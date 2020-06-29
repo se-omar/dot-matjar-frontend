@@ -11,7 +11,13 @@
         <span>Login</span>
       </v-btn>
 
+<<<<<<< HEAD
       <v-btn text @click="$router.push('/signup')">
+=======
+      <v-btn color="deep-purple accent-4" @click="$router.push('/reglogin')">reglogin</v-btn>
+
+      <v-btn color="deep-purple accent-4">
+>>>>>>> 4b67507e039dc30ba55aab6a2238f52166e4c4f7
         <span>Sign-Up</span>
       </v-btn>
 

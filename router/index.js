@@ -3,10 +3,17 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/login.vue';
 import SignUp from '../views/signup.vue'
+import reglogin from '../views/registerlogin'
 
 Vue.use(VueRouter)
 
-const routes = [{
+const routes = [
+  {path: '/reglogin',
+    name: 'reglogin',
+    component: reglogin
+  },
+  
+  {
     path: '/',
     name: 'Home',
     component: Home
