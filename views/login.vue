@@ -16,7 +16,7 @@
         <br />
         <h4>
           don't have and account
-          <a @click="$router.push('/sign-up')">Sign up</a>
+          <a @click="$router.push('/signup')">Sign up</a>
         </h4>
       </v-container>
     </v-form>

@@ -1,7 +1,7 @@
 <template>
   <div id="product">
     <v-app>
-      <v-card :elevation="7" :loading="loading" max-width="280">
+      <v-card :elevation="7" max-width="280">
         <v-img height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
 
         <v-card-title>Cafe Badilico</v-card-title>
@@ -21,7 +21,7 @@
         <v-divider class="mx-4"></v-divider>
 
         <v-card-actions>
-          <v-btn color="primary" text @click="reserve">View Details</v-btn>
+          <v-btn color="primary" text>View Details</v-btn>
         </v-card-actions>
       </v-card>
     </v-app>
