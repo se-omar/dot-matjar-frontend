@@ -2,9 +2,9 @@
   <div id="product">
     <v-app>
       <v-card :elevation="7" max-width="280">
-        <v-img height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
+        <v-img height="200" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
 
-        <v-card-title>Cafe Badilico</v-card-title>
+        <v-card-title>{{productRow.product_name}}</v-card-title>
 
         <v-card-text>
           <v-row align="center" class="mx-0">
@@ -27,3 +27,18 @@
     </v-app>
   </div>
 </template>
+
+<script>
+export default {
+  name: "product",
+  created() {
+    this.$store.dispatch("getProductRow");
+  },
+  methods: {},
+  computed: {
+    productRow() {
+      return this.$store.state.productRow;
+    }
+  }
+};
+</script>
