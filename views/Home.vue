@@ -2,28 +2,8 @@
   <div class="home">
     <v-container fluid>
       <v-row>
-        <v-col>
-          <product></product>
-        </v-col>
-
-        <v-col>
-          <product></product>
-        </v-col>
-
-        <v-col>
-          <product></product>
-        </v-col>
-
-        <v-col>
-          <product></product>
-        </v-col>
-
-        <v-col>
-          <product></product>
-        </v-col>
-
-        <v-col>
-          <product></product>
+        <v-col v-for="filteredProduct in filteredProducts" :key="filteredProduct.id">
+          <product :filteredProduct="filteredProduct"></product>
         </v-col>
       </v-row>
     </v-container>
@@ -38,14 +18,17 @@ import Product from "../components/product.vue";
 export default {
   name: "Home",
   created() {
-    // this.$axios.get("http://localhost:3000/api/users").then(response => {
-    //   this.$store.commit("addRowData", usersModel.fromDbRow(response.data));
-    //   console.log(response.data[0]);
-    // });
+    this.$store.dispatch("getProducts");
   },
   computed: {
     row() {
       return this.$store.state.row;
+    },
+    products() {
+      return this.$store.state.products;
+    },
+    filteredProducts() {
+      return this.$store.state.filteredProducts;
     }
   },
   components: {

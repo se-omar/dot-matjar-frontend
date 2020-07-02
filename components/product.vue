@@ -4,18 +4,18 @@
       <v-card :elevation="7" max-width="280">
         <v-img height="200" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
 
-        <v-card-title>{{productRow.product_name}}</v-card-title>
+        <v-card-title>{{filteredProduct.product_name}}</v-card-title>
 
         <v-card-text>
-          <v-row align="center" class="mx-0">
-            <v-rating :value="4.5" color="amber" dense half-increments readonly size="14"></v-rating>
-
-            <div class="grey--text ml-4">4.5 (413)</div>
-          </v-row>
-
-          <div class="my-4 subtitle-1">$ • Italian, Cafe</div>
-
-          <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.</div>
+          <div>product code: {{filteredProduct.product_code}}</div>
+          <div>HS Code: {{filteredProduct.HS_code}}</div>
+          <div>
+            Unit Price:
+            <span style="color: red;">{{filteredProduct.unit_price}}</span>
+            <br />
+            Min. Order: {{filteredProduct.min_units_per_order}}
+          </div>
+          <!-- <div>Business Name: {{filteredProducts.bussiness.bussiness_name}}</div> -->
         </v-card-text>
 
         <v-divider class="mx-4"></v-divider>
@@ -32,12 +32,29 @@
 export default {
   name: "product",
   created() {
-    this.$store.dispatch("getProductRow");
+    this.$store.dispatch("getProducts");
+    console.log("Product is :", this.filteredProducts);
   },
+
+  props: {
+    product: {
+      type: Object,
+      default: () => null
+    },
+    filteredProduct: {
+      type: Object,
+      default: () => null
+    }
+  },
+
   methods: {},
   computed: {
-    productRow() {
-      return this.$store.state.productRow;
+    products() {
+      return this.$store.state.products;
+    },
+
+    filteredProducts() {
+      return this.$store.state.products;
     }
   }
 };

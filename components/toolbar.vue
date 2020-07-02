@@ -4,6 +4,13 @@
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
       <v-toolbar-title>eCommerce page</v-toolbar-title>
+      <input
+        v-model="toolbarSearch"
+        @keyup="filterProducts"
+        class="input is-rounded"
+        type="text"
+        placeholder="search products"
+      />
 
       <v-spacer></v-spacer>
 
@@ -40,3 +47,36 @@
     </v-app-bar>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      toolbarSearch: ""
+    };
+  },
+
+  computed: {
+    filteredProducts() {
+      return this.$store.state.filteredProducts;
+    },
+
+    products() {
+      return this.$store.state.products;
+    }
+  },
+
+  methods: {
+    filterProducts() {
+      this.$store.dispatch("filterProducts", this.toolbarSearch);
+    }
+  }
+};
+</script>
+
+<style scoped>
+input {
+  background-color: aliceblue;
+  margin-left: 50px;
+}
+</style>
