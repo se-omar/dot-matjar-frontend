@@ -7,17 +7,20 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn color="deep-purple accent-4">
+      <v-btn @click="$router.push('/login')" text>
         <span>Login</span>
       </v-btn>
 
-      <v-btn color="deep-purple accent-4" @click="$router.push('/reglogin')">reglogin</v-btn>
+      <v-btn
+        color="deep-purple accent-4"
+        @click="$router.push('/reglogin').catch(err => {})"
+      >reglogin</v-btn>
 
       <v-btn color="deep-purple accent-4">
         <span>Sign-Up</span>
       </v-btn>
 
-      <v-btn color="deep-purple accent-4">
+      <v-btn text>
         <span>About</span>
       </v-btn>
 

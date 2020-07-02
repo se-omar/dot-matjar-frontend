@@ -46,6 +46,8 @@ export default class usersModel {
         model.linkedin = serverRow.linkedin;
         model.website = serverRow.website;
         model.address = serverRow.address;
+
+        return model;
     }
 
     toDbRow() {

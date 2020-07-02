@@ -1,7 +1,7 @@
 <template>
-    <div id="app">
+  <div id="app">
     <v-app>
-        <v-dialog v-model="dialog" persistent max-width="600px" min-width="360px">
+        <v-container style="width: 60%">
             <div>
                 <v-tabs v-model="tab" show-arrows background-color="deep-purple accent-4" icons-and-text dark grow>
                     <v-tabs-slider color="purple darken-4"></v-tabs-slider>
@@ -53,7 +53,7 @@
                                         </v-col>
                                         <v-spacer></v-spacer>
                                         <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
-                                            <v-btn x-large block :disabled="!valid" color="success" @click="validate">Register</v-btn>
+                                            <v-btn x-large block :disabled="!valid" color="success" @click="validateSignup">Register</v-btn>
                                         </v-col>
                                     </v-row>
                                 </v-form>
@@ -62,24 +62,26 @@
                     </v-tab-item>
                 </v-tabs>
             </div>
-        </v-dialog>
+        </v-container>
     </v-app>
-</div>
+  </div>
 </template>
 
 <script>
-
+//import usersModel from "../models/usersModel";
 export default {
-
-
-    name:"reglogin",
-    computed: {
+  name: "reglogin",
+  computed: {
     passwordMatch() {
       return () => this.password === this.verify || "Password must match";
+    },
+
+    row() {
+      return this.$store.state.row;
     }
   },
   methods: {
-    validate() {
+    validateSignup() {
     var self = this;
         self.$store.dispatch('register',
         {
@@ -91,25 +93,38 @@ export default {
         )
     },
    
+    validateLogin() {
+      this.$axios
+        .post("http://localhost:3000/api/login", {
+          email: this.loginEmail,
+          password: this.loginPassword
+        })
+        .then(response => {
+          console.log(response.data);
+          if (response.data != "authentication succesfull") {
+            alert(response.data);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
     reset() {
       this.$refs.form.reset();
     },
     resetValidation() {
       this.$refs.form.resetValidation();
     },
-    validateLogin(){
-this.$router.push('/mainpage')
-    }
   },
   data: () => ({
     dialog: true,
     tab: 0,
     tabs: [
-        {name:"Login", icon:"mdi-account"},
-        {name:"Register", icon:"mdi-account-outline"}
+      { name: "Login", icon: "mdi-account" },
+      { name: "Register", icon: "mdi-account-outline" }
     ],
     valid: true,
-    
+
     firstName: "",
     lastName: "",
     email: "",
@@ -133,12 +148,10 @@ this.$router.push('/mainpage')
       valid: v=> /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(v)||"password must have at least one letter, one number and one special character"
     }
   })
-}
+};
 </script>
 <style scoped>
-#app{
-    background-color:white ;
+#app {
+  background-color: white;
 }
-
-
 </style>
