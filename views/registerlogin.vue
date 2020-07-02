@@ -5,7 +5,7 @@
             <div>
                 <v-tabs v-model="tab" show-arrows background-color="deep-purple accent-4" icons-and-text dark grow>
                     <v-tabs-slider color="purple darken-4"></v-tabs-slider>
-                    <v-tab v-for="i in tabs" :key="i">
+                    <v-tab v-for="i in tabs" :key="i.name">
                         <v-icon large>{{ i.icon }}</v-icon>
                         <div class="caption py-1">{{ i.name }}</div>
                     </v-tab>
@@ -24,7 +24,7 @@
                                         </v-col>
                                         <v-spacer></v-spacer>
                                         <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
-                                            <v-btn x-large block :disabled="!valid" color="success" @click="validate"> Login </v-btn>
+                                            <v-btn x-large block :disabled="!valid" color="success" @click="validateLogin"> Login </v-btn>
                                         </v-col>
                                     </v-row>
                                 </v-form>
@@ -46,7 +46,7 @@
                                             <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
                                         </v-col>
                                         <v-col cols="12">
-                                            <v-text-field v-model="password" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, rules.min]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="Password" hint="At least 8 characters" counter @click:append="show1 = !show1"></v-text-field>
+                                            <v-text-field v-model="password" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, rules.min,rules.valid]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="Password" hint="At least 7 characters" counter @click:append="show1 = !show1"></v-text-field>
                                         </v-col>
                                         <v-col cols="12">
                                             <v-text-field block v-model="verify" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, passwordMatch]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="Confirm Password" counter @click:append="show1 = !show1"></v-text-field>
@@ -68,7 +68,10 @@
 </template>
 
 <script>
+
 export default {
+
+
     name:"reglogin",
     computed: {
     passwordMatch() {
@@ -77,15 +80,25 @@ export default {
   },
   methods: {
     validate() {
-      if (this.$refs.loginForm.validate()) {
-        console.log("valid")
-      }
+    var self = this;
+        self.$store.dispatch('register',
+        {
+            email: this.email,
+            password:this.password,
+            firstname:this.firstName,
+            lastname:this.lastName
+        }
+        )
     },
+   
     reset() {
       this.$refs.form.reset();
     },
     resetValidation() {
       this.$refs.form.resetValidation();
+    },
+    validateLogin(){
+this.$router.push('/mainpage')
     }
   },
   data: () => ({
@@ -116,7 +129,8 @@ export default {
     show1: false,
     rules: {
       required: value => !!value || "Required.",
-      min: v => (v && v.length >= 8) || "Min 8 characters"
+      min: v => (v && v.length >= 7) || "Min 7 characters",
+      valid: v=> /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(v)||"password must have at least one letter, one number and one special character"
     }
   })
 }
