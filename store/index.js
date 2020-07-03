@@ -22,10 +22,10 @@ mutations: {
 },
 
 actions:{
-  register (commit,{email,password,firstname,lastname}){
-var full_arabic_name = firstname+" "+lastname;
+  register (commit,{email,password,full_arabic_name,national_number}){
 
-   axios.post('http://localhost:3000/api/signup',{email,password ,full_arabic_name})
+
+   axios.post('http://localhost:3000/api/signup',{email,password ,full_arabic_name,national_number})
 .then((data,status)=>{
   if(status===201) console.log("Account Created")
   

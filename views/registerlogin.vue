@@ -37,14 +37,20 @@
                                 <v-form ref="registerForm" v-model="valid" lazy-validation>
                                     <v-row>
                                         <v-col cols="12" sm="6" md="6">
-                                            <v-text-field v-model="firstName" :rules="[rules.required]" label="First Name" maxlength="20" required></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="6" md="6">
-                                            <v-text-field v-model="lastName" :rules="[rules.required]" label="Last Name" maxlength="20" required></v-text-field>
-                                        </v-col>
+                                            <v-text-field v-model="fullArabicName" :rules="[rules.required]" label="Full Arabic Name" maxlength="20" required></v-text-field>
+                                      </v-col>
+                                        
+                                       
                                         <v-col cols="12">
                                             <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
                                         </v-col>
+
+                                         <!-- National NUMBER  -->
+
+                                         <v-col cols="12" sm="6" md="6">
+                                            <v-text-field v-model="nationalNumber" :rules="[rules.national,rules.must]" label="National Number" maxlength="14" ></v-text-field>
+                                        </v-col>
+
                                         <v-col cols="12">
                                             <v-text-field v-model="password" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, rules.min,rules.valid]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="Password" hint="At least 7 characters" counter @click:append="show1 = !show1"></v-text-field>
                                         </v-col>
@@ -87,8 +93,8 @@ export default {
         {
             email: this.email,
             password:this.password,
-            firstname:this.firstName,
-            lastname:this.lastName
+            full_arabic_name:this.fullArabicName,
+            national_number:this.nationalNumber
         }
         )
     },
@@ -125,9 +131,9 @@ export default {
     ],
     valid: true,
 
-    firstName: "",
-    lastName: "",
+    fullArabicName:"",
     email: "",
+    nationalNumber:"",
     password: "",
     verify: "",
     loginPassword: "",
@@ -145,7 +151,9 @@ export default {
     rules: {
       required: value => !!value || "Required.",
       min: v => (v && v.length >= 7) || "Min 7 characters",
-      valid: v=> /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(v)||"password must have at least one letter, one number and one special character"
+      valid: v=> /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(v)||"password must have at least one letter, one number and one special character",
+      national:v=> /\d+/.test(v) || "ID must be numbers only",
+      must:v => (v && v.length == 14) || "ID must be 14 NUMBERS"
     }
   })
 };

@@ -5,6 +5,7 @@ import Login from '../views/login.vue';
 import SignUp from '../views/signup.vue'
 import reglogin from '../views/registerlogin'
 import mainpage from '../views/mainpage'
+import editeaccount from '../views/editeaccount'
 
 Vue.use(VueRouter)
 
@@ -13,7 +14,11 @@ const routes = [
     name: 'reglogin',
     component: reglogin
   },
-  
+  {
+    path: '/editeaccount',
+    name: 'editeaccount',
+    component: editeaccount
+  },
   {
     path: '/',
     name: 'Home',

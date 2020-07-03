@@ -27,7 +27,9 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-btn route to="/editeaccount">editeaccount</v-btn>
   </div>
+  
 </template>
 
 <script>
