@@ -5,19 +5,20 @@ import Login from '../views/login.vue';
 import SignUp from '../views/signup.vue'
 import reglogin from '../views/registerlogin'
 import mainpage from '../views/mainpage'
-import editeaccount from '../views/editeaccount'
+import completedata from '../views/completedata'
+import productDetails from '../views/productDetails'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {path: '/reglogin',
+const routes = [{
+    path: '/reglogin',
     name: 'reglogin',
     component: reglogin
   },
   {
-    path: '/editeaccount',
-    name: 'editeaccount',
-    component: editeaccount
+    path: '/completedata',
+    name: 'completedata',
+    component: completedata
   },
   {
     path: '/',
@@ -39,6 +40,11 @@ const routes = [
     name: 'Sign-up',
     component: SignUp
   },
+  {
+    path: '/productDetails',
+    name: 'product-details',
+    component: productDetails
+  }
 ]
 
 const router = new VueRouter({

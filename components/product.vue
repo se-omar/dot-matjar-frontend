@@ -2,26 +2,42 @@
   <div id="product">
     <v-app>
       <v-card :elevation="7" max-width="280">
-        <v-img height="200" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
+        <v-img
+          height="200"
+          src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+        ></v-img>
 
-        <v-card-title>{{productRow.product_name}}</v-card-title>
+        <v-card-title>{{ filteredProduct.product_name }}</v-card-title>
 
         <v-card-text>
+          <div>كود المنتج: {{ filteredProduct.product_code }}</div>
+          <div>
+            سعر القطعة:
+            <span style="color: red;">{{ filteredProduct.unit_price }}</span>
+            <br />
+            الحد الادني للطلب: {{ filteredProduct.min_units_per_order }}
+          </div>
+          <div>المشروع: {{ filteredProduct.bussiness.bussiness_name }}</div>
           <v-row align="center" class="mx-0">
-            <v-rating :value="4.5" color="amber" dense half-increments readonly size="14"></v-rating>
+            <v-rating
+              v-model="rating"
+              color="amber"
+              dense
+              half-increments
+              readonly
+              size="14"
+            ></v-rating>
 
             <div class="grey--text ml-4">4.5 (413)</div>
           </v-row>
-
-          <div class="my-4 subtitle-1">$ • Italian, Cafe</div>
-
-          <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.</div>
         </v-card-text>
 
         <v-divider class="mx-4"></v-divider>
 
         <v-card-actions>
-          <v-btn color="primary" text>View Details</v-btn>
+          <v-btn @click="$router.push('/productDetails')" color="primary" text
+            >التفاصيل</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-app>
@@ -31,14 +47,36 @@
 <script>
 export default {
   name: "product",
-  created() {
-    this.$store.dispatch("getProductRow");
+  data() {
+    return {
+      rating: 4,
+    };
   },
+  created() {
+    this.$store.dispatch("getProducts");
+    console.log("Product is :", this.filteredProducts);
+  },
+
+  props: {
+    product: {
+      type: Object,
+      default: () => null,
+    },
+    filteredProduct: {
+      type: Object,
+      default: () => null,
+    },
+  },
+
   methods: {},
   computed: {
-    productRow() {
-      return this.$store.state.productRow;
-    }
-  }
+    products() {
+      return this.$store.state.products;
+    },
+
+    filteredProducts() {
+      return this.$store.state.products;
+    },
+  },
 };
 </script>

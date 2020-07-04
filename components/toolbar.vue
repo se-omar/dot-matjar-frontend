@@ -3,25 +3,33 @@
     <v-app-bar color="deep-purple accent-4" dense dark>
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-      <v-toolbar-title>eCommerce page</v-toolbar-title>
+      <v-toolbar-title>اسم الموقع</v-toolbar-title>
+      <!-- <input
+        v-model="toolbarSearch"
+        @keyup="filterProducts"
+        class="input is-rounded"
+        type="text"
+        placeholder="search products"
+      /> -->
 
       <v-spacer></v-spacer>
 
       <v-btn @click="$router.push('/login')" text>
-        <span>Login</span>
+        <span>تسجيل الدخول</span>
       </v-btn>
 
       <v-btn
         color="deep-purple accent-4"
-        @click="$router.push('/reglogin').catch(err => {})"
-      >reglogin</v-btn>
+        @click="$router.push('/reglogin').catch((err) => {})"
+        >التسجيل</v-btn
+      >
 
       <v-btn color="deep-purple accent-4">
-        <span>Sign-Up</span>
+        <span>انشاء حساب</span>
       </v-btn>
 
       <v-btn text>
-        <span>About</span>
+        <span>عن الموقع</span>
       </v-btn>
 
       <v-menu left bottom>

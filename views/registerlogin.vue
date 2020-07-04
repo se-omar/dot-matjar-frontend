@@ -36,31 +36,65 @@
                             <v-card-text>
                                 <v-form ref="registerForm" v-model="valid" lazy-validation>
                                     <v-row>
-                                        <v-col cols="12" sm="6" md="6">
-                                            <v-text-field v-model="fullArabicName" :rules="[rules.required]" label="Full Arabic Name" maxlength="20" required></v-text-field>
-                                      </v-col>
-                                        
-                                       
-                                        <v-col cols="12">
-                                            <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
+                                       <v-col cols="6">
+                                            <v-text-field v-model="email" :rules="emailRules" label="البريد الالكتروني" required></v-text-field>
                                         </v-col>
+                                         <v-col cols="6" sm="6" md="6">
+                                            <v-text-field v-model="nationalNumber" :rules="[rules.national,rules.must]" label="الرقم القومي" maxlength="14" ></v-text-field>
+                                        </v-col>
+
+                                        <v-col cols="6" sm="6" md="6">
+                                            <v-text-field v-model="fullArabicName" :rules="[rules.required]" label="الاسم بلكامل عربي" maxlength="20" required></v-text-field>
+                                      </v-col>
+                                        <v-col cols="6" sm="6" md="6">
+                                            <v-text-field v-model="mobileNumber" :rules="[rules.mobilenumber]" label="الموبايل" maxlength="11" required></v-text-field>
+                                      </v-col>
+                                       
+                                       
 
                                          <!-- National NUMBER  -->
 
-                                         <v-col cols="12" sm="6" md="6">
-                                            <v-text-field v-model="nationalNumber" :rules="[rules.national,rules.must]" label="National Number" maxlength="14" ></v-text-field>
+                                        
+                                        <v-col cols="6">
+                                            <v-text-field v-model="password" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, rules.min,rules.valid]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="كلمه المرور" hint="At least 7 characters" counter @click:append="show1 = !show1"></v-text-field>
                                         </v-col>
-
-                                        <v-col cols="12">
-                                            <v-text-field v-model="password" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, rules.min,rules.valid]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="Password" hint="At least 7 characters" counter @click:append="show1 = !show1"></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12">
-                                            <v-text-field block v-model="verify" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, passwordMatch]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="Confirm Password" counter @click:append="show1 = !show1"></v-text-field>
+                                        <v-col cols="6">
+                                            <v-text-field block v-model="verify" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, passwordMatch]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="تاكيد كلمه المرور" counter @click:append="show1 = !show1"></v-text-field>
                                         </v-col>
                                         <v-spacer></v-spacer>
+
+                                          <v-col cols="12">
+                                      <v-checkbox v-model="checkbox">
+      <template v-slot:label>
+        <div>
+          لقد قرات و وافقت علي سياسه التسجيل
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <a
+                target="_blank"
+                href="http://vuetifyjs.com"
+                @click.stop
+                v-on="on"
+              >
+                Vuetify
+              </a>
+            </template>
+            Opens in new window
+          </v-tooltip>
+          is awesome
+        </div>
+      </template>
+    </v-checkbox>
+                                       </v-col>
+                                         
+                                        
+                                      
+
                                         <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
-                                            <v-btn x-large block :disabled="!valid" color="success" @click="validateSignup">Register</v-btn>
+                                            <v-btn x-large block :disabled="!valid || !checkbox"  id="btn" color="success" @click="validateSignup">تسجيل</v-btn>
+                                       <v-btn x-large block :disabled="!valid || !checkbox"  color="success" @click="validateSignup">الغاء</v-btn>
                                         </v-col>
+
                                     </v-row>
                                 </v-form>
                             </v-card-text>
@@ -74,6 +108,7 @@
 </template>
 
 <script>
+
 //import usersModel from "../models/usersModel";
 export default {
   name: "reglogin",
@@ -85,6 +120,7 @@ export default {
     row() {
       return this.$store.state.row;
     }
+    
   },
   methods: {
     validateSignup() {
@@ -94,7 +130,8 @@ export default {
             email: this.email,
             password:this.password,
             full_arabic_name:this.fullArabicName,
-            national_number:this.nationalNumber
+            national_number:this.nationalNumber,
+            mobile_number:this.mobileNumber
         }
         )
     },
@@ -121,6 +158,11 @@ export default {
     resetValidation() {
       this.$refs.form.resetValidation();
     },
+    changeRoute(){
+      document.getElementById("btn").disapled()
+    },
+    
+   
   },
   data: () => ({
     dialog: true,
@@ -136,16 +178,21 @@ export default {
     nationalNumber:"",
     password: "",
     verify: "",
+    mobileNumber:"",
     loginPassword: "",
     loginEmail: "",
     loginEmailRules: [
       v => !!v || "Required",
-      v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+      v => /.+@.+\..+/.test(v) || "E-mail must be valid",
+
+    
+
     ],
     emailRules: [
       v => !!v || "Required",
       v => /.+@.+\..+/.test(v) || "E-mail must be valid"
     ],
+    
 
     show1: false,
     rules: {
@@ -153,8 +200,11 @@ export default {
       min: v => (v && v.length >= 7) || "Min 7 characters",
       valid: v=> /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(v)||"password must have at least one letter, one number and one special character",
       national:v=> /\d+/.test(v) || "ID must be numbers only",
-      must:v => (v && v.length == 14) || "ID must be 14 NUMBERS"
-    }
+      must:v => (v && v.length == 14) || "ID must be 14 NUMBERS",
+      mobilenumber:v=> /\d+/.test(v)|| "Enter numbers"
+    },
+    checkbox:false
+    
   })
 };
 </script>

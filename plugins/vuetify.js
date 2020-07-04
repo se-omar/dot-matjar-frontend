@@ -9,16 +9,17 @@ import colors from 'vuetify/lib/util/colors'
 Vue.use(Vuetify);
 
 export default new Vuetify({
-    icons:{
-iconfont:'md'||'fa'
+    rtl: true,
+    icons: {
+        iconfont: 'md' || 'fa'
     },
-    theme:{
-        themes:{
-            light:{
-                background:colors.shades.white
+    theme: {
+        themes: {
+            light: {
+                background: colors.shades.white
             },
-            dark:{
-                background:colors.shades.black
+            dark: {
+                background: colors.shades.black
             }
         }
     }
