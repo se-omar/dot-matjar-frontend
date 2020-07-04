@@ -9,7 +9,10 @@ export default new Vuex.Store({
   state: {
     row: {},
     products: [],
-    filteredProducts: []
+    filteredProducts: [],
+    currentProduct: {},
+    businesses: {},
+    dialog: false
   },
 
   mutations: {
@@ -25,6 +28,14 @@ export default new Vuex.Store({
     filterProducts(state, payload) {
       state.filteredProducts =
         state.products.filter(row => row.product_name.indexOf(payload) > -1)
+    },
+
+    setCurrentProduct(state, payload) {
+      state.currentProduct = payload;
+    },
+
+    toggleDialog(state) {
+      state.dialog = !state.dialog;
     }
   },
 
@@ -58,6 +69,14 @@ export default new Vuex.Store({
           console.log(error)
         })
     },
+
+    setCurrentProduct(context, product) {
+      context.commit('setCurrentProduct', product)
+    },
+
+    toggleDialog(context) {
+      context.commit('toggleDialog');
+    }
   },
 
   modules: {},

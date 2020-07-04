@@ -13,7 +13,7 @@
               <v-card-text>
                 <label style="font-size: 22px" for="projectOwner">الاسم</label>
                 <br />
-                <span style="font-size: 18px" id="projectOwner">اسم صاحب المشروع</span>
+                <span style="font-size: 18px">{{currentProduct.bussiness.user.full_arabic_name}}</span>
               </v-card-text>
             </v-col>
 
@@ -21,7 +21,7 @@
               <v-card-text>
                 <label style="font-size: 22px" for="projectOwner">البريد الالكتروني</label>
                 <br />
-                <span style="font-size: 18px" id="projectOwner">اسم صاحب المشروع</span>
+                <span style="font-size: 18px">{{currentProduct.bussiness.user.email}}</span>
               </v-card-text>
             </v-col>
 
@@ -29,7 +29,7 @@
               <v-card-text>
                 <label style="font-size: 22px" for="projectOwner">التليفون</label>
                 <br />
-                <span style="font-size: 18px" id="projectOwner">اسم صاحب المشروع</span>
+                <span style="font-size: 18px">{{currentProduct.bussiness.user.phone_number}}</span>
               </v-card-text>
             </v-col>
 
@@ -37,7 +37,7 @@
               <v-card-text>
                 <label style="font-size: 22px" for="projectOwner">الموبايل</label>
                 <br />
-                <span style="font-size: 18px" id="projectOwner">اسم صاحب المشروع</span>
+                <span style="font-size: 18px">{{currentProduct.bussiness.user.mobile_number}}</span>
               </v-card-text>
             </v-col>
 
@@ -45,11 +45,11 @@
               <v-card-text>
                 <label style="font-size: 22px" for="projectOwner">العنوان</label>
                 <br />
-                <span style="font-size: 18px" id="projectOwner">اسم صاحب المشروع</span>
+                <span style="font-size: 18px">{{currentProduct.bussiness.user.address}}</span>
               </v-card-text>
             </v-col>
           </v-row>
-          <v-btn @click="dialog = false">اغلاق</v-btn>
+          <v-btn @click="closeDialog">اغلاق</v-btn>
         </v-card>
       </v-dialog>
     </v-app>
@@ -59,11 +59,23 @@
 <script>
 export default {
   name: "business-info-popup",
+  computed: {
+    currentProduct() {
+      return this.$store.state.currentProduct;
+    },
 
-  props: {
-    dialog: {
-      type: Boolean,
-      default: () => null
+    businesses() {
+      return this.$store.state.businesses;
+    },
+
+    dialog() {
+      return this.$store.state.dialog;
+    }
+  },
+
+  methods: {
+    closeDialog() {
+      this.$store.dispatch("toggleDialog");
     }
   }
 };
