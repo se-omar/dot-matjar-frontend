@@ -3,14 +3,16 @@
     <v-app-bar color="deep-purple accent-4" dense dark>
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-      <v-toolbar-title>اسم الموقع</v-toolbar-title>
+      <v-toolbar-title>
+        <v-btn @click="$router.push('/')" text>اسم الموقع</v-btn>
+      </v-toolbar-title>
       <!-- <input
         v-model="toolbarSearch"
         @keyup="filterProducts"
         class="input is-rounded"
         type="text"
         placeholder="search products"
-      /> -->
+      />-->
 
       <v-spacer></v-spacer>
 
@@ -21,8 +23,7 @@
       <v-btn
         color="deep-purple accent-4"
         @click="$router.push('/reglogin').catch((err) => {})"
-        >التسجيل</v-btn
-      >
+      >التسجيل</v-btn>
 
       <v-btn color="deep-purple accent-4">
         <span>انشاء حساب</span>

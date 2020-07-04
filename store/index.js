@@ -12,6 +12,7 @@ export default new Vuex.Store({
     filteredProducts: [],
     currentProduct: {},
     businesses: {},
+    users: {},
     dialog: false
   },
 
@@ -76,6 +77,12 @@ export default new Vuex.Store({
 
     toggleDialog(context) {
       context.commit('toggleDialog');
+    },
+
+    getUsers(context) {
+      axios.get('http://localhost:3000/api/users').then(response => {
+        context.commit('getUsers', response.data);
+      })
     }
   },
 

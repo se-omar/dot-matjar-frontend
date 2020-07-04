@@ -6,6 +6,7 @@ import SignUp from '../views/signup.vue'
 import reglogin from '../views/registerlogin'
 import mainpage from '../views/mainpage'
 import productDetails from '../views/productDetails'
+import resetPassword from '../views/resetPassword'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const routes = [{
     path: '/productDetails',
     name: 'product-details',
     component: productDetails
+  },
+  {
+    path: '/resetPassword',
+    name: 'reset-password',
+    component: resetPassword
   }
 ]
 

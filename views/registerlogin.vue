@@ -1,68 +1,140 @@
 <template>
   <div id="app">
     <v-app>
-        <v-container style="width: 60%">
-            <div>
-                <v-tabs v-model="tab" show-arrows background-color="deep-purple accent-4" icons-and-text dark grow>
-                    <v-tabs-slider color="purple darken-4"></v-tabs-slider>
-                    <v-tab v-for="i in tabs" :key="i.name">
-                        <v-icon large>{{ i.icon }}</v-icon>
-                        <div class="caption py-1">{{ i.name }}</div>
-                    </v-tab>
-                    <v-tab-item>
-                        <v-card class="px-4">
-                            <v-card-text>
-                                <v-form ref="loginForm" v-model="valid" lazy-validation>
-                                    <v-row>
-                                        <v-col cols="12">
-                                            <v-text-field v-model="loginEmail" :rules="loginEmailRules" label="E-mail" required></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12">
-                                            <v-text-field v-model="loginPassword" :append-icon="show1?'eye':'eye-off'" :rules="[rules.required, rules.min]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="Password" hint="At least 8 characters" counter @click:append="show1 = !show1"></v-text-field>
-                                        </v-col>
-                                        <v-col class="d-flex" cols="12" sm="6" xsm="12">
-                                        </v-col>
-                                        <v-spacer></v-spacer>
-                                        <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
-                                            <v-btn x-large block :disabled="!valid" color="success" @click="validateLogin"> Login </v-btn>
-                                        </v-col>
-                                    </v-row>
-                                </v-form>
-                            </v-card-text>
-                        </v-card>
-                    </v-tab-item>
-                    <v-tab-item>
-                        <v-card class="px-4">
-                            <v-card-text>
-                                <v-form ref="registerForm" v-model="valid" lazy-validation>
-                                    <v-row>
-                                        <v-col cols="12" sm="6" md="6">
-                                            <v-text-field v-model="firstName" :rules="[rules.required]" label="First Name" maxlength="20" required></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="6" md="6">
-                                            <v-text-field v-model="lastName" :rules="[rules.required]" label="Last Name" maxlength="20" required></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12">
-                                            <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12">
-                                            <v-text-field v-model="password" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, rules.min,rules.valid]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="Password" hint="At least 7 characters" counter @click:append="show1 = !show1"></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12">
-                                            <v-text-field block v-model="verify" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, passwordMatch]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="Confirm Password" counter @click:append="show1 = !show1"></v-text-field>
-                                        </v-col>
-                                        <v-spacer></v-spacer>
-                                        <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
-                                            <v-btn x-large block :disabled="!valid" color="success" @click="validateSignup">Register</v-btn>
-                                        </v-col>
-                                    </v-row>
-                                </v-form>
-                            </v-card-text>
-                        </v-card>
-                    </v-tab-item>
-                </v-tabs>
-            </div>
-        </v-container>
+      <v-container style="width: 60%">
+        <div>
+          <v-tabs
+            v-model="tab"
+            show-arrows
+            background-color="deep-purple accent-4"
+            icons-and-text
+            dark
+            grow
+          >
+            <v-tabs-slider color="purple darken-4"></v-tabs-slider>
+            <v-tab v-for="i in tabs" :key="i.name">
+              <v-icon large>{{ i.icon }}</v-icon>
+              <div class="caption py-1">{{ i.name }}</div>
+            </v-tab>
+            <v-tab-item>
+              <v-card class="px-4">
+                <v-card-text>
+                  <v-form ref="loginForm" v-model="valid" lazy-validation>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="loginEmail"
+                          :rules="loginEmailRules"
+                          label="الايميل"
+                          required
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="loginPassword"
+                          :append-icon="show1?'eye':'eye-off'"
+                          :rules="[rules.required, rules.min]"
+                          :type="show1 ? 'text' : 'password'"
+                          name="input-10-1"
+                          label="كلمة السر"
+                          hint="At least 8 characters"
+                          counter
+                          @click:append="show1 = !show1"
+                        ></v-text-field>
+                      </v-col>
+
+                      <v-col class="d-flex" cols="12" xsm="12" align-end>
+                        <v-btn
+                          dense
+                          block
+                          :disabled="!valid"
+                          color="success"
+                          @click="validateLogin"
+                        >
+                          <span style="font-size: 18px;">تسجيل الدخول</span>
+                        </v-btn>
+                      </v-col>
+
+                      <v-col align-center cols="3">
+                        <v-btn @click="$router.push('/resetPassword')" text>
+                          <span style="font-size: 20px; color: red">هل نسيت كلمة السر</span>
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                  </v-form>
+                </v-card-text>
+              </v-card>
+            </v-tab-item>
+            <v-tab-item>
+              <v-card class="px-4">
+                <v-card-text>
+                  <v-form ref="registerForm" v-model="valid" lazy-validation>
+                    <v-row>
+                      <v-col cols="12" sm="6" md="6">
+                        <v-text-field
+                          v-model="firstName"
+                          :rules="[rules.required]"
+                          label="الاسم الاول"
+                          maxlength="20"
+                          required
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="6">
+                        <v-text-field
+                          v-model="lastName"
+                          :rules="[rules.required]"
+                          label="الاسم الاخير"
+                          maxlength="20"
+                          required
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field v-model="email" :rules="emailRules" label="الايميل" required></v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="password"
+                          :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                          :rules="[rules.required, rules.min,rules.valid]"
+                          :type="show1 ? 'text' : 'password'"
+                          name="input-10-1"
+                          label="كلمة السر"
+                          hint="At least 7 characters"
+                          counter
+                          @click:append="show1 = !show1"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          block
+                          v-model="verify"
+                          :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                          :rules="[rules.required, passwordMatch]"
+                          :type="show1 ? 'text' : 'password'"
+                          name="input-10-1"
+                          label="تاكيد كلمة السر"
+                          counter
+                          @click:append="show1 = !show1"
+                        ></v-text-field>
+                      </v-col>
+                      <v-spacer></v-spacer>
+                      <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
+                        <v-btn
+                          x-large
+                          block
+                          :disabled="!valid"
+                          color="success"
+                          @click="validateSignup"
+                        >Register</v-btn>
+                      </v-col>
+                    </v-row>
+                  </v-form>
+                </v-card-text>
+              </v-card>
+            </v-tab-item>
+          </v-tabs>
+        </div>
+      </v-container>
     </v-app>
   </div>
 </template>
@@ -82,17 +154,15 @@ export default {
   },
   methods: {
     validateSignup() {
-    var self = this;
-        self.$store.dispatch('register',
-        {
-            email: this.email,
-            password:this.password,
-            firstname:this.firstName,
-            lastname:this.lastName
-        }
-        )
+      var self = this;
+      self.$store.dispatch("register", {
+        email: this.email,
+        password: this.password,
+        firstname: this.firstName,
+        lastname: this.lastName
+      });
     },
-   
+
     validateLogin() {
       this.$axios
         .post("http://localhost:3000/api/login", {
@@ -101,8 +171,10 @@ export default {
         })
         .then(response => {
           console.log(response.data);
-          if (response.data != "authentication succesfull") {
+          if (response.data != "authenitcation succesfull") {
             alert(response.data);
+          } else {
+            this.$router.push("/");
           }
         })
         .catch(error => {
@@ -114,7 +186,7 @@ export default {
     },
     resetValidation() {
       this.$refs.form.resetValidation();
-    },
+    }
   },
   data: () => ({
     dialog: true,
@@ -145,7 +217,11 @@ export default {
     rules: {
       required: value => !!value || "Required.",
       min: v => (v && v.length >= 7) || "Min 7 characters",
-      valid: v=> /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(v)||"password must have at least one letter, one number and one special character"
+      valid: v =>
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
+          v
+        ) ||
+        "password must have at least one letter, one number and one special character"
     }
   })
 };
