@@ -7,10 +7,12 @@ import reglogin from '../views/registerlogin'
 import mainpage from '../views/mainpage'
 import productDetails from '../views/productDetails'
 import resetPassword from '../views/resetPassword'
+import resetPasswordSent from '../views/resetPasswordSent'
+import updatePassword from '../views/updatePassword'
 
 Vue.use(VueRouter)
 
-const routes = [{
+var routes = [{
     path: '/reglogin',
     name: 'reglogin',
     component: reglogin
@@ -45,7 +47,22 @@ const routes = [{
     path: '/resetPassword',
     name: 'reset-password',
     component: resetPassword
-  }
+  },
+  {
+    path: '/updatePassword/:hash',
+    name: 'update-password',
+    component: updatePassword
+  },
+  {
+    path: '/updatePassword/',
+    name: 'update-password',
+    component: updatePassword
+  },
+  {
+    path: '/resetPasswordSent',
+    name: 'reset-password-sent',
+    component: resetPasswordSent
+  },
 ]
 
 const router = new VueRouter({

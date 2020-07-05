@@ -26,6 +26,10 @@ export default new Vuex.Store({
       state.filteredProducts = row;
     },
 
+    getUsers(state, payload) {
+      state.users = payload
+    },
+
     filterProducts(state, payload) {
       state.filteredProducts =
         state.products.filter(row => row.product_name.indexOf(payload) > -1)
