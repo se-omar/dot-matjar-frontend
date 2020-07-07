@@ -13,6 +13,7 @@ export default new Vuex.Store({
     currentProduct: {},
     businesses: {},
     users: {},
+    currentUser: {},
     dialog: false
   },
 
@@ -41,6 +42,9 @@ export default new Vuex.Store({
 
     toggleDialog(state) {
       state.dialog = !state.dialog;
+    },
+    setCurrentUser(state, payload) {
+      state.currentUser = payload;
     }
   },
 

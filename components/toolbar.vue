@@ -25,6 +25,11 @@
         @click="$router.push('/reglogin').catch((err) => {})"
       >التسجيل</v-btn>
 
+      <v-btn
+        color="deep-purple accent-4"
+        @click="$router.push('/editPassword').catch((err) => {})"
+      >تغيير كلمة السر</v-btn>
+
       <v-btn color="deep-purple accent-4">
         <span>انشاء حساب</span>
       </v-btn>
