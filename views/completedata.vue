@@ -20,13 +20,19 @@
         </v-col>
 
         <v-col cols="12" sm="6">
-          <v-text-field
+          
+           <v-col cols="12">
+        <v-select v-model="gender" :items="genderr" label="النوع" shaped
+            ></v-select>
+      </v-col>
+          
+          <!-- <v-text-field
             v-model="gender"
             label="النوع"
             
             shaped
             outlined
-          ></v-text-field>
+          ></v-text-field> -->
         </v-col>
 
          <v-col cols="12" sm="6">
@@ -274,6 +280,9 @@ export default {
           address:this.address
         })
       },
+
+     
+       
       
     },
     data:()=> ({
@@ -284,6 +293,11 @@ export default {
       must:v => (v && v.length == 14) || "ID must be 14 NUMBERS",
       numbers:v=> /\d+/.test(v)|| "Enter numbers"
     },
+    genderr:[
+"ذكر",
+"انثي",
+"اخر"
+    ],
 
 nationalNumber:"",
 gender:"",

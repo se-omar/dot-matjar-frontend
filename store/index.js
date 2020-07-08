@@ -1,15 +1,17 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios"
-
-Vue.use(Vuex, axios);
-
+import router from '../router'
+Vue.use(Vuex, axios,router);
 export default new Vuex.Store({
-
   state: {
     row: {},
     products: [],
-    filteredProducts: []
+    filteredProducts: [],
+    currentProduct: {},
+    businesses: {},
+    users: {},
+    dialog: false
   },
 
   mutations: {
@@ -25,10 +27,25 @@ export default new Vuex.Store({
     filterProducts(state, payload) {
       state.filteredProducts =
         state.products.filter(row => row.product_name.indexOf(payload) > -1)
+    },
+
+    setCurrentProduct(state, payload) {
+      state.currentProduct = payload;
+    },
+
+    toggleDialog(state) {
+      state.dialog = !state.dialog;
+    },
+
+    activation() {
+
+      console.log("enterrr mutation")
+       this.$router.push('http://localhost:8080/api/login')
     }
   },
 
   actions: {
+    
     getProducts(context) {
       axios.get('http://localhost:3000/api/products').then(response => {
         context.commit('getProducts', response.data);
@@ -78,7 +95,7 @@ axios.put('http://localhost:3000/api/completedata/3',{
   address
 })
     },
-
+  
     register(commit, {
       email,
       password,
@@ -86,6 +103,7 @@ axios.put('http://localhost:3000/api/completedata/3',{
       mobile_number,
       national_number
     }) {
+  
       
       axios.post('http://localhost:3000/api/signup', {
           email,
@@ -93,6 +111,7 @@ axios.put('http://localhost:3000/api/completedata/3',{
           full_arabic_name,
           mobile_number,
           national_number
+          
         })
         .then((data, status) => {
           if (status === 201) console.log("Account Created")
@@ -101,6 +120,39 @@ axios.put('http://localhost:3000/api/completedata/3',{
           console.log(error)
         })
     },
+   
+   
+   
+    activation(context){
+     
+     
+        
+axios.put('http://localhost:3000/api/activate')
+.then((data) => {
+  console.log(data);
+  context.commit('activation')
+})
+
+    
+    },
+
+   
+   
+   
+   
+    setCurrentProduct(context, product) {
+      context.commit('setCurrentProduct', product)
+    },
+
+    toggleDialog(context) {
+      context.commit('toggleDialog');
+    },
+
+    getUsers(context) {
+      axios.get('http://localhost:3000/api/users').then(response => {
+        context.commit('getUsers', response.data);
+      })
+    }
   },
 
   modules: {},

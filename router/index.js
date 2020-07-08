@@ -7,13 +7,24 @@ import reglogin from '../views/registerlogin'
 import mainpage from '../views/mainpage'
 import completedata from '../views/completedata'
 import productDetails from '../views/productDetails'
-
+import resetPassword from '../views/resetPassword'
+import activation from '../views/activation'
+import businessownerdata from '../views/businessownerdata'
 Vue.use(VueRouter)
 
 const routes = [{
+  path: '/activation/:cryptoo',
+  name: 'activation',
+  component: activation
+},{
     path: '/reglogin',
     name: 'reglogin',
     component: reglogin
+  },
+  {
+    path: '/businessownerdata',
+    name: 'businessownerdata',
+    component: businessownerdata
   },
   {
     path: '/completedata',
@@ -44,7 +55,14 @@ const routes = [{
     path: '/productDetails',
     name: 'product-details',
     component: productDetails
-  }
+  },
+  {
+    path: '/resetPassword',
+    name: 'reset-password',
+    component: resetPassword
+  },
+  
+  
 ]
 
 const router = new VueRouter({

@@ -1,9 +1,30 @@
 <template>
-  <div id="app">
+<div id="app">
+
+
+
+
+
     <v-app>
-        <v-container style="width: 60%">
-            <div>
-                <v-tabs v-model="tab" show-arrows background-color="deep-purple accent-4" icons-and-text dark grow>
+        <v-parallax
+    dark
+    height="400"
+    src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
+  >
+    <v-row
+      align="center"
+      justify="center"
+    >
+      <v-col class="text-center" cols="12">
+        <h1 class="display-1 font-weight-thin mb-4">Vuetify.js</h1>
+        <h4 class="subheading">Build your application today!</h4>
+      </v-col>
+    </v-row>
+  </v-parallax>
+        <!-- <v-container > -->
+
+            <div id="container"  style="width: 60%">
+                <v-tabs v-model="tab" show-arrows background-color="white" icons-and-text dark grow>
                     <v-tabs-slider color="purple darken-4"></v-tabs-slider>
                     <v-tab v-for="i in tabs" :key="i.name">
                         <v-icon large>{{ i.icon }}</v-icon>
@@ -102,17 +123,20 @@
                     </v-tab-item>
                 </v-tabs>
             </div>
-        </v-container>
+        <!-- </v-container> -->
     </v-app>
   </div>
 </template>
 
-<script>
 
-//import usersModel from "../models/usersModel";
+  
+<script>
 export default {
-  name: "reglogin",
-  computed: {
+    name:"businessownerdata",
+
+
+
+ computed: {
     passwordMatch() {
       return () => this.password === this.verify || "Password must match";
     },
@@ -216,9 +240,20 @@ export default {
     
   })
 };
+
+
+
+
+
 </script>
+
 <style scoped>
-#app {
-  background-color: white;
+.v-parallax__image {
+  transform: none !important;
+  width: 100% !important;
+  ;
+}
+#container{
+    margin-top: -100px;
 }
 </style>

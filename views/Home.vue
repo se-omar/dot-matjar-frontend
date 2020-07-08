@@ -9,9 +9,7 @@
             v-model="toolbarSearch"
             placeholder="البحث عن المنتجات"
           ></v-text-field>
-          <v-btn style="margin-right: 20px" @click="filterProducts"
-            >البحث</v-btn
-          >
+          <v-btn style="margin-right: 20px" @click="filterProducts">البحث</v-btn>
         </v-row>
 
         <v-row>
@@ -20,21 +18,11 @@
           </v-col>
 
           <v-col class="d-flex">
-            <v-select
-              dense
-              :items="items"
-              label="القطاع الفرعي"
-              outlined
-            ></v-select>
+            <v-select dense :items="items" label="القطاع الفرعي" outlined></v-select>
           </v-col>
 
           <v-col class="d-flex">
-            <v-select
-              dense
-              :items="items"
-              label="محافظة المشروع"
-              outlined
-            ></v-select>
+            <v-select dense :items="egyptGovernorates" label="محافظة المشروع" outlined></v-select>
           </v-col>
 
           <v-col class="d-flex">
@@ -47,10 +35,7 @@
         </v-row>
 
         <v-row>
-          <v-col
-            v-for="filteredProduct in filteredProducts"
-            :key="filteredProduct.id"
-          >
+          <v-col cols="4" v-for="filteredProduct in filteredProducts" :key="filteredProduct.id">
             <product :filteredProduct="filteredProduct"></product>
           </v-col>
         </v-row>
@@ -71,6 +56,35 @@ export default {
     return {
       toolbarSearch: "",
       items: [],
+      egyptGovernorates: [
+        "الإسكندرية",
+        "الإسماعيلية",
+        "أسوان",
+        "أسيوط",
+        "الأقصر",
+        "البحر الأحمر",
+        "البحيرة",
+        "بني سويف",
+        "بورسعيد",
+        "جنوب سيناء",
+        "الجيزة",
+        "الدقهلية",
+        "دمياط",
+        "سوهاج",
+        "السويس",
+        "الشرقية",
+        "شمال سيناء",
+        "الغربية",
+        "الفيوم",
+        "القاهرة",
+        "القليوبية",
+        "قنا",
+        "كفر الشيخ",
+        "مطروح",
+        "المنوفية",
+        "المنيا",
+        "الوادي الجديد"
+      ]
     };
   },
   created() {
@@ -85,16 +99,16 @@ export default {
     },
     filteredProducts() {
       return this.$store.state.filteredProducts;
-    },
+    }
   },
 
   methods: {
     filterProducts() {
       this.$store.dispatch("filterProducts", this.toolbarSearch);
-    },
+    }
   },
   components: {
-    Product,
-  },
+    Product
+  }
 };
 </script>

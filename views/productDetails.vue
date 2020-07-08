@@ -5,31 +5,31 @@
         <v-col class="mr-10" cols="6">
           <br />
           <v-row>
-            <p
-              class="display-1 font-weight-medium"
-            >اسم المنتج اسم المنتج اسم المنتج اسم المنتج اسم المنتج</p>
+            <p class="display-1 font-weight-medium">{{currentProduct.product_name}}</p>
           </v-row>
 
           <v-row>
-            <v-col>كود المنتج: 1212121</v-col>
-            <v-col>كود التصدير (HS Code): 1212</v-col>
+            <v-col>كود المنتج: {{currentProduct.product_code}}</v-col>
+            <v-col>كود التصدير (HS Code): {{currentProduct.HS_code}}</v-col>
           </v-row>
           <br />
           <v-row>
             <v-col>
-              <span style="font-size: 22px">سعر المنتج: 12312</span>
+              <span style="font-size: 22px">سعر المنتج: {{currentProduct.unit_price}}</span>
             </v-col>
           </v-row>
 
           <v-row>
             <v-col>
-              <span style="font-size: 22px">الحد الادني للطلب: 12312</span>
+              <span
+                style="font-size: 22px"
+              >الحد الادني للطلب: {{currentProduct.min_units_per_order}}</span>
             </v-col>
           </v-row>
 
           <v-row>
             <v-col>
-              <span style="font-size: 22px">المشروع: اسم المشروع</span>
+              <span style="font-size: 22px">المشروع: {{currentProduct.bussiness.bussiness_name}}</span>
             </v-col>
           </v-row>
         </v-col>
@@ -45,18 +45,7 @@
 
       <v-row>
         <v-col class="mr-5 ml-13">
-          <p style="font-size: 19px">
-            ر إدخال بعض النوادر أو الكلمات العشوائية إلى النص. إن كنت تريد أن
-            تستخدم نص لوريم إيبسوم ما، عليك أن تتحقق أولاً أن ليس هناك أي كلمات
-            أو عبارات محرجة أو غير لائقة مخبأة في هذا النص. بينما تعمل جميع
-            مولّدات نصوص لوريم إيبسوم على الإنترنت على إعادة تكرار مقاطع من نص
-            لوريم إيبسوم نفسه عدة مرات بما تتطلبه الحاجة، يقوم مولّدنا هذا
-            باستخدام كلمات من قاموس يحوي على أكثر من 200 كلمة لا تينية، مضاف
-            إليها مجموعة من الجمل النموذجية، لتكوين نص لوريم إيبسوم ذو شكل منطقي
-            قريب إلى النص الحقيقي. وبالتالي يكون النص الناتح خالي من التكرار، أو
-            أي كلمات أو عبارات غير لائقة أو ما شابه. وهذا ما يجعله أول مولّد نص
-            لوريم إيبسوم حقيقي على الإنترنت.
-          </p>
+          <p style="font-size: 19px">{{currentProduct.describtion}}</p>
         </v-col>
       </v-row>
 
@@ -73,7 +62,7 @@
           </v-btn>
         </v-col>
       </v-row>
-      <business-info-popup :dialog="dialog"></business-info-popup>
+      <business-info-popup></business-info-popup>
     </v-content>
   </v-app>
 </template>
@@ -81,18 +70,28 @@
 <script>
 import businessInfoPopup from "../components/businessInfoPopup.vue";
 export default {
+  connected() {},
+
+  computed: {
+    currentProduct() {
+      return this.$store.state.currentProduct;
+    },
+
+    businesses() {
+      return this.$store.state.businesses;
+    },
+
+    dialog() {
+      return this.$store.state.dialog;
+    }
+  },
+
   components: {
     businessInfoPopup
   },
-  data() {
-    return {
-      dialog: false
-    };
-  },
   methods: {
     viewPopup() {
-      this.dialog = true;
-      console.log(this.dialog);
+      this.$store.dispatch("toggleDialog");
     }
   }
 };

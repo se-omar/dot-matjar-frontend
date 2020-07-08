@@ -21,6 +21,8 @@ export default class usersModel {
         this.linkedin = '';
         this.website = '';
         this.address = '';
+        this.crypto='';
+        this.active='';
     }
 
     static fromDbRow(serverRow) {
@@ -46,6 +48,8 @@ export default class usersModel {
         model.linkedin = serverRow.linkedin;
         model.website = serverRow.website;
         model.address = serverRow.address;
+        model.crypto = serverRow.crypto;
+        model.active = serverRow.active;
 
         return model;
     }
@@ -72,6 +76,8 @@ export default class usersModel {
         serverRow.linkedin = this.linkedin;
         serverRow.website = this.website;
         serverRow.address = this.address;
+        serverRow.crypto = this.crypto;
+        serverRow.active = this.active;
 
         return serverRow;
     }

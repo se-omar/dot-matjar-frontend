@@ -2,10 +2,7 @@
   <div id="product">
     <v-app>
       <v-card :elevation="7" max-width="280">
-        <v-img
-          height="200"
-          src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-        ></v-img>
+        <v-img height="200" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
 
         <v-card-title>{{ filteredProduct.product_name }}</v-card-title>
 
@@ -19,14 +16,7 @@
           </div>
           <div>المشروع: {{ filteredProduct.bussiness.bussiness_name }}</div>
           <v-row align="center" class="mx-0">
-            <v-rating
-              v-model="rating"
-              color="amber"
-              dense
-              half-increments
-              readonly
-              size="14"
-            ></v-rating>
+            <v-rating v-model="rating" color="amber" dense half-increments readonly size="14"></v-rating>
 
             <div class="grey--text ml-4">4.5 (413)</div>
           </v-row>
@@ -35,9 +25,7 @@
         <v-divider class="mx-4"></v-divider>
 
         <v-card-actions>
-          <v-btn @click="$router.push('/productDetails')" color="primary" text
-            >التفاصيل</v-btn
-          >
+          <v-btn @click="setCurrentRow" color="primary" text>التفاصيل</v-btn>
         </v-card-actions>
       </v-card>
     </v-app>
@@ -49,7 +37,7 @@ export default {
   name: "product",
   data() {
     return {
-      rating: 4,
+      rating: 4
     };
   },
   created() {
@@ -60,15 +48,20 @@ export default {
   props: {
     product: {
       type: Object,
-      default: () => null,
+      default: () => null
     },
     filteredProduct: {
       type: Object,
-      default: () => null,
-    },
+      default: () => null
+    }
   },
 
-  methods: {},
+  methods: {
+    setCurrentRow() {
+      this.$store.dispatch("setCurrentProduct", this.filteredProduct);
+      this.$router.push("/productDetails");
+    }
+  },
   computed: {
     products() {
       return this.$store.state.products;
@@ -76,7 +69,7 @@ export default {
 
     filteredProducts() {
       return this.$store.state.products;
-    },
-  },
+    }
+  }
 };
 </script>
