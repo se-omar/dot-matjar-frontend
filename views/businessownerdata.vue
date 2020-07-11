@@ -1,25 +1,58 @@
 <template>
-  <div id="app">
+<div id="app">
+
+
+
+
+
     <v-app>
-        <v-container style="width: 60%">
-            <div>
-                <v-tabs v-model="tab" show-arrows background-color="deep-purple accent-4" icons-and-text dark grow>
+        <v-parallax
+    dark
+    height="400"
+    src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
+  >
+    <v-row
+      align="center"
+      justify="center"
+    >
+      <v-col class="text-center" cols="12">
+        <h1 class="display-1 font-weight-thin mb-4">Vuetify.js</h1>
+        <h4 class="subheading">Build your application today!</h4>
+      </v-col>
+    </v-row>
+  </v-parallax>
+        <v-container >
+
+            <div id="container"  style="width: 80% ">
+                <v-tabs v-model="tab" show-arrows background-color="white" icons-and-text dark grow>
                     <v-tabs-slider color="purple darken-4"></v-tabs-slider>
-                    <v-tab v-for="i in tabs" :key="i.name">
-                        <v-icon large>{{ i.icon }}</v-icon>
-                        <div class="caption py-1">{{ i.name }}</div>
+                    <v-tab  v-for="i in tabs" :key="i.name">
+                        
+                        <div id="tabs" class="caption py-1">{{ i.name }}</div>
                     </v-tab>
                     <v-tab-item>
                         <v-card class="px-4">
                             <v-card-text>
                                 <v-form ref="loginForm" v-model="valid" lazy-validation>
                                     <v-row>
-                                        <v-col cols="12">
-                                            <v-text-field v-model="loginEmail" :rules="loginEmailRules" label="E-mail" required></v-text-field>
+                                        <v-col cols="4">
+                                            <v-text-field   label="اسم المشروع" required></v-text-field>
                                         </v-col>
-                                        <v-col cols="12">
-                                            <v-text-field v-model="loginPassword" :append-icon="show1?'eye':'eye-off'" :rules="[rules.required, rules.min]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="Password" hint="At least 8 characters" counter @click:append="show1 = !show1"></v-text-field>
+                                        <v-col cols="4">
+                                            <v-text-field :append-icon="show1?'eye':'eye-off'"  :type="show1 ? 'text' : 'password'" name="input-10-1" label="النشاط"  counter @click:append="show1 = !show1"></v-text-field>
                                         </v-col>
+                                         <v-col cols="4">
+                                            <v-text-field  :append-icon="show1?'eye':'eye-off'"  :type="show1 ? 'text' : 'password'" name="input-10-1" label="الرقم القومي للمنشاه" hint="At least 8 characters" counter @click:append="show1 = !show1"></v-text-field>
+                                        </v-col>
+                                       
+                                        
+                                          
+                                        <fileUpload />
+
+
+
+                                      
+                                        
                                         <v-col class="d-flex" cols="12" sm="6" xsm="12">
                                         </v-col>
                                         <v-spacer></v-spacer>
@@ -107,20 +140,23 @@
   </div>
 </template>
 
-<script>
 
-//import usersModel from "../models/usersModel";
+  
+<script>
+import fileUpload from '../components/fileUpload'
 export default {
-  name: "reglogin",
-  computed: {
+    name:"businessownerdata",
+ components: {
+    fileUpload
+  },
+
+ computed: {
     passwordMatch() {
       return () => this.password === this.verify || "Password must match";
     },
+
     row() {
       return this.$store.state.row;
-    },
-    currentUser() {
-      return this.$store.state.currentUser;
     }
     
   },
@@ -140,23 +176,24 @@ export default {
     },
 
     validateLogin() {
-      var self = this;
       this.$axios
         .post("http://localhost:3000/api/login", {
           email: this.loginEmail,
           password: this.loginPassword
         })
         .then(response => {
-          
-          if (response.data !== "authenitcation succesfull") {
-            alert(response.data);
-            
-          } else {
-            self.$store.commit("setCurrentUser", response.data.data);
-            this.$router.push("/home");
-            alert(response.data)
-          }
+          if(response.data != "Please activate your account"){
+
          
+         
+         if (response.data != "authenitcation succesfull") {
+            alert(response.data);
+          } else {
+            this.$router.push("/");
+            alert(response.data) 
+          }
+          }
+          else {alert(response.data)}
         })
         .catch(error => {
           console.log(error);
@@ -178,8 +215,8 @@ export default {
     dialog: true,
     tab: 0,
     tabs: [
-      { name: "Login", icon: "mdi-account" },
-      { name: "Register", icon: "mdi-account-outline" }
+      { name: "بيانات اساسيه01"  },
+      { name: "بيانات الشخص المسئول02" }
     ],
     valid: true,
 
@@ -217,9 +254,25 @@ export default {
     
   })
 };
+
+
+
+
+
 </script>
+
 <style scoped>
-#app {
-  background-color: white;
+.v-parallax__image {
+  transform: none !important;
+  width: 100% !important;
+  ;
+}
+#container{
+    margin-top: -10%;
+    margin-right: 10%;
+}
+#tabs{
+  font-weight: bold;
+  color:black 
 }
 </style>

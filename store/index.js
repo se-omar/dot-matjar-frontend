@@ -1,11 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios"
-
-Vue.use(Vuex, axios);
-
+import router from '../router'
+Vue.use(Vuex, axios,router);
 export default new Vuex.Store({
-
   state: {
     row: {},
     products: [],
@@ -44,6 +42,12 @@ export default new Vuex.Store({
     toggleDialog(state) {
       state.dialog = !state.dialog;
     },
+
+    activation() {
+      console.log("enterrr mutation")
+       this.$router.push('http://localhost:8080')
+    },
+    
     setCurrentUser(state, payload) {
       state.currentUser = payload;
     },
@@ -54,6 +58,7 @@ export default new Vuex.Store({
   },
 
   actions: {
+    
     getProducts(context) {
       axios.get('http://localhost:3000/api/products').then(response => {
         context.commit('getProducts', response.data);
@@ -63,18 +68,63 @@ export default new Vuex.Store({
     filterProducts(context, payload) {
       context.commit('filterProducts', payload);
     },
+    completedata(commit,{
+      national_number,
+          gender,
+          full_arabic_name,
+          full_english_name,
+          birthdate,
+          qualifications,
+          job,
+          governorate,
+          village,
+          center,
+          telephone_number,
+          phone_number,
+          fax,
+          facebook_account,
+          linkedin,
+          website,
+          address
+    }){
 
+axios.put('http://localhost:3000/api/completedata/3',{
+  national_number,
+  gender,
+  full_arabic_name,
+  full_english_name,
+  birthdate,
+  qualifications,
+  job,
+  governorate,
+  village,
+  center,
+  telephone_number,
+  phone_number,
+  fax,
+  facebook_account,
+  linkedin,
+  website,
+  address
+})
+    },
+  
     register(commit, {
       email,
       password,
-      firstname,
-      lastname
+      full_arabic_name,
+      mobile_number,
+      national_number
     }) {
-      var full_arabic_name = firstname + " " + lastname;
+  
+      
       axios.post('http://localhost:3000/api/signup', {
           email,
           password,
-          full_arabic_name
+          full_arabic_name,
+          mobile_number,
+          national_number
+          
         })
         .then((data, status) => {
           if (status === 201) console.log("Account Created")
@@ -83,7 +133,25 @@ export default new Vuex.Store({
           console.log(error)
         })
     },
+   
+   
+   
+    activation(context){
+     
+     
+        
+axios.put('http://localhost:3000/api/activate')
+.then((data) => {
+  console.log(data);
+  context.commit('activation')
+})
 
+    
+    },
+
+  
+   
+   
     setCurrentProduct(context, product) {
       context.commit('setCurrentProduct', product)
     },
