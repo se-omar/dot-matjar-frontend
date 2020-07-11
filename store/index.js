@@ -14,7 +14,8 @@ export default new Vuex.Store({
     businesses: {},
     users: {},
     currentUser: {},
-    dialog: false
+    dialog: false,
+    requests: {},
   },
 
   mutations: {
@@ -45,6 +46,10 @@ export default new Vuex.Store({
     },
     setCurrentUser(state, payload) {
       state.currentUser = payload;
+    },
+
+    getRequests(state, payload) {
+      state.requests = payload;
     }
   },
 
@@ -91,6 +96,16 @@ export default new Vuex.Store({
       axios.get('http://localhost:3000/api/users').then(response => {
         context.commit('getUsers', response.data);
       })
+    },
+
+    getRequests(context) {
+      axios.post("http://localhost:3000/api/recievedRequests", {
+          user_id: 2
+        })
+        .then(response => {
+          console.log(response.data);
+          context.commit('getRequests', response.data);
+        });
     }
   },
 
