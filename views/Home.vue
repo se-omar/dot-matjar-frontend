@@ -1,7 +1,8 @@
 <template>
   <div class="home">
     <v-app>
-      <v-container fluid>
+      <tool-bar></tool-bar>
+      <v-container>
         <v-row>
           <v-text-field
             @keyup="filterProducts"
@@ -47,7 +48,7 @@
 
 <script>
 import Product from "../components/product.vue";
-
+import ToolBar from "../components/toolbar.vue";
 //import usersModel from "../models/usersModel";
 
 export default {
@@ -108,7 +109,8 @@ export default {
     }
   },
   components: {
-    Product
+    Product,
+    ToolBar
   }
 };
 </script>

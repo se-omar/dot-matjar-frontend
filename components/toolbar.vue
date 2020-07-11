@@ -29,10 +29,16 @@
 
       <v-btn
         color="blue"
-        @click="$router.push('/reglogin').catch((err) => {})"
-      >التسجيل</v-btn>
+        @click="$router.push('/reglogin')"
+      >التسجيل
+      </v-btn>
 
-      <v-btn color="blue">
+      <v-btn
+        color="deep-purple accent-4"
+        @click="$router.push('/editPassword').catch((err) => {})"
+      >تغيير كلمة السر</v-btn>
+
+      <v-btn color="deep-purple accent-4">
         <span>انشاء حساب</span>
       </v-btn>
 
@@ -132,7 +138,7 @@
 
 />-->
 
-
+s
       <v-menu left bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">

@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Login from '../views/login.vue';
-import SignUp from '../views/signup.vue'
 import reglogin from '../views/registerlogin'
 import mainpage from '../views/mainpage'
 import completedata from '../views/completedata'
@@ -10,21 +8,30 @@ import productDetails from '../views/productDetails'
 import resetPassword from '../views/resetPassword'
 import activation from '../views/activation'
 import businessownerdata from '../views/businessownerdata'
+import resetPasswordSent from '../views/resetPasswordSent'
+import updateForgottenPassword from '../views/updateForgottenPassword'
+import editPassword from '../views/editPassword'
+
 Vue.use(VueRouter)
 
-const routes = [{
-  path: '/activation/:cryptoo',
-  name: 'activation',
-  component: activation
-},{
-    path: '/reglogin',
+
+
+var routes = [{
+    path: '/',
     name: 'reglogin',
     component: reglogin
   },
+  
   {
     path: '/businessownerdata',
     name: 'businessownerdata',
     component: businessownerdata
+  },
+  
+  {
+    path: '/activation/:cryptoo',
+    name: 'activation',
+    component: activation
   },
   {
     path: '/completedata',
@@ -32,24 +39,14 @@ const routes = [{
     component: completedata
   },
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: Home
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login
   },
   {
     path: '/mainpage',
     name: 'mainpage',
     component: mainpage
-  },
-  {
-    path: '/signup',
-    name: 'Sign-up',
-    component: SignUp
   },
   {
     path: '/productDetails',
@@ -61,8 +58,22 @@ const routes = [{
     name: 'reset-password',
     component: resetPassword
   },
+  {
+    path: '/updateForgottenPassword/:hash',
+    name: 'update-forgotten-password',
+    component: updateForgottenPassword
+  },
   
-  
+  {
+    path: '/resetPasswordSent',
+    name: 'reset-password-sent',
+    component: resetPasswordSent
+  },
+  {
+    path: '/editPassword',
+    name: 'edit-password',
+    component: editPassword
+  }
 ]
 
 const router = new VueRouter({

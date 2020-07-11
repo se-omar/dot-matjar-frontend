@@ -11,6 +11,7 @@ export default new Vuex.Store({
     currentProduct: {},
     businesses: {},
     users: {},
+    currentUser: {},
     dialog: false
   },
 
@@ -22,6 +23,10 @@ export default new Vuex.Store({
     getProducts(state, row) {
       state.products = row;
       state.filteredProducts = row;
+    },
+
+    getUsers(state, payload) {
+      state.users = payload
     },
 
     filterProducts(state, payload) {
@@ -38,9 +43,12 @@ export default new Vuex.Store({
     },
 
     activation() {
-
       console.log("enterrr mutation")
-       this.$router.push('http://localhost:8080/api/login')
+       this.$router.push('http://localhost:8080')
+    },
+    
+    setCurrentUser(state, payload) {
+      state.currentUser = payload;
     }
   },
 
@@ -136,8 +144,7 @@ axios.put('http://localhost:3000/api/activate')
     
     },
 
-   
-   
+  
    
    
     setCurrentProduct(context, product) {

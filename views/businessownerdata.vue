@@ -21,26 +21,38 @@
       </v-col>
     </v-row>
   </v-parallax>
-        <!-- <v-container > -->
+        <v-container >
 
-            <div id="container"  style="width: 60%">
+            <div id="container"  style="width: 80% ">
                 <v-tabs v-model="tab" show-arrows background-color="white" icons-and-text dark grow>
                     <v-tabs-slider color="purple darken-4"></v-tabs-slider>
-                    <v-tab v-for="i in tabs" :key="i.name">
-                        <v-icon large>{{ i.icon }}</v-icon>
-                        <div class="caption py-1">{{ i.name }}</div>
+                    <v-tab  v-for="i in tabs" :key="i.name">
+                        
+                        <div id="tabs" class="caption py-1">{{ i.name }}</div>
                     </v-tab>
                     <v-tab-item>
                         <v-card class="px-4">
                             <v-card-text>
                                 <v-form ref="loginForm" v-model="valid" lazy-validation>
                                     <v-row>
-                                        <v-col cols="12">
-                                            <v-text-field v-model="loginEmail" :rules="loginEmailRules" label="E-mail" required></v-text-field>
+                                        <v-col cols="4">
+                                            <v-text-field   label="اسم المشروع" required></v-text-field>
                                         </v-col>
-                                        <v-col cols="12">
-                                            <v-text-field v-model="loginPassword" :append-icon="show1?'eye':'eye-off'" :rules="[rules.required, rules.min]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="Password" hint="At least 8 characters" counter @click:append="show1 = !show1"></v-text-field>
+                                        <v-col cols="4">
+                                            <v-text-field :append-icon="show1?'eye':'eye-off'"  :type="show1 ? 'text' : 'password'" name="input-10-1" label="النشاط"  counter @click:append="show1 = !show1"></v-text-field>
                                         </v-col>
+                                         <v-col cols="4">
+                                            <v-text-field  :append-icon="show1?'eye':'eye-off'"  :type="show1 ? 'text' : 'password'" name="input-10-1" label="الرقم القومي للمنشاه" hint="At least 8 characters" counter @click:append="show1 = !show1"></v-text-field>
+                                        </v-col>
+                                       
+                                        
+                                          
+                                        <fileUpload />
+
+
+
+                                      
+                                        
                                         <v-col class="d-flex" cols="12" sm="6" xsm="12">
                                         </v-col>
                                         <v-spacer></v-spacer>
@@ -123,7 +135,7 @@
                     </v-tab-item>
                 </v-tabs>
             </div>
-        <!-- </v-container> -->
+        </v-container>
     </v-app>
   </div>
 </template>
@@ -131,10 +143,12 @@
 
   
 <script>
+import fileUpload from '../components/fileUpload'
 export default {
     name:"businessownerdata",
-
-
+ components: {
+    fileUpload
+  },
 
  computed: {
     passwordMatch() {
@@ -201,8 +215,8 @@ export default {
     dialog: true,
     tab: 0,
     tabs: [
-      { name: "Login", icon: "mdi-account" },
-      { name: "Register", icon: "mdi-account-outline" }
+      { name: "بيانات اساسيه01"  },
+      { name: "بيانات الشخص المسئول02" }
     ],
     valid: true,
 
@@ -254,6 +268,11 @@ export default {
   ;
 }
 #container{
-    margin-top: -100px;
+    margin-top: -10%;
+    margin-right: 10%;
+}
+#tabs{
+  font-weight: bold;
+  color:black 
 }
 </style>

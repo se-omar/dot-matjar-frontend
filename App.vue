@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <tool-bar></tool-bar>
     <router-view />
 
     <!-- <router-link to="/">Home</router-link>
@@ -12,16 +11,11 @@
 </template>
 
 <script>
-import ToolBar from "./components/toolbar.vue";
 export default {
   name: "App",
 
-  components: {
-    ToolBar
-  },
-
   data: () => ({
-    //
+    
   })
 };
 </script>

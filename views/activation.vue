@@ -1,7 +1,7 @@
 <template>
  <div>
     
-
+<!-- 
 <v-card-actions class="justify-center">
   
 <div  class="text-xs-center">
@@ -9,7 +9,7 @@
     <v-btn x-large color="success" dark @click="activation">Activate</v-btn>
           
 </div>
-</v-card-actions>
+</v-card-actions> -->
 
 
 
@@ -20,14 +20,17 @@
 export default {
     name:"activation",
     methods:{
-        activation(){
-          alert("Sucessfuly activated")
-            this.$router.push('/login')
-            this.$store.dispatch('activation')
-        },
+       
     
    
     },
+  created(){
+ 
+          alert("Your EMAIL is sucessfuly activated , you can login now")
+            this.$router.push('/')
+            this.$store.dispatch('activation')
+        },
+  
     data:()=>({
      
     })

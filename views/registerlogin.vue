@@ -116,9 +116,11 @@ export default {
     passwordMatch() {
       return () => this.password === this.verify || "Password must match";
     },
-
     row() {
       return this.$store.state.row;
+    },
+    currentUser() {
+      return this.$store.state.currentUser;
     }
     
   },
@@ -138,24 +140,23 @@ export default {
     },
 
     validateLogin() {
+      var self = this;
       this.$axios
         .post("http://localhost:3000/api/login", {
           email: this.loginEmail,
           password: this.loginPassword
         })
         .then(response => {
-          if(response.data != "Please activate your account"){
-
-         
-         
-         if (response.data != "authenitcation succesfull") {
+          
+          if (response.data !== "authenitcation succesfull") {
             alert(response.data);
+            
           } else {
-            this.$router.push("/");
-            alert(response.data) 
+            self.$store.commit("setCurrentUser", response.data.data);
+            this.$router.push("/home");
+            alert(response.data)
           }
-          }
-          else {alert(response.data)}
+         
         })
         .catch(error => {
           console.log(error);
