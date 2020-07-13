@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios"
 import router from '../router'
-Vue.use(Vuex, axios,router);
+Vue.use(Vuex, axios, router);
 export default new Vuex.Store({
   state: {
     row: {},
@@ -13,7 +13,10 @@ export default new Vuex.Store({
     users: {},
     currentUser: {},
     dialog: false,
-    requests: {},
+    responseDialog: false,
+    recievedRequests: {},
+    sentRequests: {},
+    currentRequest: {}
   },
 
   mutations: {
@@ -45,20 +48,32 @@ export default new Vuex.Store({
 
     activation() {
       console.log("enterrr mutation")
-       this.$router.push('http://localhost:8080')
+      this.$router.push('http://localhost:8080')
     },
-    
+
     setCurrentUser(state, payload) {
       state.currentUser = payload;
     },
 
-    getRequests(state, payload) {
-      state.requests = payload;
-    }
+    getRecievedRequests(state, payload) {
+      state.recievedRequests = payload;
+    },
+
+    getSentRequests(state, payload) {
+      state.sentRequests = payload
+    },
+
+    getCurrentRequest(state, payload) {
+      state.currentRequest = payload;
+    },
+
+    toggleResponse(state) {
+      state.responseDialog = !state.responseDialog;
+    },
   },
 
   actions: {
-    
+
     getProducts(context) {
       axios.get('http://localhost:3000/api/products').then(response => {
         context.commit('getProducts', response.data);
@@ -68,47 +83,47 @@ export default new Vuex.Store({
     filterProducts(context, payload) {
       context.commit('filterProducts', payload);
     },
-    completedata(commit,{
+    completedata(commit, {
       national_number,
-          gender,
-          full_arabic_name,
-          full_english_name,
-          birthdate,
-          qualifications,
-          job,
-          governorate,
-          village,
-          center,
-          telephone_number,
-          phone_number,
-          fax,
-          facebook_account,
-          linkedin,
-          website,
-          address
-    }){
+      gender,
+      full_arabic_name,
+      full_english_name,
+      birthdate,
+      qualifications,
+      job,
+      governorate,
+      village,
+      center,
+      telephone_number,
+      phone_number,
+      fax,
+      facebook_account,
+      linkedin,
+      website,
+      address
+    }) {
 
-axios.put('http://localhost:3000/api/completedata/3',{
-  national_number,
-  gender,
-  full_arabic_name,
-  full_english_name,
-  birthdate,
-  qualifications,
-  job,
-  governorate,
-  village,
-  center,
-  telephone_number,
-  phone_number,
-  fax,
-  facebook_account,
-  linkedin,
-  website,
-  address
-})
+      axios.put('http://localhost:3000/api/completedata/3', {
+        national_number,
+        gender,
+        full_arabic_name,
+        full_english_name,
+        birthdate,
+        qualifications,
+        job,
+        governorate,
+        village,
+        center,
+        telephone_number,
+        phone_number,
+        fax,
+        facebook_account,
+        linkedin,
+        website,
+        address
+      })
     },
-  
+
     register(commit, {
       email,
       password,
@@ -116,15 +131,15 @@ axios.put('http://localhost:3000/api/completedata/3',{
       mobile_number,
       national_number
     }) {
-  
-      
+
+
       axios.post('http://localhost:3000/api/signup', {
           email,
           password,
           full_arabic_name,
           mobile_number,
           national_number
-          
+
         })
         .then((data, status) => {
           if (status === 201) console.log("Account Created")
@@ -133,25 +148,25 @@ axios.put('http://localhost:3000/api/completedata/3',{
           console.log(error)
         })
     },
-   
-   
-   
-    activation(context){
-     
-     
-        
-axios.put('http://localhost:3000/api/activate')
-.then((data) => {
-  console.log(data);
-  context.commit('activation')
-})
 
-    
+
+
+    activation(context) {
+
+
+
+      axios.put('http://localhost:3000/api/activate')
+        .then((data) => {
+          console.log(data);
+          context.commit('activation')
+        })
+
+
     },
 
-  
-   
-   
+
+
+
     setCurrentProduct(context, product) {
       context.commit('setCurrentProduct', product)
     },
@@ -166,14 +181,28 @@ axios.put('http://localhost:3000/api/activate')
       })
     },
 
-    getRequests(context) {
+    getRecievedRequests(context) {
       axios.post("http://localhost:3000/api/recievedRequests", {
           user_id: 2
         })
         .then(response => {
           console.log(response.data);
-          context.commit('getRequests', response.data);
+          context.commit('getRecievedRequests', response.data);
         });
+    },
+
+    getSentRequests(context) {
+      axios.post("http://localhost:3000/api/sentRequests", {
+          user_id: 2
+        })
+        .then(response => {
+          console.log(response.data);
+          context.commit('getSentRequests', response.data);
+        });
+    },
+
+    getCurrentRequest(context, request) {
+      context.commit('getCurrentRequest', request)
     }
   },
 
