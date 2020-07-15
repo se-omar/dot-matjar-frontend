@@ -42,7 +42,7 @@
                           @click:append="show1 = !show1"
                         ></v-text-field>
                       </v-col>
-                      <v-col class="d-flex" cols="12" sm="6" xsm="12"> </v-col>
+                      <v-col class="d-flex" cols="12" sm="6" xsm="12"></v-col>
                       <v-spacer></v-spacer>
                       <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
                         <v-btn
@@ -50,10 +50,8 @@
                           block
                           :disabled="!valid"
                           color="success"
-                          @click="validateLogin"
-                        >
-                          Login
-                        </v-btn>
+                          @click="validateLoginPage"
+                        >Login</v-btn>
                       </v-col>
                     </v-row>
                   </v-form>
@@ -138,13 +136,7 @@
                               لقد قرات و وافقت علي
                               <v-tooltip bottom>
                                 <template v-slot:activator="{ on }">
-                                  <a
-                                    href="http://vuetifyjs.com"
-                                    @click.stop
-                                    v-on="on"
-                                  >
-                                    سياسه التسجيل
-                                  </a>
+                                  <a href="http://vuetifyjs.com" @click.stop v-on="on">سياسه التسجيل</a>
                                 </template>
                                 Opens in new window
                               </v-tooltip>
@@ -161,16 +153,14 @@
                           id="btn"
                           color="success"
                           @click="validateSignup"
-                          >تسجيل</v-btn
-                        >
+                        >تسجيل</v-btn>
                         <v-btn
                           x-large
                           block
                           :disabled="!valid || !checkbox"
                           color="success"
                           @click="$router.push('/')"
-                          >الغاء</v-btn
-                        >
+                        >الغاء</v-btn>
                       </v-col>
                     </v-row>
                   </v-form>
@@ -197,7 +187,7 @@ export default {
     },
     currentUser() {
       return this.$store.state.currentUser;
-    },
+    }
   },
   methods: {
     validateSignup() {
@@ -208,28 +198,34 @@ export default {
         password: this.password,
         full_arabic_name: this.fullArabicName,
         national_number: this.nationalNumber,
-        mobile_number: this.mobileNumber,
+        mobile_number: this.mobileNumber
       });
     },
 
-    validateLogin() {
-      var self = this;
-      this.$axios
-        .post("http://localhost:3000/api/login", {
-          email: this.loginEmail,
-          password: this.loginPassword,
-        })
-        .then((response) => {
-          if (response.data.message !== "authentication successful") {
-            alert(response.data.message);
-          } else {
-            self.$store.commit("setCurrentUser", response.data.data);
-            this.$router.push("/home");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    validateLoginPage() {
+      this.$store.dispatch("validateLoginPage", {
+        email: this.loginEmail,
+        password: this.loginPassword
+      });
+
+      // var self = this;
+      // this.$axios
+      //   .post("http://localhost:3000/api/login", {
+      //     email: this.loginEmail,
+      //     password: this.loginPassword,
+      //   })
+      //   .then((response) => {
+      //     if (response.data.message !== "authentication successful") {
+      //       alert(response.data.message);
+      //     } else {
+
+      //       self.$store.commit("setCurrentUser", response.data.data);
+      //       this.$router.push("/home");
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
     },
     reset() {
       this.$refs.form.reset();
@@ -239,14 +235,14 @@ export default {
     },
     changeRoute() {
       document.getElementById("btn").disapled();
-    },
+    }
   },
   data: () => ({
     dialog: true,
     tab: 0,
     tabs: [
       { name: "Login", icon: "mdi-account" },
-      { name: "Register", icon: "mdi-account-outline" },
+      { name: "Register", icon: "mdi-account-outline" }
     ],
     valid: true,
 
@@ -259,29 +255,29 @@ export default {
     loginPassword: "",
     loginEmail: "",
     loginEmailRules: [
-      (v) => !!v || "Required",
-      (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      v => !!v || "Required",
+      v => /.+@.+\..+/.test(v) || "E-mail must be valid"
     ],
     emailRules: [
-      (v) => !!v || "Required",
-      (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      v => !!v || "Required",
+      v => /.+@.+\..+/.test(v) || "E-mail must be valid"
     ],
 
     show1: false,
     rules: {
-      required: (value) => !!value || "Required.",
-      min: (v) => (v && v.length >= 7) || "Min 7 characters",
-      valid: (v) =>
+      required: value => !!value || "Required.",
+      min: v => (v && v.length >= 7) || "Min 7 characters",
+      valid: v =>
         /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
           v
         ) ||
         "password must have at least one letter, one number and one special character",
-      national: (v) => /\d+/.test(v) || "ID must be numbers only",
-      must: (v) => (v && v.length == 14) || "ID must be 14 NUMBERS",
-      mobilenumber: (v) => /\d+/.test(v) || "Enter numbers",
+      national: v => /\d+/.test(v) || "ID must be numbers only",
+      must: v => (v && v.length == 14) || "ID must be 14 NUMBERS",
+      mobilenumber: v => /\d+/.test(v) || "Enter numbers"
     },
-    checkbox: false,
-  }),
+    checkbox: false
+  })
 };
 </script>
 <style scoped>

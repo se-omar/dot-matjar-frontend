@@ -18,11 +18,15 @@
       </v-col>
 
       <v-col class="mt-1" cols="3">
-        <v-btn @click="toggleResponse" class="primary">الرد علي الطلب</v-btn>
+        <v-btn
+          v-if="requestType === 'recieved'"
+          @click="toggleResponse"
+          class="primary"
+        >الرد علي الطلب</v-btn>
       </v-col>
 
       <v-col class="mt-n9" cols="6">
-        <v-card-text>رقم الطلب: {{ currentRequest.request_numberr }}</v-card-text>
+        <v-card-text>رقم الطلب: {{ currentRequest.requests_id }}</v-card-text>
       </v-col>
     </v-row>
 
@@ -86,6 +90,26 @@
           <span style="font-size: 16px">
             {{
             currentRequest.request_details
+            }}
+          </span>
+        </v-card-text>
+      </v-col>
+    </v-row>
+
+    <v-row v-if="currentRequest.request_response !== null">
+      <v-col>
+        <v-card-text>
+          <span style="font-size: 30px">الرد علي الطلب</span>
+        </v-card-text>
+      </v-col>
+    </v-row>
+
+    <v-row v-if="currentRequest.request_response !== null" class="mt-n9">
+      <v-col>
+        <v-card-text>
+          <span style="font-size: 16px">
+            {{
+            currentRequest.request_response
             }}
           </span>
         </v-card-text>

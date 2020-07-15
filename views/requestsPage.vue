@@ -15,39 +15,28 @@
               </v-list-item>
             </v-list-item-group>
           </v-list>
-          <!-- <v-col class="mb-12" cols="12">
-              <v-btn @click="toggleRequestType; " text>
-                <span style="font-size: 25px">الطلبات الصادرة</span>
-              </v-btn>
-            </v-col>
- 
-            <v-col cols="12">
-              <v-btn @click="toggleRequestType" text>
-                <span style="font-size: 25px">الطلبات الواردة</span>
-              </v-btn>
-          </v-col>-->
         </v-col>
 
         <v-col v-if="requestType === 'recieved'" cols="5" class="scrollable">
+          <p class="display-1">الطلبات الواردة</p>
           <request-card
             :requestType="requestType"
             :request="request"
             :test="request"
             v-for="request in recievedRequests.recievedRequests"
             :key="request.requests_id"
-            class="light-blue lighten-5 mb-2"
             @click.native="openDetails"
           ></request-card>
         </v-col>
 
         <v-col v-else-if="requestType === 'sent'" cols="5" class="scrollable">
+          <p class="display-1">الطلبات الصادرة</p>
           <request-card
             :requestType="requestType"
             :request="request"
             :test="request"
             v-for="request in sentRequests.sentRequests"
             :key="request.requests_id"
-            class="light-blue lighten-5 mb-2"
             @click.native="openDetails"
           ></request-card>
         </v-col>

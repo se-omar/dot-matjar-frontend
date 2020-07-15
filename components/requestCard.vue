@@ -1,5 +1,9 @@
 <template>
-  <v-card width="700" @click.native="setCurrentRequest">
+  <v-card
+    :class="request.request_response === null ? 'light-blue lighten-5 mb-2' : 'light-green mb-2'"
+    width="700"
+    @click.native="setCurrentRequest"
+  >
     <v-card-title style="font-size: 25px" class="mr-1">
       {{
       request.product.product_name
@@ -12,7 +16,7 @@
       </v-col>
 
       <v-col cols="3">
-        <v-card-text>رقم الطلب: {{ request.request_numberr }}</v-card-text>
+        <v-card-text>رقم الطلب: {{ request.requests_id }}</v-card-text>
       </v-col>
     </v-row>
 
@@ -34,7 +38,10 @@
       </v-col>
 
       <v-col class="mt-2" cols="3">
-        <v-btn class="primary" text>تم الرد</v-btn>
+        <p
+          style="font-size: 20px"
+          v-if="requestType === 'recieved' && request.request_response != null"
+        >تم الرد</p>
       </v-col>
     </v-row>
   </v-card>

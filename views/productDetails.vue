@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <toolbar></toolbar>
     <v-content>
       <v-row>
         <v-col class="mr-10" cols="6">
@@ -35,7 +36,7 @@
         </v-col>
 
         <v-col class="mt-3" cols="5">
-          <v-img style="height: 370px;" src="https://bulma.io/images/placeholders/480x480.png"></v-img>
+          <v-img style="height: 370px;" src></v-img>
         </v-col>
       </v-row>
 
@@ -55,20 +56,24 @@
             <span style="font-size: 18px">اظهار بيانات صاحب المشروع</span>
           </v-btn>
         </v-col>
+
         <v-col cols="3"></v-col>
         <v-col cols="4">
-          <v-btn color="secondary" block>
+          <v-btn @click="productToggleResponse" color="secondary" block>
             <span style="font-size: 18px">طلب صاحب المشروع</span>
           </v-btn>
+          <business-info-popup v-if="dialog"></business-info-popup>
+          <product-request-dialog v-if="productRequestDialog"></product-request-dialog>
         </v-col>
       </v-row>
-      <business-info-popup></business-info-popup>
     </v-content>
   </v-app>
 </template>
 
 <script>
 import businessInfoPopup from "../components/businessInfoPopup.vue";
+import toolbar from "../components/toolbar";
+import productRequestDialog from "../components/productRequestDialog";
 export default {
   connected() {},
 
@@ -83,15 +88,25 @@ export default {
 
     dialog() {
       return this.$store.state.dialog;
+    },
+
+    productRequestDialog() {
+      return this.$store.state.productRequestDialog;
     }
   },
 
   components: {
-    businessInfoPopup
+    businessInfoPopup,
+    toolbar,
+    productRequestDialog
   },
   methods: {
     viewPopup() {
       this.$store.dispatch("toggleDialog");
+    },
+
+    productToggleResponse() {
+      this.$store.commit("productToggleResponse");
     }
   }
 };

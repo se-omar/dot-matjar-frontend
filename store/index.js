@@ -8,18 +8,46 @@ export default new Vuex.Store({
     row: {},
     products: [],
     filteredProducts: [],
-    currentProduct: {},
+    currentProduct: JSON.parse(localStorage.getItem('currentProduct')),
     businesses: {},
     users: {},
-    currentUser: {},
+    currentUser: JSON.parse(localStorage.getItem('currentUser')),
     dialog: false,
     responseDialog: false,
+    productRequestDialog: false,
     recievedRequests: {},
     sentRequests: {},
-    currentRequest: {}
+    currentRequest: {},
+    currentUserEmail: localStorage.getItem('email'),
+    currentUserPassword: localStorage.getItem('password'),
+    viewResponseDetails: false
   },
 
   mutations: {
+    validateLoginPage(state, response) {
+      if (response.data.message !== "authentication successful") {
+        alert(response.data.message);
+      } else {
+        // self.$store.commit("setCurrentUser", response.data.data);
+        localStorage.setItem('email', response.data.data.email);
+        localStorage.setItem('password', response.data.data.password)
+
+
+
+        //this.$router.push("/home");
+      }
+    },
+
+    doLogin(state, response) {
+      if (response.data.message !== "authentication successful") {
+        alert(response.data.message);
+      } else {
+        localStorage.setItem('currentUser', JSON.stringify(response.data.data));
+        router.push('/home')
+        console.log(state.currentUser);
+      }
+    },
+
     addRowData(state, payload) {
       state.row = payload;
     },
@@ -39,7 +67,9 @@ export default new Vuex.Store({
     },
 
     setCurrentProduct(state, payload) {
-      state.currentProduct = payload;
+      localStorage.setItem('currentProduct', JSON.stringify(payload));
+      state.currentProduct = JSON.parse(localStorage.getItem('currentProduct'))
+
     },
 
     toggleDialog(state) {
@@ -70,9 +100,50 @@ export default new Vuex.Store({
     toggleResponse(state) {
       state.responseDialog = !state.responseDialog;
     },
+
+    productToggleResponse(state) {
+      state.productRequestDialog = !state.productRequestDialog;
+    },
+
   },
 
   actions: {
+    validateLoginPage(context, {
+      email,
+      password
+    }) {
+      axios
+        .post("http://localhost:3000/api/login", {
+          email,
+          password,
+        })
+        .then((response) => {
+          context.commit('validateLoginPage', response);
+          context.dispatch('doLogin')
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    doLogin(context) {
+      var email = context.state.currentUserEmail;
+      var password = context.state.currentUserPassword;
+      if (email === '') {
+        console.log('email empty')
+
+        return
+      }
+      axios.post("http://localhost:3000/api/login", {
+          email,
+          password
+        }).then((response) => {
+          context.commit('doLogin', response)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
 
     getProducts(context) {
       axios.get('http://localhost:3000/api/products').then(response => {
@@ -83,6 +154,7 @@ export default new Vuex.Store({
     filterProducts(context, payload) {
       context.commit('filterProducts', payload);
     },
+
     completedata(commit, {
       national_number,
       gender,
@@ -149,23 +221,13 @@ export default new Vuex.Store({
         })
     },
 
-
-
     activation(context) {
-
-
-
       axios.put('http://localhost:3000/api/activate')
         .then((data) => {
           console.log(data);
           context.commit('activation')
         })
-
-
     },
-
-
-
 
     setCurrentProduct(context, product) {
       context.commit('setCurrentProduct', product)
@@ -183,7 +245,7 @@ export default new Vuex.Store({
 
     getRecievedRequests(context) {
       axios.post("http://localhost:3000/api/recievedRequests", {
-          user_id: 2
+          user_id: context.state.currentUser.user_id
         })
         .then(response => {
           console.log(response.data);
@@ -193,7 +255,7 @@ export default new Vuex.Store({
 
     getSentRequests(context) {
       axios.post("http://localhost:3000/api/sentRequests", {
-          user_id: 2
+          user_id: context.state.currentUser.user_id
         })
         .then(response => {
           console.log(response.data);
@@ -203,6 +265,36 @@ export default new Vuex.Store({
 
     getCurrentRequest(context, request) {
       context.commit('getCurrentRequest', request)
+    },
+
+    sendRequest(context, requestDetails) {
+      if (context.state.currentUser.user_id === context.state.currentProduct.bussiness.user.user_id) {
+        alert('لا يمكن ارسال طلب لنفسك');
+        return
+
+      }
+      axios.post('http://localhost:3000/api/sendRequest', {
+        by_user_id: context.state.currentUser.user_id,
+        to_user_id: context.state.currentProduct.bussiness.user.user_id,
+        request_details: requestDetails,
+        request_date: new Date(),
+        product_id: context.state.currentProduct.product_id,
+        //to: context.state.currentProduct.bussiness.user.email
+      }).then(response => {
+        console.log(response)
+        alert('تم ارسال الطلب بنجاح')
+      })
+    },
+
+    sendRequestResponse(context, responseDetails) {
+      axios.post('http://localhost:3000/api/sendRequestResponse', {
+        requests_id: context.state.currentRequest.requests_id,
+        request_response: responseDetails
+      }).then(response => {
+        if (response.data === 'response added successfully')
+          alert('تم ارسال الرد بنجاح')
+        console.log(response)
+      })
     }
   },
 
