@@ -43,11 +43,12 @@ export default new Vuex.Store({
     },
 
     activation() {
-      console.log("enterrr mutation")
+      
        this.$router.push('http://localhost:8080')
     },
     
     setCurrentUser(state, payload) {
+   
       state.currentUser = payload;
     }
   },

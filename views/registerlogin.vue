@@ -148,13 +148,15 @@ export default {
         })
         .then(response => {
           
-          if (response.data !== "authenitcation succesfull") {
+          if (response.data.message !== "authenitcation succesfull") {
             alert(response.data);
             
           } else {
-            self.$store.commit("setCurrentUser", response.data.data);
+            console.log(response.data.message)
+            self.$store.commit("setCurrentUser", response.data.data    );
+            console.log(response.data.data)
             this.$router.push("/home");
-            alert(response.data)
+            alert(response.data.message )
           }
          
         })

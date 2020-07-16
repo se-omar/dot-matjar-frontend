@@ -36,19 +36,19 @@
                                 <v-form ref="loginForm" v-model="valid" lazy-validation>
                                     <v-row>
                                         <v-col cols="4">
-                                            <v-text-field   label="اسم المشروع" required></v-text-field>
+                                            <v-text-field v-model="productName"  label="اسم المشروع" required></v-text-field>
                                         </v-col>
                                         <v-col cols="4">
-                                            <v-text-field :append-icon="show1?'eye':'eye-off'"  :type="show1 ? 'text' : 'password'" name="input-10-1" label="النشاط"  counter @click:append="show1 = !show1"></v-text-field>
+                                            <v-text-field v-model="businessActivity" :append-icon="show1?'eye':'eye-off'"  :type="show1 ? 'text' : 'password'" name="input-10-1" label="النشاط"  counter @click:append="show1 = !show1"></v-text-field>
                                         </v-col>
                                          <v-col cols="4">
-                                            <v-text-field  :append-icon="show1?'eye':'eye-off'"  :type="show1 ? 'text' : 'password'" name="input-10-1" label="الرقم القومي للمنشاه" hint="At least 8 characters" counter @click:append="show1 = !show1"></v-text-field>
+                                            <v-text-field v-model="enterPriceNationalNumber"  :append-icon="show1?'eye':'eye-off'"  :type="show1 ? 'text' : 'password'" name="input-10-1" label="الرقم القومي للمنشاه" hint="At least 8 characters" counter @click:append="show1 = !show1"></v-text-field>
                                         </v-col>
                                        
                                         
                                           
                                         <fileUpload />
-
+                                        
 
 
                                       
@@ -65,22 +65,24 @@
                         </v-card>
                     </v-tab-item>
                     <v-tab-item>
+
+
                         <v-card class="px-4">
                             <v-card-text>
                                 <v-form ref="registerForm" v-model="valid" lazy-validation>
                                     <v-row>
-                                       <v-col cols="6">
-                                            <v-text-field v-model="email" :rules="emailRules" label="البريد الالكتروني" required></v-text-field>
+                                       <v-col cols="4">
+                                            <v-text-field v-model="name"  label="الاسم" disabled filled   outlined></v-text-field>
                                         </v-col>
-                                         <v-col cols="6" sm="6" md="6">
-                                            <v-text-field v-model="nationalNumber" :rules="[rules.national,rules.must]" label="الرقم القومي" maxlength="14" ></v-text-field>
+                                         <v-col cols="4" >
+                                            <v-text-field v-model="nationalNumber"    label="الرقم القومي لصاحب المشروع" maxlength="14"  disabled filled   outlined></v-text-field>
                                         </v-col>
 
-                                        <v-col cols="6" sm="6" md="6">
-                                            <v-text-field v-model="fullArabicName" :rules="[rules.required]" label="الاسم بلكامل عربي" maxlength="20" required></v-text-field>
+                                        <v-col cols="4" >
+                                            <v-text-field v-model="job"  label="الوظيفه الحاليه"  disabled filled   outlined></v-text-field>
                                       </v-col>
-                                        <v-col cols="6" sm="6" md="6">
-                                            <v-text-field v-model="mobileNumber" :rules="[rules.mobilenumber]" label="الموبايل" maxlength="11" required></v-text-field>
+                                        <v-col cols="4" >
+                                            <v-text-field v-model="email"  label="البريد الالكتروني" disabled filled   outlined ></v-text-field>
                                       </v-col>
                                        
                                        
@@ -88,12 +90,32 @@
                                          <!-- National NUMBER  -->
 
                                         
-                                        <v-col cols="6">
-                                            <v-text-field v-model="password" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, rules.min,rules.valid]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="كلمه المرور" hint="At least 7 characters" counter @click:append="show1 = !show1"></v-text-field>
+                                        <v-col cols="4">
+                                            <v-text-field v-model="mobileNumber" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :type="show1 ? 'text' : 'password'" name="input-10-1" label="الموبايل" hint="At least 7 characters" counter @click:append="show1 = !show1" disabled filled   outlined></v-text-field>
                                         </v-col>
-                                        <v-col cols="6">
-                                            <v-text-field block v-model="verify" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, passwordMatch]" :type="show1 ? 'text' : 'password'" name="input-10-1" label="تاكيد كلمه المرور" counter @click:append="show1 = !show1"></v-text-field>
+                                        <v-col cols="4">
+                                            <v-text-field block v-model="fax" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"  :type="show1 ? 'text' : 'password'" name="input-10-1" label="الفاكس" counter @click:append="show1 = !show1" disabled filled   outlined></v-text-field>
                                         </v-col>
+                                          <v-col cols="4">
+                                            <v-text-field block v-model="website" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"  :type="show1 ? 'text' : 'password'" name="input-10-1" label="رابط الموقع" counter @click:append="show1 = !show1" disabled filled   outlined></v-text-field>
+                                        </v-col>
+                                              
+<v-col cols="12" >
+            <v-textarea
+               v-model="address"
+               outlined
+            
+            disabled=""
+              color="teal"
+            >
+              <template v-slot:label>
+                <div>
+                  العنوان
+                </div>
+              </template>
+            </v-textarea>
+          </v-col>
+ 
                                         <v-spacer></v-spacer>
 
                                           <v-col cols="12">
@@ -211,6 +233,13 @@ export default {
     
    
   },
+  created(){
+    var x=this.$store.state.currentUser
+    console.log(x)
+    this.name=x;
+    
+  },
+
   data: () => ({
     dialog: true,
     tab: 0,
@@ -220,7 +249,7 @@ export default {
     ],
     valid: true,
 
-    fullArabicName:"",
+   name:"",
     email: "",
     nationalNumber:"",
     password: "",
