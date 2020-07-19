@@ -11,6 +11,7 @@ import businessownerdata from '../views/businessownerdata'
 import resetPasswordSent from '../views/resetPasswordSent'
 import updateForgottenPassword from '../views/updateForgottenPassword'
 import editPassword from '../views/editPassword'
+import requestsPage from '../views/requestsPage'
 
 Vue.use(VueRouter)
 
@@ -73,7 +74,12 @@ var routes = [{
     path: '/editPassword',
     name: 'edit-password',
     component: editPassword
-  }
+  },
+  {
+    path: '/requestsPage',
+    name: 'requestsPage',
+    component: requestsPage
+  },
 ]
 
 const router = new VueRouter({
