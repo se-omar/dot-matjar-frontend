@@ -4,18 +4,18 @@
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
       <v-toolbar-title>
-        <v-btn text @click="$router.push('/home')">اسم الموقع</v-btn>
+        <v-btn text @click="$router.push('/home').catch((err) => {})">اسم الموقع</v-btn>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <v-btn text @click="$router.push('/registerlogin')">التسجيل</v-btn>
+      <v-btn text @click="$router.push('/registerlogin').catch((err) => {})">التسجيل</v-btn>
 
       <v-btn text @click="$router.push('/editPassword').catch((err) => {})">تغيير كلمة السر</v-btn>
 
-      <v-btn text @click="$router.push('/requestsPage').catch((err) => {})">
-        <span>الطلبات</span>
-      </v-btn>
+      <v-btn text @click="$router.push('/requestsPage').catch((err) => {})">الطلبات</v-btn>
+
+      <v-btn text @click="$router.push('/myProducts').catch((err) => {})">منتجاتي</v-btn>
 
       <v-btn text>
         <span>عن الموقع</span>
@@ -32,7 +32,7 @@
         offset-y
       >
         <template v-slot:activator="{ on, attrs }">
-          <v-btn color="blue" dark v-bind="attrs" v-on="on">
+          <v-btn text dark v-bind="attrs" v-on="on">
             <span>حسابي</span>
             <v-icon>mdi-account-circle</v-icon>
           </v-btn>
@@ -102,7 +102,7 @@
 
           <v-divider></v-divider>
 
-          <v-cols cols="6">
+          <v-col cols="6">
             <v-card-text>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -176,27 +176,13 @@
 
               <a class="size" @click="$router.push('/login')">تسجيل الخروج</a>
             </v-card-text>
-          </v-cols>
+          </v-col>
         </v-card>
       </v-menu>
 
       <!--============================
 
       />-->
-      s
-      <v-menu left bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
-
-        <v-list>
-          <v-list-item v-for="n in 5" :key="n" @click="() => {}">
-            <v-list-item-title>Option {{ n }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
     </v-app-bar>
   </div>
 </template>

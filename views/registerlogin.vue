@@ -32,7 +32,7 @@
                       <v-col cols="12">
                         <v-text-field
                           v-model="loginPassword"
-                          :append-icon="show1 ? 'eye' : 'eye-off'"
+                          :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                           :rules="[rules.required, rules.min]"
                           :type="show1 ? 'text' : 'password'"
                           name="input-10-1"
@@ -207,25 +207,6 @@ export default {
         email: this.loginEmail,
         password: this.loginPassword
       });
-
-      // var self = this;
-      // this.$axios
-      //   .post("http://localhost:3000/api/login", {
-      //     email: this.loginEmail,
-      //     password: this.loginPassword,
-      //   })
-      //   .then((response) => {
-      //     if (response.data.message !== "authentication successful") {
-      //       alert(response.data.message);
-      //     } else {
-
-      //       self.$store.commit("setCurrentUser", response.data.data);
-      //       this.$router.push("/home");
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
     },
     reset() {
       this.$refs.form.reset();

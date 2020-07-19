@@ -15,12 +15,13 @@ export default new Vuex.Store({
     dialog: false,
     responseDialog: false,
     productRequestDialog: false,
-    recievedRequests: {},
-    sentRequests: {},
+    recievedRequests: JSON.parse(localStorage.getItem('recievedRequests')),
+    sentRequests: JSON.parse(localStorage.getItem('sentRequests')),
     currentRequest: {},
-    currentUserEmail: localStorage.getItem('email'),
-    currentUserPassword: localStorage.getItem('password'),
-    viewResponseDetails: false
+    currentUserEmail: localStorage.getItem('currentEmail'),
+    currentUserPassword: localStorage.getItem('currentPassword'),
+    viewResponseDetails: false,
+    myProducts: JSON.parse(localStorage.getItem('myProducts'))
   },
 
   mutations: {
@@ -28,23 +29,21 @@ export default new Vuex.Store({
       if (response.data.message !== "authentication successful") {
         alert(response.data.message);
       } else {
-        // self.$store.commit("setCurrentUser", response.data.data);
-        localStorage.setItem('email', response.data.data.email);
-        localStorage.setItem('password', response.data.data.password)
-
-
-
-        //this.$router.push("/home");
+        localStorage.setItem('currentEmail', response.data.data.email);
+        localStorage.setItem('currentPassword', response.data.data.password);
+        console.log(localStorage.getItem('currentEmail'));
       }
     },
 
     doLogin(state, response) {
+      //debugger
       if (response.data.message !== "authentication successful") {
         alert(response.data.message);
       } else {
         localStorage.setItem('currentUser', JSON.stringify(response.data.data));
+        state.currentUser = JSON.parse(localStorage.getItem('currentUser'))
         router.push('/home')
-        console.log(state.currentUser);
+        console.log('current user is: ', state.currentUser);
       }
     },
 
@@ -81,16 +80,14 @@ export default new Vuex.Store({
       this.$router.push('http://localhost:8080')
     },
 
-    setCurrentUser(state, payload) {
-      state.currentUser = payload;
-    },
-
     getRecievedRequests(state, payload) {
-      state.recievedRequests = payload;
+      localStorage.setItem('recievedRequests', JSON.stringify(payload))
+      state.recievedRequests = JSON.parse(localStorage.getItem('recievedRequests'));
     },
 
     getSentRequests(state, payload) {
-      state.sentRequests = payload
+      localStorage.setItem('sentRequests', JSON.stringify(payload))
+      state.sentRequests = JSON.parse(localStorage.getItem('sentRequests'));
     },
 
     getCurrentRequest(state, payload) {
@@ -104,6 +101,11 @@ export default new Vuex.Store({
     productToggleResponse(state) {
       state.productRequestDialog = !state.productRequestDialog;
     },
+
+    getMyProducts(state, myProducts) {
+      localStorage.setItem('myProducts', JSON.stringify(myProducts))
+      state.myProducts = JSON.parse(localStorage.getItem('myProducts'));
+    }
 
   },
 
@@ -119,21 +121,27 @@ export default new Vuex.Store({
         })
         .then((response) => {
           context.commit('validateLoginPage', response);
-          context.dispatch('doLogin')
+
+          context.dispatch('doLogin', {
+            email: localStorage.getItem('currentEmail', response.data.data.email),
+            password: localStorage.getItem('currentPassword', response.data.data.password)
+          })
         })
         .catch((error) => {
           console.log(error);
         });
     },
 
-    doLogin(context) {
-      var email = context.state.currentUserEmail;
-      var password = context.state.currentUserPassword;
+    doLogin(context, {
+      email,
+      password
+    }) {
       if (email === '') {
         console.log('email empty')
 
         return
       }
+      console.log('dologin email', email)
       axios.post("http://localhost:3000/api/login", {
           email,
           password
@@ -294,6 +302,16 @@ export default new Vuex.Store({
         if (response.data === 'response added successfully')
           alert('تم ارسال الرد بنجاح')
         console.log(response)
+      })
+    },
+
+    getMyProducts(context) {
+      console.log(context.state.currentUser.user_id);
+      axios.post("http://localhost:3000/api/myProducts", {
+        user_id: context.state.currentUser.user_id
+      }).then(response => {
+        console.log(response)
+        context.commit('getMyProducts', response.data)
       })
     }
   },
