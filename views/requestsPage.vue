@@ -1,7 +1,10 @@
 <template>
   <v-app>
     <tool-bar></tool-bar>
-    <v-container fluid>
+    <v-container
+      v-if="currentUser && currentUser.user_type == 'business' && (recievedRequests || sentRequests)"
+      fluid
+    >
       <v-row>
         <v-col class="light-blue lighten-5" cols="2">
           <v-list class="light-blue lighten-5">
@@ -50,6 +53,18 @@
         </v-col>
       </v-row>
     </v-container>
+
+    <v-container v-else-if="!currentUser || currentUser.user_type != 'business'">
+      <v-row justify="center">
+        <p class="display-1">ليس لديك صلاحيات لإظهار هذه الصفحة</p>
+      </v-row>
+    </v-container>
+
+    <v-container v-else>
+      <v-row justify="center">
+        <p class="display-1">لا يوجد طلبات</p>
+      </v-row>
+    </v-container>
   </v-app>
 </template>
 
@@ -78,13 +93,15 @@ export default {
     },
     sentRequests() {
       return this.$store.state.sentRequests;
+    },
+    currentUser() {
+      return this.$store.state.currentUser;
     }
   },
 
   created() {
     this.$store.dispatch("getRecievedRequests");
     this.$store.dispatch("getSentRequests");
-    console.log(this.sentRequests);
   },
   methods: {
     openDetails() {

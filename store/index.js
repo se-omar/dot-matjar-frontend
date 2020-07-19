@@ -41,6 +41,7 @@ export default new Vuex.Store({
         alert(response.data.message);
       } else {
         localStorage.setItem('currentUser', JSON.stringify(response.data.data));
+        console.log(JSON.parse(localStorage.getItem('currentUser')));
         state.currentUser = JSON.parse(localStorage.getItem('currentUser'))
         router.push('/home')
         console.log('current user is: ', state.currentUser);
@@ -105,6 +106,17 @@ export default new Vuex.Store({
     getMyProducts(state, myProducts) {
       localStorage.setItem('myProducts', JSON.stringify(myProducts))
       state.myProducts = JSON.parse(localStorage.getItem('myProducts'));
+    },
+
+    removeCurrentUser(state) {
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('currentEmail');
+      localStorage.removeItem('currentPassword');
+      localStorage.removeItem('recievedRequests');
+      localStorage.removeItem('sentRequests');
+      localStorage.removeItem('myProducts');
+      console.log(state.currentUser)
+
     }
 
   },
@@ -123,8 +135,8 @@ export default new Vuex.Store({
           context.commit('validateLoginPage', response);
 
           context.dispatch('doLogin', {
-            email: localStorage.getItem('currentEmail', response.data.data.email),
-            password: localStorage.getItem('currentPassword', response.data.data.password)
+            email: localStorage.getItem('currentEmail'),
+            password: localStorage.getItem('currentPassword')
           })
         })
         .catch((error) => {
@@ -146,6 +158,7 @@ export default new Vuex.Store({
           email,
           password
         }).then((response) => {
+          console.log(response)
           context.commit('doLogin', response)
         })
         .catch((error) => {
@@ -256,7 +269,6 @@ export default new Vuex.Store({
           user_id: context.state.currentUser.user_id
         })
         .then(response => {
-          console.log(response.data);
           context.commit('getRecievedRequests', response.data);
         });
     },

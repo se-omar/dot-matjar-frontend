@@ -73,7 +73,7 @@
 
           <v-row>
             <v-col cols="4">
-              <v-btn @click="uploadImage" block class="primary">
+              <v-btn @click="addProduct" block class="primary">
                 <span style="font-size: 18px">اضافة المنتج</span>
               </v-btn>
             </v-col>
@@ -165,39 +165,37 @@ export default {
       this.image3 = output;
     },
 
-    addProduct() {
+    addProduct(files) {
       var self = this;
       console.log(this.currentUser);
+      files = [this.image, this.image2, this.image3];
+      console.log(files);
+      var form = new FormData();
+      form.set("product_name", self.productName);
+      form.set("product_code", self.productCode);
+      form.set("user_id", self.currentUser.user_id);
+      form.set("bussiness_id", self.currentUser.bussiness.bussiness_id);
+      form.set("HS_code", self.HScode);
+      form.set("min_units_per_order", self.minUnits);
+      form.set("unit_price", self.unitPrice);
+      form.set("size", self.size);
+      form.set("describtion", self.description);
+      form.set("color", self.color);
+      form.set("discount_amount", self.discountAmount);
+
+      files.forEach(element => {
+        form.append("file", element);
+      });
+
       this.$axios
-        .post("http://localhost:3000/api/product", {
-          product_name: self.productName,
-          product_code: self.productCode,
-          user_id: self.currentUser.user_id,
-          bussiness_id: self.currentUser.bussiness.bussiness_id,
-          HS_code: self.HScode,
-          min_units_per_order: self.minUnits,
-          unit_price: self.unitPrice,
-          color: self.color,
-          size: self.size,
-          discount_amount: self.discountAmount,
-          description: self.description,
-          image: self.image
+        .post("http://localhost:3000/api/product", form, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
         })
         .then(response => {
           console.log(response);
         });
-    },
-
-    uploadImage(files) {
-      files = [this.image, this.image2, this.image3];
-      console.log(files);
-      var form = new FormData();
-      form.append("files", files);
-      this.$axios.post("http://localhost:3000/api/product", form, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      });
     }
   }
 };
