@@ -102,7 +102,7 @@
 
           <v-divider></v-divider>
 
-          <v-cols cols="6">
+          <v-col cols="6">
             <v-card-text>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -176,18 +176,15 @@
 
               <a class="size" @click="$router.push('/login')">تسجيل الخروج</a>
             </v-card-text>
-          </v-cols>
+          </v-col>
         </v-card>
       </v-menu>
 
       <!--============================
 
-<<<<<<< HEAD
 
-=======
       />-->
-      s
->>>>>>> 1888a5f46238b39dbb005fd2e16cf6abfe367534
+    
       <v-menu left bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">

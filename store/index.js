@@ -81,11 +81,7 @@ export default new Vuex.Store({
        this.$router.push('http://localhost:8080')
     },
 
-    setCurrentUser(state, payload) {
-   
-      state.currentUser = payload;
-    },
-
+    
     getRecievedRequests(state, payload) {
       state.recievedRequests = payload;
     },

@@ -50,7 +50,7 @@
                           block
                           :disabled="!valid"
                           color="success"
-                          @click="validateLoginPage"
+                          @click="validateLogin"
                         >Login</v-btn>
                       </v-col>
                     </v-row>
@@ -202,7 +202,6 @@ export default {
       });
     },
 
-<<<<<<< HEAD
     validateLogin() {
       var self = this;
       this.$axios
@@ -217,42 +216,17 @@ export default {
             
           } else {
             console.log(response.data.message)
-            self.$store.commit("setCurrentUser", response.data.data    );
+            self.$store.commit("setCurrentUser", response.data.data);
             console.log(response.data.data)
-            this.$router.push("/home");
             alert(response.data.message )
+            this.$router.push("/home");
+            
           }
          
         })
         .catch(error => {
           console.log(error);
         });
-=======
-    validateLoginPage() {
-      this.$store.dispatch("validateLoginPage", {
-        email: this.loginEmail,
-        password: this.loginPassword
-      });
-
-      // var self = this;
-      // this.$axios
-      //   .post("http://localhost:3000/api/login", {
-      //     email: this.loginEmail,
-      //     password: this.loginPassword,
-      //   })
-      //   .then((response) => {
-      //     if (response.data.message !== "authentication successful") {
-      //       alert(response.data.message);
-      //     } else {
-
-      //       self.$store.commit("setCurrentUser", response.data.data);
-      //       this.$router.push("/home");
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
->>>>>>> 1888a5f46238b39dbb005fd2e16cf6abfe367534
     },
     reset() {
       this.$refs.form.reset();

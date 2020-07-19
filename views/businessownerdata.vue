@@ -198,6 +198,7 @@ export default {
     },
 
     validateLogin() {
+      console.log(this.$store.state.currentUser)
       this.$axios
         .post("http://localhost:3000/api/login", {
           email: this.loginEmail,
@@ -234,9 +235,9 @@ export default {
    
   },
   created(){
-    var x=this.$store.state.currentUser
-    console.log(x)
-    this.name=x;
+    
+    
+  
     
   },
 
