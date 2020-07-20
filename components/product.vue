@@ -16,9 +16,9 @@
           </div>
           <div>المشروع: {{ filteredProduct.bussiness.bussiness_name }}</div>
           <v-row align="center" class="mx-0">
-            <v-rating v-model="rating" color="amber" dense half-increments readonly size="14"></v-rating>
+            <v-rating v-model="rating" color="amber" dense half-increments readonly size="15"></v-rating>
 
-            <div class="grey--text ml-4">4.5 (413)</div>
+            <div class="grey--text ml-4">4</div>
           </v-row>
         </v-card-text>
 

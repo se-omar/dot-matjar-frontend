@@ -32,7 +32,7 @@
                       <v-col cols="12">
                         <v-text-field
                           v-model="loginPassword"
-                          :append-icon="show1 ? 'eye' : 'eye-off'"
+                          :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                           :rules="[rules.required, rules.min]"
                           :type="show1 ? 'text' : 'password'"
                           name="input-10-1"
@@ -50,7 +50,7 @@
                           block
                           :disabled="!valid"
                           color="success"
-                          @click="validateLogin"
+                          @click="validateLoginPage"
                         >Login</v-btn>
                       </v-col>
                     </v-row>
@@ -202,31 +202,13 @@ export default {
       });
     },
 
-    validateLogin() {
-      var self = this;
-      this.$axios
-        .post("http://localhost:3000/api/login", {
-          email: this.loginEmail,
-          password: this.loginPassword
-        })
-        .then(response => {
-          
-          if (response.data.message !== "authenitcation succesfull") {
-            alert(response.data);
-            
-          } else {
-            console.log(response.data.message)
-            self.$store.commit("setCurrentUser", response.data.data);
-            console.log(response.data.data)
-            alert(response.data.message )
-            this.$router.push("/home");
-            
-          }
-         
-        })
-        .catch(error => {
-          console.log(error);
-        });
+    validateLoginPage() {
+      
+      this.$store.dispatch("validateLoginPage", {
+        email: this.loginEmail,
+        password: this.loginPassword
+      });
+      console.log(this.currentUser)
     },
     reset() {
       this.$refs.form.reset();

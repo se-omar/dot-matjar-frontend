@@ -4,18 +4,18 @@
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
       <v-toolbar-title>
-        <v-btn text @click="$router.push('/home')">اسم الموقع</v-btn>
+        <v-btn text @click="$router.push('/home').catch((err) => {})">اسم الموقع</v-btn>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <v-btn text @click="$router.push('/registerlogin')">التسجيل</v-btn>
+      <v-btn text @click="$router.push('/registerlogin').catch((err) => {})">التسجيل</v-btn>
 
       <v-btn text @click="$router.push('/editPassword').catch((err) => {})">تغيير كلمة السر</v-btn>
 
-      <v-btn text @click="$router.push('/requestsPage').catch((err) => {})">
-        <span>الطلبات</span>
-      </v-btn>
+      <v-btn text @click="$router.push('/requestsPage').catch((err) => {})">الطلبات</v-btn>
+
+      <v-btn text @click="$router.push('/myProducts').catch((err) => {})">منتجاتي</v-btn>
 
       <v-btn text>
         <span>عن الموقع</span>
@@ -32,7 +32,7 @@
         offset-y
       >
         <template v-slot:activator="{ on, attrs }">
-          <v-btn color="blue" dark v-bind="attrs" v-on="on">
+          <v-btn text dark v-bind="attrs" v-on="on">
             <span>حسابي</span>
             <v-icon>mdi-account-circle</v-icon>
           </v-btn>

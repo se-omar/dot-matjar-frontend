@@ -4,15 +4,23 @@
 
 <div class="app">
 <form   enctype="multipart.form/data">
-<v-col cols="12" >
+<v-row>
 
+
+
+<!-- First photo -->
+
+
+
+ <v-col lg="4" sm="2" md="1">
 
     <div v-if="message">
 <span id="message">{{message}}</span>
 
     </div>
+   
     <v-card>
-  
+
     
       <div class="uploader">
           
@@ -32,56 +40,46 @@
 
 </span>
 <span class="file-label" style="font-weight:bold">
-    ...Choose file <br/>
+    الرخصه <br/>
 </span>
 </span>
 
 <input
 type="file"
-ref="upload"
+ref="upload1"
 @change="dropFiles"
 class="file-input"
 id="input"
  /> <br/>
-<span class="fileName" v-if="image">{{image.name}}</span>
+<span class="fileName" v-if="image1">{{image1.name}}</span>
 </label>
 </div>
-      
+   
   <v-btn @click="sendServer"> 
             Send
         </v-btn>
 
 
 </div>
-     
+</v-card>
+   </v-col>
 
 
 
 
 
-   
-    </v-card>
-    <!--  -->
+<!-- Socond photo -->
 
 
+ <v-col lg="4" sm="2" md="1">
 
-
-
-
-
-    
-</v-col> 
-</form>
-    
-
-<form   enctype="multipart.form/data">
-<v-col cols="12" >
-      <div v-if="message">
+    <div v-if="message">
 <span id="message">{{message}}</span>
 
     </div>
+   
     <v-card>
-  
+
     
       <div class="uploader">
           
@@ -101,54 +99,129 @@ id="input"
 
 </span>
 <span class="file-label" style="font-weight:bold">
-    ...Choose file <br/>
+    الرخصه <br/>
 </span>
 </span>
 
 <input
 type="file"
-ref="upload"
+ref="upload2"
 @change="dropFiles"
 class="file-input"
 id="input"
  /> <br/>
-<span class="fileName" v-if="image">{{image.name}}</span>
+<span class="fileName" v-if="image2">{{image2.name}}</span>
 </label>
 </div>
-      
+   
   <v-btn @click="sendServer"> 
             Send
         </v-btn>
 
 
 </div>
-     
+</v-card>
+   </v-col>
 
+
+
+<!-- Third photo -->
+
+
+
+ <v-col lg="4" sm="2" md="1">
+
+    <div v-if="message">
+<span id="message">{{message}}</span>
+
+    </div>
+   
+    <v-card>
+
+    
+      <div class="uploader">
+          
+<div class="file is-boxed is-primary">
+<label class="file-label">
+
+
+
+
+
+<span class="file-cta">
+<span class="file-icon">
+    
+
+<i class="fas fa-upload  fa-2x " style="color:blue"></i> <br/>
+
+
+</span>
+<span class="file-label" style="font-weight:bold">
+    الرخصه <br/>
+</span>
+</span>
+
+<input
+type="file"
+ref="upload3"
+@change="dropFiles"
+class="file-input"
+id="input"
+ /> <br/>
+<span class="fileName" v-if="image3">{{image3.name}}</span>
+</label>
+</div>
+   
+  <v-btn @click="sendServer"> 
+            Send
+        </v-btn>
+
+
+</div>
+</v-card>
+   </v-col>
+
+
+
+
+
+
+
+</v-row>
+
+</form> 
 
 
 
 
    
-    </v-card>
-    </v-col>
- </form>       
+ 
+ 
+ 
 </div>
 
 </template>
 <script>
 import 'material-design-icons-iconfont/dist/material-design-icons.css' 
 export default {
+    
   name:"fileUpload",
   methods:{
 dropFiles(){
-    this.image= this.$refs.upload.files[0]
-    console.log(this.image)
+    
+   this.image1=this.$refs.upload1.files[0]
+    this.image2=this.$refs.upload2.files[0]
+    this.image3=this.$refs.upload3.files[0]
+    this.images = [this.image1 , this.image2 , this.image3]
+    this.$store.state.images=this.images
 },
-async sendServer(){
+ sendServer(){
     var formdata=new FormData();
-    formdata.append('file',this.image)
-   
-   await this.$axios.post('http://localhost:3000/api/image',formdata)
+   this.images.forEach(element => {
+        formdata.append('file',element)
+    });
+
+    this.$axios.post('http://localhost:3000/api/image',formdata)
     .then(data =>{
         this.message="Image uploaded sucssfully"
         console.log(data.data)
@@ -162,7 +235,13 @@ async sendServer(){
   data:()=>({
    message:"",
     error:false,
-    image:[]
+    image1:[],
+    image2:[],
+    image3:[],
+    images:[]
+    
+    
+    
   })
 }
 
@@ -171,7 +250,7 @@ async sendServer(){
 <style  scoped>
 .uploader{
     text-align: center;
-    background-color:oldlace;
+    background-color:white;
     
 }
 .parag{

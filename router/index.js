@@ -12,6 +12,8 @@ import resetPasswordSent from '../views/resetPasswordSent'
 import updateForgottenPassword from '../views/updateForgottenPassword'
 import editPassword from '../views/editPassword'
 import requestsPage from '../views/requestsPage'
+import myProducts from '../views/myProducts'
+import addProduct from '../views/addProduct'
 
 Vue.use(VueRouter)
 
@@ -19,16 +21,27 @@ Vue.use(VueRouter)
 
 var routes = [{
     path: '/',
+    components: {
+      Home: Home,
+      reglogin: reglogin
+    },
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: Home
+  },
+  {
+    path: '/reglogin',
     name: 'reglogin',
     component: reglogin
   },
-  
   {
     path: '/businessownerdata',
     name: 'businessownerdata',
     component: businessownerdata
   },
-  
+
   {
     path: '/activation/:cryptoo',
     name: 'activation',
@@ -38,11 +51,6 @@ var routes = [{
     path: '/completedata',
     name: 'completedata',
     component: completedata
-  },
-  {
-    path: '/home',
-    name: 'Home',
-    component: Home
   },
   {
     path: '/mainpage',
@@ -64,7 +72,7 @@ var routes = [{
     name: 'update-forgotten-password',
     component: updateForgottenPassword
   },
-  
+
   {
     path: '/resetPasswordSent',
     name: 'reset-password-sent',
@@ -80,6 +88,16 @@ var routes = [{
     name: 'requestsPage',
     component: requestsPage
   },
+  {
+    path: '/myProducts',
+    name: 'myProducts',
+    component: myProducts
+  },
+  {
+    path: '/addProduct',
+    name: 'addProducts',
+    component: addProduct
+  }
 ]
 
 const router = new VueRouter({

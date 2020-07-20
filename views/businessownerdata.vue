@@ -32,33 +32,218 @@
                     </v-tab>
                     <v-tab-item>
                         <v-card class="px-4">
+                          
                             <v-card-text>
                                 <v-form ref="loginForm" v-model="valid" lazy-validation>
                                     <v-row>
                                         <v-col cols="4">
-                                            <v-text-field v-model="productName"  label="اسم المشروع" required></v-text-field>
+                                            <v-text-field v-model=" bussinessName"  label="اسم المشروع" required></v-text-field>
                                         </v-col>
                                         <v-col cols="4">
-                                            <v-text-field v-model="businessActivity" :append-icon="show1?'eye':'eye-off'"  :type="show1 ? 'text' : 'password'" name="input-10-1" label="النشاط"  counter @click:append="show1 = !show1"></v-text-field>
+                                            <v-text-field v-model="bussinessActivity" :append-icon="show1?'eye':'eye-off'"  name="input-10-1" label="النشاط"  counter @click:append="show1 = !show1"></v-text-field>
                                         </v-col>
                                          <v-col cols="4">
-                                            <v-text-field v-model="enterPriceNationalNumber"  :append-icon="show1?'eye':'eye-off'"  :type="show1 ? 'text' : 'password'" name="input-10-1" label="الرقم القومي للمنشاه" hint="At least 8 characters" counter @click:append="show1 = !show1"></v-text-field>
+                                            <v-text-field v-model="enterPriceNationalNumber"   name="input-10-1" label="الرقم القومي للمنشاه" hint="At least 8 characters" counter @click:append="show1 = !show1"></v-text-field>
                                         </v-col>
                                        
+
+                                       <!-- Photo upload ==================== -->
                                         
-                                          
-                                        <fileUpload />
+                                          <form   enctype="multipart.form/data">
+<v-row>
+
+
+
+<!-- First photo -->
+
+
+
+ <v-col lg="4" sm="2" md="1">
+
+    <div v-if="message">
+<span id="message">{{message}}</span>
+
+    </div>
+   
+    <v-card>
+
+    
+      <div class="uploader">
+          
+<div class="file is-boxed is-primary">
+<label class="file-label">
+
+
+
+
+
+<span class="file-cta">
+<span class="file-icon">
+    
+
+<i class="fas fa-upload  fa-2x " style="color:blue"></i> <br/>
+
+
+</span>
+<span class="file-label" style="font-weight:bold">
+ قم بوضع السجل التجاري <br/>
+</span>
+</span>
+
+<input
+type="file"
+ref="upload1"
+@change="dropFiles"
+class="file-input"
+id="input"
+ /> <br/>
+<span class="fileName" v-if="image1">{{image1.name}}</span>
+</label>
+</div>
+   
+  
+
+</div>
+</v-card>
+   </v-col>
+
+
+
+
+
+<!-- Socond photo -->
+
+
+ <v-col lg="4" sm="2" md="1">
+
+    <div v-if="message">
+<span id="message">{{message}}</span>
+
+    </div>
+   
+    <v-card>
+
+    
+      <div class="uploader">
+          
+<div class="file is-boxed is-primary">
+<label class="file-label">
+
+
+
+
+
+<span class="file-cta">
+<span class="file-icon">
+    
+
+<i class="fas fa-upload  fa-2x " style="color:blue"></i> <br/>
+
+
+</span>
+<span class="file-label" style="font-weight:bold">
+    قم بوضع البطاقه الضريبيه <br/>
+</span>
+</span>
+
+<input
+type="file"
+ref="upload2"
+@change="dropFiles"
+class="file-input"
+id="input"
+ /> <br/>
+<span class="fileName" v-if="image2">{{image2.name}}</span>
+</label>
+</div>
+  
+
+</div>
+</v-card>
+   </v-col>
+
+
+
+<!-- Third photo -->
+
+
+
+ <v-col lg="4" sm="2" md="1">
+
+    <div v-if="message">
+<span id="message">{{message}}</span>
+
+    </div>
+   
+    <v-card>
+
+    
+      <div class="uploader">
+          
+<div class="file is-boxed is-primary">
+<label class="file-label">
+
+
+
+
+
+<span class="file-cta">
+<span class="file-icon">
+    
+
+<i class="fas fa-upload  fa-2x " style="color:blue"></i> <br/>
+
+
+</span>
+<span class="file-label" style="font-weight:bold">
+    قم بوضع الرخصه <br/>
+</span>
+</span>
+
+<input
+type="file"
+ref="upload3"
+@change="dropFiles"
+class="file-input"
+id="input"
+ /> <br/>
+<span class="fileName" v-if="image3">{{image3.name}}</span>
+</label>
+</div>
+   
+  
+
+
+</div>
+</v-card>
+   </v-col>
+
+
+
+
+
+
+
+</v-row>
+
+</form> 
+
                                         
 
 
-                                      
+
+
+                                        
+
+
+                                      <!-- ======================================================= -->
                                         
                                         <v-col class="d-flex" cols="12" sm="6" xsm="12">
                                         </v-col>
                                         <v-spacer></v-spacer>
-                                        <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
-                                            <v-btn x-large block :disabled="!valid" color="success" @click="validateLogin"> Login </v-btn>
-                                        </v-col>
+                                        <!-- <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
+                                            <v-btn x-large block :disabled="!valid" color="success" @click="validateLoginPage"> Login </v-btn>
+                                        </v-col> -->
                                     </v-row>
                                 </v-form>
                             </v-card-text>
@@ -69,6 +254,8 @@
 
                         <v-card class="px-4">
                             <v-card-text>
+   <p  > هذه البيانات سوف تستخدم في عمليه البحث و للتعديل يرجي الذهاب الي رابط  <a @click="$router.push('/updateUserInfo')">تعديل بياناتي من حسابي</a></p>
+
                                 <v-form ref="registerForm" v-model="valid" lazy-validation>
                                     <v-row>
                                        <v-col cols="4">
@@ -91,25 +278,25 @@
 
                                         
                                         <v-col cols="4">
-                                            <v-text-field v-model="mobileNumber" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :type="show1 ? 'text' : 'password'" name="input-10-1" label="الموبايل" hint="At least 7 characters" counter @click:append="show1 = !show1" disabled filled   outlined></v-text-field>
+                                            <v-text-field v-model="mobileNumber"   label="الموبايل"  counter @click:append="show1 = !show1" disabled filled   outlined></v-text-field>
                                         </v-col>
                                         <v-col cols="4">
-                                            <v-text-field block v-model="fax" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"  :type="show1 ? 'text' : 'password'" name="input-10-1" label="الفاكس" counter @click:append="show1 = !show1" disabled filled   outlined></v-text-field>
+                                            <v-text-field block v-model="fax"   label="الفاكس" counter @click:append="show1 = !show1" disabled filled   outlined></v-text-field>
                                         </v-col>
                                           <v-col cols="4">
-                                            <v-text-field block v-model="website" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"  :type="show1 ? 'text' : 'password'" name="input-10-1" label="رابط الموقع" counter @click:append="show1 = !show1" disabled filled   outlined></v-text-field>
+                                            <v-text-field block v-model="website"   label="رابط الموقع" counter @click:append="show1 = !show1" disabled filled   outlined></v-text-field>
                                         </v-col>
                                               
 <v-col cols="12" >
             <v-textarea
                v-model="address"
                outlined
-            
+            s
             disabled=""
               color="teal"
             >
               <template v-slot:label>
-                <div>
+                <div >
                   العنوان
                 </div>
               </template>
@@ -146,7 +333,7 @@
                                       
 
                                         <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
-                                            <v-btn x-large block :disabled="!valid || !checkbox"  id="btn" color="success" @click="validateSignup">تسجيل</v-btn>
+                                            <v-btn x-large block :disabled="!valid || !checkbox"  id="btn" color="success" @click="sendServer">تسجيل</v-btn>
                                        <v-btn x-large block :disabled="!valid || !checkbox"  color="success" @click="$router.push('/')">الغاء</v-btn>
                                         </v-col>
 
@@ -165,11 +352,11 @@
 
   
 <script>
-import fileUpload from '../components/fileUpload'
+import 'material-design-icons-iconfont/dist/material-design-icons.css' 
 export default {
     name:"businessownerdata",
  components: {
-    fileUpload
+    
   },
 
  computed: {
@@ -183,44 +370,67 @@ export default {
     
   },
   methods: {
-    validateSignup() {
-      alert("Please Verify your account , a message has been sent")
-    var self = this;
-        self.$store.dispatch('register',
-        {
-            email: this.email,
-            password:this.password,
-            full_arabic_name:this.fullArabicName,
-            national_number:this.nationalNumber,
-            mobile_number:this.mobileNumber
-        }
-        )
-    },
 
-    validateLogin() {
-      console.log(this.$store.state.currentUser)
-      this.$axios
-        .post("http://localhost:3000/api/login", {
-          email: this.loginEmail,
-          password: this.loginPassword
-        })
-        .then(response => {
-          if(response.data != "Please activate your account"){
 
-         
-         
-         if (response.data != "authenitcation succesfull") {
-            alert(response.data);
-          } else {
-            this.$router.push("/");
-            alert(response.data) 
-          }
-          }
-          else {alert(response.data)}
-        })
-        .catch(error => {
-          console.log(error);
-        });
+
+
+// Photoupload=============================
+
+
+
+dropFiles(){
+    
+   this.commercialRegister=this.$refs.upload1.files[0]
+    this.taxCard=this.$refs.upload2.files[0]
+    this.operatingLicence=this.$refs.upload3.files[0]
+    this.images = [this.commercialRegister , this.taxCard , this.operatingLicence]
+    
+},
+ sendServer(){
+    var formdata=new FormData();
+   this.images.forEach(element => {
+        formdata.append('file',element)
+    });
+
+    this.$axios.post('http://localhost:3000/api/businessOwnerData',formdata)
+    .then(data =>{
+        this.message="Image uploaded sucssfully"
+        console.log(data.data)
+    }).catch(err=>{
+        this.message="Error occured , Please upload again"
+        console.log(err)
+    })
+    this.$store.dispatch('businessOwnerData',
+    {
+ bussiness_activity:this.bussinessActivity,
+      bussiness_name:this.bussinessName,
+      enterprice_national_number:this.enterPriceNationalNumber,
+      user_id:this.$store.state.currentUser.user_id
+      
+    }
+    )
+},
+
+ 
+
+//======================================
+
+    // validateSignup() {
+    //   alert("Please Verify your account , a message has been sent")
+    // var self = this;
+    //     self.$store.dispatch('register',
+    //     {
+    //         email: this.email,
+    //         password:this.password,
+    //         full_arabic_name:this.fullArabicName,
+    //         national_number:this.nationalNumber,
+    //         mobile_number:this.mobileNumber
+    //     }
+    //     )
+    // },
+
+    validateLoginPage() {
+     
     },
     reset() {
       this.$refs.form.reset();
@@ -236,8 +446,14 @@ export default {
   },
   created(){
     
-    
-  
+    this.name=this.$store.state.currentUser.full_arabic_name
+  this.nationalNumber=this.$store.state.currentUser.national_number
+  this.job=this.$store.state.currentUser.job
+  this.fax=this.$store.state.currentUser.fax
+  this.address=this.$store.state.currentUser.address
+  this.website=this.$store.state.currentUser.website
+  this.mobileNumber=this.$store.state.currentUser.mobile_number
+  this.email=this.$store.state.currentUser.email
     
   },
 
@@ -258,6 +474,13 @@ export default {
     mobileNumber:"",
     loginPassword: "",
     loginEmail: "",
+    bussinessName:"",
+    bussinessActivity:"",
+    enterPriceNationalNumber:"",
+    job:"",
+    fax:"",
+    website:"",
+    address:"",
     loginEmailRules: [
       v => !!v || "Required",
       v => /.+@.+\..+/.test(v) || "E-mail must be valid",
@@ -280,7 +503,18 @@ export default {
       must:v => (v && v.length == 14) || "ID must be 14 NUMBERS",
       mobilenumber:v=> /\d+/.test(v)|| "Enter numbers"
     },
-    checkbox:false
+    checkbox:false,
+
+ message:"",
+    error:false,
+    image1:[],
+    image2:[],
+    image3:[],
+    images:[]
+    
+    
+
+
     
   })
 };
@@ -305,4 +539,36 @@ export default {
   font-weight: bold;
   color:black 
 }
+.uploader{
+    text-align: center;
+    background-color:white;
+    
+}
+.parag{
+    font-weight: bold;
+    font-size: large;
+}
+i{
+   width: 100;
+   height: 100;
+}
+input{
+    opacity: 0;
+    z-index: inherit;
+}
+.fileName{
+    font-weight: bold;
+    font-size: large;
+} 
+#message{
+font-weight:bold;
+font-size: large;
+color:black
+}
+p{
+font-weight: bold;
+font-size: large;
+color:black
+}
+
 </style>
