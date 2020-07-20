@@ -9,23 +9,38 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn text @click="$router.push('/registerlogin').catch((err) => {})">التسجيل</v-btn>
+      <v-btn v-if="!currentUser" text @click="$router.push('/reglogin').catch((err) => {})">التسجيل</v-btn>
 
-      <v-btn text @click="$router.push('/editPassword').catch((err) => {})">تغيير كلمة السر</v-btn>
+      <v-btn
+        v-if="currentUser"
+        text
+        @click="$router.push('/editPassword').catch((err) => {})"
+      >تغيير كلمة السر</v-btn>
 
-      <v-btn text @click="$router.push('/requestsPage').catch((err) => {})">الطلبات</v-btn>
+      <v-btn
+        v-if="currentUser && currentUser.user_type == 'business'"
+        text
+        @click="$router.push('/requestsPage').catch((err) => {})"
+      >الطلبات</v-btn>
 
-      <v-btn text @click="$router.push('/myProducts').catch((err) => {})">منتجاتي</v-btn>
+      <v-btn
+        v-if="currentUser && currentUser.user_type == 'business'"
+        text
+        @click="$router.push('/myProducts').catch((err) => {})"
+      >منتجاتي</v-btn>
 
       <v-btn text>
         <span>عن الموقع</span>
       </v-btn>
+
+      <v-btn v-if="currentUser" text @click="logout">تسجيل الخروج</v-btn>
 
       <!--============================
 
       />-->
 
       <v-menu
+        v-if="currentUser"
         transition="fab-transition"
         :close-on-content-click="false"
         :nudge-width="200"
@@ -202,7 +217,22 @@
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  computed: {
+    currentUser() {
+      return this.$store.state.currentUser;
+    }
+  },
+
+  methods: {
+    logout() {
+      this.$store.commit("removeCurrentUser");
+      this.$router.push("/reglogin").catch(() => {});
+    }
+  }
+};
+</script>
 
 <style scoped>
 img {

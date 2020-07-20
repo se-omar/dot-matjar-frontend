@@ -41,6 +41,7 @@ export default new Vuex.Store({
         console.log(response.data.message);
       } else {
         localStorage.setItem('currentUser', JSON.stringify(response.data.data));
+        console.log(JSON.parse(localStorage.getItem('currentUser')));
         state.currentUser = JSON.parse(localStorage.getItem('currentUser'))
         router.push('/home')
         console.log('current user is: ', state.currentUser);
@@ -106,6 +107,17 @@ export default new Vuex.Store({
     getMyProducts(state, myProducts) {
       localStorage.setItem('myProducts', JSON.stringify(myProducts))
       state.myProducts = JSON.parse(localStorage.getItem('myProducts'));
+    },
+
+    removeCurrentUser(state) {
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('currentEmail');
+      localStorage.removeItem('currentPassword');
+      localStorage.removeItem('recievedRequests');
+      localStorage.removeItem('sentRequests');
+      localStorage.removeItem('myProducts');
+      console.log(state.currentUser)
+
     }
 
   },
@@ -148,7 +160,11 @@ export default new Vuex.Store({
           email,
           password
         }).then((response) => {
+<<<<<<< HEAD
           console.log('dologin response', response)
+=======
+          console.log(response)
+>>>>>>> 385f2d33ca86444cde853fd94b1889b0589237b0
           context.commit('doLogin', response)
         })
         .catch((error) => {
@@ -259,7 +275,6 @@ export default new Vuex.Store({
           user_id: context.state.currentUser.user_id
         })
         .then(response => {
-          console.log(response.data);
           context.commit('getRecievedRequests', response.data);
         });
     },

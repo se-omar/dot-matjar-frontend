@@ -42,8 +42,7 @@
                           @click:append="show1 = !show1"
                         ></v-text-field>
                       </v-col>
-                      <v-col class="d-flex" cols="12" sm="6" xsm="12"></v-col>
-                      <v-spacer></v-spacer>
+
                       <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
                         <v-btn
                           x-large
@@ -51,7 +50,11 @@
                           :disabled="!valid"
                           color="success"
                           @click="validateLoginPage"
-                        >Login</v-btn>
+                        >تسجيل الدخول</v-btn>
+                      </v-col>
+
+                      <v-col class="d-flex" cols="12" sm="6" xsm="12">
+                        <v-btn @click="$router.push('/resetPassword')" text>هل نسيت كلمة المرور</v-btn>
                       </v-col>
                     </v-row>
                   </v-form>
