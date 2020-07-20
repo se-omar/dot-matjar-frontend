@@ -21,10 +21,8 @@ Vue.use(VueRouter)
 
 var routes = [{
     path: '/',
-    components: {
-      Home: Home,
-      reglogin: reglogin
-    },
+    name: "home",
+    component: Home,
   },
   {
     path: '/home',

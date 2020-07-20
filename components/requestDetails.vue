@@ -19,7 +19,7 @@
 
       <v-col class="mt-1" cols="3">
         <v-btn
-          v-if="requestType === 'recieved'"
+          v-if="requestType === 'recieved' && !currentRequest.request_response"
           @click="toggleResponse"
           class="primary"
         >الرد علي الطلب</v-btn>

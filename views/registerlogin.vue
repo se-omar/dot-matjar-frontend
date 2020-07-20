@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <v-app>
-      <v-container style="width: 60%">
+      <tool-bar></tool-bar>
+      <v-container v-if="!currentUser" style="width: 60%">
         <div>
           <v-tabs
             v-model="tab"
@@ -173,12 +174,18 @@
           </v-tabs>
         </div>
       </v-container>
+
+      <v-container v-else>
+        <v-row justify="center">
+          <p class="display-1">انت قمت بتسجيل الدخول بالفعل</p>
+        </v-row>
+      </v-container>
     </v-app>
   </div>
 </template>
 
 <script>
-//import usersModel from "../models/usersModel";
+import toolBar from "../components/toolbar";
 export default {
   name: "reglogin",
   computed: {
@@ -192,6 +199,7 @@ export default {
       return this.$store.state.currentUser;
     }
   },
+
   methods: {
     validateSignup() {
       alert("Please Verify your account , a message has been sent");
@@ -206,12 +214,11 @@ export default {
     },
 
     validateLoginPage() {
-      
       this.$store.dispatch("validateLoginPage", {
         email: this.loginEmail,
         password: this.loginPassword
       });
-      console.log(this.currentUser)
+      console.log(this.currentUser);
     },
     reset() {
       this.$refs.form.reset();
@@ -223,6 +230,7 @@ export default {
       document.getElementById("btn").disapled();
     }
   },
+
   data: () => ({
     dialog: true,
     tab: 0,
@@ -263,7 +271,11 @@ export default {
       mobilenumber: v => /\d+/.test(v) || "Enter numbers"
     },
     checkbox: false
-  })
+  }),
+
+  components: {
+    toolBar
+  }
 };
 </script>
 <style scoped>

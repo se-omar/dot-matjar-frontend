@@ -2,7 +2,7 @@
   <div id="product">
     <v-app>
       <v-card :elevation="7" max-width="280">
-        <v-img height="200" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
+        <v-img height="200" :src="nodeHost + filteredProduct.main_picture"></v-img>
 
         <v-card-title>{{ filteredProduct.product_name }}</v-card-title>
 
@@ -69,6 +69,10 @@ export default {
 
     filteredProducts() {
       return this.$store.state.products;
+    },
+
+    nodeHost() {
+      return this.$store.state.nodeHost;
     }
   }
 };
