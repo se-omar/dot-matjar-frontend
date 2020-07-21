@@ -1,12 +1,12 @@
 <template>
   <v-app>
     <tool-bar></tool-bar>
-    <v-container v-if="currentUser && currentUser.user_type == 'business'" fluid>
+    <v-container v-if="currentUser && currentUser.user_type == 'business'">
       <v-row justify="center">
         <p class="display-1">منتجاتي</p>
       </v-row>
 
-      <v-row class="ml-7 mr-13" v-if="myProducts.length != 0">
+      <v-row v-if="myProducts.length != 0">
         <v-col cols="3" v-for="myProduct in myProducts" :key="myProduct.id">
           <product :filteredProduct="myProduct"></product>
         </v-col>
