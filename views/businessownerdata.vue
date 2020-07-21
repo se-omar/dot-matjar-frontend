@@ -43,7 +43,7 @@
                                             <v-text-field v-model="bussinessActivity" :append-icon="show1?'eye':'eye-off'"  name="input-10-1" label="النشاط"  counter @click:append="show1 = !show1"></v-text-field>
                                         </v-col>
                                          <v-col cols="4">
-                                            <v-text-field v-model="enterPriceNationalNumber"   name="input-10-1" label="الرقم القومي للمنشاه" hint="At least 8 characters" counter @click:append="show1 = !show1"></v-text-field>
+                                            <v-text-field v-model="enterPriceNationalNumber" :rules="[rules.mobilenumber]"  name="input-10-1" label="الرقم القومي للمنشاه" hint="At least 8 characters" counter @click:append="show1 = !show1"></v-text-field>
                                         </v-col>
                                        
 
@@ -97,7 +97,7 @@ ref="upload1"
 class="file-input"
 id="input"
  /> <br/>
-<span class="fileName" v-if="image1">{{image1.name}}</span>
+<span class="fileName" v-if="commercialRegister">{{commercialRegister.name}}</span>
 </label>
 </div>
    
@@ -153,7 +153,7 @@ ref="upload2"
 class="file-input"
 id="input"
  /> <br/>
-<span class="fileName" v-if="image2">{{image2.name}}</span>
+<span class="fileName" v-if="taxCard">{{taxCard.name}}</span>
 </label>
 </div>
   
@@ -207,7 +207,7 @@ ref="upload3"
 class="file-input"
 id="input"
  /> <br/>
-<span class="fileName" v-if="image3">{{image3.name}}</span>
+<span class="fileName" v-if="operatingLicence">{{operatingLicence.name}}</span>
 </label>
 </div>
    
@@ -254,22 +254,22 @@ id="input"
 
                         <v-card class="px-4">
                             <v-card-text>
-   <p  > هذه البيانات سوف تستخدم في عمليه البحث و للتعديل يرجي الذهاب الي رابط  <a @click="$router.push('/updateUserInfo')">تعديل بياناتي من حسابي</a></p>
+   <p  > يمكنك التعديل من هنا او من  <a @click="$router.push('/completedata')">تعديل بياناتي من حسابي</a></p>
 
                                 <v-form ref="registerForm" v-model="valid" lazy-validation>
                                     <v-row>
                                        <v-col cols="4">
-                                            <v-text-field v-model="name"  label="الاسم" disabled filled   outlined></v-text-field>
+                                            <v-text-field v-model="name"  label="الاسم"     outlined></v-text-field>
                                         </v-col>
                                          <v-col cols="4" >
-                                            <v-text-field v-model="nationalNumber"    label="الرقم القومي لصاحب المشروع" maxlength="14"  disabled filled   outlined></v-text-field>
+                                            <v-text-field v-model="nationalNumber"    label="الرقم القومي لصاحب المشروع" maxlength="14"      outlined></v-text-field>
                                         </v-col>
 
                                         <v-col cols="4" >
-                                            <v-text-field v-model="job"  label="الوظيفه الحاليه"  disabled filled   outlined></v-text-field>
+                                            <v-text-field v-model="job"  label="الوظيفه الحاليه"      outlined></v-text-field>
                                       </v-col>
                                         <v-col cols="4" >
-                                            <v-text-field v-model="email"  label="البريد الالكتروني" disabled filled   outlined ></v-text-field>
+                                            <v-text-field v-model="email"  label="البريد الالكتروني"  filled  disabled outlined ></v-text-field>
                                       </v-col>
                                        
                                        
@@ -278,21 +278,21 @@ id="input"
 
                                         
                                         <v-col cols="4">
-                                            <v-text-field v-model="mobileNumber"   label="الموبايل"  counter @click:append="show1 = !show1" disabled filled   outlined></v-text-field>
+                                            <v-text-field v-model="mobileNumber"   label="الموبايل"  counter @click:append="show1 = !show1"     outlined></v-text-field>
                                         </v-col>
                                         <v-col cols="4">
-                                            <v-text-field block v-model="fax"   label="الفاكس" counter @click:append="show1 = !show1" disabled filled   outlined></v-text-field>
+                                            <v-text-field block v-model="fax"   label="الفاكس" counter @click:append="show1 = !show1"     outlined></v-text-field>
                                         </v-col>
                                           <v-col cols="4">
-                                            <v-text-field block v-model="website"   label="رابط الموقع" counter @click:append="show1 = !show1" disabled filled   outlined></v-text-field>
+                                            <v-text-field block v-model="website"   label="رابط الموقع" counter @click:append="show1 = !show1"     outlined></v-text-field>
                                         </v-col>
                                               
 <v-col cols="12" >
             <v-textarea
                v-model="address"
                outlined
-            s
-            disabled=""
+            
+           
               color="teal"
             >
               <template v-slot:label>
@@ -387,28 +387,38 @@ dropFiles(){
     
 },
  sendServer(){
+   
     var formdata=new FormData();
    this.images.forEach(element => {
         formdata.append('file',element)
     });
+    formdata.set("bussiness_activity",this.bussinessActivity)
+    formdata.set("bussiness_name",this.bussinessName)
+    formdata.set("enterprice_national_number",this.enterPriceNationalNumber)
+    formdata.set("user_id",this.$store.state.currentUser.user_id)
+    // USER Table
+    formdata.set("full_arabic_name",this.name)
+    formdata.set("national_number",this.nationalNumber)
+    formdata.set("job",this.job)
+    formdata.set("fax",this.fax)
+    formdata.set("address",this.address)
+    formdata.set("website",this.website)
+    formdata.set("mobile_number",this.mobileNumber)
+    formdata.set("email",this.email)
+
 
     this.$axios.post('http://localhost:3000/api/businessOwnerData',formdata)
-    .then(data =>{
+    
+    .then(response =>{
         this.message="Image uploaded sucssfully"
-        console.log(data.data)
+        
+
+        alert(response.data.message)
     }).catch(err=>{
         this.message="Error occured , Please upload again"
         console.log(err)
     })
-    this.$store.dispatch('businessOwnerData',
-    {
- bussiness_activity:this.bussinessActivity,
-      bussiness_name:this.bussinessName,
-      enterprice_national_number:this.enterPriceNationalNumber,
-      user_id:this.$store.state.currentUser.user_id
-      
-    }
-    )
+   
 },
 
  
@@ -507,9 +517,9 @@ dropFiles(){
 
  message:"",
     error:false,
-    image1:[],
-    image2:[],
-    image3:[],
+    commercialRegister:[],
+    taxCard:[],
+    operatingLicence:[],
     images:[]
     
     
