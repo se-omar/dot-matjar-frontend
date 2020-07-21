@@ -14,6 +14,7 @@ import editPassword from '../views/editPassword'
 import requestsPage from '../views/requestsPage'
 import myProducts from '../views/myProducts'
 import addProduct from '../views/addProduct'
+import editProduct from '../views/editProduct'
 
 Vue.use(VueRouter)
 
@@ -95,7 +96,12 @@ var routes = [{
     path: '/addProduct',
     name: 'addProducts',
     component: addProduct
-  }
+  },
+  {
+    path: '/editProduct',
+    name: 'editProduct',
+    component: editProduct
+  },
 ]
 
 const router = new VueRouter({

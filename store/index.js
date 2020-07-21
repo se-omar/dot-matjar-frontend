@@ -22,7 +22,7 @@ export default new Vuex.Store({
     currentUserPassword: localStorage.getItem('currentPassword'),
     viewResponseDetails: false,
     myProducts: JSON.parse(localStorage.getItem('myProducts')),
-    nodeHost: 'http://localhost:3000/'
+    nodeHost: 'http://localhost:3000/',
   },
 
   mutations: {
@@ -120,7 +120,7 @@ export default new Vuex.Store({
       localStorage.removeItem('myProducts');
       console.log(state.currentUser)
 
-    }
+    },
 
   },
 
