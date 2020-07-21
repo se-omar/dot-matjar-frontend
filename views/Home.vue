@@ -36,14 +36,13 @@
         </v-row>
 
         <v-row>
-          <v-col cols="4" v-for="filteredProduct in filteredProducts" :key="filteredProduct.id">
+          <v-col cols="3" v-for="filteredProduct in filteredProducts" :key="filteredProduct.id">
             <product :filteredProduct="filteredProduct"></product>
           </v-col>
         </v-row>
       </v-container>
     </v-app>
   </div>
-  
 </template>
 
 <script>

@@ -86,12 +86,12 @@
           <v-row>
             <v-col cols="4">
               <v-btn @click="addProduct" block class="primary">
-                <span style="font-size: 18px">اضافة المنتج</span>
+                <span style="font-size: 18px">تعديل المنتج</span>
               </v-btn>
             </v-col>
 
             <v-col cols="4">
-              <v-btn @click="$router.push('/myProducts')" block class="red white--text">
+              <v-btn @click="$router.go(-1)" block class="red white--text">
                 <span style="font-size: 18px">الغاء</span>
               </v-btn>
             </v-col>
@@ -207,6 +207,10 @@ export default {
         })
         .then(response => {
           console.log(response);
+        })
+        .then(() => {
+          alert("تم تعديل المنتج");
+          this.$router.push("/myProducts");
         });
     }
   }
