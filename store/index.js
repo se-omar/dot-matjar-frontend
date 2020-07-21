@@ -3,6 +3,8 @@ import Vuex from "vuex";
 import axios from "axios"
 import router from '../router'
 Vue.use(Vuex, axios, router);
+
+
 export default new Vuex.Store({
   state: {
     row: {},
@@ -21,7 +23,8 @@ export default new Vuex.Store({
     currentUserEmail: localStorage.getItem('currentEmail'),
     currentUserPassword: localStorage.getItem('currentPassword'),
     viewResponseDetails: false,
-    myProducts: JSON.parse(localStorage.getItem('myProducts'))
+    myProducts: JSON.parse(localStorage.getItem('myProducts')),
+    nodeHost:"http://localhost:3000/"
   },
 
   mutations: {
@@ -118,11 +121,31 @@ export default new Vuex.Store({
       localStorage.removeItem('myProducts');
       console.log(state.currentUser)
 
+    },
+    profilePhoto(state,photoPath){
+state.profilephoto=photoPath
     }
 
   },
 
   actions: {
+    profilePhoto(context,form){
+      console.log("actions starts")
+axios.post('http://localhost:3000/api/profilePhoto',form,{
+  headers:{'content-type':'multipart/form-data'}
+})
+.then(response=>{
+  console.log("the image path",response.data.data)
+  console.log(response.data.message)
+  console.log(localStorage.getItem('currentEmail'))
+  console.log("=======",context.state.currentUser.profile_photo)
+  context.dispatch('doLogin',{
+    email: localStorage.getItem('currentEmail'),
+            password: localStorage.getItem('currentPassword')
+  })
+}
+)
+    },
     validateLoginPage(context, {
       email,
       password
@@ -150,6 +173,7 @@ export default new Vuex.Store({
       email,
       password
     }) {
+      console.log("dologin starts")
       if (email === '') {
         console.log('email empty')
 
@@ -160,11 +184,7 @@ export default new Vuex.Store({
           email,
           password
         }).then((response) => {
-<<<<<<< HEAD
           console.log('dologin response', response)
-=======
-          console.log(response)
->>>>>>> 385f2d33ca86444cde853fd94b1889b0589237b0
           context.commit('doLogin', response)
         })
         .catch((error) => {
@@ -182,7 +202,7 @@ export default new Vuex.Store({
       context.commit('filterProducts', payload);
     },
 
-    completedata(commit, {
+    completedata(context, {
       national_number,
       gender,
       full_arabic_name,
@@ -193,16 +213,17 @@ export default new Vuex.Store({
       governorate,
       village,
       center,
-      telephone_number,
       phone_number,
+      mobile_number,
       fax,
       facebook_account,
       linkedin,
       website,
-      address
+      address,
+      email
     }) {
 
-      axios.put('http://localhost:3000/api/completedata/3', {
+      axios.put('http://localhost:3000/api/completedata', {
         national_number,
         gender,
         full_arabic_name,
@@ -213,13 +234,21 @@ export default new Vuex.Store({
         governorate,
         village,
         center,
-        telephone_number,
         phone_number,
+        mobile_number,
         fax,
         facebook_account,
         linkedin,
         website,
-        address
+        address,
+        email
+      })
+      .then(response=>{
+        alert(response.data.message)
+        console.log(response.data.data)
+      })
+      .catch(err=>{
+        console.log(err)
       })
     },
 
@@ -333,27 +362,7 @@ export default new Vuex.Store({
       })
     },
 
-businessOwnerData(context,{
-  bussiness_name ,
-  bussiness_activity,
-  enterprice_national_number,
-  user_id
-}){
-  console.log(bussiness_activity)
-  axios.post('http://localhost:3000/api/businessOwnerData',{
-    bussiness_name ,
-    bussiness_activity,
-    enterprice_national_number,
-    user_id
-  }
-  ).then(response =>{
-    if(response) {alert(response.data.message)}
-    else{
-    alert("Something went wrong")
-  
-    }
-    })
-}
+
 
   },
 

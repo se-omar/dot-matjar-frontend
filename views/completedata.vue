@@ -1,5 +1,5 @@
 <template>
-<div>
+<div id="app">
 
 
 <v-form>
@@ -10,12 +10,12 @@
           <v-text-field
             v-model="nationalNumber"
             label="الرقم القومي"
-            filled
+            
             shaped
             outlined
             maxlength="14"
             :rules="[rules.must,rules.numbers]"
-            disabled
+            
           ></v-text-field>
         </v-col>
 
@@ -40,8 +40,8 @@
             v-model="fullArabicName"
             label="الاسم بلكامل عربي"
             outlined
-            disabled
-            filled
+            
+            
           ></v-text-field>
         </v-col>
 
@@ -119,14 +119,12 @@
           ></v-text-field>
         </v-col>
 
-        <v-col cols="12" sm="6">
-          <v-text-field
-            v-model="governorate"
-            label="المحافظه"
-            outlined
-            
-          ></v-text-field>
-        </v-col>
+       
+
+ <v-col class="d-flex" cols="12" sm="6">
+            <v-select  dense  v-model="governorate" :items="egyptGovernorates" label="المحافظه" outlined></v-select>
+          </v-col>
+
         
         <v-col cols="12" sm="6">
           <v-text-field
@@ -147,7 +145,7 @@
         </v-col>
         <v-col cols="12" sm="6">
           <v-text-field
-            v-model="telephoneNumber"
+            v-model="phoneNumber"
             label="التيليفون"
             outlined
             
@@ -155,10 +153,10 @@
         </v-col>
         <v-col cols="12" sm="6">
           <v-text-field
-            v-model="phoneNumber"
+            v-model="mobileNumber"
             label="الموبيل"
             outlined
-            
+            :rules="[rules.numbers]"
           ></v-text-field>
         </v-col>
         <v-col cols="12" sm="6">
@@ -169,15 +167,16 @@
             
           ></v-text-field>
         </v-col>
-        <v-col cols="12" sm="6">
+        <v-col cols="6" sm="6">
           <v-text-field
             v-model="email"
             label="البريد الالكتروني"
             filled
             outlined
-            disabled=""
+            disabled
           ></v-text-field>
         </v-col>
+        
         <v-col cols="12" sm="6">
           <v-text-field
             v-model="facebookAccount"
@@ -204,6 +203,7 @@
             
           ></v-text-field>
         </v-col>
+        
 
         
 <v-col cols="12" >
@@ -271,13 +271,14 @@ export default {
           governorate:this.governorate,
           village:this.village,
           center:this.center,
-          telephone_number:this.telephoneNumber,
           phone_number:this.phoneNumber,
+          mobile_number:this.mobileNumber,
           fax:this.fax,
           facebook_account:this.facebookAccount,
           linkedin:this.linkedin,
           website:this.website,
-          address:this.address
+          address:this.address,
+          email:this.email
         })
       },
 
@@ -285,10 +286,31 @@ export default {
        
       
     },
+    created(){
+this.nationalNumber=this.$store.state.currentUser.national_number
+this.fullArabicName=this.$store.state.currentUser.full_arabic_name
+this.email=this.$store.state.currentUser.email
+this.gender=this.$store.state.currentUser.gender
+this.fullEnglishName=this.$store.state.currentUser.fullEnglishName
+this.birthDate=this.$store.state.currentUser.birthDate
+this.qualifications=this.$store.state.currentUser.qualifications
+this.job=this.$store.state.currentUser.job
+this.governorate=this.$store.state.currentUser.governorate
+this.village=this.$store.state.currentUser.village
+this.center=this.$store.state.currentUser.center
+this.phoneNumber=this.$store.state.currentUser.phoneNumber
+this.mobileNumber=this.$store.state.currentUser.mobileNumber
+this.fax=this.$store.state.currentUser.fax
+this.facebookAccount=this.$store.state.currentUser.facebookAccount
+this.linkedin=this.$store.state.currentUser.linkedin
+this.website=this.$store.state.currentUser.website
+this.address=this.$store.state.currentUser.address
+
+    },
     data:()=> ({
       rules: {
       ex:v => !!v || "This field is required",
-     telephonenumber:v => (v && v.length >= 8) || "telenumber must be 8 NUMBERS at least",
+     phonenumber:v => (v && v.length >= 8) || "telenumber must be 8 NUMBERS at least",
      
       must:v => (v && v.length == 14) || "ID must be 14 NUMBERS",
       numbers:v=> /\d+/.test(v)|| "Enter numbers"
@@ -309,8 +331,8 @@ job:"",
 governorate:"",
 village:"",
 center:"",
-telephoneNumber:"",
 phoneNumber:"",
+mobileNumber:"",
 fax:"",
 facebookAccount:"",
 linkedin:"",
@@ -318,7 +340,35 @@ website:"",
 address:"",
 email:"",
 
-
+ egyptGovernorates: [
+        "الإسكندرية",
+        "الإسماعيلية",
+        "أسوان",
+        "أسيوط",
+        "الأقصر",
+        "البحر الأحمر",
+        "البحيرة",
+        "بني سويف",
+        "بورسعيد",
+        "جنوب سيناء",
+        "الجيزة",
+        "الدقهلية",
+        "دمياط",
+        "سوهاج",
+        "السويس",
+        "الشرقية",
+        "شمال سيناء",
+        "الغربية",
+        "الفيوم",
+        "القاهرة",
+        "القليوبية",
+        "قنا",
+        "كفر الشيخ",
+        "مطروح",
+        "المنوفية",
+        "المنيا",
+        "الوادي الجديد"
+      ]
 
 
 
@@ -327,3 +377,6 @@ email:"",
 
 }
 </script>
+<style scoped>
+
+</style>
