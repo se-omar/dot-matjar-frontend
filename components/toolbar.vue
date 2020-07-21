@@ -44,7 +44,9 @@
         transition="fab-transition"
         :close-on-content-click="false"
         :nudge-width="200"
-        offset-y
+        offset-x
+        class="menu"
+        max-width="20%"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn text dark v-bind="attrs" v-on="on">
@@ -53,9 +55,9 @@
           </v-btn>
         </template>
 
-        <v-card>
+        <v-card >
           <v-card-title>
-            <img   id="file" :src="nodeHost + currentUser.profile_photo" alt="avatar" />
+            <img v-if="currentUser.profile_photo" style="width:70%"  id="picture" :src="nodeHost + currentUser.profile_photo"  />
           </v-card-title>
           <!-- <v-card-text>
             <span>
@@ -126,7 +128,7 @@ id="profilePhoto"
 
 
           <v-card-text>
-            <span class="username">User Name</span>
+            <span  class="username">{{currentUser.full_arabic_name}}</span>
           </v-card-text>
           <v-card-title>
             <a class="x">الطلبات الصادره و الوارده</a>
@@ -256,8 +258,9 @@ img {
 }
 .username {
   font-weight: bold;
-  font-size: 20px;
-  margin-right: 33%;
+  font-size: 25px;
+  margin-right: 20%;
+  color:black
 }
 .btn1 {
   margin-right: 10%;
@@ -270,11 +273,14 @@ img {
    opacity: 0;
     z-index: inherit;
 }
-#file{
-  height: 300px;
+#picture{
+margin-right: 15%;
+ 
+text-align: center;
   
 }
 #fileUpload{
   text-align: center;
 }
+
 </style>
