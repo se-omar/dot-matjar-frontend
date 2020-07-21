@@ -55,7 +55,7 @@
 
         <v-card>
           <v-card-title>
-            <img  id="file" :src="nodeHost + currentUser.profile_photo" alt="avatar" />
+            <img   id="file" :src="nodeHost + currentUser.profile_photo" alt="avatar" />
           </v-card-title>
           <!-- <v-card-text>
             <span>
@@ -70,12 +70,8 @@
 
           </v-card-text> -->
           
-<div  id="fileUpload" class="file is-boxed is-primary">
+<div v-if="! currentUser.profile_photo" id="fileUpload" class="file is-boxed is-primary">
 <label class="file-label">
-
-
-
-
 
 <span class="file-cta">
 <span class="file-icon">
@@ -93,7 +89,34 @@ Upload your photo here <br/>
 <input
 type="file"
 ref="profileUpload"
-@change="profilePhoto"
+@change="changePhoto"
+class="file-input"
+id="profilePhoto"
+ /> <br/>
+</label>
+</div>
+
+
+<div v-if=" currentUser.profile_photo" id="fileUpload" class="file is-boxed is-primary">
+<label class="file-label">
+
+<span class="file-cta">
+<span class="file-icon">
+    
+
+<i class="fas fa-camera fa-2x " style="color:blue"></i> <br/>
+
+
+</span>
+<span  class="file-label" style="font-weight:bold">
+Change profile photo <br/>
+</span>
+</span>
+
+<input
+type="file"
+ref="profileUpload"
+@change="changePhoto"
 class="file-input"
 id="profilePhoto"
  /> <br/>
@@ -175,25 +198,6 @@ id="profilePhoto"
           </v-col>
         </v-card>
       </v-menu>
-
-      <!--============================
-
-
-      />-->
-    
-      <v-menu left bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
-
-        <v-list>
-          <v-list-item v-for="n in 5" :key="n" @click="() => {}">
-            <v-list-item-title>Option {{ n }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
     </v-app-bar>
   </div>
 </template>
@@ -214,9 +218,12 @@ export default {
   methods: {
     logout() {
       this.$store.commit("removeCurrentUser");
-      this.$router.push("/reglogin").catch(() => {});
+     setTimeout(() => {
+        this.$router.push("/reglogin").catch(() => {});
+      }, 10);
     },
-    profilePhoto(){
+    
+    changePhoto(){
 this.profilephoto=this.$refs.profileUpload.files[0]
 var form=new FormData();
 console.log("profile function starts")
@@ -224,14 +231,14 @@ form.append("profile",this.profilephoto)
 form.set("email",this.$store.state.currentUser.email)
 console.log(this.$store.state.currentUser.email)
 this.$store.dispatch("profilePhoto",form)
-    },
+    }
     
   },
   data:()=>({
 profilephoto:[] 
   })
   
-  }
+}
 
 </script>
 

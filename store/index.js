@@ -30,7 +30,7 @@ export default new Vuex.Store({
   mutations: {
     validateLoginPage(state, response) {
       if (response.data.message !== "authenitcation succesfull") {
-        alert(response.data.message);
+        alert(response.data);
       } else {
         localStorage.setItem('currentEmail', response.data.data.email);
         localStorage.setItem('currentPassword', response.data.data.password);
@@ -80,11 +80,11 @@ export default new Vuex.Store({
     },
 
     activation() {
-      
-       this.$router.push('http://localhost:8080')
+
+      this.$router.push('http://localhost:8080')
     },
 
-    
+
     getRecievedRequests(state, payload) {
       localStorage.setItem('recievedRequests', JSON.stringify(payload))
       state.recievedRequests = JSON.parse(localStorage.getItem('recievedRequests'));
@@ -114,6 +114,7 @@ export default new Vuex.Store({
 
     removeCurrentUser(state) {
       localStorage.removeItem('currentUser');
+      state.currentUser = '';
       localStorage.removeItem('currentEmail');
       localStorage.removeItem('currentPassword');
       localStorage.removeItem('recievedRequests');
@@ -362,7 +363,27 @@ axios.post('http://localhost:3000/api/profilePhoto',form,{
       })
     },
 
+    businessOwnerData(context, {
+      bussiness_name,
+      bussiness_activity,
+      enterprice_national_number,
+      user_id
+    }) {
+      console.log(bussiness_activity)
+      axios.post('http://localhost:3000/api/businessOwnerData', {
+        bussiness_name,
+        bussiness_activity,
+        enterprice_national_number,
+        user_id
+      }).then(response => {
+        if (response) {
+          alert(response.data.message)
+        } else {
+          alert("Something went wrong")
 
+        }
+      })
+    }
 
   },
 
