@@ -72,7 +72,7 @@
       <v-row>
         <v-col cols="4" class="mr-12">
           <v-btn
-            v-if="currentUser.user_id === currentProduct.bussiness.user.user_id"
+            v-if="currentUser && currentUser.user_id === currentProduct.bussiness.user.user_id"
             @click="goToEditProduct"
             color="secondary"
             block
@@ -88,7 +88,7 @@
         <v-col cols="3"></v-col>
         <v-col cols="4">
           <v-btn
-            v-if="currentUser.user_id === currentProduct.bussiness.user.user_id"
+            v-if="currentUser && currentUser.user_id === currentProduct.bussiness.user.user_id"
             @click="toggleRemoveDialog"
             color="secondary"
             block
