@@ -10,8 +10,8 @@
           </v-row>
 
           <v-row>
-            <v-col>كود المنتج: {{currentProduct.product_code}}</v-col>
-            <v-col>كود التصدير (HS Code): {{currentProduct.HS_code}}</v-col>
+            <v-col lg="6" md="6" sm="12" cols="12">كود المنتج: {{currentProduct.product_code}}</v-col>
+            <v-col lg="6" md="6" sm="12" cols="12">كود التصدير (HS Code): {{currentProduct.HS_code}}</v-col>
           </v-row>
           <br />
           <v-row>

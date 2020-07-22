@@ -24,7 +24,8 @@ export default new Vuex.Store({
     currentUserPassword: localStorage.getItem('currentPassword'),
     viewResponseDetails: false,
     myProducts: JSON.parse(localStorage.getItem('myProducts')),
-    nodeHost:"http://localhost:3000/"
+    nodeHost: "http://localhost:3000/",
+    viewRequestDetails: false
   },
 
   mutations: {
@@ -46,7 +47,7 @@ export default new Vuex.Store({
         localStorage.setItem('currentUser', JSON.stringify(response.data.data));
         console.log(JSON.parse(localStorage.getItem('currentUser')));
         state.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-        router.push('/home')
+        router.push('/home').catch(() => {})
         console.log('current user is: ', state.currentUser);
       }
     },
@@ -123,29 +124,38 @@ export default new Vuex.Store({
       console.log(state.currentUser)
 
     },
-    profilePhoto(state,photoPath){
-state.profilephoto=photoPath
+    profilePhoto(state, photoPath) {
+      state.profilephoto = photoPath
+    },
+
+    viewRequestDetails(state) {
+      state.viewRequestDetails = true
+    },
+
+    viewRequestCard(state) {
+      state.viewRequestDetails = false
     }
 
   },
 
   actions: {
-    profilePhoto(context,form){
+    profilePhoto(context, form) {
       console.log("actions starts")
-axios.post('http://localhost:3000/api/profilePhoto',form,{
-  headers:{'content-type':'multipart/form-data'}
-})
-.then(response=>{
-  console.log("the image path",response.data.data)
-  console.log(response.data.message)
-  console.log(localStorage.getItem('currentEmail'))
-  console.log("=======",context.state.currentUser.profile_photo)
-  context.dispatch('doLogin',{
-    email: localStorage.getItem('currentEmail'),
+      axios.post('http://localhost:3000/api/profilePhoto', form, {
+          headers: {
+            'content-type': 'multipart/form-data'
+          }
+        })
+        .then(response => {
+          console.log("the image path", response.data.data)
+          console.log(response.data.message)
+          console.log(localStorage.getItem('currentEmail'))
+          console.log("=======", context.state.currentUser.profile_photo)
+          context.dispatch('doLogin', {
+            email: localStorage.getItem('currentEmail'),
             password: localStorage.getItem('currentPassword')
-  })
-}
-)
+          })
+        })
     },
     validateLoginPage(context, {
       email,
@@ -225,32 +235,32 @@ axios.post('http://localhost:3000/api/profilePhoto',form,{
     }) {
 
       axios.put('http://localhost:3000/api/completedata', {
-        national_number,
-        gender,
-        full_arabic_name,
-        full_english_name,
-        birthdate,
-        qualifications,
-        job,
-        governorate,
-        village,
-        center,
-        phone_number,
-        mobile_number,
-        fax,
-        facebook_account,
-        linkedin,
-        website,
-        address,
-        email
-      })
-      .then(response=>{
-        alert(response.data.message)
-        console.log(response.data.data)
-      })
-      .catch(err=>{
-        console.log(err)
-      })
+          national_number,
+          gender,
+          full_arabic_name,
+          full_english_name,
+          birthdate,
+          qualifications,
+          job,
+          governorate,
+          village,
+          center,
+          phone_number,
+          mobile_number,
+          fax,
+          facebook_account,
+          linkedin,
+          website,
+          address,
+          email
+        })
+        .then(response => {
+          alert(response.data.message)
+          console.log(response.data.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
 
     register(context, {

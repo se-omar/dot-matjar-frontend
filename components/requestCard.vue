@@ -1,7 +1,7 @@
 <template>
   <v-card
     :class="request.request_response === null ? 'light-blue lighten-5 mb-2' : 'light-green mb-2'"
-    width="700"
+    width="100%"
     @click.native="setCurrentRequest"
   >
     <v-card-title style="font-size: 25px" class="mr-1">
@@ -70,6 +70,7 @@ export default {
   },
   methods: {
     setCurrentRequest() {
+      this.$store.commit("viewRequestDetails");
       this.$store.dispatch("getCurrentRequest", this.request);
     }
   }
