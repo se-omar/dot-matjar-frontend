@@ -1,27 +1,32 @@
 <template>
-  <v-card href width="700" v-if="requestClicked">
-    <v-card-title style="font-size: 30px" class="mr-1">
-      <v-row justify="space-between">
-        <v-col cols="9">{{ currentRequest.product.product_name }}</v-col>
-        <v-col cols="3">
-          <span style="font-size: 17px">
-            {{
-            currentRequest.request_status
-            }}
-          </span>
-        </v-col>
-      </v-row>
-    </v-card-title>
-    <v-row justify="space-between" class="mt-n8 mb-n5">
-      <v-col cols="6">
+  <v-card href width="100%" v-if="requestClicked">
+    <v-btn class="primary" @click="$store.commit('viewRequestCard')">
+      <v-icon>mdi-arrow-right</v-icon>الرجوع للطلبات
+    </v-btn>
+
+    <v-row justify="space-between">
+      <v-col cols="9">
+        <v-card-title style="font-size: 25px">{{ currentRequest.product.product_name }}</v-card-title>
+      </v-col>
+      <v-col class="mt-n5" lg="3" md="3" sm="12" cols="12">
+        <span style="font-size: 17px">
+          {{
+          currentRequest.request_status
+          }}
+        </span>
+      </v-col>
+    </v-row>
+
+    <v-row justify="space-between">
+      <v-col class="mt-n7" cols="6">
         <v-card-text>{{ currentRequest.request_date }}</v-card-text>
       </v-col>
 
-      <v-col class="mt-1" cols="3">
+      <v-col lg="3" md="3" sm="12" cols="12">
         <v-btn
           v-if="requestType === 'recieved' && !currentRequest.request_response"
           @click="toggleResponse"
-          class="primary"
+          class="primary mt-n10"
         >الرد علي الطلب</v-btn>
       </v-col>
 

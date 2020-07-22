@@ -20,7 +20,11 @@
           </v-list>
         </v-col>
 
-        <v-col v-if="requestType === 'recieved'" cols="5" class="scrollable">
+        <v-col
+          v-if="requestType === 'recieved' && !viewRequestDetails"
+          cols="10"
+          class="scrollable"
+        >
           <p class="display-1">الطلبات الواردة</p>
           <request-card
             :requestType="requestType"
@@ -32,7 +36,11 @@
           ></request-card>
         </v-col>
 
-        <v-col v-else-if="requestType === 'sent'" cols="5" class="scrollable">
+        <v-col
+          v-else-if="requestType === 'sent' && !viewRequestDetails"
+          cols="10"
+          class="scrollable"
+        >
           <p class="display-1">الطلبات الصادرة</p>
           <request-card
             :requestType="requestType"
@@ -44,11 +52,11 @@
           ></request-card>
         </v-col>
 
-        <v-col v-else cols="5" class="scrollable"></v-col>
+        <!-- <v-col v-else cols="5" class="scrollable"></v-col> -->
 
         <request-response-dialog></request-response-dialog>
 
-        <v-col cols="5 scrollable">
+        <v-col v-if="viewRequestDetails" cols="10 scrollable">
           <request-details :requestType="requestType" :requestClicked="toggle"></request-details>
         </v-col>
       </v-row>
@@ -96,6 +104,9 @@ export default {
     },
     currentUser() {
       return this.$store.state.currentUser;
+    },
+    viewRequestDetails() {
+      return this.$store.state.viewRequestDetails;
     }
   },
 
@@ -110,6 +121,7 @@ export default {
 
     toggleRequestType() {
       this.toggle = false;
+      this.$store.commit("viewRequestCard");
     }
   }
 };

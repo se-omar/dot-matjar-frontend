@@ -24,7 +24,8 @@ export default new Vuex.Store({
     currentUserPassword: localStorage.getItem('currentPassword'),
     viewResponseDetails: false,
     myProducts: JSON.parse(localStorage.getItem('myProducts')),
-    nodeHost: "http://localhost:3000/"
+    nodeHost: "http://localhost:3000/",
+    viewRequestDetails: false
   },
 
   mutations: {
@@ -125,6 +126,14 @@ export default new Vuex.Store({
     },
     profilePhoto(state, photoPath) {
       state.profilephoto = photoPath
+    },
+
+    viewRequestDetails(state) {
+      state.viewRequestDetails = true
+    },
+
+    viewRequestCard(state) {
+      state.viewRequestDetails = false
     }
 
   },

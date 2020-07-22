@@ -3,7 +3,7 @@
     <tool-bar></tool-bar>
     <v-container fluid>
       <v-row class="mr-10">
-        <v-col lg="7" md="7" sm="12">
+        <v-col lg="7" md="7" sm="12" cols="12">
           <v-row>
             <v-col cols="12">
               <v-text-field
@@ -82,20 +82,6 @@
               ></v-textarea>
             </v-col>
           </v-row>
-
-          <v-row>
-            <v-col cols="4">
-              <v-btn @click="addProduct" block class="primary">
-                <span style="font-size: 18px">تعديل المنتج</span>
-              </v-btn>
-            </v-col>
-
-            <v-col cols="4">
-              <v-btn @click="$router.go(-1)" block class="red white--text">
-                <span style="font-size: 18px">الغاء</span>
-              </v-btn>
-            </v-col>
-          </v-row>
         </v-col>
 
         <v-col lg="5" md="5" sm="12">
@@ -123,6 +109,22 @@
                 <label>صورة اضافية</label>
                 <v-file-input @change="setImage3"></v-file-input>
               </v-form>
+            </v-col>
+          </v-row>
+        </v-col>
+
+        <v-col lg="5" md="8" sm="8" cols="10">
+          <v-row justify="center">
+            <v-col cols="4">
+              <v-btn @click="updateProduct" block class="primary">
+                <span style="font-size: 18px">تعديل المنتج</span>
+              </v-btn>
+            </v-col>
+
+            <v-col cols="4">
+              <v-btn @click="$router.go(-1)" block class="red white--text">
+                <span style="font-size: 18px">الغاء</span>
+              </v-btn>
             </v-col>
           </v-row>
         </v-col>
@@ -172,7 +174,7 @@ export default {
       this.image3 = output;
     },
 
-    addProduct(files) {
+    updateProduct(files) {
       console.log(this.productName);
       var self = this;
       console.log(this.currentUser);

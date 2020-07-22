@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import reglogin from '../views/registerlogin'
-import mainpage from '../views/mainpage'
 import completedata from '../views/completedata'
 import productDetails from '../views/productDetails'
 import resetPassword from '../views/resetPassword'
@@ -50,11 +49,6 @@ var routes = [{
     path: '/completedata',
     name: 'completedata',
     component: completedata
-  },
-  {
-    path: '/mainpage',
-    name: 'mainpage',
-    component: mainpage
   },
   {
     path: '/productDetails',

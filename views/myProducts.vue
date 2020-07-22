@@ -6,20 +6,20 @@
         <p class="display-1">منتجاتي</p>
       </v-row>
 
+      <v-row justify="center">
+        <v-btn @click="$router.push('/addProduct').catch((err) => {})">
+          <span style="font-size: 19px">اضافة منتح</span>
+        </v-btn>
+      </v-row>
+
       <v-row v-if="myProducts.length != 0">
-        <v-col cols="3" v-for="myProduct in myProducts" :key="myProduct.id">
+        <v-col lg="3" md="4" sm="6" cols="6" v-for="myProduct in myProducts" :key="myProduct.id">
           <product :filteredProduct="myProduct"></product>
         </v-col>
       </v-row>
 
       <v-row class="mt-16" justify="center" v-else>
         <p class="display-1">لا يوجد منتجات</p>
-      </v-row>
-
-      <v-row justify="center">
-        <v-btn @click="$router.push('/addProduct').catch((err) => {})">
-          <span style="font-size: 19px">اضافة منتح</span>
-        </v-btn>
       </v-row>
     </v-container>
 
