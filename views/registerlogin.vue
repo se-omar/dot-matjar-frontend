@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    
     <v-app>
       <tool-bar></tool-bar>
       <v-container v-if="!currentUser" style="width: 60%">
@@ -53,10 +54,11 @@
                           @click="validateLoginPage"
                         >تسجيل الدخول</v-btn>
                       </v-col>
+                      
 
-                      <v-col class="d-flex" cols="12" sm="6" xsm="12">
+                      <v-col class="d-flex" cols="12" sm="12" xsm="12">
                         <v-btn @click="$router.push('/resetPassword')" text>هل نسيت كلمة المرور</v-btn>
-                      </v-col>
+                      </v-col>  
                     </v-row>
                   </v-form>
                 </v-card-text>
@@ -67,7 +69,7 @@
                 <v-card-text>
                   <v-form ref="registerForm" v-model="valid" lazy-validation>
                     <v-row>
-                      <v-col cols="6">
+                      <v-col cols="6" sm="12">
                         <v-text-field
                           v-model="email"
                           :rules="emailRules"
@@ -75,7 +77,7 @@
                           required
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="6" sm="6" md="6">
+                      <v-col cols="6" sm="12" md="6">
                         <v-text-field
                           v-model="nationalNumber"
                           :rules="[rules.national, rules.must]"
@@ -84,7 +86,7 @@
                         ></v-text-field>
                       </v-col>
 
-                      <v-col cols="6" sm="6" md="6">
+                      <v-col cols="6" sm="12" md="6">
                         <v-text-field
                           v-model="fullArabicName"
                           :rules="[rules.required]"
@@ -93,7 +95,7 @@
                           required
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="6" sm="6" md="6">
+                      <v-col cols="6" sm="12" md="6">
                         <v-text-field
                           v-model="mobileNumber"
                           :rules="[rules.mobilenumber]"
@@ -105,7 +107,7 @@
 
                       <!-- National NUMBER  -->
 
-                      <v-col cols="6">
+                      <v-col cols="6" sm="12">
                         <v-text-field
                           v-model="password"
                           :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -118,7 +120,7 @@
                           @click:append="show1 = !show1"
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="6">
+                      <v-col cols="6" sm="12">
                         <v-text-field
                           block
                           v-model="verify"
@@ -149,7 +151,7 @@
                         </v-checkbox>
                       </v-col>
 
-                      <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
+                      <v-col class="d-flex ml-auto" cols="12" sm="6" xsm="12">
                         <v-btn
                           x-large
                           block
@@ -181,7 +183,9 @@
         </v-row>
       </v-container>
     </v-app>
+    
   </div>
+  
 </template>
 
 <script>
@@ -202,7 +206,7 @@ export default {
 
   methods: {
     validateSignup() {
-      alert("Please Verify your account , a message has been sent");
+
       var self = this;
       self.$store.dispatch("register", {
         email: this.email,

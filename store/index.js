@@ -263,7 +263,7 @@ export default new Vuex.Store({
         })
     },
 
-    register(commit, {
+    register(context, {
       email,
       password,
       full_arabic_name,
@@ -280,8 +280,11 @@ export default new Vuex.Store({
           national_number
 
         })
-        .then((data, status) => {
-          if (status === 201) console.log("Account Created")
+        .then(response=> {
+          if (response.data.message)  {alert(response.data.message)}
+          else{
+          console.log("Error in database")
+          }
         })
         .catch(error => {
           console.log(error)

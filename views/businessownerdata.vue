@@ -36,13 +36,13 @@
                             <v-card-text>
                                 <v-form ref="loginForm" v-model="valid" lazy-validation>
                                     <v-row>
-                                        <v-col cols="4">
+                                        <v-col cols="4" sm="6">
                                             <v-text-field v-model=" bussinessName"  label="اسم المشروع" required></v-text-field>
                                         </v-col>
-                                        <v-col cols="4">
+                                        <v-col cols="4" sm="6">
                                             <v-text-field v-model="bussinessActivity" :append-icon="show1?'eye':'eye-off'"  name="input-10-1" label="النشاط"  counter @click:append="show1 = !show1"></v-text-field>
                                         </v-col>
-                                         <v-col cols="4">
+                                         <v-col cols="4" sm="6">
                                             <v-text-field v-model="enterPriceNationalNumber" :rules="[rules.mobilenumber]"  name="input-10-1" label="الرقم القومي للمنشاه" hint="At least 8 characters" counter @click:append="show1 = !show1"></v-text-field>
                                         </v-col>
                                        
@@ -58,7 +58,7 @@
 
 
 
- <v-col lg="4" sm="2" md="1">
+ <v-col lg="4" sm="4" md="4">
 
     <div v-if="message">
 <span id="message">{{message}}</span>
@@ -69,7 +69,7 @@
 
     
       <div class="uploader">
-          
+        
 <div class="file is-boxed is-primary">
 <label class="file-label">
 
@@ -102,7 +102,6 @@ id="input"
 </div>
    
   
-
 </div>
 </v-card>
    </v-col>
@@ -114,7 +113,7 @@ id="input"
 <!-- Socond photo -->
 
 
- <v-col lg="4" sm="2" md="1">
+ <v-col lg="4" sm="4" md="4">
 
     <div v-if="message">
 <span id="message">{{message}}</span>
@@ -168,7 +167,7 @@ id="input"
 
 
 
- <v-col lg="4" sm="2" md="1">
+ <v-col lg="4" sm="4" md="4">
 
     <div v-if="message">
 <span id="message">{{message}}</span>
@@ -258,17 +257,17 @@ id="input"
 
                                 <v-form ref="registerForm" v-model="valid" lazy-validation>
                                     <v-row>
-                                       <v-col cols="4">
+                                       <v-col cols="4" sm="6">
                                             <v-text-field v-model="name"  label="الاسم"     outlined></v-text-field>
                                         </v-col>
-                                         <v-col cols="4" >
+                                         <v-col cols="4" sm="6" >
                                             <v-text-field v-model="nationalNumber"    label="الرقم القومي لصاحب المشروع" maxlength="14"      outlined></v-text-field>
                                         </v-col>
 
-                                        <v-col cols="4" >
+                                        <v-col cols="4" sm="6" >
                                             <v-text-field v-model="job"  label="الوظيفه الحاليه"      outlined></v-text-field>
                                       </v-col>
-                                        <v-col cols="4" >
+                                        <v-col cols="4" sm="6" >
                                             <v-text-field v-model="email"  label="البريد الالكتروني"  filled  disabled outlined ></v-text-field>
                                       </v-col>
                                        
@@ -277,13 +276,13 @@ id="input"
                                          <!-- National NUMBER  -->
 
                                         
-                                        <v-col cols="4">
+                                        <v-col cols="4" sm="6">
                                             <v-text-field v-model="mobileNumber"   label="الموبايل"  counter @click:append="show1 = !show1"     outlined></v-text-field>
                                         </v-col>
-                                        <v-col cols="4">
+                                        <v-col cols="4" sm="6">
                                             <v-text-field block v-model="fax"   label="الفاكس" counter @click:append="show1 = !show1"     outlined></v-text-field>
                                         </v-col>
-                                          <v-col cols="4">
+                                          <v-col cols="4" sm="6">
                                             <v-text-field block v-model="website"   label="رابط الموقع" counter @click:append="show1 = !show1"     outlined></v-text-field>
                                         </v-col>
                                               
@@ -332,7 +331,7 @@ id="input"
                                         
                                       
 
-                                        <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
+                                        <v-col class="d-flex ml-auto" cols="12" sm="6" xsm="12">
                                             <v-btn x-large block :disabled="!valid || !checkbox"  id="btn" color="success" @click="sendServer">تسجيل</v-btn>
                                        <v-btn x-large block :disabled="!valid || !checkbox"  color="success" @click="$router.push('/')">الغاء</v-btn>
                                         </v-col>
@@ -358,7 +357,22 @@ export default {
  components: {
     
   },
+mounted(){
+  
 
+if (this.currentUser.website ){ this.website = this.currentUser.website}
+if (this.currentUser.full_arabic_name ){ this.name = this.currentUser.full_arabic_name}
+if (this.currentUser.fax ){ this.fax = this.currentUser.fax}
+if (this.currentUser.mobile_number ){ this.mobileNumber = this.currentUser.mobile_number}
+if (this.currentUser.national_number ){ this.nationalNumber = this.currentUser.national_number}
+if (this.currentUser.job ){ this.job = this.currentUser.job}
+if (this.currentUser.email ){ this.email = this.currentUser.email}
+if (this.currentUser.address ){ this.address = this.currentUser.address}
+
+
+
+
+},
  computed: {
     passwordMatch() {
       return () => this.password === this.verify || "Password must match";
@@ -366,7 +380,11 @@ export default {
 
     row() {
       return this.$store.state.row;
-    }
+    },
+    currentUser(){
+      return this.$store.state.currentUser
+    },  
+    
     
   },
   methods: {
@@ -454,18 +472,8 @@ dropFiles(){
     
    
   },
-  created(){
-    
-    this.name=this.$store.state.currentUser.full_arabic_name
-  this.nationalNumber=this.$store.state.currentUser.national_number
-  this.job=this.$store.state.currentUser.job
-  this.fax=this.$store.state.currentUser.fax
-  this.address=this.$store.state.currentUser.address
-  this.website=this.$store.state.currentUser.website
-  this.mobileNumber=this.$store.state.currentUser.mobile_number
-  this.email=this.$store.state.currentUser.email
-    
-  },
+  
+
 
   data: () => ({
     dialog: true,

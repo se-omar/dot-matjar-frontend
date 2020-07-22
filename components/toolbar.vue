@@ -1,13 +1,15 @@
 <template>
-  <div class="tool-bar">
-    <v-app-bar color="blue" dense dark>
+  <div  class="tool-bar">
+    <v-app-bar dark dense >
+      
+
       <v-toolbar-title>
-        <v-btn text @click="$router.push('/home').catch((err) => {})">اسم الموقع</v-btn>
+        <v-btn  class="font" text @click="$router.push('/home').catch((err) => {})">اسم الموقع</v-btn>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <v-btn
+      <v-btn class="font"
         v-if="!currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
         @click="$router.push('/reglogin').catch((err) => {})"
@@ -15,27 +17,30 @@
 
       <v-btn
         v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
-        text
+        text class="font"
         @click="$router.push('/editPassword').catch((err) => {})"
       >تغيير كلمة السر</v-btn>
 
       <v-btn
+       class="font"
         v-if="currentUser && currentUser.user_type == 'business' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
         @click="$router.push('/requestsPage').catch((err) => {})"
       >الطلبات</v-btn>
 
       <v-btn
+      class="font"
         v-if="currentUser && currentUser.user_type == 'business' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
         @click="$router.push('/myProducts').catch((err) => {})"
       >منتجاتي</v-btn>
 
-      <v-btn v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs" text>
+      <v-btn class="font" v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs" text>
         <span>عن الموقع</span>
       </v-btn>
 
       <v-btn
+      class="font"
         v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
         @click="logout"
@@ -53,11 +58,13 @@
         offset-x
         class="menu"
         max-width="20%"
+        min-width="300px"
+       
       >
         <template v-slot:activator="{ on, attrs }">
-          <v-btn text dark v-bind="attrs" v-on="on">
-            <span>حسابي</span>
-            <v-icon>mdi-account-circle</v-icon>
+          <v-btn   text dark v-bind="attrs" v-on="on">
+            <span class="font">حسابي</span>
+            <v-icon color="black">mdi-account-circle</v-icon>
           </v-btn>
         </template>
 
@@ -133,58 +140,15 @@
 
           <v-card-text>
             <v-row justify="center">
-              <span class="username">{{currentUser.full_arabic_name}}</span>
-            </v-row>
+            <span  class="username">{{currentUser.full_arabic_name}}</span>
+         </v-row>
           </v-card-text>
-          <v-card-title>
-            <a class="x">الطلبات الصادره و الوارده</a>
-          </v-card-title>
+         
           <v-row>
-            <v-card-text>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                x="0px"
-                y="0px"
-                width="24"
-                height="24"
-                viewBox="0 0 172 172"
-                style=" fill:#000000;"
-              >
-                <g
-                  fill="none"
-                  fill-rule="nonzero"
-                  stroke="none"
-                  stroke-width="1"
-                  stroke-linecap="butt"
-                  stroke-linejoin="miter"
-                  stroke-miterlimit="10"
-                  stroke-dasharray
-                  stroke-dashoffset="0"
-                  font-family="none"
-                  font-weight="none"
-                  font-size="none"
-                  text-anchor="none"
-                  style="mix-blend-mode: normal"
-                >
-                  <path d="M0,172v-172h172v172z" fill="none" />
-                  <g fill="#95a5a6">
-                    <path
-                      d="M43,14.33333v28.66667h7.16667v114.66667h37.0651l14.33333,-14.33333h-37.0651v-28.66667h35.83333v7.16667h28.66667v-28.66667h-28.66667v7.16667h-35.83333v-28.66667h35.83333v7.16667h28.66667v-28.66667h-28.66667v7.16667h-35.83333v-14.33333h7.16667v-28.66667zM159.15039,107.5c-0.91644,0 -1.83477,0.35105 -2.53352,1.0498l-7.16667,7.16667l14.33333,14.33333l7.16667,-7.16667c1.3975,-1.3975 1.3975,-3.66956 0,-5.06706l-9.26628,-9.26628c-0.70233,-0.69875 -1.61709,-1.0498 -2.53353,-1.0498zM144.38314,120.78353l-36.88314,36.88314v14.33333h14.33333l36.88314,-36.88314z"
-                    />
-                  </g>
-                </g>
-              </svg>
-
-              <a @click="$router.push('/completedata')" class="size">تعديل بياناتي</a>
-            </v-card-text>
+            
           </v-row>
           <v-divider></v-divider>
 
-          <v-col cols="12">
-            <v-btn class="btn1" x-large color="blue">
-              <span class="mos">انضم كمستشار</span>
-            </v-btn>
-          </v-col>
           <v-col cols="12">
             <v-btn class="btn1" x-large color="blue">
               <span class="mos" @click="$router.push('/businessownerdata')">انضم كصاحب مشروع</span>
@@ -197,11 +161,14 @@
             <v-card-text>
               <i class="fa fa-cog fa-lg" aria-hidden="true" style="color:black"></i>
 
-              <a class="size" @click="$router.push('/editPassword')">تعديل كلمه المرور</a>
-              <br />
-              <br />
-              <i class="fa fa-power-off fa-lg" aria-hidden="true" style="color:black"></i>
-              <a class="size" @click="$router.push('/login')">تسجيل الخروج</a>
+              <a class="size" @click="$router.push('/editPassword')">  تعديل كلمه المرور</a><br/>
+<br/>
+
+<i class="	fas fa-edit" aria-hidden="true" style="color:black"></i> 
+<a @click="$router.push('/completedata')" class="size"> تعديل بياناتي</a><br/>
+           <br/> 
+              <i class="fa fa-power-off fa-lg" aria-hidden="true"  style="color:black"></i>
+              <a class="size" @click="logout">  تسجيل الخروج </a>
             </v-card-text>
           </v-col>
         </v-card>
@@ -312,7 +279,7 @@ export default {
 </script>
 
 <style scoped>
-img {
+.img {
   border-radius: 50%;
 }
 .size {
@@ -327,7 +294,7 @@ img {
   font-weight: bold;
   font-size: 25px;
   text-align: center;
-  color: black;
+  color:black
 }
 .btn1 {
   margin-right: 10%;
@@ -348,4 +315,9 @@ img {
 #fileUpload {
   text-align: center;
 }
+.font{
+color:white;
+ font-size: 18px;
+}
+
 </style>

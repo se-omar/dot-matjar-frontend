@@ -197,6 +197,8 @@ export default {
         })
         .then(response => {
           console.log(response);
+          alert('تم اضافة المنتج')
+          this.$router.push('/myProducts').catch(() => {})
         });
     }
   }
