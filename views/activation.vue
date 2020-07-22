@@ -27,7 +27,7 @@ export default {
   created(){
  
           alert("Your EMAIL is sucessfuly activated , you can login now")
-            this.$router.push('/')
+            this.$router.push('/reglogin')
             this.$store.dispatch('activation')
         },
   
