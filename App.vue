@@ -10,7 +10,7 @@ export default {
 
   computed: {
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.currentUser
     }
   }
 };
