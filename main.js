@@ -9,8 +9,14 @@ import vuetify from './plugins/vuetify';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
-Vue.config.productionTip = false
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+Vue.config.productionTip = false
+Vue.use(BootstrapVue)
+
+Vue.use(IconsPlugin)
 
 library.add(faUserSecret)
 

@@ -14,12 +14,17 @@ import requestsPage from '../views/requestsPage'
 import myProducts from '../views/myProducts'
 import addProduct from '../views/addProduct'
 import editProduct from '../views/editProduct'
-
+import cart from '../views/cart'
 Vue.use(VueRouter)
 
 
 
 var routes = [{
+  path: '/cart',
+  name: "cart",
+  component: cart,
+},
+{
     path: '/',
     name: "home",
     component: Home,

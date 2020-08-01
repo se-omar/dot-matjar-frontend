@@ -1,7 +1,11 @@
 <template>
   <div class="home">
     <v-app>
+      <!-- cart -->
+    
+       <!-- cart -->
       <tool-bar></tool-bar>
+      <cartTable/>
       <v-container>
         <v-row>
           <v-col lg="11">
@@ -52,6 +56,7 @@
 <script>
 import Product from "../components/product.vue";
 import ToolBar from "../components/toolbar.vue";
+import cartTable from "../components/cartTable"
 //import usersModel from "../models/usersModel";
 
 export default {
@@ -113,7 +118,8 @@ export default {
   },
   components: {
     Product,
-    ToolBar
+    ToolBar,
+    cartTable
   }
 };
 </script>

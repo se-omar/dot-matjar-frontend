@@ -1,9 +1,9 @@
 <template>
+
   <v-card :elevation="7" max-width="280">
     <v-img height="200" :src="nodeHost + filteredProduct.main_picture"></v-img>
 
     <v-card-title>{{ filteredProduct.product_name }}</v-card-title>
-
     <v-card-text>
       <div>كود المنتج: {{ filteredProduct.product_code }}</div>
       <div>
@@ -22,17 +22,26 @@
 
     <v-divider class="mx-4"></v-divider>
 
-    <v-card-actions>
+    <v-card-actions >
       <v-btn @click="setCurrentRow" color="primary" text>التفاصيل</v-btn>
+       <b-button 
+          @click="add(filteredProduct)"
+          variant="primary"
+          >Add to shopping cart</b-button>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+// import cart from '../views/cart'
 export default {
+  components:{
+    
+  },
   name: "product",
   data() {
     return {
+      cart:[],
       rating: 4
     };
   },
@@ -56,7 +65,17 @@ export default {
     setCurrentRow() {
       this.$store.dispatch("setCurrentProduct", this.filteredProduct);
       this.$router.push("/productDetails");
+    },
+    add(product){
+            this.$store.dispatch('table')
+      this.$store.commit("cart",product)
+      this.$store.dispatch("cart",product.product_id)
+      console.log(product.product_id)
+      this.cart=this.$store.state.cart
+      console.log(this.cart)
+
     }
+
   },
   computed: {
     products() {
