@@ -4,72 +4,81 @@
     <v-container fluid>
       <v-row class="mr-10">
         <v-col lg="7" md="7" sm="12" cols="12">
-          <v-row>
-            <v-col cols="12">
-              <v-text-field
-                v-model="productName"
-                dense
-                required
-                outlined
-                :rules="Rules"
-                label="اسم المنتج او الخدمة*"
-              ></v-text-field>
-            </v-col>
-          </v-row>
+          <v-form ref="addForm" v-model="valid" lazy-validation>
+            <v-row>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="productName"
+                  dense
+                  outlined
+                  required
+                  :rules="Rules"
+                  label="اسم المنتج او الخدمة*"
+                ></v-text-field>
+              </v-col>
+            </v-row>
 
-          <v-row>
-            <v-col cols="6">
-              <v-text-field :rules="Rules" v-model="productCode" dense outlined label="الكود*"></v-text-field>
-            </v-col>
+            <v-row>
+              <v-col cols="6">
+                <v-text-field :rules="Rules" v-model="productCode" dense outlined label="الكود*"></v-text-field>
+              </v-col>
 
-            <v-col cols="6">
-              <v-text-field
-                dense
-                v-model="HScode"
-                :rules="Rules"
-                outlined
-                label="كود التصدير (HS Code)*"
-              ></v-text-field>
-            </v-col>
-          </v-row>
+              <v-col cols="6">
+                <v-text-field
+                  dense
+                  v-model="HScode"
+                  :rules="Rules"
+                  outlined
+                  label="كود التصدير (HS Code)*"
+                ></v-text-field>
+              </v-col>
+            </v-row>
 
-          <v-row>
-            <v-col cols="6">
-              <v-text-field :rules="Rules" dense v-model="unitPrice" outlined label="السعر للقطعة*"></v-text-field>
-            </v-col>
+            <v-row>
+              <v-col cols="6">
+                <v-text-field
+                  :rules="Rules"
+                  dense
+                  v-model="unitPrice"
+                  outlined
+                  label="السعر للقطعة*"
+                ></v-text-field>
+              </v-col>
 
-            <v-col cols="6">
-              <v-text-field
-                dense
-                v-model="minUnits"
-                :rules="Rules"
-                outlined
-                label="الحد الادني للطلب*"
-              ></v-text-field>
-            </v-col>
-          </v-row>
+              <v-col cols="6">
+                <v-text-field
+                  dense
+                  v-model="minUnits"
+                  :rules="Rules"
+                  outlined
+                  label="الحد الادني للطلب*"
+                ></v-text-field>
+              </v-col>
+            </v-row>
 
-          <v-row>
-            <v-col cols="6">
-              <v-text-field v-model="color" dense outlined label="اللون"></v-text-field>
-            </v-col>
+            <v-row>
+              <v-col cols="6">
+                <v-text-field v-model="color" dense outlined label="اللون"></v-text-field>
+              </v-col>
 
-            <v-col cols="6">
-              <v-text-field dense outlined label="قيمة التخفيض"></v-text-field>
-            </v-col>
-          </v-row>
+              <v-col cols="6">
+                <v-text-field dense outlined label="قيمة التخفيض"></v-text-field>
+              </v-col>
+            </v-row>
 
-          <v-row>
-            <v-col cols="12">
-              <v-textarea
-                v-model="description"
-                :rules="Rules"
-                dense
-                outlined
-                label="وصف المنتج\الخدمة"
-              ></v-textarea>
-            </v-col>
-          </v-row>
+            <v-row>
+              <v-col cols="12">
+                <v-textarea
+                  v-model="description"
+                  :rules="Rules"
+                  dense
+                  required
+                  outlined
+                  label="وصف المنتج\الخدمة"
+                ></v-textarea>
+              </v-col>
+            </v-row>
+          </v-form>
         </v-col>
 
         <v-col lg="5" md="5" sm="12">
@@ -104,7 +113,7 @@
         <v-col lg="5" md="8" sm="8" cols="10">
           <v-row justify="center">
             <v-col cols="4">
-              <v-btn @click="addProduct" block class="primary">
+              <v-btn :disabled="!valid" @click="addProduct" block class="primary">
                 <span style="font-size: 18px">اضافة المنتج</span>
               </v-btn>
             </v-col>
@@ -151,7 +160,8 @@ export default {
       size: "",
       discountAmount: "",
       description: "",
-      Rules: [v => !!v || "Required"]
+      Rules: [v => !!v || "Required"],
+      valid: true
     };
   },
   methods: {
@@ -197,8 +207,8 @@ export default {
         })
         .then(response => {
           console.log(response);
-          alert('تم اضافة المنتج')
-          this.$router.push('/myProducts').catch(() => {})
+          alert("تم اضافة المنتج");
+          this.$router.push("/myProducts").catch(() => {});
         });
     }
   }
