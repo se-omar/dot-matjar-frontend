@@ -256,6 +256,7 @@ export default {
   methods: {
     logout() {
       this.$store.commit("removeCurrentUser");
+      
       setTimeout(() => {
         this.$router.push("/reglogin").catch(() => {});
       }, 10);

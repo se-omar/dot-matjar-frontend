@@ -97,7 +97,7 @@ methods:{
         if(this.items[x].product_id == id){
           this.items.splice(x,1); 
           console.log(this.items) 
- this.$store.commit('remove',id)
+ 
  this.$store.dispatch('remove',id)
         }
       
@@ -134,14 +134,21 @@ methods:{
 console.log('event is :',event)
     },
      table(){
-       
-      this.items=[]
-      for(var i=0 ; i<this.$store.state.table.length;i++){
-        this.items.push(this.$store.state.table[i])
-        console.log('store i :',this.$store.state.table[i])
+       var self=this;
+       this.$store.dispatch('localStorage')
+       setTimeout(function(){ 
+          
+       console.log(self.$store.state.table)
+      self.items=[]
+      for(var i=0 ; i<self.$store.state.table.length;i++){
+        self.items.push(self.$store.state.table[i])
+        console.log('store i :',self.$store.state.table[i])
       
       }
 
+          }, 100);
+
+      
     }  
 },
 
