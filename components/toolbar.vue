@@ -64,7 +64,7 @@
         <template v-slot:activator="{ on, attrs }">
           <v-btn   text dark v-bind="attrs" v-on="on">
             <span class="font">حسابي</span>
-            <v-icon color="black">mdi-account-circle</v-icon>
+            <v-icon color="white">mdi-account-circle</v-icon>
           </v-btn>
         </template>
 

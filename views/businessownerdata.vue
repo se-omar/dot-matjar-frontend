@@ -53,19 +53,18 @@
 <v-row>
 
 
-
 <!-- First photo -->
 
+    <v-card>
 
 
- <v-col lg="4" sm="4" md="4">
+ <v-col  sm="4" md="4">
 
     <div v-if="message">
 <span id="message">{{message}}</span>
 
     </div>
    
-    <v-card>
 
     
       <div class="uploader">
@@ -103,24 +102,24 @@ id="input"
    
   
 </div>
-</v-card>
-   </v-col>
 
+   </v-col>
+</v-card>
 
 
 
 
 <!-- Socond photo -->
 
+    <v-card>
 
- <v-col lg="4" sm="4" md="4">
+ <v-col  sm="4" md="4">
 
     <div v-if="message">
 <span id="message">{{message}}</span>
 
     </div>
    
-    <v-card>
 
     
       <div class="uploader">
@@ -158,23 +157,23 @@ id="input"
   
 
 </div>
-</v-card>
    </v-col>
+</v-card>
 
 
 
 <!-- Third photo -->
 
+    <v-card>
 
 
- <v-col lg="4" sm="4" md="4">
+ <v-col  sm="4" md="4">
 
     <div v-if="message">
 <span id="message">{{message}}</span>
 
     </div>
    
-    <v-card>
 
     
       <div class="uploader">
@@ -214,9 +213,8 @@ id="input"
 
 
 </div>
-</v-card>
    </v-col>
-
+</v-card>
 
 
 

@@ -25,7 +25,9 @@ export default new Vuex.Store({
     viewResponseDetails: false,
     myProducts: JSON.parse(localStorage.getItem('myProducts')),
     nodeHost: "http://localhost:3000/",
-    viewRequestDetails: false
+    viewRequestDetails: false,
+    cart: [],
+    table: JSON.parse(localStorage.getItem('cartItems'))
   },
 
   mutations: {
@@ -116,11 +118,14 @@ export default new Vuex.Store({
     removeCurrentUser(state) {
       localStorage.removeItem('currentUser');
       state.currentUser = '';
+      state.table = ''
       localStorage.removeItem('currentEmail');
       localStorage.removeItem('currentPassword');
       localStorage.removeItem('recievedRequests');
       localStorage.removeItem('sentRequests');
       localStorage.removeItem('myProducts');
+      localStorage.removeItem('cartItems');
+
       console.log(state.currentUser)
 
     },
@@ -134,6 +139,30 @@ export default new Vuex.Store({
 
     viewRequestCard(state) {
       state.viewRequestDetails = false
+    },
+    cart(state, product) {
+      state.cart.push(product)
+    },
+
+    table(state, data) {
+      localStorage.setItem('cartItems', JSON.stringify(data))
+      state.table = JSON.parse(localStorage.getItem('cartItems'))
+    },
+
+    remove(state, id) {
+      console.log(state.table)
+
+
+      for (var i = 0; i < state.table.length; i++) {
+        if (state.table[i].product_id == id) {
+          console.log("if worked")
+          state.table.splice(i, 1)
+          localStorage.setItem('cartItems', JSON.stringify(state.table))
+          console.log('splice is:', state.table)
+        }
+
+      }
+
     }
 
   },
@@ -280,10 +309,11 @@ export default new Vuex.Store({
           national_number
 
         })
-        .then(response=> {
-          if (response.data.message)  {alert(response.data.message)}
-          else{
-          console.log("Error in database")
+        .then(response => {
+          if (response.data.message) {
+            alert(response.data.message)
+          } else {
+            console.log("Error in database")
           }
         })
         .catch(error => {
@@ -396,6 +426,41 @@ export default new Vuex.Store({
 
         }
       })
+    },
+    cart(context, product_id) {
+      axios.post('http://localhost:3000/api/cart', {
+          product_id: product_id,
+          user_id: context.state.currentUser.user_id
+
+        })
+        .then(response => {
+          console.log(response.data)
+
+        })
+
+
+
+
+
+    },
+    table(context) {
+      axios.put('http://localhost:3000/api/table', {
+          user_id: context.state.currentUser.user_id
+        })
+        .then(response => {
+          console.log(response.data.data)
+          context.commit('table', response.data.data)
+        })
+
+    },
+    remove(context, id) {
+      axios.put('http://localhost:3000/api/remove', {
+          product_id: id
+        })
+        .then(response => {
+          console.log(response.data)
+        })
+
     }
 
   },
