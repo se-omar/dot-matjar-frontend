@@ -17,23 +17,21 @@ export default {
       var sessionId = "";
 
       this.$axios
-        .post("http://localhost:3000/api/checkout", {
-          product_id: 53,
-        })
-        .then((response) => {
+        .post("http://localhost:3000/api/checkout")
+        .then(response => {
           console.log(response.data.session_id);
           sessionId = response.data.session_id;
         })
         .then(() => {
           stripe
             .redirectToCheckout({
-              sessionId: sessionId,
+              sessionId: sessionId
             })
             .then(function(result) {
               console.log(result);
             });
         });
-    },
-  },
+    }
+  }
 };
 </script>

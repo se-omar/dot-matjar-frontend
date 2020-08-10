@@ -13,14 +13,7 @@
       </div>
       <div>المشروع: {{ filteredProduct.bussiness.bussiness_name }}</div>
       <v-row align="center" class="mx-0">
-        <v-rating
-          v-model="rating"
-          color="amber"
-          dense
-          half-increments
-          readonly
-          size="15"
-        ></v-rating>
+        <v-rating v-model="rating" color="amber" dense half-increments readonly size="15"></v-rating>
 
         <div class="grey--text ml-4">4</div>
       </v-row>
@@ -30,7 +23,12 @@
 
     <v-card-actions>
       <v-btn @click="setCurrentRow" color="primary" text>التفاصيل</v-btn>
-      <b-button @click="add()" variant="primary">Add to shopping cart</b-button>
+      <b-button @click="add(filteredProduct)" variant="primary">Add to cart</b-button>
+      <!-- <b-button
+           v-if="this.inCart.in_cart==1"
+          @click="add(product)"
+          variant="warning"
+      >product is added to cart</b-button>-->
     </v-card-actions>
   </v-card>
 </template>
@@ -42,8 +40,9 @@ export default {
   name: "product",
   data() {
     return {
+      i: 0,
       cart: [],
-      rating: 4,
+      rating: 4
     };
   },
   created() {
@@ -54,12 +53,12 @@ export default {
   props: {
     product: {
       type: Object,
-      default: () => null,
+      default: () => null
     },
     filteredProduct: {
       type: Object,
-      default: () => null,
-    },
+      default: () => null
+    }
   },
 
   methods: {
@@ -67,14 +66,13 @@ export default {
       this.$store.dispatch("setCurrentProduct", this.filteredProduct);
       this.$router.push("/productDetails");
     },
-    add() {
-      this.$store.dispatch("table");
-      this.$store.commit("cart", this.filteredProduct);
-      this.$store.dispatch("cart", this.filteredProduct.product_id);
-      console.log(this.filteredProduct.product_id);
+    add(product) {
+      this.$store.dispatch("table", product);
+      // this.$store.commit("cart",product)
+      // this.$store.dispatch("cart",product.product_id)
       this.cart = this.$store.state.cart;
-      console.log(this.cart);
-    },
+      console.log(product.in_cart);
+    }
   },
   computed: {
     products() {
@@ -87,7 +85,7 @@ export default {
 
     nodeHost() {
       return this.$store.state.nodeHost;
-    },
-  },
+    }
+  }
 };
 </script>

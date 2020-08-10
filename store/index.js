@@ -27,7 +27,8 @@ export default new Vuex.Store({
     nodeHost: "http://localhost:3000/",
     viewRequestDetails: false,
     cart: [],
-    table: JSON.parse(localStorage.getItem('cartItems'))
+    table: JSON.parse(localStorage.getItem('cartItems')),
+    incart: ''
   },
 
   mutations: {
@@ -49,7 +50,7 @@ export default new Vuex.Store({
         localStorage.setItem('currentUser', JSON.stringify(response.data.data));
         console.log(JSON.parse(localStorage.getItem('currentUser')));
         state.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-        router.push('/home').catch(() => {})
+        router.push('/home').catch(() => { })
         console.log('current user is: ', state.currentUser);
       }
     },
@@ -151,17 +152,18 @@ export default new Vuex.Store({
 
     remove(state, id) {
       console.log(state.table)
-
-
       for (var i = 0; i < state.table.length; i++) {
         if (state.table[i].product_id == id) {
-          console.log("if worked")
           state.table.splice(i, 1)
           localStorage.setItem('cartItems', JSON.stringify(state.table))
           console.log('splice is:', state.table)
         }
-
       }
+    },
+
+    localStorage(state, products) {
+      localStorage.setItem('cartItems', JSON.stringify(products))
+      state.table = JSON.parse(localStorage.getItem('cartItems'))
 
     }
 
@@ -171,10 +173,10 @@ export default new Vuex.Store({
     profilePhoto(context, form) {
       console.log("actions starts")
       axios.post('http://localhost:3000/api/profilePhoto', form, {
-          headers: {
-            'content-type': 'multipart/form-data'
-          }
-        })
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      })
         .then(response => {
           console.log("the image path", response.data.data)
           console.log(response.data.message)
@@ -221,12 +223,12 @@ export default new Vuex.Store({
       }
       console.log('dologin email', email)
       axios.post("http://localhost:3000/api/login", {
-          email,
-          password
-        }).then((response) => {
-          console.log('dologin response', response)
-          context.commit('doLogin', response)
-        })
+        email,
+        password
+      }).then((response) => {
+        console.log('dologin response', response)
+        context.commit('doLogin', response)
+      })
         .catch((error) => {
           console.log(error);
         });
@@ -264,25 +266,25 @@ export default new Vuex.Store({
     }) {
 
       axios.put('http://localhost:3000/api/completedata', {
-          national_number,
-          gender,
-          full_arabic_name,
-          full_english_name,
-          birthdate,
-          qualifications,
-          job,
-          governorate,
-          village,
-          center,
-          phone_number,
-          mobile_number,
-          fax,
-          facebook_account,
-          linkedin,
-          website,
-          address,
-          email
-        })
+        national_number,
+        gender,
+        full_arabic_name,
+        full_english_name,
+        birthdate,
+        qualifications,
+        job,
+        governorate,
+        village,
+        center,
+        phone_number,
+        mobile_number,
+        fax,
+        facebook_account,
+        linkedin,
+        website,
+        address,
+        email
+      })
         .then(response => {
           alert(response.data.message)
           console.log(response.data.data)
@@ -302,13 +304,13 @@ export default new Vuex.Store({
 
 
       axios.post('http://localhost:3000/api/signup', {
-          email,
-          password,
-          full_arabic_name,
-          mobile_number,
-          national_number
+        email,
+        password,
+        full_arabic_name,
+        mobile_number,
+        national_number
 
-        })
+      })
         .then(response => {
           if (response.data.message) {
             alert(response.data.message)
@@ -345,8 +347,8 @@ export default new Vuex.Store({
 
     getRecievedRequests(context) {
       axios.post("http://localhost:3000/api/recievedRequests", {
-          user_id: context.state.currentUser.user_id
-        })
+        user_id: context.state.currentUser.user_id
+      })
         .then(response => {
           context.commit('getRecievedRequests', response.data);
         });
@@ -354,8 +356,8 @@ export default new Vuex.Store({
 
     getSentRequests(context) {
       axios.post("http://localhost:3000/api/sentRequests", {
-          user_id: context.state.currentUser.user_id
-        })
+        user_id: context.state.currentUser.user_id
+      })
         .then(response => {
           console.log(response.data);
           context.commit('getSentRequests', response.data);
@@ -429,10 +431,10 @@ export default new Vuex.Store({
     },
     cart(context, product_id) {
       axios.post('http://localhost:3000/api/cart', {
-          product_id: product_id,
-          user_id: context.state.currentUser.user_id
+        product_id: product_id,
+        user_id: context.state.currentUser.user_id
 
-        })
+      })
         .then(response => {
           console.log(response.data)
 
@@ -443,24 +445,29 @@ export default new Vuex.Store({
 
 
     },
-    table(context) {
-      axios.put('http://localhost:3000/api/table', {
-          user_id: context.state.currentUser.user_id
-        })
+    table(context, product) {
+      axios.post('http://localhost:3000/api/table', {
+        user_id: context.state.currentUser.user_id,
+        product_id: product.product_id
+      })
         .then(response => {
-          console.log(response.data.data)
-          context.commit('table', response.data.data)
+          console.log(response.data.message)
         })
 
     },
     remove(context, id) {
-      axios.put('http://localhost:3000/api/remove', {
-          product_id: id
-        })
+      axios.put('http://localhost:3000/api/remove', { product_id: id })
         .then(response => {
           console.log(response.data)
+          context.commit('remove', id)
         })
 
+    },
+    localStorage(context) {
+      axios.put('http://localhost:3000/api/getProducts', { user_id: context.state.currentUser.user_id })
+        .then((response) => {
+          context.commit('localStorage', response.data.data)
+        })
     }
 
   },
