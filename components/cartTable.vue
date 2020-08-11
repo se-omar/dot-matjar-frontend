@@ -1,15 +1,37 @@
 <template>
-      
+      <nav>
      <v-row justify="center">
+<v-card  height="70" width="100%" flat title>
+  <v-toolbar extended class="red darken-4"  extension-height="5">
+<!-- ================ -->
 
+
+
+
+
+  <!-- ========== -->
+ <v-row justify="end" class="mr-5">
     <v-btn
-      color="primary"
+      color="red lighten-1"
       dark
       @click.stop="dialog = true"
       @click="table"
+      v-if="currentUser "
+      large
     >
      <i class="fa fa-shopping-cart" aria-hidden="true"></i>
     </v-btn>
+    </v-row>
+    <!-- ==================== -->
+
+
+
+
+
+    <!-- =============== -->
+  </v-toolbar>
+
+  
 
    <v-row>
         <v-col cols="12" sm="6" md="6" lg="12" >
@@ -40,9 +62,14 @@
       <template v-slot:item.remove="{ item }">
         <v-btn depressed small  color="error" @click="remove(item.product_id)">X</v-btn>
       </template>
+<!-- =============== -->
 
+
+<!-- =================== -->
       </v-data-table>
         
+
+<v-card>
 
       <v-row>
        
@@ -57,13 +84,26 @@
 
       </v-col>
      </v-row>
+
+     <v-row justify="center">
+        <v-col lg="1" sm="1" cols="1">
+      <v-btn dark large @click="$router.push('/completeData')">Checkout</v-btn>
+     </v-col>
+       <v-col lg="6" sm="6" cols="6">
+          <h2>:Proceed to</h2>
+       </v-col>
+    
+     </v-row>
+
+</v-card>
    
     </v-dialog>
    </v-col>
      </v-row> 
 
-
+</v-card>
   </v-row>
+      </nav>
 </template>
 
 
@@ -154,6 +194,7 @@ console.log('event is :',event)
 
 data(){
     return {
+  
 
        dialog: false,
        cartTable: [{
@@ -208,10 +249,10 @@ data(){
       headers:[ 
        
        
-          { text: 'حذف', value: 'remove' },
-          { text: 'السعر', value: 'unit_price' },
-           { text: 'الكميه', value: 'quantity' },
-            { text: 'الاسم', value: 'product_name' }
+          { text: 'Remove', value: 'remove' },
+          { text: 'Price', value: 'unit_price' },
+           { text: 'Quantity', value: 'quantity' },
+            { text: 'Product name', value: 'product_name' }
             
           ],
           items: [],
@@ -230,8 +271,18 @@ data(){
         }
         return t
       },
-
+      currentUser(){
+        return this.$store.state.currentUser
+      },
+      intable(){
+        return this.$store.state.table
+      }
+  
+    },
+    created:()=>{
+      
     }
+    
 
 
 }

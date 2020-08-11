@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <tool-bar></tool-bar>
     <v-container fluid>
       <v-row class="mr-10">
         <v-col lg="7" md="7" sm="12" cols="12">
@@ -14,6 +13,21 @@
                 :rules="Rules"
                 label="اسم المنتج او الخدمة*"
               ></v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col cols="12">
+              <v-select
+               v-model="categoryName"
+               :items="categories"
+                dense
+                required
+                outlined
+                :rules="Rules"
+                label="الفئه*"
+               ></v-select>
+
             </v-col>
           </v-row>
 
@@ -122,10 +136,9 @@
 </template>
 
 <script>
-import toolBar from "../components/toolbar";
 export default {
   components: {
-    toolBar
+    
   },
 
   computed: {
@@ -151,8 +164,12 @@ export default {
       size: "",
       discountAmount: "",
       description: "",
-      Rules: [v => !!v || "Required"]
-    };
+      Rules: [v => !!v || "Required"],
+      categories:[
+        "chair",
+        "table"
+      ]
+    }
   },
   methods: {
     setImage1: function(output) {
@@ -184,6 +201,7 @@ export default {
       form.set("describtion", self.description);
       form.set("color", self.color);
       form.set("discount_amount", self.discountAmount);
+      form.set("category_name",self.categoryName)
 
       files.forEach(element => {
         form.append("file", element);

@@ -70,7 +70,7 @@ export default new Vuex.Store({
 
     filterProducts(state, payload) {
       state.filteredProducts =
-        state.products.filter(row => row.product_name.indexOf(payload) > -1)
+        state.products.filter(row => row.product_name.indexOf(payload) > -1 )
     },
 
     setCurrentProduct(state, payload) {
@@ -168,10 +168,16 @@ localStorage(state,products){
   localStorage.setItem('cartItems',JSON.stringify(products))
   state.table=JSON.parse(localStorage.getItem('cartItems'))
 
+},
+filterProductsCategory(state,payload){
+  state.filteredProducts =
+  state.products.filter(row => row.category_name.indexOf(payload) > -1 )
+
 }
 
-  },
 
+  },
+ 
   actions: {
     profilePhoto(context, form) {
       console.log("actions starts")
@@ -470,6 +476,9 @@ localStorage(state,products){
       .then((response)=>{
         context.commit('localStorage',response.data.data)
       })
+    },
+    filterProductsCategory(context,payload){
+context.commit('filterProductsCategory',payload)
     }
 
   },

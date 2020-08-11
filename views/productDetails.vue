@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <toolbar></toolbar>
+    
     <v-content>
       <v-row>
         <v-col class="mr-15" cols="5">
@@ -120,7 +120,6 @@
 
 <script>
 import businessInfoPopup from "../components/businessInfoPopup.vue";
-import toolbar from "../components/toolbar";
 import productRequestDialog from "../components/productRequestDialog";
 export default {
   data() {
@@ -158,7 +157,6 @@ export default {
 
   components: {
     businessInfoPopup,
-    toolbar,
     productRequestDialog
   },
   methods: {

@@ -15,11 +15,17 @@ import myProducts from '../views/myProducts'
 import addProduct from '../views/addProduct'
 import editProduct from '../views/editProduct'
 import cart from '../views/cart'
+import checkOut from '../views/checkOut'
 Vue.use(VueRouter)
 
 
 
 var routes = [{
+  path: '/checkOut',
+  name: "checkOut",
+  component: checkOut,
+},
+{
   path: '/cart',
   name: "cart",
   component: cart,

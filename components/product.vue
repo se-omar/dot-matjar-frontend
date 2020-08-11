@@ -1,6 +1,7 @@
 <template>
 
   <v-card :elevation="7" max-width="280">
+  
     <v-img height="200" :src="nodeHost + filteredProduct.main_picture"></v-img>
 
     <v-card-title>{{ filteredProduct.product_name }}</v-card-title>
@@ -25,9 +26,10 @@
     <v-card-actions >
       <v-btn @click="setCurrentRow" color="primary" text>التفاصيل</v-btn>
        <b-button
-      
+      v-if="currentuser"
           @click="add(filteredProduct)"
           variant="primary"
+          class="red darken-4"
           >Add to shopping cart</b-button>
           <!-- <b-button
            v-if="this.inCart.in_cart==1"
@@ -96,6 +98,9 @@ export default {
     nodeHost() {
       return this.$store.state.nodeHost;
     },
+    currentuser(){
+      return this.$store.state.currentUser
+    }
   
   }
 };

@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <tool-bar></tool-bar>
+  <v-app class="grey lighten-4">
+   
     <v-container v-if="currentUser && currentUser.user_type == 'business'">
       <v-row justify="center">
         <p class="display-1">منتجاتي</p>
@@ -39,7 +39,6 @@
 
 <script>
 import Product from "../components/product.vue";
-import ToolBar from "../components/toolbar.vue";
 export default {
   mounted() {
     this.$store.dispatch("getMyProducts");
@@ -57,7 +56,7 @@ export default {
 
   components: {
     Product,
-    ToolBar
+    
   }
 };
 </script>

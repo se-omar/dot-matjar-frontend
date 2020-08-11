@@ -1,54 +1,15 @@
 <template>
   <div  class="tool-bar">
-    <v-app-bar dark dense >
+    <v-app-bar class="red darken-2" dark dense >
       
 
       <v-toolbar-title>
-        <v-btn  class="font" text @click="$router.push('/home').catch((err) => {})">اسم الموقع</v-btn>
+        <v-btn  class="font" text @click="$router.push('/home').catch((err) => {})">E-Commerce</v-btn>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
+<!-- ============== Profile  -->
 
-      <v-btn class="font"
-        v-if="!currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
-        text
-        @click="$router.push('/reglogin').catch((err) => {})"
-      >التسجيل</v-btn>
-
-      <v-btn
-        v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
-        text class="font"
-        @click="$router.push('/editPassword').catch((err) => {})"
-      >تغيير كلمة السر</v-btn>
-
-      <v-btn
-       class="font"
-        v-if="currentUser && currentUser.user_type == 'business' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
-        text
-        @click="$router.push('/requestsPage').catch((err) => {})"
-      >الطلبات</v-btn>
-
-      <v-btn
-      class="font"
-        v-if="currentUser && currentUser.user_type == 'business' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
-        text
-        @click="$router.push('/myProducts').catch((err) => {})"
-      >منتجاتي</v-btn>
-
-      <v-btn class="font" v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs" text>
-        <span>عن الموقع</span>
-      </v-btn>
-
-      <v-btn
-      class="font"
-        v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
-        text
-        @click="logout"
-      >تسجيل الخروج</v-btn>
-
-      <!--============================
-
-      />-->
 
       <v-menu
         v-if="currentUser"
@@ -63,8 +24,8 @@
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn   text dark v-bind="attrs" v-on="on">
-            <span class="font">حسابي</span>
-            <v-icon color="white">mdi-account-circle</v-icon>
+              <v-icon color="white">mdi-account-circle</v-icon>
+            <span class="font">Profile</span>
           </v-btn>
         </template>
 
@@ -159,21 +120,62 @@
 
           <v-col cols="12">
             <v-card-text>
-              <i class="fa fa-cog fa-lg" aria-hidden="true" style="color:black"></i>
+              
 
-              <a class="size" @click="$router.push('/editPassword')">  تعديل كلمه المرور</a><br/>
+          
+  <a class="size" @click="$router.push('/editPassword')">Change your password <i class="fa fa-cog " aria-hidden="true" style="color:black"></i></a>  <br/>
 <br/>
 
-<i class="	fas fa-edit" aria-hidden="true" style="color:black"></i> 
-<a @click="$router.push('/completedata')" class="size"> تعديل بياناتي</a><br/>
+<a @click="$router.push('/completedata')" class="size">Update Info <i class="fas fa-edit" aria-hidden="true" style="color:black"></i></a>  
+<br/>
            <br/> 
-              <i class="fa fa-power-off fa-lg" aria-hidden="true"  style="color:black"></i>
-              <a class="size" @click="logout">  تسجيل الخروج </a>
+              <a class="size" @click="logout">Logout <i class="fa fa-power-off " aria-hidden="true"  style="color:black"></i>
+ </a>
             </v-card-text>
           </v-col>
         </v-card>
       </v-menu>
 
+
+
+
+
+<!-- ================= -->
+      <v-btn class="font"
+        v-if="!currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        text
+        @click="$router.push('/reglogin').catch((err) => {})"
+      >Register</v-btn>
+
+     
+      <v-btn
+       class="font"
+        v-if="currentUser && currentUser.user_type == 'business' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        text
+        @click="$router.push('/requestsPage').catch((err) => {})"
+      >Requests</v-btn>
+
+      <v-btn
+      class="font"
+        v-if="currentUser && currentUser.user_type == 'business' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        text
+        @click="$router.push('/myProducts').catch((err) => {})"
+      >My Products</v-btn>
+
+      <v-btn class="font" v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs" text>
+        <span>About us</span>
+      </v-btn>
+
+      <v-btn
+      class="font"
+        v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        text
+        @click="logout"
+      >Logout</v-btn>
+
+      <!--============================
+
+      />-->
       <v-app-bar-nav-icon
         @click="drawer = true"
         v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs"

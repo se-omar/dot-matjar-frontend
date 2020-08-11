@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <tool-bar></tool-bar>
     <v-container
       v-if="currentUser && currentUser.user_type == 'business' && (recievedRequests || sentRequests)"
       fluid
@@ -77,13 +76,12 @@
 </template>
 
 <script>
-import ToolBar from "../components/toolbar.vue";
 import requestCard from "../components/requestCard.vue";
 import requestDetails from "../components/requestDetails.vue";
 import requestResponseDialog from "../components/requestResponseDialog";
 export default {
   components: {
-    ToolBar,
+    
     requestCard,
     requestDetails,
     requestResponseDialog
