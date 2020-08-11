@@ -28,7 +28,8 @@ export default new Vuex.Store({
     viewRequestDetails: false,
     cart: [],
     table: JSON.parse(localStorage.getItem('cartItems')),
-    incart: ''
+    incart: '',
+    paymentToken: localStorage.getItem('paymentToken')
   },
 
   mutations: {
@@ -165,6 +166,11 @@ export default new Vuex.Store({
       localStorage.setItem('cartItems', JSON.stringify(products))
       state.table = JSON.parse(localStorage.getItem('cartItems'))
 
+    },
+
+    setPaymentToken(state, token) {
+      localStorage.setItem('paymentToken', token);
+      state.paymentToken = localStorage.getItem('paymentToken');
     }
 
   },

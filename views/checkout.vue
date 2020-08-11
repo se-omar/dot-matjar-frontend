@@ -13,7 +13,6 @@ export default {
       var stripe = await loadStripe(
         "pk_test_51H97oICdSDXTIUwz70svxkIu08QM3jR0rB6E2njyq3fC7tLOODIipB8ppdjdPt32pteM8zHqsSF2mAo9Oyfw9Mvf00L3omXjql"
       );
-      console.log(stripe);
       var sessionId = "";
 
       this.$axios

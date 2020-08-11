@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center">
-    <v-btn color="primary" dark @click.stop="dialog = true" @click="table">
-      <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+    <v-btn @click.stop="dialog = true" @click="table">
+      <v-icon>mdi-cart</v-icon>
     </v-btn>
 
     <v-row>
@@ -135,7 +135,6 @@ export default {
       loadStripe(
         "pk_test_51H97oICdSDXTIUwz70svxkIu08QM3jR0rB6E2njyq3fC7tLOODIipB8ppdjdPt32pteM8zHqsSF2mAo9Oyfw9Mvf00L3omXjql"
       ).then(stripe => {
-        console.log(stripe);
         var sessionId = "";
 
         this.$axios
@@ -144,8 +143,9 @@ export default {
             quantityArray: quantityArray
           })
           .then(response => {
-            console.log(response.data.session_id);
+            console.log(response.data.token);
             sessionId = response.data.session_id;
+            this.$store.commit("setPaymentToken", response.data.token);
           })
           .then(() => {
             stripe

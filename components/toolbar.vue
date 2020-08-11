@@ -1,15 +1,17 @@
 <template>
-  <div  class="tool-bar">
-    <v-app-bar dark dense >
-      
-
+  <div class="tool-bar">
+    <v-app-bar dark dense>
+      <span>
+        <cartTable />
+      </span>
       <v-toolbar-title>
-        <v-btn  class="font" text @click="$router.push('/home').catch((err) => {})">اسم الموقع</v-btn>
+        <v-btn class="font" text @click="$router.push('/home').catch((err) => {})">اسم الموقع</v-btn>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <v-btn class="font"
+      <v-btn
+        class="font"
         v-if="!currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
         @click="$router.push('/reglogin').catch((err) => {})"
@@ -17,19 +19,20 @@
 
       <v-btn
         v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
-        text class="font"
+        text
+        class="font"
         @click="$router.push('/editPassword').catch((err) => {})"
       >تغيير كلمة السر</v-btn>
 
       <v-btn
-       class="font"
+        class="font"
         v-if="currentUser && currentUser.user_type == 'business' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
         @click="$router.push('/requestsPage').catch((err) => {})"
       >الطلبات</v-btn>
 
       <v-btn
-      class="font"
+        class="font"
         v-if="currentUser && currentUser.user_type == 'business' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
         @click="$router.push('/myProducts').catch((err) => {})"
@@ -40,7 +43,7 @@
       </v-btn>
 
       <v-btn
-      class="font"
+        class="font"
         v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
         @click="logout"
@@ -59,10 +62,9 @@
         class="menu"
         max-width="20%"
         min-width="300px"
-       
       >
         <template v-slot:activator="{ on, attrs }">
-          <v-btn   text dark v-bind="attrs" v-on="on">
+          <v-btn text dark v-bind="attrs" v-on="on">
             <span class="font">حسابي</span>
             <v-icon color="white">mdi-account-circle</v-icon>
           </v-btn>
@@ -140,13 +142,11 @@
 
           <v-card-text>
             <v-row justify="center">
-            <span  class="username">{{currentUser.full_arabic_name}}</span>
-         </v-row>
+              <span class="username">{{currentUser.full_arabic_name}}</span>
+            </v-row>
           </v-card-text>
-         
-          <v-row>
-            
-          </v-row>
+
+          <v-row></v-row>
           <v-divider></v-divider>
 
           <v-col cols="12">
@@ -161,14 +161,16 @@
             <v-card-text>
               <i class="fa fa-cog fa-lg" aria-hidden="true" style="color:black"></i>
 
-              <a class="size" @click="$router.push('/editPassword')">  تعديل كلمه المرور</a><br/>
-<br/>
+              <a class="size" @click="$router.push('/editPassword')">تعديل كلمه المرور</a>
+              <br />
+              <br />
 
-<i class="	fas fa-edit" aria-hidden="true" style="color:black"></i> 
-<a @click="$router.push('/completedata')" class="size"> تعديل بياناتي</a><br/>
-           <br/> 
-              <i class="fa fa-power-off fa-lg" aria-hidden="true"  style="color:black"></i>
-              <a class="size" @click="logout">  تسجيل الخروج </a>
+              <i class="fas fa-edit" aria-hidden="true" style="color:black"></i>
+              <a @click="$router.push('/completedata')" class="size">تعديل بياناتي</a>
+              <br />
+              <br />
+              <i class="fa fa-power-off fa-lg" aria-hidden="true" style="color:black"></i>
+              <a class="size" @click="logout">تسجيل الخروج</a>
             </v-card-text>
           </v-col>
         </v-card>
@@ -243,7 +245,11 @@
 </template>
 
 <script>
+import cartTable from "../components/cartTable";
 export default {
+  components: {
+    cartTable
+  },
   computed: {
     currentUser() {
       return this.$store.state.currentUser;
@@ -256,7 +262,7 @@ export default {
   methods: {
     logout() {
       this.$store.commit("removeCurrentUser");
-      
+
       setTimeout(() => {
         this.$router.push("/reglogin").catch(() => {});
       }, 10);
@@ -295,7 +301,7 @@ export default {
   font-weight: bold;
   font-size: 25px;
   text-align: center;
-  color:black
+  color: black;
 }
 .btn1 {
   margin-right: 10%;
@@ -316,9 +322,8 @@ export default {
 #fileUpload {
   text-align: center;
 }
-.font{
-color:white;
- font-size: 18px;
+.font {
+  color: white;
+  font-size: 18px;
 }
-
 </style>
