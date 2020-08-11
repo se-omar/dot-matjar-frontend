@@ -14,16 +14,14 @@ import requestsPage from '../views/requestsPage'
 import myProducts from '../views/myProducts'
 import addProduct from '../views/addProduct'
 import editProduct from '../views/editProduct'
+import checkout from '../views/checkout'
 import cart from '../views/cart'
-import checkOut from '../views/checkOut'
 Vue.use(VueRouter)
 
-
-
 var routes = [{
-  path: '/checkOut',
-  name: "checkOut",
-  component: checkOut,
+  path: '/checkout',
+  name: "checkout",
+  component: checkout,
 },
 {
   path: '/cart',
@@ -106,6 +104,11 @@ var routes = [{
     path: '/editProduct',
     name: 'editProduct',
     component: editProduct
+  },
+  {
+    path: '/checkout',
+    name: 'checkout',
+    component: checkout
   },
 ]
 

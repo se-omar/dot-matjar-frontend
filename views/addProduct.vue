@@ -118,7 +118,7 @@
         <v-col lg="5" md="8" sm="8" cols="10">
           <v-row justify="center">
             <v-col cols="4">
-              <v-btn @click="addProduct" block class="primary">
+              <v-btn :disabled="!valid" @click="addProduct" block class="primary">
                 <span style="font-size: 18px">اضافة المنتج</span>
               </v-btn>
             </v-col>
@@ -215,8 +215,8 @@ export default {
         })
         .then(response => {
           console.log(response);
-          alert('تم اضافة المنتج')
-          this.$router.push('/myProducts').catch(() => {})
+          alert("تم اضافة المنتج");
+          this.$router.push("/myProducts").catch(() => {});
         });
     }
   }

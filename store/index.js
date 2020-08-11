@@ -26,9 +26,9 @@ export default new Vuex.Store({
     myProducts: JSON.parse(localStorage.getItem('myProducts')),
     nodeHost: "http://localhost:3000/",
     viewRequestDetails: false,
-    cart:[],
-    table:JSON.parse(localStorage.getItem('cartItems')),
-    incart:''
+    cart: [],
+    table: JSON.parse(localStorage.getItem('cartItems')),
+    incart: ''
   },
 
   mutations: {
@@ -50,7 +50,7 @@ export default new Vuex.Store({
         localStorage.setItem('currentUser', JSON.stringify(response.data.data));
         console.log(JSON.parse(localStorage.getItem('currentUser')));
         state.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-        router.push('/home').catch(() => {})
+        router.push('/home').catch(() => { })
         console.log('current user is: ', state.currentUser);
       }
     },
@@ -119,15 +119,13 @@ export default new Vuex.Store({
     removeCurrentUser(state) {
       localStorage.removeItem('currentUser');
       state.currentUser = '';
-      state.table=''
+      state.table = ''
       localStorage.removeItem('currentEmail');
       localStorage.removeItem('currentPassword');
       localStorage.removeItem('recievedRequests');
       localStorage.removeItem('sentRequests');
       localStorage.removeItem('myProducts');
-   
-    localStorage.removeItem('cartItems');
-
+      localStorage.removeItem('cartItems');
 
       console.log(state.currentUser)
 
@@ -143,30 +141,29 @@ export default new Vuex.Store({
     viewRequestCard(state) {
       state.viewRequestDetails = false
     },
-    cart(state,product){
+    cart(state, product) {
       state.cart.push(product)
-
     },
-    
-    
-    remove(state,id){
+
+    table(state, data) {
+      localStorage.setItem('cartItems', JSON.stringify(data))
+      state.table = JSON.parse(localStorage.getItem('cartItems'))
+    },
+
+    remove(state, id) {
       console.log(state.table)
-      
-
-      for(var i=0 ; i < state.table.length;i++){
-        if(state.table[i].product_id==id){
-state.table.splice(i,1)
-localStorage.setItem('cartItems',JSON.stringify(state.table))
-console.log('splice is:',state.table)
+      for (var i = 0; i < state.table.length; i++) {
+        if (state.table[i].product_id == id) {
+          state.table.splice(i, 1)
+          localStorage.setItem('cartItems', JSON.stringify(state.table))
+          console.log('splice is:', state.table)
         }
-        
-}
+      }
+    },
 
-},
-
-localStorage(state,products){
-  localStorage.setItem('cartItems',JSON.stringify(products))
-  state.table=JSON.parse(localStorage.getItem('cartItems'))
+    localStorage(state, products) {
+      localStorage.setItem('cartItems', JSON.stringify(products))
+      state.table = JSON.parse(localStorage.getItem('cartItems'))
 
 },
 filterProductsCategory(state,payload){
@@ -182,10 +179,10 @@ filterProductsCategory(state,payload){
     profilePhoto(context, form) {
       console.log("actions starts")
       axios.post('http://localhost:3000/api/profilePhoto', form, {
-          headers: {
-            'content-type': 'multipart/form-data'
-          }
-        })
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      })
         .then(response => {
           console.log("the image path", response.data.data)
           console.log(response.data.message)
@@ -232,12 +229,12 @@ filterProductsCategory(state,payload){
       }
       console.log('dologin email', email)
       axios.post("http://localhost:3000/api/login", {
-          email,
-          password
-        }).then((response) => {
-          console.log('dologin response', response)
-          context.commit('doLogin', response)
-        })
+        email,
+        password
+      }).then((response) => {
+        console.log('dologin response', response)
+        context.commit('doLogin', response)
+      })
         .catch((error) => {
           console.log(error);
         });
@@ -275,25 +272,25 @@ filterProductsCategory(state,payload){
     }) {
 
       axios.put('http://localhost:3000/api/completedata', {
-          national_number,
-          gender,
-          full_arabic_name,
-          full_english_name,
-          birthdate,
-          qualifications,
-          job,
-          governorate,
-          village,
-          center,
-          phone_number,
-          mobile_number,
-          fax,
-          facebook_account,
-          linkedin,
-          website,
-          address,
-          email
-        })
+        national_number,
+        gender,
+        full_arabic_name,
+        full_english_name,
+        birthdate,
+        qualifications,
+        job,
+        governorate,
+        village,
+        center,
+        phone_number,
+        mobile_number,
+        fax,
+        facebook_account,
+        linkedin,
+        website,
+        address,
+        email
+      })
         .then(response => {
           alert(response.data.message)
           console.log(response.data.data)
@@ -313,17 +310,18 @@ filterProductsCategory(state,payload){
 
 
       axios.post('http://localhost:3000/api/signup', {
-          email,
-          password,
-          full_arabic_name,
-          mobile_number,
-          national_number
+        email,
+        password,
+        full_arabic_name,
+        mobile_number,
+        national_number
 
-        })
-        .then(response=> {
-          if (response.data.message)  {alert(response.data.message)}
-          else{
-          console.log("Error in database")
+      })
+        .then(response => {
+          if (response.data.message) {
+            alert(response.data.message)
+          } else {
+            console.log("Error in database")
           }
         })
         .catch(error => {
@@ -355,8 +353,8 @@ filterProductsCategory(state,payload){
 
     getRecievedRequests(context) {
       axios.post("http://localhost:3000/api/recievedRequests", {
-          user_id: context.state.currentUser.user_id
-        })
+        user_id: context.state.currentUser.user_id
+      })
         .then(response => {
           context.commit('getRecievedRequests', response.data);
         });
@@ -364,8 +362,8 @@ filterProductsCategory(state,payload){
 
     getSentRequests(context) {
       axios.post("http://localhost:3000/api/sentRequests", {
-          user_id: context.state.currentUser.user_id
-        })
+        user_id: context.state.currentUser.user_id
+      })
         .then(response => {
           console.log(response.data);
           context.commit('getSentRequests', response.data);
@@ -437,38 +435,38 @@ filterProductsCategory(state,payload){
         }
       })
     },
-    cart(context,product_id){
-      axios.post('http://localhost:3000/api/cart',{
-        product_id:product_id,
-      user_id: context.state.currentUser.user_id
-       
+    cart(context, product_id) {
+      axios.post('http://localhost:3000/api/cart', {
+        product_id: product_id,
+        user_id: context.state.currentUser.user_id
+
       })
-      .then(response=>{
-        console.log(response.data)
-        
-      })
+        .then(response => {
+          console.log(response.data)
+
+        })
 
 
 
-    
+
 
     },
-    table(context,product){
-      axios.post('http://localhost:3000/api/table',{
-        user_id:context.state.currentUser.user_id,
-        product_id:product.product_id
+    table(context, product) {
+      axios.post('http://localhost:3000/api/table', {
+        user_id: context.state.currentUser.user_id,
+        product_id: product.product_id
       })
-      .then(response=>{
-        console.log(response.data.message)
-      })
+        .then(response => {
+          console.log(response.data.message)
+        })
 
     },
-    remove(context,id){
-      axios.put('http://localhost:3000/api/remove',{product_id:id})
-      .then(response=>{
-        console.log(response.data)
-        context.commit('remove',id)
-      })
+    remove(context, id) {
+      axios.put('http://localhost:3000/api/remove', { product_id: id })
+        .then(response => {
+          console.log(response.data)
+          context.commit('remove', id)
+        })
 
     },
     localStorage(context){

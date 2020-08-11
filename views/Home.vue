@@ -5,7 +5,7 @@
      
       <cartTable/>
       
-     <v-flex class="grey lighten-4" >
+     <v-card class="grey lighten-4 " >
         <v-row>
           <v-col lg="3">
             <v-text-field
@@ -77,7 +77,7 @@
         </v-row>
        
    
-     </v-flex>
+     </v-card>
         
     </v-app>
     <v-card>

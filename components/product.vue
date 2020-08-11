@@ -1,5 +1,4 @@
 <template>
-
   <v-card :elevation="7" max-width="280">
   
     <v-img height="200" :src="nodeHost + filteredProduct.main_picture"></v-img>
@@ -23,7 +22,7 @@
 
     <v-divider class="mx-4"></v-divider>
 
-    <v-card-actions >
+    <v-card-actions>
       <v-btn @click="setCurrentRow" color="primary" text>التفاصيل</v-btn>
        <b-button
       v-if="currentuser"
@@ -35,7 +34,7 @@
            v-if="this.inCart.in_cart==1"
           @click="add(product)"
           variant="warning"
-          >product is added to cart</b-button> -->
+      >product is added to cart</b-button>-->
     </v-card-actions>
   </v-card>
 </template>
@@ -43,15 +42,12 @@
 <script>
 // import cart from '../views/cart'
 export default {
-  components:{
-    
-  },
+  components: {},
   name: "product",
   data() {
-    
     return {
-      i:0,
-      cart:[],
+      i: 0,
+      cart: [],
       rating: 4
     };
   },
@@ -76,15 +72,13 @@ export default {
       this.$store.dispatch("setCurrentProduct", this.filteredProduct);
       this.$router.push("/productDetails");
     },
-    add(product){
-            this.$store.dispatch('table',product)
+    add(product) {
+      this.$store.dispatch("table", product);
       // this.$store.commit("cart",product)
       // this.$store.dispatch("cart",product.product_id)
-      this.cart=this.$store.state.cart
-      console.log(product.in_cart)
-
+      this.cart = this.$store.state.cart;
+      console.log(product.in_cart);
     }
-
   },
   computed: {
     products() {
