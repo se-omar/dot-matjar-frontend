@@ -17,6 +17,8 @@ import editProduct from '../views/editProduct'
 import cart from '../views/cart'
 import successfulPayment from '../views/successfulPayment'
 import notFound from '../views/notFound'
+import userOrders from '../views/userOrders'
+
 Vue.use(VueRouter)
 
 var routes = [{
@@ -105,6 +107,11 @@ var routes = [{
   path: '/successfulPayment/:hash',
   name: 'successfulPayment',
   component: successfulPayment
+},
+{
+  path: '/userorders',
+  name: 'userorders',
+  component: userOrders
 },
 {
   path: '*',

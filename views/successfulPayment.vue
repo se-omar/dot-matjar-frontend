@@ -8,7 +8,7 @@
 
       <v-row justify="center">
         <v-btn :to="'/home'" class="secondary">home page</v-btn>
-        <v-btn class="primary ml-6">orders page</v-btn>
+        <v-btn :to="'/userorders'" class="primary ml-6">orders page</v-btn>
       </v-row>
     </div>
 
@@ -22,14 +22,28 @@
 
 <script>
 export default {
-  beforeCreate() {
-    console.log("connected");
-    console.log(this.paymentToken);
-    console.log(this.$route.params.hash);
-    localStorage.removeItem("paymentToken");
-    localStorage.removeItem("cartItems");
-    console.log(localStorage.getItem("cartItems"));
-    console.log(this.table);
+  mounted() {
+    if (this.paymentToken === this.$route.params.hash) {
+      var self = this;
+      console.log("connected");
+      console.log(this.paymentToken);
+      console.log(this.$route.params.hash);
+      localStorage.removeItem("paymentToken");
+      console.log(self.productsQuantityArray);
+
+      this.$axios
+        .post("http://localhost:3000/api/placeOrder", {
+          user_id: self.currentUser.user_id,
+          total_price: self.totalPrice,
+          products: self.table,
+          quantity: self.productsQuantityArray
+        })
+        .then(response => {
+          console.log(response);
+        });
+    } else {
+      console.log("order is already placed");
+    }
   },
 
   computed: {
@@ -39,6 +53,18 @@ export default {
 
     table() {
       return this.$store.state.table;
+    },
+
+    currentUser() {
+      return this.$store.state.currentUser;
+    },
+
+    totalPrice() {
+      return this.$store.state.totalPrice;
+    },
+
+    productsQuantityArray() {
+      return this.$store.state.productsQuantityArray;
     }
   }
 };

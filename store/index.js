@@ -29,7 +29,9 @@ export default new Vuex.Store({
     cart: [],
     table: JSON.parse(localStorage.getItem('cartItems')),
     incart: '',
-    paymentToken: localStorage.getItem('paymentToken')
+    paymentToken: localStorage.getItem('paymentToken'),
+    totalPrice: localStorage.getItem('totalPrice'),
+    productsQuantityArray: JSON.parse(localStorage.getItem('quantity'))
   },
 
   mutations: {
@@ -176,6 +178,16 @@ export default new Vuex.Store({
     filterProductsCategory(state, payload) {
       state.filteredProducts =
         state.products.filter(row => row.category_name.indexOf(payload) > -1)
+    },
+
+    putTotalPriceInStore(state, total) {
+      localStorage.setItem('totalPrice', total)
+      state.totalPrice = localStorage.getItem('totalPrice');
+    },
+
+    putQuantityInStore(state, quantity) {
+      localStorage.setItem('quantity', JSON.stringify(quantity))
+      state.productsQuantityArray = JSON.parse(localStorage.getItem('quantity'))
     }
   },
 
