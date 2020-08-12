@@ -5,6 +5,13 @@
   <v-toolbar extended class="red darken-4"  extension-height="5">
 <!-- ================ -->
 
+<v-row justify="end ml-2" >
+  <v-col cols="12" lg="4" sm="6" md="8"  >
+  
+  <textarea  class="form-control" id="exampleFormControlTextarea4" rows="1"></textarea>
+  
+  </v-col>
+</v-row>
 
 
 
@@ -44,23 +51,24 @@
     
       <v-data-table hide-default-footer  @click:row="rowclicked"   bordered hover :items="items"   :headers="headers">
       <template  v-slot:item.quantity="{ item }">
-        <v-row>
-          <v-col cols="3" >
-            <v-btn x-small @click="increment(item.product_id)">+</v-btn>
-
-          </v-col>
-          <v-col cols="2">
-           <h4>{{item.quantity}}</h4>
-
-          </v-col>
-          <v-col cols="3">
+        <v-row >
+        <v-col cols="3">
             <v-btn x-small @click="decrement(item.product_id)">-</v-btn>
 
           </v-col>
+          <v-col cols="1">
+           <h4>{{item.quantity}}</h4>
+
+          </v-col>
+             <v-col cols="1" >
+            <v-btn x-small @click="increment(item.product_id)">+</v-btn>
+
+          </v-col>
+         
         </v-row>
       </template>
       <template v-slot:item.remove="{ item }">
-        <v-btn depressed small  color="error" @click="remove(item.product_id)">X</v-btn>
+        <v-btn depressed small  color="error" @click="removeCartItem(item.product_id)">X</v-btn>
       </template>
 <!-- =============== -->
 
@@ -75,23 +83,25 @@
        
      
 <v-col cols="4">
-           <v-btn @click="clean"  v-if="cart.length > 0"  depressed small color="error" >Clean</v-btn>
 
 </v-col>
  <v-col cols="6">
        
-         <h2>$ Total:  {{ total }}.00 </h2>
+         <h2>Total:  {{ total }}.00$ </h2>
 
       </v-col>
      </v-row>
 
      <v-row justify="center">
-        <v-col lg="1" sm="1" cols="1">
-      <v-btn dark large @click="$router.push('/completeData')">Checkout</v-btn>
-     </v-col>
-       <v-col lg="6" sm="6" cols="6">
-          <h2>:Proceed to</h2>
-       </v-col>
+       
+      
+  <v-col lg="3" sm="1" cols="1">
+      <v-btn v-if="inCartTable.length>0" dark large @click="$router.push('#')">Checkout</v-btn>
+ </v-col>
+    
+  <v-col lg="3" sm="1" cols="1">
+      <v-btn dark large @click="cleanCart"  v-if="inCartTable.length>0"  depressed small color="error" >Clean</v-btn>
+</v-col>
     
      </v-row>
 
@@ -121,23 +131,18 @@ export default {
       this.cart.push(product);
       this.counter++;
     },
-    clean() {
-      this.cart = [];
-      for (const key in this.product) {
-        this.products[key].cart = false;
-        this.products[key].quantaty = 1;
-      }
-      for (var i = 0; i < this.products.length; i++) {
-        this.products[i].cart = false;
-      }
+    cleanCart() {
+      this.items=[]
+    this.$store.dispatch('cleanCart')
+     
     },
-    remove(id) {
+    removeCartItem(id) {
       for (var x = 0; x < this.items.length; x++) {
         if (this.items[x].product_id == id) {
           this.items.splice(x, 1);
           console.log(this.items);
 
-          this.$store.dispatch("remove", id);
+          this.$store.dispatch("removeProductFromCart", id);
         }
       }
     },
@@ -215,7 +220,7 @@ export default {
 
   data() {
     return {
-  
+  toolbarSearch:'',
 
        dialog: false,
        
@@ -249,11 +254,13 @@ export default {
       cart:[],
       headers:[ 
        
-       
+         { text: 'Product name', value: 'product_name' },
+ { text: 'Quantity', value: 'quantity' },
+ { text: 'Price', value: 'unit_price' },
           { text: 'Remove', value: 'remove' },
-          { text: 'Price', value: 'unit_price' },
-           { text: 'Quantity', value: 'quantity' },
-            { text: 'Product name', value: 'product_name' }
+         
+          
+          
             
           ],
           items: [],
@@ -275,13 +282,13 @@ export default {
       currentUser(){
         return this.$store.state.currentUser
       },
-      intable(){
+      inCartTable(){
         return this.$store.state.table
       }
   
     },
     created:()=>{
-      
+      console.log(this.$store.state.table)
     }
     
 

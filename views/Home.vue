@@ -1,26 +1,28 @@
 <template>
-  <div class="home" >
-    <v-app class="ml-3">
-    
+  <div >
+    <v-app class="grey lighten-4" >
      
       <cartTable/>
       
-     <v-card class="grey lighten-4 " >
-        <v-row>
+     <div class=" mx-7"  >
+
+        
+        
+        <v-row >
           <v-col lg="3">
             <v-text-field
-              @keyup="filterProducts"
+              @keyup="emptySearchBox"
               dense
                outlined
               v-model="toolbarSearch"
-              placeholder="Product name"
+              placeholder="Search for your Product"
             ></v-text-field>
           </v-col>
         </v-row>
         <v-row>
           <v-col lg="3">
             <v-select 
-            @keyup="filterProductsCategory"
+            @keyup="emptySelectBox"
             placeholder="Search By category"
             dense
              outlined
@@ -30,7 +32,7 @@
 
           </v-col>
         </v-row>
-
+     
         <v-row>
          
 
@@ -44,6 +46,7 @@
 
           <v-col lg="1">
             <v-btn class="red darken-4 white--text" @click="filterProducts">Search</v-btn>
+         <v-btn class="red darken-4 white--text" @click="filterProductsCategory">Search Category</v-btn>
           </v-col>
         </v-row>
 
@@ -51,7 +54,7 @@
         <v-row >
           <v-col
             lg="2"
-            md="3"
+            md="4"
             sm="6"
             cols="6"
             v-for="filteredProduct in filteredProducts"
@@ -61,7 +64,7 @@
     <v-card
       slot-scope="{ hover }"
       :class="`elevation-${hover ? 12 : 4}`"
-      class="mx-auto"
+      
       width="280"
     >
           <product  :filteredProduct="filteredProduct">
@@ -77,13 +80,13 @@
         </v-row>
        
    
-     </v-card>
+     </div>
         
+   <v-card>
+        <Footer></Footer>
+    </v-card>
     </v-app>
-    <v-card>
-    <Footer></Footer>
-      
-  </v-card>
+
     
   </div>
 </template>
@@ -132,7 +135,8 @@ export default {
       ],
       categories:[
         "chair",
-        "table"
+        "table",
+        "All"
       ]
     };
   },
@@ -155,9 +159,20 @@ export default {
   methods: {
     filterProducts() {
       this.$store.dispatch("filterProducts", this.toolbarSearch);
+
     },
     filterProductsCategory(){
       this.$store.dispatch("filterProductsCategory",this.categoryName)
+    },
+    emptySearchBox(){
+      if(!this.toolbarSearch){
+        this.$store.commit('emptySearch')
+}
+    },
+      emptySelectBox(){
+      if(this.categoryName == "All"){
+        this.$store.commit('emptySearch')
+}
     }
   },
   components: {

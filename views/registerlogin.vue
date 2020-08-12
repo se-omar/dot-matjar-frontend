@@ -2,7 +2,7 @@
   <div id="app">
     
     <v-app>
-      <tool-bar></tool-bar>
+      
       <v-container v-if="!currentUser" style="width: 60%">
         <div>
           <v-tabs
@@ -52,12 +52,12 @@
                           :disabled="!valid"
                           color="red darken-4 white--text"
                           @click="validateLoginPage"
-                        >تسجيل الدخول</v-btn>
+                        >Login</v-btn>
                       </v-col>
                       
 
                       <v-col class="d-flex" cols="12" sm="12" xsm="12">
-                        <v-btn @click="$router.push('/resetPassword')" text>هل نسيت كلمة المرور</v-btn>
+                        <v-btn @click="$router.push('/resetPassword')" text> Do yo forget you Password ?</v-btn>
                       </v-col>  
                     </v-row>
                   </v-form>
@@ -73,24 +73,17 @@
                         <v-text-field
                           v-model="email"
                           :rules="emailRules"
-                          label="البريد الالكتروني"
+                          label="Email"
                           required
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="6" sm="12" md="6">
-                        <v-text-field
-                          v-model="nationalNumber"
-                          :rules="[rules.national, rules.must]"
-                          label="الرقم القومي"
-                          maxlength="14"
-                        ></v-text-field>
-                      </v-col>
+                     
 
                       <v-col cols="6" sm="12" md="6">
                         <v-text-field
                           v-model="fullArabicName"
                           :rules="[rules.required]"
-                          label="الاسم بلكامل عربي"
+                          label="Full Name"
                           maxlength="20"
                           required
                         ></v-text-field>
@@ -99,7 +92,7 @@
                         <v-text-field
                           v-model="mobileNumber"
                           :rules="[rules.mobilenumber]"
-                          label="الموبايل"
+                          label="Mobile number"
                           maxlength="11"
                           required
                         ></v-text-field>
@@ -114,7 +107,7 @@
                           :rules="[rules.required, rules.min, rules.valid]"
                           :type="show1 ? 'text' : 'password'"
                           name="input-10-1"
-                          label="كلمه المرور"
+                          label="Password"
                           hint="At least 7 characters"
                           counter
                           @click:append="show1 = !show1"
@@ -128,7 +121,7 @@
                           :rules="[rules.required, passwordMatch]"
                           :type="show1 ? 'text' : 'password'"
                           name="input-10-1"
-                          label="تاكيد كلمه المرور"
+                          label="Confirm you Password"
                           counter
                           @click:append="show1 = !show1"
                         ></v-text-field>
@@ -139,10 +132,10 @@
                         <v-checkbox v-model="checkbox">
                           <template v-slot:label>
                             <div>
-                              لقد قرات و وافقت علي
+                              I have read the 
                               <v-tooltip bottom>
                                 <template v-slot:activator="{ on }">
-                                  <a href="http://vuetifyjs.com" @click.stop v-on="on">سياسه التسجيل</a>
+                                  <a href="http://vuetifyjs.com" @click.stop v-on="on">terms and conditions</a>
                                 </template>
                                 Opens in new window
                               </v-tooltip>
@@ -151,22 +144,22 @@
                         </v-checkbox>
                       </v-col>
 
-                      <v-col class="d-flex ml-auto" cols="12" sm="6" xsm="12">
+                      <v-col class="d-flex " cols="12" sm="6" xsm="12">
                         <v-btn
                           x-large
                           block
                           :disabled="!valid || !checkbox"
                           id="btn"
-                          color="success"
+                          class="red darken-4 white--text"
                           @click="validateSignup"
-                        >تسجيل</v-btn>
+                        >Sign up</v-btn>
                         <v-btn
                           x-large
                           block
                           :disabled="!valid || !checkbox"
-                          color="success"
+                          class="red darken-4 white--text"
                           @click="$router.push('/')"
-                        >الغاء</v-btn>
+                        >Cancel</v-btn>
                       </v-col>
                     </v-row>
                   </v-form>
@@ -179,7 +172,7 @@
 
       <v-container v-else>
         <v-row justify="center">
-          <p class="display-1">انت قمت بتسجيل الدخول بالفعل</p>
+          <p class="display-1">You have already Login</p>
         </v-row>
       </v-container>
     </v-app>
@@ -190,7 +183,6 @@
 </template>
 
 <script>
-import toolBar from "../components/toolbar";
 export default {
   name: "reglogin",
   computed: {
@@ -279,7 +271,7 @@ export default {
   }),
 
   components: {
-    toolBar
+    
   }
 };
 </script>

@@ -69,10 +69,17 @@ export default new Vuex.Store({
     },
 
     filterProducts(state, payload) {
-      state.filteredProducts =
-        state.products.filter(row => row.product_name.indexOf(payload) > -1 )
-    },
+       if(!state.filteredProducts){
+  state.filteredProducts =
+  state.products.filter(row => row.product_name.indexOf(payload) > -1 )
+  }
+  else{
+    state.filteredProducts=
+    state.filteredProducts.filter(row => row.product_name.indexOf(payload) > -1 )
 
+  }
+},
+   
     setCurrentProduct(state, payload) {
       localStorage.setItem('currentProduct', JSON.stringify(payload));
       state.currentProduct = JSON.parse(localStorage.getItem('currentProduct'))
@@ -150,7 +157,7 @@ export default new Vuex.Store({
       state.table = JSON.parse(localStorage.getItem('cartItems'))
     },
 
-    remove(state, id) {
+    removeProductFromCart(state, id) {
       console.log(state.table)
       for (var i = 0; i < state.table.length; i++) {
         if (state.table[i].product_id == id) {
@@ -167,9 +174,25 @@ export default new Vuex.Store({
 
 },
 filterProductsCategory(state,payload){
+  if(!state.filteredProducts){
   state.filteredProducts =
   state.products.filter(row => row.category_name.indexOf(payload) > -1 )
+  }
+  else{
+    state.filteredProducts=
+    state.filteredProducts.filter(row => row.category_name.indexOf(payload) > -1 )
 
+  }
+},
+emptySearch(state){
+  state.filteredProducts= state.products
+},
+cleanCart(state){
+ var cartLength= state.table.length;
+ state.table.splice(0,cartLength)
+ localStorage.setItem('cartItems',JSON.stringify(state.table))
+ 
+ 
 }
 
 
@@ -177,7 +200,6 @@ filterProductsCategory(state,payload){
  
   actions: {
     profilePhoto(context, form) {
-      console.log("actions starts")
       axios.post('http://localhost:3000/api/profilePhoto', form, {
         headers: {
           'content-type': 'multipart/form-data'
@@ -192,7 +214,7 @@ filterProductsCategory(state,payload){
             email: localStorage.getItem('currentEmail'),
             password: localStorage.getItem('currentPassword')
           })
-        })
+        }).catch(err=>{console.log('ERROR',err)})
     },
     validateLoginPage(context, {
       email,
@@ -461,11 +483,11 @@ filterProductsCategory(state,payload){
         })
 
     },
-    remove(context, id) {
+    removeProductFromCart(context, id) {
       axios.put('http://localhost:3000/api/remove', { product_id: id })
         .then(response => {
           console.log(response.data)
-          context.commit('remove', id)
+          context.commit('removeProductFromCart', id)
         })
 
     },
@@ -477,6 +499,17 @@ filterProductsCategory(state,payload){
     },
     filterProductsCategory(context,payload){
 context.commit('filterProductsCategory',payload)
+    },
+
+    cleanCart(context){
+      
+context.commit('cleanCart')
+axios.put('http://localhost:3000/api/cleanCart',{
+  user_id:context.state.currentUser.user_id
+})
+.then(response=>{
+console.log(response.data.message)
+})
     }
 
   },

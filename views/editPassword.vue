@@ -1,15 +1,15 @@
 <template>
   <v-app>
-    <tool-bar />
+    
     <v-container v-if="currentUser">
       <v-row justify="center">
-        <p class="display-1">تعديل كلمة المرور</p>
+        <p class="display-1">Change password</p>
       </v-row>
 
       <v-row justify="center">
         <v-col cols="6">
           <v-text-field
-            label=" كلمة السر الحالية"
+            label="Current password"
             v-model="password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min,rules.valid]"
@@ -25,7 +25,7 @@
       <v-row justify="center">
         <v-col cols="6">
           <v-text-field
-            label=" كلمة السر الجديدة"
+            label=" New password"
             v-model="newPassword"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min,rules.valid]"
@@ -41,7 +41,7 @@
       <v-row justify="center">
         <v-col cols="6">
           <v-text-field
-            label=" تاكيد كلمة السر الجديدة "
+            label=" Confirm password"
             v-model="repeatPassword"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, passwordMatch]"
@@ -55,25 +55,24 @@
 
       <v-row justify="center">
         <v-col cols="5">
-          <v-btn @click="updatePassword" class="primary" block>تجديد كلمة السر</v-btn>
+          <v-btn @click="updatePassword" class="primary" block>Update password</v-btn>
         </v-col>
       </v-row>
     </v-container>
 
     <v-container v-else>
       <v-row justify="center">
-        <p class="display-1">ليس لديك صلاحيات لإظهار هذه الصفحة</p>
+        <p class="display-1">Cureent page cant be loaded</p>
       </v-row>
     </v-container>
   </v-app>
 </template>
 
 <script>
-import toolBar from "../components/toolbar";
+
 export default {
   name: "update-forgotten-password",
-  components: {
-    toolBar
+  components: {  
   },
   data() {
     return {

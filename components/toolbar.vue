@@ -110,9 +110,14 @@
           </v-row>
           <v-divider></v-divider>
 
-          <v-col cols="12">
+          <!-- <v-col cols="12">
             <v-btn class="btn1" x-large color="blue">
               <span class="mos" @click="$router.push('/businessownerdata')">انضم كصاحب مشروع</span>
+            </v-btn>
+          </v-col> -->
+            <v-col cols="12 ml-6  ">
+            <v-btn class="btn1" x-large color="blue">
+              <span class="mos" @click="$router.push('/myProducts')">My products</span>
             </v-btn>
           </v-col>
 
@@ -139,7 +144,6 @@
 
 
 
-
 <!-- ================= -->
       <v-btn class="font"
         v-if="!currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
@@ -155,23 +159,23 @@
         @click="$router.push('/requestsPage').catch((err) => {})"
       >Requests</v-btn>
 
-      <v-btn
+      <!-- <v-btn
       class="font"
         v-if="currentUser && currentUser.user_type == 'business' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
         @click="$router.push('/myProducts').catch((err) => {})"
-      >My Products</v-btn>
+      >My Products</v-btn> -->
 
       <v-btn class="font" v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs" text>
         <span>About us</span>
       </v-btn>
 
-      <v-btn
+      <!-- <v-btn
       class="font"
         v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
         @click="logout"
-      >Logout</v-btn>
+      >Logout</v-btn> -->
 
       <!--============================
 

@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <v-container fluid>
+  <v-app class="grey lighten-4">
+    <v-container fluid >
       <v-row class="mr-10">
         <v-col lg="7" md="7" sm="12" cols="12">
           <v-row>
@@ -11,7 +11,7 @@
                 required
                 outlined
                 :rules="Rules"
-                label="اسم المنتج او الخدمة*"
+                label="Product name"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -25,7 +25,7 @@
                 required
                 outlined
                 :rules="Rules"
-                label="الفئه*"
+                label="Category"
                ></v-select>
 
             </v-col>
@@ -33,7 +33,7 @@
 
           <v-row>
             <v-col cols="6">
-              <v-text-field :rules="Rules" v-model="productCode" dense outlined label="الكود*"></v-text-field>
+              <v-text-field :rules="Rules" v-model="productCode" dense outlined label="Code"></v-text-field>
             </v-col>
 
             <v-col cols="6">
@@ -42,14 +42,14 @@
                 v-model="HScode"
                 :rules="Rules"
                 outlined
-                label="كود التصدير (HS Code)*"
+                label="HS code"
               ></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
             <v-col cols="6">
-              <v-text-field :rules="Rules" dense v-model="unitPrice" outlined label="السعر للقطعة*"></v-text-field>
+              <v-text-field :rules="Rules" dense v-model="unitPrice" outlined label="Price"></v-text-field>
             </v-col>
 
             <v-col cols="6">
@@ -58,18 +58,18 @@
                 v-model="minUnits"
                 :rules="Rules"
                 outlined
-                label="الحد الادني للطلب*"
+                label="Minimum required orders"
               ></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
             <v-col cols="6">
-              <v-text-field v-model="color" dense outlined label="اللون"></v-text-field>
+              <v-text-field v-model="color" dense outlined label="Color"></v-text-field>
             </v-col>
 
             <v-col cols="6">
-              <v-text-field dense outlined label="قيمة التخفيض"></v-text-field>
+              <v-text-field dense outlined label="Sale"></v-text-field>
             </v-col>
           </v-row>
 
@@ -80,7 +80,7 @@
                 :rules="Rules"
                 dense
                 outlined
-                label="وصف المنتج\الخدمة"
+                label="Description"
               ></v-textarea>
             </v-col>
           </v-row>
@@ -90,7 +90,7 @@
           <v-row justify="center">
             <v-col cols="9">
               <v-form>
-                <label>الصورة الرئيسبة</label>>
+                <label>Main picture</label>>
                 <v-file-input @change="setImage1"></v-file-input>
               </v-form>
             </v-col>
@@ -99,7 +99,7 @@
           <v-row justify="center">
             <v-col cols="9">
               <v-form>
-                <label>صورة اضافية</label>
+                <label>Extra picture</label>
                 <v-file-input @change="setImage2"></v-file-input>
               </v-form>
             </v-col>
@@ -108,24 +108,24 @@
           <v-row justify="center">
             <v-col cols="9">
               <v-form>
-                <label>صورة اضافية</label>
+                <label>Extra picture</label>
                 <v-file-input @change="setImage3"></v-file-input>
               </v-form>
             </v-col>
           </v-row>
         </v-col>
 
-        <v-col lg="5" md="8" sm="8" cols="10">
+        <v-col lg="7" md="8" sm="8" cols="10">
           <v-row justify="center">
             <v-col cols="4">
-              <v-btn :disabled="!valid" @click="addProduct" block class="primary">
-                <span style="font-size: 18px">اضافة المنتج</span>
+              <v-btn  @click="addProduct" block class="primary">
+                <span style="font-size: 18px">Add product</span>
               </v-btn>
             </v-col>
 
             <v-col cols="4">
               <v-btn @click="$router.push('/myProducts')" block class="red white--text">
-                <span style="font-size: 18px">الغاء</span>
+                <span style="font-size: 18px">Cancel</span>
               </v-btn>
             </v-col>
           </v-row>

@@ -1,11 +1,12 @@
 <template>
-  <v-card :elevation="7" max-width="280">
-  
+  <v-card :elevation="7" max-width="280" >
+ 
+    
     <v-img height="200" :src="nodeHost + filteredProduct.main_picture"></v-img>
 
     <v-card-title>{{ filteredProduct.product_name }}</v-card-title>
     <v-card-text>
-      <div>كود المنتج: {{ filteredProduct.product_code }}</div>
+      <div >كود المنتج: {{ filteredProduct.product_code }}</div>
       <div>
         سعر القطعة:
         <span style="color: red;">{{ filteredProduct.unit_price }}</span>
@@ -22,9 +23,14 @@
 
     <v-divider class="mx-4"></v-divider>
 
-    <v-card-actions>
-      <v-btn @click="setCurrentRow" color="primary" text>التفاصيل</v-btn>
+  
+    
+      <v-col lg="12" sm="12" md="12">
+      <v-btn @click="setCurrentRow" color="primary" text>Details</v-btn>
+      </v-col>
+      <v-col lg="12" sm="12" md="12">
        <b-button
+       
       v-if="currentuser"
           @click="add(filteredProduct)"
           variant="primary"
@@ -35,7 +41,11 @@
           @click="add(product)"
           variant="warning"
       >product is added to cart</b-button>-->
-    </v-card-actions>
+     </v-col>
+   
+   
+  
+  
   </v-card>
 </template>
 

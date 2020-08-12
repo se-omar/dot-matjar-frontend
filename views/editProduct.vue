@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <tool-bar></tool-bar>
+    
     <v-container fluid>
       <v-row class="mr-10">
         <v-col lg="7" md="7" sm="12" cols="12">
@@ -12,7 +12,7 @@
                 required
                 outlined
                 :rules="Rules"
-                label="اسم المنتج او الخدمة*"
+                label="Product name"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -24,7 +24,7 @@
                 v-model="currentProduct.product_code"
                 dense
                 outlined
-                label="الكود*"
+                label="Code"
               ></v-text-field>
             </v-col>
 
@@ -34,7 +34,7 @@
                 v-model="currentProduct.HS_code"
                 :rules="Rules"
                 outlined
-                label="كود التصدير (HS Code)*"
+                label="HS code"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -46,7 +46,7 @@
                 dense
                 v-model="currentProduct.unit_price"
                 outlined
-                label="السعر للقطعة*"
+                label="Price"
               ></v-text-field>
             </v-col>
 
@@ -56,18 +56,18 @@
                 v-model="currentProduct.min_units_per_order"
                 :rules="Rules"
                 outlined
-                label="الحد الادني للطلب*"
+                label="Minimum required Products"
               ></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
             <v-col cols="6">
-              <v-text-field v-model="currentProduct.color" dense outlined label="اللون"></v-text-field>
+              <v-text-field v-model="currentProduct.color" dense outlined label="Color"></v-text-field>
             </v-col>
 
             <v-col cols="6">
-              <v-text-field currentProduct.discount_amount dense outlined label="قيمة التخفيض"></v-text-field>
+              <v-text-field currentProduct.discount_amount dense outlined label="Sale"></v-text-field>
             </v-col>
           </v-row>
 
@@ -78,7 +78,7 @@
                 :rules="Rules"
                 dense
                 outlined
-                label="وصف المنتج\الخدمة"
+                label="Description"
               ></v-textarea>
             </v-col>
           </v-row>
@@ -88,7 +88,7 @@
           <v-row justify="center">
             <v-col cols="9">
               <v-form>
-                <label>الصورة الرئيسبة</label>
+                <label>Main photo</label>
                 <v-file-input @change="setImage1"></v-file-input>
               </v-form>
             </v-col>
@@ -97,7 +97,7 @@
           <v-row justify="center">
             <v-col cols="9">
               <v-form>
-                <label>صورة اضافية</label>
+                <label>Extra photo</label>
                 <v-file-input @change="setImage2"></v-file-input>
               </v-form>
             </v-col>
@@ -106,38 +106,38 @@
           <v-row justify="center">
             <v-col cols="9">
               <v-form>
-                <label>صورة اضافية</label>
+                <label>Extra photo</label>
                 <v-file-input @change="setImage3"></v-file-input>
               </v-form>
             </v-col>
           </v-row>
         </v-col>
 
-        <v-col lg="5" md="8" sm="8" cols="10">
+        <v-col lg="6" md="8" sm="8" cols="10">
           <v-row justify="center">
-            <v-col cols="4">
-              <v-btn @click="updateProduct" block class="primary">
-                <span style="font-size: 18px">تعديل المنتج</span>
+            <v-col cols="5">
+              <v-btn rounded @click="updateProduct" block class="primary">
+                <span style="font-size: 18px">Edite product</span>
               </v-btn>
             </v-col>
 
-            <v-col cols="4">
-              <v-btn @click="$router.go(-1)" block class="red white--text">
-                <span style="font-size: 18px">الغاء</span>
+            <v-col cols="5" lg="4" >
+              <v-btn rounded="" @click="$router.go(-1)" block class="red white--text">
+                <span style="font-size: 18px">Cancel</span>
               </v-btn>
             </v-col>
           </v-row>
         </v-col>
+
       </v-row>
     </v-container>
   </v-app>
 </template>
 
 <script>
-import toolBar from "../components/toolbar";
 export default {
   components: {
-    toolBar
+    
   },
 
   computed: {
@@ -208,7 +208,7 @@ export default {
           }
         })
         .then(response => {
-          console.log(response);
+          console.log('Response is:',response);
         })
         .then(() => {
           alert("تم تعديل المنتج");

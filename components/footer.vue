@@ -1,6 +1,6 @@
 <template>
   <v-footer
-    class="red darken-4"
+    class="red darken-4 "
     height="auto"
   >
     <v-card

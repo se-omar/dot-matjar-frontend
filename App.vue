@@ -1,8 +1,11 @@
 <template>
   <v-app >
+    
  <tool-bar></tool-bar>
-    <router-view />
+      <router-view />
+
   </v-app>
+  
 </template>
 
 <script>
