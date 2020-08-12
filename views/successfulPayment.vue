@@ -41,6 +41,14 @@ export default {
         .then(response => {
           console.log(response);
         });
+
+      this.$axios
+        .put("http://localhost:3000/api/cleanCart", {
+          user_id: self.currentUser.user_id
+        })
+        .then(response => {
+          console.log(response);
+        });
     } else {
       console.log("order is already placed");
     }
