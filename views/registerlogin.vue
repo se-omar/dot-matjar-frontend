@@ -8,7 +8,7 @@
           <v-tabs
             v-model="tab"
             show-arrows
-            background-color="deep-purple accent-4"
+            background-color="red darken-4"
             icons-and-text
             dark
             grow
@@ -50,7 +50,7 @@
                           x-large
                           block
                           :disabled="!valid"
-                          color="success"
+                          color="red darken-4 white--text"
                           @click="validateLoginPage"
                         >تسجيل الدخول</v-btn>
                       </v-col>

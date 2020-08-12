@@ -7,9 +7,8 @@
       >the payment was successful and the order is placed, you can check on it from the my orders page</h3>
 
       <v-row justify="center">
-        <v-btn class="primary ml-6">orders page</v-btn>
-
         <v-btn :to="'/home'" class="secondary">home page</v-btn>
+        <v-btn class="primary ml-6">orders page</v-btn>
       </v-row>
     </div>
 
@@ -28,11 +27,18 @@ export default {
     console.log(this.paymentToken);
     console.log(this.$route.params.hash);
     localStorage.removeItem("paymentToken");
+    localStorage.removeItem("cartItems");
+    console.log(localStorage.getItem("cartItems"));
+    console.log(this.table);
   },
 
   computed: {
     paymentToken() {
       return this.$store.state.paymentToken;
+    },
+
+    table() {
+      return this.$store.state.table;
     }
   }
 };

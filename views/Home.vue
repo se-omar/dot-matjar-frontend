@@ -1,58 +1,77 @@
 <template>
   <div class="home">
-    <v-app>
-      <tool-bar></tool-bar>
-      <v-container>
+    <v-app class="ml-3">
+      <v-card class="grey lighten-4">
         <v-row>
-          <v-col lg="11">
+          <v-col lg="3">
             <v-text-field
               @keyup="filterProducts"
               dense
+              outlined
               v-model="toolbarSearch"
-              placeholder="البحث عن المنتجات"
+              placeholder="Product name"
             ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col lg="3">
+            <v-select
+              @keyup="filterProductsCategory"
+              placeholder="Search By category"
+              dense
+              outlined
+              v-model="categoryName"
+              :items="categories"
+            ></v-select>
           </v-col>
         </v-row>
 
         <v-row>
-          <v-col lg="3">
-            <v-select dense :items="egyptGovernorates" label="محافظة المشروع" outlined></v-select>
+          <v-col lg="1">
+            <v-text-field dense type="number" label="Price From"></v-text-field>
           </v-col>
 
-          <v-col lg="3">
-            <v-text-field dense type="number" label="السعر الي"></v-text-field>
+          <v-col lg="1  ">
+            <v-text-field dense type="number" label="Price TO"></v-text-field>
           </v-col>
 
-          <v-col lg="3">
-            <v-text-field dense type="number" label="السعر من"></v-text-field>
-          </v-col>
-
-          <v-col lg="3">
-            <v-btn @click="filterProducts">البحث</v-btn>
+          <v-col lg="1">
+            <v-btn class="red darken-4 white--text" @click="filterProducts">Search</v-btn>
           </v-col>
         </v-row>
 
         <v-row>
           <v-col
-            lg="3"
-            md="4"
+            lg="2"
+            md="3"
             sm="6"
             cols="6"
             v-for="filteredProduct in filteredProducts"
             :key="filteredProduct.id"
           >
-            <product :filteredProduct="filteredProduct"></product>
+            <v-hover>
+              <v-card
+                slot-scope="{ hover }"
+                :class="`elevation-${hover ? 12 : 4}`"
+                class="mx-auto"
+                width="280"
+              >
+                <product :filteredProduct="filteredProduct"></product>
+              </v-card>
+            </v-hover>
           </v-col>
         </v-row>
-      </v-container>
+      </v-card>
     </v-app>
+    <v-card>
+      <Footer></Footer>
+    </v-card>
   </div>
 </template>
 
 <script>
 import Product from "../components/product.vue";
-import ToolBar from "../components/toolbar.vue";
-
+import Footer from "../components/footer.vue";
 //import usersModel from "../models/usersModel";
 
 export default {
@@ -60,6 +79,7 @@ export default {
   data() {
     return {
       toolbarSearch: "",
+      categoryName: "",
       items: [],
       egyptGovernorates: [
         "الإسكندرية",
@@ -89,11 +109,13 @@ export default {
         "المنوفية",
         "المنيا",
         "الوادي الجديد"
-      ]
+      ],
+      categories: ["chair", "table"]
     };
   },
   created() {
     this.$store.dispatch("getProducts");
+    console.log(this.$store.state.filteredProducts);
   },
   computed: {
     row() {
@@ -110,11 +132,19 @@ export default {
   methods: {
     filterProducts() {
       this.$store.dispatch("filterProducts", this.toolbarSearch);
+    },
+    filterProductsCategory() {
+      this.$store.dispatch("filterProductsCategory", this.categoryName);
     }
   },
   components: {
     Product,
-    ToolBar
+    Footer
   }
 };
 </script>
+<style scoped>
+.container {
+  max-width: 960px;
+}
+</style>

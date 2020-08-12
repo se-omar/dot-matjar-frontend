@@ -171,9 +171,15 @@ export default new Vuex.Store({
     setPaymentToken(state, token) {
       localStorage.setItem('paymentToken', token);
       state.paymentToken = localStorage.getItem('paymentToken');
-    }
+    },
 
+    filterProductsCategory(state, payload) {
+      state.filteredProducts =
+        state.products.filter(row => row.category_name.indexOf(payload) > -1)
+    }
   },
+
+
 
   actions: {
     profilePhoto(context, form) {
@@ -474,6 +480,9 @@ export default new Vuex.Store({
         .then((response) => {
           context.commit('localStorage', response.data.data)
         })
+    },
+    filterProductsCategory(context, payload) {
+      context.commit('filterProductsCategory', payload)
     }
 
   },

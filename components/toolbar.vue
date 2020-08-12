@@ -1,57 +1,13 @@
 <template>
   <div class="tool-bar">
-    <v-app-bar dark dense>
-      <span>
-        <cartTable />
-      </span>
+    <v-app-bar class="red darken-2" dark dense>
+      <cartTable />
+
       <v-toolbar-title>
-        <v-btn class="font" text @click="$router.push('/home').catch((err) => {})">اسم الموقع</v-btn>
+        <v-btn class="font" text @click="$router.push('/home').catch((err) => {})">E-Commerce</v-btn>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
-
-      <v-btn
-        class="font"
-        v-if="!currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
-        text
-        @click="$router.push('/reglogin').catch((err) => {})"
-      >التسجيل</v-btn>
-
-      <v-btn
-        v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
-        text
-        class="font"
-        @click="$router.push('/editPassword').catch((err) => {})"
-      >تغيير كلمة السر</v-btn>
-
-      <v-btn
-        class="font"
-        v-if="currentUser && currentUser.user_type == 'business' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
-        text
-        @click="$router.push('/requestsPage').catch((err) => {})"
-      >الطلبات</v-btn>
-
-      <v-btn
-        class="font"
-        v-if="currentUser && currentUser.user_type == 'business' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
-        text
-        @click="$router.push('/myProducts').catch((err) => {})"
-      >منتجاتي</v-btn>
-
-      <v-btn class="font" v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs" text>
-        <span>عن الموقع</span>
-      </v-btn>
-
-      <v-btn
-        class="font"
-        v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
-        text
-        @click="logout"
-      >تسجيل الخروج</v-btn>
-
-      <!--============================
-
-      />-->
 
       <v-menu
         v-if="currentUser"
@@ -65,8 +21,8 @@
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn text dark v-bind="attrs" v-on="on">
-            <span class="font">حسابي</span>
             <v-icon color="white">mdi-account-circle</v-icon>
+            <span class="font">Profile</span>
           </v-btn>
         </template>
 
@@ -159,23 +115,64 @@
 
           <v-col cols="12">
             <v-card-text>
-              <i class="fa fa-cog fa-lg" aria-hidden="true" style="color:black"></i>
-
-              <a class="size" @click="$router.push('/editPassword')">تعديل كلمه المرور</a>
+              <a class="size" @click="$router.push('/editPassword')">
+                Change your password
+                <i class="fa fa-cog" aria-hidden="true" style="color:black"></i>
+              </a>
               <br />
               <br />
 
-              <i class="fas fa-edit" aria-hidden="true" style="color:black"></i>
-              <a @click="$router.push('/completedata')" class="size">تعديل بياناتي</a>
+              <a @click="$router.push('/completedata')" class="size">
+                Update Info
+                <i class="fas fa-edit" aria-hidden="true" style="color:black"></i>
+              </a>
               <br />
               <br />
-              <i class="fa fa-power-off fa-lg" aria-hidden="true" style="color:black"></i>
-              <a class="size" @click="logout">تسجيل الخروج</a>
+              <a class="size" @click="logout">
+                Logout
+                <i class="fa fa-power-off" aria-hidden="true" style="color:black"></i>
+              </a>
             </v-card-text>
           </v-col>
         </v-card>
       </v-menu>
 
+      <!-- ================= -->
+      <v-btn
+        class="font"
+        v-if="!currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        text
+        @click="$router.push('/reglogin').catch((err) => {})"
+      >Register</v-btn>
+
+      <v-btn
+        class="font"
+        v-if="currentUser && currentUser.user_type == 'business' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        text
+        @click="$router.push('/requestsPage').catch((err) => {})"
+      >Requests</v-btn>
+
+      <v-btn
+        class="font"
+        v-if="currentUser && currentUser.user_type == 'business' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        text
+        @click="$router.push('/myProducts').catch((err) => {})"
+      >My Products</v-btn>
+
+      <v-btn class="font" v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs" text>
+        <span>About us</span>
+      </v-btn>
+
+      <v-btn
+        class="font"
+        v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        text
+        @click="logout"
+      >Logout</v-btn>
+
+      <!--============================
+
+      />-->
       <v-app-bar-nav-icon
         @click="drawer = true"
         v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs"
@@ -190,7 +187,7 @@
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
             <v-list-item-title @click="$router.push('/home').catch((err) => {})">
-              <span style="font-size: 17px">الصفحة الرئيسية</span>
+              <span style="font-size: 17px">home page</span>
             </v-list-item-title>
           </v-list-item>
 
@@ -199,7 +196,7 @@
               <v-icon>mdi-lock-reset</v-icon>
             </v-list-item-icon>
             <v-list-item-title @click="$router.push('/editPassword').catch((err) => {})">
-              <span style="font-size: 17px">تغيير كلمة السر</span>
+              <span style="font-size: 17px">change password</span>
             </v-list-item-title>
           </v-list-item>
 
@@ -208,7 +205,7 @@
               <v-icon>mdi-email</v-icon>
             </v-list-item-icon>
             <v-list-item-title @click="$router.push('/requestsPage').catch((err) => {})">
-              <span style="font-size: 17px">الطلبات</span>
+              <span style="font-size: 17px">requests</span>
             </v-list-item-title>
           </v-list-item>
 
@@ -217,7 +214,7 @@
               <v-icon>mdi-cart-plus</v-icon>
             </v-list-item-icon>
             <v-list-item-title @click="$router.push('/myProducts').catch((err) => {})">
-              <span style="font-size: 17px">منتجاتي</span>
+              <span style="font-size: 17px">my products</span>
             </v-list-item-title>
           </v-list-item>
 
@@ -226,7 +223,7 @@
               <v-icon>mdi-account-plus</v-icon>
             </v-list-item-icon>
             <v-list-item-title @click="$router.push('/reglogin').catch((err) => {})">
-              <span style="font-size: 17px">التسجيل</span>
+              <span style="font-size: 17px">login and signup</span>
             </v-list-item-title>
           </v-list-item>
 
@@ -235,7 +232,7 @@
               <v-icon>mdi-information</v-icon>
             </v-list-item-icon>
             <v-list-item-title>
-              <span style="font-size: 17px">عن الموقع</span>
+              <span style="font-size: 17px">about us</span>
             </v-list-item-title>
           </v-list-item>
         </v-list-item-group>
@@ -323,7 +320,6 @@ export default {
   text-align: center;
 }
 .font {
-  color: white;
-  font-size: 18px;
+  font-size: 14px;
 }
 </style>
