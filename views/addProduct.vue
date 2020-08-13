@@ -20,12 +20,13 @@
             <v-col cols="12">
               <v-select
                v-model="categoryName"
-               :items="categories"
+               :items="category"
                 dense
                 required
                 outlined
                 :rules="Rules"
                 label="Category"
+                @click="categoriesDB"
                ></v-select>
 
             </v-col>
@@ -165,10 +166,7 @@ export default {
       discountAmount: "",
       description: "",
       Rules: [v => !!v || "Required"],
-      categories:[
-        "chair",
-        "table"
-      ]
+      category:''
     }
   },
   methods: {
@@ -215,11 +213,22 @@ export default {
         })
         .then(response => {
           console.log(response);
-          alert("تم اضافة المنتج");
+          alert("Product added successfully");
           this.$router.push("/myProducts").catch(() => {});
         });
+    },
+     categoriesDB(){
+    this.category = this.$store.state.category
     }
-  }
+  },
+  created () {
+    return new Promise(resolve => {
+        setTimeout(() => {
+ this.$store.dispatch('categoriesDB')    
+         resolve()
+        })
+    })
+},
 };
 </script>
 

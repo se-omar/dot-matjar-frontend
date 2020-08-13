@@ -28,7 +28,7 @@ export default new Vuex.Store({
     viewRequestDetails: false,
     cart: [],
     table: JSON.parse(localStorage.getItem('cartItems')),
-    incart: ''
+    category:[]
   },
 
   mutations: {
@@ -68,16 +68,18 @@ export default new Vuex.Store({
       state.users = payload
     },
 
-    filterProducts(state, payload) {
-       if(!state.filteredProducts){
-  state.filteredProducts =
-  state.products.filter(row => row.product_name.indexOf(payload) > -1 )
-  }
-  else{
-    state.filteredProducts=
-    state.filteredProducts.filter(row => row.product_name.indexOf(payload) > -1 )
+    filterProducts(state, products) {
+  //      if(!state.filteredProducts){
+  // state.filteredProducts =
+  // state.products.filter(row => row.product_name.indexOf(payload) > -1 )
+  // }
+  // else{
+  //   state.filteredProducts=
+  //   state.filteredProducts.filter(row => row.product_name.indexOf(payload) > -1 )
 
-  }
+  // }
+
+  state.filteredProducts = products
 },
    
     setCurrentProduct(state, payload) {
@@ -173,17 +175,7 @@ export default new Vuex.Store({
       state.table = JSON.parse(localStorage.getItem('cartItems'))
 
 },
-filterProductsCategory(state,payload){
-  if(!state.filteredProducts){
-  state.filteredProducts =
-  state.products.filter(row => row.category_name.indexOf(payload) > -1 )
-  }
-  else{
-    state.filteredProducts=
-    state.filteredProducts.filter(row => row.category_name.indexOf(payload) > -1 )
 
-  }
-},
 emptySearch(state){
   state.filteredProducts= state.products
 },
@@ -193,6 +185,11 @@ cleanCart(state){
  localStorage.setItem('cartItems',JSON.stringify(state.table))
  
  
+},
+categoriesDB(state,data){
+  console.log(data)
+state.category= data.map(e=>{return e.category_name})
+console.log(state.category)
 }
 
 
@@ -268,8 +265,20 @@ cleanCart(state){
       })
     },
 
-    filterProducts(context, payload) {
-      context.commit('filterProducts', payload);
+    filterProducts(context,{product_name,category_name}) {
+console.log(product_name)
+   axios.put('http://localhost:3000/api/filterProducts',{
+     product_name,category_name
+   })
+   .then(products=>{
+     console.log('message:',products.data.message)
+     console.log('products:',products.data.data)
+
+    context.commit('filterProducts', products.data.data);
+
+   })
+
+
     },
 
     completedata(context, {
@@ -497,10 +506,7 @@ cleanCart(state){
         context.commit('localStorage',response.data.data)
       })
     },
-    filterProductsCategory(context,payload){
-context.commit('filterProductsCategory',payload)
-    },
-
+   
     cleanCart(context){
       
 context.commit('cleanCart')
@@ -510,7 +516,17 @@ axios.put('http://localhost:3000/api/cleanCart',{
 .then(response=>{
 console.log(response.data.message)
 })
-    }
+    },
+
+categoriesDB(context){
+axios.get('http://localhost:3000/api/selectCategory')
+.then((res)=>{
+  console.log(res.data.data)
+  context.commit('categoriesDB',res.data.data)
+})
+},
+
+
 
   },
 

@@ -4,7 +4,7 @@
      
       <cartTable/>
       
-     <div class=" mx-7"  >
+     <div class="mx-7"  >
 
         
         
@@ -27,7 +27,8 @@
             dense
              outlined
             v-model="categoryName"
-            :items="categories"
+            :items="category"
+            @click="categoriesDB"
             ></v-select>
 
           </v-col>
@@ -46,7 +47,6 @@
 
           <v-col lg="1">
             <v-btn class="red darken-4 white--text" @click="filterProducts">Search</v-btn>
-         <v-btn class="red darken-4 white--text" @click="filterProductsCategory">Search Category</v-btn>
           </v-col>
         </v-row>
 
@@ -133,16 +133,18 @@ export default {
         "المنيا",
         "الوادي الجديد"
       ],
-      categories:[
-        "chair",
-        "table",
-        "All"
-      ]
+      category:[]
     };
   },
   created() {
     this.$store.dispatch("getProducts");
     console.log(this.$store.state.filteredProducts)
+     return new Promise(resolve => {
+        setTimeout(() => {
+ this.$store.dispatch('categoriesDB')    
+         resolve()
+        })
+    })
   },
   computed: {
     row() {
@@ -158,12 +160,14 @@ export default {
 
   methods: {
     filterProducts() {
-      this.$store.dispatch("filterProducts", this.toolbarSearch);
+      console.log(this.toolbarSearch,this.categoryName)
+      this.$store.dispatch("filterProducts",{
+        product_name:this.toolbarSearch,
+        category_name:this.categoryName
+      });
 
     },
-    filterProductsCategory(){
-      this.$store.dispatch("filterProductsCategory",this.categoryName)
-    },
+  
     emptySearchBox(){
       if(!this.toolbarSearch){
         this.$store.commit('emptySearch')
@@ -173,11 +177,13 @@ export default {
       if(this.categoryName == "All"){
         this.$store.commit('emptySearch')
 }
+    },
+    categoriesDB(){
+      this.category = this.$store.state.category
     }
   },
   components: {
     Product,
-   
     cartTable,
     Footer
   }

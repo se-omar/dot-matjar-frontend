@@ -95,11 +95,11 @@
      <v-row justify="center">
        
       
-  <v-col lg="3" sm="1" cols="1">
-      <v-btn v-if="inCartTable.length>0" dark large @click="$router.push('#')">Checkout</v-btn>
+  <v-col lg="3" sm="3" cols="3">
+      <v-btn v-if="inCartTable.length>0" dark large @click="getSession">Checkout</v-btn>
  </v-col>
     
-  <v-col lg="3" sm="1" cols="1">
+  <v-col lg="3" sm="3" cols="3">
       <v-btn dark large @click="cleanCart"  v-if="inCartTable.length>0"  depressed small color="error" >Clean</v-btn>
 </v-col>
     
@@ -288,7 +288,6 @@ export default {
   
     },
     created:()=>{
-      console.log(this.$store.state.table)
     }
     
 

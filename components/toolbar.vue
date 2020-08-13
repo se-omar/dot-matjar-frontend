@@ -16,7 +16,7 @@
         transition="fab-transition"
         :close-on-content-click="false"
         :nudge-width="200"
-        offset-x
+        offset-y
         class="menu"
         max-width="20%"
         min-width="300px"
@@ -29,11 +29,11 @@
           </v-btn>
         </template>
 
-        <v-card>
-          <v-card-title>
+        <v-card >
+          <v-card-title class="ml-4" style="width:100">
             <v-img
               v-if="currentUser.profile_photo"
-              style="width:70%; height:90%"
+              style="width:70%; height:100%"
               id="picture"
               :src="nodeHost + currentUser.profile_photo"
             />

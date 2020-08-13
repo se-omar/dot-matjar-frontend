@@ -52,8 +52,10 @@ export default {
     },
     currentUser() {
       return this.$store.state.currentUser;
-    }
+    },
+    
   },
+  
 
   components: {
     Product,
