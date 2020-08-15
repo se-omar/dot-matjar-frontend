@@ -159,6 +159,20 @@
         @click="$router.push('/myProducts').catch((err) => {})"
       >My Products</v-btn>
 
+      <v-btn
+        class="font"
+        v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        text
+        @click="$router.push('/userOrders').catch((err) => {})"
+      >my orders</v-btn>
+
+      <v-btn
+        class="font"
+        v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        text
+        @click="$router.push('/dashboard').catch((err) => {})"
+      >Dashboard</v-btn>
+
       <v-btn class="font" v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs" text>
         <span>About us</span>
       </v-btn>

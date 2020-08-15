@@ -18,6 +18,7 @@ import cart from '../views/cart'
 import successfulPayment from '../views/successfulPayment'
 import notFound from '../views/notFound'
 import userOrders from '../views/userOrders'
+import dashboard from '../views/dashboard'
 
 Vue.use(VueRouter)
 
@@ -112,6 +113,11 @@ var routes = [{
   path: '/userorders',
   name: 'userorders',
   component: userOrders
+},
+{
+  path: '/dashboard',
+  name: 'dashboard',
+  component: dashboard
 },
 {
   path: '*',

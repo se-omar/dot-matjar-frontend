@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <tool-bar></tool-bar>
     <v-container fluid>
       <v-row class="mr-10">
         <v-col lg="7" md="7" sm="12" cols="12">
@@ -134,12 +133,7 @@
 </template>
 
 <script>
-import toolBar from "../components/toolbar";
 export default {
-  components: {
-    toolBar
-  },
-
   computed: {
     currentUser() {
       return this.$store.state.currentUser;

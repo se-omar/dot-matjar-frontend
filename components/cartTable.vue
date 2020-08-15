@@ -54,7 +54,7 @@
                   </v-col>
 
                   <v-col lg="2" sm="1" cols="1">
-                    <v-btn large dark @click="getSession">Checkout</v-btn>
+                    <v-btn :disabled="items.length === 0" large dark @click="getSession">Checkout</v-btn>
                   </v-col>
                 </v-row>
               </v-card>

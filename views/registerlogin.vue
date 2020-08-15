@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    
     <v-app>
-      <tool-bar></tool-bar>
       <v-container v-if="!currentUser" style="width: 60%">
         <div>
           <v-tabs
@@ -54,11 +52,10 @@
                           @click="validateLoginPage"
                         >تسجيل الدخول</v-btn>
                       </v-col>
-                      
 
                       <v-col class="d-flex" cols="12" sm="12" xsm="12">
                         <v-btn @click="$router.push('/resetPassword')" text>هل نسيت كلمة المرور</v-btn>
-                      </v-col>  
+                      </v-col>
                     </v-row>
                   </v-form>
                 </v-card-text>
@@ -183,14 +180,10 @@
         </v-row>
       </v-container>
     </v-app>
-
-    
   </div>
-  
 </template>
 
 <script>
-import toolBar from "../components/toolbar";
 export default {
   name: "reglogin",
   computed: {
@@ -207,7 +200,6 @@ export default {
 
   methods: {
     validateSignup() {
-
       var self = this;
       self.$store.dispatch("register", {
         email: this.email,
@@ -276,11 +268,7 @@ export default {
       mobilenumber: v => /\d+/.test(v) || "Enter numbers"
     },
     checkbox: false
-  }),
-
-  components: {
-    toolBar
-  }
+  })
 };
 </script>
 <style scoped>

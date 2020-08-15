@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <tool-bar />
     <v-container v-if="currentUser">
       <v-row justify="center">
         <p class="display-1">تعديل كلمة المرور</p>
@@ -69,12 +68,9 @@
 </template>
 
 <script>
-import toolBar from "../components/toolbar";
 export default {
   name: "update-forgotten-password",
-  components: {
-    toolBar
-  },
+  components: {},
   data() {
     return {
       password: "",
