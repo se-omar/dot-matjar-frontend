@@ -1,40 +1,35 @@
 <template>
-  <v-card :elevation="7" max-width="280">
-    <v-img height="200" :src="nodeHost + filteredProduct.main_picture"></v-img>
+  <v-card class="grey lighten-4" :elevation="7" max-width="430">
+    <v-img height="150" :src="nodeHost + filteredProduct.main_picture"></v-img>
 
-    <v-card-title>{{ filteredProduct.product_name }}</v-card-title>
+    <v-row justify="center" class="mb-n3">
+      <v-card-title
+        class="grey--text text--darken-2"
+        style="font-size: 25px"
+      >{{ filteredProduct.product_name }}</v-card-title>
+    </v-row>
     <v-card-text>
-      <div>كود المنتج: {{ filteredProduct.product_code }}</div>
-      <div>
-        سعر القطعة:
-        <span style="color: red;">{{ filteredProduct.unit_price }}</span>
-        <br />
-        الحد الادني للطلب: {{ filteredProduct.min_units_per_order }}
+      <div class="mb-1">
+        <span style="font-size: 17px">Product Code: {{ filteredProduct.product_code }}</span>
       </div>
-      <div>المشروع: {{ filteredProduct.bussiness.bussiness_name }}</div>
-      <v-row align="center" class="mx-0">
-        <v-rating v-model="rating" color="amber" dense half-increments readonly size="15"></v-rating>
+      <div>
+        <span style="font-size: 17px">
+          Unit Price:
+          <span style="color: red; ">{{ filteredProduct.unit_price }}</span>
+        </span>
+      </div>
+      <div>
+        <v-row class="mt-n2">
+          <v-col cols="8">
+            <span style="font-size: 17px">Number of Times Sold: {{ filteredProduct.buy_counter }}</span>
+          </v-col>
 
-        <div class="grey--text ml-4">4</div>
-      </v-row>
+          <v-col class="mt-n2" cols="4">
+            <v-btn @click="setCurrentRow" class="primary">Details</v-btn>
+          </v-col>
+        </v-row>
+      </div>
     </v-card-text>
-
-    <v-divider class="mx-4"></v-divider>
-
-    <v-card-actions>
-      <v-btn @click="setCurrentRow" color="primary" text>التفاصيل</v-btn>
-      <b-button
-        v-if="currentuser"
-        @click="add(filteredProduct)"
-        variant="primary"
-        class="red darken-4"
-      >Add to cart</b-button>
-      <!-- <b-button
-           v-if="this.inCart.in_cart==1"
-          @click="add(product)"
-          variant="warning"
-      >product is added to cart</b-button>-->
-    </v-card-actions>
   </v-card>
 </template>
 

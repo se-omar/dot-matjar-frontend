@@ -31,7 +31,9 @@ export default new Vuex.Store({
     incart: '',
     paymentToken: localStorage.getItem('paymentToken'),
     totalPrice: localStorage.getItem('totalPrice'),
-    productsQuantityArray: JSON.parse(localStorage.getItem('quantity'))
+    productsQuantityArray: JSON.parse(localStorage.getItem('quantity')),
+    topProduct: {},
+    leastProduct: {}
   },
 
   mutations: {
@@ -188,6 +190,14 @@ export default new Vuex.Store({
     putQuantityInStore(state, quantity) {
       localStorage.setItem('quantity', JSON.stringify(quantity))
       state.productsQuantityArray = JSON.parse(localStorage.getItem('quantity'))
+    },
+
+    getTopSellingProduct(state, topProduct) {
+      state.topProduct = topProduct;
+    },
+
+    getLeastSellingProduct(state, leastProduct) {
+      state.leastProduct = leastProduct;
     }
   },
 
@@ -495,6 +505,28 @@ export default new Vuex.Store({
     },
     filterProductsCategory(context, payload) {
       context.commit('filterProductsCategory', payload)
+    },
+
+    getTopSellingProduct(context) {
+      axios
+        .post("http://localhost:3000/api/topSellingProduct", {
+          user_id: context.state.currentUser.user_id
+        })
+        .then(response => {
+          console.log(response);
+          context.commit('getTopSellingProduct', response.data.maxProduct);
+        });
+    },
+
+    getLeastSellingProduct(context) {
+      axios
+        .post("http://localhost:3000/api/leastSellingProduct", {
+          user_id: context.state.currentUser.user_id
+        })
+        .then(response => {
+          console.log(response);
+          context.commit('getLeastSellingProduct', response.data.minProduct);
+        });
     }
 
   },
