@@ -13,7 +13,7 @@
                 width="400"
                 type="bar"
                 :options="chartOptions"
-                :series="chartSeries"
+                :series="salesChartSeries"
               ></apexchart>
             </v-card>
           </v-hover>
@@ -39,7 +39,7 @@
                 width="400"
                 type="line"
                 :options="chartOptions"
-                :series="chartSeries"
+                :series="salesChartSeries"
               ></apexchart>
             </v-card>
           </v-hover>
@@ -97,7 +97,7 @@
                 height="300"
                 type="line"
                 :options="chartOptions"
-                :series="chartSeries"
+                :series="revenueChartSeries"
               ></apexchart>
             </v-card>
           </v-hover>
@@ -105,7 +105,7 @@
             <v-label for="lineChart">
               <span
                 style="font-size: 22px"
-              >Revenue This Month: {{chartSeries[0].data[chartSeries[0].data.length-1]}}</span>
+              >Revenue This Month: {{revenueChartSeries[0].data[revenueChartSeries[0].data.length-1]}}</span>
             </v-label>
           </v-row>
         </div>
@@ -139,16 +139,25 @@
 <script>
 import dashboardSellingProduct from "../components/dashboardSellingProduct";
 export default {
-  mounted() {
+  created() {
     //console.log(this.currentUser);
     this.$store.dispatch("getTopSellingProduct");
     this.$store.dispatch("getLeastSellingProduct");
     this.$store.dispatch("getMyProducts");
+    this.$store.dispatch("getMonthlySales");
 
     const result = this.groupBy(this.myProducts, c => c.category_id);
     this.categoryArray = result;
+
+    const ordered = this.groupBy(
+      this.notSortedDashboardOrders,
+      c => c.order_month
+    );
+    this.monthlySortedOrders = ordered;
+
     this.calculateCategoryPercentage();
-    this.pieOptions.labels = this.labels;
+    //this.pieOptions.labels = this.labels;
+    this.calculateMonthlySales();
     //console.log(this.pieOptions.labels);
   },
 
@@ -179,7 +188,7 @@ export default {
 
     pieOptions() {
       return {
-        labels: [this.labels],
+        labels: this.labels,
         responsive: [
           {
             breakpoint: 480,
@@ -191,6 +200,28 @@ export default {
           }
         ]
       };
+    },
+
+    notSortedDashboardOrders() {
+      return this.$store.state.notSortedDashboardOrders;
+    },
+
+    salesChartSeries() {
+      return [
+        {
+          name: "asdasd",
+          data: JSON.parse(localStorage.getItem("monthlySalesArray"))
+        }
+      ];
+    },
+
+    revenueChartSeries() {
+      return [
+        {
+          name: "asdasd",
+          data: this.monthlyRevenueArray
+        }
+      ];
     }
   },
 
@@ -219,20 +250,15 @@ export default {
         colors: ["#F44336"]
       },
 
-      chartSeries: [
-        {
-          name: "asdasd",
-          data: [30, 40, 35, 50, 49, 60, 70, 91, 49, 60, 70, 91]
-        }
-      ],
-
       topSellingProduct: {},
       leastSellingProduct: {},
 
       categoryArray: [],
       categoryPercentageArray: [],
       categoryNames: [],
-      testCategories: ["asdf", "asdf", "asdf"]
+      monthlySortedOrders: {},
+      monthlySalesArray: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      monthlyRevenueArray: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     };
   },
 
@@ -252,7 +278,7 @@ export default {
 
       for (i in this.categoryArray) {
         categorySales = 0;
-        //console.log(this.categoryArray[i][1]);
+        console.log("in category function", this.categoryArray[i][1]);
         for (j = 0; j < this.categoryArray[i].length; j++) {
           categorySales += this.categoryArray[i][j].buy_counter;
           totalCategorySales += this.categoryArray[i][j].buy_counter;
@@ -279,6 +305,28 @@ export default {
         );
         // console.log(this.categoryPercentageArray);
       }
+    },
+
+    calculateMonthlySales() {
+      var i, j, totalMonthSales, totalMonthRevenue;
+
+      for (i in this.monthlySortedOrders) {
+        totalMonthSales = 0;
+        totalMonthRevenue = 0;
+        for (j = 0; j < this.monthlySortedOrders[i].length; j++) {
+          this.monthlySortedOrders[i][j].products.forEach(element => {
+            totalMonthSales += element.buy_counter;
+            totalMonthRevenue += element.unit_price * element.buy_counter;
+          });
+        }
+        this.monthlySalesArray.splice(i - 1, 1, totalMonthSales);
+        this.monthlyRevenueArray.splice(i - 1, 1, totalMonthRevenue);
+        console.log("monthly sales array", this.monthlySalesArray);
+      }
+      localStorage.setItem(
+        "monthlySalesArray",
+        JSON.stringify(this.monthlySalesArray)
+      );
     }
   },
 
