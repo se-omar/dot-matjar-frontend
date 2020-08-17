@@ -139,8 +139,7 @@
 <script>
 import dashboardSellingProduct from "../components/dashboardSellingProduct";
 export default {
-  created() {
-    //console.log(this.currentUser);
+  mounted() {
     this.$store.dispatch("getTopSellingProduct");
     this.$store.dispatch("getLeastSellingProduct");
     this.$store.dispatch("getMyProducts");
@@ -154,10 +153,9 @@ export default {
       c => c.order_month
     );
     this.monthlySortedOrders = ordered;
-
-    this.calculateCategoryPercentage();
     //this.pieOptions.labels = this.labels;
     this.calculateMonthlySales();
+    this.calculateCategoryPercentage();
     //console.log(this.pieOptions.labels);
   },
 
@@ -210,7 +208,7 @@ export default {
       return [
         {
           name: "asdasd",
-          data: JSON.parse(localStorage.getItem("monthlySalesArray"))
+          data: this.monthlySalesArray
         }
       ];
     },
@@ -323,10 +321,10 @@ export default {
         this.monthlyRevenueArray.splice(i - 1, 1, totalMonthRevenue);
         console.log("monthly sales array", this.monthlySalesArray);
       }
-      localStorage.setItem(
-        "monthlySalesArray",
-        JSON.stringify(this.monthlySalesArray)
-      );
+      // localStorage.setItem(
+      //   "monthlySalesArray",
+      //   JSON.stringify(this.monthlySalesArray)
+      // );
     }
   },
 

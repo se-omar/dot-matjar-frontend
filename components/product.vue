@@ -46,7 +46,6 @@ export default {
   data() {
     return {
       i: 0,
-      cart: [],
       rating: 4
     };
   },
@@ -75,7 +74,6 @@ export default {
       this.$store.dispatch("table", product);
       // this.$store.commit("cart",product)
       // this.$store.dispatch("cart",product.product_id)
-      this.cart = this.$store.state.cart;
       console.log(product.in_cart);
     }
   },
@@ -93,6 +91,9 @@ export default {
     },
     currentuser() {
       return this.$store.state.currentUser;
+    },
+    cart() {
+      return this.$store.state.cart;
     }
   }
 };

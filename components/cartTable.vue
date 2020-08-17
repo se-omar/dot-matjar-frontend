@@ -95,7 +95,7 @@ export default {
       for (var x = 0; x < this.items.length; x++) {
         if (this.items[x].product_id == id) {
           this.items.splice(x, 1);
-          console.log(this.items);
+          console.log("cart remove button", this.items);
 
           this.$store.dispatch("remove", id);
         }
