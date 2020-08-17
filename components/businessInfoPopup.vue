@@ -70,13 +70,13 @@ export default {
 
     dialog() {
       return this.$store.state.dialog;
-    }
+    },
   },
 
   methods: {
     closeDialog() {
       this.$store.dispatch("toggleDialog");
-    }
-  }
+    },
+  },
 };
 </script>

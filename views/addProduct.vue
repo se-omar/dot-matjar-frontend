@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="grey lighten-4">
     <v-container fluid>
       <v-row class="mr-10">
         <v-col lg="7" md="7" sm="12" cols="12">
@@ -11,7 +11,7 @@
                 required
                 outlined
                 :rules="Rules"
-                label="اسم المنتج او الخدمة*"
+                label="Product name"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -20,35 +20,30 @@
             <v-col cols="12">
               <v-select
                 v-model="categoryName"
-                :items="categories"
+                :items="category"
                 dense
                 required
                 outlined
                 :rules="Rules"
-                label="الفئه*"
+                label="Category"
+                @click="categoriesDB"
               ></v-select>
             </v-col>
           </v-row>
 
           <v-row>
             <v-col cols="6">
-              <v-text-field :rules="Rules" v-model="productCode" dense outlined label="الكود*"></v-text-field>
+              <v-text-field :rules="Rules" v-model="productCode" dense outlined label="Code"></v-text-field>
             </v-col>
 
             <v-col cols="6">
-              <v-text-field
-                dense
-                v-model="HScode"
-                :rules="Rules"
-                outlined
-                label="كود التصدير (HS Code)*"
-              ></v-text-field>
+              <v-text-field dense v-model="HScode" :rules="Rules" outlined label="HS code"></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
             <v-col cols="6">
-              <v-text-field :rules="Rules" dense v-model="unitPrice" outlined label="السعر للقطعة*"></v-text-field>
+              <v-text-field :rules="Rules" dense v-model="unitPrice" outlined label="Price"></v-text-field>
             </v-col>
 
             <v-col cols="6">
@@ -57,30 +52,24 @@
                 v-model="minUnits"
                 :rules="Rules"
                 outlined
-                label="الحد الادني للطلب*"
+                label="Minimum required orders"
               ></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
             <v-col cols="6">
-              <v-text-field v-model="color" dense outlined label="اللون"></v-text-field>
+              <v-text-field v-model="color" dense outlined label="Color"></v-text-field>
             </v-col>
 
             <v-col cols="6">
-              <v-text-field dense outlined label="قيمة التخفيض"></v-text-field>
+              <v-text-field dense outlined label="Sale"></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
             <v-col cols="12">
-              <v-textarea
-                v-model="description"
-                :rules="Rules"
-                dense
-                outlined
-                label="وصف المنتج\الخدمة"
-              ></v-textarea>
+              <v-textarea v-model="description" :rules="Rules" dense outlined label="Description"></v-textarea>
             </v-col>
           </v-row>
         </v-col>
@@ -89,7 +78,7 @@
           <v-row justify="center">
             <v-col cols="9">
               <v-form>
-                <label>الصورة الرئيسبة</label>>
+                <label>Main picture</label>>
                 <v-file-input @change="setImage1"></v-file-input>
               </v-form>
             </v-col>
@@ -98,7 +87,7 @@
           <v-row justify="center">
             <v-col cols="9">
               <v-form>
-                <label>صورة اضافية</label>
+                <label>Extra picture</label>
                 <v-file-input @change="setImage2"></v-file-input>
               </v-form>
             </v-col>
@@ -107,24 +96,24 @@
           <v-row justify="center">
             <v-col cols="9">
               <v-form>
-                <label>صورة اضافية</label>
+                <label>Extra picture</label>
                 <v-file-input @change="setImage3"></v-file-input>
               </v-form>
             </v-col>
           </v-row>
         </v-col>
 
-        <v-col lg="5" md="8" sm="8" cols="10">
+        <v-col lg="7" md="8" sm="8" cols="10">
           <v-row justify="center">
             <v-col cols="4">
-              <v-btn :disabled="!valid" @click="addProduct" block class="primary">
-                <span style="font-size: 18px">اضافة المنتج</span>
+              <v-btn @click="addProduct" block class="primary">
+                <span style="font-size: 18px">Add product</span>
               </v-btn>
             </v-col>
 
             <v-col cols="4">
               <v-btn @click="$router.push('/myProducts')" block class="red white--text">
-                <span style="font-size: 18px">الغاء</span>
+                <span style="font-size: 18px">Cancel</span>
               </v-btn>
             </v-col>
           </v-row>
@@ -141,7 +130,7 @@ export default {
   computed: {
     currentUser() {
       return this.$store.state.currentUser;
-    }
+    },
   },
 
   data() {
@@ -161,21 +150,21 @@ export default {
       size: "",
       discountAmount: "",
       description: "",
-      Rules: [v => !!v || "Required"],
-      categories: ["chair", "table"],
-      valid: true
+      Rules: [(v) => !!v || "Required"],
+      category: "",
+      valid: true,
     };
   },
   methods: {
-    setImage1: function(output) {
+    setImage1: function (output) {
       this.image = output;
       console.log(output);
     },
-    setImage2: function(output) {
+    setImage2: function (output) {
       this.image2 = output;
       console.log(output);
     },
-    setImage3: function(output) {
+    setImage3: function (output) {
       this.image3 = output;
     },
 
@@ -198,23 +187,34 @@ export default {
       form.set("discount_amount", self.discountAmount);
       form.set("category_name", self.categoryName);
 
-      files.forEach(element => {
+      files.forEach((element) => {
         form.append("file", element);
       });
 
       this.$axios
         .post("http://localhost:3000/api/product", form, {
           headers: {
-            "Content-Type": "multipart/form-data"
-          }
+            "Content-Type": "multipart/form-data",
+          },
         })
-        .then(response => {
+        .then((response) => {
           console.log(response);
-          alert("تم اضافة المنتج");
+          alert("Product added successfully");
           this.$router.push("/myProducts").catch(() => {});
         });
-    }
-  }
+    },
+    categoriesDB() {
+      this.category = this.$store.state.category;
+    },
+  },
+  created() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.$store.dispatch("categoriesDB");
+        resolve();
+      });
+    });
+  },
 };
 </script>
 

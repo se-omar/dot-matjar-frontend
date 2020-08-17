@@ -1,17 +1,21 @@
 <template>
   <v-app class="grey lighten-4">
-   
     <v-container v-if="currentUser && currentUser.user_type == 'business'">
       <v-row justify="center">
-        <p class="display-1">منتجاتي</p>
+        <p class="display-1">{{currentUser.full_arabic_name}}'s products</p>
+      </v-row>
+      <v-row>
+        <v-col></v-col>
       </v-row>
 
       <v-row justify="center">
         <v-btn @click="$router.push('/addProduct').catch((err) => {})">
-          <span style="font-size: 19px">اضافة منتح</span>
+          <span style="font-size: 19px">Add product</span>
         </v-btn>
       </v-row>
-
+      <v-row>
+        <v-col></v-col>
+      </v-row>
       <v-row v-if="myProducts.length != 0">
         <v-col lg="3" md="4" sm="6" cols="6" v-for="myProduct in myProducts" :key="myProduct.id">
           <product :filteredProduct="myProduct"></product>
@@ -19,25 +23,30 @@
       </v-row>
 
       <v-row class="mt-16" justify="center" v-else>
-        <p class="display-1">لا يوجد منتجات</p>
+        <p class="display-1">No data available</p>
       </v-row>
     </v-container>
 
     <v-container v-else-if="!currentUser || currentUser.user_type != 'business'">
       <v-row justify="center">
-        <p class="display-1">ليس لديك صلاحيات لإظهار هذه الصفحة</p>
+        <p class="display-1">You cannot proceed to this page</p>
       </v-row>
     </v-container>
 
     <v-container v-else>
       <v-row justify="center">
-        <p class="display-1">لا يوجد منتجات</p>
+        <p class="display-1">No products available</p>
       </v-row>
+    </v-container>
+    <v-divider class="mx-15"></v-divider>
+    <v-container>
+      <ordersChart />
     </v-container>
   </v-app>
 </template>
 
 <script>
+import ordersChart from "../components/ordersChart";
 import Product from "../components/product.vue";
 export default {
   mounted() {
@@ -51,13 +60,13 @@ export default {
     },
     currentUser() {
       return this.$store.state.currentUser;
-    }
+    },
   },
 
   components: {
     Product,
-    
-  }
+    ordersChart,
+  },
 };
 </script>
 

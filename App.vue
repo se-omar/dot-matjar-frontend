@@ -11,12 +11,12 @@ import ToolBar from "./components/toolbar.vue";
 export default {
   name: "App",
   components: {
-    ToolBar
+    ToolBar,
   },
   computed: {
     currentUser() {
       return this.$store.state.currentUser;
-    }
-  }
+    },
+  },
 };
 </script>

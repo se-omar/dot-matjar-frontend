@@ -54,7 +54,7 @@
                   </v-col>
 
                   <v-col lg="2" sm="1" cols="1">
-                    <v-btn :disabled="items.length === 0" large dark @click="getSession">Checkout</v-btn>
+                    <v-btn large dark @click="getSession">Checkout</v-btn>
                   </v-col>
                 </v-row>
               </v-card>
@@ -95,7 +95,7 @@ export default {
       for (var x = 0; x < this.items.length; x++) {
         if (this.items[x].product_id == id) {
           this.items.splice(x, 1);
-          console.log("cart remove button", this.items);
+          console.log(this.items);
 
           this.$store.dispatch("remove", id);
         }

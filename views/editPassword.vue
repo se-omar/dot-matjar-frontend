@@ -2,13 +2,13 @@
   <v-app>
     <v-container v-if="currentUser">
       <v-row justify="center">
-        <p class="display-1">تعديل كلمة المرور</p>
+        <p class="display-1">Change password</p>
       </v-row>
 
       <v-row justify="center">
         <v-col cols="6">
           <v-text-field
-            label=" كلمة السر الحالية"
+            label="Current password"
             v-model="password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min,rules.valid]"
@@ -24,7 +24,7 @@
       <v-row justify="center">
         <v-col cols="6">
           <v-text-field
-            label=" كلمة السر الجديدة"
+            label=" New password"
             v-model="newPassword"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min,rules.valid]"
@@ -40,7 +40,7 @@
       <v-row justify="center">
         <v-col cols="6">
           <v-text-field
-            label=" تاكيد كلمة السر الجديدة "
+            label=" Confirm password"
             v-model="repeatPassword"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, passwordMatch]"
@@ -54,14 +54,14 @@
 
       <v-row justify="center">
         <v-col cols="5">
-          <v-btn @click="updatePassword" class="primary" block>تجديد كلمة السر</v-btn>
+          <v-btn @click="updatePassword" class="primary" block>Update password</v-btn>
         </v-col>
       </v-row>
     </v-container>
 
     <v-container v-else>
       <v-row justify="center">
-        <p class="display-1">ليس لديك صلاحيات لإظهار هذه الصفحة</p>
+        <p class="display-1">Cureent page cant be loaded</p>
       </v-row>
     </v-container>
   </v-app>
@@ -78,14 +78,14 @@ export default {
       repeatPassword: "",
       show1: false,
       rules: {
-        required: value => !!value || "Required.",
-        min: v => (v && v.length >= 7) || "Min 7 characters",
-        valid: v =>
+        required: (value) => !!value || "Required.",
+        min: (v) => (v && v.length >= 7) || "Min 7 characters",
+        valid: (v) =>
           /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
             v
           ) ||
-          "password must have at least one letter, one number and one special character"
-      }
+          "password must have at least one letter, one number and one special character",
+      },
     };
   },
 
@@ -96,7 +96,7 @@ export default {
     },
     currentUser() {
       return this.$store.state.currentUser;
-    }
+    },
   },
 
   methods: {
@@ -117,15 +117,15 @@ export default {
         .post(route, {
           email: self.currentUser.email,
           password: self.password,
-          newPassword: self.newPassword
+          newPassword: self.newPassword,
         })
-        .then(response => {
+        .then((response) => {
           alert(response.data);
           if (response.data === "password updated successfully") {
             self.$router.push("/");
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>

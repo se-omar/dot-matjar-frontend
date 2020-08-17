@@ -1,27 +1,28 @@
 <template>
-  <div class="home">
-    <v-app class="ml-3">
-      <v-card class="grey lighten-4">
+  <div>
+    <v-app class="grey lighten-4">
+      <div class="mx-7">
         <v-row>
           <v-col lg="3">
             <v-text-field
-              @keyup="filterProducts"
+              @keyup="emptySearchBox"
               dense
               outlined
               v-model="toolbarSearch"
-              placeholder="Product name"
+              placeholder="Search for your Product"
             ></v-text-field>
           </v-col>
         </v-row>
         <v-row>
           <v-col lg="3">
             <v-select
-              @keyup="filterProductsCategory"
+              @keyup="emptySelectBox"
               placeholder="Search By category"
               dense
               outlined
               v-model="categoryName"
-              :items="categories"
+              :items="category"
+              @click="categoriesDB"
             ></v-select>
           </v-col>
         </v-row>
@@ -43,29 +44,25 @@
         <v-row>
           <v-col
             lg="2"
-            md="3"
+            md="4"
             sm="6"
             cols="6"
             v-for="filteredProduct in filteredProducts"
             :key="filteredProduct.id"
           >
             <v-hover>
-              <v-card
-                slot-scope="{ hover }"
-                :class="`elevation-${hover ? 12 : 4}`"
-                class="mx-auto"
-                width="280"
-              >
+              <v-card slot-scope="{ hover }" :class="`elevation-${hover ? 12 : 4}`" width="280">
                 <product :filteredProduct="filteredProduct"></product>
               </v-card>
             </v-hover>
           </v-col>
         </v-row>
+      </div>
+
+      <v-card>
+        <Footer></Footer>
       </v-card>
     </v-app>
-    <v-card>
-      <Footer></Footer>
-    </v-card>
   </div>
 </template>
 
@@ -110,12 +107,18 @@ export default {
         "المنيا",
         "الوادي الجديد"
       ],
-      categories: ["chair", "table"]
+      category: []
     };
   },
   created() {
     this.$store.dispatch("getProducts");
     console.log(this.$store.state.filteredProducts);
+    return new Promise(resolve => {
+      setTimeout(() => {
+        this.$store.dispatch("categoriesDB");
+        resolve();
+      });
+    });
   },
   computed: {
     row() {
@@ -131,10 +134,25 @@ export default {
 
   methods: {
     filterProducts() {
-      this.$store.dispatch("filterProducts", this.toolbarSearch);
+      console.log(this.toolbarSearch, this.categoryName);
+      this.$store.dispatch("filterProducts", {
+        product_name: this.toolbarSearch,
+        category_name: this.categoryName
+      });
     },
-    filterProductsCategory() {
-      this.$store.dispatch("filterProductsCategory", this.categoryName);
+
+    emptySearchBox() {
+      if (!this.toolbarSearch) {
+        this.$store.commit("emptySearch");
+      }
+    },
+    emptySelectBox() {
+      if (this.categoryName == "All") {
+        this.$store.commit("emptySearch");
+      }
+    },
+    categoriesDB() {
+      this.category = this.$store.state.category;
     }
   },
   components: {

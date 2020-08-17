@@ -21,20 +21,22 @@
 
     <v-divider class="mx-4"></v-divider>
 
-    <v-card-actions>
-      <v-btn @click="setCurrentRow" color="primary" text>التفاصيل</v-btn>
+    <v-col lg="12" sm="12" md="12">
+      <v-btn @click="setCurrentRow" color="primary" text>Details</v-btn>
+    </v-col>
+    <v-col lg="12" sm="12" md="12">
       <b-button
         v-if="currentuser"
         @click="add(filteredProduct)"
         variant="primary"
         class="red darken-4"
-      >Add to cart</b-button>
+      >Add to shopping cart</b-button>
       <!-- <b-button
            v-if="this.inCart.in_cart==1"
           @click="add(product)"
           variant="warning"
       >product is added to cart</b-button>-->
-    </v-card-actions>
+    </v-col>
   </v-card>
 </template>
 
@@ -46,7 +48,12 @@ export default {
   data() {
     return {
       i: 0,
+<<<<<<< HEAD
       rating: 4
+=======
+      cart: [],
+      rating: 4,
+>>>>>>> 0dfcf3f70db18a144e946fc849220c14ddef18d9
     };
   },
   created() {
@@ -57,12 +64,12 @@ export default {
   props: {
     product: {
       type: Object,
-      default: () => null
+      default: () => null,
     },
     filteredProduct: {
       type: Object,
-      default: () => null
-    }
+      default: () => null,
+    },
   },
 
   methods: {
@@ -74,8 +81,12 @@ export default {
       this.$store.dispatch("table", product);
       // this.$store.commit("cart",product)
       // this.$store.dispatch("cart",product.product_id)
+<<<<<<< HEAD
+=======
+      this.cart = this.cartt;
+>>>>>>> 0dfcf3f70db18a144e946fc849220c14ddef18d9
       console.log(product.in_cart);
-    }
+    },
   },
   computed: {
     products() {
@@ -92,9 +103,16 @@ export default {
     currentuser() {
       return this.$store.state.currentUser;
     },
+<<<<<<< HEAD
     cart() {
       return this.$store.state.cart;
     }
   }
+=======
+    cartt() {
+      return this.$store.state.cart;
+    },
+  },
+>>>>>>> 0dfcf3f70db18a144e946fc849220c14ddef18d9
 };
 </script>

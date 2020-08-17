@@ -1,5 +1,6 @@
 <template>
   <v-app id="app">
+    <tool-bar></tool-bar>
     <v-row justify="start">
       <v-row>
         <v-col cols="4">
@@ -80,7 +81,9 @@
 <script>
 export default {
   name: "checkOut",
-  components: {},
+  components: {
+    ToolBar,
+  },
   data: () => ({
     governorate: "",
     village: "",
@@ -101,9 +104,9 @@ export default {
     //   ]
     fields: [
       { key: "product_name", label: "المنتجات" },
-      { key: "unit_price", label: "السعر" }
+      { key: "unit_price", label: "السعر" },
     ],
-    items: []
+    items: [],
   }),
   created() {
     this.address = this.$store.state.currentUser.address;
@@ -111,7 +114,7 @@ export default {
     this.governorate = this.$store.state.currentUser.governorate;
     this.items = this.$store.state.table;
   },
-  mounted: {}
+  mounted: {},
 };
 </script>
 <style scoped>
