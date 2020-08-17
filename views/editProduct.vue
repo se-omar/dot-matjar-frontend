@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    
     <v-container fluid>
       <v-row class="mr-10">
         <v-col lg="7" md="7" sm="12" cols="12">
@@ -121,14 +120,13 @@
               </v-btn>
             </v-col>
 
-            <v-col cols="5" lg="4" >
-              <v-btn rounded="" @click="$router.go(-1)" block class="red white--text">
+            <v-col cols="5" lg="4">
+              <v-btn rounded @click="$router.go(-1)" block class="red white--text">
                 <span style="font-size: 18px">Cancel</span>
               </v-btn>
             </v-col>
           </v-row>
         </v-col>
-
       </v-row>
     </v-container>
   </v-app>
@@ -136,9 +134,7 @@
 
 <script>
 export default {
-  components: {
-    
-  },
+  components: {},
 
   computed: {
     currentUser() {
@@ -147,7 +143,7 @@ export default {
 
     currentProduct() {
       return this.$store.state.currentProduct;
-    }
+    },
   },
 
   data() {
@@ -158,19 +154,19 @@ export default {
       image2: null,
       hasImage3: false,
       image3: null,
-      Rules: [v => !!v || "Required"]
+      Rules: [(v) => !!v || "Required"],
     };
   },
   methods: {
-    setImage1: function(output) {
+    setImage1: function (output) {
       this.image = output;
       console.log(output);
     },
-    setImage2: function(output) {
+    setImage2: function (output) {
       this.image2 = output;
       console.log(output);
     },
-    setImage3: function(output) {
+    setImage3: function (output) {
       this.image3 = output;
     },
 
@@ -195,7 +191,7 @@ export default {
       form.set("color", self.currentProduct.color);
       form.set("discount_amount", self.currentProduct.discount_amount);
 
-      files.forEach(element => {
+      files.forEach((element) => {
         if (element) {
           form.append("file", element);
         }
@@ -204,18 +200,18 @@ export default {
       this.$axios
         .post("http://localhost:3000/api/updateProduct", form, {
           headers: {
-            "Content-Type": "multipart/form-data"
-          }
+            "Content-Type": "multipart/form-data",
+          },
         })
-        .then(response => {
-          console.log('Response is:',response);
+        .then((response) => {
+          console.log("Response is:", response);
         })
         .then(() => {
           alert("تم تعديل المنتج");
           this.$router.push("/myProducts");
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

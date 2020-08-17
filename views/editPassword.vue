@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    
     <v-container v-if="currentUser">
       <v-row justify="center">
         <p class="display-1">Change password</p>
@@ -69,11 +68,9 @@
 </template>
 
 <script>
-
 export default {
   name: "update-forgotten-password",
-  components: {  
-  },
+  components: {},
   data() {
     return {
       password: "",
@@ -81,14 +78,14 @@ export default {
       repeatPassword: "",
       show1: false,
       rules: {
-        required: value => !!value || "Required.",
-        min: v => (v && v.length >= 7) || "Min 7 characters",
-        valid: v =>
+        required: (value) => !!value || "Required.",
+        min: (v) => (v && v.length >= 7) || "Min 7 characters",
+        valid: (v) =>
           /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
             v
           ) ||
-          "password must have at least one letter, one number and one special character"
-      }
+          "password must have at least one letter, one number and one special character",
+      },
     };
   },
 
@@ -99,7 +96,7 @@ export default {
     },
     currentUser() {
       return this.$store.state.currentUser;
-    }
+    },
   },
 
   methods: {
@@ -120,15 +117,15 @@ export default {
         .post(route, {
           email: self.currentUser.email,
           password: self.password,
-          newPassword: self.newPassword
+          newPassword: self.newPassword,
         })
-        .then(response => {
+        .then((response) => {
           alert(response.data);
           if (response.data === "password updated successfully") {
             self.$router.push("/");
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>

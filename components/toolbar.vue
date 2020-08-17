@@ -162,6 +162,20 @@
         @click="$router.push('/myProducts').catch((err) => {})"
       >My Products</v-btn>-->
 
+      <v-btn
+        class="font"
+        v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        text
+        @click="$router.push('/userOrders').catch((err) => {})"
+      >my orders</v-btn>
+
+      <v-btn
+        class="font"
+        v-if="currentUser && currentUser.user_type == 'business' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        text
+        @click="$router.push('/dashboard').catch((err) => {})"
+      >Dashboard</v-btn>
+
       <v-btn class="font" v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs" text>
         <span>About us</span>
       </v-btn>
@@ -218,6 +232,15 @@
             </v-list-item-icon>
             <v-list-item-title @click="$router.push('/myProducts').catch((err) => {})">
               <span style="font-size: 17px">my products</span>
+            </v-list-item-title>
+          </v-list-item>
+
+          <v-list-item v-if="currentUser && currentUser.user_type == 'business'">
+            <v-list-item-icon>
+              <v-icon>mdi-cart-plus</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title @click="$router.push('/dashboard').catch((err) => {})">
+              <span style="font-size: 17px">Dashboard</span>
             </v-list-item-title>
           </v-list-item>
 

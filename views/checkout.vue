@@ -79,8 +79,6 @@
   </v-app>
 </template>
 <script>
-import ToolBar from "../components/toolbar.vue";
-
 export default {
   name: "checkOut",
   components: {

@@ -35,6 +35,9 @@ export default new Vuex.Store({
     productsQuantityArray: JSON.parse(localStorage.getItem('quantity')),
     orders: [],
     orderProducts: [],
+    topProduct: {},
+    leastProduct: {},
+    notSortedDashboardOrders: []
   },
 
   mutations: {
@@ -232,6 +235,17 @@ export default new Vuex.Store({
       })
       state.orderProducts = products
       console.log('commit products', state.orderProducts)
+    },
+    getTopSellingProduct(state, topProduct) {
+      state.topProduct = topProduct;
+    },
+
+    getLeastSellingProduct(state, leastProduct) {
+      state.leastProduct = leastProduct;
+    },
+
+    getMonthlySales(state, orders) {
+      state.notSortedDashboardOrders = orders
     }
 
   },
@@ -599,6 +613,40 @@ export default new Vuex.Store({
 
           context.commit('getOrders', orders.data.data)
         })
+    },
+    filterProductsCategory(context, payload) {
+      context.commit('filterProductsCategory', payload)
+    },
+
+    getTopSellingProduct(context) {
+      axios
+        .post("http://localhost:3000/api/topSellingProduct", {
+          user_id: context.state.currentUser.user_id
+        })
+        .then(response => {
+          console.log(response);
+          context.commit('getTopSellingProduct', response.data.maxProduct);
+        });
+    },
+
+    getLeastSellingProduct(context) {
+      axios
+        .post("http://localhost:3000/api/leastSellingProduct", {
+          user_id: context.state.currentUser.user_id
+        })
+        .then(response => {
+          console.log(response);
+          context.commit('getLeastSellingProduct', response.data.minProduct);
+        });
+    },
+
+    getMonthlySales(context) {
+      axios.post('http://localhost:3000/api/monthlySales', {
+        user_id: context.state.currentUser.user_id
+      }).then(response => {
+        console.log('monthly sales', response.data)
+        context.commit('getMonthlySales', response.data)
+      })
     }
 
 

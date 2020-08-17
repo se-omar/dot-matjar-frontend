@@ -28,7 +28,7 @@ export default {
       console.log("connected");
       console.log(this.paymentToken);
       console.log(this.$route.params.hash);
-      localStorage.removeItem("paymentToken");
+      // localStorage.removeItem("paymentToken");
       console.log(self.productsQuantityArray);
 
       this.$axios

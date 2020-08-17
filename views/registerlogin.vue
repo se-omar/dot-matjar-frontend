@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    
     <v-app>
-      
       <v-container v-if="!currentUser" style="width: 60%">
         <div>
           <v-tabs
@@ -54,11 +52,13 @@
                           @click="validateLoginPage"
                         >Login</v-btn>
                       </v-col>
-                      
 
                       <v-col class="d-flex" cols="12" sm="12" xsm="12">
-                        <v-btn @click="$router.push('/resetPassword')" text> Do yo forget you Password ?</v-btn>
-                      </v-col>  
+                        <v-btn
+                          @click="$router.push('/resetPassword')"
+                          text
+                        >Do yo forget you Password ?</v-btn>
+                      </v-col>
                     </v-row>
                   </v-form>
                 </v-card-text>
@@ -70,14 +70,8 @@
                   <v-form ref="registerForm" v-model="valid" lazy-validation>
                     <v-row>
                       <v-col cols="6" sm="12">
-                        <v-text-field
-                          v-model="email"
-                          :rules="emailRules"
-                          label="Email"
-                          required
-                        ></v-text-field>
+                        <v-text-field v-model="email" :rules="emailRules" label="Email" required></v-text-field>
                       </v-col>
-                     
 
                       <v-col cols="6" sm="12" md="6">
                         <v-text-field
@@ -132,10 +126,14 @@
                         <v-checkbox v-model="checkbox">
                           <template v-slot:label>
                             <div>
-                              I have read the 
+                              I have read the
                               <v-tooltip bottom>
                                 <template v-slot:activator="{ on }">
-                                  <a href="http://vuetifyjs.com" @click.stop v-on="on">terms and conditions</a>
+                                  <a
+                                    href="http://vuetifyjs.com"
+                                    @click.stop
+                                    v-on="on"
+                                  >terms and conditions</a>
                                 </template>
                                 Opens in new window
                               </v-tooltip>
@@ -144,7 +142,7 @@
                         </v-checkbox>
                       </v-col>
 
-                      <v-col class="d-flex " cols="12" sm="6" xsm="12">
+                      <v-col class="d-flex" cols="12" sm="6" xsm="12">
                         <v-btn
                           x-large
                           block
@@ -176,10 +174,7 @@
         </v-row>
       </v-container>
     </v-app>
-
-    
   </div>
-  
 </template>
 
 <script>
@@ -194,26 +189,25 @@ export default {
     },
     currentUser() {
       return this.$store.state.currentUser;
-    }
+    },
   },
 
   methods: {
     validateSignup() {
-
       var self = this;
       self.$store.dispatch("register", {
         email: this.email,
         password: this.password,
         full_arabic_name: this.fullArabicName,
         national_number: this.nationalNumber,
-        mobile_number: this.mobileNumber
+        mobile_number: this.mobileNumber,
       });
     },
 
     validateLoginPage() {
       this.$store.dispatch("validateLoginPage", {
         email: this.loginEmail,
-        password: this.loginPassword
+        password: this.loginPassword,
       });
       console.log(this.currentUser);
     },
@@ -225,7 +219,7 @@ export default {
     },
     changeRoute() {
       document.getElementById("btn").disapled();
-    }
+    },
   },
 
   data: () => ({
@@ -233,7 +227,7 @@ export default {
     tab: 0,
     tabs: [
       { name: "Login", icon: "mdi-account" },
-      { name: "Register", icon: "mdi-account-outline" }
+      { name: "Register", icon: "mdi-account-outline" },
     ],
     valid: true,
 
@@ -246,33 +240,31 @@ export default {
     loginPassword: "",
     loginEmail: "",
     loginEmailRules: [
-      v => !!v || "Required",
-      v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+      (v) => !!v || "Required",
+      (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
     ],
     emailRules: [
-      v => !!v || "Required",
-      v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+      (v) => !!v || "Required",
+      (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
     ],
 
     show1: false,
     rules: {
-      required: value => !!value || "Required.",
-      min: v => (v && v.length >= 7) || "Min 7 characters",
-      valid: v =>
+      required: (value) => !!value || "Required.",
+      min: (v) => (v && v.length >= 7) || "Min 7 characters",
+      valid: (v) =>
         /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
           v
         ) ||
         "password must have at least one letter, one number and one special character",
-      national: v => /\d+/.test(v) || "ID must be numbers only",
-      must: v => (v && v.length == 14) || "ID must be 14 NUMBERS",
-      mobilenumber: v => /\d+/.test(v) || "Enter numbers"
+      national: (v) => /\d+/.test(v) || "ID must be numbers only",
+      must: (v) => (v && v.length == 14) || "ID must be 14 NUMBERS",
+      mobilenumber: (v) => /\d+/.test(v) || "Enter numbers",
     },
-    checkbox: false
+    checkbox: false,
   }),
 
-  components: {
-    
-  }
+  components: {},
 };
 </script>
 <style scoped>
