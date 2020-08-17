@@ -1,12 +1,10 @@
 <template>
-  <v-card :elevation="7" max-width="280" >
- 
-    
+  <v-card :elevation="7" max-width="280">
     <v-img height="200" :src="nodeHost + filteredProduct.main_picture"></v-img>
 
     <v-card-title>{{ filteredProduct.product_name }}</v-card-title>
     <v-card-text>
-      <div >كود المنتج: {{ filteredProduct.product_code }}</div>
+      <div>كود المنتج: {{ filteredProduct.product_code }}</div>
       <div>
         سعر القطعة:
         <span style="color: red;">{{ filteredProduct.unit_price }}</span>
@@ -23,29 +21,22 @@
 
     <v-divider class="mx-4"></v-divider>
 
-  
-    
-      <v-col lg="12" sm="12" md="12">
+    <v-col lg="12" sm="12" md="12">
       <v-btn @click="setCurrentRow" color="primary" text>Details</v-btn>
-      </v-col>
-      <v-col lg="12" sm="12" md="12">
-       <b-button
-       
-      v-if="currentuser"
-          @click="add(filteredProduct)"
-          variant="primary"
-          class="red darken-4"
-          >Add to shopping cart</b-button>
-          <!-- <b-button
+    </v-col>
+    <v-col lg="12" sm="12" md="12">
+      <b-button
+        v-if="currentuser"
+        @click="add(filteredProduct)"
+        variant="primary"
+        class="red darken-4"
+      >Add to shopping cart</b-button>
+      <!-- <b-button
            v-if="this.inCart.in_cart==1"
           @click="add(product)"
           variant="warning"
       >product is added to cart</b-button>-->
-     </v-col>
-   
-   
-  
-  
+    </v-col>
   </v-card>
 </template>
 
@@ -58,7 +49,7 @@ export default {
     return {
       i: 0,
       cart: [],
-      rating: 4
+      rating: 4,
     };
   },
   created() {
@@ -69,12 +60,12 @@ export default {
   props: {
     product: {
       type: Object,
-      default: () => null
+      default: () => null,
     },
     filteredProduct: {
       type: Object,
-      default: () => null
-    }
+      default: () => null,
+    },
   },
 
   methods: {
@@ -86,9 +77,9 @@ export default {
       this.$store.dispatch("table", product);
       // this.$store.commit("cart",product)
       // this.$store.dispatch("cart",product.product_id)
-      this.cart = this.$store.state.cart;
+      this.cart = this.cartt;
       console.log(product.in_cart);
-    }
+    },
   },
   computed: {
     products() {
@@ -102,10 +93,12 @@ export default {
     nodeHost() {
       return this.$store.state.nodeHost;
     },
-    currentuser(){
-      return this.$store.state.currentUser
-    }
-  
-  }
+    currentuser() {
+      return this.$store.state.currentUser;
+    },
+    cartt() {
+      return this.$store.state.cart;
+    },
+  },
 };
 </script>

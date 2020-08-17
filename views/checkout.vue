@@ -1,37 +1,126 @@
 <template>
-  <v-app>
-    <p class="display-1">this is the checkout page</p>
-    <v-btn id="checkout-button" @click="getSession">checkout</v-btn>
+  <v-app id="app">
+    <tool-bar></tool-bar>
+    <v-row justify="start">
+      <v-row>
+        <v-col cols="4">
+          <v-card class="white">
+            <b-table striped hover :items="items" :fields="fields"></b-table>
+          </v-card>
+        </v-col>
+      </v-row>
+
+      <v-col align="start" cols="12">Total</v-col>
+
+      <v-container>
+        <v-row justify="center">
+          <v-col cols="3">
+            <h2>Dilevery Address</h2>
+          </v-col>
+        </v-row>
+        <v-row justify="center">
+          <v-col cols="3">
+            <v-text-field label="المحافظه" outlined v-model="governorate"></v-text-field>
+          </v-col>
+
+          <v-col cols="3">
+            <v-text-field label="القريه" v-model="village" outlined></v-text-field>
+          </v-col>
+        </v-row>
+
+        <v-row justify="center">
+          <v-col cols="6">
+            <v-textarea v-model="address" outlined color="teal">
+              <template v-slot:label>
+                <div>العنوان</div>
+              </template>
+            </v-textarea>
+          </v-col>
+        </v-row>
+        <v-row justify="center">
+          <v-col cols="3">
+            <h2>:Total</h2>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-row>
+
+    <v-container>
+      <v-row justify="center">
+        <v-col cols="3">
+          <h2>Dilevery Address</h2>
+        </v-col>
+      </v-row>
+      <v-row justify="center">
+        <v-col cols="3">
+          <v-text-field label="المحافظه" outlined v-model="governorate"></v-text-field>
+        </v-col>
+
+        <v-col cols="3">
+          <v-text-field label="القريه" v-model="village" outlined></v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row justify="center">
+        <v-col cols="6">
+          <v-textarea v-model="address" outlined color="teal">
+            <template v-slot:label>
+              <div>العنوان</div>
+            </template>
+          </v-textarea>
+        </v-col>
+      </v-row>
+      <v-row justify="center">
+        <v-col cols="3">
+          <h2>:Total</h2>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-app>
 </template>
-
 <script>
-import { loadStripe } from "@stripe/stripe-js";
-export default {
-  methods: {
-    async getSession() {
-      var stripe = await loadStripe(
-        "pk_test_51H97oICdSDXTIUwz70svxkIu08QM3jR0rB6E2njyq3fC7tLOODIipB8ppdjdPt32pteM8zHqsSF2mAo9Oyfw9Mvf00L3omXjql"
-      );
-      console.log(stripe);
-      var sessionId = "";
+import ToolBar from "../components/toolbar.vue";
 
-      this.$axios
-        .post("http://localhost:3000/api/checkout")
-        .then(response => {
-          console.log(response.data.session_id);
-          sessionId = response.data.session_id;
-        })
-        .then(() => {
-          stripe
-            .redirectToCheckout({
-              sessionId: sessionId
-            })
-            .then(function(result) {
-              console.log(result);
-            });
-        });
-    }
-  }
+export default {
+  name: "checkOut",
+  components: {
+    ToolBar,
+  },
+  data: () => ({
+    governorate: "",
+    village: "",
+    address: "",
+
+    //   headers:[
+    //   {text:"Product", value:"product"},
+    //   {text:"price" , value:'price'}
+
+    //   ],
+    //   items: [
+    //     {
+    //       product:'machinegun'
+    //     },
+    //     {
+    //         product:'anything'
+    //     }
+    //   ]
+    fields: [
+      { key: "product_name", label: "المنتجات" },
+      { key: "unit_price", label: "السعر" },
+    ],
+    items: [],
+  }),
+  created() {
+    this.address = this.$store.state.currentUser.address;
+    this.village = this.$store.state.currentUser.village;
+    this.governorate = this.$store.state.currentUser.governorate;
+    this.items = this.$store.state.table;
+  },
+  mounted: {},
 };
 </script>
+<style scoped>
+#app {
+  background-color: whitesmoke;
+}
+</style>

@@ -1,19 +1,15 @@
 <template>
-  <div >
-    <v-app class="grey lighten-4" >
-     
-      <cartTable/>
-      
-     <div class="mx-7"  >
+  <div>
+    <v-app class="grey lighten-4">
+      <cartTable />
 
-        
-        
-        <v-row >
+      <div class="mx-7">
+        <v-row>
           <v-col lg="3">
             <v-text-field
               @keyup="emptySearchBox"
               dense
-               outlined
+              outlined
               v-model="toolbarSearch"
               placeholder="Search for your Product"
             ></v-text-field>
@@ -21,22 +17,19 @@
         </v-row>
         <v-row>
           <v-col lg="3">
-            <v-select 
-            @keyup="emptySelectBox"
-            placeholder="Search By category"
-            dense
-             outlined
-            v-model="categoryName"
-            :items="category"
-            @click="categoriesDB"
+            <v-select
+              @keyup="emptySelectBox"
+              placeholder="Search By category"
+              dense
+              outlined
+              v-model="categoryName"
+              :items="category"
+              @click="categoriesDB"
             ></v-select>
-
           </v-col>
         </v-row>
-     
-        <v-row>
-         
 
+        <v-row>
           <v-col lg="1">
             <v-text-field dense type="number" label="Price From"></v-text-field>
           </v-col>
@@ -50,8 +43,7 @@
           </v-col>
         </v-row>
 
-  
-        <v-row >
+        <v-row>
           <v-col
             lg="2"
             md="4"
@@ -60,41 +52,26 @@
             v-for="filteredProduct in filteredProducts"
             :key="filteredProduct.id"
           >
-             <v-hover>
-    <v-card
-      slot-scope="{ hover }"
-      :class="`elevation-${hover ? 12 : 4}`"
-      
-      width="280"
-    >
-          <product  :filteredProduct="filteredProduct">
-  
-
-
-          </product>
-   
-               
-    </v-card>
-             </v-hover>
+            <v-hover>
+              <v-card slot-scope="{ hover }" :class="`elevation-${hover ? 12 : 4}`" width="280">
+                <product :filteredProduct="filteredProduct"></product>
+              </v-card>
+            </v-hover>
           </v-col>
         </v-row>
-       
-   
-     </div>
-        
-   <v-card>
-        <Footer></Footer>
-    </v-card>
-    </v-app>
+      </div>
 
-    
+      <v-card>
+        <Footer></Footer>
+      </v-card>
+    </v-app>
   </div>
 </template>
 
 <script>
 import Product from "../components/product.vue";
-import cartTable from "../components/cartTable"
-import Footer from '../components/footer.vue'
+import Footer from "../components/footer.vue";
+import cartTable from "../components/cartTable";
 //import usersModel from "../models/usersModel";
 
 export default {
@@ -102,7 +79,7 @@ export default {
   data() {
     return {
       toolbarSearch: "",
-      categoryName:'',
+      categoryName: "",
       items: [],
       egyptGovernorates: [
         "الإسكندرية",
@@ -131,20 +108,20 @@ export default {
         "مطروح",
         "المنوفية",
         "المنيا",
-        "الوادي الجديد"
+        "الوادي الجديد",
       ],
-      category:[]
+      category: [],
     };
   },
   created() {
     this.$store.dispatch("getProducts");
-    console.log(this.$store.state.filteredProducts)
-     return new Promise(resolve => {
-        setTimeout(() => {
- this.$store.dispatch('categoriesDB')    
-         resolve()
-        })
-    })
+    console.log(this.$store.state.filteredProducts);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.$store.dispatch("categoriesDB");
+        resolve();
+      });
+    });
   },
   computed: {
     row() {
@@ -155,42 +132,40 @@ export default {
     },
     filteredProducts() {
       return this.$store.state.filteredProducts;
-    }
+    },
   },
 
   methods: {
     filterProducts() {
-      console.log(this.toolbarSearch,this.categoryName)
-      this.$store.dispatch("filterProducts",{
-        product_name:this.toolbarSearch,
-        category_name:this.categoryName
+      console.log(this.toolbarSearch, this.categoryName);
+      this.$store.dispatch("filterProducts", {
+        product_name: this.toolbarSearch,
+        category_name: this.categoryName,
       });
+    },
 
+    emptySearchBox() {
+      if (!this.toolbarSearch) {
+        this.$store.commit("emptySearch");
+      }
     },
-  
-    emptySearchBox(){
-      if(!this.toolbarSearch){
-        this.$store.commit('emptySearch')
-}
+    emptySelectBox() {
+      if (this.categoryName == "All") {
+        this.$store.commit("emptySearch");
+      }
     },
-      emptySelectBox(){
-      if(this.categoryName == "All"){
-        this.$store.commit('emptySearch')
-}
+    categoriesDB() {
+      this.category = this.$store.state.category;
     },
-    categoriesDB(){
-      this.category = this.$store.state.category
-    }
   },
   components: {
     Product,
     cartTable,
-    Footer
-  }
+    Footer,
+  },
 };
 </script>
 <style scoped>
-
 .container {
   max-width: 960px;
 }

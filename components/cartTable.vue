@@ -1,119 +1,95 @@
 <template>
-      <nav>
-     <v-row justify="center">
-<v-card  height="70" width="100%" flat title>
-  <v-toolbar extended class="red darken-4"  extension-height="5">
-<!-- ================ -->
+  <nav>
+    <v-row justify="center">
+      <v-card height="70" width="100%" flat title>
+        <v-toolbar extended class="red darken-4" extension-height="5">
+          <v-row justify="end ml-2">
+            <v-col cols="12" lg="4" sm="6" md="8">
+              <textarea class="form-control" id="exampleFormControlTextarea4" rows="1"></textarea>
+            </v-col>
+          </v-row>
 
-<v-row justify="end ml-2" >
-  <v-col cols="12" lg="4" sm="6" md="8"  >
-  
-  <textarea  class="form-control" id="exampleFormControlTextarea4" rows="1"></textarea>
-  
-  </v-col>
-</v-row>
+          <v-row justify="end" class="mr-5">
+            <v-btn
+              color="red lighten-1"
+              dark
+              @click.stop="dialog = true"
+              @click="table"
+              v-if="currentUser"
+              large
+              rounded
+            >
+              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            </v-btn>
+          </v-row>
+        </v-toolbar>
 
+        <!-- =============== -->
 
+        <v-row>
+          <v-col cols="12" sm="6" md="6" lg="12">
+            <v-dialog v-model="dialog" max-width="600px">
+              <v-data-table
+                hide-default-footer
+                @click:row="rowclicked"
+                bordered
+                hover
+                :items="items"
+                :headers="headers"
+              >
+                <template v-slot:item.quantity="{ item }">
+                  <v-row>
+                    <v-col cols="3">
+                      <v-btn x-small @click="decrement(item.product_id)">-</v-btn>
+                    </v-col>
+                    <v-col cols="1">
+                      <h4>{{item.quantity}}</h4>
+                    </v-col>
+                    <v-col cols="1">
+                      <v-btn x-small @click="increment(item.product_id)">+</v-btn>
+                    </v-col>
+                  </v-row>
+                </template>
+                <template v-slot:item.remove="{ item }">
+                  <v-btn depressed small color="error" @click="removeCartItem(item.product_id)">X</v-btn>
+                </template>
+                <!-- =============== -->
 
+                <!-- =================== -->
+              </v-data-table>
 
-  <!-- ========== -->
- <v-row justify="end" class="mr-5">
-    <v-btn
-      color="red lighten-1"
-      dark
-      @click.stop="dialog = true"
-      @click="table"
-      v-if="currentUser "
-      large
-    >
-     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-    </v-btn>
-    </v-row>
-    <!-- ==================== -->
+              <v-card>
+                <v-row>
+                  <v-col cols="4"></v-col>
+                  <v-col cols="6">
+                    <h2>Total: {{ total }}.00$</h2>
+                  </v-col>
+                </v-row>
 
+                <v-row justify="center">
+                  <v-col lg="3" sm="3" cols="3">
+                    <v-btn v-if="inCartTable.length>0" dark large @click="getSession">Checkout</v-btn>
+                  </v-col>
 
-
-
-
-    <!-- =============== -->
-  </v-toolbar>
-
-  
-
-   <v-row>
-        <v-col cols="12" sm="6" md="6" lg="12" >
-
-    <v-dialog
-      v-model="dialog"
-      max-width="600px"
-    >
-    
-    
-      <v-data-table hide-default-footer  @click:row="rowclicked"   bordered hover :items="items"   :headers="headers">
-      <template  v-slot:item.quantity="{ item }">
-        <v-row >
-        <v-col cols="3">
-            <v-btn x-small @click="decrement(item.product_id)">-</v-btn>
-
+                  <v-col lg="3" sm="3" cols="3">
+                    <v-btn
+                      dark
+                      large
+                      @click="cleanCart"
+                      v-if="inCartTable.length>0"
+                      depressed
+                      small
+                      color="error"
+                    >Clean</v-btn>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-dialog>
           </v-col>
-          <v-col cols="1">
-           <h4>{{item.quantity}}</h4>
-
-          </v-col>
-             <v-col cols="1" >
-            <v-btn x-small @click="increment(item.product_id)">+</v-btn>
-
-          </v-col>
-         
         </v-row>
-      </template>
-      <template v-slot:item.remove="{ item }">
-        <v-btn depressed small  color="error" @click="removeCartItem(item.product_id)">X</v-btn>
-      </template>
-<!-- =============== -->
-
-
-<!-- =================== -->
-      </v-data-table>
-        
-
-<v-card>
-
-      <v-row>
-       
-     
-<v-col cols="4">
-
-</v-col>
- <v-col cols="6">
-       
-         <h2>Total:  {{ total }}.00$ </h2>
-
-      </v-col>
-     </v-row>
-
-     <v-row justify="center">
-       
-      
-  <v-col lg="3" sm="3" cols="3">
-      <v-btn v-if="inCartTable.length>0" dark large @click="getSession">Checkout</v-btn>
- </v-col>
-    
-  <v-col lg="3" sm="3" cols="3">
-      <v-btn dark large @click="cleanCart"  v-if="inCartTable.length>0"  depressed small color="error" >Clean</v-btn>
-</v-col>
-    
-     </v-row>
-
-</v-card>
-   
-    </v-dialog>
-   </v-col>
-     </v-row> 
-
-</v-card>
-  </v-row>
-      </nav>
+      </v-card>
+    </v-row>
+  </nav>
 </template>
 
 
@@ -132,9 +108,8 @@ export default {
       this.counter++;
     },
     cleanCart() {
-      this.items=[]
-    this.$store.dispatch('cleanCart')
-     
+      this.items = [];
+      this.$store.dispatch("cleanCart");
     },
     removeCartItem(id) {
       for (var x = 0; x < this.items.length; x++) {
@@ -175,55 +150,57 @@ export default {
     table() {
       var self = this;
       this.$store.dispatch("localStorage");
-      setTimeout(function() {
-        console.log(self.$store.state.table);
+      setTimeout(function () {
+        console.log(self.intable);
         self.items = [];
-        for (var i = 0; i < self.$store.state.table.length; i++) {
-          self.items.push(self.$store.state.table[i]);
-          console.log("store i :", self.$store.state.table[i]);
+        for (var i = 0; i < self.intable.length; i++) {
+          self.items.push(self.intable[i]);
+          console.log("store i :", self.intable[i]);
         }
       }, 100);
     },
 
     getSession() {
-      var quantityArray = [];
-      this.items.forEach(element => {
-        quantityArray.push(element.quantity);
+      var self = this;
+      self.quantityArray = [];
+      this.items.forEach((element) => {
+        self.quantityArray.push(element.quantity);
       });
+      console.log(self.quantityArray);
       loadStripe(
         "pk_test_51H97oICdSDXTIUwz70svxkIu08QM3jR0rB6E2njyq3fC7tLOODIipB8ppdjdPt32pteM8zHqsSF2mAo9Oyfw9Mvf00L3omXjql"
-      ).then(stripe => {
-        console.log(stripe);
+      ).then((stripe) => {
         var sessionId = "";
-
         this.$axios
           .post("http://localhost:3000/api/checkout", {
             user_id: this.currentUser.user_id,
-            quantityArray: quantityArray
+            quantityArray: self.quantityArray,
           })
-          .then(response => {
-            console.log(response.data.session_id);
+          .then((response) => {
+            console.log(self.quantityArray);
             sessionId = response.data.session_id;
+            this.$store.commit("setPaymentToken", response.data.token);
+            this.$store.commit("putTotalPriceInStore", self.total);
+            this.$store.commit("putQuantityInStore", self.quantityArray);
           })
           .then(() => {
             stripe
               .redirectToCheckout({
-                sessionId: sessionId
+                sessionId: sessionId,
               })
-              .then(function(result) {
+              .then(function (result) {
                 console.log(result);
               });
           });
       });
-    }
+    },
   },
 
   data() {
     return {
-  toolbarSearch:'',
+      toolbarSearch: "",
+      dialog: false,
 
-       dialog: false,
-       
       counter: 0,
       products: [
         {
@@ -232,7 +209,7 @@ export default {
           name: "car1",
           price: 1,
           quantaty: 1,
-          cart: false
+          cart: false,
         },
         {
           id: 2,
@@ -240,7 +217,7 @@ export default {
           name: "car2",
           price: 2,
           quantaty: 1,
-          cart: false
+          cart: false,
         },
         {
           id: 3,
@@ -248,49 +225,42 @@ export default {
           name: "car3",
           price: 3,
           quantaty: 1,
-          cart: false
-        }
+          cart: false,
+        },
       ],
-      cart:[],
-      headers:[ 
-       
-         { text: 'Product name', value: 'product_name' },
- { text: 'Quantity', value: 'quantity' },
- { text: 'Price', value: 'unit_price' },
-          { text: 'Remove', value: 'remove' },
-         
-          
-          
-            
-          ],
-          items: [],
-          
-    }
+      cart: [],
+      headers: [
+        { text: "Product name", value: "product_name" },
+        { text: "Quantity", value: "quantity" },
+        { text: "Price", value: "unit_price" },
+        { text: "Remove", value: "remove" },
+      ],
+      items: [],
+    };
   },
-   computed:{
-       
-      total(){
-        
-        var t=0 ;
-        for(var i=0 ; i<this.items.length;i++){
-          console.log(this.items[i].unit_price)
-          t += this.items[i].unit_price * this.items[i].quantity 
-          console.log( this.items[0].quantity)
-        }
-        return t
-      },
-      currentUser(){
-        return this.$store.state.currentUser
-      },
-      inCartTable(){
-        return this.$store.state.table
+  computed: {
+    total() {
+      var t = 0;
+      for (var i = 0; i < this.items.length; i++) {
+        console.log(this.items[i].unit_price);
+        t += this.items[i].unit_price * this.items[i].quantity;
+        console.log(this.items[0].quantity);
       }
-  
+      return t;
     },
-    created:()=>{
-    }
-    
+    currentUser() {
+      return this.$store.state.currentUser;
+    },
+    inCartTable() {
+      return this.$store.state.table;
+    },
 
-
-}
+    intable() {
+      return this.$store.state.table;
+    },
+  },
+  created() {
+    console.log(this.$store.state.table);
+  },
+};
 </script>

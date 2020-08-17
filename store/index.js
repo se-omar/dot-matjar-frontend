@@ -27,8 +27,14 @@ export default new Vuex.Store({
     nodeHost: "http://localhost:3000/",
     viewRequestDetails: false,
     cart: [],
-    table: JSON.parse(localStorage.getItem('cartItems')),
-    category:[]
+    table: JSON.parse(localStorage.getItem('cartItems')) ? JSON.parse(localStorage.getItem('cartItems')) : [],
+    category: [],
+    incart: '',
+    paymentToken: localStorage.getItem('paymentToken'),
+    totalPrice: localStorage.getItem('totalPrice'),
+    productsQuantityArray: JSON.parse(localStorage.getItem('quantity')),
+    orders: [],
+    orderProducts: [],
   },
 
   mutations: {
@@ -50,7 +56,7 @@ export default new Vuex.Store({
         localStorage.setItem('currentUser', JSON.stringify(response.data.data));
         console.log(JSON.parse(localStorage.getItem('currentUser')));
         state.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-        router.push('/home').catch(() => { })
+        router.push('/home').catch(() => {})
         console.log('current user is: ', state.currentUser);
       }
     },
@@ -69,19 +75,19 @@ export default new Vuex.Store({
     },
 
     filterProducts(state, products) {
-  //      if(!state.filteredProducts){
-  // state.filteredProducts =
-  // state.products.filter(row => row.product_name.indexOf(payload) > -1 )
-  // }
-  // else{
-  //   state.filteredProducts=
-  //   state.filteredProducts.filter(row => row.product_name.indexOf(payload) > -1 )
+      //      if(!state.filteredProducts){
+      // state.filteredProducts =
+      // state.products.filter(row => row.product_name.indexOf(payload) > -1 )
+      // }
+      // else{
+      //   state.filteredProducts=
+      //   state.filteredProducts.filter(row => row.product_name.indexOf(payload) > -1 )
 
-  // }
+      // }
 
-  state.filteredProducts = products
-},
-   
+      state.filteredProducts = products
+    },
+
     setCurrentProduct(state, payload) {
       localStorage.setItem('currentProduct', JSON.stringify(payload));
       state.currentProduct = JSON.parse(localStorage.getItem('currentProduct'))
@@ -174,34 +180,71 @@ export default new Vuex.Store({
       localStorage.setItem('cartItems', JSON.stringify(products))
       state.table = JSON.parse(localStorage.getItem('cartItems'))
 
-},
+    },
 
-emptySearch(state){
-  state.filteredProducts= state.products
-},
-cleanCart(state){
- var cartLength= state.table.length;
- state.table.splice(0,cartLength)
- localStorage.setItem('cartItems',JSON.stringify(state.table))
- 
- 
-},
-categoriesDB(state,data){
-  console.log(data)
-state.category= data.map(e=>{return e.category_name})
-console.log(state.category)
-}
+    emptySearch(state) {
+      state.filteredProducts = state.products
+    },
+    cleanCart(state) {
+      var cartLength = state.table.length;
+      state.table.splice(0, cartLength)
+      localStorage.setItem('cartItems', JSON.stringify(state.table))
 
+
+    },
+    categoriesDB(state, data) {
+      console.log(data)
+      state.category = data.map(e => {
+        return e.category_name
+      })
+      console.log(state.category)
+    },
+
+
+    setPaymentToken(state, token) {
+      localStorage.setItem('paymentToken', token);
+      state.paymentToken = localStorage.getItem('paymentToken');
+    },
+
+    filterProductsCategory(state, payload) {
+      state.filteredProducts =
+        state.products.filter(row => row.category_name.indexOf(payload) > -1)
+    },
+
+    putTotalPriceInStore(state, total) {
+      localStorage.setItem('totalPrice', total)
+      state.totalPrice = localStorage.getItem('totalPrice');
+    },
+
+    putQuantityInStore(state, quantity) {
+      localStorage.setItem('quantity', JSON.stringify(quantity))
+      state.productsQuantityArray = JSON.parse(localStorage.getItem('quantity'))
+    },
+    getOrders(state, order) {
+      console.log('orer si', order)
+      state.orders = order
+      console.log('state order', state.order)
+    },
+    getOrderProducts(state, response) {
+      var products = response.map(e => {
+
+        return e.product
+      })
+      state.orderProducts = products
+      console.log('commit products', state.orderProducts)
+    }
 
   },
- 
+
+
+
   actions: {
     profilePhoto(context, form) {
       axios.post('http://localhost:3000/api/profilePhoto', form, {
-        headers: {
-          'content-type': 'multipart/form-data'
-        }
-      })
+          headers: {
+            'content-type': 'multipart/form-data'
+          }
+        })
         .then(response => {
           console.log("the image path", response.data.data)
           console.log(response.data.message)
@@ -211,7 +254,9 @@ console.log(state.category)
             email: localStorage.getItem('currentEmail'),
             password: localStorage.getItem('currentPassword')
           })
-        }).catch(err=>{console.log('ERROR',err)})
+        }).catch(err => {
+          console.log('ERROR', err)
+        })
     },
     validateLoginPage(context, {
       email,
@@ -248,12 +293,12 @@ console.log(state.category)
       }
       console.log('dologin email', email)
       axios.post("http://localhost:3000/api/login", {
-        email,
-        password
-      }).then((response) => {
-        console.log('dologin response', response)
-        context.commit('doLogin', response)
-      })
+          email,
+          password
+        }).then((response) => {
+          console.log('dologin response', response)
+          context.commit('doLogin', response)
+        })
         .catch((error) => {
           console.log(error);
         });
@@ -265,18 +310,22 @@ console.log(state.category)
       })
     },
 
-    filterProducts(context,{product_name,category_name}) {
-console.log(product_name)
-   axios.put('http://localhost:3000/api/filterProducts',{
-     product_name,category_name
-   })
-   .then(products=>{
-     console.log('message:',products.data.message)
-     console.log('products:',products.data.data)
+    filterProducts(context, {
+      product_name,
+      category_name
+    }) {
+      console.log(product_name)
+      axios.put('http://localhost:3000/api/filterProducts', {
+          product_name,
+          category_name
+        })
+        .then(products => {
+          console.log('message:', products.data.message)
+          console.log('products:', products.data.data)
 
-    context.commit('filterProducts', products.data.data);
+          context.commit('filterProducts', products.data.data);
 
-   })
+        })
 
 
     },
@@ -303,25 +352,25 @@ console.log(product_name)
     }) {
 
       axios.put('http://localhost:3000/api/completedata', {
-        national_number,
-        gender,
-        full_arabic_name,
-        full_english_name,
-        birthdate,
-        qualifications,
-        job,
-        governorate,
-        village,
-        center,
-        phone_number,
-        mobile_number,
-        fax,
-        facebook_account,
-        linkedin,
-        website,
-        address,
-        email
-      })
+          national_number,
+          gender,
+          full_arabic_name,
+          full_english_name,
+          birthdate,
+          qualifications,
+          job,
+          governorate,
+          village,
+          center,
+          phone_number,
+          mobile_number,
+          fax,
+          facebook_account,
+          linkedin,
+          website,
+          address,
+          email
+        })
         .then(response => {
           alert(response.data.message)
           console.log(response.data.data)
@@ -341,13 +390,13 @@ console.log(product_name)
 
 
       axios.post('http://localhost:3000/api/signup', {
-        email,
-        password,
-        full_arabic_name,
-        mobile_number,
-        national_number
+          email,
+          password,
+          full_arabic_name,
+          mobile_number,
+          national_number
 
-      })
+        })
         .then(response => {
           if (response.data.message) {
             alert(response.data.message)
@@ -384,8 +433,8 @@ console.log(product_name)
 
     getRecievedRequests(context) {
       axios.post("http://localhost:3000/api/recievedRequests", {
-        user_id: context.state.currentUser.user_id
-      })
+          user_id: context.state.currentUser.user_id
+        })
         .then(response => {
           context.commit('getRecievedRequests', response.data);
         });
@@ -393,8 +442,8 @@ console.log(product_name)
 
     getSentRequests(context) {
       axios.post("http://localhost:3000/api/sentRequests", {
-        user_id: context.state.currentUser.user_id
-      })
+          user_id: context.state.currentUser.user_id
+        })
         .then(response => {
           console.log(response.data);
           context.commit('getSentRequests', response.data);
@@ -468,10 +517,10 @@ console.log(product_name)
     },
     cart(context, product_id) {
       axios.post('http://localhost:3000/api/cart', {
-        product_id: product_id,
-        user_id: context.state.currentUser.user_id
+          product_id: product_id,
+          user_id: context.state.currentUser.user_id
 
-      })
+        })
         .then(response => {
           console.log(response.data)
 
@@ -484,49 +533,78 @@ console.log(product_name)
     },
     table(context, product) {
       axios.post('http://localhost:3000/api/table', {
-        user_id: context.state.currentUser.user_id,
-        product_id: product.product_id
-      })
+          user_id: context.state.currentUser.user_id,
+          product_id: product.product_id
+        })
         .then(response => {
           console.log(response.data.message)
         })
 
     },
     removeProductFromCart(context, id) {
-      axios.put('http://localhost:3000/api/remove', { product_id: id })
+      axios.put('http://localhost:3000/api/remove', {
+          product_id: id
+        })
         .then(response => {
           console.log(response.data)
           context.commit('removeProductFromCart', id)
         })
 
     },
-    localStorage(context){
-      axios.put('http://localhost:3000/api/getProducts',{user_id:context.state.currentUser.user_id})
-      .then((response)=>{
-        context.commit('localStorage',response.data.data)
-      })
-    },
-   
-    cleanCart(context){
-      
-context.commit('cleanCart')
-axios.put('http://localhost:3000/api/cleanCart',{
-  user_id:context.state.currentUser.user_id
-})
-.then(response=>{
-console.log(response.data.message)
-})
+    localStorage(context) {
+      axios.put('http://localhost:3000/api/getProducts', {
+          user_id: context.state.currentUser.user_id
+        })
+        .then((response) => {
+          context.commit('localStorage', response.data.data)
+        })
     },
 
-categoriesDB(context){
-axios.get('http://localhost:3000/api/selectCategory')
-.then((res)=>{
-  console.log(res.data.data)
-  context.commit('categoriesDB',res.data.data)
-})
-},
+    cleanCart(context) {
+
+      context.commit('cleanCart')
+      axios.put('http://localhost:3000/api/cleanCart', {
+          user_id: context.state.currentUser.user_id
+        })
+        .then(response => {
+          console.log(response.data.message)
+        })
+    },
+
+    categoriesDB(context) {
+      axios.get('http://localhost:3000/api/selectCategory')
+        .then((res) => {
+          console.log(res.data.data)
+          context.commit('categoriesDB', res.data.data)
+        })
+    },
+    getOrderProducts(context, id) {
+      console.log('id', id)
+      axios.put('http://localhost:3000/api/getOrderProducts', {
+          order_id: id
+        })
+        .then(response => {
+          console.log('Products', response.data)
+          context.commit('getOrderProducts', response.data)
+        })
 
 
+    },
+    getOrders(context) {
+      console.log(context.state.currentUser.user_id)
+      axios.put('http://localhost:3000/api/getOrders', {
+          user_id: context.state.currentUser.user_id
+        })
+        .then(orders => {
+
+          context.commit('getOrders', orders.data.data)
+        })
+    }
+
+
+    // filterProductsCategory(context, payload) {
+    //   context.commit('filterProductsCategory', payload)
+    // }
 
   },
 
