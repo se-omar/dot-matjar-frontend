@@ -37,7 +37,9 @@ export default new Vuex.Store({
     orderProducts: [],
     topProduct: {},
     leastProduct: {},
-    notSortedDashboardOrders: []
+    notSortedDashboardOrders: [],
+    suppliers: [],
+    allSuppliers: [],
   },
 
   mutations: {
@@ -52,14 +54,14 @@ export default new Vuex.Store({
     },
 
     doLogin(state, response) {
-      //debugger
+      //
       if (response.data.message != "authenitcation succesfull") {
         console.log(response.data.message);
       } else {
         localStorage.setItem('currentUser', JSON.stringify(response.data.data));
         console.log(JSON.parse(localStorage.getItem('currentUser')));
         state.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-        router.push('/home').catch(() => {})
+        router.push('/home').catch(() => { })
         console.log('current user is: ', state.currentUser);
       }
     },
@@ -246,6 +248,23 @@ export default new Vuex.Store({
 
     getMonthlySales(state, orders) {
       state.notSortedDashboardOrders = orders
+    },
+
+    getSuppliers(state, suppliers) {
+      state.suppliers.push(...suppliers);
+      state.allSuppliers.push(...suppliers);
+    },
+
+    filterSuppliers(state, users) {
+      state.suppliers = users;
+    },
+
+    emptySupplierName(state) {
+      state.suppliers = state.allSuppliers
+    },
+
+    emptySupplierLocation(state) {
+      state.suppliers = state.allSuppliers;
     }
 
   },
@@ -255,10 +274,10 @@ export default new Vuex.Store({
   actions: {
     profilePhoto(context, form) {
       axios.post('http://localhost:3000/api/profilePhoto', form, {
-          headers: {
-            'content-type': 'multipart/form-data'
-          }
-        })
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      })
         .then(response => {
           console.log("the image path", response.data.data)
           console.log(response.data.message)
@@ -307,12 +326,12 @@ export default new Vuex.Store({
       }
       console.log('dologin email', email)
       axios.post("http://localhost:3000/api/login", {
-          email,
-          password
-        }).then((response) => {
-          console.log('dologin response', response)
-          context.commit('doLogin', response)
-        })
+        email,
+        password
+      }).then((response) => {
+        console.log('dologin response', response)
+        context.commit('doLogin', response)
+      })
         .catch((error) => {
           console.log(error);
         });
@@ -330,9 +349,9 @@ export default new Vuex.Store({
     }) {
       console.log(product_name)
       axios.put('http://localhost:3000/api/filterProducts', {
-          product_name,
-          category_name
-        })
+        product_name,
+        category_name
+      })
         .then(products => {
           console.log('message:', products.data.message)
           console.log('products:', products.data.data)
@@ -366,25 +385,25 @@ export default new Vuex.Store({
     }) {
 
       axios.put('http://localhost:3000/api/completedata', {
-          national_number,
-          gender,
-          full_arabic_name,
-          full_english_name,
-          birthdate,
-          qualifications,
-          job,
-          governorate,
-          village,
-          center,
-          phone_number,
-          mobile_number,
-          fax,
-          facebook_account,
-          linkedin,
-          website,
-          address,
-          email
-        })
+        national_number,
+        gender,
+        full_arabic_name,
+        full_english_name,
+        birthdate,
+        qualifications,
+        job,
+        governorate,
+        village,
+        center,
+        phone_number,
+        mobile_number,
+        fax,
+        facebook_account,
+        linkedin,
+        website,
+        address,
+        email
+      })
         .then(response => {
           alert(response.data.message)
           console.log(response.data.data)
@@ -404,13 +423,13 @@ export default new Vuex.Store({
 
 
       axios.post('http://localhost:3000/api/signup', {
-          email,
-          password,
-          full_arabic_name,
-          mobile_number,
-          national_number
+        email,
+        password,
+        full_arabic_name,
+        mobile_number,
+        national_number
 
-        })
+      })
         .then(response => {
           if (response.data.message) {
             alert(response.data.message)
@@ -447,8 +466,8 @@ export default new Vuex.Store({
 
     getRecievedRequests(context) {
       axios.post("http://localhost:3000/api/recievedRequests", {
-          user_id: context.state.currentUser.user_id
-        })
+        user_id: context.state.currentUser.user_id
+      })
         .then(response => {
           context.commit('getRecievedRequests', response.data);
         });
@@ -456,8 +475,8 @@ export default new Vuex.Store({
 
     getSentRequests(context) {
       axios.post("http://localhost:3000/api/sentRequests", {
-          user_id: context.state.currentUser.user_id
-        })
+        user_id: context.state.currentUser.user_id
+      })
         .then(response => {
           console.log(response.data);
           context.commit('getSentRequests', response.data);
@@ -500,7 +519,7 @@ export default new Vuex.Store({
 
     getMyProducts(context) {
       console.log(context.state.currentUser.user_id);
-      axios.post("http://localhost:3000/api/myProducts", {
+      return axios.post("http://localhost:3000/api/myProducts", {
         user_id: context.state.currentUser.user_id
       }).then(response => {
         console.log(response)
@@ -531,10 +550,10 @@ export default new Vuex.Store({
     },
     cart(context, product_id) {
       axios.post('http://localhost:3000/api/cart', {
-          product_id: product_id,
-          user_id: context.state.currentUser.user_id
+        product_id: product_id,
+        user_id: context.state.currentUser.user_id
 
-        })
+      })
         .then(response => {
           console.log(response.data)
 
@@ -547,9 +566,9 @@ export default new Vuex.Store({
     },
     table(context, product) {
       axios.post('http://localhost:3000/api/table', {
-          user_id: context.state.currentUser.user_id,
-          product_id: product.product_id
-        })
+        user_id: context.state.currentUser.user_id,
+        product_id: product.product_id
+      })
         .then(response => {
           console.log(response.data.message)
         })
@@ -557,8 +576,8 @@ export default new Vuex.Store({
     },
     removeProductFromCart(context, id) {
       axios.put('http://localhost:3000/api/remove', {
-          product_id: id
-        })
+        product_id: id
+      })
         .then(response => {
           console.log(response.data)
           context.commit('removeProductFromCart', id)
@@ -567,8 +586,8 @@ export default new Vuex.Store({
     },
     localStorage(context) {
       axios.put('http://localhost:3000/api/getProducts', {
-          user_id: context.state.currentUser.user_id
-        })
+        user_id: context.state.currentUser.user_id
+      })
         .then((response) => {
           context.commit('localStorage', response.data.data)
         })
@@ -578,8 +597,8 @@ export default new Vuex.Store({
 
       context.commit('cleanCart')
       axios.put('http://localhost:3000/api/cleanCart', {
-          user_id: context.state.currentUser.user_id
-        })
+        user_id: context.state.currentUser.user_id
+      })
         .then(response => {
           console.log(response.data.message)
         })
@@ -595,8 +614,8 @@ export default new Vuex.Store({
     getOrderProducts(context, id) {
       console.log('id', id)
       axios.put('http://localhost:3000/api/getOrderProducts', {
-          order_id: id
-        })
+        order_id: id
+      })
         .then(response => {
           console.log('Products', response.data)
           context.commit('getOrderProducts', response.data)
@@ -607,8 +626,8 @@ export default new Vuex.Store({
     getOrders(context) {
       console.log(context.state.currentUser.user_id)
       axios.put('http://localhost:3000/api/getOrders', {
-          user_id: context.state.currentUser.user_id
-        })
+        user_id: context.state.currentUser.user_id
+      })
         .then(orders => {
 
           context.commit('getOrders', orders.data.data)
@@ -619,6 +638,7 @@ export default new Vuex.Store({
     },
 
     getTopSellingProduct(context) {
+
       axios
         .post("http://localhost:3000/api/topSellingProduct", {
           user_id: context.state.currentUser.user_id
@@ -641,11 +661,34 @@ export default new Vuex.Store({
     },
 
     getMonthlySales(context) {
-      axios.post('http://localhost:3000/api/monthlySales', {
+      return axios.post('http://localhost:3000/api/monthlySales', {
         user_id: context.state.currentUser.user_id
       }).then(response => {
         console.log('monthly sales', response.data)
+
         context.commit('getMonthlySales', response.data)
+      })
+    },
+
+    getSuppliers(context) {
+      axios.post('http://localhost:3000/api/getSuppliers', {
+        user_id: context.state.suppliers.length > 0 ? context.state.suppliers[context.state.suppliers.length - 1].user_id : null
+      }).then(response => {
+        console.log(response.data.users)
+        context.commit('getSuppliers', response.data.users)
+      })
+    },
+
+    filterSuppliers(context, {
+      supplierName, supplierLocation
+    }) {
+      console.log('supplierName', supplierName)
+      console.log('supplierLocation', supplierLocation)
+      axios.put('http://localhost:3000/api/filterSuppliers', {
+        name: supplierName,
+        location: supplierLocation
+      }).then(response => {
+        context.commit('filterSuppliers', response.data.users)
       })
     }
 

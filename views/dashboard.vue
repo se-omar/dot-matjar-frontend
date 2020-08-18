@@ -139,24 +139,26 @@
 <script>
 import dashboardSellingProduct from "../components/dashboardSellingProduct";
 export default {
-  mounted() {
+  async mounted() {
     this.$store.dispatch("getTopSellingProduct");
     this.$store.dispatch("getLeastSellingProduct");
-    this.$store.dispatch("getMyProducts");
-    this.$store.dispatch("getMonthlySales");
+    await this.$store.dispatch("getMyProducts");
+    await this.$store.dispatch("getMonthlySales");
 
-    const result = this.groupBy(this.myProducts, c => c.category_id);
+    const result = this.groupBy(this.myProducts, (c) => c.category_id);
     this.categoryArray = result;
 
     const ordered = this.groupBy(
       this.notSortedDashboardOrders,
-      c => c.order_month
+      (c) => c.order_month
     );
+
     this.monthlySortedOrders = ordered;
     //this.pieOptions.labels = this.labels;
     this.calculateMonthlySales();
     this.calculateCategoryPercentage();
     //console.log(this.pieOptions.labels);
+    console.log(this.monthlySalesArray);
   },
 
   computed: {
@@ -192,11 +194,11 @@ export default {
             breakpoint: 480,
             options: {
               legend: {
-                position: "bottom"
-              }
-            }
-          }
-        ]
+                position: "bottom",
+              },
+            },
+          },
+        ],
       };
     },
 
@@ -208,8 +210,8 @@ export default {
       return [
         {
           name: "asdasd",
-          data: this.monthlySalesArray
-        }
+          data: this.monthlySalesArray,
+        },
       ];
     },
 
@@ -217,17 +219,15 @@ export default {
       return [
         {
           name: "asdasd",
-          data: this.monthlyRevenueArray
-        }
+          data: this.monthlyRevenueArray,
+        },
       ];
-    }
-  },
+    },
 
-  data: function() {
-    return {
-      chartOptions: {
+    chartOptions() {
+      return {
         chart: {
-          id: "vuechart-example"
+          id: "vuechart-example",
         },
         xaxis: {
           categories: [
@@ -242,12 +242,16 @@ export default {
             "sep",
             "oct",
             "nov",
-            "dec"
-          ]
+            "dec",
+          ],
         },
-        colors: ["#F44336"]
-      },
+        colors: ["#F44336"],
+      };
+    },
+  },
 
+  data: function () {
+    return {
       topSellingProduct: {},
       leastSellingProduct: {},
 
@@ -256,7 +260,7 @@ export default {
       categoryNames: [],
       monthlySortedOrders: {},
       monthlySalesArray: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      monthlyRevenueArray: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      monthlyRevenueArray: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     };
   },
 
@@ -269,6 +273,7 @@ export default {
     },
 
     calculateCategoryPercentage() {
+      console.log("calculateCategoryPercentage");
       var categorySales, i, j;
       var categorySalesArray = [];
       var totalCategorySales = 0;
@@ -306,13 +311,17 @@ export default {
     },
 
     calculateMonthlySales() {
+      console.log("entered function");
+
       var i, j, totalMonthSales, totalMonthRevenue;
 
       for (i in this.monthlySortedOrders) {
+        console.log("entered first loop");
         totalMonthSales = 0;
         totalMonthRevenue = 0;
         for (j = 0; j < this.monthlySortedOrders[i].length; j++) {
-          this.monthlySortedOrders[i][j].products.forEach(element => {
+          console.log("entered second loop");
+          this.monthlySortedOrders[i][j].products.forEach((element) => {
             totalMonthSales += element.buy_counter;
             totalMonthRevenue += element.unit_price * element.buy_counter;
           });
@@ -325,11 +334,11 @@ export default {
       //   "monthlySalesArray",
       //   JSON.stringify(this.monthlySalesArray)
       // );
-    }
+    },
   },
 
   components: {
-    dashboardSellingProduct
-  }
+    dashboardSellingProduct,
+  },
 };
 </script>

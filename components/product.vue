@@ -48,12 +48,7 @@ export default {
   data() {
     return {
       i: 0,
-<<<<<<< HEAD
       rating: 4
-=======
-      cart: [],
-      rating: 4,
->>>>>>> 0dfcf3f70db18a144e946fc849220c14ddef18d9
     };
   },
   created() {
@@ -81,10 +76,6 @@ export default {
       this.$store.dispatch("table", product);
       // this.$store.commit("cart",product)
       // this.$store.dispatch("cart",product.product_id)
-<<<<<<< HEAD
-=======
-      this.cart = this.cartt;
->>>>>>> 0dfcf3f70db18a144e946fc849220c14ddef18d9
       console.log(product.in_cart);
     },
   },
@@ -103,16 +94,9 @@ export default {
     currentuser() {
       return this.$store.state.currentUser;
     },
-<<<<<<< HEAD
     cart() {
       return this.$store.state.cart;
     }
   }
-=======
-    cartt() {
-      return this.$store.state.cart;
-    },
-  },
->>>>>>> 0dfcf3f70db18a144e946fc849220c14ddef18d9
 };
 </script>

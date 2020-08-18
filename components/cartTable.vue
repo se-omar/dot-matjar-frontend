@@ -97,7 +97,7 @@ export default {
           this.items.splice(x, 1);
           console.log(this.items);
 
-          this.$store.dispatch("remove", id);
+          this.$store.dispatch("removeProductFromCart", id);
         }
       }
     },
