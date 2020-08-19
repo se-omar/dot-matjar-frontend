@@ -37,7 +37,8 @@ export default new Vuex.Store({
     orderProducts: [],
     topProduct: {},
     leastProduct: {},
-    notSortedDashboardOrders: []
+    notSortedDashboardOrders: [],
+    supplierPageColor: localStorage.getItem('supplierPageColor')
   },
 
   mutations: {
@@ -246,6 +247,10 @@ export default new Vuex.Store({
 
     getMonthlySales(state, orders) {
       state.notSortedDashboardOrders = orders
+    },
+    supplierPageColor(state, color) {
+      localStorage.setItem('supplierPageColor', color)
+      state.supplierPageColor = localStorage.getItem('supplierPageColor')
     }
 
   },
@@ -647,8 +652,25 @@ export default new Vuex.Store({
         console.log('monthly sales', response.data)
         context.commit('getMonthlySales', response.data)
       })
-    }
+    },
 
+    supplierProducts(context) {
+      axios.get('http://localhost:3000/api/supplierProducts', {
+        user_id: context.state.currentUser.user_id
+      }).then(products => {
+        console.log('supplier products', products)
+      })
+    },
+    supplierPageColor(context, color) {
+      axios.put('http://localhost:3000/api/supplierPageColor', {
+          page_color: color,
+          user_id: context.state.currentUser.user_id
+        })
+        .then(response => {
+          console.log(response.data.message)
+          context.commit('supplierPageColor', response.data.data)
+        })
+    }
 
     // filterProductsCategory(context, payload) {
     //   context.commit('filterProductsCategory', payload)

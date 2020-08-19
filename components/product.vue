@@ -26,7 +26,7 @@
     </v-col>
     <v-col lg="12" sm="12" md="12">
       <b-button
-        v-if="currentuser"
+        v-if="currentuser && addToCartButton"
         @click="add(filteredProduct)"
         variant="primary"
         class="red darken-4"
@@ -65,6 +65,10 @@ export default {
     filteredProduct: {
       type: Object,
       default: () => null,
+    },
+    addToCartButton: {
+      type: Object,
+      default: () => true,
     },
   },
 

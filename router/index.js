@@ -19,7 +19,10 @@ import successfulPayment from '../views/successfulPayment'
 import notFound from '../views/notFound'
 import userOrders from '../views/userOrders'
 import dashboard from '../views/dashboard'
-
+import supplierPage from '../views/supplierPage'
+import test from '../views/test'
+import test2 from '../views/test2'
+import sideButton from '../components/sideButton'
 Vue.use(VueRouter)
 
 var routes = [{
@@ -118,6 +121,26 @@ var routes = [{
     path: '/dashboard',
     name: 'dashboard',
     component: dashboard
+  },
+  {
+    path: '/supplierPage',
+    name: 'supplierPage',
+    component: supplierPage
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: test
+  },
+  {
+    path: '/test2',
+    name: 'test2',
+    component: test2
+  },
+  {
+    path: '/sideButton',
+    name: 'sidebutton',
+    component: sideButton
   },
   {
     path: '*',

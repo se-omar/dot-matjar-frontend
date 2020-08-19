@@ -1,6 +1,6 @@
 <template>
   <div class="tool-bar">
-    <v-app-bar class="red darken-2" dark dense>
+    <v-app-bar :class="toolBarColor" dark>
       <v-toolbar-title>
         <v-btn class="font" text @click="$router.push('/home').catch((err) => {})">E-Commerce</v-btn>
       </v-toolbar-title>
@@ -109,8 +109,13 @@
             </v-btn>
           </v-col>-->
           <v-col cols="12 ml-6  ">
-            <v-btn class="btn1" x-large color="blue">
+            <v-btn class="btn1" x-large color="blue" rounded>
               <span class="mos" @click="$router.push('/myProducts')">My products</span>
+            </v-btn>
+          </v-col>
+          <v-col cols="12 ml-6  ">
+            <v-btn class="btn1" x-large color="blue" rounded>
+              <span class="mos" @click="$router.push('/supplierPage')">My Page</span>
             </v-btn>
           </v-col>
 
@@ -266,11 +271,15 @@
     </v-navigation-drawer>
   </div>
 </template>
-
 <script>
-// import cartTable from "../components/cartTable";
 export default {
   components: {},
+  props: {
+    toolBarColor: {
+      type: String,
+      default: () => "red darken-4",
+    },
+  },
   computed: {
     currentUser() {
       return this.$store.state.currentUser;

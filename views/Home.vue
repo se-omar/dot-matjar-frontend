@@ -1,5 +1,6 @@
 <template>
   <div>
+    <toolBar></toolBar>
     <v-app class="grey lighten-4">
       <cartTable />
 
@@ -72,6 +73,7 @@
 import Product from "../components/product.vue";
 import Footer from "../components/footer.vue";
 import cartTable from "../components/cartTable";
+import toolBar from "../components/toolbar";
 //import usersModel from "../models/usersModel";
 
 export default {
@@ -162,6 +164,7 @@ export default {
     Product,
     cartTable,
     Footer,
+    toolBar,
   },
 };
 </script>

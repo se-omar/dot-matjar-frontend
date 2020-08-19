@@ -1,95 +1,84 @@
 <template>
-  <nav>
-    <v-row justify="center">
-      <v-card height="70" width="100%" flat title>
-        <v-toolbar extended class="red darken-4" extension-height="5">
-          <v-row justify="end ml-2">
-            <v-col cols="12" lg="4" sm="6" md="8">
-              <textarea class="form-control" id="exampleFormControlTextarea4" rows="1"></textarea>
-            </v-col>
-          </v-row>
+  <div>
+    <v-row justify="start">
+      <v-col cols="12">
+        <v-btn
+          color="red lighten-1"
+          dark
+          @click.stop="dialog = true"
+          @click="table"
+          v-if="currentUser"
+          large
+          rounded
+        >
+          <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        </v-btn>
+      </v-col>
+      <!-- =============== -->
 
-          <v-row justify="end" class="mr-5">
-            <v-btn
-              color="red lighten-1"
-              dark
-              @click.stop="dialog = true"
-              @click="table"
-              v-if="currentUser"
-              large
-              rounded
+      <v-row>
+        <v-col cols="12" sm="6" md="6" lg="12">
+          <v-dialog v-model="dialog" max-width="600px">
+            <v-data-table
+              hide-default-footer
+              @click:row="rowclicked"
+              bordered
+              hover
+              :items="items"
+              :headers="headers"
             >
-              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-            </v-btn>
-          </v-row>
-        </v-toolbar>
-
-        <!-- =============== -->
-
-        <v-row>
-          <v-col cols="12" sm="6" md="6" lg="12">
-            <v-dialog v-model="dialog" max-width="600px">
-              <v-data-table
-                hide-default-footer
-                @click:row="rowclicked"
-                bordered
-                hover
-                :items="items"
-                :headers="headers"
-              >
-                <template v-slot:item.quantity="{ item }">
-                  <v-row>
-                    <v-col cols="3">
-                      <v-btn x-small @click="decrement(item.product_id)">-</v-btn>
-                    </v-col>
-                    <v-col cols="1">
-                      <h4>{{item.quantity}}</h4>
-                    </v-col>
-                    <v-col cols="1">
-                      <v-btn x-small @click="increment(item.product_id)">+</v-btn>
-                    </v-col>
-                  </v-row>
-                </template>
-                <template v-slot:item.remove="{ item }">
-                  <v-btn depressed small color="error" @click="removeCartItem(item.product_id)">X</v-btn>
-                </template>
-                <!-- =============== -->
-
-                <!-- =================== -->
-              </v-data-table>
-
-              <v-card>
+              <template v-slot:item.quantity="{ item }">
                 <v-row>
-                  <v-col cols="4"></v-col>
-                  <v-col cols="6">
-                    <h2>Total: {{ total }}.00$</h2>
+                  <v-col cols="3">
+                    <v-btn x-small @click="decrement(item.product_id)">-</v-btn>
+                  </v-col>
+                  <v-col cols="1">
+                    <h4>{{item.quantity}}</h4>
+                  </v-col>
+                  <v-col cols="1">
+                    <v-btn x-small @click="increment(item.product_id)">+</v-btn>
                   </v-col>
                 </v-row>
+              </template>
+              <template v-slot:item.remove="{ item }">
+                <v-btn depressed small color="error" @click="removeCartItem(item.product_id)">X</v-btn>
+              </template>
+              <!-- =============== -->
 
-                <v-row justify="center">
-                  <v-col lg="3" sm="3" cols="3">
-                    <v-btn v-if="inCartTable.length>0" dark large @click="getSession">Checkout</v-btn>
-                  </v-col>
+              <!-- =================== -->
+            </v-data-table>
 
-                  <v-col lg="3" sm="3" cols="3">
-                    <v-btn
-                      dark
-                      large
-                      @click="cleanCart"
-                      v-if="inCartTable.length>0"
-                      depressed
-                      small
-                      color="error"
-                    >Clean</v-btn>
-                  </v-col>
-                </v-row>
-              </v-card>
-            </v-dialog>
-          </v-col>
-        </v-row>
-      </v-card>
+            <v-card>
+              <v-row>
+                <v-col cols="4"></v-col>
+                <v-col cols="6">
+                  <h2>Total: {{ total }}.00$</h2>
+                </v-col>
+              </v-row>
+
+              <v-row justify="center">
+                <v-col lg="3" sm="3" cols="3">
+                  <v-btn v-if="inCartTable.length>0" dark large @click="getSession">Checkout</v-btn>
+                </v-col>
+
+                <v-col lg="3" sm="3" cols="3">
+                  <v-btn
+                    dark
+                    large
+                    @click="cleanCart"
+                    v-if="inCartTable.length>0"
+                    depressed
+                    small
+                    color="error"
+                  >Clean</v-btn>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-dialog>
+        </v-col>
+      </v-row>
     </v-row>
-  </nav>
+  </div>
 </template>
 
 
