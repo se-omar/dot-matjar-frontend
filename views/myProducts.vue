@@ -18,7 +18,7 @@
       </v-row>
       <v-row v-if="myProducts.length != 0">
         <v-col lg="3" md="4" sm="6" cols="6" v-for="myProduct in myProducts" :key="myProduct.id">
-          <product :filteredProduct="myProduct"></product>
+          <product :addToCartButton="false" :filteredProduct="myProduct"></product>
         </v-col>
       </v-row>
 

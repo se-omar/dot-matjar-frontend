@@ -1,69 +1,84 @@
 <template>
-  <nav>
-    <v-btn text @click.stop="dialog = true" @click="table" v-if="currentUser ">
-      <v-icon>mdi-cart</v-icon>
-    </v-btn>
+  <div>
+    <v-row justify="start">
+      <v-col cols="12">
+        <v-btn
+          color="red lighten-1"
+          dark
+          @click.stop="dialog = true"
+          @click="table"
+          v-if="currentUser"
+          large
+          rounded
+        >
+          <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        </v-btn>
+      </v-col>
+      <!-- =============== -->
 
-    <v-row v-if="dialog" justify="center">
-      <v-card width="100%" flat title>
-        <v-row>
-          <v-col cols="12" sm="6" md="6" lg="12">
-            <v-dialog v-model="dialog" max-width="600px">
-              <v-data-table
-                hide-default-footer
-                @click:row="rowclicked"
-                bordered
-                hover
-                :items="items"
-                :headers="headers"
-              >
-                <template v-slot:item.quantity="{ item }">
-                  <v-row>
-                    <v-col cols="3">
-                      <v-btn x-small @click="increment(item.product_id)">+</v-btn>
-                    </v-col>
-                    <v-col cols="2">
-                      <h4>{{item.quantity}}</h4>
-                    </v-col>
-                    <v-col cols="3">
-                      <v-btn x-small @click="decrement(item.product_id)">-</v-btn>
-                    </v-col>
-                  </v-row>
-                </template>
-                <template v-slot:item.remove="{ item }">
-                  <v-btn depressed small color="error" @click="remove(item.product_id)">X</v-btn>
-                </template>
-                <!-- =============== -->
-
-                <!-- =================== -->
-              </v-data-table>
-
-              <v-card>
+      <v-row>
+        <v-col cols="12" sm="6" md="6" lg="12">
+          <v-dialog v-model="dialog" max-width="600px">
+            <v-data-table
+              hide-default-footer
+              @click:row="rowclicked"
+              bordered
+              hover
+              :items="items"
+              :headers="headers"
+            >
+              <template v-slot:item.quantity="{ item }">
                 <v-row>
-                  <v-col cols="4">
-                    <v-btn @click="clean" v-if="cart.length > 0" depressed small color="error">Clean</v-btn>
+                  <v-col cols="3">
+                    <v-btn x-small @click="decrement(item.product_id)">-</v-btn>
                   </v-col>
-                  <v-col cols="6">
-                    <h2>$ Total: {{ total }}.00</h2>
+                  <v-col cols="1">
+                    <h4>{{item.quantity}}</h4>
                   </v-col>
-                </v-row>
-
-                <v-row justify="center">
-                  <v-col lg="4" sm="6" cols="6">
-                    <h2>Proceed to:</h2>
-                  </v-col>
-
-                  <v-col lg="2" sm="1" cols="1">
-                    <v-btn large dark @click="getSession">Checkout</v-btn>
+                  <v-col cols="1">
+                    <v-btn x-small @click="increment(item.product_id)">+</v-btn>
                   </v-col>
                 </v-row>
-              </v-card>
-            </v-dialog>
-          </v-col>
-        </v-row>
-      </v-card>
+              </template>
+              <template v-slot:item.remove="{ item }">
+                <v-btn depressed small color="error" @click="removeCartItem(item.product_id)">X</v-btn>
+              </template>
+              <!-- =============== -->
+
+              <!-- =================== -->
+            </v-data-table>
+
+            <v-card>
+              <v-row>
+                <v-col cols="4"></v-col>
+                <v-col cols="6">
+                  <h2>Total: {{ total }}.00$</h2>
+                </v-col>
+              </v-row>
+
+              <v-row justify="center">
+                <v-col lg="3" sm="3" cols="3">
+                  <v-btn v-if="intable.length>0" dark large @click="getSession">Checkout</v-btn>
+                </v-col>
+
+                <v-col lg="3" sm="3" cols="3">
+                  <v-btn
+                    dark
+                    large
+                    @click="cleanCart"
+                    v-if="intable.length>0"
+                    depressed
+                    small
+                    color="error"
+                  >Clean</v-btn>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-dialog>
+        </v-col>
+      </v-row>
     </v-row>
-  </nav>
+  </div>
 </template>
 
 
@@ -91,7 +106,7 @@ export default {
         this.products[i].cart = false;
       }
     },
-    async remove(id) {
+    async removeCartItem(id) {
       for (var x = 0; x < this.items.length; x++) {
         if (this.items[x].product_id == id) {
           this.items.splice(x, 1);
@@ -132,7 +147,8 @@ export default {
       await this.$store.dispatch("localStorage");
 
       console.log(self.intable);
-      self.items = self.intable;
+      self.items = [];
+      self.items.push(...self.intable);
       // for (var i = 0; i < self.intable.length; i++) {
       //   self.items.push(self.intable[i]);
       //   console.log("store i :", self.intable[i]);
@@ -172,6 +188,10 @@ export default {
               });
           });
       });
+    },
+    cleanCart() {
+      this.items = [];
+      this.$store.dispatch("cleanCart");
     },
   },
 
@@ -214,6 +234,7 @@ export default {
         { text: "Product name", value: "product_name" },
       ],
       items: [],
+      inTable: [],
     };
   },
   computed: {
@@ -229,6 +250,7 @@ export default {
     currentUser() {
       return this.$store.state.currentUser;
     },
+
     intable() {
       return this.$store.state.table;
     },

@@ -1,8 +1,6 @@
 <template>
   <div class="tool-bar">
-    <v-app-bar class="red darken-2" dark dense>
-      <cartTable />
-
+    <v-app-bar :class="toolBarColor" dark>
       <v-toolbar-title>
         <v-btn class="font" text @click="$router.push('/home').catch((err) => {})">E-Commerce</v-btn>
       </v-toolbar-title>
@@ -108,6 +106,16 @@
           <v-col cols="12">
             <v-btn class="btn1" x-large color="blue">
               <span class="mos" @click="$router.push('/businessownerdata')">انضم كصاحب مشروع</span>
+            </v-btn>
+          </v-col>-->
+          <v-col cols="12 ml-6  ">
+            <v-btn class="btn1" x-large color="blue" rounded>
+              <span class="mos" @click="$router.push('/myProducts')">My products</span>
+            </v-btn>
+          </v-col>
+          <v-col cols="12 ml-6  ">
+            <v-btn class="btn1" x-large color="blue" rounded>
+              <span class="mos" @click="$router.push('/supplierPage')">My Page</span>
             </v-btn>
           </v-col>
 
@@ -263,12 +271,14 @@
     </v-navigation-drawer>
   </div>
 </template>
-
 <script>
-import cartTable from "../components/cartTable";
 export default {
-  components: {
-    cartTable
+  components: {},
+  props: {
+    toolBarColor: {
+      type: String,
+      default: () => "red darken-4",
+    },
   },
   computed: {
     currentUser() {
@@ -276,7 +286,7 @@ export default {
     },
     nodeHost() {
       return this.$store.state.nodeHost;
-    }
+    },
   },
 
   methods: {
@@ -296,12 +306,12 @@ export default {
       form.set("email", this.$store.state.currentUser.email);
       console.log(this.$store.state.currentUser.email);
       this.$store.dispatch("profilePhoto", form);
-    }
+    },
   },
   data: () => ({
     profilephoto: [],
-    drawer: false
-  })
+    drawer: false,
+  }),
 };
 </script>
 

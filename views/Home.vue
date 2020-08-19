@@ -1,6 +1,9 @@
 <template>
   <div>
+    <toolBar></toolBar>
+
     <v-app class="grey lighten-4">
+      <cartTable></cartTable>
       <div>
         <v-radio-group mandatory v-model="radioGroup">
           <v-row class="mb-n5" justify="center">
@@ -141,7 +144,9 @@
 <script>
 import Product from "../components/product.vue";
 import Footer from "../components/footer.vue";
+import toolBar from "../components/toolbar";
 import supplier from "../components/supplier";
+import cartTable from "../components/cartTable";
 //import usersModel from "../models/usersModel";
 
 export default {
@@ -277,7 +282,9 @@ export default {
   components: {
     Product,
     Footer,
+    toolBar,
     supplier,
+    cartTable,
   },
 };
 </script>
