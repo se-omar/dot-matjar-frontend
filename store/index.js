@@ -171,6 +171,7 @@ export default new Vuex.Store({
     },
 
     removeProductFromCart(state, id) {
+
       console.log(state.table)
       for (var i = 0; i < state.table.length; i++) {
         if (state.table[i].product_id == id) {
@@ -265,6 +266,11 @@ export default new Vuex.Store({
 
     emptySupplierLocation(state) {
       state.suppliers = state.allSuppliers;
+    },
+
+    refreshCurrentUser(state, user) {
+      console.log('new user is ', user)
+      state.currentUser = user;
     }
 
   },
@@ -517,9 +523,9 @@ export default new Vuex.Store({
       })
     },
 
-    getMyProducts(context) {
+    async getMyProducts(context) {
       console.log(context.state.currentUser.user_id);
-      return axios.post("http://localhost:3000/api/myProducts", {
+      await axios.post("http://localhost:3000/api/myProducts", {
         user_id: context.state.currentUser.user_id
       }).then(response => {
         console.log(response)
@@ -565,20 +571,24 @@ export default new Vuex.Store({
 
     },
     table(context, product) {
+
       axios.post('http://localhost:3000/api/table', {
         user_id: context.state.currentUser.user_id,
         product_id: product.product_id
       })
         .then(response => {
+
           console.log(response.data.message)
         })
 
     },
-    removeProductFromCart(context, id) {
-      axios.put('http://localhost:3000/api/remove', {
+    async removeProductFromCart(context, id) {
+
+      await axios.put('http://localhost:3000/api/remove', {
         product_id: id
       })
         .then(response => {
+
           console.log(response.data)
           context.commit('removeProductFromCart', id)
         })
@@ -660,8 +670,8 @@ export default new Vuex.Store({
         });
     },
 
-    getMonthlySales(context) {
-      return axios.post('http://localhost:3000/api/monthlySales', {
+    async getMonthlySales(context) {
+      await axios.post('http://localhost:3000/api/monthlySales', {
         user_id: context.state.currentUser.user_id
       }).then(response => {
         console.log('monthly sales', response.data)
@@ -689,6 +699,14 @@ export default new Vuex.Store({
         location: supplierLocation
       }).then(response => {
         context.commit('filterSuppliers', response.data.users)
+      })
+    },
+
+    async refreshCurrentUser(context) {
+      await axios.post('http://localhost:3000/api/refreshCurrentUser', {
+        user_id: context.state.currentUser.user_id
+      }).then(response => {
+        context.commit('refreshCurrentUser', response.data.user)
       })
     }
 

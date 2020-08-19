@@ -91,13 +91,13 @@ export default {
         this.products[i].cart = false;
       }
     },
-    remove(id) {
+    async remove(id) {
       for (var x = 0; x < this.items.length; x++) {
         if (this.items[x].product_id == id) {
           this.items.splice(x, 1);
           console.log(this.items);
 
-          this.$store.dispatch("removeProductFromCart", id);
+          await this.$store.dispatch("removeProductFromCart", id);
         }
       }
     },
@@ -130,7 +130,7 @@ export default {
     table() {
       var self = this;
       this.$store.dispatch("localStorage");
-      setTimeout(function() {
+      setTimeout(function () {
         console.log(self.intable);
         self.items = [];
         for (var i = 0; i < self.intable.length; i++) {
@@ -143,20 +143,20 @@ export default {
     getSession() {
       var self = this;
       self.quantityArray = [];
-      this.items.forEach(element => {
+      this.items.forEach((element) => {
         self.quantityArray.push(element.quantity);
       });
       console.log(self.quantityArray);
       loadStripe(
         "pk_test_51H97oICdSDXTIUwz70svxkIu08QM3jR0rB6E2njyq3fC7tLOODIipB8ppdjdPt32pteM8zHqsSF2mAo9Oyfw9Mvf00L3omXjql"
-      ).then(stripe => {
+      ).then((stripe) => {
         var sessionId = "";
         this.$axios
           .post("http://localhost:3000/api/checkout", {
             user_id: this.currentUser.user_id,
-            quantityArray: self.quantityArray
+            quantityArray: self.quantityArray,
           })
-          .then(response => {
+          .then((response) => {
             console.log(self.quantityArray);
             sessionId = response.data.session_id;
             this.$store.commit("setPaymentToken", response.data.token);
@@ -166,14 +166,14 @@ export default {
           .then(() => {
             stripe
               .redirectToCheckout({
-                sessionId: sessionId
+                sessionId: sessionId,
               })
-              .then(function(result) {
+              .then(function (result) {
                 console.log(result);
               });
           });
       });
-    }
+    },
   },
 
   data() {
@@ -188,7 +188,7 @@ export default {
           name: "car1",
           price: 1,
           quantaty: 1,
-          cart: false
+          cart: false,
         },
         {
           id: 2,
@@ -196,7 +196,7 @@ export default {
           name: "car2",
           price: 2,
           quantaty: 1,
-          cart: false
+          cart: false,
         },
         {
           id: 3,
@@ -204,17 +204,17 @@ export default {
           name: "car3",
           price: 3,
           quantaty: 1,
-          cart: false
-        }
+          cart: false,
+        },
       ],
       cart: [],
       headers: [
         { text: "Remove", value: "remove" },
         { text: "Price", value: "unit_price" },
         { text: "Quantity", value: "quantity" },
-        { text: "Product name", value: "product_name" }
+        { text: "Product name", value: "product_name" },
       ],
-      items: []
+      items: [],
     };
   },
   computed: {
@@ -232,7 +232,7 @@ export default {
     },
     intable() {
       return this.$store.state.table;
-    }
-  }
+    },
+  },
 };
 </script>

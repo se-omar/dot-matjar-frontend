@@ -30,7 +30,7 @@
         @click="add(filteredProduct)"
         variant="primary"
         class="red darken-4"
-      >Add to shopping cart</b-button>
+      >Add to cart</b-button>
       <!-- <b-button
            v-if="this.inCart.in_cart==1"
           @click="add(product)"
@@ -48,7 +48,7 @@ export default {
   data() {
     return {
       i: 0,
-      rating: 4
+      rating: 4,
     };
   },
   created() {
@@ -96,7 +96,7 @@ export default {
     },
     cart() {
       return this.$store.state.cart;
-    }
-  }
+    },
+  },
 };
 </script>

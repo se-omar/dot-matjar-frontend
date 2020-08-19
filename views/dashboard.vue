@@ -110,6 +110,59 @@
           </v-row>
         </div>
       </v-col>
+
+      <v-col lg="3">
+        <div style="text-align: center">
+          <v-hover>
+            <v-card
+              height="75"
+              width="300"
+              slot-scope="{ hover }"
+              :class="`elevation-${hover ? 5 : 3}` "
+              class="grey lighten-5 mb-11"
+            >
+              <span
+                class="grey--text text--darken-1"
+                style="font-size: 20px"
+              >Total Revenue: {{currentUser.total_revenue}} EGP</span>
+            </v-card>
+          </v-hover>
+        </div>
+
+        <div style="text-align: center">
+          <v-hover>
+            <v-card
+              height="75"
+              width="300"
+              slot-scope="{ hover }"
+              :class="`elevation-${hover ? 5 : 3}` "
+              class="grey lighten-5 mb-11"
+            >
+              <span
+                class="grey--text text--darken-1"
+                style="font-size: 20px"
+              >Amount Recieved: {{currentUser.revenue_recieved || 0}} EGP</span>
+            </v-card>
+          </v-hover>
+        </div>
+
+        <div style="text-align: center">
+          <v-hover>
+            <v-card
+              width="300"
+              height="75"
+              slot-scope="{ hover }"
+              :class="`elevation-${hover ? 5 : 3}` "
+              class="grey lighten-5 mb-11"
+            >
+              <span
+                class="grey--text text--darken-1"
+                style="font-size: 20px"
+              >Amount Left: {{currentUser.total_revenue - currentUser.revenue_recieved || 0}} EGP</span>
+            </v-card>
+          </v-hover>
+        </div>
+      </v-col>
     </v-row>
 
     <v-divider></v-divider>
@@ -140,6 +193,7 @@
 import dashboardSellingProduct from "../components/dashboardSellingProduct";
 export default {
   async mounted() {
+    await this.$store.dispatch("refreshCurrentUser");
     this.$store.dispatch("getTopSellingProduct");
     this.$store.dispatch("getLeastSellingProduct");
     await this.$store.dispatch("getMyProducts");
@@ -261,6 +315,7 @@ export default {
       monthlySortedOrders: {},
       monthlySalesArray: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       monthlyRevenueArray: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      totalRevenue: 0,
     };
   },
 
@@ -319,11 +374,14 @@ export default {
         console.log("entered first loop");
         totalMonthSales = 0;
         totalMonthRevenue = 0;
+
         for (j = 0; j < this.monthlySortedOrders[i].length; j++) {
           console.log("entered second loop");
           this.monthlySortedOrders[i][j].products.forEach((element) => {
             totalMonthSales += element.buy_counter;
             totalMonthRevenue += element.unit_price * element.buy_counter;
+            this.totalRevenue += element.unit_price * element.buy_counter;
+            console.log(this.totalRevenue);
           });
         }
         this.monthlySalesArray.splice(i - 1, 1, totalMonthSales);
