@@ -127,17 +127,16 @@ export default {
     rowclicked(event) {
       console.log("event is :", event);
     },
-    table() {
+    async table() {
       var self = this;
-      this.$store.dispatch("localStorage");
-      setTimeout(function () {
-        console.log(self.intable);
-        self.items = [];
-        for (var i = 0; i < self.intable.length; i++) {
-          self.items.push(self.intable[i]);
-          console.log("store i :", self.intable[i]);
-        }
-      }, 100);
+      await this.$store.dispatch("localStorage");
+
+      console.log(self.intable);
+      self.items = self.intable;
+      // for (var i = 0; i < self.intable.length; i++) {
+      //   self.items.push(self.intable[i]);
+      //   console.log("store i :", self.intable[i]);
+      // }
     },
 
     getSession() {

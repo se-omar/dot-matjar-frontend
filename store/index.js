@@ -195,8 +195,6 @@ export default new Vuex.Store({
       var cartLength = state.table.length;
       state.table.splice(0, cartLength)
       localStorage.setItem('cartItems', JSON.stringify(state.table))
-
-
     },
     categoriesDB(state, data) {
       console.log(data)
@@ -594,8 +592,8 @@ export default new Vuex.Store({
         })
 
     },
-    localStorage(context) {
-      axios.put('http://localhost:3000/api/getProducts', {
+    async localStorage(context) {
+      await axios.put('http://localhost:3000/api/getProducts', {
         user_id: context.state.currentUser.user_id
       })
         .then((response) => {
