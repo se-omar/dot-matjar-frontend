@@ -38,7 +38,9 @@ export default new Vuex.Store({
     topProduct: {},
     leastProduct: {},
     notSortedDashboardOrders: [],
-    supplierPageColor: localStorage.getItem('supplierPageColor')
+    supplierPageColor: localStorage.getItem('supplierPageColor'),
+    suppliers: [],
+    allSuppliers: [],
   },
 
   mutations: {
@@ -53,7 +55,7 @@ export default new Vuex.Store({
     },
 
     doLogin(state, response) {
-      //debugger
+      //
       if (response.data.message != "authenitcation succesfull") {
         console.log(response.data.message);
       } else {
@@ -170,6 +172,7 @@ export default new Vuex.Store({
     },
 
     removeProductFromCart(state, id) {
+
       console.log(state.table)
       for (var i = 0; i < state.table.length; i++) {
         if (state.table[i].product_id == id) {
@@ -251,6 +254,27 @@ export default new Vuex.Store({
     supplierPageColor(state, color) {
       localStorage.setItem('supplierPageColor', color)
       state.supplierPageColor = localStorage.getItem('supplierPageColor')
+    },
+    getSuppliers(state, suppliers) {
+      state.suppliers.push(...suppliers);
+      state.allSuppliers.push(...suppliers);
+    },
+
+    filterSuppliers(state, users) {
+      state.suppliers = users;
+    },
+
+    emptySupplierName(state) {
+      state.suppliers = state.allSuppliers
+    },
+
+    emptySupplierLocation(state) {
+      state.suppliers = state.allSuppliers;
+    },
+
+    refreshCurrentUser(state, user) {
+      console.log('new user is ', user)
+      state.currentUser = user;
     }
 
   },
@@ -503,9 +527,9 @@ export default new Vuex.Store({
       })
     },
 
-    getMyProducts(context) {
+    async getMyProducts(context) {
       console.log(context.state.currentUser.user_id);
-      axios.post("http://localhost:3000/api/myProducts", {
+      await axios.post("http://localhost:3000/api/myProducts", {
         user_id: context.state.currentUser.user_id
       }).then(response => {
         console.log(response)
@@ -551,6 +575,7 @@ export default new Vuex.Store({
 
     },
     table(context, product) {
+
       axios.post('http://localhost:3000/api/table', {
           user_id: context.state.currentUser.user_id,
           product_id: product.product_id
@@ -560,18 +585,20 @@ export default new Vuex.Store({
         })
 
     },
-    removeProductFromCart(context, id) {
-      axios.put('http://localhost:3000/api/remove', {
+    async removeProductFromCart(context, id) {
+
+      await axios.put('http://localhost:3000/api/remove', {
           product_id: id
         })
         .then(response => {
+
           console.log(response.data)
           context.commit('removeProductFromCart', id)
         })
 
     },
-    localStorage(context) {
-      axios.put('http://localhost:3000/api/getProducts', {
+    async localStorage(context) {
+      await axios.put('http://localhost:3000/api/getProducts', {
           user_id: context.state.currentUser.user_id
         })
         .then((response) => {
@@ -624,6 +651,7 @@ export default new Vuex.Store({
     },
 
     getTopSellingProduct(context) {
+
       axios
         .post("http://localhost:3000/api/topSellingProduct", {
           user_id: context.state.currentUser.user_id
@@ -645,12 +673,44 @@ export default new Vuex.Store({
         });
     },
 
-    getMonthlySales(context) {
-      axios.post('http://localhost:3000/api/monthlySales', {
+    async getMonthlySales(context) {
+      await axios.post('http://localhost:3000/api/monthlySales', {
         user_id: context.state.currentUser.user_id
       }).then(response => {
         console.log('monthly sales', response.data)
+
         context.commit('getMonthlySales', response.data)
+      })
+    },
+
+    getSuppliers(context) {
+      axios.post('http://localhost:3000/api/getSuppliers', {
+        user_id: context.state.suppliers.length > 0 ? context.state.suppliers[context.state.suppliers.length - 1].user_id : null
+      }).then(response => {
+        console.log(response.data.users)
+        context.commit('getSuppliers', response.data.users)
+      })
+    },
+
+    filterSuppliers(context, {
+      supplierName,
+      supplierLocation
+    }) {
+      console.log('supplierName', supplierName)
+      console.log('supplierLocation', supplierLocation)
+      axios.put('http://localhost:3000/api/filterSuppliers', {
+        name: supplierName,
+        location: supplierLocation
+      }).then(response => {
+        context.commit('filterSuppliers', response.data.users)
+      })
+    },
+
+    async refreshCurrentUser(context) {
+      await axios.post('http://localhost:3000/api/refreshCurrentUser', {
+        user_id: context.state.currentUser.user_id
+      }).then(response => {
+        context.commit('refreshCurrentUser', response.data.user)
       })
     },
 

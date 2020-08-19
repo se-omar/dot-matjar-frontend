@@ -30,7 +30,7 @@
         @click="add(filteredProduct)"
         variant="primary"
         class="red darken-4"
-      >Add to shopping cart</b-button>
+      >Add to cart</b-button>
       <!-- <b-button
            v-if="this.inCart.in_cart==1"
           @click="add(product)"
@@ -48,7 +48,6 @@ export default {
   data() {
     return {
       i: 0,
-      cart: [],
       rating: 4,
     };
   },
@@ -67,7 +66,7 @@ export default {
       default: () => null,
     },
     addToCartButton: {
-      type: Object,
+      type: Boolean,
       default: () => true,
     },
   },
@@ -81,7 +80,6 @@ export default {
       this.$store.dispatch("table", product);
       // this.$store.commit("cart",product)
       // this.$store.dispatch("cart",product.product_id)
-      this.cart = this.cartt;
       console.log(product.in_cart);
     },
   },
@@ -100,7 +98,7 @@ export default {
     currentuser() {
       return this.$store.state.currentUser;
     },
-    cartt() {
+    cart() {
       return this.$store.state.cart;
     },
   },

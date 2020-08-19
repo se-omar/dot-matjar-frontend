@@ -1,13 +1,26 @@
 <template>
   <div>
     <toolBar></toolBar>
-    <v-app class="grey lighten-4">
-      <cartTable />
 
-      <div class="mx-7">
-        <v-row>
-          <v-col lg="3">
+    <v-app class="grey lighten-4">
+      <cartTable></cartTable>
+      <div>
+        <v-radio-group mandatory v-model="radioGroup">
+          <v-row class="mb-n5" justify="center">
+            <v-col lg="4">
+              <v-radio label="Search for Products" value="1"></v-radio>
+            </v-col>
+
+            <v-col lg="4">
+              <v-radio label="Search for suppliers" value="2"></v-radio>
+            </v-col>
+          </v-row>
+        </v-radio-group>
+
+        <v-row justify="center">
+          <v-col lg="4">
             <v-text-field
+              :disabled="radioGroup === '2'"
               @keyup="emptySearchBox"
               dense
               outlined
@@ -15,11 +28,24 @@
               placeholder="Search for your Product"
             ></v-text-field>
           </v-col>
+
+          <v-col lg="4">
+            <v-text-field
+              :disabled="radioGroup === '1'"
+              @keyup="emptySupplierName"
+              dense
+              outlined
+              v-model="supplierName"
+              placeholder="Search Suppliers by Name"
+            ></v-text-field>
+          </v-col>
         </v-row>
-        <v-row>
-          <v-col lg="3">
+
+        <v-row justify="center">
+          <v-col lg="4">
             <v-select
               @keyup="emptySelectBox"
+              :disabled="radioGroup === '2'"
               placeholder="Search By category"
               dense
               outlined
@@ -28,23 +54,51 @@
               @click="categoriesDB"
             ></v-select>
           </v-col>
+
+          <v-col lg="4">
+            <v-text-field
+              @keyup="emptySupplierLocation"
+              :disabled="radioGroup === '1'"
+              placeholder="Search Suppliers by Location"
+              dense
+              outlined
+              v-model="supplierLocation"
+            ></v-text-field>
+          </v-col>
         </v-row>
 
-        <v-row>
+        <v-row class="mt-n3">
+          <v-col lg="2"></v-col>
           <v-col lg="1">
-            <v-text-field dense type="number" label="Price From"></v-text-field>
+            <v-text-field :disabled="radioGroup === '2'" dense type="number" label="Price From"></v-text-field>
           </v-col>
 
           <v-col lg="1  ">
-            <v-text-field dense type="number" label="Price TO"></v-text-field>
+            <v-text-field :disabled="radioGroup === '2'" dense type="number" label="Price TO"></v-text-field>
           </v-col>
 
+          <v-col lg="1"></v-col>
+
           <v-col lg="1">
-            <v-btn class="red darken-4 white--text" @click="filterProducts">Search</v-btn>
+            <v-btn
+              :disabled="radioGroup === '2'"
+              class="red darken-4 white--text"
+              @click="filterProducts"
+            >Search</v-btn>
+          </v-col>
+
+          <v-col lg="3"></v-col>
+
+          <v-col lg="1">
+            <v-btn
+              :disabled="radioGroup === '1'"
+              class="red darken-4 white--text"
+              @click="filterSuppliers"
+            >Search</v-btn>
           </v-col>
         </v-row>
 
-        <v-row>
+        <v-row v-if="radioGroup === '1'">
           <v-col
             lg="2"
             md="4"
@@ -60,6 +114,24 @@
             </v-hover>
           </v-col>
         </v-row>
+
+        <v-row v-if="radioGroup === '2'">
+          <v-col
+            class="mb-15"
+            v-for="supplier in suppliers"
+            :key="supplier.user_id"
+            lg="2"
+            md="4"
+            sm="6"
+            cols="6"
+          >
+            <supplier :supplier="supplier"></supplier>
+          </v-col>
+        </v-row>
+
+        <v-row justify="center">
+          <v-btn large class="red darken-4 mb-15 white--text" @click="loadMore">load more</v-btn>
+        </v-row>
       </div>
 
       <v-card>
@@ -72,8 +144,9 @@
 <script>
 import Product from "../components/product.vue";
 import Footer from "../components/footer.vue";
-import cartTable from "../components/cartTable";
 import toolBar from "../components/toolbar";
+import supplier from "../components/supplier";
+import cartTable from "../components/cartTable";
 //import usersModel from "../models/usersModel";
 
 export default {
@@ -82,6 +155,8 @@ export default {
     return {
       toolbarSearch: "",
       categoryName: "",
+      supplierName: "",
+      supplierLocation: "",
       items: [],
       egyptGovernorates: [
         "الإسكندرية",
@@ -113,10 +188,12 @@ export default {
         "الوادي الجديد",
       ],
       category: [],
+      radioGroup: 1,
     };
   },
   created() {
     this.$store.dispatch("getProducts");
+    this.$store.dispatch("getSuppliers");
     console.log(this.$store.state.filteredProducts);
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -125,6 +202,7 @@ export default {
       });
     });
   },
+
   computed: {
     row() {
       return this.$store.state.row;
@@ -134,6 +212,9 @@ export default {
     },
     filteredProducts() {
       return this.$store.state.filteredProducts;
+    },
+    suppliers() {
+      return this.$store.state.suppliers;
     },
   },
 
@@ -146,11 +227,31 @@ export default {
       });
     },
 
+    filterSuppliers() {
+      this.$store.dispatch("filterSuppliers", {
+        supplierName: this.supplierName,
+        supplierLocation: this.supplierLocation,
+      });
+    },
+
     emptySearchBox() {
       if (!this.toolbarSearch) {
         this.$store.commit("emptySearch");
       }
     },
+
+    emptySupplierName() {
+      if (!this.supplierName) {
+        this.$store.commit("emptySupplierName");
+      }
+    },
+
+    emptySupplierLocation() {
+      if (!this.supplierLocation) {
+        this.$store.commit("emptySupplierLocation");
+      }
+    },
+
     emptySelectBox() {
       if (this.categoryName == "All") {
         this.$store.commit("emptySearch");
@@ -159,12 +260,31 @@ export default {
     categoriesDB() {
       this.category = this.$store.state.category;
     },
+
+    loadMore() {
+      var self = this;
+      self.$store.dispatch("getSuppliers");
+      // window.onscroll = function () {
+      //   console.log(this.suppliers);
+      //   // let bottomOfWindow =
+      //   //   document.documentElement.scrollTop + window.innerHeight ===
+      //   //   document.documentElement.offsetHeight;
+      //   // console.log(bottomOfWindow);
+      //   console.log("false");
+      //   if (window.innerHeight + window.scrollY >= document.body.scrollHeight) {
+      //     console.log(this.suppliers);
+      //     console.log("true");
+      //     self.$store.dispatch("getSuppliers");
+      //   }
+      // };
+    },
   },
   components: {
     Product,
-    cartTable,
     Footer,
     toolBar,
+    supplier,
+    cartTable,
   },
 };
 </script>

@@ -12,7 +12,7 @@
         transition="fab-transition"
         :close-on-content-click="false"
         :nudge-width="200"
-        offset-y
+        offset-x
         class="menu"
         max-width="20%"
         min-width="300px"
@@ -25,10 +25,10 @@
         </template>
 
         <v-card>
-          <v-card-title class="ml-4" style="width:100">
+          <v-card-title>
             <v-img
               v-if="currentUser.profile_photo"
-              style="width:70%; height:100%"
+              style="width:70%; height:90%"
               id="picture"
               :src="nodeHost + currentUser.profile_photo"
             />
@@ -103,7 +103,7 @@
           <v-row></v-row>
           <v-divider></v-divider>
 
-          <!-- <v-col cols="12">
+          <v-col cols="12">
             <v-btn class="btn1" x-large color="blue">
               <span class="mos" @click="$router.push('/businessownerdata')">انضم كصاحب مشروع</span>
             </v-btn>
@@ -160,12 +160,12 @@
         @click="$router.push('/requestsPage').catch((err) => {})"
       >Requests</v-btn>
 
-      <!-- <v-btn
-      class="font"
+      <v-btn
+        class="font"
         v-if="currentUser && currentUser.user_type == 'business' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
         @click="$router.push('/myProducts').catch((err) => {})"
-      >My Products</v-btn>-->
+      >My Products</v-btn>
 
       <v-btn
         class="font"
@@ -185,12 +185,12 @@
         <span>About us</span>
       </v-btn>
 
-      <!-- <v-btn
-      class="font"
+      <v-btn
+        class="font"
         v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
         @click="logout"
-      >Logout</v-btn>-->
+      >Logout</v-btn>
 
       <!--============================
 

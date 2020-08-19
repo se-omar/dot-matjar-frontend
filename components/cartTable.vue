@@ -58,7 +58,7 @@
 
               <v-row justify="center">
                 <v-col lg="3" sm="3" cols="3">
-                  <v-btn v-if="inCartTable.length>0" dark large @click="getSession">Checkout</v-btn>
+                  <v-btn v-if="intable.length>0" dark large @click="getSession">Checkout</v-btn>
                 </v-col>
 
                 <v-col lg="3" sm="3" cols="3">
@@ -66,7 +66,7 @@
                     dark
                     large
                     @click="cleanCart"
-                    v-if="inCartTable.length>0"
+                    v-if="intable.length>0"
                     depressed
                     small
                     color="error"
@@ -96,17 +96,23 @@ export default {
       this.cart.push(product);
       this.counter++;
     },
-    cleanCart() {
-      this.items = [];
-      this.$store.dispatch("cleanCart");
+    clean() {
+      this.cart = [];
+      for (const key in this.product) {
+        this.products[key].cart = false;
+        this.products[key].quantaty = 1;
+      }
+      for (var i = 0; i < this.products.length; i++) {
+        this.products[i].cart = false;
+      }
     },
-    removeCartItem(id) {
+    async removeCartItem(id) {
       for (var x = 0; x < this.items.length; x++) {
         if (this.items[x].product_id == id) {
           this.items.splice(x, 1);
           console.log(this.items);
 
-          this.$store.dispatch("removeProductFromCart", id);
+          await this.$store.dispatch("removeProductFromCart", id);
         }
       }
     },
@@ -136,17 +142,17 @@ export default {
     rowclicked(event) {
       console.log("event is :", event);
     },
-    table() {
+    async table() {
       var self = this;
-      this.$store.dispatch("localStorage");
-      setTimeout(function () {
-        console.log(self.intable);
-        self.items = [];
-        for (var i = 0; i < self.intable.length; i++) {
-          self.items.push(self.intable[i]);
-          console.log("store i :", self.intable[i]);
-        }
-      }, 100);
+      await this.$store.dispatch("localStorage");
+
+      console.log(self.intable);
+      self.items = [];
+      self.items.push(...self.intable);
+      // for (var i = 0; i < self.intable.length; i++) {
+      //   self.items.push(self.intable[i]);
+      //   console.log("store i :", self.intable[i]);
+      // }
     },
 
     getSession() {
@@ -183,11 +189,14 @@ export default {
           });
       });
     },
+    cleanCart() {
+      this.items = [];
+      this.$store.dispatch("cleanCart");
+    },
   },
 
   data() {
     return {
-      toolbarSearch: "",
       dialog: false,
 
       counter: 0,
@@ -219,12 +228,13 @@ export default {
       ],
       cart: [],
       headers: [
-        { text: "Product name", value: "product_name" },
-        { text: "Quantity", value: "quantity" },
-        { text: "Price", value: "unit_price" },
         { text: "Remove", value: "remove" },
+        { text: "Price", value: "unit_price" },
+        { text: "Quantity", value: "quantity" },
+        { text: "Product name", value: "product_name" },
       ],
       items: [],
+      inTable: [],
     };
   },
   computed: {
@@ -240,16 +250,10 @@ export default {
     currentUser() {
       return this.$store.state.currentUser;
     },
-    inCartTable() {
-      return this.$store.state.table;
-    },
 
     intable() {
       return this.$store.state.table;
     },
-  },
-  created() {
-    console.log(this.$store.state.table);
   },
 };
 </script>
