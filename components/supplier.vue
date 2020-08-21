@@ -1,11 +1,6 @@
 <template>
   <v-main>
-    <v-card
-      @click="$router.push('/').catch(() => {})"
-      height="300"
-      width="250"
-      class="grey lighten-4"
-    >
+    <v-card @click="currentSupplier(supplier)" height="300" width="250" class="grey lighten-4">
       <v-img
         height="180"
         width="180"
@@ -31,10 +26,22 @@ export default {
   created() {
     console.log(this.supplier);
   },
+  methods: {
+    currentSupplier(supplier) {
+      console.log(supplier);
+      this.$store.commit("supplierPage", supplier);
+      this.$router.push("/supplierPage");
+    },
+  },
   props: {
     supplier: {
       type: Object,
       default: () => null,
+    },
+  },
+  computed: {
+    suppliers() {
+      return this.$store.state.suppliers;
     },
   },
 };

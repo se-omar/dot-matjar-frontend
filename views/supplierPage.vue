@@ -7,26 +7,26 @@
       <v-row justify="center">
         <v-card max-width="400">
           <v-card-actions aspect-ratio="1.7">
-            <v-img id="image" :src="nodeHost + currentUser.profile_photo"></v-img>
+            <v-img id="image" :src="supplier.profile_photo"></v-img>
           </v-card-actions>
           <v-card-title>
-            <span class="black--text ml-13">{{currentUser.full_arabic_name}}</span>
+            <span class="black--text ml-13">{{supplier.full_arabic_name}}</span>
           </v-card-title>
           <v-card-actions>
             <span style="font-weight:bold" class="black--text">Mobile number :</span>
-            <span class="black--text">{{currentUser.mobile_number}}</span>
+            <span class="black--text">{{supplier.mobile_number}}</span>
           </v-card-actions>
           <v-card-actions>
             <span style="font-weight:bold" class="black--text">User type :</span>
-            <span class="black--text">{{currentUser.user_type}}</span>
+            <span class="black--text">{{supplier.user_type}}</span>
           </v-card-actions>
           <v-card-actions>
             <span style="font-weight:bold" class="black--text">Email :</span>
-            <span class="black--text">{{currentUser.email}}</span>
+            <span class="black--text">{{supplier.email}}</span>
           </v-card-actions>
           <v-card-actions>
             <span style="font-weight:bold" class="black--text">Facbook-account :</span>
-            <span class="black--text">{{currentUser.facebook_account}}</span>
+            <span class="black--text">{{supplier.facebook_account}}</span>
           </v-card-actions>
         </v-card>
       </v-row>
@@ -37,10 +37,17 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col lg="3" md="4" sm="6" cols="6" v-for="myProduct in myProducts" :key="myProduct.id">
+        <v-col
+          lg="3"
+          md="4"
+          sm="6"
+          cols="6"
+          v-for="(supplierProduct,product_id) in supplierProducts"
+          :key="product_id"
+        >
           <v-card>
             <v-hover>
-              <product :addToCartButton="false" :filteredProduct="myProduct"></product>
+              <product :addToCartButton="false" :filteredProduct="supplierProduct"></product>
             </v-hover>
           </v-card>
         </v-col>
@@ -67,6 +74,9 @@ export default {
     currentUser() {
       return this.$store.state.currentUser;
     },
+    supplier() {
+      return this.$store.state.supplier;
+    },
     myProducts() {
       return this.$store.state.myProducts;
     },
@@ -76,13 +86,17 @@ export default {
     pageColor() {
       return this.$store.state.supplierPageColor;
     },
+    supplierProducts() {
+      return this.$store.state.supplierProducts;
+    },
   },
   created() {
-    this.$store.dispatch("getMyProducts");
+    this.$store.dispatch("getSupplierProducts");
     this.$store.dispatch("supplierPageColor");
     console.log(this.$store.state.myProducts);
     console.log(this.$store.state.supplierPageColor);
     this.pageColor = this.$store.state.supplierPageColor;
+    console.log("state.supplier", this.$store.state.supplier);
   },
 };
 </script>

@@ -11,7 +11,7 @@
         <br />
         الحد الادني للطلب: {{ filteredProduct.min_units_per_order }}
       </div>
-      <div>المشروع: {{ filteredProduct.bussiness.bussiness_name }}</div>
+      <!-- <div>المشروع: {{ filteredProduct.bussiness.bussiness_name }}</div> -->
       <v-row align="center" class="mx-0">
         <v-rating v-model="rating" color="amber" dense half-increments readonly size="15"></v-rating>
 
