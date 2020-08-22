@@ -198,8 +198,6 @@ export default new Vuex.Store({
       var cartLength = state.table.length;
       state.table.splice(0, cartLength)
       localStorage.setItem('cartItems', JSON.stringify(state.table))
-
-
     },
     categoriesDB(state, data) {
       console.log(data)
@@ -746,9 +744,7 @@ export default new Vuex.Store({
         })
     }
 
-    // filterProductsCategory(context, payload) {
-    //   context.commit('filterProductsCategory', payload)
-    // }
+
 
   },
 
