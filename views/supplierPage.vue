@@ -78,6 +78,7 @@ export default {
     },
   },
   created() {
+    this.$store.dispatch("refreshCurrentUser");
     this.$store.dispatch("getMyProducts");
     this.$store.dispatch("supplierPageColor");
     console.log(this.$store.state.myProducts);

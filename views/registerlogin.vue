@@ -49,7 +49,7 @@
                           block
                           :disabled="!valid"
                           color="red darken-4 white--text"
-                          @click="validateLoginPage"
+                          @click="login"
                         >Login</v-btn>
                       </v-col>
 
@@ -204,13 +204,16 @@ export default {
       });
     },
 
-    validateLoginPage() {
-      this.$store.dispatch("validateLoginPage", {
+    async login() {
+      await this.$store.dispatch("login", {
         email: this.loginEmail,
         password: this.loginPassword,
       });
+
+      await this.$store.dispatch("refreshCurrentUser");
       console.log(this.currentUser);
     },
+
     reset() {
       this.$refs.form.reset();
     },

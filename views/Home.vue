@@ -5,6 +5,7 @@
     <v-app class="grey lighten-4">
       <cartTable></cartTable>
       <div>
+        <v-btn @click="testStripe" x-large>test stripe checkout</v-btn>
         <v-radio-group mandatory v-model="radioGroup">
           <v-row class="mb-n5" justify="center">
             <v-col lg="4">
@@ -192,6 +193,7 @@ export default {
     };
   },
   created() {
+    this.$store.dispatch("refreshCurrentUser");
     this.$store.dispatch("getProducts");
     this.$store.dispatch("getSuppliers");
     console.log(this.$store.state.filteredProducts);
@@ -277,6 +279,12 @@ export default {
       //     self.$store.dispatch("getSuppliers");
       //   }
       // };
+    },
+
+    testStripe() {
+      this.$axios.post("http://localhost:3000/webhook").then((response) => {
+        console.log(response);
+      });
     },
   },
   components: {

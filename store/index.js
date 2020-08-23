@@ -13,7 +13,7 @@ export default new Vuex.Store({
     currentProduct: JSON.parse(localStorage.getItem('currentProduct')),
     businesses: {},
     users: {},
-    currentUser: JSON.parse(localStorage.getItem('currentUser')),
+    currentUser: '',
     dialog: false,
     responseDialog: false,
     productRequestDialog: false,
@@ -23,7 +23,7 @@ export default new Vuex.Store({
     currentUserEmail: localStorage.getItem('currentEmail'),
     currentUserPassword: localStorage.getItem('currentPassword'),
     viewResponseDetails: false,
-    myProducts: JSON.parse(localStorage.getItem('myProducts')),
+    myProducts: [],
     nodeHost: "http://localhost:3000/",
     viewRequestDetails: false,
     cart: [],
@@ -41,31 +41,16 @@ export default new Vuex.Store({
     supplierPageColor: localStorage.getItem('supplierPageColor'),
     suppliers: [],
     allSuppliers: [],
+    loginToken: localStorage.getItem('loginToken')
   },
 
   mutations: {
-    validateLoginPage(state, response) {
-      if (response.data.message !== "authenitcation succesfull") {
-        alert(response.data);
-      } else {
-        localStorage.setItem('currentEmail', response.data.data.email);
-        localStorage.setItem('currentPassword', response.data.data.password);
-        console.log(localStorage.getItem('currentEmail'));
-      }
+    login(state, token) {
+      localStorage.setItem('loginToken', token)
+      state.loginToken = localStorage.getItem('loginToken');
     },
 
-    doLogin(state, response) {
-      //
-      if (response.data.message != "authenitcation succesfull") {
-        console.log(response.data.message);
-      } else {
-        localStorage.setItem('currentUser', JSON.stringify(response.data.data));
-        console.log(JSON.parse(localStorage.getItem('currentUser')));
-        state.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-        router.push('/home').catch(() => { })
-        console.log('current user is: ', state.currentUser);
-      }
-    },
+
 
     addRowData(state, payload) {
       state.row = payload;
@@ -133,19 +118,17 @@ export default new Vuex.Store({
     },
 
     getMyProducts(state, myProducts) {
-      localStorage.setItem('myProducts', JSON.stringify(myProducts))
-      state.myProducts = JSON.parse(localStorage.getItem('myProducts'));
+      state.myProducts = myProducts;
     },
 
     removeCurrentUser(state) {
       localStorage.removeItem('currentUser');
+      localStorage.removeItem('loginToken');
+      state.loginToken = ''
       state.currentUser = '';
       state.table = ''
-      localStorage.removeItem('currentEmail');
-      localStorage.removeItem('currentPassword');
       localStorage.removeItem('recievedRequests');
       localStorage.removeItem('sentRequests');
-      localStorage.removeItem('myProducts');
       localStorage.removeItem('cartItems');
 
       console.log(state.currentUser)
@@ -299,51 +282,24 @@ export default new Vuex.Store({
           console.log('ERROR', err)
         })
     },
-    validateLoginPage(context, {
-      email,
-      password
-    }) {
-      axios
-        .post("http://localhost:3000/api/login", {
-          email,
-          password,
-        })
+
+    async login(context, { email, password }) {
+
+      await axios.post("http://localhost:3000/api/login",
+        { email, password, })
         .then((response) => {
-          context.commit('validateLoginPage', response);
-          console.log(localStorage.getItem('currentEmail'))
-          console.log(localStorage.getItem('currentPassword'))
-          context.dispatch('doLogin', {
-            email: localStorage.getItem('currentEmail'),
-            password: localStorage.getItem('currentPassword')
-          })
+          if (response.data.message === 'please sign up first' || response.data.message === 'Please activate your account' || response.data.message === 'authentication failed') {
+            return alert(response.data.message);
+          }
+          context.commit('login', response.data.token);
+          router.push('/')
+
         })
         .catch((error) => {
           console.log(error);
         });
     },
 
-    doLogin(context, {
-      email,
-      password
-    }) {
-      console.log("dologin starts")
-      if (email === '') {
-        console.log('email empty')
-
-        return
-      }
-      console.log('dologin email', email)
-      axios.post("http://localhost:3000/api/login", {
-        email,
-        password
-      }).then((response) => {
-        console.log('dologin response', response)
-        context.commit('doLogin', response)
-      })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
 
     getProducts(context) {
       axios.get('http://localhost:3000/api/products').then(response => {
@@ -705,9 +661,11 @@ export default new Vuex.Store({
     },
 
     async refreshCurrentUser(context) {
+
       await axios.post('http://localhost:3000/api/refreshCurrentUser', {
-        user_id: context.state.currentUser.user_id
+        token: context.state.loginToken
       }).then(response => {
+
         context.commit('refreshCurrentUser', response.data.user)
       })
     },

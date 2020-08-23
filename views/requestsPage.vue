@@ -81,15 +81,14 @@ import requestDetails from "../components/requestDetails.vue";
 import requestResponseDialog from "../components/requestResponseDialog";
 export default {
   components: {
-    
     requestCard,
     requestDetails,
-    requestResponseDialog
+    requestResponseDialog,
   },
   data() {
     return {
       toggle: false,
-      requestType: "recieved"
+      requestType: "recieved",
     };
   },
 
@@ -105,10 +104,11 @@ export default {
     },
     viewRequestDetails() {
       return this.$store.state.viewRequestDetails;
-    }
+    },
   },
 
   created() {
+    this.$store.dispatch("refreshCurrentUser");
     this.$store.dispatch("getRecievedRequests");
     this.$store.dispatch("getSentRequests");
   },
@@ -120,8 +120,8 @@ export default {
     toggleRequestType() {
       this.toggle = false;
       this.$store.commit("viewRequestCard");
-    }
-  }
+    },
+  },
 };
 </script>
 

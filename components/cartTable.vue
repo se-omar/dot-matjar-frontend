@@ -87,6 +87,9 @@ import { loadStripe } from "@stripe/stripe-js";
 
 export default {
   name: "cartTable",
+  created() {
+    this.$store.dispatch("refreshCurrentUser");
+  },
   methods: {
     showProduct() {
       console.log(this.pressedProduct);
@@ -183,7 +186,7 @@ export default {
               .redirectToCheckout({
                 sessionId: sessionId,
               })
-              .then(function (result) {
+              .then((result) => {
                 console.log(result);
               });
           });

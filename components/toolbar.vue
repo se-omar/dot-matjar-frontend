@@ -8,7 +8,7 @@
       <v-spacer></v-spacer>
 
       <v-menu
-        v-if="currentUser"
+        v-if="currentUser !== ''"
         transition="fab-transition"
         :close-on-content-click="false"
         :nudge-width="200"
@@ -274,6 +274,10 @@
 <script>
 export default {
   components: {},
+  created() {
+    this.$store.dispatch("refreshCurrentUser");
+  },
+
   props: {
     toolBarColor: {
       type: String,
@@ -292,10 +296,7 @@ export default {
   methods: {
     logout() {
       this.$store.commit("removeCurrentUser");
-
-      setTimeout(() => {
-        this.$router.push("/reglogin").catch(() => {});
-      }, 10);
+      this.$router.push("/reglogin");
     },
 
     changePhoto() {
