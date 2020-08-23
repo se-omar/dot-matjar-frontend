@@ -240,6 +240,11 @@ export default {
       "الوادي الجديد",
     ],
   }),
+  computed: {
+    currentUser() {
+      return this.$store.state.currentUser;
+    },
+  },
 };
 </script>
 <style scoped>

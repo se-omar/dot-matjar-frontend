@@ -41,7 +41,9 @@ export default new Vuex.Store({
     supplierPageColor: localStorage.getItem('supplierPageColor'),
     suppliers: [],
     allSuppliers: [],
-    loginToken: localStorage.getItem('loginToken')
+    loginToken: localStorage.getItem('loginToken'),
+    supplier: JSON.parse(localStorage.getItem('supplier')),
+    supplierProducts: JSON.parse(localStorage.getItem('supplierProducts'))
   },
 
   mutations: {
@@ -49,7 +51,6 @@ export default new Vuex.Store({
       localStorage.setItem('loginToken', token)
       state.loginToken = localStorage.getItem('loginToken');
     },
-
 
 
     addRowData(state, payload) {
@@ -119,6 +120,11 @@ export default new Vuex.Store({
 
     getMyProducts(state, myProducts) {
       state.myProducts = myProducts;
+    },
+
+    getSupplierProducts(state, supplierProducts) {
+      localStorage.setItem('supplierProducts', JSON.stringify(supplierProducts))
+      state.supplierProducts = JSON.parse(localStorage.getItem('supplierProducts'));
     },
 
     removeCurrentUser(state) {
@@ -256,10 +262,17 @@ export default new Vuex.Store({
     refreshCurrentUser(state, user) {
       console.log('new user is ', user)
       state.currentUser = user;
+    },
+
+
+    supplierPage(state, supplier) {
+      localStorage.setItem('supplier', JSON.stringify(supplier))
+      state.supplier = JSON.parse(localStorage.getItem('supplier'))
+
+      console.log(state.supplier)
+      console.log('supplier worked')
     }
-
   },
-
 
 
   actions: {
@@ -481,13 +494,13 @@ export default new Vuex.Store({
       })
     },
 
-    async getMyProducts(context) {
-      console.log(context.state.currentUser.user_id);
-      await axios.post("http://localhost:3000/api/myProducts", {
-        user_id: context.state.currentUser.user_id
+    async getSupplierProducts(context) {
+      console.log(context.state.supplier.user_id);
+      await axios.put("http://localhost:3000/api/supplierProducts", {
+        user_id: context.state.supplier.user_id
       }).then(response => {
-        console.log(response)
-        context.commit('getMyProducts', response.data)
+        console.log('response', response)
+        context.commit('getSupplierProducts', response.data.data)
       })
     },
 
@@ -670,27 +683,40 @@ export default new Vuex.Store({
       })
     },
 
-    supplierProducts(context) {
-      axios.get('http://localhost:3000/api/supplierProducts', {
-        user_id: context.state.currentUser.user_id
-      }).then(products => {
-        console.log('supplier products', products)
-      })
-    },
+    // supplierProducts(context) {
+    //   console.log(context.state.supplier.user_id)
+    //   axios.put('http://localhost:3000/api/supplierProducts', {
+    //     user_id: context.state.supplier.user_id
+    //   }).then(products => {
+    //     if (products) {
+    //       console.log('supplier products', products.data.data)
+    //     } else {
+    //       console.log('error')
+    //     }
+    //   })
+    // },
     supplierPageColor(context, color) {
       axios.put('http://localhost:3000/api/supplierPageColor', {
         page_color: color,
-        user_id: context.state.currentUser.user_id
+        user_id: context.state.supplier.user_id
       })
         .then(response => {
           console.log(response.data.message)
           context.commit('supplierPageColor', response.data.data)
         })
-    }
+    },
 
-    // filterProductsCategory(context, payload) {
-    //   context.commit('filterProductsCategory', payload)
-    // }
+    async getMyProducts(context) {
+      console.log(context.state.currentUser.user_id);
+      await axios.post("http://localhost:3000/api/myProducts", {
+        user_id: context.state.currentUser.user_id
+      }).then(response => {
+        console.log(response)
+        context.commit('getMyProducts', response.data)
+      })
+    },
+
+
 
   },
 

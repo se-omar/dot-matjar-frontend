@@ -114,8 +114,8 @@
             </v-btn>
           </v-col>
           <v-col cols="12 ml-6  ">
-            <v-btn class="btn1" x-large color="blue" rounded>
-              <span class="mos" @click="$router.push('/supplierPage')">My Page</span>
+            <v-btn class="btn1" x-large color="blue" rounded @click="supplierPage">
+              <span class="mos">My Page</span>
             </v-btn>
           </v-col>
 
@@ -307,6 +307,11 @@ export default {
       form.set("email", this.$store.state.currentUser.email);
       console.log(this.$store.state.currentUser.email);
       this.$store.dispatch("profilePhoto", form);
+    },
+    supplierPage() {
+      console.log("worked");
+      this.$store.commit("supplierPage", this.currentUser);
+      this.$router.push("/supplierPage");
     },
   },
   data: () => ({
