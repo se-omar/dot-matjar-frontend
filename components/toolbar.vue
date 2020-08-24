@@ -8,7 +8,7 @@
       <v-spacer></v-spacer>
 
       <v-menu
-        v-if="currentUser !== ''"
+        v-if="currentUser"
         transition="fab-transition"
         :close-on-content-click="false"
         :nudge-width="200"
@@ -19,7 +19,7 @@
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn text dark v-bind="attrs" v-on="on">
-            <v-icon color="white">mdi-account-circle</v-icon>
+           <i class="fab fa-accessible-icon"></i>
             <span class="font">Profile</span>
           </v-btn>
         </template>
@@ -103,11 +103,7 @@
           <v-row></v-row>
           <v-divider></v-divider>
 
-          <v-col cols="12">
-            <v-btn class="btn1" x-large color="blue">
-              <span class="mos" @click="$router.push('/businessownerdata')">انضم كصاحب مشروع</span>
-            </v-btn>
-          </v-col>-->
+        
           <v-col cols="12 ml-6  ">
             <v-btn class="btn1" x-large color="blue" rounded>
               <span class="mos" @click="$router.push('/myProducts')">My products</span>
@@ -131,7 +127,7 @@
               <br />
 
               <a @click="$router.push('/completedata')" class="size">
-                Update Info
+                Update/complete Info
                 <i class="fas fa-edit" aria-hidden="true" style="color:black"></i>
               </a>
               <br />
@@ -180,13 +176,6 @@
         text
         @click="$router.push('/dashboard').catch((err) => {})"
       >Dashboard</v-btn>
-
-      <v-btn
-        class="font"
-        v-if="currentUser && currentUser.user_type == 'admin' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
-        text
-        @click="$router.push('/adminPage').catch((err) => {})"
-      >admin dashboard</v-btn>
 
       <v-btn class="font" v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs" text>
         <span>About us</span>
@@ -281,10 +270,6 @@
 <script>
 export default {
   components: {},
-  created() {
-    this.$store.dispatch("refreshCurrentUser");
-  },
-
   props: {
     toolBarColor: {
       type: String,
@@ -303,7 +288,10 @@ export default {
   methods: {
     logout() {
       this.$store.commit("removeCurrentUser");
-      this.$router.push("/reglogin");
+
+      setTimeout(() => {
+        this.$router.push("/reglogin").catch(() => {});
+      }, 10);
     },
 
     changePhoto() {
@@ -318,7 +306,7 @@ export default {
     supplierPage() {
       console.log("worked");
       this.$store.commit("supplierPage", this.currentUser);
-      this.$router.push("/supplierPage");
+      this.$router.push(`/supplierPage/` + this.currentUser.user_id);
     },
   },
   data: () => ({

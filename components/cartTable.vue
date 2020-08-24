@@ -10,6 +10,7 @@
           v-if="currentUser"
           large
           rounded
+          
         >
           <i class="fa fa-shopping-cart" aria-hidden="true"></i>
         </v-btn>
@@ -83,13 +84,10 @@
 
 
 <script>
-import { loadStripe } from "@stripe/stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
 
 export default {
   name: "cartTable",
-  created() {
-    this.$store.dispatch("refreshCurrentUser");
-  },
   methods: {
     showProduct() {
       console.log(this.pressedProduct);
@@ -159,38 +157,40 @@ export default {
     },
 
     getSession() {
-      var self = this;
-      self.quantityArray = [];
-      this.items.forEach((element) => {
-        self.quantityArray.push(element.quantity);
-      });
-      console.log(self.quantityArray);
-      loadStripe(
-        "pk_test_51H97oICdSDXTIUwz70svxkIu08QM3jR0rB6E2njyq3fC7tLOODIipB8ppdjdPt32pteM8zHqsSF2mAo9Oyfw9Mvf00L3omXjql"
-      ).then((stripe) => {
-        var sessionId = "";
-        this.$axios
-          .post("http://localhost:3000/api/checkout", {
-            user_id: this.currentUser.user_id,
-            quantityArray: self.quantityArray,
-          })
-          .then((response) => {
-            console.log(self.quantityArray);
-            sessionId = response.data.session_id;
-            this.$store.commit("setPaymentToken", response.data.token);
-            this.$store.commit("putTotalPriceInStore", self.total);
-            this.$store.commit("putQuantityInStore", self.quantityArray);
-          })
-          .then(() => {
-            stripe
-              .redirectToCheckout({
-                sessionId: sessionId,
-              })
-              .then((result) => {
-                console.log(result);
-              });
-          });
-      });
+      this.$router.push('/checkOutLocation')
+      
+      // var self = this;
+      // self.quantityArray = [];
+      // this.items.forEach((element) => {
+      //   self.quantityArray.push(element.quantity);
+      // });
+      // console.log(self.quantityArray);
+      // loadStripe(
+      //   "pk_test_51H97oICdSDXTIUwz70svxkIu08QM3jR0rB6E2njyq3fC7tLOODIipB8ppdjdPt32pteM8zHqsSF2mAo9Oyfw9Mvf00L3omXjql"
+      // ).then((stripe) => {
+      //   var sessionId = "";
+      //   this.$axios
+      //     .post("http://localhost:3000/api/checkout", {
+      //       user_id: this.currentUser.user_id,
+      //       quantityArray: self.quantityArray,
+      //     })
+      //     .then((response) => {
+      //       console.log(self.quantityArray);
+      //       sessionId = response.data.session_id;
+      //       this.$store.commit("setPaymentToken", response.data.token);
+      //       this.$store.commit("putTotalPriceInStore", self.total);
+      //       this.$store.commit("putQuantityInStore", self.quantityArray);
+      //     })
+      //     .then(() => {
+      //       stripe
+      //         .redirectToCheckout({
+      //           sessionId: sessionId,
+      //         })
+      //         .then(function (result) {
+      //           console.log(result);
+      //         });
+      //     });
+      // });
     },
     cleanCart() {
       this.items = [];

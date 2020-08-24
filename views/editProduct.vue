@@ -136,10 +136,6 @@
 export default {
   components: {},
 
-  created() {
-    this.$store.dispatch("refreshCurrentUser");
-  },
-
   computed: {
     currentUser() {
       return this.$store.state.currentUser;
@@ -186,6 +182,7 @@ export default {
       form.set("product_name", self.currentProduct.product_name);
       form.set("product_code", self.currentProduct.product_code);
       form.set("user_id", self.currentUser.user_id);
+      form.set("bussiness_id", self.currentUser.bussiness.bussiness_id);
       form.set("HS_code", self.currentProduct.HS_code);
       form.set("min_units_per_order", self.currentProduct.min_units_per_order);
       form.set("unit_price", self.currentProduct.unit_price);

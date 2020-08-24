@@ -49,12 +49,8 @@
 import ordersChart from "../components/ordersChart";
 import Product from "../components/product.vue";
 export default {
-  async created() {
-    await this.$store.dispatch("refreshCurrentUser");
-    await this.$store.dispatch("getMyProducts");
-  },
-
   mounted() {
+    this.$store.dispatch("getMyProducts");
     console.log(this.myProducts);
   },
 

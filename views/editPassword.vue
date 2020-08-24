@@ -70,9 +70,6 @@
 <script>
 export default {
   name: "update-forgotten-password",
-  created() {
-    this.$store.dispatch("refreshCurrentUser");
-  },
   components: {},
   data() {
     return {

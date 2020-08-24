@@ -151,9 +151,8 @@ export default {
       discountAmount: "",
       description: "",
       Rules: [(v) => !!v || "Required"],
-      category: [],
+      category: "",
       valid: true,
-      categoryName: "",
     };
   },
   methods: {
@@ -178,6 +177,7 @@ export default {
       form.set("product_name", self.productName);
       form.set("product_code", self.productCode);
       form.set("user_id", self.currentUser.user_id);
+      form.set("bussiness_id", self.currentUser.bussiness.bussiness_id);
       form.set("HS_code", self.HScode);
       form.set("min_units_per_order", self.minUnits);
       form.set("unit_price", self.unitPrice);
@@ -208,8 +208,6 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("refreshCurrentUser");
-
     return new Promise((resolve) => {
       setTimeout(() => {
         this.$store.dispatch("categoriesDB");
