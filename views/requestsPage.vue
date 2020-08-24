@@ -107,10 +107,11 @@ export default {
     },
   },
 
-  created() {
-    this.$store.dispatch("refreshCurrentUser");
+  async created() {
+    await this.$store.dispatch("refreshCurrentUser");
     this.$store.dispatch("getRecievedRequests");
     this.$store.dispatch("getSentRequests");
+    console.log(this.recievedRequests);
   },
   methods: {
     openDetails() {

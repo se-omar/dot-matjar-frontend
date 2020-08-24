@@ -1,6 +1,6 @@
 <template>
   <v-app class="grey lighten-4">
-    <div class="display-1 mb-10 mt-6" style="margin: auto">Dashboard</div>
+    <div class="display-1 mb-10 mt-6" style="margin: auto">{{supplier.full_arabic_name}}'s Dashboard</div>
 
     <v-row style="width: 92%; margin: auto">
       <v-col lg="4" md="6" sm="12" cols="12">
@@ -124,7 +124,7 @@
               <span
                 class="grey--text text--darken-1"
                 style="font-size: 20px"
-              >Total Revenue: {{currentUser.total_revenue}} EGP</span>
+              >Total Revenue: {{supplier.total_revenue}} EGP</span>
             </v-card>
           </v-hover>
         </div>
@@ -141,7 +141,7 @@
               <span
                 class="grey--text text--darken-1"
                 style="font-size: 20px"
-              >Amount Recieved: {{currentUser.revenue_recieved || 0}} EGP</span>
+              >Amount Recieved: {{supplier.revenue_recieved || 0}} EGP</span>
             </v-card>
           </v-hover>
         </div>
@@ -158,7 +158,7 @@
               <span
                 class="grey--text text--darken-1"
                 style="font-size: 20px"
-              >Amount Left: {{currentUser.total_revenue - currentUser.revenue_recieved || 0}} EGP</span>
+              >Amount Left: {{supplier.total_revenue - supplier.revenue_recieved || 0}} EGP</span>
             </v-card>
           </v-hover>
         </div>
@@ -194,10 +194,13 @@ import dashboardSellingProduct from "../components/dashboardSellingProduct";
 export default {
   async mounted() {
     await this.$store.dispatch("refreshCurrentUser");
-    this.$store.dispatch("getTopSellingProduct", this.currentUser.user_id);
-    this.$store.dispatch("getLeastSellingProduct", this.currentUser.user_id);
-    await this.$store.dispatch("getMyProducts", this.currentUser.user_id);
-    await this.$store.dispatch("getMonthlySales", this.currentUser.user_id);
+    this.$store.commit("supplierPage", this.supplier);
+    await this.$store.dispatch("getMyProducts", this.supplier.user_id);
+    await this.$store.dispatch("getTopSellingProduct", this.supplier.user_id);
+    await this.$store.dispatch("getLeastSellingProduct", this.supplier.user_id);
+    console.log("most selling is", this.topProduct);
+    console.log("least selling is", this.leastProduct);
+    await this.$store.dispatch("getMonthlySales", this.supplier.user_id);
 
     const result = this.groupBy(this.myProducts, (c) => c.category_id);
     console.log(this.myProducts);
@@ -303,6 +306,10 @@ export default {
         colors: ["#F44336"],
       };
     },
+
+    supplier() {
+      return this.$store.state.supplier;
+    },
   },
 
   data: function () {
@@ -336,9 +343,9 @@ export default {
       var categoryName = [];
 
       for (i in this.categoryArray) {
-        console.log("category array is", this.categoryArray);
+        // console.log("category array is", this.categoryArray);
         categorySales = 0;
-        console.log("in category function", this.categoryArray[i][1]);
+        //console.log("in category function", this.categoryArray[i][1]);
         for (j = 0; j < this.categoryArray[i].length; j++) {
           categorySales += this.categoryArray[i][j].buy_counter;
           totalCategorySales += this.categoryArray[i][j].buy_counter;
@@ -373,22 +380,22 @@ export default {
       var i, j, totalMonthSales, totalMonthRevenue;
 
       for (i in this.monthlySortedOrders) {
-        console.log("entered first loop");
+        // console.log("entered first loop");
         totalMonthSales = 0;
         totalMonthRevenue = 0;
 
         for (j = 0; j < this.monthlySortedOrders[i].length; j++) {
-          console.log("entered second loop");
+          // console.log("entered second loop");
           this.monthlySortedOrders[i][j].products.forEach((element) => {
             totalMonthSales += element.buy_counter;
             totalMonthRevenue += element.unit_price * element.buy_counter;
             this.totalRevenue += element.unit_price * element.buy_counter;
-            console.log(this.totalRevenue);
+            // console.log(this.totalRevenue);
           });
         }
         this.monthlySalesArray.splice(i - 1, 1, totalMonthSales);
         this.monthlyRevenueArray.splice(i - 1, 1, totalMonthRevenue);
-        console.log("monthly sales array", this.monthlySalesArray);
+        //console.log("monthly sales array", this.monthlySalesArray);
       }
       // localStorage.setItem(
       //   "monthlySalesArray",

@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <v-card @click="currentSupplier(supplier)" height="300" width="250" class="grey lighten-4">
+    <v-card height="300" width="250" class="grey lighten-4">
       <v-img
         height="180"
         width="180"

@@ -181,6 +181,13 @@
         @click="$router.push('/dashboard').catch((err) => {})"
       >Dashboard</v-btn>
 
+      <v-btn
+        class="font"
+        v-if="currentUser && currentUser.user_type == 'admin' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        text
+        @click="$router.push('/adminPage').catch((err) => {})"
+      >admin dashboard</v-btn>
+
       <v-btn class="font" v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs" text>
         <span>About us</span>
       </v-btn>

@@ -1,5 +1,10 @@
 <template>
-  <v-card class="grey lighten-4" :elevation="7" max-width="430">
+  <v-card
+    v-if="filteredProduct.message !== 'product not found'"
+    class="grey lighten-4"
+    :elevation="7"
+    max-width="430"
+  >
     <v-img height="150" :src="nodeHost + filteredProduct.main_picture"></v-img>
 
     <v-row justify="center" class="mb-n3">
@@ -31,6 +36,10 @@
       </div>
     </v-card-text>
   </v-card>
+
+  <v-card class="grey lighten-4" height="200" v-else>
+    <v-card-title class="display-1 ml-16">no product found</v-card-title>
+  </v-card>
 </template>
 
 <script>
@@ -42,7 +51,7 @@ export default {
     return {
       i: 0,
       cart: [],
-      rating: 4
+      rating: 4,
     };
   },
   created() {
@@ -53,12 +62,12 @@ export default {
   props: {
     product: {
       type: Object,
-      default: () => null
+      default: () => null,
     },
     filteredProduct: {
       type: Object,
-      default: () => null
-    }
+      default: () => null,
+    },
   },
 
   methods: {
@@ -72,7 +81,7 @@ export default {
       // this.$store.dispatch("cart",product.product_id)
       this.cart = this.$store.state.cart;
       console.log(product.in_cart);
-    }
+    },
   },
   computed: {
     products() {
@@ -88,7 +97,7 @@ export default {
     },
     currentuser() {
       return this.$store.state.currentUser;
-    }
-  }
+    },
+  },
 };
 </script>

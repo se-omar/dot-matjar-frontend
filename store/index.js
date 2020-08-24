@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios"
 import router from '../router'
+import test from './test'
 Vue.use(Vuex, axios, router);
 
 
@@ -617,11 +618,11 @@ export default new Vuex.Store({
       context.commit('filterProductsCategory', payload)
     },
 
-    getTopSellingProduct(context) {
+    async getTopSellingProduct(context, id) {
 
-      axios
+      await axios
         .post("http://localhost:3000/api/topSellingProduct", {
-          user_id: context.state.currentUser.user_id
+          user_id: id
         })
         .then(response => {
           console.log(response);
@@ -629,10 +630,10 @@ export default new Vuex.Store({
         });
     },
 
-    getLeastSellingProduct(context) {
-      axios
+    async getLeastSellingProduct(context, id) {
+      await axios
         .post("http://localhost:3000/api/leastSellingProduct", {
-          user_id: context.state.currentUser.user_id
+          user_id: id
         })
         .then(response => {
           console.log(response);
@@ -640,9 +641,9 @@ export default new Vuex.Store({
         });
     },
 
-    async getMonthlySales(context) {
+    async getMonthlySales(context, id) {
       await axios.post('http://localhost:3000/api/monthlySales', {
-        user_id: context.state.currentUser.user_id
+        user_id: id
       }).then(response => {
         console.log('monthly sales', response.data)
 
@@ -706,10 +707,9 @@ export default new Vuex.Store({
         })
     },
 
-    async getMyProducts(context) {
-      console.log(context.state.currentUser.user_id);
+    async getMyProducts(context, id) {
       await axios.post("http://localhost:3000/api/myProducts", {
-        user_id: context.state.currentUser.user_id
+        user_id: id
       }).then(response => {
         console.log(response)
         context.commit('getMyProducts', response.data)
@@ -720,6 +720,8 @@ export default new Vuex.Store({
 
   },
 
-  modules: {},
+  modules: {
+    test: test
+  },
 
 })

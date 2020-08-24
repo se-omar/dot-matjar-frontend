@@ -23,6 +23,8 @@ import supplierPage from '../views/supplierPage'
 import test from '../views/test'
 import test2 from '../views/test2'
 import sideButton from '../components/sideButton'
+import adminPage from '../views/adminPage'
+import suppliersDashboard from '../views/allSuppliersDashboard'
 Vue.use(VueRouter)
 
 var routes = [{
@@ -141,6 +143,16 @@ var routes = [{
   path: '/sideButton',
   name: 'sidebutton',
   component: sideButton
+},
+{
+  path: '/adminPage',
+  name: 'adminPage',
+  component: adminPage
+},
+{
+  path: '/suppliersDashboard',
+  name: 'suppliersDashboard',
+  component: suppliersDashboard
 },
 {
   path: '*',

@@ -5,7 +5,6 @@
     <v-app class="grey lighten-4">
       <cartTable></cartTable>
       <div>
-        <v-btn @click="testStripe" x-large>test stripe checkout</v-btn>
         <v-radio-group mandatory v-model="radioGroup">
           <v-row class="mb-n5" justify="center">
             <v-col lg="4">
@@ -126,7 +125,9 @@
             sm="6"
             cols="6"
           >
-            <supplier :supplier="supplier"></supplier>
+            <v-card @click="supplierClicked(supplier)">
+              <supplier :supplier="supplier"></supplier>
+            </v-card>
           </v-col>
         </v-row>
 
@@ -193,6 +194,7 @@ export default {
     };
   },
   created() {
+    console.log(this.$store.state.testVariable);
     this.$store.dispatch("refreshCurrentUser");
     this.$store.dispatch("getProducts");
     this.$store.dispatch("getSuppliers");
@@ -281,10 +283,9 @@ export default {
       // };
     },
 
-    testStripe() {
-      this.$axios.post("http://localhost:3000/webhook").then((response) => {
-        console.log(response);
-      });
+    supplierClicked(supplier) {
+      this.$store.commit("supplierPage", supplier);
+      this.$router.push("/supplierPage");
     },
   },
   components: {
