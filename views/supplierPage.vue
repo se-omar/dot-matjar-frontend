@@ -92,13 +92,13 @@ export default {
   },
   created() {
     this.$store.dispatch("refreshCurrentUser");
-    this.$store.dispatch("getMyProducts");
-    this.$store.dispatch("getSupplierProducts");
-    this.$store.dispatch("supplierPageColor");
+    this.$store.state.supplierPageColor = [];
+    this.$store.dispatch("getSupplierProducts", this.$route.params.supplier_id);
+
+    this.$store.dispatch("getSupplier", this.$route.params.supplier_id);
     console.log(this.$store.state.myProducts);
     console.log(this.$store.state.supplierPageColor);
     this.pageColor = this.$store.state.supplierPageColor;
-    console.log("state.supplier", this.$store.state.supplier);
   },
 };
 </script>

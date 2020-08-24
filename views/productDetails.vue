@@ -162,7 +162,7 @@
               <v-spacer></v-spacer>
               <v-list-item-content>
                 <span>
-                  Description :
+                  Describtion :
                   <span class="red--text">{{currentProduct.describtion}}</span>
                 </span>
               </v-list-item-content>
@@ -173,9 +173,14 @@
               <v-list-item-content>
                 <span>
                   Minimum units per order :
-                  <span
-                    class="red--text"
-                  >{{currentProduct.min_units_per_order}}</span>
+                  <span class="red--text">{{currentProduct.min_units_per_order}}</span>
+                </span>
+              </v-list-item-content>
+              <v-spacer></v-spacer>
+              <v-list-item-content>
+                <span>
+                  Category :
+                  <span class="red--text">{{currentProduct.bussiness.bussiness_name}}</span>
                 </span>
               </v-list-item-content>
             </v-list-item>
@@ -205,13 +210,13 @@
 
               <v-col cols="4" lg="4">
                 <v-btn
-                  v-if="currentUser && currentUser.user_id === currentProduct.user_id"
+                  v-if="currentUser && currentUser.user_id === currentProduct.bussiness.user.user_id"
                   @click="goToEditProduct"
                   color="red darken-4"
                   block
                   rounded
                 >
-                  <span class="white--text" style="font-size: 18px">Edit product</span>
+                  <span class="white--text" style="font-size: 18px">Edite product</span>
                 </v-btn>
 
                 <v-btn color="red darken-4 " v-else @click="viewPopup" rounded>
@@ -222,7 +227,7 @@
 
               <v-col cols="4" lg="4">
                 <v-btn
-                  v-if="currentUser && currentUser.user_id === currentProduct.user_id"
+                  v-if="currentUser && currentUser.user_id === currentProduct.bussiness.user.user_id"
                   @click="toggleRemoveDialog"
                   color="red darken-4"
                   rounded

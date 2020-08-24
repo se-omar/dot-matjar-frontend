@@ -134,11 +134,11 @@
 
 <script>
 export default {
-  components: {},
-
   created() {
     this.$store.dispatch("refreshCurrentUser");
   },
+
+  components: {},
 
   computed: {
     currentUser() {

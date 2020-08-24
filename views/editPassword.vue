@@ -73,6 +73,7 @@ export default {
   created() {
     this.$store.dispatch("refreshCurrentUser");
   },
+
   components: {},
   data() {
     return {

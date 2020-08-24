@@ -1,22 +1,14 @@
 <template>
   <div id="app">
+    <ToolBar></ToolBar>
     <v-form>
       <v-container>
         <v-row>
-          <v-col cols="12" sm="6">
-            <v-text-field
-              v-model="nationalNumber"
-              label="الرقم القومي"
-              shaped
-              outlined
-              maxlength="14"
-              :rules="[rules.must,rules.numbers]"
-            ></v-text-field>
-          </v-col>
+        
 
           <v-col cols="12" sm="6">
             <v-col cols="12">
-              <v-select v-model="gender" :items="genderr" label="النوع" shaped></v-select>
+              <v-select v-model="gender" :items="genderr" label="Gender" shaped></v-select>
             </v-col>
 
             <!-- <v-text-field
@@ -29,12 +21,10 @@
           </v-col>
 
           <v-col cols="12" sm="6">
-            <v-text-field v-model="fullArabicName" label="الاسم بلكامل عربي" outlined></v-text-field>
+            <v-text-field v-model="fullArabicName" label="Name" outlined></v-text-field>
           </v-col>
 
-          <v-col cols="12" sm="6">
-            <v-text-field v-model="fullEnglishName" label="الاسم بلكامل انجليزي" outlined></v-text-field>
-          </v-col>
+        
 
           <v-col cols="12" sm="6">
             <v-menu
@@ -65,75 +55,94 @@
           </v-col>
 
           <v-col cols="12" sm="6">
-            <v-text-field v-model="qualifications" label="المؤهل" outlined></v-text-field>
+            <v-text-field v-model="qualifications" label="Qualification" outlined></v-text-field>
           </v-col>
 
           <v-col cols="12" sm="6">
-            <v-text-field v-model="job" label="المهنه" outlined></v-text-field>
+            <v-text-field v-model="job" label="Job" outlined></v-text-field>
           </v-col>
 
           <v-col class="d-flex" cols="12" sm="6">
             <v-select
               dense
               v-model="governorate"
-              :items="egyptGovernorates"
-              label="المحافظه"
+              :items="governorates"
+              label="Governorate"
               outlined
+              @change="getCountryRegions"
             ></v-select>
           </v-col>
 
-          <v-col cols="12" sm="6">
-            <v-text-field v-model="center" label="المركز" outlined></v-text-field>
-          </v-col>
 
           <v-col cols="12" sm="6">
-            <v-text-field v-model="village" label="القريه" outlined></v-text-field>
+            <v-select
+            v-model="region"
+            :items="regions"
+            dense
+            label="Region"
+            outlined
+            >
+
+            </v-select>
           </v-col>
           <v-col cols="12" sm="6">
-            <v-text-field v-model="phoneNumber" label="التيليفون" outlined></v-text-field>
+            <v-text-field v-model="phoneNumber" label="Mobile number" outlined></v-text-field>
           </v-col>
           <v-col cols="12" sm="6">
-            <v-text-field v-model="mobileNumber" label="الموبيل" outlined :rules="[rules.numbers]"></v-text-field>
+            <v-text-field v-model="mobileNumber" label="telephone number" outlined :rules="[rules.numbers]"></v-text-field>
           </v-col>
           <v-col cols="12" sm="6">
-            <v-text-field v-model="fax" label="الفاكس" outlined></v-text-field>
+            <v-text-field v-model="fax" label="Fax" outlined></v-text-field>
           </v-col>
           <v-col cols="6" sm="6">
-            <v-text-field v-model="email" label="البريد الالكتروني" filled outlined disabled></v-text-field>
+            <v-text-field v-model="email" label="Email" filled outlined disabled></v-text-field>
           </v-col>
 
           <v-col cols="12" sm="6">
-            <v-text-field v-model="facebookAccount" label="الفيسبوك" outlined></v-text-field>
+            <v-text-field v-model="facebookAccount" label="Facebook" outlined></v-text-field>
           </v-col>
           <v-col cols="12" sm="6">
-            <v-text-field v-model="linkedin" label="لينكدان" outlined></v-text-field>
+            <v-text-field v-model="linkedin" label="Linkedin" outlined></v-text-field>
           </v-col>
 
-          <v-col cols="12">
-            <v-text-field v-model="website" label="الموقع الالكتروني" outlined></v-text-field>
+          <v-col cols="12" sm="6">
+            <v-text-field v-model="website" label="Website" outlined></v-text-field>
           </v-col>
 
           <v-col cols="12">
             <v-textarea v-model="address" outlined color="teal">
               <template v-slot:label>
-                <div>العنوان</div>
+                <div>Address</div>
               </template>
             </v-textarea>
           </v-col>
 
-          <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
-            <v-btn x-large block color="blue" @click="completedata">حفظ</v-btn>
-
-            <v-btn x-large block color="red" @click="$router.push('/')">الغاء</v-btn>
-          </v-col>
+         
+        </v-row>
+        <v-row justify="center">
+  <v-col  cols="12" sm="3" xsm="12">
+            <v-btn x-large block color="blue" @click="completedata">Save</v-btn>
+  </v-col>
+   <v-col  cols="12" sm="3" xsm="12">
+            <v-btn x-large block color="red" @click="$router.push('/')">Cancel</v-btn>
+          </v-col>         
         </v-row>
       </v-container>
+     
     </v-form>
+     <Footer></Footer>
   </div>
 </template>
 <script>
+import ToolBar from '../components/toolbar'
+import Footer from '../components/footer'
 export default {
+  
   name: "completedata",
+  components:{
+    ToolBar,
+    Footer
+  },
   methods: {
     completedata() {
       this.$store.dispatch("completedata", {
@@ -157,10 +166,13 @@ export default {
         email: this.email,
       });
     },
+    getCountryRegions(){
+        console.log(this.governorate)
+      this.$store.dispatch('getRegions' , this.governorate)
+    }
   },
   created() {
-    this.$store.dispatch("refreshCurrentUser");
-
+   this.$store.dispatch("getGovernorate")
     this.nationalNumber = this.$store.state.currentUser.national_number;
     this.fullArabicName = this.$store.state.currentUser.full_arabic_name;
     this.email = this.$store.state.currentUser.email;
@@ -170,8 +182,8 @@ export default {
     this.qualifications = this.$store.state.currentUser.qualifications;
     this.job = this.$store.state.currentUser.job;
     this.governorate = this.$store.state.currentUser.governorate;
-    this.village = this.$store.state.currentUser.village;
-    this.center = this.$store.state.currentUser.center;
+    this.region = this.$store.state.currentUser.region;
+   
     this.phoneNumber = this.$store.state.currentUser.phoneNumber;
     this.mobileNumber = this.$store.state.currentUser.mobileNumber;
     this.fax = this.$store.state.currentUser.fax;
@@ -179,6 +191,8 @@ export default {
     this.linkedin = this.$store.state.currentUser.linkedin;
     this.website = this.$store.state.currentUser.website;
     this.address = this.$store.state.currentUser.address;
+        
+ 
   },
   data: () => ({
     rules: {
@@ -189,7 +203,7 @@ export default {
       must: (v) => (v && v.length == 14) || "ID must be 14 NUMBERS",
       numbers: (v) => /\d+/.test(v) || "Enter numbers",
     },
-    genderr: ["ذكر", "انثي", "اخر"],
+    genderr: ['male','female','other'],
 
     nationalNumber: "",
     gender: "",
@@ -209,6 +223,8 @@ export default {
     website: "",
     address: "",
     email: "",
+   
+    region:'',
 
     egyptGovernorates: [
       "الإسكندرية",
@@ -244,6 +260,12 @@ export default {
     currentUser() {
       return this.$store.state.currentUser;
     },
+    governorates(){
+      return this.$store.state.governorates
+    },
+    regions(){
+      return this.$store.state.regions
+    }
   },
 };
 </script>

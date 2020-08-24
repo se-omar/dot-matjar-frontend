@@ -151,9 +151,8 @@ export default {
       discountAmount: "",
       description: "",
       Rules: [(v) => !!v || "Required"],
-      category: [],
+      category: "",
       valid: true,
-      categoryName: "",
     };
   },
   methods: {
@@ -209,7 +208,6 @@ export default {
   },
   created() {
     this.$store.dispatch("refreshCurrentUser");
-
     return new Promise((resolve) => {
       setTimeout(() => {
         this.$store.dispatch("categoriesDB");

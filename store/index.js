@@ -2,7 +2,6 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios"
 import router from '../router'
-import test from './test'
 Vue.use(Vuex, axios, router);
 
 
@@ -42,9 +41,11 @@ export default new Vuex.Store({
     supplierPageColor: localStorage.getItem('supplierPageColor'),
     suppliers: [],
     allSuppliers: [],
-    loginToken: localStorage.getItem('loginToken'),
     supplier: JSON.parse(localStorage.getItem('supplier')),
-    supplierProducts: JSON.parse(localStorage.getItem('supplierProducts'))
+    loginToken: localStorage.getItem('loginToken'),
+    supplierProducts: JSON.parse(localStorage.getItem('supplierProducts')),
+    regions: [],
+    governorates: []
   },
 
   mutations: {
@@ -129,13 +130,15 @@ export default new Vuex.Store({
     },
 
     removeCurrentUser(state) {
-      localStorage.removeItem('currentUser');
-      localStorage.removeItem('loginToken');
-      state.loginToken = ''
       state.currentUser = '';
       state.table = ''
+      localStorage.removeItem('loginToken');
+      state.loginToken = ''
+      localStorage.removeItem('currentEmail');
+      localStorage.removeItem('currentPassword');
       localStorage.removeItem('recievedRequests');
       localStorage.removeItem('sentRequests');
+      localStorage.removeItem('myProducts');
       localStorage.removeItem('cartItems');
 
       console.log(state.currentUser)
@@ -266,13 +269,33 @@ export default new Vuex.Store({
     },
 
 
-    supplierPage(state, supplier) {
+    // supplierPage(state, supplier) {
+    //   localStorage.setItem('supplier', JSON.stringify(supplier))
+    //   state.supplier = JSON.parse(localStorage.getItem('supplier'))
+
+    //   console.log(state.supplier)
+    //   console.log('supplier worked')
+    // },
+    getSupplier(state, supplier) {
+
+
       localStorage.setItem('supplier', JSON.stringify(supplier))
       state.supplier = JSON.parse(localStorage.getItem('supplier'))
+      localStorage.setItem('supplierPageColor', state.supplier.page_color)
+      state.supplierPageColor = localStorage.getItem('supplierPageColor')
+    },
+    getRegions(state, regions) {
+      state.regions = []
+      for (var i = 0; i < regions.length; i++) {
+        state.regions.push(regions[i].city)
+      }
 
-      console.log(state.supplier)
-      console.log('supplier worked')
+    },
+    getGovernorate(state, res) {
+      state.governorates = res
     }
+
+
   },
 
 
@@ -297,22 +320,7 @@ export default new Vuex.Store({
         })
     },
 
-    async login(context, { email, password }) {
 
-      await axios.post("http://localhost:3000/api/login",
-        { email, password, })
-        .then((response) => {
-          if (response.data.message === 'please sign up first' || response.data.message === 'Please activate your account' || response.data.message === 'authentication failed') {
-            return alert(response.data.message);
-          }
-          context.commit('login', response.data.token);
-          router.push('/')
-
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
 
 
     getProducts(context) {
@@ -396,7 +404,9 @@ export default new Vuex.Store({
       password,
       full_arabic_name,
       mobile_number,
-      national_number
+      national_number,
+      governorate,
+      region
     }) {
 
 
@@ -405,7 +415,9 @@ export default new Vuex.Store({
         password,
         full_arabic_name,
         mobile_number,
-        national_number
+        national_number,
+        governorate,
+        region
 
       })
         .then(response => {
@@ -419,6 +431,24 @@ export default new Vuex.Store({
           console.log(error)
         })
     },
+
+    async login(context, { email, password }) {
+
+      await axios.post("http://localhost:3000/api/login",
+        { email, password, })
+        .then((response) => {
+          if (response.data.message === 'please sign up first' || response.data.message === 'Please activate your account' || response.data.message === 'authentication failed') {
+            return alert(response.data.message);
+          }
+          context.commit('login', response.data.token);
+          router.push('/')
+
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
 
     activation(context) {
       axios.put('http://localhost:3000/api/activate')
@@ -495,12 +525,12 @@ export default new Vuex.Store({
       })
     },
 
-    async getSupplierProducts(context) {
-      console.log(context.state.supplier.user_id);
+    async getSupplierProducts(context, id) {
+      console.log('the id is', id);
       await axios.put("http://localhost:3000/api/supplierProducts", {
-        user_id: context.state.supplier.user_id
+        user_id: id
       }).then(response => {
-        console.log('response', response)
+        console.log('Products is here', response)
         context.commit('getSupplierProducts', response.data.data)
       })
     },
@@ -618,6 +648,7 @@ export default new Vuex.Store({
       context.commit('filterProductsCategory', payload)
     },
 
+
     async getTopSellingProduct(context, id) {
 
       await axios
@@ -662,14 +693,18 @@ export default new Vuex.Store({
 
     filterSuppliers(context, {
       supplierName,
-      supplierLocation
+      governorate,
+      region
     }) {
-      console.log('supplierName', supplierName)
-      console.log('supplierLocation', supplierLocation)
+      console.log('governorate', governorate)
+      console.log('region', region)
+
       axios.put('http://localhost:3000/api/filterSuppliers', {
         name: supplierName,
-        location: supplierLocation
+        governorate: governorate,
+        region: region
       }).then(response => {
+        console.log(response)
         context.commit('filterSuppliers', response.data.users)
       })
     },
@@ -697,13 +732,33 @@ export default new Vuex.Store({
     //   })
     // },
     supplierPageColor(context, color) {
+
       axios.put('http://localhost:3000/api/supplierPageColor', {
         page_color: color,
         user_id: context.state.supplier.user_id
       })
         .then(response => {
           console.log(response.data.message)
+          console.log(response.data.data)
           context.commit('supplierPageColor', response.data.data)
+        })
+    },
+    async getSupplier(context, id) {
+      await axios.put('http://localhost:3000/api/getSupplier', { user_id: id })
+        .then(supplier => {
+          console.log('supplierererer', supplier.data.data)
+          context.commit('getSupplier', supplier.data.data)
+
+        })
+    },
+
+    getRegions(context, governorate) {
+      console.log(governorate)
+      axios.put('http://localhost:3000/api/getRegions', { governorate: governorate })
+        .then(regions => {
+          console.log('regionss', regions.data.data)
+          context.commit('getRegions', regions.data.data)
+
         })
     },
 
@@ -717,11 +772,16 @@ export default new Vuex.Store({
     },
 
 
+    getGovernorate(context) {
+      axios.put('http://localhost:3000/api/getGovernorate')
+        .then(res => {
+          console.log(res.data.data)
+          context.commit('getGovernorate', res.data.data)
+        })
+    }
 
   },
 
-  modules: {
-    test: test
-  },
+  modules: {},
 
 })

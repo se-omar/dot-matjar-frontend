@@ -22,23 +22,24 @@
 
 <script>
 export default {
-  async mounted() {
-    await this.$store.dispatch("refreshCurrentUser");
+  mounted() {
     if (this.paymentToken === this.$route.params.hash) {
       var self = this;
       console.log("connected");
       console.log(this.paymentToken);
       console.log(this.$route.params.hash);
-      console.log("current use ris ", this.currentUser);
-      localStorage.removeItem("paymentToken");
+      // localStorage.removeItem("paymentToken");
       console.log(self.productsQuantityArray);
 
       this.$axios
-        .put("http://localhost:3000/api/cleanCart", {
+        .post("http://localhost:3000/api/placeOrder", {
           user_id: self.currentUser.user_id,
+          total_price: self.totalPrice,
+          products: self.table,
+          quantity: self.productsQuantityArray,
         })
         .then((response) => {
-          console.log("clean cart response", response);
+          console.log(response);
         });
     } else {
       console.log("order is already placed");

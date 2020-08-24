@@ -49,7 +49,7 @@ export default {
       this.color = item.color;
       console.log(item.color);
       this.$emit("update:color", item.color);
-      this.$store.dispatch("supplierPageColor", item.color);
+      this.$store.dispatch("supplierPageColor", item.color );
     },
   },
   computed: {

@@ -200,7 +200,6 @@ export default {
     await this.$store.dispatch("getMonthlySales", this.currentUser.user_id);
 
     const result = this.groupBy(this.myProducts, (c) => c.category_id);
-    console.log(this.myProducts);
     this.categoryArray = result;
 
     const ordered = this.groupBy(
@@ -336,7 +335,6 @@ export default {
       var categoryName = [];
 
       for (i in this.categoryArray) {
-        console.log("category array is", this.categoryArray);
         categorySales = 0;
         console.log("in category function", this.categoryArray[i][1]);
         for (j = 0; j < this.categoryArray[i].length; j++) {

@@ -26,13 +26,7 @@ export default {
   created() {
     console.log(this.supplier);
   },
-  methods: {
-    currentSupplier(supplier) {
-      console.log(supplier);
-      this.$store.commit("supplierPage", supplier);
-      this.$router.push("/supplierPage");
-    },
-  },
+
   props: {
     supplier: {
       type: Object,

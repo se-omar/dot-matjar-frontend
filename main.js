@@ -14,6 +14,10 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueApexCharts from 'vue-apexcharts'
 
+
+
+
+
 Vue.use(VueApexCharts)
 Vue.component('apexchart', VueApexCharts)
 

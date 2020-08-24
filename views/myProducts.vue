@@ -54,10 +54,6 @@ export default {
     await this.$store.dispatch("getMyProducts");
   },
 
-  mounted() {
-    console.log(this.myProducts);
-  },
-
   computed: {
     myProducts() {
       return this.$store.state.myProducts;

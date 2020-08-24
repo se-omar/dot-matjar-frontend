@@ -23,9 +23,13 @@ import supplierPage from '../views/supplierPage'
 import test from '../views/test'
 import test2 from '../views/test2'
 import sideButton from '../components/sideButton'
+import checkOutLocation from '../views/checkOutLocation'
 import adminPage from '../views/adminPage'
 import suppliersDashboard from '../views/allSuppliersDashboard'
+// import { isInteger } from 'core-js/fn/number'
 Vue.use(VueRouter)
+
+
 
 var routes = [{
   path: '/cart',
@@ -125,9 +129,10 @@ var routes = [{
   component: dashboard
 },
 {
-  path: '/supplierPage',
+  path: '/supplierPage/:supplier_id',
   name: 'supplierPage',
-  component: supplierPage
+  component: supplierPage,
+  props: true
 },
 {
   path: '/test',
@@ -143,6 +148,11 @@ var routes = [{
   path: '/sideButton',
   name: 'sidebutton',
   component: sideButton
+},
+{
+  path: '/checkOutLocation',
+  name: 'checkOutLocation',
+  component: checkOutLocation
 },
 {
   path: '/adminPage',

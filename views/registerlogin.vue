@@ -92,7 +92,26 @@
                         ></v-text-field>
                       </v-col>
 
-                      <!-- National NUMBER  -->
+                      <v-col cols="6" sm="12" md="6">
+                        <v-select
+                          :items="governorates"
+                          placeholder="Governorate"
+                          dense
+                          outlined
+                          v-model="governorate"
+                          @change="getCountryRegions()"
+                        ></v-select>
+                      </v-col>
+
+                      <v-col cols="6" sm="12" md="6">
+                        <v-select
+                          :items="regions"
+                          placeholder="Region"
+                          dense
+                          outlined
+                          v-model="region"
+                        ></v-select>
+                      </v-col>
 
                       <v-col cols="6" sm="12">
                         <v-text-field
@@ -190,8 +209,16 @@ export default {
     currentUser() {
       return this.$store.state.currentUser;
     },
+    governorates() {
+      return this.$store.state.governorates;
+    },
+    regions() {
+      return this.$store.state.regions;
+    },
   },
-
+  created() {
+    this.$store.dispatch("getGovernorate");
+  },
   methods: {
     validateSignup() {
       var self = this;
@@ -201,6 +228,8 @@ export default {
         full_arabic_name: this.fullArabicName,
         national_number: this.nationalNumber,
         mobile_number: this.mobileNumber,
+        governorate: this.governorate,
+        region: this.region,
       });
     },
 
@@ -222,6 +251,10 @@ export default {
     },
     changeRoute() {
       document.getElementById("btn").disapled();
+    },
+    getCountryRegions() {
+      console.log(this.governorate);
+      this.$store.dispatch("getRegions", this.governorate);
     },
   },
 
@@ -265,6 +298,8 @@ export default {
       mobilenumber: (v) => /\d+/.test(v) || "Enter numbers",
     },
     checkbox: false,
+    governorate: "",
+    region: "",
   }),
 
   components: {},

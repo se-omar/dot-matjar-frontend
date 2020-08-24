@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="grey lighten-4">
     <toolBar></toolBar>
-
     <v-app class="grey lighten-4">
-      <cartTable></cartTable>
-      <div>
+      <div class="mx-10">
+        <cartTable></cartTable>
+
         <v-radio-group mandatory v-model="radioGroup">
           <v-row class="mb-n5" justify="center">
             <v-col lg="4">
@@ -21,6 +21,7 @@
           <v-col lg="4">
             <v-text-field
               :disabled="radioGroup === '2'"
+              items="items"
               @keyup="emptySearchBox"
               dense
               outlined
@@ -56,14 +57,30 @@
           </v-col>
 
           <v-col lg="4">
-            <v-text-field
-              @keyup="emptySupplierLocation"
+            <v-select
+              :items="egyptGovernorates"
               :disabled="radioGroup === '1'"
-              placeholder="Search Suppliers by Location"
+              placeholder="Governorate"
               dense
               outlined
-              v-model="supplierLocation"
-            ></v-text-field>
+              v-model="governorate"
+              @change="getCountryRegions()"
+            ></v-select>
+          </v-col>
+        </v-row>
+
+        <v-row justify="center">
+          <v-col lg="4"></v-col>
+
+          <v-col lg="4">
+            <v-select
+              :items="regions"
+              :disabled="radioGroup === '1'"
+              placeholder="Region"
+              dense
+              outlined
+              v-model="region"
+            ></v-select>
           </v-col>
         </v-row>
 
@@ -160,42 +177,44 @@ export default {
       supplierName: "",
       supplierLocation: "",
       items: [],
-      egyptGovernorates: [
-        "الإسكندرية",
-        "الإسماعيلية",
-        "أسوان",
-        "أسيوط",
-        "الأقصر",
-        "البحر الأحمر",
-        "البحيرة",
-        "بني سويف",
-        "بورسعيد",
-        "جنوب سيناء",
-        "الجيزة",
-        "الدقهلية",
-        "دمياط",
-        "سوهاج",
-        "السويس",
-        "الشرقية",
-        "شمال سيناء",
-        "الغربية",
-        "الفيوم",
-        "القاهرة",
-        "القليوبية",
-        "قنا",
-        "كفر الشيخ",
-        "مطروح",
-        "المنوفية",
-        "المنيا",
-        "الوادي الجديد",
-      ],
+      // egyptGovernorates: [
+      //   "الإسكندرية",
+      //   "الإسماعيلية",
+      //   "أسوان",
+      //   "أسيوط",
+      //   "الأقصر",
+      //   "البحر الأحمر",
+      //   "البحيرة",
+      //   "بني سويف",
+      //   "بورسعيد",
+      //   "جنوب سيناء",
+      //   "الجيزة",
+      //   "الدقهلية",
+      //   "دمياط",
+      //   "سوهاج",
+      //   "السويس",
+      //   "الشرقية",
+      //   "شمال سيناء",
+      //   "الغربية",
+      //   "الفيوم",
+      //   "القاهرة",
+      //   "القليوبية",
+      //   "قنا",
+      //   "كفر الشيخ",
+      //   "مطروح",
+      //   "المنوفية",
+      //   "المنيا",
+      //   "الوادي الجديد",
+      // ],
       category: [],
       radioGroup: 1,
+      governorate: "",
+      region: "",
     };
   },
-  created() {
-    console.log(this.$store.state.testVariable);
-    this.$store.dispatch("refreshCurrentUser");
+  async created() {
+    await this.$store.dispatch("refreshCurrentUser");
+    this.$store.dispatch("getGovernorate");
     this.$store.dispatch("getProducts");
     this.$store.dispatch("getSuppliers");
     console.log(this.$store.state.filteredProducts);
@@ -220,6 +239,12 @@ export default {
     suppliers() {
       return this.$store.state.suppliers;
     },
+    regions() {
+      return this.$store.state.regions;
+    },
+    egyptGovernorates() {
+      return this.$store.state.governorates;
+    },
   },
 
   methods: {
@@ -234,7 +259,8 @@ export default {
     filterSuppliers() {
       this.$store.dispatch("filterSuppliers", {
         supplierName: this.supplierName,
-        supplierLocation: this.supplierLocation,
+        governorate: this.governorate,
+        region: this.region,
       });
     },
 
@@ -250,11 +276,11 @@ export default {
       }
     },
 
-    emptySupplierLocation() {
-      if (!this.supplierLocation) {
-        this.$store.commit("emptySupplierLocation");
-      }
-    },
+    // emptySupplierLocation() {
+    //   if (!this.supplierLocation) {
+    //     this.$store.commit("emptySupplierLocation");
+    //   }
+    // },
 
     emptySelectBox() {
       if (this.categoryName == "All") {
@@ -286,6 +312,11 @@ export default {
     supplierClicked(supplier) {
       this.$store.commit("supplierPage", supplier);
       this.$router.push("/supplierPage");
+    },
+
+    getCountryRegions() {
+      console.log(this.governorate);
+      this.$store.dispatch("getRegions", this.governorate);
     },
   },
   components: {
