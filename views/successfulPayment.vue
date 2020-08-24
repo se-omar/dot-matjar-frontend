@@ -40,17 +40,6 @@ export default {
         .then((response) => {
           console.log("clean cart response", response);
         });
-
-      // this.$axios
-      //   .post("http://localhost:3000/api/placeOrder", {
-      //     user_id: self.currentUser.user_id,
-      //     total_price: self.totalPrice,
-      //     products: self.table,
-      //     quantity: self.productsQuantityArray,
-      //   })
-      //   .then((response) => {
-      //     console.log(response);
-      //   });
     } else {
       console.log("order is already placed");
     }
