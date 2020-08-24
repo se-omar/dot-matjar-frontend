@@ -310,8 +310,9 @@ export default {
     },
 
     supplierClicked(supplier) {
+      console.log("current supplier id", supplier.user_id);
       this.$store.commit("supplierPage", supplier);
-      this.$router.push("/supplierPage");
+      this.$router.push("/supplierPage/" + supplier.user_id);
     },
 
     getCountryRegions() {

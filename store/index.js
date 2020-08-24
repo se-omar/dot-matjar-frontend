@@ -269,13 +269,14 @@ export default new Vuex.Store({
     },
 
 
-    // supplierPage(state, supplier) {
-    //   localStorage.setItem('supplier', JSON.stringify(supplier))
-    //   state.supplier = JSON.parse(localStorage.getItem('supplier'))
+    supplierPage(state, supplier) {
+      localStorage.setItem('supplier', JSON.stringify(supplier))
+      state.supplier = JSON.parse(localStorage.getItem('supplier'))
 
-    //   console.log(state.supplier)
-    //   console.log('supplier worked')
-    // },
+      console.log(state.supplier)
+      console.log('supplier worked')
+    },
+
     getSupplier(state, supplier) {
 
 
