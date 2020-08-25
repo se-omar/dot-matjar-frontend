@@ -1,9 +1,12 @@
 <template>
   <div class="tool-bar">
     <v-app-bar :class="toolBarColor" dark>
-      <v-toolbar-title>
-        <v-btn class="font" text @click="$router.push('/home').catch((err) => {})">E-Commerce</v-btn>
-      </v-toolbar-title>
+      <v-toolbar-items class="ml-4">
+       
+        <v-btn  rounded  text @click="$router.push('/home').catch((err) => {})">
+         <i class="fa fa-shopping-cart fa-lg "></i> <span class="font-weight-bold mt-2 " >Divan</span>
+        </v-btn>
+      </v-toolbar-items>
 
       <v-spacer></v-spacer>
 
