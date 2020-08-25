@@ -2,6 +2,30 @@
   <v-app class="grey lighten-4">
     <div class="display-1 mb-10 mt-6" style="margin: auto">Dashboard</div>
 
+    <v-row justify="center">
+      <p style="font-size: 28px">All Products</p>
+    </v-row>
+
+    <v-row class="ml-12" v-if="myProducts.length != 0">
+      <v-col
+        class="mx-n8"
+        lg="3"
+        md="4"
+        sm="6"
+        cols="6"
+        v-for="myProduct in myProducts"
+        :key="myProduct.id"
+      >
+        <product :addToCartButton="false" :filteredProduct="myProduct"></product>
+      </v-col>
+    </v-row>
+
+    <v-row class="mt-16" justify="center" v-else>
+      <p style="font-size: 25px">No products available for this supplier</p>
+    </v-row>
+
+    <v-divider class="mt- mb-10"></v-divider>
+
     <v-row style="width: 92%; margin: auto">
       <v-col lg="4" md="6" sm="12" cols="12">
         <div style="text-align: center">
@@ -190,6 +214,7 @@
 </template>
 
 <script>
+import product from "../components/product";
 import dashboardSellingProduct from "../components/dashboardSellingProduct";
 export default {
   async mounted() {
@@ -397,6 +422,7 @@ export default {
 
   components: {
     dashboardSellingProduct,
+    product,
   },
 };
 </script>

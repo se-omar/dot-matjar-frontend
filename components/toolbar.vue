@@ -19,7 +19,7 @@
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn text dark v-bind="attrs" v-on="on">
-            <i class="fab fa-accessible-icon"></i>
+            <i class="fa fa-user fa-lg mt-n1 mr-1"></i>
             <span class="font">Profile</span>
           </v-btn>
         </template>
@@ -157,7 +157,7 @@
 
       <v-btn
         class="font"
-        v-if="currentUser && currentUser.user_type == 'business' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        v-if="currentUser && currentUser.user_type == 'business' || currentUser.user_type == 'admin' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
         @click="$router.push('/myProducts').catch((err) => {})"
       >My Products</v-btn>

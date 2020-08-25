@@ -1,6 +1,8 @@
 <template>
   <v-app>
     <router-view />
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.x/css/font-awesome.min.css" rel="stylesheet">
+
   </v-app>
 </template>
 

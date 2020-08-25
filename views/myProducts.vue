@@ -1,6 +1,8 @@
 <template>
   <v-app class="grey lighten-4">
-    <v-container v-if="currentUser && currentUser.user_type == 'business'">
+    <v-container
+      v-if="currentUser && currentUser.user_type == 'business' || currentUser.user_type == 'admin'"
+    >
       <v-row justify="center">
         <p class="display-1">{{currentUser.full_arabic_name}}'s products</p>
       </v-row>
@@ -51,7 +53,7 @@ import Product from "../components/product.vue";
 export default {
   async created() {
     await this.$store.dispatch("refreshCurrentUser");
-    await this.$store.dispatch("getMyProducts");
+    await this.$store.dispatch("getMyProducts", this.currentUser.user_id);
   },
 
   computed: {

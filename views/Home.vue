@@ -213,7 +213,10 @@ export default {
     };
   },
   async created() {
-    await this.$store.dispatch("refreshCurrentUser");
+    if (this.loginToken) {
+      await this.$store.dispatch("refreshCurrentUser");
+    }
+
     this.$store.dispatch("getGovernorate");
     this.$store.dispatch("getProducts");
     this.$store.dispatch("getSuppliers");
@@ -244,6 +247,9 @@ export default {
     },
     egyptGovernorates() {
       return this.$store.state.governorates;
+    },
+    loginToken() {
+      return this.$store.state.loginToken;
     },
   },
 

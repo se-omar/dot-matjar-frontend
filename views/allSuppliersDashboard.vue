@@ -1,6 +1,29 @@
 <template>
   <v-app class="grey lighten-4">
     <div class="display-1 mb-10 mt-6" style="margin: auto">{{supplier.full_arabic_name}}'s Dashboard</div>
+    <v-row justify="center">
+      <p style="font-size: 28px">All Products</p>
+    </v-row>
+
+    <v-row class="ml-12" v-if="supplierProducts.length != 0">
+      <v-col
+        class="mx-n8"
+        lg="3"
+        md="4"
+        sm="6"
+        cols="6"
+        v-for="supplierProduct in supplierProducts"
+        :key="supplierProduct.id"
+      >
+        <product :addToCartButton="false" :filteredProduct="supplierProduct"></product>
+      </v-col>
+    </v-row>
+
+    <v-row class="mt-16" justify="center" v-else>
+      <p style="font-size: 25px">No products available for this supplier</p>
+    </v-row>
+
+    <v-divider class="mt- mb-10"></v-divider>
 
     <v-row style="width: 92%; margin: auto">
       <v-col lg="4" md="6" sm="12" cols="12">
@@ -190,6 +213,7 @@
 </template>
 
 <script>
+import product from "../components/product";
 import dashboardSellingProduct from "../components/dashboardSellingProduct";
 export default {
   async mounted() {
@@ -202,8 +226,8 @@ export default {
     console.log("least selling is", this.leastProduct);
     await this.$store.dispatch("getMonthlySales", this.supplier.user_id);
 
-    const result = this.groupBy(this.myProducts, (c) => c.category_id);
-    console.log(this.myProducts);
+    const result = this.groupBy(this.supplierProducts, (c) => c.category_id);
+    console.log(this.supplierProducts);
     this.categoryArray = result;
 
     const ordered = this.groupBy(
@@ -232,7 +256,7 @@ export default {
       return this.$store.state.leastProduct;
     },
 
-    myProducts() {
+    supplierProducts() {
       return this.$store.state.myProducts;
     },
 
@@ -406,6 +430,7 @@ export default {
 
   components: {
     dashboardSellingProduct,
+    product,
   },
 };
 </script>
