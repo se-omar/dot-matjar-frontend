@@ -1,18 +1,19 @@
 <template>
   <div>
     <v-row justify="start">
-      <v-col cols="12">
+      <v-col cols="1" lg="1">
         <v-btn
           color="red lighten-1"
           dark
           @click.stop="dialog = true"
           @click="table"
           v-if="currentUser"
-          large
+          
           rounded
           
         >
           <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+          <!-- <v-icon medium >shopping cart</v-icon> -->
         </v-btn>
       </v-col>
       <!-- =============== -->

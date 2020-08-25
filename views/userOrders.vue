@@ -1,5 +1,6 @@
 <template>
   <div>
+    <toolbar></toolbar>
     <v-row justify="start mx-6">
       <!-- <v-col cols="4">
         <v-card class="mx-auto mt-4" max-width="700" tile>
@@ -48,7 +49,7 @@
             hover
             hide-default-footer
             :headers="productHeaders"
-            :items="orderProducts"
+            :items="productsInOrder"
           ></v-data-table>
         </v-card>
       </v-col>
@@ -97,18 +98,24 @@
         </v-row>
       </v-card>
     </v-row>-->
+    <Footer></Footer>
   </div>
 </template>
 <script>
+import Footer from '../components/footer'
+import toolbar from '../components/toolbar'
 export default {
   name: "userOrders",
-  components: {},
-  created() {
-    var self = this;
-    this.$store.dispatch("getOrders");
-    setTimeout(function () {
-      self.items = self.$store.state.orders;
-    }, 1000);
+  components: {
+    Footer,
+    toolbar
+  },
+ async created() {
+    await this.$store.dispatch("refreshCurrentUser");
+   await this.$store.dispatch("getOrders");
+    
+     
+   
   },
   computed: {
     row() {
@@ -129,6 +136,9 @@ export default {
     nodeHost() {
       return this.$store.state.nodeHost;
     },
+   items(){
+      return this.$store.state.orders
+    }
   },
 
   methods: {
@@ -158,10 +168,10 @@ export default {
       this.orderProducts = this.productsInOrder;
       console.log(this.productsInOrder);
     },
-    showProducts(order) {
+   async showProducts(order) {
       console.log("id iss", order);
-      this.$store.dispatch("getOrderProducts", order);
-      this.orderProducts = this.productsInOrder;
+     await this.$store.dispatch("getOrderProducts", order);
+     
     },
     tableClicked(event) {
       console.log("event is", event);
@@ -180,7 +190,7 @@ export default {
     ],
     order: [],
     item: 1,
-    items: [],
+   
     productHeaders: [
       { text: "Product name", value: "product_name" },
       { text: "Price", value: "unit_price" },

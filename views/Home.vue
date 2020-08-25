@@ -213,6 +213,7 @@ export default {
     };
   },
   async created() {
+   
     await this.$store.dispatch("refreshCurrentUser");
     this.$store.dispatch("getGovernorate");
     this.$store.dispatch("getProducts");
@@ -221,7 +222,7 @@ export default {
     return new Promise((resolve) => {
       setTimeout(() => {
         this.$store.dispatch("categoriesDB");
-        resolve();
+          resolve();
       });
     });
   },
@@ -245,6 +246,9 @@ export default {
     egyptGovernorates() {
       return this.$store.state.governorates;
     },
+    currentUser(){
+      return this.$store.state.currentUser
+    }
   },
 
   methods: {

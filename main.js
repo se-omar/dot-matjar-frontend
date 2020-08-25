@@ -37,7 +37,7 @@ Vue.use(vaxios, axios);
 Vue.prototype.$axios = axios;
 new Vue({
   icons: {
-    iconfont: 'mdiSvg', // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4' || 'faSvg'
+    iconfont: 'fa' // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4' || 'faSvg'
   },
   router,
   store,

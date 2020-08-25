@@ -8,7 +8,7 @@
       <v-spacer></v-spacer>
 
       <v-menu
-        v-if="currentUser !== ''"
+        v-if="currentUser "
         transition="fab-transition"
         :close-on-content-click="false"
         :nudge-width="200"
@@ -19,8 +19,8 @@
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn text dark v-bind="attrs" v-on="on">
-            <i class="fab fa-accessible-icon"></i>
-            <span class="font">Profile</span>
+            <i class="fas fa-user fa-lg"> </i>
+            <span class="font-weight-black">Profile</span>
           </v-btn>
         </template>
 
@@ -104,8 +104,8 @@
           <v-divider></v-divider>
 
           <v-col cols="12 ml-6  ">
-            <v-btn class="btn1" x-large color="blue" rounded>
-              <span class="mos" @click="$router.push('/myProducts')">My products</span>
+            <v-btn class="btn1" x-large color="blue" rounded  @click="$router.push('/myProducts')">
+              <span class="mos">My products</span>
             </v-btn>
           </v-col>
           <v-col cols="12 ml-6  ">
