@@ -8,13 +8,13 @@
       <v-spacer></v-spacer>
 
       <v-menu
-        v-if="currentUser !== ''"
+        v-if="currentUser "
         transition="fab-transition"
         :close-on-content-click="false"
         :nudge-width="200"
         offset-x
         class="menu"
-        max-width="20%"
+        max-width="30%"
         min-width="300px"
       >
         <template v-slot:activator="{ on, attrs }">
@@ -104,8 +104,8 @@
           <v-divider></v-divider>
 
           <v-col cols="12 ml-6  ">
-            <v-btn class="btn1" x-large color="blue" rounded>
-              <span class="mos" @click="$router.push('/myProducts')">My products</span>
+            <v-btn class="btn1" x-large color="blue" rounded @click="$router.push('/myProducts')">
+              <span class="mos">My products</span>
             </v-btn>
           </v-col>
           <v-col cols="12 ml-6  ">
@@ -119,21 +119,21 @@
           <v-col cols="12">
             <v-card-text>
               <a class="size" @click="$router.push('/editPassword')">
-                Change your password
                 <i class="fa fa-cog" aria-hidden="true" style="color:black"></i>
+                Change your password
               </a>
               <br />
               <br />
 
               <a @click="$router.push('/completedata')" class="size">
-                Update/complete Info
                 <i class="fas fa-edit" aria-hidden="true" style="color:black"></i>
+                Update/complete Info
               </a>
               <br />
               <br />
               <a class="size" @click="logout">
-                Logout
                 <i class="fa fa-power-off" aria-hidden="true" style="color:black"></i>
+                Logout
               </a>
             </v-card-text>
           </v-col>

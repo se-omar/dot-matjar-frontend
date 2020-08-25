@@ -327,6 +327,7 @@ export default new Vuex.Store({
     getProducts(context) {
       axios.get('http://localhost:3000/api/products').then(response => {
         context.commit('getProducts', response.data);
+        console.log('productss iss', response.data)
       })
     },
 
@@ -635,9 +636,9 @@ export default new Vuex.Store({
 
 
     },
-    getOrders(context) {
-      console.log(context.state.currentUser.user_id)
-      axios.put('http://localhost:3000/api/getOrders', {
+    async getOrders(context) {
+      console.log('user id iss', context.state.currentUser.user_id)
+      await axios.put('http://localhost:3000/api/getOrders', {
         user_id: context.state.currentUser.user_id
       })
         .then(orders => {
@@ -764,6 +765,7 @@ export default new Vuex.Store({
     },
 
     async getMyProducts(context, id) {
+
       await axios.post("http://localhost:3000/api/myProducts", {
         user_id: id
       }).then(response => {

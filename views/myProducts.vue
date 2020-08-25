@@ -1,5 +1,6 @@
 <template>
   <v-app class="grey lighten-4">
+    <toolbar />
     <v-container
       v-if="currentUser && currentUser.user_type == 'business' || currentUser.user_type == 'admin'"
     >
@@ -41,15 +42,18 @@
       </v-row>
     </v-container>
     <v-divider class="mx-15"></v-divider>
-    <v-container>
+    <!-- <v-container>
       <ordersChart />
-    </v-container>
+    </v-container>-->
+    <Footer></Footer>
   </v-app>
 </template>
 
 <script>
-import ordersChart from "../components/ordersChart";
+// import ordersChart from "../components/ordersChart";
 import Product from "../components/product.vue";
+import toolbar from "../components/toolbar";
+import Footer from "../components/footer";
 export default {
   async created() {
     await this.$store.dispatch("refreshCurrentUser");
@@ -67,7 +71,8 @@ export default {
 
   components: {
     Product,
-    ordersChart,
+    Footer,
+    toolbar,
   },
 };
 </script>
