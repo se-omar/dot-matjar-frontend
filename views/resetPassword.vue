@@ -1,37 +1,50 @@
 <template>
   <v-app>
-    <v-container>
+    <ToolBar></ToolBar>
+    <v-container mt-16>
       <v-row justify="center">
-        <p class="display-1">هل نسيت كلمة المرور</p>
+        <p class="display-1">Forgot your password ?</p>
       </v-row>
       <br />
       <v-row justify="center">
-        <p style="font-size: 30px;">ادخال البريد الالكتروني و الرقم القومي لاعادة تعيين كلمة المرور</p>
+        <p style="font-size: 30px;">Enter your email</p>
       </v-row>
       <v-row justify="center">
         <v-col cols="7">
-          <v-text-field :rules="emailRules" required v-model="email" label="البريد الالكتروني"></v-text-field>
+          <v-text-field :rules="emailRules" required v-model="email" label="Email"></v-text-field>
         </v-col>
-        <v-col cols="7">
-          <v-text-field type="number" v-model="nationalNumber" required label="الرقم القومي"></v-text-field>
-        </v-col>
+        
       </v-row>
 
       <v-row justify="center">
-        <v-col cols="7">
-          <v-btn @click="validateResetPassword" class="primary" dense block>
-            <span style="font-size: 18">ارسال</span>
+        <v-col cols="3">
+          <v-btn @click="validateResetPassword" class="red darken-4" dense block>
+            <span class="white--text" style="font-size: 18">Send</span>
           </v-btn>
         </v-col>
       </v-row>
     </v-container>
+
+ 
+     <!-- all other page content -->
+ 
+   <Footer id="footer"></Footer>
+
+
+   
   </v-app>
 </template>
 
 <script>
 //import updatePassword from "./updatePassword";
+import Footer from '../components/footer'
+import ToolBar from '../components/toolbar'
 export default {
   name: "reset-password",
+  components:{
+    Footer ,
+    ToolBar
+  },
   data() {
     return {
       email: "",
@@ -47,8 +60,8 @@ export default {
       var self = this;
       this.$axios
         .post("http://localhost:3000/api/resetPassword", {
-          email: this.email,
-          national_number: this.nationalNumber
+          email: this.email
+        
         })
         .then(response => {
           console.log(response.data);
@@ -73,3 +86,21 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 2.5rem;   
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* height: 2.5rem;            */
+}
+</style>

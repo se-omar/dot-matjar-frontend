@@ -1,6 +1,7 @@
 <template>
   <div>
     <toolbar></toolbar>
+    <v-flex ml-10>
     <v-row justify="start mx-6">
       <!-- <v-col cols="4">
         <v-card class="mx-auto mt-4" max-width="700" tile>
@@ -98,6 +99,7 @@
         </v-row>
       </v-card>
     </v-row>-->
+    </v-flex>
     <Footer></Footer>
   </div>
 </template>
@@ -196,6 +198,7 @@ export default {
       { text: "Price", value: "unit_price" },
       { text: "Product code", value: "product_code" },
       { text: "size", value: "product_size" },
+      { text: "Quantity", value: "quantity" },
     ],
     orderProducts: [],
   }),

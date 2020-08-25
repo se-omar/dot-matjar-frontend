@@ -210,7 +210,7 @@ export default {
           console.log("Response is:", response);
         })
         .then(() => {
-          alert("تم تعديل المنتج");
+          alert("Product changed");
           this.$router.push("/myProducts");
         });
     },

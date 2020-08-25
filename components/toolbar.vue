@@ -14,7 +14,7 @@
         :nudge-width="200"
         offset-x
         class="menu"
-        max-width="20%"
+        max-width="30%"
         min-width="300px"
       >
         <template v-slot:activator="{ on, attrs }">
@@ -119,21 +119,24 @@
           <v-col cols="12">
             <v-card-text>
               <a class="size" @click="$router.push('/editPassword')">
-                Change your password
+                
                 <i class="fa fa-cog" aria-hidden="true" style="color:black"></i>
+                Change your password
               </a>
               <br />
               <br />
 
               <a @click="$router.push('/completedata')" class="size">
-                Update/complete Info
+              
                 <i class="fas fa-edit" aria-hidden="true" style="color:black"></i>
+                  Update/complete Info
               </a>
               <br />
               <br />
               <a class="size" @click="logout">
-                Logout
+                
                 <i class="fa fa-power-off" aria-hidden="true" style="color:black"></i>
+                Logout
               </a>
             </v-card-text>
           </v-col>

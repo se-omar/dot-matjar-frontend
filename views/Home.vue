@@ -213,8 +213,7 @@ export default {
     };
   },
   async created() {
-   
-    await this.$store.dispatch("refreshCurrentUser");
+  if(this.loginToken){ await this.$store.dispatch("refreshCurrentUser");}
     this.$store.dispatch("getGovernorate");
     this.$store.dispatch("getProducts");
     this.$store.dispatch("getSuppliers");
@@ -248,6 +247,9 @@ export default {
     },
     currentUser(){
       return this.$store.state.currentUser
+    },
+    loginToken(){
+      return this.$store.state.loginToken
     }
   },
 

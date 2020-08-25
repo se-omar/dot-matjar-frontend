@@ -327,6 +327,7 @@ export default new Vuex.Store({
     getProducts(context) {
       axios.get('http://localhost:3000/api/products').then(response => {
         context.commit('getProducts', response.data);
+        console.log('productss iss',response.data)
       })
     },
 
