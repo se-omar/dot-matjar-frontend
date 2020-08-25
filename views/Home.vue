@@ -84,8 +84,8 @@
           </v-col>
         </v-row>
 
-        <v-row class="mt-n3">
-          <v-col lg="2"></v-col>
+        <v-row class="mt-n3" justify="center">
+          
           <v-col lg="1">
             <v-text-field :disabled="radioGroup === '2'" dense type="number" label="Price From"></v-text-field>
           </v-col>
@@ -102,11 +102,16 @@
               class="red darken-4 white--text"
               @click="filterProducts"
             >Search</v-btn>
+            
           </v-col>
 
-          <v-col lg="3"></v-col>
+          <v-col lg="2"> <v-btn
+              
+              class="red darken-4 white--text"
+              @click="All"
+            >All</v-btn></v-col>
 
-          <v-col lg="1">
+          <v-col lg="2">
             <v-btn
               :disabled="radioGroup === '1'"
               class="red darken-4 white--text"
@@ -339,6 +344,10 @@ export default {
       console.log(this.governorate);
       this.$store.dispatch("getRegions", this.governorate);
     },
+    All(){
+      this.$store.commit("emptySearch");
+    this.$store.commit("emptySupplierName");
+    }
   },
   components: {
     Product,
