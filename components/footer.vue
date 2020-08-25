@@ -1,5 +1,5 @@
 <template>
-  <v-footer  :class="backGroundColor" height="auto">
+  <v-footer :class="backGroundColor" height="auto">
     <v-card flat tile :class="backGroundColor">
       <v-card-text>
         <v-row justify="center">
@@ -45,5 +45,4 @@ export default {
 };
 </script>
 <style  scoped>
-
 </style>
