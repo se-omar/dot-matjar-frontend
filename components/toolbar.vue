@@ -53,7 +53,7 @@
             <label class="file-label">
               <span class="file-cta">
                 <span class="file-icon">
-                  <i class="fas fa-camera fa-2x" style="color:blue"></i>
+                  <i class="fa fa-camera fa-2x" style="color:blue"></i>
                   <br />
                 </span>
                 <span class="file-label" style="font-weight:bold">
@@ -77,7 +77,7 @@
             <label class="file-label">
               <span class="file-cta">
                 <span class="file-icon">
-                  <i class="fas fa-camera fa-2x" style="color:blue"></i>
+                  <i class="fa fa-camera fa-2x" style="color:blue"></i>
                   <br />
                 </span>
                 <span class="file-label" style="font-weight:bold">
@@ -129,7 +129,7 @@
               <br />
 
               <a @click="$router.push('/completedata')" class="size">
-                <i class="fas fa-edit" aria-hidden="true" style="color:black"></i>
+                <i class="fa fa-edit" aria-hidden="true" style="color:black"></i>
                 Update/complete Info
               </a>
               <br />
