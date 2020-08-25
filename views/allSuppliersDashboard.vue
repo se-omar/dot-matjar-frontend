@@ -5,7 +5,7 @@
       <p style="font-size: 28px">All Products</p>
     </v-row>
 
-    <v-row class="ml-12" v-if="supplierProducts.length != 0">
+    <v-row justify="center" v-if="supplierProducts.length != 0">
       <v-col
         class="mx-n8"
         lg="3"

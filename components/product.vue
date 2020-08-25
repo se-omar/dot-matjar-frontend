@@ -1,10 +1,11 @@
 <template>
   <v-card :elevation="7" max-width="280">
-    <v-img height="200" :src="nodeHost + filteredProduct.main_picture"></v-img>
+    <v-img height="200" :src="filteredProduct.main_picture"></v-img>
 
     <v-card-title>{{ filteredProduct.product_name }}</v-card-title>
     <v-card-text>
       <div>كود المنتج: {{ filteredProduct.product_code }}</div>
+      <div>category id: {{ filteredProduct.category_id }}</div>
       <div>
         سعر القطعة:
         <span style="color: red;">{{ filteredProduct.unit_price }}</span>
@@ -50,10 +51,6 @@ export default {
       i: 0,
       rating: 4,
     };
-  },
-  created() {
-    this.$store.dispatch("getProducts");
-    console.log("Product is :", this.filteredProducts);
   },
 
   props: {

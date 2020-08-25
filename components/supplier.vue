@@ -15,7 +15,7 @@
 
       <v-card-text class="mt-n5" style="font-size: 16px">
         <v-icon class="mt-n1 mr-1">mdi-map-marker</v-icon>
-        {{supplier.location}}
+        {{supplier.governorate}}, {{supplier.region}}
       </v-card-text>
     </v-card>
   </v-main>

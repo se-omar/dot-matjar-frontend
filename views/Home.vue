@@ -177,6 +177,7 @@ export default {
       supplierName: "",
       supplierLocation: "",
       items: [],
+      filterFlag: false,
       // egyptGovernorates: [
       //   "الإسكندرية",
       //   "الإسماعيلية",
@@ -257,6 +258,8 @@ export default {
 
   methods: {
     filterProducts() {
+      this.filterFlag = true;
+      this.$store.commit("productFilterFlag");
       console.log(this.toolbarSearch, this.categoryName);
       this.$store.dispatch("filterProducts", {
         product_name: this.toolbarSearch,
@@ -301,7 +304,16 @@ export default {
 
     loadMore() {
       var self = this;
-      self.$store.dispatch("getSuppliers");
+      if (this.radioGroup === "1" && this.filterFlag) {
+        this.$store.dispatch("filterProducts", {
+          product_name: this.toolbarSearch,
+          category_name: this.categoryName,
+        });
+      } else if (this.radioGroup === "1" && !this.filterFlag) {
+        this.$store.dispatch("getProducts");
+      } else {
+        self.$store.dispatch("getSuppliers");
+      }
       // window.onscroll = function () {
       //   console.log(this.suppliers);
       //   // let bottomOfWindow =

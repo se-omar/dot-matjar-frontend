@@ -45,7 +45,8 @@ export default new Vuex.Store({
     loginToken: localStorage.getItem('loginToken'),
     supplierProducts: JSON.parse(localStorage.getItem('supplierProducts')),
     regions: [],
-    governorates: []
+    governorates: [],
+    productFilterFlag: false,
   },
 
   mutations: {
@@ -59,9 +60,9 @@ export default new Vuex.Store({
       state.row = payload;
     },
 
-    getProducts(state, row) {
-      state.products = row;
-      state.filteredProducts = row;
+    getProducts(state, products) {
+      state.products.push(...products);
+      state.filteredProducts.push(...products);
     },
 
     getUsers(state, payload) {
@@ -78,8 +79,11 @@ export default new Vuex.Store({
       //   state.filteredProducts.filter(row => row.product_name.indexOf(payload) > -1 )
 
       // }
-
-      state.filteredProducts = products
+      if (state.productFilterFlag) {
+        state.filteredProducts = [];
+        state.productFilterFlag = false;
+      }
+      state.filteredProducts.push(...products);
     },
 
     setCurrentProduct(state, payload) {
@@ -294,6 +298,10 @@ export default new Vuex.Store({
     },
     getGovernorate(state, res) {
       state.governorates = res
+    },
+
+    productFilterFlag(state) {
+      state.productFilterFlag = true
     }
 
 
@@ -325,8 +333,12 @@ export default new Vuex.Store({
 
 
     getProducts(context) {
-      axios.get('http://localhost:3000/api/products').then(response => {
-        context.commit('getProducts', response.data);
+
+      axios.post('http://localhost:3000/api/products', {
+        product_id: context.state.filteredProducts.length > 0 ? context.state.filteredProducts[context.state.filteredProducts.length - 1].product_id : null
+      }).then(response => {
+
+        context.commit('getProducts', response.data.products);
         console.log('productss iss', response.data)
       })
     },
@@ -337,14 +349,15 @@ export default new Vuex.Store({
     }) {
       console.log(product_name)
       axios.put('http://localhost:3000/api/filterProducts', {
+        product_id: context.state.filteredProducts.length > 0 ? context.state.filteredProducts[context.state.filteredProducts.length - 1].product_id : null,
         product_name,
         category_name
       })
-        .then(products => {
-          console.log('message:', products.data.message)
-          console.log('products:', products.data.data)
+        .then(response => {
+          console.log('message:', response.data.message)
+          console.log('products:', response.data.data)
 
-          context.commit('filterProducts', products.data.data);
+          context.commit('filterProducts', response.data.data);
 
         })
 

@@ -1,5 +1,5 @@
 <template>
-  <v-footer  :class="backGroundColor" height="auto">
+  <v-footer :class="backGroundColor" height="auto">
     <v-card flat tile :class="backGroundColor">
       <v-card-text>
         <v-row justify="center">
@@ -35,15 +35,14 @@ export default {
 
   data: () => ({
     icons: [
-      "fab fa-facebook",
-      "fab fa-twitter",
-      "fab fa-google-plus",
-      "fab fa-linkedin",
-      "fab fa-instagram",
+      "fa fa-facebook",
+      "fa fa-twitter",
+      "fa fa-google-plus",
+      "fa fa-linkedin",
+      "fa fa-instagram",
     ],
   }),
 };
 </script>
 <style  scoped>
-
 </style>
