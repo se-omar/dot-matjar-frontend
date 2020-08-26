@@ -345,13 +345,17 @@ export default new Vuex.Store({
 
     filterProducts(context, {
       product_name,
-      category_name
+      category_name,
+      governorate,
+      region
     }) {
       console.log(product_name)
       axios.put('http://localhost:3000/api/filterProducts', {
         product_id: context.state.filteredProducts.length > 0 ? context.state.filteredProducts[context.state.filteredProducts.length - 1].product_id : null,
         product_name,
-        category_name
+        category_name,
+        governorate,
+        region
       })
         .then(response => {
           console.log('message:', response.data.message)

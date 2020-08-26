@@ -59,7 +59,7 @@
           <v-col lg="4">
             <v-select
               :items="egyptGovernorates"
-              :disabled="radioGroup === '1'"
+              
               placeholder="Governorate"
               dense
               outlined
@@ -75,7 +75,7 @@
           <v-col lg="4">
             <v-select
               :items="regions"
-              :disabled="radioGroup === '1'"
+              
               placeholder="Region"
               dense
               outlined
@@ -269,6 +269,8 @@ export default {
       this.$store.dispatch("filterProducts", {
         product_name: this.toolbarSearch,
         category_name: this.categoryName,
+        governorate:this.governorate,
+        region:this.region
       });
     },
 

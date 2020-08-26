@@ -1,135 +1,25 @@
 <template>
   <v-app>
+    <carttable></carttable>
     <v-content>
-      <!-- <v-row>
-        <v-col class="mr-15" cols="5">
-          <br />
-          <v-row>
-            <p class="display-1 font-weight-medium">{{currentProduct.product_name}}</p>
-          </v-row>
-
-          <v-row>
-            <v-col lg="6" md="6" sm="12" cols="12">كود المنتج: {{currentProduct.product_code}}</v-col>
-            <v-col lg="6" md="6" sm="12" cols="12">كود التصدير (HS Code): {{currentProduct.HS_code}}</v-col>
-          </v-row>
-          <br />
-          <v-row>
-            <v-col>
-              <span style="font-size: 22px">سعر المنتج: {{currentProduct.unit_price}}</span>
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <v-col>
-              <span
-                style="font-size: 22px"
-              >الحد الادني للطلب: {{currentProduct.min_units_per_order}}</span>
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <v-col>
-              <span style="font-size: 22px">المشروع: {{currentProduct.bussiness.bussiness_name}}</span>
-            </v-col>
-          </v-row>
-        </v-col>
-
-        <v-col class="mt-3 mb-n5 mr-n4" cols="6">
-          <v-img
-            v-if="order === 1"
-            style="height: 400px; width: 800px"
-            :src="nodeHost + currentProduct.main_picture"
-          ></v-img>
-          <v-img
-            v-if="order === 2"
-            style="height: 400px;"
-            :src="nodeHost + currentProduct.extra_picture1"
-          ></v-img>
-          <v-img
-            v-if="order === 3"
-            style="height: 400px;"
-            :src="nodeHost + currentProduct.extra_picture2"
-          ></v-img>
-          <v-row class="mt-3" justify="center">
-            <v-btn @click="order = 1">1</v-btn>
-            <v-btn v-if="currentProduct.extra_picture1" class="ml-5 mr-5" @click="order = 2">2</v-btn>
-            <v-btn v-if="currentProduct.extra_picture2" @click="order = 3">3</v-btn>
-          </v-row>
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <p class="display-1 mr-16">وصف المنتج \الخدمة</p>
-      </v-row>
-
-      <v-row>
-        <v-col class="mr-5 ml-13 mr-13">
-          <p style="font-size: 19px">{{currentProduct.describtion}}</p>
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-col cols="4" class="mr-12">
-          <v-btn
-            v-if="currentUser && currentUser.user_id === currentProduct.bussiness.user.user_id"
-            @click="goToEditProduct"
-            color="secondary"
-            block
-          >
-            <span style="font-size: 18px">تعديل المنتج</span>
-          </v-btn>
-
-          <v-btn v-else @click="viewPopup" color="secondary" block>
-            <span style="font-size: 18px">اظهار بيانات صاحب المشروع</span>
-          </v-btn>
-        </v-col>
-
-        <v-col cols="3"></v-col>
-        <v-col cols="4">
-          <v-btn
-            v-if="currentUser && currentUser.user_id === currentProduct.bussiness.user.user_id"
-            @click="toggleRemoveDialog"
-            color="secondary"
-            block
-          >
-            <span style="font-size: 18px">ازالة المنتج</span>
-          </v-btn>
-
-          <v-btn v-else @click="productToggleResponse" color="secondary" block>
-            <span style="font-size: 18px">طلب صاحب المشروع</span>
-          </v-btn>
-          <business-info-popup v-if="dialog"></business-info-popup>
-          <product-request-dialog v-if="productRequestDialog"></product-request-dialog>
-        </v-col>
-
-        <v-dialog width="700" persistent v-model="removePressed">
-          <v-card>
-            <p style="text-align:center" class="display-1">هل انت متأكد من ازالة هذا المنتج؟</p>
-            <br />
-            <v-row justify="center">
-              <v-btn @click="removeProduct" class="primary ml-15">نعم</v-btn>
-              <v-btn @click="removePressed = false" class="red white--text">لا</v-btn>
-            </v-row>
-          </v-card>
-        </v-dialog>
-      </v-row>-->
+    
       <v-row justify="center mt-3">
         <v-card height="400px" width="800px" class="grey lighten-4">
           <v-card>
             <v-img
               v-if="order === 1"
               style="height: 400px; width: 800px"
-              :src="nodeHost + currentProduct.main_picture"
+              :src=" currentProduct.main_picture"
             ></v-img>
             <v-img
               v-if="order === 2"
               style="height: 400px;"
-              :src="nodeHost + currentProduct.extra_picture1"
+              :src="currentProduct.extra_picture1"
             ></v-img>
             <v-img
               v-if="order === 3"
               style="height: 400px;"
-              :src="nodeHost + currentProduct.extra_picture2"
+              :src="currentProduct.extra_picture2"
             ></v-img>
           </v-card>
           <v-divider></v-divider>
@@ -177,12 +67,6 @@
                 </span>
               </v-list-item-content>
               <v-spacer></v-spacer>
-              <v-list-item-content>
-                <span>
-                  Category :
-                  <span class="red--text">{{currentProduct.bussiness.bussiness_name}}</span>
-                </span>
-              </v-list-item-content>
             </v-list-item>
 
             <v-divider></v-divider>
@@ -210,7 +94,7 @@
 
               <v-col cols="4" lg="4">
                 <v-btn
-                  v-if="currentUser && currentUser.user_id === currentProduct.bussiness.user.user_id"
+                  v-if="currentUser && currentUser.user_id === currentProduct.user_id"
                   @click="goToEditProduct"
                   color="red darken-4"
                   block
@@ -227,7 +111,7 @@
 
               <v-col cols="4" lg="4">
                 <v-btn
-                  v-if="currentUser && currentUser.user_id === currentProduct.bussiness.user.user_id"
+                  v-if="currentUser && currentUser.user_id === currentProduct.user_id"
                   @click="toggleRemoveDialog"
                   color="red darken-4"
                   rounded
@@ -236,9 +120,20 @@
                   <span style="font-size: 18px" class="white--text">Remove product</span>
                 </v-btn>
 
-                <v-btn v-else @click="productToggleResponse" class="red darken-4" block rounded>
+                <!-- <v-btn v-else @click="productToggleResponse" class="red darken-4" block rounded>
                   <span style="font-size: 18px" class="white--text">Contact Business owner</span>
-                </v-btn>
+                </v-btn> -->
+                 <v-btn
+        v-if="addToCartButton"
+        @click="add()"
+        variant="primary"
+        class="red darken-4 white--text"
+        rounded
+        
+      >Add to cart</v-btn>
+
+
+
                 <business-info-popup v-if="dialog"></business-info-popup>
                 <product-request-dialog v-if="productRequestDialog"></product-request-dialog>
               </v-col>
@@ -266,6 +161,7 @@
 <script>
 // import businessInfoPopup from "../components/businessInfoPopup.vue";
 // import productRequestDialog from "../components/productRequestDialog";
+import carttable from '../components/cartTable'
 export default {
   created() {
     this.$store.dispatch("refreshCurrentUser");
@@ -275,6 +171,7 @@ export default {
     return {
       order: 1,
       removePressed: false,
+      addToCartButton:true
     };
   },
 
@@ -307,6 +204,7 @@ export default {
   components: {
     // businessInfoPopup,
     // productRequestDialog
+    carttable
   },
   methods: {
     viewPopup() {
@@ -344,6 +242,9 @@ export default {
     goToEditProduct() {
       this.$router.push("/editProduct");
     },
+    add(){
+      this.$store.dispatch("table", this.currentProduct);
+    }
   },
 };
 </script>
