@@ -2,7 +2,10 @@
   <v-app>
     <carttable></carttable>
     <v-content>
+<<<<<<< HEAD
     
+=======
+>>>>>>> a2a36733f46240e3fc8898a32efa0a9e0b375b02
       <v-row justify="center mt-3">
         <v-card height="400px" width="800px" class="grey lighten-4">
           <v-card>
@@ -10,6 +13,7 @@
               v-if="order === 1"
               style="height: 400px; width: 800px"
               :src=" currentProduct.main_picture"
+<<<<<<< HEAD
             ></v-img>
             <v-img
               v-if="order === 2"
@@ -20,7 +24,17 @@
               v-if="order === 3"
               style="height: 400px;"
               :src="currentProduct.extra_picture2"
+=======
+>>>>>>> a2a36733f46240e3fc8898a32efa0a9e0b375b02
             ></v-img>
+            <v-img v-if="order === 2" style="height: 400px;" :src="currentProduct.extra_picture1"></v-img>
+            <v-img v-if="order === 3" style="height: 400px;" :src="currentProduct.extra_picture2"></v-img>
+
+            <v-row class="mt-3" justify="center">
+              <v-btn @click="order = 1">1</v-btn>
+              <v-btn v-if="currentProduct.extra_picture1" class="ml-5 mr-5" @click="order = 2">2</v-btn>
+              <v-btn v-if="currentProduct.extra_picture2" @click="order = 3">3</v-btn>
+            </v-row>
           </v-card>
           <v-divider></v-divider>
           <v-list class="mt-5" style=" font-size:large">
@@ -63,7 +77,9 @@
               <v-list-item-content>
                 <span>
                   Minimum units per order :
-                  <span class="red--text">{{currentProduct.min_units_per_order}}</span>
+                  <span
+                    class="red--text"
+                  >{{currentProduct.min_units_per_order}}</span>
                 </span>
               </v-list-item-content>
               <v-spacer></v-spacer>

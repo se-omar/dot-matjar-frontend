@@ -85,7 +85,6 @@
         </v-row>
 
         <v-row class="mt-n3" justify="center">
-          
           <v-col lg="1">
             <v-text-field :disabled="radioGroup === '2'" dense type="number" label="Price From"></v-text-field>
           </v-col>
@@ -102,14 +101,11 @@
               class="red darken-4 white--text"
               @click="filterProducts"
             >Search</v-btn>
-            
           </v-col>
 
-          <v-col lg="2"> <v-btn
-              
-              class="red darken-4 white--text"
-              @click="All"
-            >All</v-btn></v-col>
+          <v-col lg="2">
+            <v-btn class="red darken-4 white--text" @click="All">All</v-btn>
+          </v-col>
 
           <v-col lg="2">
             <v-btn
@@ -182,7 +178,8 @@ export default {
       supplierName: "",
       supplierLocation: "",
       items: [],
-      filterFlag: false,
+      productFilterFlag: false,
+      supplierFilterFlag: false,
       // egyptGovernorates: [
       //   "الإسكندرية",
       //   "الإسماعيلية",
@@ -223,8 +220,17 @@ export default {
       await this.$store.dispatch("refreshCurrentUser");
     }
     this.$store.dispatch("getGovernorate");
-    this.$store.dispatch("getProducts");
-    this.$store.dispatch("getSuppliers");
+    this.$store.dispatch("getProducts", {
+      productFilterFlagss: this.productFilterFlag,
+      productName: this.toolbarSearch,
+      categoryName: this.categoryName,
+    });
+    this.$store.dispatch("getSuppliers", {
+      supplierFilterFlag: this.supplierFilterFlag,
+      supplierName: this.supplierName,
+      governorate: this.governorate,
+      region: this.region,
+    });
     console.log(this.$store.state.filteredProducts);
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -263,8 +269,7 @@ export default {
 
   methods: {
     filterProducts() {
-      this.filterFlag = true;
-      this.$store.commit("productFilterFlag");
+      this.productFilterFlag = true;
       console.log(this.toolbarSearch, this.categoryName);
       this.$store.dispatch("filterProducts", {
         product_name: this.toolbarSearch,
@@ -275,6 +280,7 @@ export default {
     },
 
     filterSuppliers() {
+      this.supplierFilterFlag = true;
       this.$store.dispatch("filterSuppliers", {
         supplierName: this.supplierName,
         governorate: this.governorate,
@@ -311,15 +317,20 @@ export default {
 
     loadMore() {
       var self = this;
-      if (this.radioGroup === "1" && this.filterFlag) {
-        this.$store.dispatch("filterProducts", {
-          product_name: this.toolbarSearch,
-          category_name: this.categoryName,
+      if (this.radioGroup === "1") {
+        console.log("filter products condition");
+        this.$store.dispatch("getProducts", {
+          productFilterFlag: this.productFilterFlag,
+          productName: this.toolbarSearch,
+          categoryName: this.categoryName,
         });
-      } else if (this.radioGroup === "1" && !this.filterFlag) {
-        this.$store.dispatch("getProducts");
       } else {
-        self.$store.dispatch("getSuppliers");
+        self.$store.dispatch("getSuppliers", {
+          supplierFilterFlag: this.supplierFilterFlag,
+          supplierName: this.supplierName,
+          governorate: this.governorate,
+          region: this.region,
+        });
       }
       // window.onscroll = function () {
       //   console.log(this.suppliers);
@@ -346,10 +357,11 @@ export default {
       console.log(this.governorate);
       this.$store.dispatch("getRegions", this.governorate);
     },
-    All(){
+    All() {
+      this.supplierFilterFlag = false;
       this.$store.commit("emptySearch");
-    this.$store.commit("emptySupplierName");
-    }
+      this.$store.commit("emptySupplierName");
+    },
   },
   components: {
     Product,
