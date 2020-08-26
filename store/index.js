@@ -46,7 +46,7 @@ export default new Vuex.Store({
     supplierProducts: JSON.parse(localStorage.getItem('supplierProducts')),
     regions: [],
     governorates: [],
-    productFilterFlag: false,
+
   },
 
   mutations: {
@@ -70,21 +70,11 @@ export default new Vuex.Store({
     },
 
     filterProducts(state, products) {
-      //      if(!state.filteredProducts){
-      // state.filteredProducts =
-      // state.products.filter(row => row.product_name.indexOf(payload) > -1 )
-      // }
-      // else{
-      //   state.filteredProducts=
-      //   state.filteredProducts.filter(row => row.product_name.indexOf(payload) > -1 )
-
-      // }
-      if (state.productFilterFlag) {
-        state.filteredProducts = [];
-        state.productFilterFlag = false;
-      }
-      state.filteredProducts.push(...products);
+      state.filteredProducts = products;
     },
+
+
+
 
     setCurrentProduct(state, payload) {
       localStorage.setItem('currentProduct', JSON.stringify(payload));
@@ -300,9 +290,6 @@ export default new Vuex.Store({
       state.governorates = res
     },
 
-    productFilterFlag(state) {
-      state.productFilterFlag = true
-    }
 
 
   },
@@ -332,15 +319,29 @@ export default new Vuex.Store({
 
 
 
-    getProducts(context) {
-
-      axios.post('http://localhost:3000/api/products', {
-        product_id: context.state.filteredProducts.length > 0 ? context.state.filteredProducts[context.state.filteredProducts.length - 1].product_id : null
-      }).then(response => {
-
-        context.commit('getProducts', response.data.products);
-        console.log('productss iss', response.data)
-      })
+    getProducts(context, {
+      productFilterFlag,
+      productName,
+      categoryName
+    }) {
+      if (!productFilterFlag) {
+        axios.post('http://localhost:3000/api/products', {
+          product_id: context.state.filteredProducts.length > 0 ? context.state.filteredProducts[context.state.filteredProducts.length - 1].product_id : null
+        }).then(response => {
+          context.commit('getProducts', response.data.products);
+          console.log('productss iss', response.data)
+        })
+      }
+      else {
+        axios.post('http://localhost:3000/api/loadMoreProductsWithFilter', {
+          product_id: context.state.filteredProducts.length > 0 ? context.state.filteredProducts[context.state.filteredProducts.length - 1].product_id : null,
+          product_name: productName,
+          category_name: categoryName
+        }).then(response => {
+          context.commit('getProducts', response.data.products);
+          console.log('productss iss', response.data)
+        })
+      }
     },
 
     filterProducts(context, {
@@ -349,7 +350,6 @@ export default new Vuex.Store({
     }) {
       console.log(product_name)
       axios.put('http://localhost:3000/api/filterProducts', {
-        product_id: context.state.filteredProducts.length > 0 ? context.state.filteredProducts[context.state.filteredProducts.length - 1].product_id : null,
         product_name,
         category_name
       })
@@ -697,13 +697,31 @@ export default new Vuex.Store({
       })
     },
 
-    getSuppliers(context) {
-      axios.post('http://localhost:3000/api/getSuppliers', {
-        user_id: context.state.suppliers.length > 0 ? context.state.suppliers[context.state.suppliers.length - 1].user_id : null
-      }).then(response => {
-        console.log(response.data.users)
-        context.commit('getSuppliers', response.data.users)
-      })
+    getSuppliers(context, {
+      supplierFilterFlag,
+      supplierName,
+      governorate,
+      region
+    }) {
+      if (!supplierFilterFlag) {
+        axios.post('http://localhost:3000/api/getSuppliers', {
+          user_id: context.state.suppliers.length > 0 ? context.state.suppliers[context.state.suppliers.length - 1].user_id : null
+        }).then(response => {
+          console.log(response.data.users)
+          context.commit('getSuppliers', response.data.users)
+        })
+      }
+      else {
+        axios.post('http://localhost:3000/api/loadMoreSuppliersWithFilter', {
+          user_id: context.state.suppliers.length > 0 ? context.state.suppliers[context.state.suppliers.length - 1].user_id : null,
+          name: supplierName,
+          governorate,
+          region
+        }).then(response => {
+          console.log(response.data.users)
+          context.commit('getSuppliers', response.data.users)
+        })
+      }
     },
 
     filterSuppliers(context, {
@@ -715,6 +733,7 @@ export default new Vuex.Store({
       console.log('region', region)
 
       axios.put('http://localhost:3000/api/filterSuppliers', {
+        user_id: context.state.suppliers.length > 0 ? context.state.suppliers[context.state.suppliers.length - 1].user_id : null,
         name: supplierName,
         governorate: governorate,
         region: region
