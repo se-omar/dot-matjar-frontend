@@ -36,6 +36,12 @@ export default {
     this.$store.dispatch("getSuppliers");
   },
 
+  data() {
+    return {
+      supplierFilterFlag: false,
+    };
+  },
+
   computed: {
     currentUser() {
       return this.$store.state.currentUser;
@@ -52,7 +58,7 @@ export default {
   methods: {
     loadMore() {
       var self = this;
-      self.$store.dispatch("getSuppliers");
+      self.$store.dispatch("getSuppliers", this.supplierFilterFlag);
       // window.onscroll = function () {
       //   console.log(this.suppliers);
       //   // let bottomOfWindow =

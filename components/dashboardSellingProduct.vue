@@ -55,7 +55,9 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch("getProducts");
+    this.$store.dispatch("getProducts", {
+      productFilterFlag: false,
+    });
     console.log("Product is :", this.filteredProducts);
   },
 
