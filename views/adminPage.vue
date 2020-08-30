@@ -33,10 +33,12 @@ import supplier from "../components/supplier";
 export default {
   async created() {
     await this.$store.dispatch("refreshCurrentUser");
-    this.$store.dispatch("getSuppliers");
+    this.$store.dispatch("getSuppliers", {
+      supplierFilterFlag: this.supplierFilterFlag,
+    });
   },
 
-  data() {
+  data: () => {
     return {
       supplierFilterFlag: false,
     };

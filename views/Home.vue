@@ -2,157 +2,198 @@
   <div class="grey lighten-4">
     <toolBar></toolBar>
     <v-app class="grey lighten-4">
-      <div class="mx-10">
-        <cartTable></cartTable>
+      <div class="vld-parent">
+        <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="fullPage"></loading>
+      </div>
 
-        <v-radio-group mandatory v-model="radioGroup">
-          <v-row class="mb-n5" justify="center">
+      <v-row>
+        <v-col>
+          <v-card height="180">
+            <v-card-title>
+              <span>ad goes here</span>
+            </v-card-title>
+          </v-card>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col lg="2">
+          <v-card height="95%">
+            <v-card-title>
+              <span>ad goes here</span>
+            </v-card-title>
+          </v-card>
+        </v-col>
+
+        <v-col lg="8">
+          <cartTable></cartTable>
+
+          <v-radio-group mandatory v-model="radioGroup">
+            <v-row class="mb-n5" justify="center">
+              <v-col lg="4">
+                <v-radio label="Search for Products" value="1"></v-radio>
+              </v-col>
+
+              <v-col lg="4">
+                <v-radio label="Search for suppliers" value="2"></v-radio>
+              </v-col>
+            </v-row>
+          </v-radio-group>
+
+          <v-row justify="center">
             <v-col lg="4">
-              <v-radio label="Search for Products" value="1"></v-radio>
+              <v-text-field
+                v-if="radioGroup === '1'"
+                :disabled="radioGroup === '2'"
+                items="items"
+                @keyup="emptySearchBox"
+                dense
+                outlined
+                v-model="toolbarSearch"
+                placeholder="Search for your Product"
+              ></v-text-field>
             </v-col>
 
             <v-col lg="4">
-              <v-radio label="Search for suppliers" value="2"></v-radio>
+              <v-text-field
+                v-if="radioGroup === '2'"
+                :disabled="radioGroup === '1'"
+                @keyup="emptySupplierName"
+                dense
+                outlined
+                v-model="supplierName"
+                placeholder="Search Suppliers by Name"
+              ></v-text-field>
             </v-col>
           </v-row>
-        </v-radio-group>
 
-        <v-row justify="center">
-          <v-col lg="4">
-            <v-text-field
-              :disabled="radioGroup === '2'"
-              items="items"
-              @keyup="emptySearchBox"
-              dense
-              outlined
-              v-model="toolbarSearch"
-              placeholder="Search for your Product"
-            ></v-text-field>
-          </v-col>
+          <v-row justify="center">
+            <v-col lg="4">
+              <v-select
+                v-if="radioGroup === '1'"
+                @keyup="emptySelectBox"
+                :disabled="radioGroup === '2'"
+                placeholder="Search By category"
+                dense
+                outlined
+                v-model="categoryName"
+                :items="category"
+                @click="categoriesDB"
+              ></v-select>
+            </v-col>
 
-          <v-col lg="4">
-            <v-text-field
-              :disabled="radioGroup === '1'"
-              @keyup="emptySupplierName"
-              dense
-              outlined
-              v-model="supplierName"
-              placeholder="Search Suppliers by Name"
-            ></v-text-field>
-          </v-col>
-        </v-row>
+            <v-col lg="4">
+              <v-select
+                v-if="radioGroup === '2'"
+                :items="egyptGovernorates"
+                :disabled="radioGroup === '1'"
+                placeholder="Governorate"
+                dense
+                outlined
+                v-model="governorate"
+                @change="getCountryRegions()"
+              ></v-select>
+            </v-col>
+          </v-row>
 
-        <v-row justify="center">
-          <v-col lg="4">
-            <v-select
-              @keyup="emptySelectBox"
-              :disabled="radioGroup === '2'"
-              placeholder="Search By category"
-              dense
-              outlined
-              v-model="categoryName"
-              :items="category"
-              @click="categoriesDB"
-            ></v-select>
-          </v-col>
+          <v-row justify="center">
+            <v-col lg="4"></v-col>
 
-          <v-col lg="4">
-            <v-select
-              :items="egyptGovernorates"
-              :disabled="radioGroup === '1'"
-              placeholder="Governorate"
-              dense
-              outlined
-              v-model="governorate"
-              @change="getCountryRegions()"
-            ></v-select>
-          </v-col>
-        </v-row>
+            <v-col lg="4">
+              <v-select
+                v-if="radioGroup === '2'"
+                :items="regions"
+                :disabled="radioGroup === '1'"
+                placeholder="Region"
+                dense
+                outlined
+                v-model="region"
+              ></v-select>
+            </v-col>
+          </v-row>
 
-        <v-row justify="center">
-          <v-col lg="4"></v-col>
+          <v-row class="mt-n3" justify="center">
+            <v-col lg="1">
+              <v-text-field :disabled="radioGroup === '2'" dense type="number" label="Price From"></v-text-field>
+            </v-col>
 
-          <v-col lg="4">
-            <v-select
-              :items="regions"
-              :disabled="radioGroup === '1'"
-              placeholder="Region"
-              dense
-              outlined
-              v-model="region"
-            ></v-select>
-          </v-col>
-        </v-row>
+            <v-col lg="1  ">
+              <v-text-field :disabled="radioGroup === '2'" dense type="number" label="Price TO"></v-text-field>
+            </v-col>
 
-        <v-row class="mt-n3" justify="center">
-          <v-col lg="1">
-            <v-text-field :disabled="radioGroup === '2'" dense type="number" label="Price From"></v-text-field>
-          </v-col>
+            <v-col lg="1"></v-col>
 
-          <v-col lg="1  ">
-            <v-text-field :disabled="radioGroup === '2'" dense type="number" label="Price TO"></v-text-field>
-          </v-col>
+            <v-col lg="2">
+              <v-btn
+                :disabled="radioGroup === '2'"
+                class="red darken-4 white--text"
+                @click="filterProducts"
+              >Search</v-btn>
+            </v-col>
 
-          <v-col lg="1"></v-col>
+            <v-col lg="2">
+              <v-btn
+                :disabled="radioGroup === '1'"
+                class="red darken-4 white--text"
+                @click="All"
+              >All</v-btn>
+            </v-col>
 
-          <v-col lg="1">
-            <v-btn
-              :disabled="radioGroup === '2'"
-              class="red darken-4 white--text"
-              @click="filterProducts"
-            >Search</v-btn>
-          </v-col>
+            <v-col lg="2">
+              <v-btn
+                :disabled="radioGroup === '1'"
+                class="red darken-4 white--text"
+                @click="filterSuppliers"
+              >Search</v-btn>
+            </v-col>
+          </v-row>
 
-          <v-col lg="2">
-            <v-btn class="red darken-4 white--text" @click="All">All</v-btn>
-          </v-col>
+          <v-row v-if="radioGroup === '1'">
+            <v-col
+              lg="3"
+              md="4"
+              sm="6"
+              cols="6"
+              v-for="filteredProduct in filteredProducts"
+              :key="filteredProduct.id"
+            >
+              <v-hover>
+                <v-card slot-scope="{ hover }" :class="`elevation-${hover ? 12 : 4}`" width="280">
+                  <product class="ml-n2 mr-n2" :filteredProduct="filteredProduct"></product>
+                </v-card>
+              </v-hover>
+            </v-col>
+          </v-row>
 
-          <v-col lg="2">
-            <v-btn
-              :disabled="radioGroup === '1'"
-              class="red darken-4 white--text"
-              @click="filterSuppliers"
-            >Search</v-btn>
-          </v-col>
-        </v-row>
-
-        <v-row v-if="radioGroup === '1'">
-          <v-col
-            lg="2"
-            md="4"
-            sm="6"
-            cols="6"
-            v-for="filteredProduct in filteredProducts"
-            :key="filteredProduct.id"
-          >
-            <v-hover>
-              <v-card slot-scope="{ hover }" :class="`elevation-${hover ? 12 : 4}`" width="280">
-                <product :filteredProduct="filteredProduct"></product>
+          <v-row v-if="radioGroup === '2'">
+            <v-col
+              class="mb-15"
+              v-for="supplier in suppliers"
+              :key="supplier.user_id"
+              lg="3"
+              md="4"
+              sm="6"
+              cols="6"
+            >
+              <v-card @click="supplierClicked(supplier)">
+                <supplier :supplier="supplier"></supplier>
               </v-card>
-            </v-hover>
-          </v-col>
-        </v-row>
+            </v-col>
+          </v-row>
 
-        <v-row v-if="radioGroup === '2'">
-          <v-col
-            class="mb-15"
-            v-for="supplier in suppliers"
-            :key="supplier.user_id"
-            lg="2"
-            md="4"
-            sm="6"
-            cols="6"
-          >
-            <v-card @click="supplierClicked(supplier)">
-              <supplier :supplier="supplier"></supplier>
-            </v-card>
-          </v-col>
-        </v-row>
+          <v-row justify="center">
+            <v-btn large class="red darken-4 mb-15 white--text" @click="loadMore">load more</v-btn>
+          </v-row>
+        </v-col>
 
-        <v-row justify="center">
-          <v-btn large class="red darken-4 mb-15 white--text" @click="loadMore">load more</v-btn>
-        </v-row>
-      </div>
+        <v-col lg="2">
+          <v-card height="95%">
+            <v-card-title>
+              <span>ad goes here</span>
+            </v-card-title>
+          </v-card>
+        </v-col>
+      </v-row>
 
       <v-card>
         <Footer></Footer>
@@ -162,6 +203,8 @@
 </template>
 
 <script>
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 import Product from "../components/product.vue";
 import Footer from "../components/footer.vue";
 import toolBar from "../components/toolbar";
@@ -180,42 +223,18 @@ export default {
       items: [],
       productFilterFlag: false,
       supplierFilterFlag: false,
-      // egyptGovernorates: [
-      //   "الإسكندرية",
-      //   "الإسماعيلية",
-      //   "أسوان",
-      //   "أسيوط",
-      //   "الأقصر",
-      //   "البحر الأحمر",
-      //   "البحيرة",
-      //   "بني سويف",
-      //   "بورسعيد",
-      //   "جنوب سيناء",
-      //   "الجيزة",
-      //   "الدقهلية",
-      //   "دمياط",
-      //   "سوهاج",
-      //   "السويس",
-      //   "الشرقية",
-      //   "شمال سيناء",
-      //   "الغربية",
-      //   "الفيوم",
-      //   "القاهرة",
-      //   "القليوبية",
-      //   "قنا",
-      //   "كفر الشيخ",
-      //   "مطروح",
-      //   "المنوفية",
-      //   "المنيا",
-      //   "الوادي الجديد",
-      // ],
       category: [],
       radioGroup: 1,
       governorate: "",
       region: "",
+      isLoading: false,
+      fullPage: true,
     };
   },
   async created() {
+    debugger;
+    this.doLoading(3000);
+
     if (this.loginToken) {
       await this.$store.dispatch("refreshCurrentUser");
     }
@@ -268,6 +287,14 @@ export default {
   },
 
   methods: {
+    doLoading(time) {
+      debugger;
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+      }, time);
+    },
+
     filterProducts() {
       this.productFilterFlag = true;
       console.log(this.toolbarSearch, this.categoryName);
@@ -314,6 +341,7 @@ export default {
     },
 
     loadMore() {
+      this.doLoading(8000);
       var self = this;
       if (this.radioGroup === "1") {
         console.log("filter products condition");
@@ -367,6 +395,7 @@ export default {
     toolBar,
     supplier,
     cartTable,
+    Loading,
   },
 };
 </script>

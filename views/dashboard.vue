@@ -7,15 +7,7 @@
     </v-row>
 
     <v-row justify="center" v-if="myProducts.length != 0">
-      <v-col
-        class="mx-n8"
-        lg="3"
-        md="4"
-        sm="6"
-        cols="6"
-        v-for="myProduct in myProducts"
-        :key="myProduct.id"
-      >
+      <v-col lg="2" md="4" sm="6" cols="6" v-for="myProduct in myProducts" :key="myProduct.id">
         <product :addToCartButton="false" :filteredProduct="myProduct"></product>
       </v-col>
     </v-row>
@@ -442,7 +434,6 @@ export default {
       console.log("my products", this.myProducts);
       console.log("my yearly products 1", this.myYearlyProducts);
       console.log("category array 1", this.categoryArray);
-      console.log("category array 2", this.categoryArray2);
       this.monthlySalesArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       this.monthlyRevenueArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       this.myYearlyProducts = [];
