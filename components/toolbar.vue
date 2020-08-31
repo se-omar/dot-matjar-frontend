@@ -4,7 +4,7 @@
       <v-toolbar-items class="ml-4">
        
         <v-btn  rounded  text @click="$router.push('/home').catch((err) => {})">
-         <i class="fa fa-shopping-cart fa-lg "></i> <span class="font-weight-bold mt-2 " >Divan</span>
+         <i class="fa fa-shopping-cart fa-lg "></i> <span class="font-weight-bold mt-2 " >Dot-Market</span>
         </v-btn>
       </v-toolbar-items>
 
@@ -106,12 +106,12 @@
           <v-row></v-row>
           <v-divider></v-divider>
 
-          <v-col cols="12 ml-6  ">
+          <v-col v-if="currentUser.user_type == 'bussines' || currentUser.user_type == 'admin'" cols="12 ml-6  ">
             <v-btn class="btn1" :color="siteColor" x-large  rounded @click="$router.push('/myProducts')">
               <span class="mos">My products</span>
             </v-btn>
           </v-col>
-          <v-col cols="12 ml-6  ">
+          <v-col v-if="currentUser.user_type == 'bussines' ||   currentUser.user_type ==  'business'" cols="12 ml-6  ">
             <v-btn class="btn1" :color="siteColor" x-large rounded @click="supplierPage">
               <span class="mos">My Page</span>
             </v-btn>

@@ -31,7 +31,7 @@
           dark
           v-bind="attrs"
           v-on="on"
-          @click="address"
+          @click="dialog=true"
         >
           Open Dialog
         </v-btn>
@@ -69,7 +69,7 @@
               
             </v-row>
           </v-container>
-          <small>*indicates required field</small>
+       
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -151,9 +151,6 @@ console.log('order addrress',this.$store.state.OrderAddressDetails)
         console.log('assdasdas  ',this.address1)
         },
      
-      address(){
-       
-      }
 
     },
    async created(){
