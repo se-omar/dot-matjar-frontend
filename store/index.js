@@ -38,7 +38,7 @@ export default new Vuex.Store({
     topProduct: {},
     leastProduct: {},
     notSortedDashboardOrders: [],
-    supplierPageColor: localStorage.getItem('supplierPageColor'),
+  
     suppliers: [],
     allSuppliers: [],
     supplier: JSON.parse(localStorage.getItem('supplier')),
@@ -46,6 +46,12 @@ export default new Vuex.Store({
     supplierProducts: JSON.parse(localStorage.getItem('supplierProducts')),
     regions: [],
     governorates: [],
+   ordersMade:[], 
+    usersMadeOrders:[],
+    showOrderProducts:[],
+    userOrderAddress:[],
+    OrderAddressDetails:[],
+    siteColor : localStorage.getItem('siteColor') ? localStorage.getItem('siteColor') : 'red darken-4',
 
   },
 
@@ -237,8 +243,9 @@ export default new Vuex.Store({
       state.notSortedDashboardOrders = orders
     },
     supplierPageColor(state, color) {
-      localStorage.setItem('supplierPageColor', color)
-      state.supplierPageColor = localStorage.getItem('supplierPageColor')
+      console.log('color of supp',color)
+      localStorage.setItem('siteColor', color)
+      state.siteColor = localStorage.getItem('siteColor')
     },
     getSuppliers(state, suppliers) {
       state.suppliers.push(...suppliers);
@@ -276,8 +283,8 @@ export default new Vuex.Store({
 
       localStorage.setItem('supplier', JSON.stringify(supplier))
       state.supplier = JSON.parse(localStorage.getItem('supplier'))
-      localStorage.setItem('supplierPageColor', state.supplier.page_color)
-      state.supplierPageColor = localStorage.getItem('supplierPageColor')
+      localStorage.setItem('siteColor', supplier.page_color)
+      state.siteColor = localStorage.getItem('siteColor')
     },
     getRegions(state, regions) {
       state.regions = []
@@ -289,8 +296,83 @@ export default new Vuex.Store({
     getGovernorate(state, res) {
       state.governorates = res
     },
+   ordersMade(state , orders){
+// var products=orders.map(e=>{return e.products})
+var users=[]
+var address=[]
+for (var i=0 ; i<orders.length ; i++){
+  users.push({'full_arabic_name':orders[i].user.full_arabic_name,
+  'mobile_number':orders[i].user.mobile_number,
+  'order_number':orders[i].order_number
+})
 
 
+}
+console.log('userss iss ',users)
+
+state.ordersMade = orders
+state.usersMadeOrders = users
+
+for(var x =0 ; x<orders.length ; x++){
+  address.push({
+    'country':orders[x].country,
+    'city':orders[x].city,
+    'state':orders[x].state,
+    'address_line_1':orders[x].address_line_1,
+    'address_line_2':orders[x].address_line_2
+  })
+}
+
+state.userOrderAddress = address
+
+    },
+    showOrderProducts(state , products){
+var productDetails = []
+
+for(var i=0 ; i < products.length ; i++){
+  productDetails.push({
+    'product_name' :products[i].product.product_name,
+    'product_id' : products[i].product_id,
+    'product_code':products[i].product.product_code,
+    'order_id':products[i].order_id,
+    'purchase_date':products[i].purchase_date,
+    'quantity':products[i].quantity
+  })
+  console.log(productDetails)
+  state.showOrderProducts = productDetails
+}
+    },
+    showAddressDetails(state , orderNumber){
+    state.OrderAddressDetails=[]
+      console.log('orders  madd',state.ordersMade)
+      console.log(state.ordersMade[0].order_number,orderNumber)
+for(var i=0 ; i< state.ordersMade.length ; i++){
+  if(state.ordersMade[i].order_number == orderNumber){
+  console.log('for acceesd')
+    state.OrderAddressDetails.push({
+      'country': state.ordersMade[i].country,
+      'state': state.ordersMade[i].state,
+      'address_line_1': state.ordersMade[i].address_line_1,
+      'address_line_2': state.ordersMade[i].address_line_2,
+      'city': state.ordersMade[i].city,
+
+
+    })
+  }
+  
+
+}
+console.log('addres detaisl ',state.OrderAddressDetails)
+    },
+    changingSiteColor(state,color){
+      localStorage.setItem('siteColor',color)
+      state.siteColor = localStorage.getItem('siteColor')
+    },
+    getSiteColor(state,color){
+      
+localStorage.setItem('siteColor',color)
+state.siteColor = localStorage.getItem('siteColor')
+    }
 
   },
 
@@ -346,12 +428,16 @@ export default new Vuex.Store({
 
     filterProducts(context, {
       product_name,
-      category_name
+      category_name,
+      governorate,
+      region
     }) {
       console.log(product_name)
       axios.put('http://localhost:3000/api/filterProducts', {
         product_name,
-        category_name
+        category_name,
+        governorate,
+        region
       })
         .then(response => {
           console.log('message:', response.data.message)
@@ -638,12 +724,12 @@ export default new Vuex.Store({
         })
     },
     getOrderProducts(context, id) {
-      console.log('id', id)
+
       axios.put('http://localhost:3000/api/getOrderProducts', {
         order_id: id
       })
         .then(response => {
-          console.log('Products', response.data)
+       
           context.commit('getOrderProducts', response.data)
         })
 
@@ -813,6 +899,37 @@ export default new Vuex.Store({
           console.log(res.data.data)
           context.commit('getGovernorate', res.data.data)
         })
+    },
+    ordersMade(context,id){
+      axios.put('http://localhost:3000/api/supplierProductsInOrder',{user_id: id })
+      .then(orders=>{
+        console.log('ordersss',orders.data.data)
+       
+        context.commit('ordersMade',orders.data.data)
+      })
+    },
+
+    showOrderProducts(context , order_number){
+      axios.put('http://localhost:3000/api/showOrderProducts',{order_number:order_number})
+      .then(products =>{
+        console.log(products.data.data)
+        context.commit('showOrderProducts',products.data.data)
+      })
+    },
+    changingSiteColor(context , pickerColor){
+axios.put('http://localhost:3000/api/changeSiteColor',{user_id:context.state.currentUser.user_id,site_color:pickerColor})
+.then(response=>{
+  console.log(response.data.message)
+  context.commit( 'changingSiteColor',pickerColor)
+})
+    },
+    getSiteColor(context){
+      axios.put('http://localhost:3000/api/getSiteColor')
+      .then(response=>{
+        console.log(response.data.data)
+        console.log(response.data.message)
+        context.commit('getSiteColor',response.data.data)
+      })
     }
 
   },

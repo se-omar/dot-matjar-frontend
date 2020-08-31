@@ -23,15 +23,16 @@
     <v-divider class="mx-4"></v-divider>
 
     <v-col lg="12" sm="12" md="12">
-      <v-btn @click="setCurrentRow" color="primary" text>Details</v-btn>
+      <v-btn @click="setCurrentRow" :color="siteColor" text>Details</v-btn>
     </v-col>
     <v-col lg="12" sm="12" md="12">
-      <b-button
+      <v-btn
         v-if="currentuser && addToCartButton"
         @click="add(filteredProduct)"
         variant="primary"
-        class="red darken-4"
-      >Add to cart</b-button>
+       :color="siteColor"
+       class="white--text"
+      >Add to cart</v-btn>
       <!-- <b-button
            v-if="this.inCart.in_cart==1"
           @click="add(product)"
@@ -98,6 +99,9 @@ export default {
     cart() {
       return this.$store.state.cart;
     },
+    siteColor(){
+      return this.$store.state.siteColor;
+    }
   },
 };
 </script>

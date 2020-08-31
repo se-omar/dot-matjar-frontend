@@ -16,7 +16,7 @@
               <v-text-field dense outlined v-model="region" label="Region" disabled></v-text-field>
             </v-col>
             <v-col cols="12" lg="12">
-              <v-textarea outlined color="teal" label="Address" v-model="address"></v-textarea>
+              <v-textarea  outlined color="teal" label="Address" v-model="address"></v-textarea>
             </v-col>
           </v-row>
           <v-row justify="center">
@@ -66,6 +66,7 @@ export default {
   },
   methods: {
     getSession() {
+      
       var self = this;
       self.quantityArray = [];
       this.items.forEach((element) => {

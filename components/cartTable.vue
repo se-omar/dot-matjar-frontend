@@ -3,7 +3,7 @@
     <v-row justify="start">
       <v-col cols="1" lg="1">
         <v-btn
-          color="red lighten-1"
+          :color="siteColor"
           dark
           @click.stop="dialog = true"
           @click="table"
@@ -258,6 +258,9 @@ export default {
     intable() {
       return this.$store.state.table;
     },
+    siteColor(){
+      return this.$store.state.siteColor
+    }
   },
 };
 </script>

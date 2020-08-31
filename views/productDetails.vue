@@ -1,6 +1,8 @@
 <template>
   <v-app>
+    <carttable></carttable>
     <v-content>
+    
       <v-row justify="center mt-3">
         <v-card height="400px" width="800px" class="grey lighten-4">
           <v-card>
@@ -8,6 +10,16 @@
               v-if="order === 1"
               style="height: 400px; width: 800px"
               :src=" currentProduct.main_picture"
+            ></v-img>
+            <v-img
+              v-if="order === 2"
+              style="height: 400px;"
+              :src="currentProduct.extra_picture1"
+            ></v-img>
+            <v-img
+              v-if="order === 3"
+              style="height: 400px;"
+              :src="currentProduct.extra_picture2"
             ></v-img>
             <v-img v-if="order === 2" style="height: 400px;" :src="currentProduct.extra_picture1"></v-img>
             <v-img v-if="order === 3" style="height: 400px;" :src="currentProduct.extra_picture2"></v-img>
@@ -118,9 +130,20 @@
                   <span style="font-size: 18px" class="white--text">Remove product</span>
                 </v-btn>
 
-                <v-btn v-else @click="productToggleResponse" class="red darken-4" block rounded>
+                <!-- <v-btn v-else @click="productToggleResponse" class="red darken-4" block rounded>
                   <span style="font-size: 18px" class="white--text">Contact Business owner</span>
-                </v-btn>
+                </v-btn> -->
+                 <v-btn
+        v-if="addToCartButton"
+        @click="add()"
+        variant="primary"
+        class="red darken-4 white--text"
+        rounded
+        
+      >Add to cart</v-btn>
+
+
+
                 <business-info-popup v-if="dialog"></business-info-popup>
                 <product-request-dialog v-if="productRequestDialog"></product-request-dialog>
               </v-col>
@@ -148,6 +171,7 @@
 <script>
 // import businessInfoPopup from "../components/businessInfoPopup.vue";
 // import productRequestDialog from "../components/productRequestDialog";
+import carttable from '../components/cartTable'
 export default {
   created() {
     this.$store.dispatch("refreshCurrentUser");
@@ -157,6 +181,7 @@ export default {
     return {
       order: 1,
       removePressed: false,
+      addToCartButton:true
     };
   },
 
@@ -189,6 +214,7 @@ export default {
   components: {
     // businessInfoPopup,
     // productRequestDialog
+    carttable
   },
   methods: {
     viewPopup() {
@@ -226,6 +252,9 @@ export default {
     goToEditProduct() {
       this.$router.push("/editProduct");
     },
+    add(){
+      this.$store.dispatch("table", this.currentProduct);
+    }
   },
 };
 </script>

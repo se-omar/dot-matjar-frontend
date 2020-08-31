@@ -20,5 +20,6 @@ export default {
       return this.$store.state.currentUser;
     },
   },
+ 
 };
 </script>

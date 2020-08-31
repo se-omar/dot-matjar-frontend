@@ -26,6 +26,8 @@ import sideButton from '../components/sideButton'
 import checkOutLocation from '../views/checkOutLocation'
 import adminPage from '../views/adminPage'
 import suppliersDashboard from '../views/allSuppliersDashboard'
+import orderedProducts from '../views/orderedProducts'
+
 // import { isInteger } from 'core-js/fn/number'
 Vue.use(VueRouter)
 
@@ -163,6 +165,11 @@ var routes = [{
   path: '/suppliersDashboard',
   name: 'suppliersDashboard',
   component: suppliersDashboard
+},
+{
+  path: '/orderedProducts',
+  name: 'orderedProducts',
+  component: orderedProducts
 },
 {
   path: '*',

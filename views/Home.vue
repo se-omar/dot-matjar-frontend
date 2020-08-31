@@ -1,6 +1,10 @@
 <template>
   <div class="grey lighten-4">
     <toolBar></toolBar>
+    <div v-if="currentUser.user_type == 'admin'">
+      <SiteColor></SiteColor>
+    </div>
+
     <v-app class="grey lighten-4">
       <div class="vld-parent">
         <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="fullPage"></loading>
@@ -170,7 +174,7 @@
               class="mb-15"
               v-for="supplier in suppliers"
               :key="supplier.user_id"
-              lg="3"
+              lg="2"
               md="4"
               sm="6"
               cols="6"
@@ -180,10 +184,9 @@
               </v-card>
             </v-col>
           </v-row>
-
-          <v-row justify="center">
-            <v-btn large class="red darken-4 mb-15 white--text" @click="loadMore">load more</v-btn>
-          </v-row>
+          <v-col cols="6">
+            <v-btn large :color="siteColor" class="mb-15 white--text" @click="loadMore">load more</v-btn>
+          </v-col>
         </v-col>
 
         <v-col lg="2" style="max-width: 12%">
@@ -210,6 +213,8 @@ import Footer from "../components/footer.vue";
 import toolBar from "../components/toolbar";
 import supplier from "../components/supplier";
 import cartTable from "../components/cartTable";
+import SiteColor from "../components/siteColor";
+// import { component } from 'vue/types/umd';
 //import usersModel from "../models/usersModel";
 
 export default {
@@ -232,7 +237,8 @@ export default {
     };
   },
   async created() {
-    debugger;
+    this.$store.dispatch("getSiteColor");
+
     this.doLoading(3000);
 
     if (this.loginToken) {
@@ -284,11 +290,13 @@ export default {
     loginToken() {
       return this.$store.state.loginToken;
     },
+    siteColor() {
+      return this.$store.state.siteColor;
+    },
   },
 
   methods: {
     doLoading(time) {
-      debugger;
       this.isLoading = true;
       setTimeout(() => {
         this.isLoading = false;
@@ -301,6 +309,8 @@ export default {
       this.$store.dispatch("filterProducts", {
         product_name: this.toolbarSearch,
         category_name: this.categoryName,
+        governorate: this.governorate,
+        region: this.region,
       });
     },
 
@@ -395,6 +405,7 @@ export default {
     toolBar,
     supplier,
     cartTable,
+    SiteColor,
     Loading,
   },
 };

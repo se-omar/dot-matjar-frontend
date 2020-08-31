@@ -129,6 +129,7 @@ export default {
             },
           ];
         }
+        console.log("this , orderrr", this.order);
       }
 
       this.orderProducts = this.productsInOrder;

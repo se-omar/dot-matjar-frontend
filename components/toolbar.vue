@@ -1,6 +1,6 @@
 <template>
   <div class="tool-bar">
-    <v-app-bar :class="toolBarColor" dark>
+    <v-app-bar :color="siteColor" dark>
       <v-toolbar-items class="ml-4">
        
         <v-btn  rounded  text @click="$router.push('/home').catch((err) => {})">
@@ -53,7 +53,7 @@
             <label class="file-label">
               <span class="file-cta">
                 <span class="file-icon">
-                  <i class="fas fa-camera fa-2x" style="color:blue"></i>
+                  <i class="fa fa-camera fa-2x" style="color:blue"></i>
                   <br />
                 </span>
                 <span class="file-label" style="font-weight:bold">
@@ -77,7 +77,7 @@
             <label class="file-label">
               <span class="file-cta">
                 <span class="file-icon">
-                  <i class="fas fa-camera fa-2x" style="color:blue"></i>
+                  <i class="fa fa-camera fa-2x" style="color:blue"></i>
                   <br />
                 </span>
                 <span class="file-label" style="font-weight:bold">
@@ -107,29 +107,33 @@
           <v-divider></v-divider>
 
           <v-col cols="12 ml-6  ">
-            <v-btn class="btn1" x-large color="blue" rounded @click="$router.push('/myProducts')">
+            <v-btn class="btn1" :color="siteColor" x-large  rounded @click="$router.push('/myProducts')">
               <span class="mos">My products</span>
             </v-btn>
           </v-col>
           <v-col cols="12 ml-6  ">
-            <v-btn class="btn1" x-large color="blue" rounded @click="supplierPage">
+            <v-btn class="btn1" :color="siteColor" x-large rounded @click="supplierPage">
               <span class="mos">My Page</span>
             </v-btn>
           </v-col>
-
+        <v-col cols="12 ml-6  ">
+            <v-btn class="btn1" :color="siteColor" x-large  rounded @click="$router.push('/orderedProducts')">
+              <span class="mos">Ordered Products</span>
+            </v-btn>
+          </v-col>
           <v-divider></v-divider>
 
           <v-col cols="12">
             <v-card-text>
-              <a class="size" @click="$router.push('/editPassword')">
+              <a class="size"  @click="$router.push('/editPassword')">
                 <i class="fa fa-cog" aria-hidden="true" style="color:black"></i>
-                Change your password
+               <span :color="siteColor"> Change your password </span>
               </a>
               <br />
               <br />
 
               <a @click="$router.push('/completedata')" class="size">
-                <i class="fas fa-edit" aria-hidden="true" style="color:black"></i>
+                <i class="fa fa-edit" aria-hidden="true" style="color:black"></i>
                 Update/complete Info
               </a>
               <br />
@@ -277,6 +281,7 @@
   </div>
 </template>
 <script>
+
 export default {
   components: {},
   created() {
@@ -284,10 +289,12 @@ export default {
   },
 
   props: {
-    toolBarColor: {
-      type: String,
-      default: () => "red darken-4",
-    },
+//     toolBarColor: {
+//       type: String,
+//       default (){
+// return this.siteColor
+//       } 
+//     },
   },
   computed: {
     currentUser() {
@@ -296,6 +303,9 @@ export default {
     nodeHost() {
       return this.$store.state.nodeHost;
     },
+    siteColor(){
+      return this.$store.state.siteColor
+    }
   },
 
   methods: {
