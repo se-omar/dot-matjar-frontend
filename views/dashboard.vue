@@ -7,15 +7,7 @@
     </v-row>
 
     <v-row justify="center" v-if="myProducts.length != 0">
-      <v-col
-        class="mx-n8"
-        lg="3"
-        md="4"
-        sm="6"
-        cols="6"
-        v-for="myProduct in myProducts"
-        :key="myProduct.id"
-      >
+      <v-col lg="2" md="4" sm="6" cols="6" v-for="myProduct in myProducts" :key="myProduct.id">
         <product :addToCartButton="false" :filteredProduct="myProduct"></product>
       </v-col>
     </v-row>
@@ -25,6 +17,18 @@
     </v-row>
 
     <v-divider class="mt- mb-10"></v-divider>
+
+    <v-row class="mb-n7" style="width: 92%; margin: auto">
+      <v-col lg="3">
+        <v-select
+          @change="changeYear"
+          v-model="selectedYear"
+          outlined
+          :items="years"
+          label="Select Year"
+        ></v-select>
+      </v-col>
+    </v-row>
 
     <v-row style="width: 92%; margin: auto">
       <v-col lg="4" md="6" sm="12" cols="12">
@@ -224,47 +228,35 @@ export default {
     await this.$store.dispatch("getMyProducts", this.currentUser.user_id);
     await this.$store.dispatch("getMonthlySales", this.currentUser.user_id);
 
-    const result = this.groupBy(this.myProducts, (c) => c.category_id);
-    this.categoryArray = result;
-
-    const ordered = this.groupBy(
-      this.notSortedDashboardOrders,
-      (c) => c.order_month
-    );
-
-    this.monthlySortedOrders = ordered;
+    this.yearlySortedOrders[this.selectedYear].forEach((element) => {
+      this.myYearlyProducts.push(...element.products);
+    });
     //this.pieOptions.labels = this.labels;
     this.calculateMonthlySales();
     this.calculateCategoryPercentage();
     //console.log(this.pieOptions.labels);
-    console.log(this.monthlySalesArray);
+    //console.log(this.monthlySalesArray);
   },
 
   computed: {
     currentUser() {
       return this.$store.state.currentUser;
     },
-
     topProduct() {
       return this.$store.state.topProduct;
     },
-
     leastProduct() {
       return this.$store.state.leastProduct;
     },
-
     myProducts() {
       return this.$store.state.myProducts;
     },
-
     pieSeries() {
       return this.categoryPercentageArray;
     },
-
     labels() {
       return this.categoryNames;
     },
-
     pieOptions() {
       return {
         labels: this.labels,
@@ -280,11 +272,9 @@ export default {
         ],
       };
     },
-
     notSortedDashboardOrders() {
       return this.$store.state.notSortedDashboardOrders;
     },
-
     salesChartSeries() {
       return [
         {
@@ -293,7 +283,6 @@ export default {
         },
       ];
     },
-
     revenueChartSeries() {
       return [
         {
@@ -302,7 +291,6 @@ export default {
         },
       ];
     },
-
     chartOptions() {
       return {
         chart: {
@@ -327,20 +315,41 @@ export default {
         colors: ["#F44336"],
       };
     },
+    years() {
+      var year = [];
+      this.notSortedDashboardOrders.forEach((element) => {
+        year.push(element.order_year);
+      });
+      return year.sort(function (a, b) {
+        return b - a;
+      });
+    },
+
+    yearlySortedOrders() {
+      return this.groupBy(this.notSortedDashboardOrders, (c) => c.order_year);
+    },
+    monthlySortedOrders() {
+      return this.groupBy(
+        this.yearlySortedOrders[this.selectedYear],
+        (c) => c.order_month
+      );
+    },
+    categoryArray() {
+      return this.groupBy(this.myYearlyProducts, (c) => c.category_id);
+    },
   },
 
   data: function () {
     return {
       topSellingProduct: {},
       leastSellingProduct: {},
-
-      categoryArray: [],
       categoryPercentageArray: [],
       categoryNames: [],
-      monthlySortedOrders: {},
       monthlySalesArray: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       monthlyRevenueArray: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       totalRevenue: 0,
+      selectedYear: new Date().getFullYear(),
+      myYearlyProducts: [],
     };
   },
 
@@ -353,7 +362,7 @@ export default {
     },
 
     calculateCategoryPercentage() {
-      console.log("calculateCategoryPercentage");
+      //console.log("calculateCategoryPercentage");
       var categorySales, i, j;
       var categorySalesArray = [];
       var totalCategorySales = 0;
@@ -361,7 +370,7 @@ export default {
 
       for (i in this.categoryArray) {
         categorySales = 0;
-        console.log("in category function", this.categoryArray[i][1]);
+        // console.log("in category function", this.categoryArray[i][1]);
         for (j = 0; j < this.categoryArray[i].length; j++) {
           categorySales += this.categoryArray[i][j].buy_counter;
           totalCategorySales += this.categoryArray[i][j].buy_counter;
@@ -391,32 +400,51 @@ export default {
     },
 
     calculateMonthlySales() {
-      console.log("entered function");
+      // console.log("entered function");
 
       var i, j, totalMonthSales, totalMonthRevenue;
 
       for (i in this.monthlySortedOrders) {
-        console.log("entered first loop");
+        //console.log("entered first loop");
         totalMonthSales = 0;
         totalMonthRevenue = 0;
 
         for (j = 0; j < this.monthlySortedOrders[i].length; j++) {
-          console.log("entered second loop");
+          //console.log("entered second loop");
           this.monthlySortedOrders[i][j].products.forEach((element) => {
             totalMonthSales += element.buy_counter;
             totalMonthRevenue += element.unit_price * element.buy_counter;
             this.totalRevenue += element.unit_price * element.buy_counter;
-            console.log(this.totalRevenue);
+            // console.log(this.totalRevenue);
           });
         }
         this.monthlySalesArray.splice(i - 1, 1, totalMonthSales);
         this.monthlyRevenueArray.splice(i - 1, 1, totalMonthRevenue);
-        console.log("monthly sales array", this.monthlySalesArray);
+        // console.log("monthly sales array", this.monthlySalesArray);
       }
       // localStorage.setItem(
       //   "monthlySalesArray",
       //   JSON.stringify(this.monthlySalesArray)
       // );
+    },
+
+    changeYear() {
+      console.log(this.yearlySortedOrders);
+      console.log(this.selectedYear);
+      console.log("my products", this.myProducts);
+      console.log("my yearly products 1", this.myYearlyProducts);
+      console.log("category array 1", this.categoryArray);
+      this.monthlySalesArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      this.monthlyRevenueArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      this.myYearlyProducts = [];
+      this.categoryPercentageArray = [];
+      console.log("my yearly products 2", this.myYearlyProducts);
+      this.yearlySortedOrders[this.selectedYear].forEach((element) => {
+        this.myYearlyProducts.push(...element.products);
+      });
+      console.log("my yearly products 3", this.myYearlyProducts);
+      this.calculateMonthlySales();
+      this.calculateCategoryPercentage();
     },
   },
 

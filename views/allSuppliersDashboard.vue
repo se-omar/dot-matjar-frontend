@@ -25,6 +25,18 @@
 
     <v-divider class="mt- mb-10"></v-divider>
 
+    <v-row class="mb-n7" style="width: 92%; margin: auto">
+      <v-col lg="3">
+        <v-select
+          @change="changeYear"
+          v-model="selectedYear"
+          outlined
+          :items="years"
+          label="Select Year"
+        ></v-select>
+      </v-col>
+    </v-row>
+
     <v-row style="width: 92%; margin: auto">
       <v-col lg="4" md="6" sm="12" cols="12">
         <div style="text-align: center">
@@ -226,16 +238,10 @@ export default {
     console.log("least selling is", this.leastProduct);
     await this.$store.dispatch("getMonthlySales", this.supplier.user_id);
 
-    const result = this.groupBy(this.supplierProducts, (c) => c.category_id);
-    console.log(this.supplierProducts);
-    this.categoryArray = result;
+    this.yearlySortedOrders[this.selectedYear].forEach((element) => {
+      this.myYearlyProducts.push(...element.products);
+    });
 
-    const ordered = this.groupBy(
-      this.notSortedDashboardOrders,
-      (c) => c.order_month
-    );
-
-    this.monthlySortedOrders = ordered;
     //this.pieOptions.labels = this.labels;
     this.calculateMonthlySales();
     this.calculateCategoryPercentage();
@@ -286,6 +292,29 @@ export default {
 
     notSortedDashboardOrders() {
       return this.$store.state.notSortedDashboardOrders;
+    },
+
+    years() {
+      var year = [];
+      this.notSortedDashboardOrders.forEach((element) => {
+        year.push(element.order_year);
+      });
+      return year.sort(function (a, b) {
+        return b - a;
+      });
+    },
+
+    yearlySortedOrders() {
+      return this.groupBy(this.notSortedDashboardOrders, (c) => c.order_year);
+    },
+    monthlySortedOrders() {
+      return this.groupBy(
+        this.yearlySortedOrders[this.selectedYear],
+        (c) => c.order_month
+      );
+    },
+    categoryArray() {
+      return this.groupBy(this.myYearlyProducts, (c) => c.category_id);
     },
 
     salesChartSeries() {
@@ -340,14 +369,13 @@ export default {
     return {
       topSellingProduct: {},
       leastSellingProduct: {},
-
-      categoryArray: [],
       categoryPercentageArray: [],
       categoryNames: [],
-      monthlySortedOrders: {},
       monthlySalesArray: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       monthlyRevenueArray: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       totalRevenue: 0,
+      selectedYear: new Date().getFullYear(),
+      myYearlyProducts: [],
     };
   },
 
@@ -425,6 +453,25 @@ export default {
       //   "monthlySalesArray",
       //   JSON.stringify(this.monthlySalesArray)
       // );
+    },
+
+    changeYear() {
+      console.log(this.yearlySortedOrders);
+      console.log(this.selectedYear);
+      console.log("my products", this.myProducts);
+      console.log("my yearly products 1", this.myYearlyProducts);
+      console.log("category array 1", this.categoryArray);
+      this.monthlySalesArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      this.monthlyRevenueArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      this.myYearlyProducts = [];
+      this.categoryPercentageArray = [];
+      console.log("my yearly products 2", this.myYearlyProducts);
+      this.yearlySortedOrders[this.selectedYear].forEach((element) => {
+        this.myYearlyProducts.push(...element.products);
+      });
+      console.log("my yearly products 3", this.myYearlyProducts);
+      this.calculateMonthlySales();
+      this.calculateCategoryPercentage();
     },
   },
 

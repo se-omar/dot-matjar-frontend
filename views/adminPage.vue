@@ -33,7 +33,15 @@ import supplier from "../components/supplier";
 export default {
   async created() {
     await this.$store.dispatch("refreshCurrentUser");
-    this.$store.dispatch("getSuppliers");
+    this.$store.dispatch("getSuppliers", {
+      supplierFilterFlag: this.supplierFilterFlag,
+    });
+  },
+
+  data: () => {
+    return {
+      supplierFilterFlag: false,
+    };
   },
 
   computed: {
@@ -52,7 +60,7 @@ export default {
   methods: {
     loadMore() {
       var self = this;
-      self.$store.dispatch("getSuppliers");
+      self.$store.dispatch("getSuppliers", this.supplierFilterFlag);
       // window.onscroll = function () {
       //   console.log(this.suppliers);
       //   // let bottomOfWindow =
