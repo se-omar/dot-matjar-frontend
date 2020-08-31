@@ -8,24 +8,24 @@
 
       <v-row>
         <v-col>
-          <v-card height="180">
+          <v-card height="120">
             <v-card-title>
-              <span>ad goes here</span>
+              <span>ad here</span>
             </v-card-title>
           </v-card>
         </v-col>
       </v-row>
 
-      <v-row>
-        <v-col lg="2">
+      <v-row class="ml-2">
+        <v-col lg="2" style="max-width: 12%">
           <v-card height="95%">
             <v-card-title>
-              <span>ad goes here</span>
+              <span>ad here</span>
             </v-card-title>
           </v-card>
         </v-col>
 
-        <v-col lg="8">
+        <v-col lg="9">
           <cartTable></cartTable>
 
           <v-radio-group mandatory v-model="radioGroup">
@@ -186,10 +186,10 @@
           </v-row>
         </v-col>
 
-        <v-col lg="2">
+        <v-col lg="2" style="max-width: 12%">
           <v-card height="95%">
             <v-card-title>
-              <span>ad goes here</span>
+              <span>ad here</span>
             </v-card-title>
           </v-card>
         </v-col>
@@ -341,7 +341,7 @@ export default {
     },
 
     loadMore() {
-      this.doLoading(8000);
+      this.doLoading(1000);
       var self = this;
       if (this.radioGroup === "1") {
         console.log("filter products condition");
