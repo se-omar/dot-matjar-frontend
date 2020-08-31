@@ -1,6 +1,6 @@
 <template>
-  <v-footer :class="backGroundColor" height="auto">
-    <v-card flat tile :class="backGroundColor">
+  <v-footer :color="siteColor" height="auto">
+    <v-card flat tile :color="siteColor">
       <v-card-text>
         <v-row justify="center">
           <v-btn v-for="icon in icons" :key="icon" class="mx-8 white--text" icon>
@@ -27,10 +27,12 @@
 <script>
 export default {
   props: {
-    backGroundColor: {
-      type: String,
-      default: () => "red darken-4",
-    },
+    // backGroundColor: {
+    //   type: String,
+    //   default (){
+    //     return this.siteColor
+    //   },
+    // },
   },
 
   data: () => ({
@@ -42,6 +44,11 @@ export default {
       "fa fa-instagram",
     ],
   }),
+  computed:{
+siteColor(){
+  return this.$store.state.siteColor
+}
+  }
 };
 </script>
 <style  scoped>

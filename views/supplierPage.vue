@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <toolBar :toolBarColor="pageColor"></toolBar>
-    <sideButton :color.sync="pageColor"></sideButton>
+    <toolBar ></toolBar>
+    <sideButton v-if="this.$route.params.supplier_id == currentUser.user_id" ></sideButton>
 
     <v-container>
       <v-row justify="center">
@@ -53,7 +53,7 @@
         </v-col>
       </v-row>
     </v-container>
-    <footerr :backGroundColor="pageColor"></footerr>
+    <footerr ></footerr>
   </v-app>
 </template>
 <script>
@@ -84,11 +84,12 @@ export default {
       return this.$store.state.nodeHost;
     },
     pageColor() {
-      return this.$store.state.supplierPageColor;
+      return this.$store.state.siteColor;
     },
     supplierProducts() {
       return this.$store.state.supplierProducts;
     },
+    
   },
   created() {
     this.$store.dispatch("refreshCurrentUser");

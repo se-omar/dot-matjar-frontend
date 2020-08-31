@@ -2,10 +2,7 @@
   <v-app>
     <carttable></carttable>
     <v-content>
-<<<<<<< HEAD
     
-=======
->>>>>>> a2a36733f46240e3fc8898a32efa0a9e0b375b02
       <v-row justify="center mt-3">
         <v-card height="400px" width="800px" class="grey lighten-4">
           <v-card>
@@ -13,7 +10,6 @@
               v-if="order === 1"
               style="height: 400px; width: 800px"
               :src=" currentProduct.main_picture"
-<<<<<<< HEAD
             ></v-img>
             <v-img
               v-if="order === 2"
@@ -24,8 +20,6 @@
               v-if="order === 3"
               style="height: 400px;"
               :src="currentProduct.extra_picture2"
-=======
->>>>>>> a2a36733f46240e3fc8898a32efa0a9e0b375b02
             ></v-img>
             <v-img v-if="order === 2" style="height: 400px;" :src="currentProduct.extra_picture1"></v-img>
             <v-img v-if="order === 3" style="height: 400px;" :src="currentProduct.extra_picture2"></v-img>

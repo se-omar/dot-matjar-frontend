@@ -7,7 +7,6 @@
     class="menu"
     max-width="200"
     min-width="200"
-    
   >
     <template v-slot:activator="{ on, attrs }">
       
@@ -15,7 +14,7 @@
       <v-row justify="end">
         <v-col cols="1">
           <v-btn rounded :color="siteColor" dark v-bind="attrs" v-on="on">
-            <span class="font">Page color</span>
+            <span class="font">Site color</span>
           </v-btn>
         </v-col>
       </v-row>
@@ -25,7 +24,7 @@
     <v-card>
       <v-card-text>
         <v-row justify="center">
-          <span class="black--text" style="font-weight:bold;">Choose your page color form Here :</span>
+          <span class="black--text" style="font-weight:bold;">Choose your Site color form Here :</span>
         </v-row>
       </v-card-text>
 
@@ -40,14 +39,15 @@
 export default {
   data: () => ({
    
-    colorPicker:''
+   colorPicker:''
   }),
   methods: {
     changeColor() {
      
       console.log(this.colorPicker);
       this.$emit("update:color", this.colorPicker);
-      this.$store.dispatch("supplierPageColor", this.colorPicker );
+      this.$store.dispatch("changingSiteColor", this.colorPicker );
+      this.$router.go('/')
     },
     changeColorPicker(){
       console.log(this.colorPicker)
@@ -63,7 +63,7 @@ export default {
       return this.$store.state.currentUser
     },
     siteColor(){
-      return this.$store.state.siteColor
+        return this.$store.state.siteColor
     }
   },
 };

@@ -1,6 +1,10 @@
 <template>
   <div class="grey lighten-4">
     <toolBar></toolBar>
+    <div v-if="currentUser.user_type == 'admin'" >
+      <SiteColor></SiteColor>
+    </div>
+    
     <v-app class="grey lighten-4">
       <div class="mx-10">
         <cartTable></cartTable>
@@ -98,19 +102,21 @@
           <v-col lg="1">
             <v-btn
               :disabled="radioGroup === '2'"
-              class="red darken-4 white--text"
+              class="white--text"
+              :color="siteColor"
               @click="filterProducts"
             >Search</v-btn>
           </v-col>
 
           <v-col lg="2">
-            <v-btn class="red darken-4 white--text" @click="All">All</v-btn>
+            <v-btn  class="white--text" :color="siteColor" @click="All">All</v-btn>
           </v-col>
 
           <v-col lg="2">
             <v-btn
               :disabled="radioGroup === '1'"
-              class="red darken-4 white--text"
+              class="white--text"
+              :color="siteColor"
               @click="filterSuppliers"
             >Search</v-btn>
           </v-col>
@@ -150,7 +156,7 @@
         </v-row>
 
         <v-row justify="center">
-          <v-btn large class="red darken-4 mb-15 white--text" @click="loadMore">load more</v-btn>
+          <v-btn large :color="siteColor" class=" mb-15 white--text" @click="loadMore">load more</v-btn>
         </v-row>
       </div>
 
@@ -167,6 +173,8 @@ import Footer from "../components/footer.vue";
 import toolBar from "../components/toolbar";
 import supplier from "../components/supplier";
 import cartTable from "../components/cartTable";
+import SiteColor from '../components/siteColor'
+// import { component } from 'vue/types/umd';
 //import usersModel from "../models/usersModel";
 
 export default {
@@ -216,6 +224,7 @@ export default {
     };
   },
   async created() {
+    this.$store.dispatch('getSiteColor')
     if (this.loginToken) {
       await this.$store.dispatch("refreshCurrentUser");
     }
@@ -238,6 +247,7 @@ export default {
         resolve();
       });
     });
+    
   },
 
   computed: {
@@ -265,6 +275,9 @@ export default {
     loginToken() {
       return this.$store.state.loginToken;
     },
+    siteColor(){
+      return this.$store.state.siteColor
+    }
   },
 
   methods: {
@@ -369,6 +382,7 @@ export default {
     toolBar,
     supplier,
     cartTable,
+    SiteColor
   },
 };
 </script>

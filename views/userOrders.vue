@@ -140,7 +140,8 @@ export default {
     },
    items(){
       return this.$store.state.orders
-    }
+    },
+    
   },
 
   methods: {
@@ -165,6 +166,7 @@ export default {
             },
           ];
         }
+        console.log('this , orderrr',this.order)
       }
 
       this.orderProducts = this.productsInOrder;
