@@ -1,10 +1,10 @@
 <template>
   <div class="grey lighten-4">
     <toolBar></toolBar>
-    <div v-if="currentUser.user_type == 'admin'" >
+    <div v-if="currentUser.user_type == 'admin'">
       <SiteColor></SiteColor>
     </div>
-    
+
     <v-app class="grey lighten-4">
       <div class="vld-parent">
         <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="fullPage"></loading>
@@ -12,24 +12,24 @@
 
       <v-row>
         <v-col>
-          <v-card height="180">
+          <v-card height="120">
             <v-card-title>
-              <span>ad goes here</span>
+              <span>ad here</span>
             </v-card-title>
           </v-card>
         </v-col>
       </v-row>
 
-      <v-row>
-        <v-col lg="2">
+      <v-row class="ml-2">
+        <v-col lg="2" style="max-width: 12%">
           <v-card height="95%">
             <v-card-title>
-              <span>ad goes here</span>
+              <span>ad here</span>
             </v-card-title>
           </v-card>
         </v-col>
 
-        <v-col lg="8">
+        <v-col lg="9">
           <cartTable></cartTable>
 
           <v-radio-group mandatory v-model="radioGroup">
@@ -168,38 +168,34 @@
               </v-hover>
             </v-col>
           </v-row>
-      
+
+          <v-row v-if="radioGroup === '2'">
+            <v-col
+              class="mb-15"
+              v-for="supplier in suppliers"
+              :key="supplier.user_id"
+              lg="2"
+              md="4"
+              sm="6"
+              cols="6"
+            >
+              <v-card @click="supplierClicked(supplier)">
+                <supplier :supplier="supplier"></supplier>
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-col cols="6">
+            <v-btn large :color="siteColor" class="mb-15 white--text" @click="loadMore">load more</v-btn>
+          </v-col>
         </v-col>
 
- 
-
-        <v-row v-if="radioGroup === '2'">
-          <v-col
-            class="mb-15"
-            v-for="supplier in suppliers"
-            :key="supplier.user_id"
-            lg="2"
-            md="4"
-            sm="6"
-            cols="6"
-          >
-            <v-card @click="supplierClicked(supplier)">
-              <supplier :supplier="supplier"></supplier>
-            </v-card>
-             
-          </v-col>
-            <v-col lg="2">
+        <v-col lg="2" style="max-width: 12%">
           <v-card height="95%">
             <v-card-title>
-              <span>ad goes here</span>
+              <span>ad here</span>
             </v-card-title>
           </v-card>
         </v-col>
-        </v-row>
-<v-col cols='6' >
-          <v-btn large :color="siteColor" class=" mb-15 white--text" @click="loadMore">load more</v-btn>
-        </v-col>
-       
       </v-row>
 
       <v-card>
@@ -217,7 +213,7 @@ import Footer from "../components/footer.vue";
 import toolBar from "../components/toolbar";
 import supplier from "../components/supplier";
 import cartTable from "../components/cartTable";
-import SiteColor from '../components/siteColor'
+import SiteColor from "../components/siteColor";
 // import { component } from 'vue/types/umd';
 //import usersModel from "../models/usersModel";
 
@@ -241,8 +237,8 @@ export default {
     };
   },
   async created() {
-    this.$store.dispatch('getSiteColor')
-   
+    this.$store.dispatch("getSiteColor");
+
     this.doLoading(3000);
 
     if (this.loginToken) {
@@ -267,7 +263,6 @@ export default {
         resolve();
       });
     });
-    
   },
 
   computed: {
@@ -295,14 +290,13 @@ export default {
     loginToken() {
       return this.$store.state.loginToken;
     },
-    siteColor(){
-      return this.$store.state.siteColor
-    }
+    siteColor() {
+      return this.$store.state.siteColor;
+    },
   },
 
   methods: {
     doLoading(time) {
-      
       this.isLoading = true;
       setTimeout(() => {
         this.isLoading = false;
@@ -315,8 +309,8 @@ export default {
       this.$store.dispatch("filterProducts", {
         product_name: this.toolbarSearch,
         category_name: this.categoryName,
-        governorate:this.governorate,
-        region:this.region
+        governorate: this.governorate,
+        region: this.region,
       });
     },
 
@@ -357,7 +351,7 @@ export default {
     },
 
     loadMore() {
-      this.doLoading(8000);
+      this.doLoading(1000);
       var self = this;
       if (this.radioGroup === "1") {
         console.log("filter products condition");

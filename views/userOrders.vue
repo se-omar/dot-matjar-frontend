@@ -1,123 +1,87 @@
 <template>
   <div>
     <toolbar></toolbar>
-    <v-flex ml-10>
-    <v-row justify="start mx-6">
-      <!-- <v-col cols="4">
-        <v-card class="mx-auto mt-4" max-width="700" tile>
-          <v-list rounded>
-            <v-subheader style="font-weight:bold; font-size:large;">Orders</v-subheader>
-            <v-list-item-group v-model="item" color="primary">
-              <v-list-item
-                v-for="(item, order_id) in items"
-                :key="order_id"
-                @click="rowClicked(item)"
-              >
-                <v-list-item-icon></v-list-item-icon>
-                <v-list-item-content>
-                  <span>Order :</span>
-                  <v-list-item-title v-text="item.order_number"></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
-        </v-card>
-      </v-col>-->
-      <v-col cols="6 mt-4">
-        <v-card max-width="700">
-          <v-data-table
-            @click:row="tableClicked"
-            bordered
-            hover
-            hide-default-footer
-            :headers="headers"
-            :items="items"
-          >
-            <template v-slot:item.showProducts="{item}">
-              <v-row>
-                <v-col cols="6" lg="4">
-                  <v-btn small @click="showProducts(item.order_id)">ShowProducts</v-btn>
-                </v-col>
-              </v-row>
-            </template>
-          </v-data-table>
-        </v-card>
-      </v-col>
-      <v-col cols="6 mt-4">
-        <v-card max-width="500">
-          <v-data-table
-            bordered
-            hover
-            hide-default-footer
-            :headers="productHeaders"
-            :items="productsInOrder"
-          ></v-data-table>
+    <v-row>
+      <v-col>
+        <v-card height="120">
+          <v-card-title>
+            <span>ad here</span>
+          </v-card-title>
         </v-card>
       </v-col>
     </v-row>
 
-    <v-divider></v-divider>
+    <v-flex>
+      <v-row>
+        <v-col lg="2" style="max-width: 12%">
+          <v-card height="95%">
+            <v-card-title>
+              <span>ad here</span>
+            </v-card-title>
+          </v-card>
+        </v-col>
 
-    <!-- <v-row justify="center mt-4">
-      <v-col cols="5">
-        <v-card max-width="500">
-          <v-data-table bordered hover hide-default-footer :headers="headers" :items="order"></v-data-table>
-        </v-card>
-      </v-col>
-      <v-col cols="4">
-        <v-card max-width="500">
-          <v-data-table
-            bordered
-            hover
-            hide-default-footer
-            :headers="productHeaders"
-            :items="orderProducts"
-          ></v-data-table>
-        </v-card>
-      </v-col>``
-    </v-row>-->
+        <v-col lg="9">
+          <v-row justify="start">
+            <v-col cols="6 mt-4">
+              <v-card max-width="700">
+                <v-data-table
+                  @click:row="tableClicked"
+                  bordered
+                  hover
+                  hide-default-footer
+                  :headers="headers"
+                  :items="items"
+                >
+                  <template v-slot:item.showProducts="{item}">
+                    <v-row>
+                      <v-col cols="6" lg="4">
+                        <v-btn small @click="showProducts(item.order_id)">ShowProducts</v-btn>
+                      </v-col>
+                    </v-row>
+                  </template>
+                </v-data-table>
+              </v-card>
+            </v-col>
+            <v-col cols="6 mt-4">
+              <v-card max-width="500">
+                <v-data-table
+                  bordered
+                  hover
+                  hide-default-footer
+                  :headers="productHeaders"
+                  :items="productsInOrder"
+                ></v-data-table>
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-divider></v-divider>
+        </v-col>
 
-    <!-- Card orderr -->
-    <!-- <v-row>
-      <v-card v-for="order in orders" :key="order.order_id">
-        <v-card-title>Order:{{order.order_number}}</v-card-title>
-        <v-row>
-          <v-col v-for="productt in  orderProducts" :key="productt.product_id">
-            <v-card-actions>
-              <v-row>
-                <v-col>
-                  <v-img width="100" height="100" :src="nodeHost + productt.main_picture"></v-img>
-                </v-col>
-                <v-col>
-                  <v-card-text>
-                    <p>{{productt.product_name}}</p>
-                  </v-card-text>
-                </v-col>
-              </v-row>
-            </v-card-actions>
-          </v-col>
-        </v-row>
-      </v-card>
-    </v-row>-->
+        <v-col lg="2" style="max-width: 12%">
+          <v-card height="95%">
+            <v-card-title>
+              <span>ad here</span>
+            </v-card-title>
+          </v-card>
+        </v-col>
+      </v-row>
     </v-flex>
     <Footer></Footer>
   </div>
 </template>
 <script>
-import Footer from '../components/footer'
-import toolbar from '../components/toolbar'
+import Footer from "../components/footer";
+import toolbar from "../components/toolbar";
 export default {
   name: "userOrders",
   components: {
     Footer,
-    toolbar
+    toolbar,
   },
- async created() {
+  async created() {
     await this.$store.dispatch("refreshCurrentUser");
-   await this.$store.dispatch("getOrders");
-    
-     
-   
+    await this.$store.dispatch("getOrders");
   },
   computed: {
     row() {
@@ -138,10 +102,9 @@ export default {
     nodeHost() {
       return this.$store.state.nodeHost;
     },
-   items(){
-      return this.$store.state.orders
+    items() {
+      return this.$store.state.orders;
     },
-    
   },
 
   methods: {
@@ -166,16 +129,15 @@ export default {
             },
           ];
         }
-        console.log('this , orderrr',this.order)
+        console.log("this , orderrr", this.order);
       }
 
       this.orderProducts = this.productsInOrder;
       console.log(this.productsInOrder);
     },
-   async showProducts(order) {
+    async showProducts(order) {
       console.log("id iss", order);
-     await this.$store.dispatch("getOrderProducts", order);
-     
+      await this.$store.dispatch("getOrderProducts", order);
     },
     tableClicked(event) {
       console.log("event is", event);
@@ -194,7 +156,7 @@ export default {
     ],
     order: [],
     item: 1,
-   
+
     productHeaders: [
       { text: "Product name", value: "product_name" },
       { text: "Price", value: "unit_price" },

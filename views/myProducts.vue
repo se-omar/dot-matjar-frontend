@@ -1,47 +1,84 @@
 <template>
   <v-app class="grey lighten-4">
     <toolbar />
-    <v-container
-      v-if="currentUser && currentUser.user_type == 'business' || currentUser.user_type == 'admin'"
-    >
-      <v-row justify="center">
-        <p class="display-1">{{currentUser.full_arabic_name}}'s products</p>
-      </v-row>
-      <v-row>
-        <v-col></v-col>
-      </v-row>
+    <v-row>
+      <v-col>
+        <v-card height="120">
+          <v-card-title>
+            <span>ad here</span>
+          </v-card-title>
+        </v-card>
+      </v-col>
+    </v-row>
 
-      <v-row justify="center">
-        <v-btn @click="$router.push('/addProduct').catch((err) => {})">
-          <span style="font-size: 19px">Add product</span>
-        </v-btn>
-      </v-row>
-      <v-row>
-        <v-col></v-col>
-      </v-row>
-      <v-row v-if="myProducts.length != 0">
-        <v-col lg="3" md="4" sm="6" cols="6" v-for="myProduct in myProducts" :key="myProduct.id">
-          <product :addToCartButton="false" :filteredProduct="myProduct"></product>
-        </v-col>
-      </v-row>
+    <v-row class="ml-2">
+      <v-col lg="2" style="max-width: 12%">
+        <v-card height="95%">
+          <v-card-title>
+            <span>ad here</span>
+          </v-card-title>
+        </v-card>
+      </v-col>
 
-      <v-row class="mt-16" justify="center" v-else>
-        <p class="display-1">No data available</p>
-      </v-row>
-    </v-container>
+      <v-col lg="9">
+        <v-container
+          v-if="currentUser && currentUser.user_type == 'business' || currentUser.user_type == 'admin'"
+        >
+          <v-row justify="center">
+            <p class="display-1">{{currentUser.full_arabic_name}}'s products</p>
+          </v-row>
+          <v-row>
+            <v-col></v-col>
+          </v-row>
 
-    <v-container v-else-if="!currentUser || currentUser.user_type != 'business'">
-      <v-row justify="center">
-        <p class="display-1">You cannot proceed to this page</p>
-      </v-row>
-    </v-container>
+          <v-row justify="center">
+            <v-btn @click="$router.push('/addProduct').catch((err) => {})">
+              <span style="font-size: 19px">Add product</span>
+            </v-btn>
+          </v-row>
+          <v-row>
+            <v-col></v-col>
+          </v-row>
+          <v-row v-if="myProducts.length != 0">
+            <v-col
+              lg="3"
+              md="4"
+              sm="6"
+              cols="6"
+              v-for="myProduct in myProducts"
+              :key="myProduct.id"
+            >
+              <product class="ml-n2 mr-n2" :addToCartButton="false" :filteredProduct="myProduct"></product>
+            </v-col>
+          </v-row>
 
-    <v-container v-else>
-      <v-row justify="center">
-        <p class="display-1">No products available</p>
-      </v-row>
-    </v-container>
-    <v-divider class="mx-15"></v-divider>
+          <v-row class="mt-16" justify="center" v-else>
+            <p class="display-1">No data available</p>
+          </v-row>
+        </v-container>
+
+        <v-container v-else-if="!currentUser || currentUser.user_type != 'business'">
+          <v-row justify="center">
+            <p class="display-1">You cannot proceed to this page</p>
+          </v-row>
+        </v-container>
+
+        <v-container v-else>
+          <v-row justify="center">
+            <p class="display-1">No products available</p>
+          </v-row>
+        </v-container>
+        <v-divider class="mx-15"></v-divider>
+      </v-col>
+
+      <v-col lg="2" style="max-width: 12%">
+        <v-card height="95%">
+          <v-card-title>
+            <span>ad here</span>
+          </v-card-title>
+        </v-card>
+      </v-col>
+    </v-row>
     <!-- <v-container>
       <ordersChart />
     </v-container>-->
