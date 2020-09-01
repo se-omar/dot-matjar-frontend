@@ -1,5 +1,8 @@
 <template>
   <v-app class="grey lighten-4">
+    <div class="vld-parent">
+      <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
+    </div>
     <div class="display-1 mb-10 mt-6" style="margin: auto">Dashboard</div>
 
     <v-row justify="center">
@@ -222,6 +225,8 @@ import product from "../components/product";
 import dashboardSellingProduct from "../components/dashboardSellingProduct";
 export default {
   async mounted() {
+    this.doLoading(2000);
+
     await this.$store.dispatch("refreshCurrentUser");
     this.$store.dispatch("getTopSellingProduct", this.currentUser.user_id);
     this.$store.dispatch("getLeastSellingProduct", this.currentUser.user_id);
@@ -350,10 +355,18 @@ export default {
       totalRevenue: 0,
       selectedYear: new Date().getFullYear(),
       myYearlyProducts: [],
+      isLoading: false,
     };
   },
 
   methods: {
+    doLoading(time) {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+      }, time);
+    },
+
     groupBy(xs, f) {
       return xs.reduce(
         (r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r),

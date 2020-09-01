@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <v-card height="300" width="250" class="grey lighten-4">
+    <v-card width="250" class="grey lighten-4">
       <v-img
         height="180"
         width="180"
@@ -17,6 +17,8 @@
         <v-icon class="mt-n1 mr-1">mdi-map-marker</v-icon>
         {{supplier.governorate}}, {{supplier.region}}
       </v-card-text>
+
+      <v-card-text class="mt-n5" style="font-size: 16px">sales: {{supplier.total_sales}}</v-card-text>
     </v-card>
   </v-main>
 </template>
