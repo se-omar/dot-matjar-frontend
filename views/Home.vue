@@ -7,15 +7,13 @@
 
     <v-app class="grey lighten-4">
       <div class="vld-parent">
-        <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="fullPage"></loading>
+        <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
       </div>
 
-      <v-row>
-        <v-col>
-          <v-card height="120">
-            <v-card-title>
-              <span>ad here</span>
-            </v-card-title>
+      <v-row class="mt-n13" justify="center">
+        <v-col lg="7">
+          <v-card height="170">
+            <v-img src="../assets/images/862-860x170.jpg"></v-img>
           </v-card>
         </v-col>
       </v-row>
@@ -23,14 +21,12 @@
       <v-row class="ml-2">
         <v-col lg="2" style="max-width: 12%">
           <v-card height="95%">
-            <v-card-title>
-              <span>ad here</span>
-            </v-card-title>
+            <v-img src="../assets/images/603-150x600.jpg"></v-img>
           </v-card>
         </v-col>
 
         <v-col lg="9">
-          <cartTable></cartTable>
+          <cartTable class="mb-n16"></cartTable>
 
           <v-radio-group mandatory v-model="radioGroup">
             <v-row class="mb-n5" justify="center">
@@ -188,16 +184,16 @@
               </v-card>
             </v-col>
           </v-row>
-          <v-col cols="6">
-            <v-btn large :color="siteColor" class="mb-15 white--text" @click="loadMore">load more</v-btn>
-          </v-col>
+          <v-row justify="center">
+            <v-col cols="6">
+              <v-btn large :color="siteColor" class="mb-15 white--text" @click="loadMore">load more</v-btn>
+            </v-col>
+          </v-row>
         </v-col>
 
         <v-col lg="2" style="max-width: 12%">
           <v-card height="95%">
-            <v-card-title>
-              <span>ad here</span>
-            </v-card-title>
+            <v-img src="../assets/images/838-150x600.jpg"></v-img>
           </v-card>
         </v-col>
       </v-row>
@@ -210,8 +206,6 @@
 </template>
 
 <script>
-import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/vue-loading.css";
 import Product from "../components/product.vue";
 
 import supplier from "../components/supplier";
@@ -236,7 +230,6 @@ export default {
       governorate: "",
       region: "",
       isLoading: false,
-      fullPage: true,
     };
   },
   async created() {
@@ -409,7 +402,6 @@ export default {
     supplier,
     cartTable,
     SiteColor,
-    Loading,
   },
 };
 </script>

@@ -1,5 +1,8 @@
 <template>
   <v-app class="grey lighten-4">
+    <div class="vld-parent">
+      <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
+    </div>
     <div class="display-1 mb-10 mt-6" style="margin: auto">{{supplier.full_arabic_name}}'s Dashboard</div>
     <v-row justify="center">
       <p style="font-size: 28px">All Products</p>
@@ -229,6 +232,7 @@ import product from "../components/product";
 import dashboardSellingProduct from "../components/dashboardSellingProduct";
 export default {
   async mounted() {
+    this.doLoading(2000);
     await this.$store.dispatch("refreshCurrentUser");
     this.$store.commit("supplierPage", this.supplier);
     await this.$store.dispatch("getMyProducts", this.supplier.user_id);
@@ -296,6 +300,7 @@ export default {
 
     years() {
       var year = [];
+
       this.notSortedDashboardOrders.forEach((element) => {
         year.push(element.order_year);
       });
@@ -376,10 +381,18 @@ export default {
       totalRevenue: 0,
       selectedYear: new Date().getFullYear(),
       myYearlyProducts: [],
+      isLoading: false,
     };
   },
 
   methods: {
+    doLoading(time) {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+      }, time);
+    },
+
     groupBy(xs, f) {
       return xs.reduce(
         (r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r),
@@ -438,6 +451,7 @@ export default {
 
         for (j = 0; j < this.monthlySortedOrders[i].length; j++) {
           // console.log("entered second loop");
+
           this.monthlySortedOrders[i][j].products.forEach((element) => {
             totalMonthSales += element.buy_counter;
             totalMonthRevenue += element.unit_price * element.buy_counter;
@@ -466,6 +480,7 @@ export default {
       this.myYearlyProducts = [];
       this.categoryPercentageArray = [];
       console.log("my yearly products 2", this.myYearlyProducts);
+
       this.yearlySortedOrders[this.selectedYear].forEach((element) => {
         this.myYearlyProducts.push(...element.products);
       });
