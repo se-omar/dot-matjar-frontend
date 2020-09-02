@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <toolbar />
     <v-row justify="center">
       <p class="display-1 mt-8">All Suppliers</p>
     </v-row>
@@ -28,7 +27,6 @@
 </template>
 
 <script>
-import toolbar from "../components/toolbar";
 import supplier from "../components/supplier";
 export default {
   async created() {
@@ -84,7 +82,7 @@ export default {
   },
 
   components: {
-    toolbar,
+  
     supplier,
   },
 };

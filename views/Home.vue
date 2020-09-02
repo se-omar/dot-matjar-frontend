@@ -1,6 +1,6 @@
 <template>
   <div class="grey lighten-4">
-    <toolBar></toolBar>
+    
     <div v-if="currentUser.user_type == 'admin'">
       <SiteColor></SiteColor>
     </div>
@@ -130,24 +130,28 @@
             <v-col lg="2">
               <v-btn
                 :disabled="radioGroup === '2'"
-                class="red darken-4 white--text"
+                class="white--text"
                 @click="filterProducts"
+                :color="siteColor"
               >Search</v-btn>
             </v-col>
 
             <v-col lg="2">
               <v-btn
                 :disabled="radioGroup === '1'"
-                class="red darken-4 white--text"
+                class="white--text"
                 @click="All"
+                :color="siteColor"
               >All</v-btn>
             </v-col>
 
             <v-col lg="2">
               <v-btn
                 :disabled="radioGroup === '1'"
-                class="red darken-4 white--text"
+                class="white--text"
                 @click="filterSuppliers"
+              :color="siteColor"
+
               >Search</v-btn>
             </v-col>
           </v-row>
@@ -199,7 +203,7 @@
       </v-row>
 
       <v-card>
-        <Footer></Footer>
+      
       </v-card>
     </v-app>
   </div>
@@ -209,8 +213,7 @@
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 import Product from "../components/product.vue";
-import Footer from "../components/footer.vue";
-import toolBar from "../components/toolbar";
+
 import supplier from "../components/supplier";
 import cartTable from "../components/cartTable";
 import SiteColor from "../components/siteColor";
@@ -237,6 +240,7 @@ export default {
     };
   },
   async created() {
+    this.$store.commit('removeSupplierPageData')
     this.$store.dispatch("getSiteColor");
 
     this.doLoading(3000);
@@ -401,8 +405,7 @@ export default {
   },
   components: {
     Product,
-    Footer,
-    toolBar,
+    
     supplier,
     cartTable,
     SiteColor,

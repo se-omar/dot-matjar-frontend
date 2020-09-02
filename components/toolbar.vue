@@ -1,12 +1,34 @@
 <template>
   <div class="tool-bar">
     <v-app-bar :color="siteColor" dark>
-      <v-toolbar-items class="ml-4">
+     
+     
        
-        <v-btn  rounded  text @click="$router.push('/home').catch((err) => {})">
-         <i class="fa fa-shopping-cart fa-lg "></i> <span class="font-weight-bold mt-2 " >Dot-Market</span>
-        </v-btn>
-      </v-toolbar-items>
+   
+       <span v-if="!supplierPageInfo.logo" >
+<v-btn text>
+  <i class="fa fa-shopping-cart fa-lg "></i>
+  <span class="mt-2">Dot-Market</span>
+</v-btn>
+       
+       </span>
+
+       <span v-else class="ml-4">
+<v-btn text max-width="150" @click="goSupplierPage">
+     <v-img
+        class="mx-2"
+        :src="nodeHost + supplierPageInfo.logo"
+        max-height="60"
+        max-width="100"
+        contain
+        
+      ></v-img>
+      <span class="mt-3">{{supplierPageInfo.site_name}}</span>
+     </v-btn> 
+
+       </span>
+      
+
 
       <v-spacer></v-spacer>
 
@@ -305,7 +327,14 @@ export default {
     },
     siteColor(){
       return this.$store.state.siteColor
+    },
+    supplierPageInfo(){
+      return this.$store.state.supplierPageInfo
+    },
+    supplier(){
+      return this.$store.state.supplier
     }
+   
   },
 
   methods: {
@@ -331,6 +360,9 @@ export default {
       this.$store.commit("supplierPage", this.currentUser);
       this.$router.push(`/supplierPage/` + this.currentUser.user_id);
     },
+    goSupplierPage(){
+      this.$router.push('/supplierPage/'+this.supplier.user_id)
+    }
   },
   data: () => ({
     profilephoto: [],

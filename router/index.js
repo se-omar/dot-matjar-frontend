@@ -27,7 +27,7 @@ import checkOutLocation from '../views/checkOutLocation'
 import adminPage from '../views/adminPage'
 import suppliersDashboard from '../views/allSuppliersDashboard'
 import orderedProducts from '../views/orderedProducts'
-
+import updateSupplierPage from '../views/updateSupplierPage'
 // import { isInteger } from 'core-js/fn/number'
 Vue.use(VueRouter)
 
@@ -170,6 +170,11 @@ var routes = [{
   path: '/orderedProducts',
   name: 'orderedProducts',
   component: orderedProducts
+},
+{
+  path: '/updateSupplierPage',
+  name: 'updateSupplierPage',
+  component: updateSupplierPage
 },
 {
   path: '*',

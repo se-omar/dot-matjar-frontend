@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <ToolBar></ToolBar>
+    
     <v-form>
       <v-container>
         <v-row>
@@ -130,18 +130,16 @@
       </v-container>
      
     </v-form>
-     <Footer></Footer>
+    
   </div>
 </template>
 <script>
-import ToolBar from '../components/toolbar'
-import Footer from '../components/footer'
+
 export default {
   
   name: "completedata",
   components:{
-    ToolBar,
-    Footer
+   
   },
   methods: {
     completedata() {
