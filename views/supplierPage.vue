@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app >
    
     <div class="vld-parent">
         <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="fullPage"></loading>
@@ -7,7 +7,7 @@
     <sideButton v-if="this.$route.params.supplier_id == currentUser.user_id" ></sideButton>
     <v-row justify="end" class="mr-16">
     <v-col cols="6"> 
-      <v-btn v-if="supplier.user_id == currentUser.user_id" class="white--text" @click="$router.push('/updateSupplierPage')" :color="pageColor" >Update My page</v-btn>
+      <v-btn v-if="supplier.user_id == currentUser.user_id" class="white--text" @click="updatePage" :color="pageColor" >Update My page</v-btn>
       </v-col>
 
  </v-row>
@@ -113,6 +113,10 @@ export default {
         this.isLoading = false;
       }, time);
     },
+    updatePage(){
+    
+      this.$router.push('/updateSupplierPage/' + this.$route.params.supplier_id)
+    }
   },
   created() {
      this.doLoading(3000);

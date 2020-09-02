@@ -1,11 +1,12 @@
 <template>
-<v-app>
+<v-app >
+  
 <v-row class="mt-6" justify="center">
     <h1>Welcome to Dot-Market</h1>
 
     </v-row>
      <v-row class="mt-6" justify="center">
-    <h2>Please be aware that your logo have to be a PNG file</h2>
+    <h2>Please be aware that your logo has to be a PNG file</h2>
 
     </v-row>
     <!-- <v-row class="mb-8" justify="center"> -->
@@ -13,18 +14,20 @@
     
       <v-row justify="center"> 
       <!-- =============== photo -->
-       <v-col cols="6" lg="4" sm="4" md="6">
+       <v-col   cols="12" lg="4" sm="6" md="6">
          <form   enctype="multipart.form/data">
          <label>
          
-     <v-card>
-           <span>Upload yur logo here:</span>
+     <v-card max-width="200" :color="siteColor">
+       
+           <span class="ml-4 mt-4" style="font-size:25px">Upload your logo here:</span>
         
-              <i class="fa fa-upload"> </i> 
+              <i class="fa fa-upload fa-lg"> </i> 
            <input @change="fileUploaded"  type="file" ref="logo"/>
           <span v-if="logo">
            {{logo.name}}
           </span>
+         
        </v-card>
        
          </label>
@@ -54,7 +57,7 @@
             <v-col cols="12" lg="12" sm="12" md="12">
             <v-textarea rounded label="Footer" v-model="footer" outlined :color="siteColor" > </v-textarea>
           </v-col>
-           <v-col cols="12" lg=3 sm="12" md="12">
+           <v-col cols="5" lg="3" sm="3" md="3">
              <v-btn @click="sendData" x-large :color="siteColor" class="white--text">Update</v-btn>
           </v-col>
       </v-row>
@@ -105,11 +108,23 @@ export default {
    },
    supplier(){
      return this.$store.state.supplier
+   },
+   currentUser(){
+     return this.$store.state.currentUser
    }
     },
     created(){
+      this.$store.dispatch('refreshCurrentUser')
+        this.$store.dispatch("getSupplier", this.$route.params.supplier_id);
+       this.$store.dispatch('getSupplierPageData' , this.$route.params.supplier_id);
+      if(this.currentUser){
+         if(this.$route.params.supplier_id != this.currentUser.user_id){
+        this.$router.push('/notFound')
+      }
+      }
+     
 console.log(this.supplier.user_id)
-this.$store.dispatch('getSupplierPageData')
+
     }
     
 }

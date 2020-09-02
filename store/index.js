@@ -963,6 +963,7 @@ axios.post('http://localhost:3000/api/updateSupplierPage',formdata)
 .then(response=>{
   console.log(response.data.message , response.data.data)
 context.commit('updateSupplierPage',response.data.data)
+
 })
     },
     getSupplierPageData(context,id){

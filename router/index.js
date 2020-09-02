@@ -172,7 +172,7 @@ var routes = [{
   component: orderedProducts
 },
 {
-  path: '/updateSupplierPage',
+  path: '/updateSupplierPage/:supplier_id',
   name: 'updateSupplierPage',
   component: updateSupplierPage
 },
