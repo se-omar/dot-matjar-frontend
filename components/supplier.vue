@@ -18,21 +18,36 @@
         {{supplier.governorate}}, {{supplier.region}}
       </v-card-text>
 
-      <v-card-text class="mt-n5" style="font-size: 16px">sales: {{supplier.total_sales}}</v-card-text>
+      <v-card-text class="mt-n5" style="font-size: 16px">total sales: {{supplier.total_sales}}</v-card-text>
+
+      <v-card-text
+        v-if="supplier.monthSales"
+        style="font-size: 16px"
+        class="mt-n5"
+      >{{moment().subtract(1, 'month').format('MMMM')}} sales: {{supplier.monthSales}}</v-card-text>
+
+      <v-card-text
+        v-if="supplier.monthRevenue"
+        style="font-size: 16px"
+        class="mt-n5"
+      >{{moment().subtract(1, 'month').format('MMMM')}} Revenue: {{supplier.monthRevenue}}</v-card-text>
     </v-card>
   </v-main>
 </template>
 
 <script>
+import moment from "moment";
 export default {
-  created() {
-    console.log(this.supplier);
-  },
-
   props: {
     supplier: {
       type: Object,
       default: () => null,
+    },
+  },
+
+  methods: {
+    moment() {
+      return new moment();
     },
   },
   computed: {

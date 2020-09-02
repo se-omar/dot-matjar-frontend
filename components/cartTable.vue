@@ -8,9 +8,7 @@
           @click.stop="dialog = true"
           @click="table"
           v-if="currentUser"
-          
           rounded
-          
         >
           <i class="fa fa-shopping-cart" aria-hidden="true"></i>
           <!-- <v-icon medium >shopping cart</v-icon> -->
@@ -158,8 +156,8 @@ export default {
     },
 
     getSession() {
-      this.$router.push('/checkOutLocation')
-      
+      this.$router.push("/checkOutLocation");
+
       // var self = this;
       // self.quantityArray = [];
       // this.items.forEach((element) => {
@@ -258,9 +256,9 @@ export default {
     intable() {
       return this.$store.state.table;
     },
-    siteColor(){
-      return this.$store.state.siteColor
-    }
+    siteColor() {
+      return this.$store.state.siteColor;
+    },
   },
 };
 </script>
