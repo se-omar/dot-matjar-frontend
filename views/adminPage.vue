@@ -136,7 +136,6 @@
 </template>
 
 <script>
-import toolbar from "../components/toolbar";
 import supplier from "../components/supplier";
 export default {
   async created() {
@@ -358,7 +357,7 @@ export default {
   },
 
   components: {
-    toolbar,
+  
     supplier,
   },
 };

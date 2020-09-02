@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <ToolBar></ToolBar>
+   
     <v-container mt-16>
       <v-row justify="center">
         <p class="display-1">Forgot your password ?</p>
@@ -28,7 +28,7 @@
  
      <!-- all other page content -->
  
-   <Footer id="footer"></Footer>
+   
 
 
    
@@ -37,13 +37,11 @@
 
 <script>
 //import updatePassword from "./updatePassword";
-import Footer from '../components/footer'
-import ToolBar from '../components/toolbar'
+
 export default {
   name: "reset-password",
   components:{
-    Footer ,
-    ToolBar
+ 
   },
   data() {
     return {

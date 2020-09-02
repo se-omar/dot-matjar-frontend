@@ -1,6 +1,6 @@
 <template>
 <v-app class="grey lighten-4">
-    <toolbar></toolbar>
+   
     <v-row  justify="center">
 <v-col  cols="12" lg="4" class="mt-8">
 <h1>Products placed in order</h1>
@@ -31,7 +31,7 @@
           dark
           v-bind="attrs"
           v-on="on"
-          @click="address"
+          @click="dialog=true"
         >
           Open Dialog
         </v-btn>
@@ -69,7 +69,7 @@
               
             </v-row>
           </v-container>
-          <small>*indicates required field</small>
+       
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -93,17 +93,15 @@
 </v-col>
 
     </v-row>
-    <Footer></Footer>
+   
 </v-app>
 </template>
 
 <script>
-import toolbar from '../components/toolbar'
-import Footer from '../components/footer'
+
 export default {
     components:{
-        toolbar,
-        Footer
+      
     },
     data:()=>({
         dialog:false,
@@ -151,9 +149,6 @@ console.log('order addrress',this.$store.state.OrderAddressDetails)
         console.log('assdasdas  ',this.address1)
         },
      
-      address(){
-       
-      }
 
     },
    async created(){

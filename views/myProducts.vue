@@ -1,6 +1,6 @@
 <template>
   <v-app class="grey lighten-4">
-    <toolbar />
+  
     <v-row>
       <v-col>
         <v-card height="120">
@@ -82,15 +82,14 @@
     <!-- <v-container>
       <ordersChart />
     </v-container>-->
-    <Footer></Footer>
+   
   </v-app>
 </template>
 
 <script>
 // import ordersChart from "../components/ordersChart";
 import Product from "../components/product.vue";
-import toolbar from "../components/toolbar";
-import Footer from "../components/footer";
+
 export default {
   async created() {
     await this.$store.dispatch("refreshCurrentUser");
@@ -108,8 +107,7 @@ export default {
 
   components: {
     Product,
-    Footer,
-    toolbar,
+   
   },
 };
 </script>

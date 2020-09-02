@@ -41,18 +41,19 @@ export default new Vuex.Store({
 
     suppliers: [],
     allSuppliers: [],
-    supplier: JSON.parse(localStorage.getItem('supplier')),
+    supplier: [],
     loginToken: localStorage.getItem('loginToken'),
     supplierProducts: JSON.parse(localStorage.getItem('supplierProducts')),
     regions: [],
     governorates: [],
-    ordersMade: [],
-    usersMadeOrders: [],
-    showOrderProducts: [],
-    userOrderAddress: [],
-    OrderAddressDetails: [],
-    siteColor: localStorage.getItem('siteColor') ? localStorage.getItem('siteColor') : 'red darken-4',
-    allSuppliersWithSales: []
+   ordersMade:[], 
+    usersMadeOrders:[],
+    showOrderProducts:[],
+    userOrderAddress:[],
+    OrderAddressDetails:[],
+    siteColor : localStorage.getItem('siteColor') ? localStorage.getItem('siteColor') : 'red darken-4',
+    supplierPageInfo:[],
+    allSuppliersWithSales: [],
   },
 
   mutations: {
@@ -281,8 +282,9 @@ export default new Vuex.Store({
     getSupplier(state, supplier) {
 
 
-      localStorage.setItem('supplier', JSON.stringify(supplier))
-      state.supplier = JSON.parse(localStorage.getItem('supplier'))
+      // localStorage.setItem('supplier', JSON.stringify(supplier))
+      // state.supplier = JSON.parse(localStorage.getItem('supplier'))
+      state.supplier = supplier
       localStorage.setItem('siteColor', supplier.page_color)
       state.siteColor = localStorage.getItem('siteColor')
     },
@@ -369,10 +371,21 @@ export default new Vuex.Store({
       localStorage.setItem('siteColor', color)
       state.siteColor = localStorage.getItem('siteColor')
     },
-    getSiteColor(state, color) {
-      localStorage.setItem('siteColor', color)
-      state.siteColor = localStorage.getItem('siteColor')
+    getSiteColor(state,color){
+      
+localStorage.setItem('siteColor',color)
+state.siteColor = localStorage.getItem('siteColor')
     },
+    updateSupplierPage(state,pageData){
+   state.supplierPageInfo = pageData
+    },
+    getSupplierPageData(state,info){
+      state.supplierPageInfo = info
+    },
+   removeSupplierPageData(state){
+state.supplierPageInfo=[]
+   },
+    
 
     getAllSuppliersWithSales(state, suppliers) {
       state.allSuppliersWithSales = suppliers
@@ -939,11 +952,31 @@ export default new Vuex.Store({
     },
     getSiteColor(context) {
       axios.put('http://localhost:3000/api/getSiteColor')
-        .then(response => {
-          console.log(response.data.data)
-          console.log(response.data.message)
-          context.commit('getSiteColor', response.data.data)
+      .then(response=>{
+        console.log(response.data.data)
+        console.log(response.data.message)
+        context.commit('getSiteColor',response.data.data)
+      })
+    },
+    updateSupplierPage(context,formdata){
+axios.post('http://localhost:3000/api/updateSupplierPage',formdata)
+.then(response=>{
+  console.log(response.data.message , response.data.data)
+context.commit('updateSupplierPage',response.data.data)
+
+})
+    },
+    getSupplierPageData(context,id){
+     
+        console.log('the id os supp',context.state.supplier.user_id)
+        axios.put('http://localhost:3000/api/getSupplierPageData',{supplier_id:id})
+        .then(info=>{
+          console.log('info from database',info.data.data)
+          console.log('info message from databas', info.data.message)
+          context.commit('getSupplierPageData',info.data.data)
         })
+   
+     
     }
 
   },

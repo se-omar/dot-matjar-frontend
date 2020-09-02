@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app>
-      <toolbar></toolbar>
+   
       <v-form>
         <v-container>
           <v-row justify="center" class="mt-16">
@@ -27,19 +27,17 @@
         </v-container>
       </v-form>
     </v-app>
-    <Footer></Footer>
+ 
   </div>
 </template>
 
 <script>
 import { loadStripe } from "@stripe/stripe-js";
 
-import toolbar from "../components/toolbar";
-import Footer from "../components/footer";
+
 export default {
   components: {
-    toolbar,
-    Footer,
+    
   },
   data: () => ({
     governorate: "",

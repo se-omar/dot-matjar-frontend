@@ -27,7 +27,7 @@
     </v-col>
     <v-col lg="12" sm="12" md="12">
       <v-btn
-        v-if="currentuser && addToCartButton"
+        v-if="currentuser"
         @click="add(filteredProduct)"
         variant="primary"
        :color="siteColor"

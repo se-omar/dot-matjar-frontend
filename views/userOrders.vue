@@ -1,6 +1,6 @@
 <template>
   <div>
-    <toolbar></toolbar>
+    
     <v-row>
       <v-col>
         <v-card height="120">
@@ -67,18 +67,15 @@
         </v-col>
       </v-row>
     </v-flex>
-    <Footer></Footer>
+   
   </div>
 </template>
 <script>
-import Footer from "../components/footer";
-import toolbar from "../components/toolbar";
+
 export default {
   name: "userOrders",
   components: {
-    Footer,
-    toolbar,
-  },
+      },
   async created() {
     await this.$store.dispatch("refreshCurrentUser");
     await this.$store.dispatch("getOrders");

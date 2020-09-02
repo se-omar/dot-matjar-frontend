@@ -1,6 +1,6 @@
 <template>
   <div class="grey lighten-4">
-    <toolBar></toolBar>
+    
     <div v-if="currentUser.user_type == 'admin'">
       <SiteColor></SiteColor>
     </div>
@@ -10,13 +10,13 @@
         <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
       </div>
 
-      <v-row class="mt-n13" justify="center">
+      <!-- <v-row class="mt-n13" justify="center">
         <v-col lg="7">
           <v-card height="170">
             <v-img src="../assets/images/862-860x170.jpg"></v-img>
           </v-card>
         </v-col>
-      </v-row>
+      </v-row> -->
 
       <v-row class="ml-2">
         <v-col lg="2" style="max-width: 12%">
@@ -26,7 +26,7 @@
         </v-col>
 
         <v-col lg="9">
-          <cartTable class="mb-n16"></cartTable>
+          <cartTable class=""></cartTable>
 
           <v-radio-group mandatory v-model="radioGroup">
             <v-row class="mb-n5" justify="center">
@@ -125,25 +125,30 @@
 
             <v-col lg="2">
               <v-btn
+              
                 :disabled="radioGroup === '2'"
-                class="red darken-4 white--text"
+                class="white--text"
                 @click="filterProducts"
+                :color="siteColor"
               >Search</v-btn>
             </v-col>
 
             <v-col lg="2">
               <v-btn
                 :disabled="radioGroup === '1'"
-                class="red darken-4 white--text"
+                class="white--text"
                 @click="All"
+                :color="siteColor"
               >All</v-btn>
             </v-col>
 
             <v-col lg="2">
               <v-btn
                 :disabled="radioGroup === '1'"
-                class="red darken-4 white--text"
+                class="white--text"
                 @click="filterSuppliers"
+              :color="siteColor"
+
               >Search</v-btn>
             </v-col>
           </v-row>
@@ -195,7 +200,7 @@
       </v-row>
 
       <v-card>
-        <Footer></Footer>
+      
       </v-card>
     </v-app>
   </div>
@@ -203,8 +208,7 @@
 
 <script>
 import Product from "../components/product.vue";
-import Footer from "../components/footer.vue";
-import toolBar from "../components/toolbar";
+
 import supplier from "../components/supplier";
 import cartTable from "../components/cartTable";
 import SiteColor from "../components/siteColor";
@@ -230,6 +234,7 @@ export default {
     };
   },
   async created() {
+    this.$store.commit('removeSupplierPageData')
     this.$store.dispatch("getSiteColor");
 
     this.doLoading(3000);
@@ -394,8 +399,7 @@ export default {
   },
   components: {
     Product,
-    Footer,
-    toolBar,
+    
     supplier,
     cartTable,
     SiteColor,
