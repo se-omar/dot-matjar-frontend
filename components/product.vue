@@ -27,11 +27,11 @@
     </v-col>
     <v-col lg="12" sm="12" md="12">
       <v-btn
-        v-if="currentuser"
+        v-if="currentuser && ($route.path ==='/home' || $route.path ==='/' || $route.path ==='/supplierPage/'+$route.params.supplier_id) "
         @click="add(filteredProduct)"
         variant="primary"
-       :color="siteColor"
-       class="white--text"
+        :color="siteColor"
+        class="white--text"
       >Add to cart</v-btn>
       <!-- <b-button
            v-if="this.inCart.in_cart==1"
@@ -46,6 +46,9 @@
 // import cart from '../views/cart'
 export default {
   components: {},
+  created() {
+    console.log(this.$route);
+  },
   name: "product",
   data() {
     return {
@@ -99,9 +102,9 @@ export default {
     cart() {
       return this.$store.state.cart;
     },
-    siteColor(){
+    siteColor() {
       return this.$store.state.siteColor;
-    }
+    },
   },
 };
 </script>

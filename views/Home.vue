@@ -1,24 +1,40 @@
 <template>
   <div class="grey lighten-4">
-    
     <div v-if="currentUser.user_type == 'admin'">
       <SiteColor></SiteColor>
     </div>
 
     <v-app class="grey lighten-4">
-      <div class="vld-parent">
+      <div class="vld-parent mb-n16">
         <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
       </div>
 
-      <!-- <v-row class="mt-n13" justify="center">
-        <v-col lg="7">
-          <v-card height="170">
-            <v-img src="../assets/images/862-860x170.jpg"></v-img>
-          </v-card>
+      <v-row justify="center">
+        <v-col lg="10">
+          <carousel
+            :autoplay="true"
+            :per-page="1"
+            :centerMode="true"
+            :loop="true"
+            :navigationEnabled="true"
+          >
+            <slide>
+              <v-img height="370" src="..\assets\Image-1595324434181.jpg"></v-img>
+            </slide>
+            <slide>
+              <v-img height="370" src="../assets\Image-1595324434182.jpg"></v-img>
+            </slide>
+            <slide>
+              <v-img height="370" src="../assets\Image-1595324404683.jpg"></v-img>
+            </slide>
+            <slide>
+              <v-img height="370" src="../assets\Image-1595324434200.jpg"></v-img>
+            </slide>
+          </carousel>
         </v-col>
-      </v-row> -->
+      </v-row>
 
-      <v-row class="ml-2">
+      <v-row class="ml-2 mt-n7">
         <v-col lg="2" style="max-width: 12%">
           <v-card height="95%">
             <v-img src="../assets/images/603-150x600.jpg"></v-img>
@@ -26,7 +42,7 @@
         </v-col>
 
         <v-col lg="9">
-          <cartTable class=""></cartTable>
+          <cartTable class></cartTable>
 
           <v-radio-group mandatory v-model="radioGroup">
             <v-row class="mb-n5" justify="center">
@@ -125,7 +141,6 @@
 
             <v-col lg="2">
               <v-btn
-              
                 :disabled="radioGroup === '2'"
                 class="white--text"
                 @click="filterProducts"
@@ -147,8 +162,7 @@
                 :disabled="radioGroup === '1'"
                 class="white--text"
                 @click="filterSuppliers"
-              :color="siteColor"
-
+                :color="siteColor"
               >Search</v-btn>
             </v-col>
           </v-row>
@@ -175,7 +189,7 @@
               class="mb-15"
               v-for="supplier in suppliers"
               :key="supplier.user_id"
-              lg="2"
+              lg="3"
               md="4"
               sm="6"
               cols="6"
@@ -186,29 +200,31 @@
             </v-col>
           </v-row>
           <v-row justify="center">
-            <v-col cols="6">
-              <v-btn large :color="siteColor" class="mb-15 white--text" @click="loadMore">load more</v-btn>
-            </v-col>
+            <v-btn large :color="siteColor" class="mb-15 white--text" @click="loadMore">load more</v-btn>
           </v-row>
         </v-col>
 
-        <v-col lg="2" style="max-width: 12%">
-          <v-card height="95%">
+        <v-col lg="2" style="max-width: 12%;   resize: both;
+  overflow: auto;">
+          <v-card
+            style="resize: both;
+  overflow: auto;"
+            min-width="100"
+            min-height="300"
+            height="500"
+          >
             <v-img src="../assets/images/838-150x600.jpg"></v-img>
           </v-card>
         </v-col>
       </v-row>
 
-      <v-card>
-      
-      </v-card>
+      <v-card></v-card>
     </v-app>
   </div>
 </template>
 
 <script>
 import Product from "../components/product.vue";
-
 import supplier from "../components/supplier";
 import cartTable from "../components/cartTable";
 import SiteColor from "../components/siteColor";
@@ -234,10 +250,10 @@ export default {
     };
   },
   async created() {
-    this.$store.commit('removeSupplierPageData')
+    this.$store.commit("removeSupplierPageData");
     this.$store.dispatch("getSiteColor");
 
-    this.doLoading(3000);
+    // this.doLoading(3000);
 
     if (this.loginToken) {
       await this.$store.dispatch("refreshCurrentUser");
@@ -254,7 +270,6 @@ export default {
       governorate: this.governorate,
       region: this.region,
     });
-    console.log(this.$store.state.filteredProducts);
     return new Promise((resolve) => {
       setTimeout(() => {
         this.$store.dispatch("categoriesDB");
@@ -366,19 +381,6 @@ export default {
           region: this.region,
         });
       }
-      // window.onscroll = function () {
-      //   console.log(this.suppliers);
-      //   // let bottomOfWindow =
-      //   //   document.documentElement.scrollTop + window.innerHeight ===
-      //   //   document.documentElement.offsetHeight;
-      //   // console.log(bottomOfWindow);
-      //   console.log("false");
-      //   if (window.innerHeight + window.scrollY >= document.body.scrollHeight) {
-      //     console.log(this.suppliers);
-      //     console.log("true");
-      //     self.$store.dispatch("getSuppliers");
-      //   }
-      // };
     },
 
     supplierClicked(supplier) {
@@ -399,7 +401,6 @@ export default {
   },
   components: {
     Product,
-    
     supplier,
     cartTable,
     SiteColor,

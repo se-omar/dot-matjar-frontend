@@ -1,7 +1,9 @@
 <template>
   <v-app>
-    <toolbar />
     <div class="vld-parent">
+      <div v-if="currentUser.user_type == 'admin'">
+        <SiteColor></SiteColor>
+      </div>
       <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
     </div>
     <v-row justify="center">
@@ -25,7 +27,9 @@
     </v-row>
 
     <v-row justify="center">
-      <p class="display-1 mt-8">Top Selling Suppliers in August</p>
+      <p
+        class="display-1 mt-8"
+      >Top Selling Suppliers in {{moment().subtract(1, 'month').format('MMMM')}}</p>
     </v-row>
 
     <v-row>
@@ -44,7 +48,7 @@
       </v-col>
     </v-row>
 
-    <v-row class="mb-n7" style="width: 92%; margin: auto">
+    <!-- <v-row class="mb-n7" style="width: 92%; margin: auto">
       <v-col lg="3">
         <v-select
           @change="changeYear"
@@ -54,7 +58,7 @@
           label="Select Year"
         ></v-select>
       </v-col>
-    </v-row>
+    </v-row>-->
 
     <v-row justify="center">
       <p class="display-1 mt-8">Suppliers Ranking Chart</p>
@@ -113,6 +117,41 @@
       <p class="display-1 mt-8">All Suppliers</p>
     </v-row>
 
+    <v-row justify="center">
+      <v-col lg="3">
+        <v-text-field
+          @keyup="emptySupplierName"
+          dense
+          outlined
+          v-model="supplierName"
+          placeholder="Search Suppliers by Name"
+        ></v-text-field>
+      </v-col>
+
+      <v-col lg="3">
+        <v-select
+          :items="egyptGovernorates"
+          placeholder="Governorate"
+          dense
+          outlined
+          v-model="governorate"
+          @change="getCountryRegions()"
+        ></v-select>
+      </v-col>
+
+      <v-col lg="3">
+        <v-select :items="regions" placeholder="Region" dense outlined v-model="region"></v-select>
+      </v-col>
+
+      <v-col lg="1">
+        <v-btn class="white--text" @click="filterSuppliers" :color="siteColor">Search</v-btn>
+      </v-col>
+
+      <v-col lg="1">
+        <v-btn class="white--text" @click="All" :color="siteColor">All</v-btn>
+      </v-col>
+    </v-row>
+
     <v-row>
       <v-col
         class="mb-15"
@@ -130,21 +169,28 @@
     </v-row>
 
     <v-row justify="center">
-      <v-btn large class="red darken-4 mb-15 white--text" @click="loadMore">load more</v-btn>
+      <v-btn large :color="siteColor" class="mb-15 white--text" @click="loadMore">load more</v-btn>
     </v-row>
   </v-app>
 </template>
 
 <script>
 import supplier from "../components/supplier";
+import moment from "moment";
+import SiteColor from "../components/siteColor";
 export default {
   async created() {
     this.doLoading(5000);
     await this.$store.dispatch("refreshCurrentUser");
     await this.$store.dispatch("getAllSuppliersWithSales");
+    this.$store.dispatch("getGovernorate");
+    this.$store.dispatch("getSiteColor");
     console.log(this.currentMonth);
     this.$store.dispatch("getSuppliers", {
       supplierFilterFlag: this.supplierFilterFlag,
+      supplierName: this.supplierName,
+      governorate: this.governorate,
+      region: this.region,
     });
     console.log("all suppliers", this.suppliers);
 
@@ -167,12 +213,22 @@ export default {
       topMonthlySalesArray: [],
       topMonthlyRevenueArray: [],
       topMonthSuppliers: [],
+      governorate: "",
+      region: "",
+      supplierName: "",
+      supplierLocation: "",
     };
   },
 
   computed: {
     currentUser() {
       return this.$store.state.currentUser;
+    },
+    regions() {
+      return this.$store.state.regions;
+    },
+    egyptGovernorates() {
+      return this.$store.state.governorates;
     },
     suppliers() {
       return this.$store.state.suppliers;
@@ -249,6 +305,9 @@ export default {
       // });
       return [2020, 2015, 2016];
     },
+    siteColor() {
+      return this.$store.state.siteColor;
+    },
   },
 
   methods: {
@@ -257,6 +316,10 @@ export default {
       setTimeout(() => {
         this.isLoading = false;
       }, time);
+    },
+
+    moment() {
+      return new moment();
     },
 
     loadMore() {
@@ -297,6 +360,7 @@ export default {
       var totalMonthSales;
       var totalMonthRevenue;
       var yearlySortedOrders;
+
       for (var i = 0; i < this.allSuppliersWithSales.length; i++) {
         totalMonthSales = 0;
         totalMonthRevenue = 0;
@@ -354,11 +418,37 @@ export default {
     changeYear() {
       console.log(this.selectedYear);
     },
+
+    filterSuppliers() {
+      this.supplierFilterFlag = true;
+      this.$store.dispatch("filterSuppliers", {
+        supplierName: this.supplierName,
+        governorate: this.governorate,
+        region: this.region,
+      });
+    },
+
+    emptySupplierName() {
+      if (!this.supplierName) {
+        this.$store.commit("emptySupplierName");
+      }
+    },
+
+    getCountryRegions() {
+      console.log(this.governorate);
+      this.$store.dispatch("getRegions", this.governorate);
+    },
+
+    All() {
+      this.supplierFilterFlag = false;
+      this.$store.commit("emptySearch");
+      this.$store.commit("emptySupplierName");
+    },
   },
 
   components: {
-  
     supplier,
+    SiteColor,
   },
 };
 </script>
