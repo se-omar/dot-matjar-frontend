@@ -15,8 +15,10 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueApexCharts from 'vue-apexcharts'
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
+import Moment from 'moment'
+import VueCarousel from 'vue-carousel';
 
-
+Vue.use(VueCarousel);
 
 
 Vue.use(VueApexCharts)
@@ -29,6 +31,8 @@ Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 
 Vue.use(IconsPlugin)
+
+Vue.use(Moment);
 
 library.add(faUserSecret)
 

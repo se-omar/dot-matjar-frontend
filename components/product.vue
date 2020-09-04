@@ -58,6 +58,9 @@
 // import cart from '../views/cart'
 export default {
   components: {},
+  created() {
+    console.log(this.$route);
+  },
   name: "product",
   data() {
     return {
@@ -111,9 +114,9 @@ export default {
     cart() {
       return this.$store.state.cart;
     },
-    siteColor(){
+    siteColor() {
       return this.$store.state.siteColor;
-    }
+    },
   },
 };
 </script>

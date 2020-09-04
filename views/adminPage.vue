@@ -1,7 +1,9 @@
 <template>
   <v-app>
-    <toolbar />
     <div class="vld-parent">
+      <div v-if="currentUser.user_type == 'admin'">
+        <SiteColor></SiteColor>
+      </div>
       <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
     </div>
     <v-row justify="center">
@@ -23,6 +25,40 @@
         </v-card>
       </v-col>
     </v-row>
+
+    <v-row justify="center">
+      <p
+        class="display-1 mt-8"
+      >Top Selling Suppliers in {{moment().subtract(1, 'month').format('MMMM')}}</p>
+    </v-row>
+
+    <v-row>
+      <v-col
+        class="mb-15"
+        v-for="topSupplier in topMonthSuppliers"
+        :key="topSupplier.user_id"
+        lg="2"
+        md="4"
+        sm="6"
+        cols="6"
+      >
+        <v-card @click="supplierClicked(sortedSupplier)">
+          <supplier :supplier="topSupplier"></supplier>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <!-- <v-row class="mb-n7" style="width: 92%; margin: auto">
+      <v-col lg="3">
+        <v-select
+          @change="changeYear"
+          v-model="selectedYear"
+          outlined
+          :items="years"
+          label="Select Year"
+        ></v-select>
+      </v-col>
+    </v-row>-->
 
     <v-row justify="center">
       <p class="display-1 mt-8">Suppliers Ranking Chart</p>
@@ -81,6 +117,41 @@
       <p class="display-1 mt-8">All Suppliers</p>
     </v-row>
 
+    <v-row justify="center">
+      <v-col lg="3">
+        <v-text-field
+          @keyup="emptySupplierName"
+          dense
+          outlined
+          v-model="supplierName"
+          placeholder="Search Suppliers by Name"
+        ></v-text-field>
+      </v-col>
+
+      <v-col lg="3">
+        <v-select
+          :items="egyptGovernorates"
+          placeholder="Governorate"
+          dense
+          outlined
+          v-model="governorate"
+          @change="getCountryRegions()"
+        ></v-select>
+      </v-col>
+
+      <v-col lg="3">
+        <v-select :items="regions" placeholder="Region" dense outlined v-model="region"></v-select>
+      </v-col>
+
+      <v-col lg="1">
+        <v-btn class="white--text" @click="filterSuppliers" :color="siteColor">Search</v-btn>
+      </v-col>
+
+      <v-col lg="1">
+        <v-btn class="white--text" @click="All" :color="siteColor">All</v-btn>
+      </v-col>
+    </v-row>
+
     <v-row>
       <v-col
         class="mb-15"
@@ -98,19 +169,28 @@
     </v-row>
 
     <v-row justify="center">
-      <v-btn large class="red darken-4 mb-15 white--text" @click="loadMore">load more</v-btn>
+      <v-btn large :color="siteColor" class="mb-15 white--text" @click="loadMore">load more</v-btn>
     </v-row>
   </v-app>
 </template>
 
 <script>
 import supplier from "../components/supplier";
+import moment from "moment";
+import SiteColor from "../components/siteColor";
 export default {
   async created() {
+    this.doLoading(5000);
     await this.$store.dispatch("refreshCurrentUser");
     await this.$store.dispatch("getAllSuppliersWithSales");
+    this.$store.dispatch("getGovernorate");
+    this.$store.dispatch("getSiteColor");
+    console.log(this.currentMonth);
     this.$store.dispatch("getSuppliers", {
       supplierFilterFlag: this.supplierFilterFlag,
+      supplierName: this.supplierName,
+      governorate: this.governorate,
+      region: this.region,
     });
     console.log("all suppliers", this.suppliers);
 
@@ -118,6 +198,8 @@ export default {
       "all suppliers with sales from admin page",
       this.allSuppliersWithSales
     );
+    this.getTopMonthlySuppliers();
+
     console.log("suppliers sorted by sales", this.suppliersSortedBySales);
   },
 
@@ -125,12 +207,28 @@ export default {
     return {
       supplierFilterFlag: false,
       isLoading: false,
+      notSortedOrders: [],
+      selectedYear: new Date().getFullYear(),
+      currentMonth: new Date().getMonth(),
+      topMonthlySalesArray: [],
+      topMonthlyRevenueArray: [],
+      topMonthSuppliers: [],
+      governorate: "",
+      region: "",
+      supplierName: "",
+      supplierLocation: "",
     };
   },
 
   computed: {
     currentUser() {
       return this.$store.state.currentUser;
+    },
+    regions() {
+      return this.$store.state.regions;
+    },
+    egyptGovernorates() {
+      return this.$store.state.governorates;
     },
     suppliers() {
       return this.$store.state.suppliers;
@@ -197,6 +295,19 @@ export default {
         },
       ];
     },
+    years() {
+      // var year = [];
+      // this.notSortedOrders.forEach((element) => {
+      //   year.push(element.order_year);
+      // });
+      // return year.sort(function (a, b) {
+      //   return b - a;
+      // });
+      return [2020, 2015, 2016];
+    },
+    siteColor() {
+      return this.$store.state.siteColor;
+    },
   },
 
   methods: {
@@ -205,6 +316,10 @@ export default {
       setTimeout(() => {
         this.isLoading = false;
       }, time);
+    },
+
+    moment() {
+      return new moment();
     },
 
     loadMore() {
@@ -232,23 +347,108 @@ export default {
       console.log(this.supplier);
     },
 
-    dynamicSort(property) {
-      var sortOrder = 1;
-      if (property[0] === "-") {
-        sortOrder = -1;
-        property = property.substr(1);
+    groupBy(xs, f) {
+      return xs.reduce(
+        (r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r),
+        {}
+      );
+    },
+
+    async getTopMonthlySuppliers() {
+      var self = this;
+      var monthlySortedOrders = [];
+      var totalMonthSales;
+      var totalMonthRevenue;
+      var yearlySortedOrders;
+
+      for (var i = 0; i < this.allSuppliersWithSales.length; i++) {
+        totalMonthSales = 0;
+        totalMonthRevenue = 0;
+        await self.$axios
+          .post("http://localhost:3000/api/monthlySales", {
+            user_id: self.allSuppliersWithSales[i].user_id,
+          })
+          .then((response) => {
+            if (response.data.length > 0) {
+              yearlySortedOrders = self.groupBy(
+                response.data,
+                (c) => c.order_year
+              );
+
+              if (yearlySortedOrders[self.selectedYear]) {
+                monthlySortedOrders = self.groupBy(
+                  yearlySortedOrders[self.selectedYear],
+                  (c) => c.order_month
+                );
+
+                var currentSupplier;
+                for (
+                  var j = 0;
+                  j < monthlySortedOrders[self.currentMonth].length;
+                  j++
+                ) {
+                  currentSupplier =
+                    monthlySortedOrders[self.currentMonth][j].products[0].user;
+                  monthlySortedOrders[self.currentMonth][j].products.forEach(
+                    (element) => {
+                      totalMonthSales += element.buy_counter;
+                      totalMonthRevenue +=
+                        element.buy_counter * element.unit_price;
+                    }
+                  );
+                }
+              }
+              if (totalMonthSales > 0) {
+                currentSupplier.monthSales = totalMonthSales;
+                currentSupplier.monthRevenue = totalMonthRevenue;
+                console.log(totalMonthRevenue);
+                self.topMonthSuppliers.push(currentSupplier);
+              }
+            }
+          });
       }
-      return function (a, b) {
-        var result =
-          a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
-        return result * sortOrder;
-      };
+
+      self.topMonthSuppliers.sort(function (a, b) {
+        return b.monthSales - a.monthSales;
+      });
+
+      console.log("top month suppliers", self.topMonthSuppliers);
+    },
+
+    changeYear() {
+      console.log(this.selectedYear);
+    },
+
+    filterSuppliers() {
+      this.supplierFilterFlag = true;
+      this.$store.dispatch("filterSuppliers", {
+        supplierName: this.supplierName,
+        governorate: this.governorate,
+        region: this.region,
+      });
+    },
+
+    emptySupplierName() {
+      if (!this.supplierName) {
+        this.$store.commit("emptySupplierName");
+      }
+    },
+
+    getCountryRegions() {
+      console.log(this.governorate);
+      this.$store.dispatch("getRegions", this.governorate);
+    },
+
+    All() {
+      this.supplierFilterFlag = false;
+      this.$store.commit("emptySearch");
+      this.$store.commit("emptySupplierName");
     },
   },
 
   components: {
-  
     supplier,
+    SiteColor,
   },
 };
 </script>
