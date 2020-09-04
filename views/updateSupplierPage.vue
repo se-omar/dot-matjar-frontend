@@ -60,6 +60,43 @@
            <v-col cols="5" lg="3" sm="3" md="3">
              <v-btn @click="sendData" x-large :color="siteColor" class="white--text">Update</v-btn>
           </v-col>
+         
+<!-- ======================== -->
+
+
+ 
+  
+
+    <v-snackbar
+      v-model="snackbar"
+      :bottom="y === 'bottom'"
+      :color="siteColor"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+      :right="x === 'right'"
+      :timeout="timeout"
+      :top="y === 'top'"
+      :vertical="mode === 'vertical'"
+    >
+     Page Updated succesfully
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          dark
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+
+
+<!-- ======================= -->
+
+
+
       </v-row>
       
     </v-container>
@@ -79,7 +116,22 @@ export default {
       linkedin:'',
       twitter:'',
       google:'',
-      footer:''
+      footer:'',
+
+
+
+
+        mode: '',
+        snackbar: false,
+     
+        timeout: 3000,
+        x: null,
+        y: 'top',
+
+
+
+
+
     }),
     methods:{
      fileUploaded(){
@@ -100,6 +152,7 @@ export default {
        formdata.set('supplier_id',this.supplier.user_id)
 
        this.$store.dispatch('updateSupplierPage',formdata)
+       this.snackbar = true
      }
     },
     computed:{

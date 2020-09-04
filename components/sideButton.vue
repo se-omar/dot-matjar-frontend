@@ -1,5 +1,5 @@
 <template>
-  <v-menu
+  <!-- <v-menu
     transition="fab-transition"
     :close-on-content-click="false"
     :nudge-width="200"
@@ -7,7 +7,7 @@
     class="menu"
     max-width="200"
     min-width="200"
-    
+    max-height="50"
   >
     <template v-slot:activator="{ on, attrs }">
       
@@ -22,19 +22,70 @@
 
     </template>
 
-    <v-card>
-      <v-card-text>
-        <v-row justify="center">
-          <span class="black--text" style="font-weight:bold;">Choose your page color form Here :</span>
-        </v-row>
-      </v-card-text>
+    <v-card max-height="500" >
+     
+     
+           <v-row justify="center" > 
+             <v-col cols="4" >  
+<div class="file is-boxed is-primary">
+<label class="file-label">
 
-      <!-- <v-row justify="center" v-for="item in items" :key="item.color">
-        <v-btn small icon :class="item.color" @click="changeColor(item)"></v-btn>
-      </v-row> -->
-      <input type="color" v-model="colorPicker"> <v-btn :color="siteColor" @click="changeColor">X</v-btn>
+
+
+
+
+<span class="file-cta">
+<span class="file-icon">
+    
+
+<i class="fas fa-paint-roller  fa-2x " style="color:blue"></i> <br/>
+
+
+</span>
+
+</span>
+
+<input type="color" 
+v-model="colorPicker"
+id="input"
+ /> <br/>
+
+</label>
+</div>
+             </v-col>
+             </v-row>
     </v-card>
-  </v-menu>
+  </v-menu> -->
+  
+<div class="file is-boxed is-primary">
+  <v-row justify="end">
+<label class="file-label">
+
+
+
+
+
+<span class="file-cta">
+<span  class="file-icon">
+    
+
+<i class="fas fa-paint-roller  fa-2x  mt-4" ></i> <br/>
+
+
+</span>
+
+</span>
+
+<input type="color" 
+v-model="colorPicker"
+id="input"
+@change="changeColor"
+ /> <br/>
+
+</label>
+  </v-row>
+</div>
+ 
 </template>
 <script>
 export default {
@@ -68,3 +119,10 @@ export default {
   },
 };
 </script>
+<style scoped>
+input{
+  opacity: 0;
+  z-index: inherit;
+  
+}
+</style>

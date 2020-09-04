@@ -11,7 +11,13 @@
     <v-card>
         <v-row >
     <v-col cols="12" lg="6"  >
- <v-data-table @click:row="showProducts" :headers="usersTableHeaders" :items="usersMadeOrders" hide-default-footer>
+ <v-data-table @click:row="showProducts" :headers="usersTableHeaders" :items="usersMadeOrders"  :footer-props="{
+      showFirstLastPage: true,
+      firstIcon: 'mdi-arrow-collapse-left',
+      lastIcon: 'mdi-arrow-collapse-right',
+      prevIcon: 'mdi-minus',
+      nextIcon: 'mdi-plus'
+    }">
 
 <template v-slot:item.showProducts><v-btn small  >Show Products</v-btn> </template>
 
@@ -23,8 +29,19 @@
 <!-- ================= -->
 <!-- Address detailss  -->
 
-<template v-slot:item.addressDetails>  <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="600px">
+
+
+
+
+<!-- =================== -->
+        </v-data-table>
+    </v-col>
+
+        </v-row>
+        <v-divider></v-divider>
+        <!-- ============================ -->
+<v-row justify="center">
+ <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           color="primary"
@@ -33,7 +50,7 @@
           v-on="on"
           @click="dialog=true"
         >
-          Open Dialog
+          Show Address Details
         </v-btn>
       </template>
       <v-card>
@@ -78,17 +95,8 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-row></template>
-
-
-
-
-<!-- =================== -->
-        </v-data-table>
-    </v-col>
-
-        </v-row>
-        <v-divider></v-divider>
+    </v-row>
+        <!-- ========================= -->
 </v-card>
 </v-col>
 
@@ -138,7 +146,7 @@ city:''
     methods:{
    async    showProducts(event){
 console.log(event)
-this.$store.dispatch('showOrderProducts',event.order_number)
+await this.$store.dispatch('showOrderProducts',event.order_number)
 await this.$store.commit('showAddressDetails',event.order_number)
 console.log('order addrress',this.$store.state.OrderAddressDetails)
  var address = this.OrderAddressDetails
@@ -153,8 +161,9 @@ console.log('order addrress',this.$store.state.OrderAddressDetails)
     },
    async created(){
         await this.$store.dispatch('refreshCurrentUser')
-
+console.log(this.currentUser.user_id)
 this.$store.dispatch('ordersMade',this.currentUser.user_id)
+console.log('user made orders',this.usersMadeOrders)
     },
     computed:{
         currentUser(){

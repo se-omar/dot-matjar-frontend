@@ -1,11 +1,12 @@
 <template>
-  <div class="grey lighten-4">
+  <div class="grey lighten-4 ">
     
-    <div v-if="currentUser.user_type == 'admin'">
+   
+
+    <v-app class="grey lighten-4 mr-4">
+       <div v-if="currentUser.user_type == 'admin'">
       <SiteColor></SiteColor>
     </div>
-
-    <v-app class="grey lighten-4">
       <div class="vld-parent">
         <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
       </div>
@@ -113,42 +114,46 @@
           </v-row>
 
           <v-row class="mt-n3" justify="center">
-            <v-col lg="1">
+            <v-col cols="6" sm="6" md="6" lg="6">
               <v-text-field :disabled="radioGroup === '2'" dense type="number" label="Price From"></v-text-field>
             </v-col>
 
-            <v-col lg="1  ">
+            <v-col  cols="6" sm="6" md="6" lg="6">
               <v-text-field :disabled="radioGroup === '2'" dense type="number" label="Price TO"></v-text-field>
             </v-col>
 
-            <v-col lg="1"></v-col>
+          
 
-            <v-col lg="2">
+            <v-col cols="4" sm="4" md="4" lg="4">
               <v-btn
               
                 :disabled="radioGroup === '2'"
                 class="white--text"
                 @click="filterProducts"
                 :color="siteColor"
+                rounded
+                max-width="80"
               >Search</v-btn>
             </v-col>
 
-            <v-col lg="2">
+            <v-col cols="4" sm="4" md="4" lg="4">
               <v-btn
                 :disabled="radioGroup === '1'"
                 class="white--text"
                 @click="All"
                 :color="siteColor"
+                rounded
               >All</v-btn>
             </v-col>
 
-            <v-col lg="2">
+            <v-col cols="4" sm="4" md="4" lg="4">
               <v-btn
                 :disabled="radioGroup === '1'"
                 class="white--text"
                 @click="filterSuppliers"
               :color="siteColor"
-
+              rounded
+              max-width="80"
               >Search</v-btn>
             </v-col>
           </v-row>

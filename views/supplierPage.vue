@@ -83,6 +83,7 @@ export default {
   },
   data: () => ({
      isLoading: false,
+     fullPage:''
   }),
   computed: {
     currentUser() {
@@ -124,13 +125,13 @@ export default {
     this.$store.dispatch("refreshCurrentUser");
   
        this.$store.dispatch('getSupplierPageData' , this.$route.params.supplier_id);
-    this.$store.state.supplierPageColor = [];
+    // this.$store.state.supplierPageColor = [];
     this.$store.dispatch("getSupplierProducts", this.$route.params.supplier_id);
 
     
     console.log(this.$store.state.myProducts);
     console.log(this.$store.state.supplierPageColor);
-    this.pageColor = this.$store.state.supplierPageColor;
+    
     console.log(this.currentUser.user_id , this.supplier.user_id)
   },
 };

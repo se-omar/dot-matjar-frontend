@@ -138,7 +138,7 @@
               <span class="mos">My Page</span>
             </v-btn>
           </v-col>
-        <v-col cols="12 ml-6  ">
+        <v-col v-if="currentUser.user_type == 'business'  || currentUser.user_type == 'admin'" cols="12 ml-6  ">
             <v-btn class="btn1" :color="siteColor" x-large  rounded @click="$router.push('/orderedProducts')">
               <span class="mos">Ordered Products</span>
             </v-btn>

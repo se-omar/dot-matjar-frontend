@@ -1,16 +1,20 @@
 <template>
+<div>
+ 
   <v-card :elevation="7" max-width="280">
+     <v-row>
+    <v-col cols="12">
     <v-img height="200" :src="filteredProduct.main_picture"></v-img>
 
     <v-card-title>{{ filteredProduct.product_name }}</v-card-title>
     <v-card-text>
-      <div>كود المنتج: {{ filteredProduct.product_code }}</div>
+      <div>Code {{ filteredProduct.product_code }}</div>
       <div>category id: {{ filteredProduct.category_id }}</div>
       <div>
-        سعر القطعة:
+       Price:
         <span style="color: red;">{{ filteredProduct.unit_price }}</span>
         <br />
-        الحد الادني للطلب: {{ filteredProduct.min_units_per_order }}
+       Min requests :{{ filteredProduct.min_units_per_order }} 
       </div>
       <!-- <div>المشروع: {{ filteredProduct.bussiness.bussiness_name }}</div> -->
       <v-row align="center" class="mx-0">
@@ -21,25 +25,33 @@
     </v-card-text>
 
     <v-divider class="mx-4"></v-divider>
-
-    <v-col lg="12" sm="12" md="12">
+<v-row>
+    <v-col cols="12" lg="12" sm="12" md="12">
       <v-btn @click="setCurrentRow" :color="siteColor" text>Details</v-btn>
     </v-col>
-    <v-col lg="12" sm="12" md="12">
+    <v-col cols="12"  lg="12" sm="12" md="12" >
       <v-btn
+      max-width="100"
         v-if="currentuser"
         @click="add(filteredProduct)"
         variant="primary"
        :color="siteColor"
        class="white--text"
-      >Add to cart</v-btn>
+       rounded
+      >Add to<br/> cart</v-btn>
       <!-- <b-button
            v-if="this.inCart.in_cart==1"
           @click="add(product)"
           variant="warning"
       >product is added to cart</b-button>-->
     </v-col>
+    </v-row>
+     </v-col>
+  </v-row>
   </v-card>
+
+   
+  </div>
 </template>
 
 <script>

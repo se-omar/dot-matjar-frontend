@@ -1,24 +1,24 @@
 <template>
   <div id="app">
-    <v-app>
-      <v-container v-if="!currentUser" style="width: 60%">
+    <v-app >
+      <v-container  v-if="!currentUser" style="width: 60%">
         <div>
           <v-tabs
             v-model="tab"
             show-arrows
-            background-color="red darken-4"
+           
             icons-and-text
             dark
             grow
           >
-            <v-tabs-slider color="purple darken-4"></v-tabs-slider>
-            <v-tab v-for="i in tabs" :key="i.name">
-              <v-icon large>{{ i.icon }}</v-icon>
+            <v-tabs-slider  ></v-tabs-slider>
+            <v-tab   v-for="i in tabs" :key="i.name">
+              <v-icon  large>{{ i.icon }}</v-icon>
               <div class="caption py-1">{{ i.name }}</div>
             </v-tab>
             <v-tab-item>
-              <v-card class="px-4">
-                <v-card-text>
+              <v-card  class="px-4">
+                <v-card-text >
                   <v-form ref="loginForm" v-model="valid" lazy-validation>
                     <v-row>
                       <v-col cols="12">
@@ -48,7 +48,8 @@
                           x-large
                           block
                           :disabled="!valid"
-                          color="red darken-4 white--text"
+                          class=" white--text"
+                          :color="siteColor"
                           @click="login"
                         >Login</v-btn>
                       </v-col>
@@ -215,6 +216,10 @@ export default {
     regions() {
       return this.$store.state.regions;
     },
+    siteColor(){
+
+      return this.$store.state.siteColor
+    }
   },
   created() {
     this.$store.dispatch("getGovernorate");
@@ -256,6 +261,7 @@ export default {
       console.log(this.governorate);
       this.$store.dispatch("getRegions", this.governorate);
     },
+
   },
 
   data: () => ({

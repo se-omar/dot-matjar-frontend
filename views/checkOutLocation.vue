@@ -2,26 +2,49 @@
   <div>
     <v-app>
    
-      <v-form>
+      <v-form v-model="valid">
         <v-container>
           <v-row justify="center" class="mt-16">
             <h1>Products will be delivered to this location</h1>
           </v-row>
-
           <v-row>
             <v-col lg="6" sm="6">
-              <v-text-field dense outlined v-model="governorate" label="Governorate" disabled></v-text-field>
+             <v-select
+               :rules="rules"
+                :items="egyptGovernorates"
+               
+                placeholder="Governorate"
+                dense
+                outlined
+                v-model="governorate"
+                @change="getCountryRegions()"
+              ></v-select>
             </v-col>
             <v-col lg="6" sm="6">
-              <v-text-field dense outlined v-model="region" label="Region" disabled></v-text-field>
+             <v-select
+               :rules="rules"
+                :items="regions"
+                
+                placeholder="Region"
+                dense
+                outlined
+                v-model="region"
+              ></v-select>
             </v-col>
             <v-col cols="12" lg="12">
               <v-textarea  outlined color="teal" label="Address" v-model="address"></v-textarea>
             </v-col>
           </v-row>
-          <v-row justify="center">
+          <v-row  justify="center">
             <v-col lg="2">
-              <v-btn color="red darken-4" class="white--text" @click="getSession">Proceed</v-btn>
+              <v-btn :disabled="!valid" @click="createOrder" :color="siteColor" class="white--text" >
+              Pay on Receiving
+              </v-btn>
+            </v-col>
+               <v-col lg="2">
+              <v-btn :disabled="!valid" :color="siteColor" class="white--text" @click="getSession">
+              Visa
+              </v-btn>
             </v-col>
           </v-row>
         </v-container>
@@ -40,12 +63,16 @@ export default {
     
   },
   data: () => ({
-    governorate: "",
-    region: "",
+region:'',
+governorate:'',
+valid:true,
     address: "",
-    regions: [],
+
     governorates: [],
     quantityArray: [],
+    rules:[
+      v=> !!v || "Required"
+    ]
   }),
 
   computed: {
@@ -55,12 +82,29 @@ export default {
     items() {
       return this.$store.state.table;
     },
+    siteColor(){
+      return this.$store.state.siteColor
+    },
+    regions() {
+      return this.$store.state.regions;
+    },
+    egyptGovernorates() {
+      return this.$store.state.governorates;
+    },
   },
-  created() {
-    this.governorate = this.currentUser.governorate;
-    this.region = this.currentUser.region;
+  async created() {
+          await this.$store.dispatch("refreshCurrentUser");
+    this.$store.dispatch("getGovernorate");
     this.address = this.currentUser.address;
     console.log(this.currentUser.governorate);
+    this.governorate = this.currentUser.governorate
+   await this.$store.dispatch("getRegions", this.governorate);
+    this.region = this.currentUser.region
+
+
+var d= new Date()
+console.log('d is',d)
+
   },
   methods: {
     getSession() {
@@ -98,6 +142,14 @@ export default {
           });
       });
     },
+     getCountryRegions() {
+      console.log(this.governorate);
+      this.$store.dispatch("getRegions", this.governorate);
+    },
+    createOrder(){
+      this.$store.dispatch('createOrder',this.governorate,this.region,this.address)
+      console.log(this.$store.state.totalPrice)
+    }
   },
 };
 </script>
