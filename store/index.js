@@ -980,7 +980,7 @@ context.commit('updateSupplierPage',response.data.data)
    
      
     },
-    createOrder(context,gov){
+    createOrder(context){
       console.log('data check', context.state.currentUser.region, context.state.currentUser.address)
       axios.post('http://localhost:3000/api/createOrder',{user_id:context.state.currentUser.user_id
         ,governorate:context.state.currentUser.governorate , 
