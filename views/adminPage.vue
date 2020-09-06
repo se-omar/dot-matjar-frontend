@@ -27,9 +27,33 @@
     </v-row>
 
     <v-row justify="center">
-      <p
-        class="display-1 mt-8"
-      >Top Selling Suppliers in {{moment().subtract(1, 'month').format('MMMM')}}</p>
+      <p class="display-1 mt-8">Top Selling Suppliers in {{selectedMonth}}</p>
+    </v-row>
+
+    <v-row class="mb-n7" style="width: 92%; margin: auto">
+      <v-col lg="3">
+        <v-select
+          @change="changeYear"
+          v-model="selectedYear"
+          outlined
+          :items="years"
+          label="Select Year"
+        ></v-select>
+      </v-col>
+
+      <v-col lg="3">
+        <v-select
+          @change="changeYear"
+          v-model="selectedMonth"
+          outlined
+          :items="months"
+          label="Select Month"
+        ></v-select>
+      </v-col>
+
+      <v-col class="mt-2" lg="2">
+        <v-btn large @click="getTopMonthlySuppliers(); isLoading = true ">Filter</v-btn>
+      </v-col>
     </v-row>
 
     <v-row>
@@ -43,22 +67,10 @@
         cols="6"
       >
         <v-card @click="supplierClicked(sortedSupplier)">
-          <supplier :supplier="topSupplier"></supplier>
+          <supplier :selectedMonth="selectedMonth" :supplier="topSupplier"></supplier>
         </v-card>
       </v-col>
     </v-row>
-
-    <!-- <v-row class="mb-n7" style="width: 92%; margin: auto">
-      <v-col lg="3">
-        <v-select
-          @change="changeYear"
-          v-model="selectedYear"
-          outlined
-          :items="years"
-          label="Select Year"
-        ></v-select>
-      </v-col>
-    </v-row>-->
 
     <v-row justify="center">
       <p class="display-1 mt-8">Suppliers Ranking Chart</p>
@@ -180,13 +192,13 @@ import moment from "moment";
 import SiteColor from "../components/siteColor";
 export default {
   async created() {
-    this.doLoading(5000);
+    this.isLoading = true;
     await this.$store.dispatch("refreshCurrentUser");
     await this.$store.dispatch("getAllSuppliersWithSales");
-    this.$store.dispatch("getGovernorate");
-    this.$store.dispatch("getSiteColor");
+    await this.$store.dispatch("getGovernorate");
+    await this.$store.dispatch("getSiteColor");
     console.log(this.currentMonth);
-    this.$store.dispatch("getSuppliers", {
+    await this.$store.dispatch("getSuppliers", {
       supplierFilterFlag: this.supplierFilterFlag,
       supplierName: this.supplierName,
       governorate: this.governorate,
@@ -198,8 +210,8 @@ export default {
       "all suppliers with sales from admin page",
       this.allSuppliersWithSales
     );
-    this.getTopMonthlySuppliers();
-
+    await this.getTopMonthlySuppliers();
+    this.isLoading = false;
     console.log("suppliers sorted by sales", this.suppliersSortedBySales);
   },
 
@@ -210,6 +222,7 @@ export default {
       notSortedOrders: [],
       selectedYear: new Date().getFullYear(),
       currentMonth: new Date().getMonth(),
+      selectedMonth: moment().format("MMMM"),
       topMonthlySalesArray: [],
       topMonthlyRevenueArray: [],
       topMonthSuppliers: [],
@@ -217,6 +230,21 @@ export default {
       region: "",
       supplierName: "",
       supplierLocation: "",
+      months: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ],
+      loadingTimer: 10000,
     };
   },
 
@@ -296,36 +324,24 @@ export default {
       ];
     },
     years() {
-      // var year = [];
-      // this.notSortedOrders.forEach((element) => {
-      //   year.push(element.order_year);
-      // });
-      // return year.sort(function (a, b) {
-      //   return b - a;
-      // });
-      return [2020, 2015, 2016];
+      return this.getYearsArray(10);
     },
+
     siteColor() {
       return this.$store.state.siteColor;
     },
   },
 
   methods: {
-    doLoading(time) {
-      this.isLoading = true;
-      setTimeout(() => {
-        this.isLoading = false;
-      }, time);
-    },
-
     moment() {
       return new moment();
     },
 
-    loadMore() {
-      this.doLoading(800);
+    async loadMore() {
+      this.isLoading = true;
       var self = this;
-      self.$store.dispatch("getSuppliers", this.supplierFilterFlag);
+      await self.$store.dispatch("getSuppliers", this.supplierFilterFlag);
+      this.isLoading = false;
       // window.onscroll = function () {
       //   console.log(this.suppliers);
       //   // let bottomOfWindow =
@@ -355,7 +371,9 @@ export default {
     },
 
     async getTopMonthlySuppliers() {
+      //this.isLoading = true;
       var self = this;
+      self.topMonthSuppliers = [];
       var monthlySortedOrders = [];
       var totalMonthSales;
       var totalMonthRevenue;
@@ -369,6 +387,7 @@ export default {
             user_id: self.allSuppliersWithSales[i].user_id,
           })
           .then((response) => {
+            console.log("response", response);
             if (response.data.length > 0) {
               yearlySortedOrders = self.groupBy(
                 response.data,
@@ -376,26 +395,36 @@ export default {
               );
 
               if (yearlySortedOrders[self.selectedYear]) {
+                console.log(
+                  "orders of this year",
+                  yearlySortedOrders[self.selectedYear]
+                );
                 monthlySortedOrders = self.groupBy(
                   yearlySortedOrders[self.selectedYear],
                   (c) => c.order_month
                 );
+                console.log("monthlySortedOrders", monthlySortedOrders);
 
                 var currentSupplier;
-                for (
-                  var j = 0;
-                  j < monthlySortedOrders[self.currentMonth].length;
-                  j++
-                ) {
-                  currentSupplier =
-                    monthlySortedOrders[self.currentMonth][j].products[0].user;
-                  monthlySortedOrders[self.currentMonth][j].products.forEach(
-                    (element) => {
-                      totalMonthSales += element.buy_counter;
-                      totalMonthRevenue +=
-                        element.buy_counter * element.unit_price;
-                    }
-                  );
+                var currentMonthIndex =
+                  self.months.indexOf(self.selectedMonth) + 1;
+                if (monthlySortedOrders[currentMonthIndex]) {
+                  for (
+                    var j = 0;
+                    j < monthlySortedOrders[currentMonthIndex].length;
+                    j++
+                  ) {
+                    currentSupplier =
+                      monthlySortedOrders[currentMonthIndex][j].products[0]
+                        .user;
+                    monthlySortedOrders[currentMonthIndex][j].products.forEach(
+                      (element) => {
+                        totalMonthSales += element.buy_counter;
+                        totalMonthRevenue +=
+                          element.buy_counter * element.unit_price;
+                      }
+                    );
+                  }
                 }
               }
               if (totalMonthSales > 0) {
@@ -413,6 +442,7 @@ export default {
       });
 
       console.log("top month suppliers", self.topMonthSuppliers);
+      this.isLoading = false;
     },
 
     changeYear() {
@@ -443,6 +473,11 @@ export default {
       this.supplierFilterFlag = false;
       this.$store.commit("emptySearch");
       this.$store.commit("emptySupplierName");
+    },
+
+    getYearsArray(back) {
+      const year = new Date().getFullYear();
+      return Array.from({ length: back }, (v, i) => year - back + i + 1);
     },
   },
 

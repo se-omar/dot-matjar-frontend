@@ -46,13 +46,13 @@ export default new Vuex.Store({
     supplierProducts: JSON.parse(localStorage.getItem('supplierProducts')),
     regions: [],
     governorates: [],
-   ordersMade:[], 
-    usersMadeOrders:[],
-    showOrderProducts:[],
-    userOrderAddress:[],
-    OrderAddressDetails:[],
-    siteColor : localStorage.getItem('siteColor') ? localStorage.getItem('siteColor') : 'red darken-4',
-    supplierPageInfo:[],
+    ordersMade: [],
+    usersMadeOrders: [],
+    showOrderProducts: [],
+    userOrderAddress: [],
+    OrderAddressDetails: [],
+    siteColor: localStorage.getItem('siteColor') ? localStorage.getItem('siteColor') : 'red darken-4',
+    supplierPageInfo: [],
     allSuppliersWithSales: [],
   },
 
@@ -294,7 +294,7 @@ export default new Vuex.Store({
       for (var i = 0; i < regions.length; i++) {
         state.regions.push(regions[i].city)
       }
-console.log(state.regions)
+      console.log(state.regions)
     },
     getGovernorate(state, res) {
       state.governorates = res
@@ -373,21 +373,21 @@ console.log(state.regions)
       localStorage.setItem('siteColor', color)
       state.siteColor = localStorage.getItem('siteColor')
     },
-    getSiteColor(state,color){
-      
-localStorage.setItem('siteColor',color)
-state.siteColor = localStorage.getItem('siteColor')
+    getSiteColor(state, color) {
+
+      localStorage.setItem('siteColor', color)
+      state.siteColor = localStorage.getItem('siteColor')
     },
-    updateSupplierPage(state,pageData){
-   state.supplierPageInfo = pageData
+    updateSupplierPage(state, pageData) {
+      state.supplierPageInfo = pageData
     },
-    getSupplierPageData(state,info){
+    getSupplierPageData(state, info) {
       state.supplierPageInfo = info
     },
-   removeSupplierPageData(state){
-state.supplierPageInfo=[]
-   },
-    
+    removeSupplierPageData(state) {
+      state.supplierPageInfo = []
+    },
+
 
     getAllSuppliersWithSales(state, suppliers) {
       state.allSuppliersWithSales = suppliers
@@ -954,44 +954,47 @@ state.supplierPageInfo=[]
     },
     getSiteColor(context) {
       axios.put('http://localhost:3000/api/getSiteColor')
-      .then(response=>{
-        console.log(response.data.data)
-        console.log(response.data.message)
-        context.commit('getSiteColor',response.data.data)
-      })
-    },
-    updateSupplierPage(context,formdata){
-axios.post('http://localhost:3000/api/updateSupplierPage',formdata)
-.then(response=>{
-  console.log(response.data.message , response.data.data)
-context.commit('updateSupplierPage',response.data.data)
-
-})
-    },
-    getSupplierPageData(context,id){
-     
-        console.log('the id os supp',context.state.supplier.user_id)
-        axios.put('http://localhost:3000/api/getSupplierPageData',{supplier_id:id})
-        .then(info=>{
-          console.log('info from database',info.data.data)
-          console.log('info message from databas', info.data.message)
-          context.commit('getSupplierPageData',info.data.data)
+        .then(response => {
+          console.log(response.data.data)
+          console.log(response.data.message)
+          context.commit('getSiteColor', response.data.data)
         })
-   
-     
     },
-    createOrder(context){
-      console.log('data check', context.state.currentUser.region, context.state.currentUser.address)
-      axios.post('http://localhost:3000/api/createOrder',{user_id:context.state.currentUser.user_id
-        ,governorate:context.state.currentUser.governorate , 
-        region:context.state.currentUser.region , 
-        address:context.state.currentUser.address , 
-        cartItems:context.state.table,
-      totalPrice : context.state.totalPrice})
-      .then(res=>{
-        console.log(res.data.data)
-        console.log('order crreatedd',res.data.message)
+    updateSupplierPage(context, formdata) {
+      axios.post('http://localhost:3000/api/updateSupplierPage', formdata)
+        .then(response => {
+          console.log(response.data.message, response.data.data)
+          context.commit('updateSupplierPage', response.data.data)
+
+        })
+    },
+    getSupplierPageData(context, id) {
+
+      console.log('the id os supp', context.state.supplier.user_id)
+      axios.put('http://localhost:3000/api/getSupplierPageData', { supplier_id: id })
+        .then(info => {
+          console.log('info from database', info.data.data)
+          console.log('info message from databas', info.data.message)
+          context.commit('getSupplierPageData', info.data.data)
+        })
+
+
+    },
+    createOrder(context ,{ governorate , region , address}){
+      console.log('data check', context.state.table)
+      axios.post('http://localhost:3000/api/createOrder', {
+        user_id: context.state.currentUser.user_id
+        , governorate:governorate,
+        region: region,
+        address: address,
+        cartItems: context.state.table,
+        totalPrice: context.state.totalPrice,
+          
       })
+        .then(res => {
+          console.log(res.data.data)
+          console.log('order crreatedd', res.data.message)
+        })
     }
 
   },

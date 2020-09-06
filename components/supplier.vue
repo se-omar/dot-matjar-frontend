@@ -24,13 +24,13 @@
         v-if="supplier.monthSales"
         style="font-size: 16px"
         class="mt-n5"
-      >{{moment().subtract(1, 'month').format('MMMM')}} sales: {{supplier.monthSales}}</v-card-text>
+      >{{selectedMonth}} sales: {{supplier.monthSales}}</v-card-text>
 
       <v-card-text
         v-if="supplier.monthRevenue"
         style="font-size: 16px"
         class="mt-n5"
-      >{{moment().subtract(1, 'month').format('MMMM')}} Revenue: {{supplier.monthRevenue}}</v-card-text>
+      >{{selectedMonth}} Revenue: {{supplier.monthRevenue}}</v-card-text>
     </v-card>
   </v-main>
 </template>
@@ -38,10 +38,17 @@
 <script>
 import moment from "moment";
 export default {
+  created() {
+    console.log(this.selectedMonth);
+  },
   props: {
     supplier: {
       type: Object,
       default: () => null,
+    },
+
+    selectedMonth: {
+      type: String,
     },
   },
 

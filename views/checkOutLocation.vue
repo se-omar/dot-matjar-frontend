@@ -174,8 +174,8 @@ console.log('d is',d)
       this.$store.dispatch("getRegions", this.governorate);
     },
     createOrder(){
-      console.log('data che k',this.currentUser.region,this.currentUser.address )
-      this.$store.dispatch('createOrder',this.governorate)
+      console.log('data che k',this.governorate,this.region,this.address)
+      this.$store.dispatch('createOrder',{governorate:this.governorate , region:this.region , address:this.address})
       console.log(this.$store.state.totalPrice)
       this.snackbar = true
     }
