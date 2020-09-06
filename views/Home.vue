@@ -11,7 +11,7 @@
         <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
       </div>
 
-      <!-- <v-row justify="center">
+      <v-row justify="center">
         <v-col lg="10">
           <carousel
             :autoplay="true"
@@ -21,20 +21,20 @@
             :navigationEnabled="true"
           >
             <slide>
-              <v-img height="370" src="..\assets\Image-1595324434181.jpg"></v-img>
+              <v-img height="370" src="..\assets\images/car1.jpg"></v-img>
             </slide>
             <slide>
-              <v-img height="370" src="../assets\Image-1595324434182.jpg"></v-img>
+              <v-img height="370" src="..\assets\images/car1.jpg"></v-img>
             </slide>
             <slide>
-              <v-img height="370" src="../assets\Image-1595324404683.jpg"></v-img>
+              <v-img height="370" src="..\assets\images/car1.jpg"></v-img>
             </slide>
             <slide>
-              <v-img height="370" src="../assets\Image-1595324434200.jpg"></v-img>
+              <v-img height="370" src="..\assets\images/car1.jpg"></v-img>
             </slide>
           </carousel>
         </v-col>
-      </v-row> -->
+      </v-row>
 
       <v-row class="ml-2 mt-n7">
         <v-col lg="2" style="max-width: 12%">
@@ -154,7 +154,7 @@
 
             <v-col cols="4" sm="4" md="4" lg="4">
               <v-btn
-                :disabled="radioGroup === '1'"
+                
                 class="white--text"
                 @click="All"
                 :color="siteColor"
@@ -260,7 +260,7 @@ export default {
     this.$store.commit("removeSupplierPageData");
     this.$store.dispatch("getSiteColor");
 
-    // this.doLoading(3000);
+    this.doLoading(3000);
 
     if (this.loginToken) {
       await this.$store.dispatch("refreshCurrentUser");

@@ -37,9 +37,33 @@
           </v-row>
           <v-row  justify="center">
             <v-col lg="2">
+
               <v-btn :disabled="!valid" @click="createOrder" :color="siteColor" class="white--text" >
               Pay on Receiving
               </v-btn>
+
+              <!-- =============== -->
+            
+
+    <v-snackbar
+      v-model="snackbar"
+      :vertical="vertical"
+      :color="siteColor"
+    >
+   <span style="font-weight:bold ; font-size:large">   {{ text }} </span>
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="white"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+              <!-- ====================== -->
             </v-col>
                <v-col lg="2">
               <v-btn :disabled="!valid" :color="siteColor" class="white--text" @click="getSession">
@@ -72,7 +96,10 @@ valid:true,
     quantityArray: [],
     rules:[
       v=> !!v || "Required"
-    ]
+    ],
+     snackbar: false,
+      text: 'Order is Placed Successfully',
+      vertical: true,
   }),
 
   computed: {
@@ -147,8 +174,10 @@ console.log('d is',d)
       this.$store.dispatch("getRegions", this.governorate);
     },
     createOrder(){
-      this.$store.dispatch('createOrder',this.governorate,this.region,this.address)
+      console.log('data che k',this.currentUser.region,this.currentUser.address )
+      this.$store.dispatch('createOrder',this.governorate)
       console.log(this.$store.state.totalPrice)
+      this.snackbar = true
     }
   },
 };

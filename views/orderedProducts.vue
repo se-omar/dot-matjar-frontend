@@ -154,6 +154,7 @@ console.log('order addrress',this.$store.state.OrderAddressDetails)
         this.state= address[0].state
         this.address1 = address[0].address_line_1
         this.address2= address[0].address_line_2
+        this.city = address[0].city
         console.log('assdasdas  ',this.address1)
         },
      
