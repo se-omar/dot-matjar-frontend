@@ -232,7 +232,7 @@ import product from "../components/product";
 import dashboardSellingProduct from "../components/dashboardSellingProduct";
 export default {
   async mounted() {
-    this.doLoading(2000);
+    this.isloading = true;
     await this.$store.dispatch("refreshCurrentUser");
     this.$store.commit("supplierPage", this.supplier);
     await this.$store.dispatch("getMyProducts", this.supplier.user_id);
@@ -247,8 +247,9 @@ export default {
     });
 
     //this.pieOptions.labels = this.labels;
-    this.calculateMonthlySales();
-    this.calculateCategoryPercentage();
+    await this.calculateMonthlySales();
+    await this.calculateCategoryPercentage();
+    this.isloading = false;
     //console.log(this.pieOptions.labels);
     console.log(this.monthlySalesArray);
   },
@@ -386,13 +387,6 @@ export default {
   },
 
   methods: {
-    doLoading(time) {
-      this.isLoading = true;
-      setTimeout(() => {
-        this.isLoading = false;
-      }, time);
-    },
-
     groupBy(xs, f) {
       return xs.reduce(
         (r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r),
@@ -437,6 +431,7 @@ export default {
         );
         // console.log(this.categoryPercentageArray);
       }
+      this.isloading = false;
     },
 
     calculateMonthlySales() {
@@ -467,6 +462,7 @@ export default {
       //   "monthlySalesArray",
       //   JSON.stringify(this.monthlySalesArray)
       // );
+      this.isloading = false;
     },
 
     changeYear() {

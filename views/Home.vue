@@ -9,7 +9,7 @@
         <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
       </div>
 
-      <v-row justify="center">
+      <v-row class="mt-16" justify="center">
         <v-col lg="10">
           <carousel
             :autoplay="true"
@@ -250,28 +250,29 @@ export default {
     };
   },
   async created() {
+    this.isLoading = true;
     this.$store.commit("removeSupplierPageData");
-    this.$store.dispatch("getSiteColor");
-
-    // this.doLoading(3000);
+    await this.$store.dispatch("getSiteColor");
 
     if (this.loginToken) {
       await this.$store.dispatch("refreshCurrentUser");
     }
-    this.$store.dispatch("getGovernorate");
-    this.$store.dispatch("getProducts", {
+    await this.$store.dispatch("getGovernorate");
+    await this.$store.dispatch("getProducts", {
       productFilterFlagss: this.productFilterFlag,
       productName: this.toolbarSearch,
       categoryName: this.categoryName,
     });
-    this.$store.dispatch("getSuppliers", {
+    await this.$store.dispatch("getSuppliers", {
       supplierFilterFlag: this.supplierFilterFlag,
       supplierName: this.supplierName,
       governorate: this.governorate,
       region: this.region,
     });
+    this.isLoading = false;
     return new Promise((resolve) => {
       setTimeout(() => {
+        this.isLoading = false;
         this.$store.dispatch("categoriesDB");
         resolve();
       });
@@ -309,31 +310,28 @@ export default {
   },
 
   methods: {
-    doLoading(time) {
+    async filterProducts() {
       this.isLoading = true;
-      setTimeout(() => {
-        this.isLoading = false;
-      }, time);
-    },
-
-    filterProducts() {
       this.productFilterFlag = true;
       console.log(this.toolbarSearch, this.categoryName);
-      this.$store.dispatch("filterProducts", {
+      await this.$store.dispatch("filterProducts", {
         product_name: this.toolbarSearch,
         category_name: this.categoryName,
         governorate: this.governorate,
         region: this.region,
       });
+      this.isLoading = false;
     },
 
-    filterSuppliers() {
+    async filterSuppliers() {
+      this.isLoading = true;
       this.supplierFilterFlag = true;
-      this.$store.dispatch("filterSuppliers", {
+      await this.$store.dispatch("filterSuppliers", {
         supplierName: this.supplierName,
         governorate: this.governorate,
         region: this.region,
       });
+      this.isLoading = false;
     },
 
     emptySearchBox() {
@@ -364,7 +362,7 @@ export default {
     },
 
     loadMore() {
-      this.doLoading(1000);
+      this.isLoading = true;
       var self = this;
       if (this.radioGroup === "1") {
         console.log("filter products condition");
@@ -381,6 +379,7 @@ export default {
           region: this.region,
         });
       }
+      this.isLoading = false;
     },
 
     supplierClicked(supplier) {

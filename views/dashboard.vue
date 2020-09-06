@@ -225,11 +225,17 @@ import product from "../components/product";
 import dashboardSellingProduct from "../components/dashboardSellingProduct";
 export default {
   async mounted() {
-    this.doLoading(2000);
+    this.isLoading = true;
 
     await this.$store.dispatch("refreshCurrentUser");
-    this.$store.dispatch("getTopSellingProduct", this.currentUser.user_id);
-    this.$store.dispatch("getLeastSellingProduct", this.currentUser.user_id);
+    await this.$store.dispatch(
+      "getTopSellingProduct",
+      this.currentUser.user_id
+    );
+    await this.$store.dispatch(
+      "getLeastSellingProduct",
+      this.currentUser.user_id
+    );
     await this.$store.dispatch("getMyProducts", this.currentUser.user_id);
     await this.$store.dispatch("getMonthlySales", this.currentUser.user_id);
 
@@ -237,10 +243,11 @@ export default {
       this.myYearlyProducts.push(...element.products);
     });
     //this.pieOptions.labels = this.labels;
-    this.calculateMonthlySales();
-    this.calculateCategoryPercentage();
+    await this.calculateMonthlySales();
+    await this.calculateCategoryPercentage();
     //console.log(this.pieOptions.labels);
     //console.log(this.monthlySalesArray);
+    this.isLoading = false;
   },
 
   computed: {
@@ -360,13 +367,6 @@ export default {
   },
 
   methods: {
-    doLoading(time) {
-      this.isLoading = true;
-      setTimeout(() => {
-        this.isLoading = false;
-      }, time);
-    },
-
     groupBy(xs, f) {
       return xs.reduce(
         (r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r),
@@ -410,6 +410,7 @@ export default {
         );
         // console.log(this.categoryPercentageArray);
       }
+      this.isLoading = false;
     },
 
     calculateMonthlySales() {
@@ -439,6 +440,7 @@ export default {
       //   "monthlySalesArray",
       //   JSON.stringify(this.monthlySalesArray)
       // );
+      this.isLoading = false;
     },
 
     changeYear() {
