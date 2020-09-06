@@ -1,5 +1,5 @@
 <template>
-  <v-menu
+  <!-- <v-menu
     transition="fab-transition"
     :close-on-content-click="false"
     :nudge-width="200"
@@ -28,12 +28,65 @@
         </v-row>
       </v-card-text>
 
-      <!-- <v-row justify="center" v-for="item in items" :key="item.color">
-        <v-btn small icon :class="item.color" @click="changeColor(item)"></v-btn>
-      </v-row> -->
-      <input type="color" v-model="colorPicker"> <v-btn :color="siteColor" @click="changeColor">X</v-btn>
+      <div class="file is-boxed is-primary">
+  <v-row justify="end">
+<label class="file-label">
+
+
+
+
+
+<span class="file-cta">
+<span  class="file-icon">
+    
+
+<i class="fas fa-paint-roller  fa-2x  mt-4" ></i> <br/>
+
+
+</span>
+
+</span>
+
+<input type="color" 
+v-model="colorPicker"
+id="input"
+@change="changeColor"
+ /> <br/>
+
+</label>
+  </v-row>
+</div>
+
     </v-card>
-  </v-menu>
+  </v-menu> -->
+  <div class="file is-boxed is-primary">
+  <v-row justify="end">
+<label class="file-label">
+
+
+
+
+
+<span class="file-cta">
+<span  class="file-icon">
+    
+
+<i class="fas fa-paint-roller  fa-2x  mt-4" ></i> <br/>
+
+
+</span>
+
+</span>
+
+<input type="color" 
+v-model="colorPicker"
+id="input"
+@change="changeColor"
+ /> <br/>
+
+</label>
+  </v-row>
+</div>
 </template>
 <script>
 export default {
@@ -68,3 +121,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+input{
+  opacity: 0;
+  z-index: inherit;
+}
+</style>

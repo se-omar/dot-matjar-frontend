@@ -41,21 +41,21 @@ iconPressed(item){
 console.log(item)
 
 switch (item){
-case 'fa fa-facebook':
+case 'fab fa-facebook':
   location.href = this.supplierPageInfo.facebook 
 break;
-case "fa fa-twitter":
+case "fab fa-twitter":
    location.href = this.supplierPageInfo.twitter 
    break ;
-  case "fa fa-google-plus":
+  case "fab fa-google-plus":
        location.href = this.supplierPageInfo.google
        
        break ;
 
-  case "fa fa-linkedin" :
+  case "fab fa-linkedin" :
        location.href = this.supplierPageInfo.linkedin
 break;
-  case  "fa fa-instagram" :
+  case  "fab fa-instagram" :
            location.href = this.supplierPageInfo.instgram
 break;
 
@@ -67,11 +67,11 @@ break;
 },
   data: () => ({
     icons: [
-      "fa fa-facebook",
-      "fa fa-twitter",
-      "fa fa-google-plus",
-      "fa fa-linkedin",
-      "fa fa-instagram",
+      "fab fa-facebook",
+      "fab fa-twitter",
+      "fab fa-google-plus",
+      "fab fa-linkedin",
+      "fab fa-instagram",
     ],
   }),
   computed:{

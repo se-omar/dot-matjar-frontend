@@ -53,8 +53,8 @@
       </v-row>
 
       <v-row justify="center">
-        <v-col cols="5">
-          <v-btn @click="updatePassword" class="primary" block>Update password</v-btn>
+        <v-col cols="2"  lg="2" >
+          <v-btn  rounded @click="updatePassword" :color="siteColor" class="white--text" block>Update<br/> password</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -101,6 +101,9 @@ export default {
     currentUser() {
       return this.$store.state.currentUser;
     },
+    siteColor(){
+      return this.$store.state.siteColor
+    }
   },
 
   methods: {

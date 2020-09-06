@@ -84,6 +84,7 @@ export default {
   },
   data: () => ({
     isLoading: false,
+    fullPage: "",
   }),
   computed: {
     currentUser() {
