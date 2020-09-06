@@ -26,8 +26,12 @@
       </v-col>
     </v-row>
 
-    <v-row justify="center">
+    <v-row justify="center" v-if="selectedMonth !== 'all'">
       <p class="display-1 mt-8">Top Selling Suppliers in {{selectedMonth}}</p>
+    </v-row>
+
+    <v-row justify="center" v-if="selectedMonth === 'all'">
+      <p class="display-1 mt-8">Top Selling Suppliers in {{selectedYear}}</p>
     </v-row>
 
     <v-row class="mb-n7" style="width: 92%; margin: auto">
@@ -56,7 +60,27 @@
       </v-col>
     </v-row>
 
-    <v-row>
+    <v-row v-if="selectedMonth === 'all'">
+      <v-col
+        class="mb-15"
+        v-for="topSupplier in topYearSuppliers"
+        :key="topSupplier.user_id"
+        lg="2"
+        md="4"
+        sm="6"
+        cols="6"
+      >
+        <v-card @click="supplierClicked(sortedSupplier)">
+          <supplier
+            :selectedYear="selectedYear"
+            :selectedMonth="selectedMonth"
+            :supplier="topSupplier"
+          ></supplier>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <v-row v-else>
       <v-col
         class="mb-15"
         v-for="topSupplier in topMonthSuppliers"
@@ -67,7 +91,11 @@
         cols="6"
       >
         <v-card @click="supplierClicked(sortedSupplier)">
-          <supplier :selectedMonth="selectedMonth" :supplier="topSupplier"></supplier>
+          <supplier
+            :selectedYear="selectedYear"
+            :selectedMonth="selectedMonth"
+            :supplier="topSupplier"
+          ></supplier>
         </v-card>
       </v-col>
     </v-row>
@@ -222,15 +250,17 @@ export default {
       notSortedOrders: [],
       selectedYear: new Date().getFullYear(),
       currentMonth: new Date().getMonth(),
-      selectedMonth: moment().format("MMMM"),
+      selectedMonth: "all",
       topMonthlySalesArray: [],
       topMonthlyRevenueArray: [],
       topMonthSuppliers: [],
+      topYearSuppliers: [],
       governorate: "",
       region: "",
       supplierName: "",
       supplierLocation: "",
       months: [
+        "all",
         "January",
         "February",
         "March",
@@ -374,20 +404,24 @@ export default {
       //this.isLoading = true;
       var self = this;
       self.topMonthSuppliers = [];
+      self.topYearSuppliers = [];
       var monthlySortedOrders = [];
       var totalMonthSales;
+      var totalYearSales;
       var totalMonthRevenue;
+      var totalYearRevenue;
       var yearlySortedOrders;
 
       for (var i = 0; i < this.allSuppliersWithSales.length; i++) {
         totalMonthSales = 0;
+        totalYearSales = 0;
         totalMonthRevenue = 0;
+        totalYearRevenue = 0;
         await self.$axios
           .post("http://localhost:3000/api/monthlySales", {
             user_id: self.allSuppliersWithSales[i].user_id,
           })
           .then((response) => {
-            console.log("response", response);
             if (response.data.length > 0) {
               yearlySortedOrders = self.groupBy(
                 response.data,
@@ -395,43 +429,63 @@ export default {
               );
 
               if (yearlySortedOrders[self.selectedYear]) {
-                console.log(
-                  "orders of this year",
-                  yearlySortedOrders[self.selectedYear]
-                );
                 monthlySortedOrders = self.groupBy(
                   yearlySortedOrders[self.selectedYear],
                   (c) => c.order_month
                 );
-                console.log("monthlySortedOrders", monthlySortedOrders);
-
+                // debugger;
                 var currentSupplier;
-                var currentMonthIndex =
-                  self.months.indexOf(self.selectedMonth) + 1;
-                if (monthlySortedOrders[currentMonthIndex]) {
-                  for (
-                    var j = 0;
-                    j < monthlySortedOrders[currentMonthIndex].length;
-                    j++
-                  ) {
-                    currentSupplier =
-                      monthlySortedOrders[currentMonthIndex][j].products[0]
-                        .user;
-                    monthlySortedOrders[currentMonthIndex][j].products.forEach(
-                      (element) => {
+                var currentYearOrders = yearlySortedOrders[self.selectedYear];
+                console.log("current year orders", currentYearOrders);
+
+                if (self.selectedMonth === "all") {
+                  currentSupplier = currentYearOrders[0].products[0].user;
+                  console.log("current supplier from all", currentSupplier);
+                  for (var h = 0; h < currentYearOrders.length; h++) {
+                    currentYearOrders[h].products.forEach((element) => {
+                      totalYearSales += element.buy_counter;
+                      totalYearRevenue +=
+                        element.buy_counter * element.unit_price;
+                    });
+                  }
+
+                  if (totalYearSales > 0) {
+                    currentSupplier.yearSales = totalYearSales;
+                    currentSupplier.yearRevenue = totalYearRevenue;
+                    console.log(totalYearRevenue);
+                    self.topYearSuppliers.push(currentSupplier);
+                  }
+                } else {
+                  var currentMonthIndex = self.months.indexOf(
+                    self.selectedMonth
+                  );
+                  if (monthlySortedOrders[currentMonthIndex]) {
+                    for (
+                      var j = 0;
+                      j < monthlySortedOrders[currentMonthIndex].length;
+                      j++
+                    ) {
+                      currentSupplier =
+                        monthlySortedOrders[currentMonthIndex][j].products[0]
+                          .user;
+                      monthlySortedOrders[currentMonthIndex][
+                        j
+                      ].products.forEach((element) => {
                         totalMonthSales += element.buy_counter;
                         totalMonthRevenue +=
                           element.buy_counter * element.unit_price;
-                      }
-                    );
+                      });
+                    }
+                  }
+                  if (totalMonthSales > 0) {
+                    currentSupplier.monthSales = totalMonthSales;
+                    currentSupplier.monthRevenue = totalMonthRevenue;
+                    console.log(totalMonthRevenue);
+                    console.log("entered herer");
+                    self.topMonthSuppliers.push(currentSupplier);
+                    console.log("top month suppliers", self.topMonthSuppliers);
                   }
                 }
-              }
-              if (totalMonthSales > 0) {
-                currentSupplier.monthSales = totalMonthSales;
-                currentSupplier.monthRevenue = totalMonthRevenue;
-                console.log(totalMonthRevenue);
-                self.topMonthSuppliers.push(currentSupplier);
               }
             }
           });
@@ -439,6 +493,10 @@ export default {
 
       self.topMonthSuppliers.sort(function (a, b) {
         return b.monthSales - a.monthSales;
+      });
+
+      self.topYearSuppliers.sort(function (a, b) {
+        return b.yearSales - a.yearSales;
       });
 
       console.log("top month suppliers", self.topMonthSuppliers);
