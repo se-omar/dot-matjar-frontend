@@ -980,15 +980,16 @@ export default new Vuex.Store({
 
 
     },
-    createOrder(context) {
-      console.log('data check', context.state.currentUser.region, context.state.currentUser.address)
+    createOrder(context ,{ governorate , region , address}){
+      console.log('data check', context.state.table)
       axios.post('http://localhost:3000/api/createOrder', {
         user_id: context.state.currentUser.user_id
-        , governorate: context.state.currentUser.governorate,
-        region: context.state.currentUser.region,
-        address: context.state.currentUser.address,
+        , governorate:governorate,
+        region: region,
+        address: address,
         cartItems: context.state.table,
-        totalPrice: context.state.totalPrice
+        totalPrice: context.state.totalPrice,
+          
       })
         .then(res => {
           console.log(res.data.data)

@@ -117,7 +117,7 @@ usersTableHeaders:[
     {text:'User name' , value:'full_arabic_name'},
     {text:'User mobile number' , value:'mobile_number'},
          {text:'Order Number',value:'order_number'},
-            {text:'Order ID',value:'order_id'},
+           
          
          {text:'Show Products',value:'showProducts'},
      
