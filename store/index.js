@@ -54,7 +54,7 @@ export default new Vuex.Store({
     siteColor: localStorage.getItem('siteColor') ? localStorage.getItem('siteColor') : 'red darken-4',
     supplierPageInfo: [],
     allSuppliersWithSales: [],
-    pressedOrder:[],
+    pressedOrder: [],
   },
 
   mutations: {
@@ -306,21 +306,21 @@ export default new Vuex.Store({
       var users = []
       var address = []
       for (var i = 0; i < orders.length; i++) {
-      
-      
-        if(userId){
+
+
+        if (userId) {
           users.push({
             'full_arabic_name': orders[i].user.full_arabic_name,
             'mobile_number': orders[i].user.mobile_number,
             'order_number': orders[i].order_number,
-            'order_date':orders[i].order_date,
-            'status':orders[i].status
+            'order_date': orders[i].order_date,
+            'status': orders[i].status
           })
-         }
+        }
 
       }
-  
-         localStorage.setItem('ordersMade',JSON.stringify(orders))
+
+      localStorage.setItem('ordersMade', JSON.stringify(orders))
       state.ordersMade = JSON.parse(localStorage.getItem('ordersMade'))
       state.usersMadeOrders = users
 
@@ -337,10 +337,10 @@ export default new Vuex.Store({
       state.userOrderAddress = address
 
     },
-    showOrderProducts(state , orderNumber) {
+    showOrderProducts(state, orderNumber) {
 
       for (var i = 0; i < state.ordersMade.length; i++) {
-        if(state.ordersMade[i].order_number == orderNumber){
+        if (state.ordersMade[i].order_number == orderNumber) {
           // productDetails.push({
           //   'product_name':state.ordersMade[i].product.product_name,
           //   'product_id': state.ordersMade[i].product.product_id,
@@ -353,7 +353,7 @@ export default new Vuex.Store({
           state.showOrderProducts = state.ordersMade[i].products
           state.pressedOrder = state.ordersMade[i]
         }
-       
+
       }
     },
     // showAddressDetails(state, orderNumber) {
@@ -989,11 +989,11 @@ export default new Vuex.Store({
 
 
     },
-    createOrder(context ,{ governorate , region , address}){
+    createOrder(context, { governorate, region, address }) {
       console.log('data check', context.state.table)
       axios.post('http://localhost:3000/api/createOrder', {
         user_id: context.state.currentUser.user_id
-        , governorate:governorate,
+        , governorate: governorate,
         region: region,
         address: address,
         cartItems: context.state.table,
