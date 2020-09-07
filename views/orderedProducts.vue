@@ -117,9 +117,10 @@ usersTableHeaders:[
     {text:'User name' , value:'full_arabic_name'},
     {text:'User mobile number' , value:'mobile_number'},
          {text:'Order Number',value:'order_number'},
-           
-         
-         {text:'Show Products',value:'showProducts'},
+             {text:'Order Date',value:'order_date'},
+           {text:'status',value:'status'},
+            {text:'Show Products',value:'showProducts'}
+
      
     
     
@@ -128,11 +129,8 @@ productsTableHeaders:[
     {text:'Product name',value:'product_name'},
     {text:'product ID',value:'product_id'},
      {text:'product Code',value:'product_code'},
-      {text:'Purchase Date',value:'purchase_date'},
     
     {text:'Quantity',value:'quantity'},
-   
-          {text:"Address Details",value:'addressDetails'},
 
 
 ],
@@ -146,16 +144,16 @@ city:''
     methods:{
    async    showProducts(event){
 console.log(event)
-await this.$store.dispatch('showOrderProducts',event.order_number)
-await this.$store.commit('showAddressDetails',event.order_number)
+await this.$store.commit('showOrderProducts',event.order_number)
+// await this.$store.commit('showAddressDetails',event.order_number)
 console.log('order addrress',this.$store.state.OrderAddressDetails)
- var address = this.OrderAddressDetails
-        this.country = address[0].country
-        this.state= address[0].state
-        this.address1 = address[0].address_line_1
-        this.address2= address[0].address_line_2
-        this.city = address[0].city
-        console.log('assdasdas  ',this.address1)
+
+        this.country = this.pressedOrder.country
+        this.state= this.pressedOrder.state
+        this.address1 = this.pressedOrder.address_line_1
+        this.address2= this.pressedOrder.address_line_2
+        this.city = this.pressedOrder.city
+        
         },
      
 
@@ -182,8 +180,11 @@ console.log('user made orders',this.usersMadeOrders)
         userOrderAddress(){
             return this.$store.state.userOrderAddress
         },
-       OrderAddressDetails(){
-         return this.$store.state.OrderAddressDetails
+      //  OrderAddressDetails(){
+      //    return this.$store.state.OrderAddressDetails
+      //  },
+       pressedOrder(){
+         return this.$store.state.pressedOrder
        }
       
     }
