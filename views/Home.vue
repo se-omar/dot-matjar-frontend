@@ -18,16 +18,16 @@
             :navigationEnabled="true"
           >
             <slide>
-              <v-img height="370" src="..\assets\images/car1.jpg"></v-img>
+              <v-img height="400" src="..\assets\images/car1.jpg"></v-img>
             </slide>
             <slide>
-              <v-img height="370" src="..\assets\images/car1.jpg"></v-img>
+              <v-img height="400" src="..\assets\images/car1.jpg"></v-img>
             </slide>
             <slide>
-              <v-img height="370" src="..\assets\images/car1.jpg"></v-img>
+              <v-img height="400" src="..\assets\images/car1.jpg"></v-img>
             </slide>
             <slide>
-              <v-img height="370" src="..\assets\images/car1.jpg"></v-img>
+              <v-img height="400" src="..\assets\images/car1.jpg"></v-img>
             </slide>
           </carousel>
         </v-col>
@@ -173,8 +173,12 @@
               :key="filteredProduct.id"
             >
               <v-hover>
-                <v-card slot-scope="{ hover }" :class="`elevation-${hover ? 12 : 4}`" width="280">
-                  <product class="ml-n2 mr-n2" :filteredProduct="filteredProduct"></product>
+                <v-card
+                  slot-scope="{ hover }"
+                  :class="`elevation-${hover ? 12 : 4} ml-n2 `"
+                  width="280"
+                >
+                  <product :filteredProduct="filteredProduct"></product>
                 </v-card>
               </v-hover>
             </v-col>
