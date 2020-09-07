@@ -225,7 +225,7 @@ import product from "../components/product";
 import dashboardSellingProduct from "../components/dashboardSellingProduct";
 export default {
   async mounted() {
-    this.isLoading = true;
+    //this.isLoading = true;
 
     await this.$store.dispatch("refreshCurrentUser");
     await this.$store.dispatch(

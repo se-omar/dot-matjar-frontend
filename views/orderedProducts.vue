@@ -128,8 +128,7 @@ usersTableHeaders:[
 productsTableHeaders:[
     {text:'Product name',value:'product_name'},
     {text:'product ID',value:'product_id'},
-     {text:'product Code',value:'product_code'},
-    
+     {text:'product Code',value:'product_code'},    
     {text:'Quantity',value:'quantity'},
 
 
