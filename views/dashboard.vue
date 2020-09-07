@@ -239,9 +239,11 @@ export default {
     await this.$store.dispatch("getMyProducts", this.currentUser.user_id);
     await this.$store.dispatch("getMonthlySales", this.currentUser.user_id);
 
-    this.yearlySortedOrders[this.selectedYear].forEach((element) => {
-      this.myYearlyProducts.push(...element.products);
-    });
+    if (this.yearlySortedOrders[this.selectedYear]) {
+      this.yearlySortedOrders[this.selectedYear].forEach((element) => {
+        this.myYearlyProducts.push(...element.products);
+      });
+    }
     //this.pieOptions.labels = this.labels;
     await this.calculateMonthlySales();
     await this.calculateCategoryPercentage();
@@ -341,10 +343,14 @@ export default {
       return this.groupBy(this.notSortedDashboardOrders, (c) => c.order_year);
     },
     monthlySortedOrders() {
-      return this.groupBy(
-        this.yearlySortedOrders[this.selectedYear],
-        (c) => c.order_month
-      );
+      if (this.yearlySortedOrders[this.selectedYear]) {
+        return this.groupBy(
+          this.yearlySortedOrders[this.selectedYear],
+          (c) => c.order_month
+        );
+      } else {
+        return [];
+      }
     },
     categoryArray() {
       return this.groupBy(this.myYearlyProducts, (c) => c.category_id);
