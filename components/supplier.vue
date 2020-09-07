@@ -27,10 +27,22 @@
       >{{selectedMonth}} sales: {{supplier.monthSales}}</v-card-text>
 
       <v-card-text
+        v-if="supplier.yearSales"
+        style="font-size: 16px"
+        class="mt-n5"
+      >{{selectedYear}} sales: {{supplier.yearSales}}</v-card-text>
+
+      <v-card-text
         v-if="supplier.monthRevenue"
         style="font-size: 16px"
         class="mt-n5"
       >{{selectedMonth}} Revenue: {{supplier.monthRevenue}}</v-card-text>
+
+      <v-card-text
+        v-if="supplier.yearRevenue"
+        style="font-size: 16px"
+        class="mt-n5"
+      >{{selectedYear}} Revenue: {{supplier.yearRevenue}}</v-card-text>
     </v-card>
   </v-main>
 </template>
@@ -49,6 +61,9 @@ export default {
 
     selectedMonth: {
       type: String,
+    },
+    selectedYear: {
+      type: Number,
     },
   },
 
