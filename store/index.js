@@ -46,7 +46,7 @@ export default new Vuex.Store({
     supplierProducts: JSON.parse(localStorage.getItem('supplierProducts')),
     regions: [],
     governorates: [],
-    ordersMade: [],
+    ordersMade: JSON.parse(localStorage.getItem('ordersMade')) ? JSON.parse(localStorage.getItem('ordersMade')) : [],
     usersMadeOrders: [],
     showOrderProducts: [],
     userOrderAddress: [],
@@ -54,6 +54,7 @@ export default new Vuex.Store({
     siteColor: localStorage.getItem('siteColor') ? localStorage.getItem('siteColor') : 'red darken-4',
     supplierPageInfo: [],
     allSuppliersWithSales: [],
+    pressedOrder:[],
   },
 
   mutations: {
@@ -301,74 +302,82 @@ export default new Vuex.Store({
     },
     ordersMade(state, orders) {
       // var products=orders.map(e=>{return e.products})
-
+      var userId = true
       var users = []
       var address = []
       for (var i = 0; i < orders.length; i++) {
-        users.push({
-          'full_arabic_name': orders[i].order.user.full_arabic_name,
-          'mobile_number': orders[i].order.user.mobile_number,
-          'order_number': orders[i].order.order_number
-        })
-
+      
+      
+        if(userId){
+          users.push({
+            'full_arabic_name': orders[i].user.full_arabic_name,
+            'mobile_number': orders[i].user.mobile_number,
+            'order_number': orders[i].order_number,
+            'order_date':orders[i].order_date,
+            'status':orders[i].status
+          })
+         }
 
       }
-      console.log('userss iss ', users)
-
-      state.ordersMade = orders
+  
+         localStorage.setItem('ordersMade',JSON.stringify(orders))
+      state.ordersMade = JSON.parse(localStorage.getItem('ordersMade'))
       state.usersMadeOrders = users
 
       for (var x = 0; x < orders.length; x++) {
         address.push({
-          'country': orders[x].order.country,
-          'city': orders[x].order.city,
-          'state': orders[x].order.state,
-          'address_line_1': orders[x].order.address_line_1,
-          'address_line_2': orders[x].order.address_line_2
+          'country': orders[x].country,
+          'city': orders[x].city,
+          'state': orders[x].state,
+          'address_line_1': orders[x].address_line_1,
+          'address_line_2': orders[x].address_line_2
         })
       }
 
       state.userOrderAddress = address
 
     },
-    showOrderProducts(state, products) {
-      var productDetails = []
+    showOrderProducts(state , orderNumber) {
 
-      for (var i = 0; i < products.length; i++) {
-        productDetails.push({
-          'product_name': products[i].product.product_name,
-          'product_id': products[i].product_id,
-          'product_code': products[i].product.product_code,
-          'order_id': products[i].order_id,
-          'purchase_date': products[i].purchase_date,
-          'quantity': products[i].quantity
-        })
-        console.log(productDetails)
-        state.showOrderProducts = productDetails
-      }
-    },
-    showAddressDetails(state, orderNumber) {
-      state.OrderAddressDetails = []
-      console.log('orders  madd', state.ordersMade)
-      console.log(state.ordersMade[0].order_number, orderNumber)
       for (var i = 0; i < state.ordersMade.length; i++) {
-        if (state.ordersMade[i].order.order_number == orderNumber) {
-          console.log('for acceesd')
-          state.OrderAddressDetails.push({
-            'country': state.ordersMade[i].order.country,
-            'state': state.ordersMade[i].order.state,
-            'address_line_1': state.ordersMade[i].order.address_line_1,
-            'address_line_2': state.ordersMade[i].order.address_line_2,
-            'city': state.ordersMade[i].order.city,
-
-
-          })
+        if(state.ordersMade[i].order_number == orderNumber){
+          // productDetails.push({
+          //   'product_name':state.ordersMade[i].product.product_name,
+          //   'product_id': state.ordersMade[i].product.product_id,
+          //   'product_code':state.ordersMade[i].product.product_code,
+          //   'order_id': state.ordersMade[i].order_id,
+          //   'purchase_date': state.ordersMade[i].purchase_date,
+          //   'quantity': state.ordersMade[i].quantity
+          // })
+          console.log(state.ordersMade[i].products)
+          state.showOrderProducts = state.ordersMade[i].products
+          state.pressedOrder = state.ordersMade[i]
         }
-
-
+       
       }
-      console.log('addres detaisl ', state.OrderAddressDetails)
     },
+    // showAddressDetails(state, orderNumber) {
+    //   state.OrderAddressDetails = []
+    //   console.log('orders  madd', state.ordersMade)
+    //   console.log(state.ordersMade[0].order_number, orderNumber)
+    //   for (var i = 0; i < state.ordersMade.length; i++) {
+    //     if (state.ordersMade[i].order_number == orderNumber) {
+    //       console.log('for acceesd')
+    //       state.OrderAddressDetails.push({
+    //         'country': state.ordersMade[i].order.country,
+    //         'state': state.ordersMade[i].order.state,
+    //         'address_line_1': state.ordersMade[i].order.address_line_1,
+    //         'address_line_2': state.ordersMade[i].order.address_line_2,
+    //         'city': state.ordersMade[i].order.city,
+
+
+    //       })
+    //     }
+
+
+    //   }
+    //   console.log('addres detaisl ', state.OrderAddressDetails)
+    // },
     changingSiteColor(state, color) {
       localStorage.setItem('siteColor', color)
       state.siteColor = localStorage.getItem('siteColor')
@@ -938,13 +947,13 @@ export default new Vuex.Store({
         })
     },
 
-    showOrderProducts(context, order_number) {
-      axios.put('http://localhost:3000/api/showOrderProducts', { order_number: order_number })
-        .then(products => {
-          console.log(products.data.data)
-          context.commit('showOrderProducts', products.data.data)
-        })
-    },
+    // showOrderProducts(context, order_number) {
+    //   axios.put('http://localhost:3000/api/showOrderProducts', { order_number: order_number })
+    //     .then(products => {
+    //       console.log(products.data.data)
+    //       context.commit('showOrderProducts', products.data.data)
+    //     })
+    // },
     changingSiteColor(context, pickerColor) {
       axios.put('http://localhost:3000/api/changeSiteColor', { user_id: context.state.currentUser.user_id, site_color: pickerColor })
         .then(response => {
@@ -989,7 +998,7 @@ export default new Vuex.Store({
         address: address,
         cartItems: context.state.table,
         totalPrice: context.state.totalPrice,
-          
+
       })
         .then(res => {
           console.log(res.data.data)
