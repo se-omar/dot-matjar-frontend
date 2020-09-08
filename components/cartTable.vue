@@ -5,12 +5,13 @@
         <v-btn
           :color="siteColor"
           dark
+          x-large
           @click.stop="dialog = true"
           @click="table"
           v-if="currentUser"
-          rounded
+          fab
         >
-          <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+          <i class="fa fa-2x fa-shopping-cart mr-1" aria-hidden="true"></i>
           <!-- <v-icon medium >shopping cart</v-icon> -->
         </v-btn>
       </v-col>
@@ -156,8 +157,8 @@ export default {
     },
 
     getSession() {
-      this.$router.push('/checkOutLocation')
-      this.$store.commit('putTotalPriceInStore',this.total)
+      this.$router.push("/checkOutLocation");
+      this.$store.commit("putTotalPriceInStore", this.total);
       // var self = this;
       // self.quantityArray = [];
       // this.items.forEach((element) => {

@@ -73,6 +73,10 @@ export default new Vuex.Store({
       state.filteredProducts.push(...products);
     },
 
+    emptyProductsArray(state) {
+      state.filteredProducts = [];
+    },
+
     getUsers(state, payload) {
       state.users = payload
     },
