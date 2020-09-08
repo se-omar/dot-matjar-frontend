@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <v-card width="250" class="grey lighten-4">
+    <v-card @click="supplierClicked(supplier)" width="290" class="grey lighten-5">
       <v-img
         height="180"
         width="180"
@@ -70,6 +70,12 @@ export default {
   methods: {
     moment() {
       return new moment();
+    },
+
+    supplierClicked(supplier) {
+      console.log("current supplier id", supplier.user_id);
+      this.$store.commit("supplierPage", supplier);
+      this.$router.push("/supplierPage/" + supplier.user_id);
     },
   },
   computed: {

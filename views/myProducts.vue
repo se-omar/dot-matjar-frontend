@@ -1,6 +1,5 @@
 <template>
   <v-app class="grey lighten-4">
-  
     <v-row>
       <v-col>
         <v-card height="120">
@@ -32,8 +31,13 @@
           </v-row>
 
           <v-row justify="center">
-            <v-btn @click="$router.push('/addProduct').catch((err) => {})">
-              <span style="font-size: 19px">Add product</span>
+            <v-btn
+              :color="siteColor"
+              fab
+              large
+              @click="$router.push('/addProduct').catch((err) => {})"
+            >
+              <i class="fa fa-plus fa-2x"></i>
             </v-btn>
           </v-row>
           <v-row>
@@ -82,7 +86,6 @@
     <!-- <v-container>
       <ordersChart />
     </v-container>-->
-   
   </v-app>
 </template>
 
@@ -103,11 +106,13 @@ export default {
     currentUser() {
       return this.$store.state.currentUser;
     },
+    siteColor() {
+      return this.$store.state.siteColor;
+    },
   },
 
   components: {
     Product,
-   
   },
 };
 </script>
