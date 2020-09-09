@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row justify="start">
-      <v-col cols="1" lg="1">
+      <v-col class="ml-2" cols="1" lg="1">
         <v-btn
           :color="siteColor"
           dark
@@ -10,6 +10,7 @@
           @click="table"
           v-if="currentUser"
           fab
+          fixed
         >
           <i class="fa fa-2x fa-shopping-cart mr-1" aria-hidden="true"></i>
           <!-- <v-icon medium >shopping cart</v-icon> -->

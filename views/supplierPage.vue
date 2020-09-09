@@ -14,7 +14,6 @@
         >Update My page</v-btn>
       </v-col>
     </v-row>
-    <CartTable></CartTable>
 
     <v-row class="ml-2">
       <v-col lg="2" style="max-width: 12%">
@@ -125,14 +124,13 @@ import product from "../components/product";
 import sideButton from "../components/sideButton";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
-import CartTable from "../components/cartTable";
+
 export default {
   name: "supplierPage",
   components: {
     product,
     sideButton,
     Loading,
-    CartTable,
   },
   data: () => ({
     isLoading: false,
