@@ -59,7 +59,11 @@
         <v-btn large @click="getTopMonthlySuppliers(); isLoading = true ">Filter</v-btn>
       </v-col>
     </v-row>
-
+    <v-row justify="center" v-if="topYearSuppliers.length < 1 && topMonthSuppliers.length < 1">
+      <v-col lg="7">
+        <p class="text-h4">No Data available</p>
+      </v-col>
+    </v-row>
     <v-row v-if="selectedMonth === 'all'">
       <v-col
         class="mb-15"

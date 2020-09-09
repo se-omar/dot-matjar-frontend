@@ -102,11 +102,7 @@
             v-for="(supplierProduct,product_id) in supplierProducts"
             :key="product_id"
           >
-            <v-card>
-              <v-hover>
-                <product :addToCartButton="false" :filteredProduct="supplierProduct"></product>
-              </v-hover>
-            </v-card>
+            <product :addToCartButton="false" :filteredProduct="supplierProduct"></product>
           </v-col>
         </v-row>
       </v-col>
