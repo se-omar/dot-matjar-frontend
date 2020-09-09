@@ -5,8 +5,8 @@
       <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
     </div>
 
-    <v-row justify="end">
-      <v-col lg="10">
+    <v-row justify="center">
+      <v-col lg="7">
         <carousel
           :autoplay="true"
           :per-page="1"
@@ -29,7 +29,7 @@
         </carousel>
       </v-col>
 
-      <v-col lg="1">
+      <v-col lg="1" v-if="currentUser.user_type == 'admin'">
         <SiteColor disabled></SiteColor>
       </v-col>
     </v-row>
@@ -42,8 +42,6 @@
       </v-col>
 
       <v-col lg="9">
-        <cartTable></cartTable>
-
         <v-radio-group mandatory v-model="radioGroup">
           <v-row class="mb-n5" justify="center">
             <v-col lg="4">
@@ -209,7 +207,6 @@
 <script>
 import Product from "../components/product.vue";
 import supplier from "../components/supplier";
-import cartTable from "../components/cartTable";
 import SiteColor from "../components/siteColor";
 // import { component } from 'vue/types/umd';
 //import usersModel from "../models/usersModel";
@@ -379,7 +376,7 @@ export default {
   components: {
     Product,
     supplier,
-    cartTable,
+
     SiteColor,
   },
 };
