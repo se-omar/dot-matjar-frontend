@@ -1,34 +1,25 @@
 <template>
   <div class="tool-bar">
     <v-app-bar :color="siteColor" dark>
-     
-     
-       
-   
-       <span v-if="!supplierPageInfo.logo" >
-<v-btn @click="$router.push('/').catch(()=>{})" text>
-  <i class="fa fa-shopping-cart fa-lg "></i>
-  <span class="mt-2">Dot-Market</span>
-</v-btn>
-       
-       </span>
+      <span v-if="!supplierPageInfo.logo">
+        <v-btn @click="$router.push('/').catch(()=>{})" text>
+          <i class="fa fa-shopping-cart fa-lg"></i>
+          <span class="mt-2">Dot-Market</span>
+        </v-btn>
+      </span>
 
-       <span v-else class="ml-4">
-<v-btn text max-width="150" @click="goSupplierPage">
-     <v-img
-        class="mx-2"
-        :src="nodeHost + supplierPageInfo.logo"
-        max-height="60"
-        max-width="100"
-        contain
-        
-      ></v-img>
-      <span class="mt-3">{{supplierPageInfo.site_name}}</span>
-     </v-btn> 
-
-       </span>
-      
-
+      <span v-else class="ml-4">
+        <v-btn text max-width="150" @click="goSupplierPage">
+          <v-img
+            class="mx-2"
+            :src="nodeHost + supplierPageInfo.logo"
+            max-height="60"
+            max-width="100"
+            contain
+          ></v-img>
+          <span class="mt-3">{{supplierPageInfo.site_name}}</span>
+        </v-btn>
+      </span>
 
       <v-spacer></v-spacer>
 
@@ -128,18 +119,39 @@
           <v-row></v-row>
           <v-divider></v-divider>
 
-          <v-col v-if="currentUser.user_type == 'bussines' || currentUser.user_type == 'admin'" cols="12 ml-6  ">
-            <v-btn class="btn1" :color="siteColor" x-large  rounded @click="$router.push('/myProducts')">
+          <v-col
+            v-if="currentUser.user_type == 'bussines' || currentUser.user_type == 'admin'"
+            cols="12 ml-6  "
+          >
+            <v-btn
+              class="btn1"
+              :color="siteColor"
+              x-large
+              rounded
+              @click="$router.push('/myProducts')"
+            >
               <span class="mos">My products</span>
             </v-btn>
           </v-col>
-          <v-col v-if="currentUser.user_type == 'bussines' ||   currentUser.user_type ==  'business'" cols="12 ml-6  ">
+          <v-col
+            v-if="currentUser.user_type == 'bussines' ||   currentUser.user_type ==  'business'"
+            cols="12 ml-6  "
+          >
             <v-btn class="btn1" :color="siteColor" x-large rounded @click="supplierPage">
               <span class="mos">My Page</span>
             </v-btn>
           </v-col>
-        <v-col v-if="currentUser.user_type == 'business'  || currentUser.user_type == 'admin'" cols="12 ml-6  ">
-            <v-btn class="btn1" :color="siteColor" x-large  rounded @click="$router.push('/orderedProducts')">
+          <v-col
+            v-if="currentUser.user_type == 'business'  || currentUser.user_type == 'admin'"
+            cols="12 ml-6  "
+          >
+            <v-btn
+              class="btn1"
+              :color="siteColor"
+              x-large
+              rounded
+              @click="$router.push('/orderedProducts')"
+            >
               <span class="mos">Ordered Products</span>
             </v-btn>
           </v-col>
@@ -147,9 +159,9 @@
 
           <v-col cols="12">
             <v-card-text>
-              <a class="size"  @click="$router.push('/editPassword')">
+              <a class="size" @click="$router.push('/editPassword')">
                 <i class="fa fa-cog" aria-hidden="true" style="color:black"></i>
-               <span :color="siteColor"> Change your password </span>
+                <span :color="siteColor">Change your password</span>
               </a>
               <br />
               <br />
@@ -303,20 +315,20 @@
   </div>
 </template>
 <script>
-
 export default {
   components: {},
   created() {
     this.$store.dispatch("refreshCurrentUser");
+    console.log(this.siteColor);
   },
 
   props: {
-//     toolBarColor: {
-//       type: String,
-//       default (){
-// return this.siteColor
-//       } 
-//     },
+    //     toolBarColor: {
+    //       type: String,
+    //       default (){
+    // return this.siteColor
+    //       }
+    //     },
   },
   computed: {
     currentUser() {
@@ -325,16 +337,19 @@ export default {
     nodeHost() {
       return this.$store.state.nodeHost;
     },
-    siteColor(){
-      return this.$store.state.siteColor
+    siteColor() {
+      if (this.$store.state.siteColor) {
+        return this.$store.state.siteColor;
+      } else {
+        return "red darken-4";
+      }
     },
-    supplierPageInfo(){
-      return this.$store.state.supplierPageInfo
+    supplierPageInfo() {
+      return this.$store.state.supplierPageInfo;
     },
-    supplier(){
-      return this.$store.state.supplier
-    }
-   
+    supplier() {
+      return this.$store.state.supplier;
+    },
   },
 
   methods: {
@@ -360,9 +375,9 @@ export default {
       this.$store.commit("supplierPage", this.currentUser);
       this.$router.push(`/supplierPage/` + this.currentUser.user_id);
     },
-    goSupplierPage(){
-      this.$router.push('/supplierPage/'+this.supplier.user_id)
-    }
+    goSupplierPage() {
+      this.$router.push("/supplierPage/" + this.supplier.user_id);
+    },
   },
   data: () => ({
     profilephoto: [],

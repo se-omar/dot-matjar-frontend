@@ -165,7 +165,8 @@
         <v-row class="ml-7 mr-7" v-if="radioGroup === '1'">
           <v-col
             lg="3"
-            md="4"
+            md="6"
+            xmd="4"
             sm="12"
             cols="12"
             v-for="filteredProduct in filteredProducts"
@@ -207,6 +208,7 @@
 <script>
 import Product from "../components/product.vue";
 import supplier from "../components/supplier";
+
 import SiteColor from "../components/siteColor";
 // import { component } from 'vue/types/umd';
 //import usersModel from "../models/usersModel";

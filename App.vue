@@ -1,7 +1,7 @@
 <template>
-  <v-app>
+  <v-app class="grey lighten-4">
     <ToolBar></ToolBar>
-    <cartTable class="grey lighten-4"></cartTable>
+    <cartTable></cartTable>
     <router-view />
     <!-- <link
       href="https://cdn.jsdelivr.net/npm/font-awesome@4.x/css/font-awesome.min.css"
