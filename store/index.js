@@ -56,7 +56,8 @@ export default new Vuex.Store({
     allSuppliersWithSales: [],
     pressedOrder: [],
     productRating: 0,
-    productReview: ''
+    productReview: '',
+    averageProductRating: 0
   },
 
   mutations: {
@@ -393,6 +394,15 @@ export default new Vuex.Store({
       console.log('product row from commit', row)
       state.productRating = row.rating;
       state.productReview = row.review;
+    },
+
+    calculateProductRating(state, average) {
+      if (average) {
+        state.averageProductRating = average
+      }
+      else {
+        state.averageProductRating = 0
+      }
     }
 
   },
@@ -1020,6 +1030,15 @@ export default new Vuex.Store({
         .then((response) => {
           alert(response.data.message);
         });
+    },
+
+    calculateProductRating(context, product_id) {
+      axios.post('http://localhost:3000/api/calculateProductRating', {
+        product_id
+      }).then(response => {
+        context.commit('calculateProductRating', response.data.average)
+        console.log(response.data.average)
+      })
     }
   },
 

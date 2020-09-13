@@ -153,6 +153,20 @@
             >Add to cart</v-btn>
           </v-col>
 
+          <v-col lg="9">
+            <p class="text-h5 mb-n2 text-center">Product Rating</p>
+            <v-rating
+              class="ml-n1"
+              :readonly="productRating > 0"
+              v-model="currentProduct.rating"
+              :hover="hover"
+              :size="size"
+              :color="siteColor"
+            ></v-rating>
+
+            <p class="text-center text-subtitle">(based on {{currentProduct.rate_counter}} Ratings)</p>
+          </v-col>
+
           <v-col cols="9">
             <v-divider class="mb-8"></v-divider>
             <p v-if="productRating === 0" class="text-h5 mb-n2 text-center">Rate this Product</p>
