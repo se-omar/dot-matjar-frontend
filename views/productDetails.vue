@@ -211,7 +211,6 @@
 <script>
 //import businessInfoPopup from "../components/businessInfoPopup.vue";
 // import productRequestDialog from "../components/productRequestDialog";
-
 export default {
   async mounted() {
     await this.$store.dispatch("refreshCurrentUser");

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-row justify="start">
-      <v-col class="ml-2" cols="1" lg="1">
+    <v-row justify="start" class="ml-2">
+      <v-col cols="1" lg="1">
         <v-btn
           :color="siteColor"
           dark

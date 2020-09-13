@@ -1,9 +1,12 @@
 <template>
-  <v-app>
+  <v-app class="grey lighten-4">
     <ToolBar></ToolBar>
-    <CartTable class="grey lighten-4"></CartTable>
+    <cartTable></cartTable>
     <router-view />
-
+    <!-- <link
+      href="https://cdn.jsdelivr.net/npm/font-awesome@4.x/css/font-awesome.min.css"
+      rel="stylesheet"
+    />-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" />
 
     <Footer></Footer>
@@ -13,10 +16,10 @@
 <script>
 import ToolBar from "./components/toolbar";
 import Footer from "./components/footer";
-import CartTable from "./components/cartTable";
+import cartTable from "./components/cartTable";
 export default {
   name: "App",
-  components: { ToolBar, Footer, CartTable },
+  components: { ToolBar, Footer, cartTable },
   data: () => ({}),
   computed: {
     currentUser() {

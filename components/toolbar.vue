@@ -319,6 +319,7 @@ export default {
   components: {},
   created() {
     this.$store.dispatch("refreshCurrentUser");
+    console.log(this.siteColor);
   },
 
   props: {

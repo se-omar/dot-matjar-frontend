@@ -348,14 +348,7 @@ export default new Vuex.Store({
 
       for (var i = 0; i < state.ordersMade.length; i++) {
         if (state.ordersMade[i].order_number == orderNumber) {
-          // productDetails.push({
-          //   'product_name':state.ordersMade[i].product.product_name,
-          //   'product_id': state.ordersMade[i].product.product_id,
-          //   'product_code':state.ordersMade[i].product.product_code,
-          //   'order_id': state.ordersMade[i].order_id,
-          //   'purchase_date': state.ordersMade[i].purchase_date,
-          //   'quantity': state.ordersMade[i].quantity
-          // })
+
           console.log(state.ordersMade[i].products)
           state.showOrderProducts = state.ordersMade[i].products
           state.pressedOrder = state.ordersMade[i]
@@ -948,13 +941,7 @@ export default new Vuex.Store({
         })
     },
 
-    // showOrderProducts(context, order_number) {
-    //   axios.put('http://localhost:3000/api/showOrderProducts', { order_number: order_number })
-    //     .then(products => {
-    //       console.log(products.data.data)
-    //       context.commit('showOrderProducts', products.data.data)
-    //     })
-    // },
+
     changingSiteColor(context, pickerColor) {
       axios.put('http://localhost:3000/api/changeSiteColor', { user_id: context.state.currentUser.user_id, site_color: pickerColor })
         .then(response => {

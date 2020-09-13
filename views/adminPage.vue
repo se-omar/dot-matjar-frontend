@@ -25,7 +25,7 @@
         </v-card>
       </v-col>
     </v-row>
-
+    <v-divider></v-divider>
     <v-row justify="center" v-if="selectedMonth !== 'all'">
       <p class="display-1 mt-8">Top Selling Suppliers in {{selectedMonth}}</p>
     </v-row>
@@ -103,7 +103,7 @@
         </v-card>
       </v-col>
     </v-row>
-
+    <v-divider></v-divider>
     <v-row justify="center">
       <p class="display-1 mt-8">Suppliers Ranking Chart</p>
     </v-row>
@@ -156,7 +156,7 @@
         </v-row>
       </v-col>
     </v-row>
-
+    <v-divider></v-divider>
     <v-row justify="center">
       <p class="display-1 mt-8">All Suppliers</p>
     </v-row>

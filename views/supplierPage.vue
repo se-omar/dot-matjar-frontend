@@ -177,7 +177,7 @@ export default {
       "getSupplierProducts",
       this.$route.params.supplier_id
     );
-
+    console.log("info", this.$store.state.supplierPageInfo);
     console.log(this.$store.state.myProducts);
     console.log(this.$store.state.supplierPageColor);
     this.pageColor = this.$store.state.supplierPageColor;
