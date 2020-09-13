@@ -28,6 +28,7 @@ import adminPage from '../views/adminPage'
 import suppliersDashboard from '../views/allSuppliersDashboard'
 import orderedProducts from '../views/orderedProducts'
 import updateSupplierPage from '../views/updateSupplierPage'
+import ratingTest from '../views/ratingTest.vue'
 // import { isInteger } from 'core-js/fn/number'
 Vue.use(VueRouter)
 
@@ -175,6 +176,11 @@ var routes = [{
   path: '/updateSupplierPage/:supplier_id',
   name: 'updateSupplierPage',
   component: updateSupplierPage
+},
+{
+  path: '/ratingTest',
+  name: 'ratingTest',
+  component: ratingTest
 },
 {
   path: '*',

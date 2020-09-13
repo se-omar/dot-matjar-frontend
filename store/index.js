@@ -55,6 +55,8 @@ export default new Vuex.Store({
     supplierPageInfo: [],
     allSuppliersWithSales: [],
     pressedOrder: [],
+    productRating: 0,
+    productReview: ''
   },
 
   mutations: {
@@ -360,28 +362,7 @@ export default new Vuex.Store({
 
       }
     },
-    // showAddressDetails(state, orderNumber) {
-    //   state.OrderAddressDetails = []
-    //   console.log('orders  madd', state.ordersMade)
-    //   console.log(state.ordersMade[0].order_number, orderNumber)
-    //   for (var i = 0; i < state.ordersMade.length; i++) {
-    //     if (state.ordersMade[i].order_number == orderNumber) {
-    //       console.log('for acceesd')
-    //       state.OrderAddressDetails.push({
-    //         'country': state.ordersMade[i].order.country,
-    //         'state': state.ordersMade[i].order.state,
-    //         'address_line_1': state.ordersMade[i].order.address_line_1,
-    //         'address_line_2': state.ordersMade[i].order.address_line_2,
-    //         'city': state.ordersMade[i].order.city,
 
-
-    //       })
-    //     }
-
-
-    //   }
-    //   console.log('addres detaisl ', state.OrderAddressDetails)
-    // },
     changingSiteColor(state, color) {
       localStorage.setItem('siteColor', color)
       state.siteColor = localStorage.getItem('siteColor')
@@ -406,6 +387,12 @@ export default new Vuex.Store({
       state.allSuppliersWithSales = suppliers
       console.log('commit suppliers', suppliers)
       console.log('commit supp', state.allSuppliersWithSales)
+    },
+
+    getProductReview(state, row) {
+      console.log('product row from commit', row)
+      state.productRating = row.rating;
+      state.productReview = row.review;
     }
 
   },
@@ -1008,8 +995,32 @@ export default new Vuex.Store({
           console.log(res.data.data)
           console.log('order crreatedd', res.data.message)
         })
-    }
+    },
 
+    async getProductReview(context, {
+      product_id, user_id
+    }) {
+      await axios
+        .post("http://localhost:3000/api/getProductReview", {
+          product_id: product_id,
+          user_id: user_id,
+        }).then(response => {
+
+          context.commit('getProductReview', response.data.review)
+        })
+    },
+
+    addProductReview(context, {
+      user_id, product_id, rating, review
+    }) {
+      axios
+        .post("http://localhost:3000/api/addProductReview", {
+          user_id, product_id, rating, review
+        })
+        .then((response) => {
+          alert(response.data.message);
+        });
+    }
   },
 
   modules: {},

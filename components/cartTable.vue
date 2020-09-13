@@ -259,7 +259,11 @@ export default {
       return this.$store.state.table;
     },
     siteColor() {
-      return this.$store.state.siteColor;
+      if (this.$store.state.siteColor) {
+        return this.$store.state.siteColor;
+      } else {
+        return "red darken-4";
+      }
     },
   },
 };
