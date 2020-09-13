@@ -30,9 +30,14 @@
             <v-col cols="11" lg="10" sm="11" md="11">
               <v-btn outlined block @click="setCurrentRow" :color="siteColor" text>Details</v-btn>
             </v-col>
-            <v-col cols="11" lg="10" sm="11" md="11">
+            <v-col
+              cols="11"
+              lg="10"
+              sm="11"
+              md="11"
+              v-if="currentUser && currentUser.user_type == 'user'"
+            >
               <v-btn
-                v-if="currentuser"
                 block
                 @click="add(filteredProduct)"
                 variant="primary"
@@ -60,8 +65,11 @@
 // import cart from '../views/cart'
 export default {
   components: {},
-  created() {
+  async created() {
+    await this.$store.dispatch("refreshCurrentUser");
+
     console.log(this.$route);
+    console.log(this.currentUser);
   },
   name: "product",
   data() {
@@ -100,8 +108,10 @@ export default {
 
     add3Dots(string, limit) {
       var dots = "...";
-      if (string.length > limit) {
-        string = string.substring(0, limit) + dots;
+      if (string) {
+        if (string.length > limit) {
+          string = string.substring(0, limit) + dots;
+        }
       }
 
       return string;
@@ -119,14 +129,18 @@ export default {
     nodeHost() {
       return this.$store.state.nodeHost;
     },
-    currentuser() {
+    currentUser() {
       return this.$store.state.currentUser;
     },
     cart() {
       return this.$store.state.cart;
     },
     siteColor() {
-      return this.$store.state.siteColor;
+      if (this.$store.state.siteColor) {
+        return this.$store.state.siteColor;
+      } else {
+        return "red darken-4";
+      }
     },
   },
 };

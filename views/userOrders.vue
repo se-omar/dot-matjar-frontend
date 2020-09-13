@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <v-row>
       <v-col>
         <v-card height="120">
@@ -51,7 +50,19 @@
                   hide-default-footer
                   :headers="productHeaders"
                   :items="productsInOrder"
-                ></v-data-table>
+                >
+                  <template v-slot:item.status="{item}">
+                    <h5>
+                      {{item.pending_status}}
+                      <i
+                        v-if="item.pending_status == 'Delivered'"
+                        class="fa fa-check"
+                      ></i>
+                      <i v-if="item.pending_status == 'Pending'" class="fas fa-spinner fa-pulse"></i>
+                      <i v-if="item.pending_status == 'Rejected'" class="fa fa-ban"></i>
+                    </h5>
+                  </template>
+                </v-data-table>
               </v-card>
             </v-col>
           </v-row>
@@ -67,15 +78,12 @@
         </v-col>
       </v-row>
     </v-flex>
-   
   </div>
 </template>
 <script>
-
 export default {
   name: "userOrders",
-  components: {
-      },
+  components: {},
   async created() {
     await this.$store.dispatch("refreshCurrentUser");
     await this.$store.dispatch("getOrders");
@@ -158,7 +166,7 @@ export default {
       { text: "Product name", value: "product_name" },
       { text: "Price", value: "unit_price" },
       { text: "Product code", value: "product_code" },
-      { text: "size", value: "product_size" },
+      { text: "Status", value: "status" },
       { text: "Quantity", value: "quantity" },
     ],
     orderProducts: [],

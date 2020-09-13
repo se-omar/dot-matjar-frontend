@@ -1,5 +1,5 @@
 <template>
-  <v-app class="grey lighten-4">
+  <v-app>
     <div v-if="currentUser.user_type == 'admin'"></div>
     <div class="vld-parent">
       <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>

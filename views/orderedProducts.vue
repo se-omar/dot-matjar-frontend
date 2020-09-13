@@ -33,11 +33,63 @@
                 :headers="productsTableHeaders"
                 :items="showOrderProducts"
                 hide-default-footer
+                @click:row="productClicked"
               >
-                <!-- ================= -->
-                <!-- Address detailss  -->
+                <template v-slot:item.status="{item}">
+                  <h5>
+                    {{item.products_orders.status}}
+                    <i
+                      v-if="item.products_orders.status == 'Delivered'"
+                      class="fa fa-check"
+                    ></i>
+                    <i
+                      v-if="item.products_orders.status == 'Pending'"
+                      class="fas fa-spinner fa-pulse"
+                    ></i>
+                    <i v-if="item.products_orders.status == 'Rejected'" class="fa fa-trash fa-lg"></i>
+                    <v-btn icon @click="productStatus">
+                      <i class="fa fa-edit fa-2x ml-4"></i>
+                    </v-btn>
+                  </h5>
 
-                <!-- =================== -->
+                  <v-dialog v-model="statusDialog" max-width="500px">
+                    <v-card tile>
+                      <v-toolbar flat dark :color="siteColor" max-height="80">
+                        <v-row class="mr-6" justify="end">
+                          <v-toolbar-title>{{clickedProductInfo.product_name}}</v-toolbar-title>
+                        </v-row>
+                        <v-spacer></v-spacer>
+                      </v-toolbar>
+                      <v-row justify="center">
+                        <v-col cols="8">
+                          <v-card-text>
+                            <v-list three-line subheader>
+                              <v-subheader>Product Status</v-subheader>
+
+                              <v-select v-model="productStatusUpdate" outlined :items="statusItems"></v-select>
+
+                              <v-btn
+                                @click="updateStatus"
+                                rounded
+                                :color="siteColor"
+                                class="white--text"
+                              >Update</v-btn>
+                              <v-btn
+                                @click="statusDialog = false"
+                                rounded
+                                class="ml-2 white--text"
+                                :color="siteColor"
+                              >Close</v-btn>
+                            </v-list>
+                          </v-card-text>
+                        </v-col>
+                      </v-row>
+                      <div style="flex: 1 1 auto;"></div>
+                    </v-card>
+                  </v-dialog>
+
+                  <!-- ================================== -->
+                </template>
               </v-data-table>
             </v-col>
           </v-row>
@@ -136,16 +188,23 @@ export default {
       { text: "product ID", value: "product_id" },
       { text: "product Code", value: "product_code" },
       { text: "Quantity", value: "quantity" },
+      { text: "Status", value: "status" },
     ],
     state: "",
     country: "",
     address1: "",
     address2: "",
     city: "",
+    statusDialog: false,
+    clickedProductInfo: "",
+    statusItems: ["pending", "Delivered", "Rejected"],
+    productStatusUpdate: "",
+    userMadeOrder: "",
   }),
   methods: {
     async showProducts(event) {
-      console.log(event);
+      this.userMadeOrder = event;
+      console.log("user made order", event);
       await this.$store.commit("showOrderProducts", event.order_number);
       // await this.$store.commit('showAddressDetails',event.order_number)
       console.log("order addrress", this.$store.state.OrderAddressDetails);
@@ -155,6 +214,24 @@ export default {
       this.address1 = this.pressedOrder.address_line_1;
       this.address2 = this.pressedOrder.address_line_2;
       this.city = this.pressedOrder.city;
+    },
+    productClicked(event) {
+      console.log(event);
+      this.clickedProductInfo = event;
+      this.productStatusUpdate = event.pending_status;
+      console.log(event.pending_status);
+    },
+    productStatus() {
+      this.statusDialog = true;
+    },
+    updateStatus() {
+      console.log(this.productStatusUpdate);
+
+      this.$store.dispatch("updateProductStatus", {
+        status: this.productStatusUpdate,
+        orderId: this.userMadeOrder.order_id,
+        productId: this.clickedProductInfo.product_id,
+      });
     },
   },
   async created() {
@@ -184,6 +261,9 @@ export default {
     //  },
     pressedOrder() {
       return this.$store.state.pressedOrder;
+    },
+    siteColor() {
+      return this.$store.state.siteColor;
     },
   },
 };

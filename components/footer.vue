@@ -20,7 +20,7 @@
 
       <v-card-text class="white--text pt-2">
         &copy; Copywrites 2020 -
-        <strong>Dot-Market</strong>
+        <strong>Dot-Matjar</strong>
       </v-card-text>
     </v-card>
   </v-footer>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row justify="start" class="ml-2">
+    <v-row justify="start" class="ml-2" v-if="currentUser.user_type == 'user'">
       <v-col cols="1" lg="1">
         <v-btn
           :color="siteColor"

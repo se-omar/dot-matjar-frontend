@@ -1,8 +1,8 @@
 <template>
-  <v-app class="grey lighten-4">
+  <v-app>
     <ToolBar></ToolBar>
     <cartTable></cartTable>
-    <router-view />
+    <router-view class="grey lighten-4" />
     <!-- <link
       href="https://cdn.jsdelivr.net/npm/font-awesome@4.x/css/font-awesome.min.css"
       rel="stylesheet"
