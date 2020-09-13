@@ -152,6 +152,42 @@
               :color="siteColor"
             >Add to cart</v-btn>
           </v-col>
+
+          <v-col lg="9">
+            <p class="text-h5 mb-n2 text-center">Product Rating</p>
+            <v-rating
+              class="ml-n1"
+              :readonly="productRating > 0"
+              v-model="currentProduct.rating"
+              :hover="hover"
+              :size="size"
+              :color="siteColor"
+            ></v-rating>
+
+            <p class="text-center text-subtitle">(based on {{currentProduct.rate_counter}} Ratings)</p>
+          </v-col>
+
+          <v-col cols="9">
+            <v-divider class="mb-8"></v-divider>
+            <p v-if="productRating === 0" class="text-h5 mb-n2 text-center">Rate this Product</p>
+            <p v-else class="text-h5 mb-n2 text-center">Your Rating:</p>
+            <v-rating
+              class="ml-n1"
+              :readonly="productRating > 0"
+              v-model="rating"
+              :hover="hover"
+              :size="size"
+              :color="siteColor"
+            ></v-rating>
+            <v-textarea :disabled="productRating > 0" height="150" outlined v-model="review"></v-textarea>
+            <v-btn
+              class="white--text"
+              :disabled="productRating > 0"
+              @click="submitReview"
+              block
+              :color="siteColor"
+            >submit</v-btn>
+          </v-col>
         </v-row>
       </v-col>
     </v-row>
@@ -176,14 +212,25 @@
 //import businessInfoPopup from "../components/businessInfoPopup.vue";
 // import productRequestDialog from "../components/productRequestDialog";
 export default {
-  created() {
-    this.$store.dispatch("refreshCurrentUser");
+  async mounted() {
+    await this.$store.dispatch("refreshCurrentUser");
     console.log(this.currentProduct);
-    this.$store.dispatch("getSiteColor");
+    await this.$store.dispatch("getSiteColor");
+    await this.$store.dispatch("getProductReview", {
+      product_id: this.currentProduct.product_id,
+      user_id: this.currentUser.user_id,
+    });
+    await this.setValues();
+    console.log(this.productRating);
+    console.log(this.productReview);
   },
 
   data() {
     return {
+      hover: true,
+      rating: 0,
+      size: 45,
+      review: "",
       removePressed: false,
       addToCartButton: true,
     };
@@ -215,6 +262,12 @@ export default {
     },
     siteColor() {
       return this.$store.state.siteColor;
+    },
+    productRating() {
+      return this.$store.state.productRating;
+    },
+    productReview() {
+      return this.$store.state.productReview;
     },
   },
 
@@ -266,6 +319,23 @@ export default {
       console.log("current supplier id", supplier.user_id);
       this.$store.commit("supplierPage", supplier);
       this.$router.push("/supplierPage/" + supplier.user_id);
+    },
+
+    async submitReview() {
+      console.log(this.rating);
+      console.log(this.review);
+      await this.$store.dispatch("addProductReview", {
+        product_id: this.currentProduct.product_id,
+        user_id: this.currentUser.user_id,
+        rating: this.rating,
+        review: this.review,
+      });
+      window.location.reload();
+    },
+
+    setValues() {
+      this.rating = this.productRating;
+      this.review = this.productReview;
     },
   },
 };

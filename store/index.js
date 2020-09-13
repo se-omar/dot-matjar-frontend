@@ -55,6 +55,9 @@ export default new Vuex.Store({
     supplierPageInfo: [],
     allSuppliersWithSales: [],
     pressedOrder: [],
+    productRating: 0,
+    productReview: '',
+    averageProductRating: 0
   },
 
   mutations: {
@@ -379,6 +382,21 @@ export default new Vuex.Store({
       state.allSuppliersWithSales = suppliers
       console.log('commit suppliers', suppliers)
       console.log('commit supp', state.allSuppliersWithSales)
+    },
+
+    getProductReview(state, row) {
+      console.log('product row from commit', row)
+      state.productRating = row.rating;
+      state.productReview = row.review;
+    },
+
+    calculateProductRating(state, average) {
+      if (average) {
+        state.averageProductRating = average
+      }
+      else {
+        state.averageProductRating = 0
+      }
     }
 
   },
@@ -982,8 +1000,41 @@ export default new Vuex.Store({
         .then(response => {
           console.log(response.data.message)
         })
-    }
+    },
 
+    async getProductReview(context, {
+      product_id, user_id
+    }) {
+      await axios
+        .post("http://localhost:3000/api/getProductReview", {
+          product_id: product_id,
+          user_id: user_id,
+        }).then(response => {
+
+          context.commit('getProductReview', response.data.review)
+        })
+    },
+
+    addProductReview(context, {
+      user_id, product_id, rating, review
+    }) {
+      axios
+        .post("http://localhost:3000/api/addProductReview", {
+          user_id, product_id, rating, review
+        })
+        .then((response) => {
+          alert(response.data.message);
+        });
+    },
+
+    calculateProductRating(context, product_id) {
+      axios.post('http://localhost:3000/api/calculateProductRating', {
+        product_id
+      }).then(response => {
+        context.commit('calculateProductRating', response.data.average)
+        console.log(response.data.average)
+      })
+    }
   },
 
   modules: {},

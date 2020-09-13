@@ -21,7 +21,14 @@
               </v-col>
 
               <v-col class="mt-n2" lg="12" md="12" sm="12" cols="12">
-                <v-rating v-model="rating" color="amber" dense half-increments readonly size="20"></v-rating>
+                <v-rating
+                  v-model="filteredProduct.rating"
+                  color="amber"
+                  dense
+                  half-increments
+                  readonly
+                  size="20"
+                ></v-rating>
               </v-col>
             </v-row>
           </v-card-text>
@@ -68,14 +75,16 @@ export default {
   async created() {
     await this.$store.dispatch("refreshCurrentUser");
 
-    console.log(this.$route);
-    console.log(this.currentUser);
+    await this.$store.dispatch(
+      "calculateProductRating",
+      this.filteredProduct.product_id
+    );
+    console.log("average product rateing", this.averageProductRating);
   },
   name: "product",
   data() {
     return {
       i: 0,
-      rating: 4,
     };
   },
 
@@ -141,6 +150,9 @@ export default {
       } else {
         return "red darken-4";
       }
+    },
+    averageProductRating() {
+      return this.$store.state.averageProductRating;
     },
   },
 };

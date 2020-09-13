@@ -29,7 +29,7 @@
         </carousel>
       </v-col>
 
-      <v-col lg="1" v-if="currentUser.user_type == 'admin'">
+      <v-col class="mr-n10" lg="1" v-if="currentUser.user_type == 'admin'">
         <SiteColor disabled></SiteColor>
       </v-col>
     </v-row>
