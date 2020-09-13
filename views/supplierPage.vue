@@ -102,7 +102,9 @@
             v-for="(supplierProduct,product_id) in supplierProducts"
             :key="product_id"
           >
-            <product :addToCartButton="false" :filteredProduct="supplierProduct"></product>
+            <v-hover>
+              <product :addToCartButton="false" :filteredProduct="supplierProduct"></product>
+            </v-hover>
           </v-col>
         </v-row>
       </v-col>
@@ -163,7 +165,6 @@ export default {
     },
   },
   async created() {
-    this.isLoading = true;
     await this.$store.dispatch("getSupplier", this.$route.params.supplier_id);
     await this.$store.dispatch("refreshCurrentUser");
     console.log("current user", this.currentUser);

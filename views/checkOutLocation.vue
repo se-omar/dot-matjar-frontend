@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-app>
-   
       <v-form v-model="valid">
         <v-container>
           <v-row justify="center" class="mt-16">
@@ -9,10 +8,9 @@
           </v-row>
           <v-row>
             <v-col lg="6" sm="6">
-             <v-select
-               :rules="rules"
+              <v-select
+                :rules="rules"
                 :items="egyptGovernorates"
-               
                 placeholder="Governorate"
                 dense
                 outlined
@@ -21,10 +19,9 @@
               ></v-select>
             </v-col>
             <v-col lg="6" sm="6">
-             <v-select
-               :rules="rules"
+              <v-select
+                :rules="rules"
                 :items="regions"
-                
                 placeholder="Region"
                 dense
                 outlined
@@ -32,74 +29,61 @@
               ></v-select>
             </v-col>
             <v-col cols="12" lg="12">
-              <v-textarea  outlined color="teal" label="Address" v-model="address"></v-textarea>
+              <v-textarea outlined color="teal" label="Address" v-model="address"></v-textarea>
             </v-col>
           </v-row>
-          <v-row  justify="center">
+          <v-row justify="center">
             <v-col lg="2">
-
-              <v-btn :disabled="!valid" @click="createOrder" :color="siteColor" class="white--text" >
-              Pay on Receiving
-              </v-btn>
+              <v-btn
+                :disabled="!valid"
+                @click="createOrder"
+                :color="siteColor"
+                class="white--text"
+              >Pay on Receiving</v-btn>
 
               <!-- =============== -->
-            
 
-    <v-snackbar
-      v-model="snackbar"
-      :vertical="vertical"
-      :color="siteColor"
-    >
-   <span style="font-weight:bold ; font-size:large">   {{ text }} </span>
+              <v-snackbar v-model="snackbar" :vertical="vertical" :color="siteColor">
+                <span style="font-weight:bold ; font-size:large">{{ text }}</span>
 
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          color="white"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
+                <template v-slot:action="{ attrs }">
+                  <v-btn color="white" text v-bind="attrs" @click="snackbar = false">Close</v-btn>
+                </template>
+              </v-snackbar>
               <!-- ====================== -->
             </v-col>
-               <v-col lg="2">
-              <v-btn :disabled="!valid" :color="siteColor" class="white--text" @click="getSession">
-              Visa
-              </v-btn>
+            <v-col lg="2">
+              <v-btn
+                :disabled="!valid"
+                :color="siteColor"
+                class="white--text"
+                @click="getSession"
+              >Visa</v-btn>
             </v-col>
           </v-row>
         </v-container>
       </v-form>
     </v-app>
- 
   </div>
 </template>
 
 <script>
 import { loadStripe } from "@stripe/stripe-js";
 
-
 export default {
-  components: {
-    
-  },
+  components: {},
   data: () => ({
-region:'',
-governorate:'',
-valid:true,
+    region: "",
+    governorate: "",
+    valid: true,
     address: "",
 
     governorates: [],
     quantityArray: [],
-    rules:[
-      v=> !!v || "Required"
-    ],
-     snackbar: false,
-      text: 'Order is Placed Successfully',
-      vertical: true,
+    rules: [(v) => !!v || "Required"],
+    snackbar: false,
+    text: "Order is Placed Successfully",
+    vertical: true,
   }),
 
   computed: {
@@ -109,8 +93,8 @@ valid:true,
     items() {
       return this.$store.state.table;
     },
-    siteColor(){
-      return this.$store.state.siteColor
+    siteColor() {
+      return this.$store.state.siteColor;
     },
     regions() {
       return this.$store.state.regions;
@@ -120,22 +104,19 @@ valid:true,
     },
   },
   async created() {
-          await this.$store.dispatch("refreshCurrentUser");
+    await this.$store.dispatch("refreshCurrentUser");
     this.$store.dispatch("getGovernorate");
     this.address = this.currentUser.address;
     console.log(this.currentUser.governorate);
-    this.governorate = this.currentUser.governorate
-   await this.$store.dispatch("getRegions", this.governorate);
-    this.region = this.currentUser.region
+    this.governorate = this.currentUser.governorate;
+    await this.$store.dispatch("getRegions", this.governorate);
+    this.region = this.currentUser.region;
 
-
-var d= new Date()
-console.log('d is',d)
-
+    var d = new Date();
+    console.log("d is", d);
   },
   methods: {
     getSession() {
-      
       var self = this;
       self.quantityArray = [];
       this.items.forEach((element) => {
@@ -169,16 +150,23 @@ console.log('d is',d)
           });
       });
     },
-     getCountryRegions() {
+    getCountryRegions() {
       console.log(this.governorate);
       this.$store.dispatch("getRegions", this.governorate);
     },
-    createOrder(){
-      console.log('data che k',this.governorate,this.region,this.address)
-      this.$store.dispatch('createOrder',{governorate:this.governorate , region:this.region , address:this.address})
-      console.log(this.$store.state.totalPrice)
-      this.snackbar = true
-    }
+    createOrder() {
+      console.log("data che k", this.governorate, this.region, this.address);
+      this.$store.dispatch("createOrder", {
+        governorate: this.governorate,
+        region: this.region,
+        address: this.address,
+      });
+      console.log(this.$store.state.totalPrice);
+      this.snackbar = true;
+      setTimeout(() => {
+        this.$router.push("/");
+      }, 2000);
+    },
   },
 };
 </script>

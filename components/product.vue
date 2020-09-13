@@ -37,9 +37,14 @@
             <v-col cols="11" lg="10" sm="11" md="11">
               <v-btn outlined block @click="setCurrentRow" :color="siteColor" text>Details</v-btn>
             </v-col>
-            <v-col cols="11" lg="10" sm="11" md="11">
+            <v-col
+              cols="11"
+              lg="10"
+              sm="11"
+              md="11"
+              v-if="currentUser && currentUser.user_type == 'user'"
+            >
               <v-btn
-                v-if="currentuser"
                 block
                 @click="add(filteredProduct)"
                 variant="primary"
@@ -68,11 +73,12 @@
 export default {
   components: {},
   async created() {
+    await this.$store.dispatch("refreshCurrentUser");
+
     await this.$store.dispatch(
       "calculateProductRating",
       this.filteredProduct.product_id
     );
-    console.log(this.$route);
     console.log("average product rateing", this.averageProductRating);
   },
   name: "product",
@@ -111,8 +117,10 @@ export default {
 
     add3Dots(string, limit) {
       var dots = "...";
-      if (string.length > limit) {
-        string = string.substring(0, limit) + dots;
+      if (string) {
+        if (string.length > limit) {
+          string = string.substring(0, limit) + dots;
+        }
       }
 
       return string;
@@ -130,14 +138,18 @@ export default {
     nodeHost() {
       return this.$store.state.nodeHost;
     },
-    currentuser() {
+    currentUser() {
       return this.$store.state.currentUser;
     },
     cart() {
       return this.$store.state.cart;
     },
     siteColor() {
-      return this.$store.state.siteColor;
+      if (this.$store.state.siteColor) {
+        return this.$store.state.siteColor;
+      } else {
+        return "red darken-4";
+      }
     },
     averageProductRating() {
       return this.$store.state.averageProductRating;

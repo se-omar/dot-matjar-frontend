@@ -1,5 +1,5 @@
 <template>
-  <v-app class="grey lighten-4">
+  <v-app>
     <div v-if="currentUser.user_type == 'admin'"></div>
     <div class="vld-parent">
       <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
@@ -15,21 +15,21 @@
           :navigationEnabled="true"
         >
           <slide>
-            <v-img height="400" src="..\assets\5c1c90f8e04d6243c7019cf6.jpg"></v-img>
+            <v-img height="400" src="..\assets\images/car1.jpg"></v-img>
           </slide>
           <slide>
-            <v-img height="400" src="../assets\Image-1595324311221.jpg"></v-img>
+            <v-img height="400" src="..\assets\images/car1.jpg"></v-img>
           </slide>
           <slide>
-            <v-img height="400" src="..\assets\Image-1595333043432.jpg"></v-img>
+            <v-img height="400" src="..\assets\images/car1.jpg"></v-img>
           </slide>
           <slide>
-            <v-img height="400" src="..\assets\Image-1595333213433.jpg"></v-img>
+            <v-img height="400" src="..\assets\images/car1.jpg"></v-img>
           </slide>
         </carousel>
       </v-col>
 
-      <v-col lg="1" v-if="currentUser.user_type == 'admin'">
+      <v-col class="mr-n10" lg="1" v-if="currentUser.user_type == 'admin'">
         <SiteColor disabled></SiteColor>
       </v-col>
     </v-row>

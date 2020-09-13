@@ -1,24 +1,17 @@
 <template>
   <div id="app">
-    <v-app >
-      <v-container  v-if="!currentUser" style="width: 60%">
+    <v-app>
+      <v-container v-if="!currentUser" style="width: 60%">
         <div>
-          <v-tabs
-            v-model="tab"
-            show-arrows
-           
-            icons-and-text
-            dark
-            grow
-          >
-            <v-tabs-slider  ></v-tabs-slider>
-            <v-tab   v-for="i in tabs" :key="i.name">
-              <v-icon  large>{{ i.icon }}</v-icon>
+          <v-tabs v-model="tab" show-arrows icons-and-text dark grow>
+            <v-tabs-slider></v-tabs-slider>
+            <v-tab class="red darken-4" v-for="i in tabs" :key="i.name">
+              <v-icon large>{{ i.icon }}</v-icon>
               <div class="caption py-1">{{ i.name }}</div>
             </v-tab>
             <v-tab-item>
-              <v-card  class="px-4">
-                <v-card-text >
+              <v-card class="px-4">
+                <v-card-text>
                   <v-form ref="loginForm" v-model="valid" lazy-validation>
                     <v-row>
                       <v-col cols="12">
@@ -48,8 +41,7 @@
                           x-large
                           block
                           :disabled="!valid"
-                          class=" white--text"
-                          :color="siteColor"
+                          class="red darken-4 white--text"
                           @click="login"
                         >Login</v-btn>
                       </v-col>
@@ -194,10 +186,15 @@
         </v-row>
       </v-container>
     </v-app>
+    <facebook-login class="button" appId="752933488821050"></facebook-login>
+    <v-facebook-login app-id="752933488821050"></v-facebook-login>
   </div>
 </template>
 
 <script>
+import facebookLogin from "facebook-login-vuejs";
+// import VFacebookLogin from "vue-facebook-login-component";
+
 export default {
   name: "reglogin",
   computed: {
@@ -216,13 +213,17 @@ export default {
     regions() {
       return this.$store.state.regions;
     },
-    siteColor(){
-
-      return this.$store.state.siteColor
-    }
+    siteColor() {
+      if (this.$store.state.siteColor) {
+        return this.$store.state.siteColor;
+      } else {
+        return "red darken-4";
+      }
+    },
   },
   created() {
     this.$store.dispatch("getGovernorate");
+    console.log(this.siteColor);
   },
   methods: {
     validateSignup() {
@@ -261,7 +262,32 @@ export default {
       console.log(this.governorate);
       this.$store.dispatch("getRegions", this.governorate);
     },
-
+    getUserData() {
+      this.FB.api(
+        "/me",
+        "GET",
+        { fields: "id,name,email" },
+        (userInformation) => {
+          console.warn("get data from facebook", userInformation);
+          this.presonalId = userInformation.id;
+          this.facbookEmail = userInformation.email;
+          this.name = userInformation.name;
+          console.log("user info", userInformation);
+        }
+      );
+    },
+    sdkLoaded(payload) {
+      this.isConnected = payload.isConnected;
+      this.FB = payload.FB;
+      if (this.isConnected) this.getUserData();
+    },
+    onLogin() {
+      this.isConnected = true;
+      this.getUserData();
+    },
+    onLogout() {
+      this.isConnected = false;
+    },
   },
 
   data: () => ({
@@ -306,9 +332,13 @@ export default {
     checkbox: false,
     governorate: "",
     region: "",
+    // name: "",
+    // FB: undefined,
+    // facebookEmail: "",
+    // isConnected: false,
   }),
 
-  components: {},
+  components: { facebookLogin },
 };
 </script>
 <style scoped>

@@ -234,7 +234,7 @@ export default new Vuex.Store({
     },
     getOrderProducts(state, response) {
       var products = response.map(e => {
-
+        e.product.pending_status = e.status
         return e.product
       })
       state.orderProducts = products
@@ -321,7 +321,8 @@ export default new Vuex.Store({
             'mobile_number': orders[i].user.mobile_number,
             'order_number': orders[i].order_number,
             'order_date': orders[i].order_date,
-            'status': orders[i].status
+            'status': orders[i].status,
+            'order_id': orders[i].order_id
           })
         }
 
@@ -753,7 +754,7 @@ export default new Vuex.Store({
         order_id: id
       })
         .then(response => {
-
+          console.log(response.data)
           context.commit('getOrderProducts', response.data)
         })
 
@@ -761,11 +762,11 @@ export default new Vuex.Store({
     },
     async getOrders(context) {
       console.log('user id iss', context.state.currentUser.user_id)
-      await axios.put('http://localhost:3000/api/getOrders', {
+      await axios.put('http://localhost:3000/api/getUserOrders', {
         user_id: context.state.currentUser.user_id
       })
         .then(orders => {
-
+          console.log('database responde', orders.data.data)
           context.commit('getOrders', orders.data.data)
         })
     },
@@ -991,6 +992,13 @@ export default new Vuex.Store({
         .then(res => {
           console.log(res.data.data)
           console.log('order crreatedd', res.data.message)
+        })
+    },
+    updateProductStatus(context, { status, orderId, productId }) {
+      console.log('testing befor sending to database', status, orderId, productId)
+      axios.put('http://localhost:3000/api/updateProductStatus', { status: status, orderId: orderId, productId: productId })
+        .then(response => {
+          console.log(response.data.message)
         })
     },
 
