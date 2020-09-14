@@ -197,7 +197,7 @@ export default {
     city: "",
     statusDialog: false,
     clickedProductInfo: "",
-    statusItems: ["pending", "Delivered", "Rejected"],
+    statusItems: ["Pending", "Delivered", "Rejected"],
     productStatusUpdate: "",
     userMadeOrder: "",
   }),
@@ -218,7 +218,7 @@ export default {
     productClicked(event) {
       console.log(event);
       this.clickedProductInfo = event;
-      this.productStatusUpdate = event.pending_status;
+      this.productStatusUpdate = event.products_orders.status;
       console.log(event.pending_status);
     },
     productStatus() {

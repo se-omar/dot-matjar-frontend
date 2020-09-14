@@ -236,6 +236,7 @@ export default new Vuex.Store({
     getOrderProducts(state, response) {
       var products = response.map(e => {
         e.product.pending_status = e.status
+        e.product.quantity = e.quantity
         return e.product
       })
       state.orderProducts = products
@@ -762,7 +763,7 @@ export default new Vuex.Store({
         order_id: id
       })
         .then(response => {
-          console.log(response.data)
+          console.log('get products from data base', response.data)
           context.commit('getOrderProducts', response.data)
         })
 
