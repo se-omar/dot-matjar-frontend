@@ -238,6 +238,22 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-divider></v-divider>
+    <v-row justify="center">
+      <v-col lg="8">
+        <p class="text-h5">({{reviewsWithText.length}}) Reviews</p>
+      </v-col>
+    </v-row>
+
+    <v-row justify="center">
+      <v-col lg="8" v-for="review in reviewsWithText" :key="review.products_reviews_id">
+        <v-card class="pa-5" elevation="0">
+          <p class="text-h5">By {{review.user.full_arabic_name}}</p>
+
+          <p style="font-size: 17px">{{review.review}}</p>
+        </v-card>
+      </v-col>
+    </v-row>
 
     <v-dialog width="700" persistent v-model="removePressed">
       <v-card>
@@ -291,6 +307,7 @@ export default {
     console.log("bar arting array", this.barRatingArray);
 
     console.log(this.groupedRatings[5].length);
+    console.log("products with review", this.reviewsWithText);
   },
 
   data() {
@@ -350,6 +367,16 @@ export default {
           ar[j - 1] = this.groupedRatings[j].length * 20;
         }
       }
+      return ar;
+    },
+
+    reviewsWithText() {
+      var ar = [];
+      this.currentProductRatings.forEach((element) => {
+        if (element.review !== "") {
+          ar.push(element);
+        }
+      });
       return ar;
     },
   },
