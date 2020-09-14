@@ -229,9 +229,9 @@
                   v-for="i in starNum"
                   :key="i"
                   rounded
-                  :value="barRatingArray[5-i]*20"
+                  :value="barRatingArray[5-i]"
                   :color="siteColor"
-                >{{6-i}} Star ({{barRatingArray[5-i]}} Ratings)</v-progress-linear>
+                >{{6-i}} Star ({{barRatingArray[5-i]/20}} Ratings)</v-progress-linear>
               </div>
             </v-col>
           </v-row>
@@ -284,7 +284,7 @@ export default {
 
     for (var j = 1; j < this.barRatingArray.length + 1; j++) {
       if (this.groupedRatings[j]) {
-        this.barRatingArray[j - 1] = this.groupedRatings[j].length;
+        this.barRatingArray[j - 1] = this.groupedRatings[j].length * 20;
       }
     }
 
@@ -304,7 +304,6 @@ export default {
 
       starNum: 5,
       groupedRatings: [],
-      barRatingArray: [0, 0, 0, 0, 0],
     };
   },
 
@@ -343,6 +342,15 @@ export default {
     },
     currentProductRatings() {
       return this.$store.state.currentProductRatings;
+    },
+    barRatingArray() {
+      var ar = [0, 0, 0, 0, 0];
+      for (var j = 1; j < ar.length + 1; j++) {
+        if (this.groupedRatings[j]) {
+          ar[j - 1] = this.groupedRatings[j].length * 20;
+        }
+      }
+      return ar;
     },
   },
 
