@@ -169,9 +169,20 @@
 
           <v-col cols="9">
             <v-divider class="mb-8"></v-divider>
-            <p v-if="productRating === 0" class="text-h5 mb-n2 text-center">Rate this Product</p>
-            <p v-else class="text-h5 mb-n2 text-center">Your Rating:</p>
+            <p
+              class="text-h5 mb-n2 text-center"
+              v-if="!userOrderedProductFlag"
+            >You can rate this Product once You buy it</p>
+            <p
+              v-if="productRating === 0 && userOrderedProductFlag"
+              class="text-h5 mb-n2 text-center"
+            >Rate this Product</p>
+            <p
+              v-if="productRating !== 0 && userOrderedProductFlag"
+              class="text-h5 mb-n2 text-center"
+            >Your Rating:</p>
             <v-rating
+              v-if="userOrderedProductFlag"
               class="ml-n1"
               :readonly="productRating > 0"
               v-model="rating"
@@ -179,8 +190,15 @@
               :size="size"
               :color="siteColor"
             ></v-rating>
-            <v-textarea :disabled="productRating > 0" height="150" outlined v-model="review"></v-textarea>
+            <v-textarea
+              v-if="userOrderedProductFlag"
+              :disabled="productRating > 0"
+              height="150"
+              outlined
+              v-model="review"
+            ></v-textarea>
             <v-btn
+              v-if="userOrderedProductFlag"
               class="white--text"
               :disabled="productRating > 0"
               @click="submitReview"
@@ -248,12 +266,14 @@
     <v-row justify="center">
       <v-col lg="8" v-for="review in reviewsWithText" :key="review.products_reviews_id">
         <v-card class="pa-5" elevation="0">
-          <p class="text-h5">By {{review.user.full_arabic_name}}</p>
+          <p class="text-h5 font-weight-medium">By {{review.user.full_arabic_name}}</p>
 
-          <p style="font-size: 17px">{{review.review}}</p>
+          <p class="font-weight-medium text--secondary" style="font-size: 17px">{{review.review}}</p>
         </v-card>
       </v-col>
     </v-row>
+
+    <v-divider></v-divider>
 
     <v-dialog width="700" persistent v-model="removePressed">
       <v-card>
@@ -289,9 +309,6 @@ export default {
       "getProductRatingsArray",
       this.currentProduct.product_id
     );
-    console.log(this.productRating);
-    console.log(this.productReview);
-    console.log("current product ratings ", this.currentProductRatings);
 
     this.groupedRatings = this.groupBy(
       this.currentProductRatings,
@@ -304,10 +321,10 @@ export default {
       }
     }
 
-    console.log("bar arting array", this.barRatingArray);
-
-    console.log(this.groupedRatings[5].length);
-    console.log("products with review", this.reviewsWithText);
+    await this.$store.dispatch("checkIfUserOrdered", {
+      user_id: this.currentUser.user_id,
+      product_id: this.currentProduct.product_id,
+    });
   },
 
   data() {
@@ -378,6 +395,9 @@ export default {
         }
       });
       return ar;
+    },
+    userOrderedProductFlag() {
+      return this.$store.state.userOrderedProductFlag;
     },
   },
 

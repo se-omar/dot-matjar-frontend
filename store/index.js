@@ -58,7 +58,8 @@ export default new Vuex.Store({
     productRating: 0,
     productReview: '',
     averageProductRating: 0,
-    currentProductRatings: []
+    currentProductRatings: [],
+    userOrderedProductFlag: false
   },
 
   mutations: {
@@ -406,6 +407,15 @@ export default new Vuex.Store({
       rows.forEach(element => {
         state.currentProductRatings.push(element);
       });
+    },
+
+    checkIfUserOrdered(state, row) {
+      if (row) {
+        state.userOrderedProductFlag = true;
+      }
+      else {
+        state.userOrderedProductFlag = false;
+      }
     }
 
   },
@@ -1050,6 +1060,22 @@ export default new Vuex.Store({
         product_id
       }).then(response => {
         context.commit('getProductRatingsArray', response.data.rows)
+      })
+    },
+
+    async checkIfUserOrdered(context, {
+      user_id, product_id
+    }) {
+      await axios.post('http://localhost:3000/api/checkIfUserOrdered', {
+        product_id,
+        user_id
+      }).then(response => {
+        if (response.data.row) {
+          context.commit('checkIfUserOrdered', response.data.row)
+        }
+        else {
+          context.commit('checkIfUserOrdered')
+        }
       })
     }
   },
