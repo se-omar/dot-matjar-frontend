@@ -57,7 +57,8 @@ export default new Vuex.Store({
     pressedOrder: [],
     productRating: 0,
     productReview: '',
-    averageProductRating: 0
+    averageProductRating: 0,
+    categoriesItems: []
   },
 
   mutations: {
@@ -205,6 +206,7 @@ export default new Vuex.Store({
         return e.category_name
       })
       console.log(state.category)
+
     },
 
 
@@ -398,6 +400,10 @@ export default new Vuex.Store({
       else {
         state.averageProductRating = 0
       }
+    },
+    getCategoryItems(state, items) {
+
+      state.categoriesItems = items
     }
 
   },
@@ -1035,6 +1041,38 @@ export default new Vuex.Store({
         context.commit('calculateProductRating', response.data.average)
         console.log(response.data.average)
       })
+    },
+    addNewCategory(context, categoryName) {
+      axios.post('http://localhost:3000/api/addNewCategory', { categoryName: categoryName })
+        .then(message => {
+          console.log(message.data.message)
+          alert(message.data.message)
+
+        })
+    },
+    addCategoryItems(context, { categoryName, categoryItem }) {
+      axios.post('http://localhost:3000/api/addCategoryItems', { categoryName: categoryName, categoryItem: categoryItem })
+        .then(message => {
+          console.log(message.data.message)
+          alert(message.data.message)
+        })
+    },
+    getCategoryItems(context) {
+      axios.put('http://localhost:3000/api/getCategoryItems')
+        .then(response => {
+          console.log(response.data.message)
+          console.log(response.data.data)
+          context.commit('getCategoryItems', response.data.data)
+        })
+
+
+    },
+    removeCategoryAndItems(context, { categoryName, categoryItem }) {
+      axios.put('http://localhost:3000/api/removeCategoryAndItems', { categoryName: categoryName, categoryItem: categoryItem })
+        .then(message => {
+          console.log(message.data.message)
+          alert(message.data.message)
+        })
     }
   },
 

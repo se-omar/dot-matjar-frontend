@@ -92,9 +92,22 @@
               outlined
               v-model="categoryName"
               :items="category"
-              @click="categoriesDB"
+              @change="gettingCategoryItems"
             ></v-select>
           </v-col>
+          <!-- <v-col lg="4">
+            <v-select
+              v-if="radioGroup === '1'"
+              @keyup="emptySelectBox"
+              :disabled="radioGroup === '2'"
+              placeholder="Search By item"
+              dense
+              outlined
+              v-model="categoryItem"
+              :items="categoryItems"
+              @change="categoriesDB"
+            ></v-select>
+          </v-col>-->
 
           <v-col lg="4">
             <v-select
@@ -161,7 +174,39 @@
             >Search</v-btn>
           </v-col>
         </v-row>
+        <v-row justify="center">
+          <!-- testing -->
+          <!-- <v-menu :close-on-content-click="false" open-on-hover bottom offset-y>
+                <template v-slot:activator="{ on }">
+                  <v-btn icon v-on="on">
+                    <i class="fa fa-user-tie fa-2x"></i>
+                  </v-btn>
+                </template>
 
+                <v-list>
+                  <v-list-group>
+                    <template v-slot:activator>
+                      <v-list-tile>
+                        <v-list-tile-content>
+                          <v-list-tile-title>test</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                    </template>
+
+                    <v-list-tile>
+                      <v-list-tile-content>
+                        <v-list-tile-title>test</v-list-tile-title>
+                      </v-list-tile-content>
+
+                      <v-list-tile-action>
+                        <v-icon>test</v-icon>
+                      </v-list-tile-action>
+                    </v-list-tile>
+                  </v-list-group>
+                </v-list>
+          </v-menu>-->
+          <!-- testing` -->
+        </v-row>
         <v-row class="ml-7 mr-7" v-if="radioGroup === '1'">
           <v-col
             lg="3"
@@ -224,14 +269,18 @@ export default {
       items: [],
       productFilterFlag: false,
       supplierFilterFlag: false,
-      category: [],
+      // category: [],
       radioGroup: 1,
       governorate: "",
       region: "",
       isLoading: false,
+      categoryItems: [],
+      categoryItem: "",
     };
   },
   async created() {
+    await this.$store.dispatch("categoriesDB");
+    await this.$store.dispatch("getCategoryItems");
     this.isLoading = true;
     this.$store.commit("removeSupplierPageData");
     await this.$store.dispatch("getSiteColor");
@@ -290,6 +339,12 @@ export default {
     siteColor() {
       return this.$store.state.siteColor;
     },
+    category() {
+      return this.$store.state.category;
+    },
+    categoriesItems() {
+      return this.$store.state.categoriesItems;
+    },
   },
 
   methods: {
@@ -341,7 +396,7 @@ export default {
       }
     },
     categoriesDB() {
-      this.category = this.$store.state.category;
+      console.log(this.categoryName);
     },
 
     loadMore() {
@@ -373,6 +428,15 @@ export default {
       this.supplierFilterFlag = false;
       this.$store.commit("emptySearch");
       this.$store.commit("emptySupplierName");
+    },
+    gettingCategoryItems() {
+      this.categoryItems = [];
+      for (let i = 0; i < this.categoriesItems.length; i++) {
+        if (this.categoriesItems[i].category_name == this.categoryName) {
+          this.categoryItems.push(this.categoriesItems[i].category_items);
+        }
+      }
+      console.log(this.categoryItems);
     },
   },
   components: {
