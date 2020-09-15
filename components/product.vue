@@ -79,7 +79,6 @@ export default {
       "calculateProductRating",
       this.filteredProduct.product_id
     );
-    console.log("average product rateing", this.averageProductRating);
   },
   name: "product",
   data() {
@@ -150,9 +149,6 @@ export default {
       } else {
         return "red darken-4";
       }
-    },
-    averageProductRating() {
-      return this.$store.state.averageProductRating;
     },
   },
 };

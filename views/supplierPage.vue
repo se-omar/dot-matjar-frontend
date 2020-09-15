@@ -88,25 +88,134 @@
           </v-col>
         </v-row>
 
-        <v-row>
-          <v-col>
-            <h1>Products</h1>
+        <v-row justify="center">
+          <v-col lg="6">
+            <v-row justify="center">
+              <v-col lg="6">
+                <p class="text-h4">Customer Ratings</p>
+              </v-col>
+            </v-row>
+
+            <v-card elevation="1" height="250">
+              <v-row justify="center">
+                <v-col lg="6" class="text-center ml-n10 mt-5">
+                  <v-avatar fab :color="pageColor" size="100">
+                    <span class="white--text headline text-h3">{{supplier.rating}}.0</span>
+                  </v-avatar>
+
+                  <v-rating
+                    readonly
+                    class="ml-n1"
+                    v-model="supplier.rating"
+                    :hover="hover"
+                    :size="size"
+                    :color="pageColor"
+                  ></v-rating>
+
+                  <p class="text-center text-subtitle">(based on {{supplier.rate_counter}} Ratings)</p>
+                </v-col>
+
+                <v-col lg="5">
+                  <div>
+                    <v-progress-linear
+                      class="mb-2"
+                      height="38"
+                      v-for="i in starNum"
+                      :key="i"
+                      rounded
+                      :value="barRatingArray[5-i]"
+                      :color="pageColor? pageColor : siteColor"
+                    >{{6-i}} Star ({{barRatingArray[5-i]/20}} Ratings)</v-progress-linear>
+                  </div>
+                </v-col>
+              </v-row>
+            </v-card>
           </v-col>
         </v-row>
-        <v-row>
-          <v-col
-            lg="3"
-            md="4"
-            sm="6"
-            cols="6"
-            v-for="(supplierProduct,product_id) in supplierProducts"
-            :key="product_id"
-          >
-            <v-hover>
-              <product :addToCartButton="false" :filteredProduct="supplierProduct"></product>
-            </v-hover>
-          </v-col>
-        </v-row>
+
+        <v-tabs v-model="tab" show-arrows icons-and-text dark grow>
+          <v-tabs-slider></v-tabs-slider>
+          <v-tab :style="`background-color: ${pageColor}`" v-for="i in tabs" :key="i.name">
+            <div class="caption py-1 font-weight-medium text-subtitle-1">{{ i.name }}</div>
+          </v-tab>
+
+          <v-tab-item class="grey lighten-4">
+            <v-row>
+              <v-col
+                lg="3"
+                md="4"
+                sm="6"
+                cols="6"
+                v-for="(supplierProduct,product_id) in supplierProducts"
+                :key="product_id"
+              >
+                <v-hover>
+                  <product :addToCartButton="false" :filteredProduct="supplierProduct"></product>
+                </v-hover>
+              </v-col>
+            </v-row>
+          </v-tab-item>
+
+          <v-tab-item class="grey lighten-4">
+            <v-row justify="center">
+              <v-col lg="8">
+                <p class="text-h5">({{reviewsWithText.length}}) Reviews</p>
+              </v-col>
+            </v-row>
+
+            <v-row justify="center">
+              <v-col lg="8" v-for="review in reviewsWithText" :key="review.suppliers_reviews_id">
+                <v-card class="pa-5" elevation="0">
+                  <v-row>
+                    <v-col lg="7">
+                      <p class="text-h5 font-weight-medium">By {{review.user.full_arabic_name}}</p>
+                    </v-col>
+
+                    <v-col lg="5">
+                      <v-rating
+                        readonly
+                        class="ml-n1 mt-n2"
+                        v-model="review.rating"
+                        :hover="hover"
+                        :size="size2"
+                        :color="pageColor"
+                      ></v-rating>
+                    </v-col>
+                  </v-row>
+                  <p
+                    class="font-weight-medium text--secondary"
+                    style="font-size: 17px"
+                  >{{review.review}}</p>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-tab-item>
+
+          <v-tab-item class="grey lighten-4">
+            <v-row justify="center">
+              <v-col lg="8">
+                <p v-if="supplierRating === 0" class="text-h5 mb-n2 text-center">Rate this Product</p>
+                <p v-else class="text-h5 mb-n2 text-center">Your Rating:</p>
+                <v-rating
+                  :readonly="supplierRating > 0"
+                  class="ml-n1 text-center mt-1"
+                  v-model="rating"
+                  :hover="hover"
+                  :size="size"
+                  :color="pageColor"
+                ></v-rating>
+                <v-textarea :disabled="supplierRating > 0" height="150" outlined v-model="review"></v-textarea>
+                <v-btn
+                  :disabled="supplierRating > 0"
+                  class="white--text"
+                  @click="submitReview"
+                  block
+                  :color="pageColor"
+                >submit</v-btn>
+              </v-col>
+            </v-row>
+          </v-tab-item>
+        </v-tabs>
       </v-col>
 
       <v-col lg="2" style="max-width: 12%">
@@ -133,6 +242,19 @@ export default {
   data: () => ({
     isLoading: false,
     fullPage: "",
+    hover: true,
+    size: 45,
+    size2: 30,
+    starNum: 5,
+    rating: 0,
+    review: "",
+    groupedRatings: [],
+    tab: 0,
+    tabs: [
+      { name: "Products" },
+      { name: "Reviews" },
+      { name: "Rate Supplier" },
+    ],
   }),
   computed: {
     currentUser() {
@@ -148,7 +270,18 @@ export default {
       return this.$store.state.nodeHost;
     },
     pageColor() {
-      return this.$store.state.siteColor;
+      if (this.$store.state.siteColor) {
+        return this.$store.state.siteColor;
+      } else {
+        return "red darken-4";
+      }
+    },
+    siteColor() {
+      if (this.$store.state.siteColor) {
+        return this.$store.state.siteColor;
+      } else {
+        return "red darken-4";
+      }
     },
     supplierProducts() {
       return this.$store.state.supplierProducts;
@@ -156,11 +289,61 @@ export default {
     supplierPageInfo() {
       return this.$store.state.supplierPageInfo;
     },
+    supplierRating() {
+      return this.$store.state.supplierRating;
+    },
+    supplierReview() {
+      return this.$store.state.supplierReview;
+    },
+    currentSupplierRatings() {
+      return this.$store.state.currentSupplierRatings;
+    },
+    barRatingArray() {
+      var ar = [0, 0, 0, 0, 0];
+      for (var j = 1; j < ar.length + 1; j++) {
+        if (this.groupedRatings[j]) {
+          ar[j - 1] = this.groupedRatings[j].length * 20;
+        }
+      }
+      return ar;
+    },
+
+    reviewsWithText() {
+      var ar = [];
+      this.currentSupplierRatings.forEach((element) => {
+        if (element.review !== "") {
+          ar.push(element);
+        }
+      });
+      return ar;
+    },
   },
   methods: {
     updatePage() {
       this.$router.push(
         "/updateSupplierPage/" + this.$route.params.supplier_id
+      );
+    },
+
+    async submitReview() {
+      await this.$store.dispatch("addSupplierReview", {
+        supplier_id: this.supplier.user_id,
+        user_id: this.currentUser.user_id,
+        rating: this.rating,
+        review: this.review,
+      });
+      window.location.reload();
+    },
+
+    setValues() {
+      this.rating = this.supplierRating;
+      this.review = this.supplierReview;
+    },
+
+    groupBy(xs, f) {
+      return xs.reduce(
+        (r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r),
+        {}
       );
     },
   },
@@ -178,11 +361,29 @@ export default {
       "getSupplierProducts",
       this.$route.params.supplier_id
     );
-    console.log("info", this.$store.state.supplierPageInfo);
-    console.log(this.$store.state.myProducts);
-    console.log(this.$store.state.supplierPageColor);
     this.pageColor = this.$store.state.supplierPageColor;
-    console.log(this.currentUser.user_id, this.supplier.user_id);
+    await this.$store.dispatch("getSupplierReview", {
+      supplier_id: this.supplier.user_id,
+      user_id: this.currentUser.user_id,
+    });
+    await this.setValues();
+
+    await this.$store.dispatch(
+      "getSupplierRatingsArray",
+      this.supplier.user_id
+    );
+
+    this.groupedRatings = this.groupBy(
+      this.currentSupplierRatings,
+      (c) => c.rating
+    );
+
+    for (var j = 1; j < this.barRatingArray.length + 1; j++) {
+      if (this.groupedRatings[j]) {
+        this.barRatingArray[j - 1] = this.groupedRatings[j].length * 20;
+      }
+    }
+    console.log(this.barRatingArray);
     this.isLoading = false;
   },
 };

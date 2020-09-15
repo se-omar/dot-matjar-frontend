@@ -266,7 +266,22 @@
     <v-row justify="center">
       <v-col lg="8" v-for="review in reviewsWithText" :key="review.products_reviews_id">
         <v-card class="pa-5" elevation="0">
-          <p class="text-h5 font-weight-medium">By {{review.user.full_arabic_name}}</p>
+          <v-row>
+            <v-col lg="7">
+              <p class="text-h5 font-weight-medium">By {{review.user.full_arabic_name}}</p>
+            </v-col>
+
+            <v-col lg="5">
+              <v-rating
+                readonly
+                class="ml-n1 mt-n2"
+                v-model="review.rating"
+                :hover="hover"
+                :size="size2"
+                :color="pageColor"
+              ></v-rating>
+            </v-col>
+          </v-row>
 
           <p class="font-weight-medium text--secondary" style="font-size: 17px">{{review.review}}</p>
         </v-card>
@@ -332,6 +347,7 @@ export default {
       hover: true,
       rating: 0,
       size: 45,
+      size2: 30,
       review: "",
       removePressed: false,
       addToCartButton: true,

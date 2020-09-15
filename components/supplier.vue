@@ -26,6 +26,10 @@
         class="mt-n5"
       >{{selectedMonth}} sales: {{supplier.monthSales}}</v-card-text>
 
+      <v-card-text>
+        <v-rating v-model="supplier.rating" color="amber" dense half-increments readonly size="20"></v-rating>
+      </v-card-text>
+
       <v-card-text
         v-if="supplier.yearSales"
         style="font-size: 16px"
@@ -50,8 +54,12 @@
 <script>
 import moment from "moment";
 export default {
-  created() {
+  async created() {
     console.log(this.selectedMonth);
+    await this.$store.dispatch(
+      "calculateSupplierRating",
+      this.supplier.user_id
+    );
   },
   props: {
     supplier: {
@@ -81,6 +89,9 @@ export default {
   computed: {
     suppliers() {
       return this.$store.state.suppliers;
+    },
+    averageSupplierRating() {
+      return this.$store.state.averageSupplierRating;
     },
   },
 };

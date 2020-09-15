@@ -57,9 +57,11 @@ export default new Vuex.Store({
     pressedOrder: [],
     productRating: 0,
     productReview: '',
-    averageProductRating: 0,
     currentProductRatings: [],
-    userOrderedProductFlag: false
+    currentSupplierRatings: [],
+    userOrderedProductFlag: false,
+    supplierRating: 0,
+    supplierReview: ''
   },
 
   mutations: {
@@ -393,19 +395,25 @@ export default new Vuex.Store({
       state.productReview = row.review;
     },
 
-    calculateProductRating(state, average) {
-      if (average) {
-        state.averageProductRating = average
-      }
-      else {
-        state.averageProductRating = 0
-      }
+    getSupplierReview(state, row) {
+      state.supplierRating = row.rating;
+      state.supplierReview = row.review;
     },
+
+
+
 
     getProductRatingsArray(state, rows) {
       state.currentProductRatings = [];
       rows.forEach(element => {
         state.currentProductRatings.push(element);
+      });
+    },
+
+    getSupplierRatingsArray(state, rows) {
+      state.currentSupplierRatings = [];
+      rows.forEach(element => {
+        state.currentSupplierRatings.push(element);
       });
     },
 
@@ -1050,16 +1058,32 @@ export default new Vuex.Store({
       axios.post('http://localhost:3000/api/calculateProductRating', {
         product_id
       }).then(response => {
-        context.commit('calculateProductRating', response.data.average)
-        console.log(response.data.average)
+        console.log(response.data.message)
       })
     },
+
+    calculateSupplierRating(context, supplier_id) {
+      axios.post('http://localhost:3000/api/calculateSupplierRating', {
+        supplier_id
+      }).then(response => {
+        console.log(response.message)
+      })
+    },
+
 
     async getProductRatingsArray(context, product_id) {
       await axios.post('http://localhost:3000/api/getProductRatingsArray', {
         product_id
       }).then(response => {
         context.commit('getProductRatingsArray', response.data.rows)
+      })
+    },
+
+    async getSupplierRatingsArray(context, supplier_id) {
+      await axios.post('http://localhost:3000/api/getSupplierRatingsArray', {
+        supplier_id
+      }).then(response => {
+        context.commit('getSupplierRatingsArray', response.data.rows)
       })
     },
 
@@ -1077,7 +1101,38 @@ export default new Vuex.Store({
           context.commit('checkIfUserOrdered')
         }
       })
-    }
+    },
+
+    async addSupplierReview(context, {
+      supplier_id,
+      user_id,
+      rating,
+      review,
+    }) {
+      await axios.post('http://localhost:3000/api/addSupplierReview', {
+        supplier_id,
+        user_id,
+        rating,
+        review,
+      }).then(response => {
+        console.log('add supplier review response', response.data)
+        alert(response.data.message)
+      })
+    },
+
+    async getSupplierReview(context, {
+      supplier_id, user_id
+    }) {
+      await axios
+        .post("http://localhost:3000/api/getSupplierReview", {
+          supplier_id: supplier_id,
+          user_id: user_id,
+        }).then(response => {
+
+          context.commit('getSupplierReview', response.data.review)
+        })
+    },
+
   },
 
   modules: {},
