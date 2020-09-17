@@ -19,7 +19,7 @@
             </v-row>
 
             <v-row>
-              <v-col cols="12">
+              <v-col cols="6">
                 <v-select
                   v-model="categoryName"
                   :items="category"
@@ -28,7 +28,18 @@
                   outlined
                   :rules="rules"
                   label="Category"
-                  @click="categoriesDB"
+                  @change="gettingCategoryItems"
+                ></v-select>
+              </v-col>
+              <v-col cols="6">
+                <v-select
+                  v-model="categoryItem"
+                  :items="categoryItems"
+                  dense
+                  required
+                  outlined
+                  :rules="rules"
+                  label="Item"
                 ></v-select>
               </v-col>
             </v-row>
@@ -128,6 +139,12 @@ export default {
     currentUser() {
       return this.$store.state.currentUser;
     },
+    categoriesItems() {
+      return this.$store.state.categoriesItems;
+    },
+    category() {
+      return this.$store.state.category;
+    },
   },
 
   data() {
@@ -149,9 +166,11 @@ export default {
       description: "",
 
       rules: [(v) => !!v || "Required."],
-      category: "",
+
       valid: true,
       categoryName: "",
+      catgoryItems: [],
+      categoryItem: "",
     };
   },
   methods: {
@@ -184,6 +203,7 @@ export default {
       form.set("color", self.color);
       form.set("discount_amount", self.discountAmount);
       form.set("category_name", self.categoryName);
+      form.set("category_item", this.categoryItem);
 
       files.forEach((element) => {
         form.append("file", element);
@@ -201,8 +221,15 @@ export default {
           this.$router.push("/myProducts").catch(() => {});
         });
     },
-    categoriesDB() {
-      this.category = this.$store.state.category;
+
+    gettingCategoryItems() {
+      this.categoryItems = [];
+      for (let i = 0; i < this.categoriesItems.length; i++) {
+        if (this.categoriesItems[i].category_name == this.categoryName) {
+          this.categoryItems.push(this.categoriesItems[i].category_items);
+        }
+      }
+      console.log(this.categoryItems);
     },
   },
   created() {

@@ -42,22 +42,45 @@ export default {
 
       switch (item) {
         case "fab fa-facebook":
-          location.href = this.supplierPageInfo.facebook;
-          break;
+          if (!this.supplierPageInfo.facebook) {
+            location.href = "https://www.facebook.com/";
+            break;
+          } else {
+            location.href = this.supplierPageInfo.facebook;
+            break;
+          }
         case "fab fa-twitter":
-          location.href = this.supplierPageInfo.twitter;
-          break;
+          if (!this.supplierPageInfo.twitter) {
+            location.href = "https://www.facebook.com/";
+            break;
+          } else {
+            location.href = this.supplierPageInfo.twitter;
+            break;
+          }
         case "fab fa-google-plus":
-          location.href = this.supplierPageInfo.google;
-
-          break;
-
+          if (!this.supplierPageInfo.google) {
+            location.href = "https://www.facebook.com/";
+            break;
+          } else {
+            location.href = this.supplierPageInfo.google;
+            break;
+          }
         case "fab fa-linkedin":
-          location.href = this.supplierPageInfo.linkedin;
-          break;
+          if (!this.supplierPageInfo.linkedin) {
+            location.href = "https://www.facebook.com/";
+            break;
+          } else {
+            location.href = this.supplierPageInfo.linkedin;
+            break;
+          }
         case "fab fa-instagram":
-          location.href = this.supplierPageInfo.instgram;
-          break;
+          if (!this.supplierPageInfo.instgram) {
+            location.href = "https://www.facebook.com/";
+            break;
+          } else {
+            location.href = this.supplierPageInfo.instgram;
+            break;
+          }
       }
     },
   },

@@ -6,7 +6,27 @@
     </div>
 
     <v-row justify="center">
-      <v-col lg="7">
+      <v-col cols="6">
+        <v-text-field
+          append-icon="fa fa-search"
+          :color="siteColor"
+          outlined
+          rounded
+          placeholder="What are you looking for ?"
+          @keyup="emptySearchBox"
+          v-model="toolbarSearch"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="1" sm="6" lg="1">
+        <v-btn
+          class="white--text mt-3"
+          @click="filterProducts"
+          :color="siteColor"
+          rounded
+          max-width="80"
+        >Search</v-btn>
+      </v-col>
+      <v-col cols="6" lg="7">
         <carousel
           :autoplay="true"
           :per-page="1"
@@ -95,7 +115,7 @@
               @change="gettingCategoryItems"
             ></v-select>
           </v-col>
-          <!-- <v-col lg="4">
+          <v-col lg="4">
             <v-select
               v-if="radioGroup === '1'"
               @keyup="emptySelectBox"
@@ -107,7 +127,7 @@
               :items="categoryItems"
               @change="categoriesDB"
             ></v-select>
-          </v-col>-->
+          </v-col>
 
           <v-col lg="4">
             <v-select
@@ -173,40 +193,76 @@
               max-width="80"
             >Search</v-btn>
           </v-col>
+          <v-row justify="start">
+            <v-card max-height class="ml-2" :color="siteColor" rounded max-width="200">
+              <v-row>
+                <v-col cols="12" v-for="category in category" :key="category">
+                  <v-menu offset-x :close-on-content-click="false" open-on-hover>
+                    <template v-slot:activator="{ on,attrs }">
+                      <v-btn
+                        @mouseover="mouseOver(category)"
+                        v-bind="attrs"
+                        v-on="on"
+                        text
+                        rounded
+                        class="white--text"
+                        @click="filterProductsWithCategory(category)"
+                      >
+                        {{category}}
+                        <i :class="`fas fa-${category} fa-2x ml-2` "></i>
+                      </v-btn>
+                    </template>
+                    <v-card>
+                      <v-list :color="siteColor" v-for="item in categoryItems" :key="item.id">
+                        <v-btn class="white--text" @click="filterProductsWithItem(item)" text>
+                          - {{item}}
+                          <i :class="`fa fa-${item} fa-lg ml-2`"></i>
+                        </v-btn>
+                      </v-list>
+                    </v-card>
+                  </v-menu>
+                  <v-divider class="white"></v-divider>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-row>
         </v-row>
-        <v-row justify="center">
-          <!-- testing -->
-          <!-- <v-menu :close-on-content-click="false" open-on-hover bottom offset-y>
-                <template v-slot:activator="{ on }">
-                  <v-btn icon v-on="on">
-                    <i class="fa fa-user-tie fa-2x"></i>
+
+        <!-- <v-toolbar shaped dark dense :color="siteColor">
+          <v-row justify="center">
+         
+
+            <v-col cols="2" v-for="category in category" :key="category.id">
+              <v-menu offset-x :close-on-content-click="false" open-on-hover>
+                <template v-slot:activator="{ on,attrs }">
+                  <v-btn
+                    @mouseover="mouseOver(category)"
+                    v-bind="attrs"
+                    v-on="on"
+                    text
+                    rounded
+                    class="white--text"
+                    @click="filterProductsWithCategory(category)"
+                  >
+                    {{category}}
+                    <i :class="`fas fa-${category} fa-2x ml-2` "></i>
                   </v-btn>
                 </template>
+                <v-card style="background-color:red">
+                  <v-list v-for="item in categoryItems" :key="item.id">
+                    <v-btn @click="filterProductsWithItem(item)" text>
+                      - {{item}}
+                      <i :class="`fa fa-${item} fa-lg ml-2`"></i>
+                    </v-btn>
+                  </v-list>
+                </v-card>
+              </v-menu>
+            </v-col>
 
-                <v-list>
-                  <v-list-group>
-                    <template v-slot:activator>
-                      <v-list-tile>
-                        <v-list-tile-content>
-                          <v-list-tile-title>test</v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                    </template>
-
-                    <v-list-tile>
-                      <v-list-tile-content>
-                        <v-list-tile-title>test</v-list-tile-title>
-                      </v-list-tile-content>
-
-                      <v-list-tile-action>
-                        <v-icon>test</v-icon>
-                      </v-list-tile-action>
-                    </v-list-tile>
-                  </v-list-group>
-                </v-list>
-          </v-menu>-->
-          <!-- testing` -->
-        </v-row>
+            
+         
+          </v-row>
+        </v-toolbar>-->
         <v-row class="ml-7 mr-7" v-if="radioGroup === '1'">
           <v-col
             lg="3"
@@ -276,6 +332,13 @@ export default {
       isLoading: false,
       categoryItems: [],
       categoryItem: "",
+      categories: [
+        { name: "Clothing", icon: "fa fa-user-tie fa-2x ml-2" },
+        { name: "Furniture", icon: "fa fa-couch fa-2x ml-2" },
+        { name: "Labtops", icon: "fa fa-laptop fa-2x ml-2" },
+        { name: "Mobile Phones", icon: "fa fa-mobile fa-2x ml-2" },
+        { name: "Cars", icon: "fa fa-car fa-2x ml-2" },
+      ],
     };
   },
   async created() {
@@ -437,6 +500,24 @@ export default {
         }
       }
       console.log(this.categoryItems);
+    },
+    mouseOver(name) {
+      this.categoryItems = [];
+      console.log(name);
+      for (let i = 0; i < this.categoriesItems.length; i++) {
+        if (this.categoriesItems[i].category_name == name) {
+          this.categoryItems.push(this.categoriesItems[i].category_items);
+        }
+      }
+      console.log(this.category);
+    },
+    filterProductsWithItem(item) {
+      console.log(item);
+      this.$store.dispatch("filterProducts", { categoryItem: item });
+    },
+    filterProductsWithCategory(category) {
+      console.log(category);
+      this.$store.dispatch("filterProducts", { category_name: category });
     },
   },
   components: {

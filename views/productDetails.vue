@@ -156,8 +156,8 @@
           <v-col lg="9">
             <p class="text-h5 mb-n2 text-center">Product Rating</p>
             <v-rating
+              readonly
               class="ml-n1"
-              :readonly="productRating > 0"
               v-model="currentProduct.rating"
               :hover="hover"
               :size="size"
@@ -169,9 +169,20 @@
 
           <v-col cols="9">
             <v-divider class="mb-8"></v-divider>
-            <p v-if="productRating === 0" class="text-h5 mb-n2 text-center">Rate this Product</p>
-            <p v-else class="text-h5 mb-n2 text-center">Your Rating:</p>
+            <p
+              class="text-h5 mb-n2 text-center"
+              v-if="!userOrderedProductFlag"
+            >You can rate this Product once You buy it</p>
+            <p
+              v-if="productRating === 0 && userOrderedProductFlag"
+              class="text-h5 mb-n2 text-center"
+            >Rate this Product</p>
+            <p
+              v-if="productRating !== 0 && userOrderedProductFlag"
+              class="text-h5 mb-n2 text-center"
+            >Your Rating:</p>
             <v-rating
+              v-if="userOrderedProductFlag"
               class="ml-n1"
               :readonly="productRating > 0"
               v-model="rating"
@@ -179,8 +190,15 @@
               :size="size"
               :color="siteColor"
             ></v-rating>
-            <v-textarea :disabled="productRating > 0" height="150" outlined v-model="review"></v-textarea>
+            <v-textarea
+              v-if="userOrderedProductFlag"
+              :disabled="productRating > 0"
+              height="150"
+              outlined
+              v-model="review"
+            ></v-textarea>
             <v-btn
+              v-if="userOrderedProductFlag"
               class="white--text"
               :disabled="productRating > 0"
               @click="submitReview"
@@ -191,6 +209,87 @@
         </v-row>
       </v-col>
     </v-row>
+    <v-divider></v-divider>
+    <v-row justify="center">
+      <v-col lg="8">
+        <p class="text-h4">Customer Reviews</p>
+      </v-col>
+    </v-row>
+
+    <v-row justify="center">
+      <v-col lg="6">
+        <v-card elevation="1" height="250">
+          <v-row justify="center">
+            <v-col lg="6" class="text-center ml-n10 mt-5">
+              <v-avatar fab :color="siteColor" size="100">
+                <span class="white--text headline text-h3">{{currentProduct.rating}}.0</span>
+              </v-avatar>
+
+              <v-rating
+                readonly
+                class="ml-n1"
+                v-model="currentProduct.rating"
+                :hover="hover"
+                :size="size"
+                :color="siteColor"
+              ></v-rating>
+
+              <p
+                class="text-center text-subtitle"
+              >(based on {{currentProduct.rate_counter}} Ratings)</p>
+            </v-col>
+
+            <v-col lg="5">
+              <div>
+                <v-progress-linear
+                  class="mb-2"
+                  height="38"
+                  v-for="i in starNum"
+                  :key="i"
+                  rounded
+                  :value="barRatingArray[5-i]"
+                  :color="siteColor"
+                >{{6-i}} Star ({{barRatingArray[5-i]/20}} Ratings)</v-progress-linear>
+              </div>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-divider></v-divider>
+    <v-row justify="center">
+      <v-col lg="8">
+        <p class="text-h5">({{reviewsWithText.length}}) Reviews</p>
+      </v-col>
+    </v-row>
+
+    <v-row justify="center">
+      <v-col lg="8" v-for="review in reviewsWithText" :key="review.products_reviews_id">
+        <v-card class="pa-5" elevation="0">
+          <v-row>
+            <v-col lg="7">
+              <p class="text-h5 font-weight-medium">By {{review.user.full_arabic_name}}</p>
+            </v-col>
+
+            <v-col lg="5">
+              <v-rating
+                readonly
+                class="ml-n1 mt-n2"
+                v-model="review.rating"
+                :hover="hover"
+                :size="size2"
+                :color="siteColor"
+              ></v-rating>
+            </v-col>
+          </v-row>
+
+          <p class="font-weight-medium text--secondary" style="font-size: 17px">{{review.review}}</p>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <v-divider></v-divider>
+
     <v-dialog width="700" persistent v-model="removePressed">
       <v-card>
         <p style="text-align:center" class="text-h5">Are you sure you want to remove this product?</p>
@@ -221,8 +320,26 @@ export default {
       user_id: this.currentUser.user_id,
     });
     await this.setValues();
-    console.log(this.productRating);
-    console.log(this.productReview);
+    await this.$store.dispatch(
+      "getProductRatingsArray",
+      this.currentProduct.product_id
+    );
+
+    this.groupedRatings = this.groupBy(
+      this.currentProductRatings,
+      (c) => c.rating
+    );
+
+    for (var j = 1; j < this.barRatingArray.length + 1; j++) {
+      if (this.groupedRatings[j]) {
+        this.barRatingArray[j - 1] = this.groupedRatings[j].length * 20;
+      }
+    }
+
+    await this.$store.dispatch("checkIfUserOrdered", {
+      user_id: this.currentUser.user_id,
+      product_id: this.currentProduct.product_id,
+    });
   },
 
   data() {
@@ -230,9 +347,13 @@ export default {
       hover: true,
       rating: 0,
       size: 45,
+      size2: 30,
       review: "",
       removePressed: false,
       addToCartButton: true,
+
+      starNum: 5,
+      groupedRatings: [],
     };
   },
 
@@ -268,6 +389,31 @@ export default {
     },
     productReview() {
       return this.$store.state.productReview;
+    },
+    currentProductRatings() {
+      return this.$store.state.currentProductRatings;
+    },
+    barRatingArray() {
+      var ar = [0, 0, 0, 0, 0];
+      for (var j = 1; j < ar.length + 1; j++) {
+        if (this.groupedRatings[j]) {
+          ar[j - 1] = this.groupedRatings[j].length * 20;
+        }
+      }
+      return ar;
+    },
+
+    reviewsWithText() {
+      var ar = [];
+      this.currentProductRatings.forEach((element) => {
+        if (element.review !== "") {
+          ar.push(element);
+        }
+      });
+      return ar;
+    },
+    userOrderedProductFlag() {
+      return this.$store.state.userOrderedProductFlag;
     },
   },
 
@@ -336,6 +482,13 @@ export default {
     setValues() {
       this.rating = this.productRating;
       this.review = this.productReview;
+    },
+
+    groupBy(xs, f) {
+      return xs.reduce(
+        (r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r),
+        {}
+      );
     },
   },
 };

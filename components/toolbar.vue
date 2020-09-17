@@ -2,7 +2,7 @@
   <div class="tool-bar">
     <v-app-bar :color="siteColor" dark>
       <span v-if="!supplierPageInfo.logo">
-        <v-btn @click="$router.push('/').catch(()=>{})" text>
+        <v-btn text @click="$router.push('/').catch(()=>{})">
           <i class="fa fa-shopping-cart fa-lg"></i>
           <span class="mt-2">Dot-Matjar</span>
         </v-btn>

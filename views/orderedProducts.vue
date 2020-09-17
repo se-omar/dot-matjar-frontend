@@ -74,6 +74,17 @@
                                 :color="siteColor"
                                 class="white--text"
                               >Update</v-btn>
+                              <v-snackbar v-model="snackbar" :timeout="timeout">
+                                <template v-slot:action="{ attrs }">
+                                  Product status Updated successfully
+                                  <v-btn
+                                    color="blue"
+                                    text
+                                    v-bind="attrs"
+                                    @click="snackbar = false"
+                                  >Close</v-btn>
+                                </template>
+                              </v-snackbar>
                               <v-btn
                                 @click="statusDialog = false"
                                 rounded
@@ -180,7 +191,7 @@ export default {
       { text: "User mobile number", value: "mobile_number" },
       { text: "Order Number", value: "order_number" },
       { text: "Order Date", value: "order_date" },
-      { text: "status", value: "status" },
+
       { text: "Show Products", value: "showProducts" },
     ],
     productsTableHeaders: [
@@ -200,6 +211,8 @@ export default {
     statusItems: ["Pending", "Delivered", "Rejected"],
     productStatusUpdate: "",
     userMadeOrder: "",
+    snackbar: false,
+    timeout: 2000,
   }),
   methods: {
     async showProducts(event) {
@@ -226,7 +239,7 @@ export default {
     },
     updateStatus() {
       console.log(this.productStatusUpdate);
-
+      this.snackbar = true;
       this.$store.dispatch("updateProductStatus", {
         status: this.productStatusUpdate,
         orderId: this.userMadeOrder.order_id,
