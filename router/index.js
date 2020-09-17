@@ -20,15 +20,12 @@ import notFound from '../views/notFound'
 import userOrders from '../views/userOrders'
 import dashboard from '../views/dashboard'
 import supplierPage from '../views/supplierPage'
-import test from '../views/test'
-import test2 from '../views/test2'
 import sideButton from '../components/sideButton'
 import checkOutLocation from '../views/checkOutLocation'
 import adminPage from '../views/adminPage'
 import suppliersDashboard from '../views/allSuppliersDashboard'
 import orderedProducts from '../views/orderedProducts'
 import updateSupplierPage from '../views/updateSupplierPage'
-import ratingTest from '../views/ratingTest.vue'
 // import { isInteger } from 'core-js/fn/number'
 Vue.use(VueRouter)
 
@@ -138,16 +135,6 @@ var routes = [{
   props: true
 },
 {
-  path: '/test',
-  name: 'test',
-  component: test
-},
-{
-  path: '/test2',
-  name: 'test2',
-  component: test2
-},
-{
   path: '/sideButton',
   name: 'sidebutton',
   component: sideButton
@@ -176,11 +163,6 @@ var routes = [{
   path: '/updateSupplierPage/:supplier_id',
   name: 'updateSupplierPage',
   component: updateSupplierPage
-},
-{
-  path: '/ratingTest',
-  name: 'ratingTest',
-  component: ratingTest
 },
 {
   path: '*',

@@ -172,7 +172,11 @@
             v-for="filteredProduct in filteredProducts"
             :key="filteredProduct.id"
           >
-            <product class="ml-n2 mr-n2" :filteredProduct="filteredProduct"></product>
+            <product
+              class="ml-n2 mr-n2"
+              :currentUser="currentUser"
+              :filteredProduct="filteredProduct"
+            ></product>
           </v-col>
         </v-row>
 
@@ -233,10 +237,11 @@ export default {
   },
   async created() {
     this.isLoading = true;
-    this.$store.commit("removeSupplierPageData");
+    this.$store.dispatch("removeSupplierPageData");
     await this.$store.dispatch("getSiteColor");
-
+    console.log(this.loginToken);
     if (this.loginToken) {
+      console.log("x");
       await this.$store.dispatch("refreshCurrentUser");
     }
     this.$store.commit("emptyProductsArray");
@@ -263,32 +268,29 @@ export default {
   },
 
   computed: {
-    row() {
-      return this.$store.state.row;
-    },
     products() {
-      return this.$store.state.products;
+      return this.$store.state.Home.products;
     },
     filteredProducts() {
-      return this.$store.state.filteredProducts;
+      return this.$store.state.Home.filteredProducts;
     },
     suppliers() {
-      return this.$store.state.suppliers;
+      return this.$store.state.Home.suppliers;
     },
     regions() {
-      return this.$store.state.regions;
+      return this.$store.state.Home.regions;
     },
     egyptGovernorates() {
-      return this.$store.state.governorates;
+      return this.$store.state.Home.governorates;
     },
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
     loginToken() {
-      return this.$store.state.loginToken;
+      return this.$store.state.RegisterLogin.loginToken;
     },
     siteColor() {
-      return this.$store.state.siteColor;
+      return this.$store.state.Home.siteColor;
     },
   },
 
@@ -373,6 +375,11 @@ export default {
       this.supplierFilterFlag = false;
       this.$store.commit("emptySearch");
       this.$store.commit("emptySupplierName");
+    },
+
+    testModule() {
+      this.$store.dispatch("testAct", "assdfsaf");
+      console.log(this.$store.state.test.testVar);
     },
   },
   components: {

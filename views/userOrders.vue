@@ -96,19 +96,19 @@ export default {
       return this.$store.state.products;
     },
     filteredProducts() {
-      return this.$store.state.filteredProducts;
+      return this.$store.state.Home.filteredProducts;
     },
     orders() {
-      return this.$store.state.orders;
+      return this.$store.state.Orders.orders;
     },
     productsInOrder() {
-      return this.$store.state.orderProducts;
+      return this.$store.state.Orders.orderProducts;
     },
     nodeHost() {
       return this.$store.state.nodeHost;
     },
     items() {
-      return this.$store.state.orders;
+      return this.$store.state.Orders.orders;
     },
   },
 

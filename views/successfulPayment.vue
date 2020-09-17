@@ -57,7 +57,7 @@ export default {
 
   computed: {
     paymentToken() {
-      return this.$store.state.paymentToken;
+      return this.$store.state.Orders.paymentToken;
     },
 
     table() {
@@ -65,7 +65,7 @@ export default {
     },
 
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
 
     totalPrice() {
@@ -73,7 +73,7 @@ export default {
     },
 
     productsQuantityArray() {
-      return this.$store.state.productsQuantityArray;
+      return this.$store.state.Orders.productsQuantityArray;
     },
   },
 };

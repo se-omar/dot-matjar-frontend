@@ -284,24 +284,24 @@ export default {
 
   computed: {
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
     regions() {
-      return this.$store.state.regions;
+      return this.$store.state.Home.regions;
     },
     egyptGovernorates() {
-      return this.$store.state.governorates;
+      return this.$store.state.Home.governorates;
     },
     suppliers() {
-      return this.$store.state.suppliers;
+      return this.$store.state.Home.suppliers;
     },
 
     allSuppliersWithSales() {
-      return this.$store.state.allSuppliersWithSales;
+      return this.$store.state.AdminPage.allSuppliersWithSales;
     },
 
     supplier() {
-      return this.$store.state.supplier;
+      return this.$store.state.SupplierPage.supplier;
     },
 
     suppliersSortedBySales() {
@@ -362,7 +362,7 @@ export default {
     },
 
     siteColor() {
-      return this.$store.state.siteColor;
+      return this.$store.state.Home.siteColor;
     },
   },
 
@@ -376,19 +376,6 @@ export default {
       var self = this;
       await self.$store.dispatch("getSuppliers", this.supplierFilterFlag);
       this.isLoading = false;
-      // window.onscroll = function () {
-      //   console.log(this.suppliers);
-      //   // let bottomOfWindow =
-      //   //   document.documentElement.scrollTop + window.innerHeight ===
-      //   //   document.documentElement.offsetHeight;
-      //   // console.log(bottomOfWindow);
-      //   console.log("false");
-      //   if (window.innerHeight + window.scrollY >= document.body.scrollHeight) {
-      //     console.log(this.suppliers);
-      //     console.log("true");
-      //     self.$store.dispatch("getSuppliers");
-      //   }
-      // };
     },
 
     supplierClicked(supplier) {

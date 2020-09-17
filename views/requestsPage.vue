@@ -94,16 +94,16 @@ export default {
 
   computed: {
     recievedRequests() {
-      return this.$store.state.recievedRequests;
+      return this.$store.state.Requests.recievedRequests;
     },
     sentRequests() {
-      return this.$store.state.sentRequests;
+      return this.$store.state.Requests.sentRequests;
     },
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
     viewRequestDetails() {
-      return this.$store.state.viewRequestDetails;
+      return this.$store.state.Requests.viewRequestDetails;
     },
   },
 

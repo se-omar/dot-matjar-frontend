@@ -258,15 +258,15 @@ export default {
 
   computed: {
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
 
     topProduct() {
-      return this.$store.state.topProduct;
+      return this.$store.state.Dashboard.topProduct;
     },
 
     leastProduct() {
-      return this.$store.state.leastProduct;
+      return this.$store.state.Dashboard.leastProduct;
     },
 
     supplierProducts() {
@@ -298,7 +298,7 @@ export default {
     },
 
     notSortedDashboardOrders() {
-      return this.$store.state.notSortedDashboardOrders;
+      return this.$store.state.Dashboard.notSortedDashboardOrders;
     },
 
     years() {
@@ -373,7 +373,7 @@ export default {
     },
 
     supplier() {
-      return this.$store.state.supplier;
+      return this.$store.state.SupplierPage.supplier;
     },
   },
 

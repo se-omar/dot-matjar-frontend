@@ -73,8 +73,6 @@
 export default {
   components: {},
   async created() {
-    await this.$store.dispatch("refreshCurrentUser");
-
     await this.$store.dispatch(
       "calculateProductRating",
       this.filteredProduct.product_id
@@ -99,6 +97,10 @@ export default {
     addToCartButton: {
       type: Boolean,
       default: () => true,
+    },
+    currentUser: {
+      type: Object,
+      default: () => {},
     },
   },
 
@@ -126,26 +128,20 @@ export default {
     },
   },
   computed: {
-    products() {
-      return this.$store.state.products;
-    },
-
     filteredProducts() {
-      return this.$store.state.products;
+      return this.$store.state.Home.products;
     },
 
     nodeHost() {
       return this.$store.state.nodeHost;
     },
-    currentUser() {
-      return this.$store.state.currentUser;
-    },
+
     cart() {
-      return this.$store.state.cart;
+      return this.$store.state.Cart.cart;
     },
     siteColor() {
-      if (this.$store.state.siteColor) {
-        return this.$store.state.siteColor;
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor;
       } else {
         return "red darken-4";
       }

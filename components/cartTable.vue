@@ -252,15 +252,15 @@ export default {
       return t;
     },
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
 
     intable() {
-      return this.$store.state.table;
+      return this.$store.state.Cart.table;
     },
     siteColor() {
-      if (this.$store.state.siteColor) {
-        return this.$store.state.siteColor;
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor;
       } else {
         return "red darken-4";
       }

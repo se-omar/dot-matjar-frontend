@@ -201,21 +201,18 @@ export default {
     passwordMatch() {
       return () => this.password === this.verify || "Password must match";
     },
-    row() {
-      return this.$store.state.row;
-    },
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
     governorates() {
-      return this.$store.state.governorates;
+      return this.$store.state.Home.governorates;
     },
     regions() {
-      return this.$store.state.regions;
+      return this.$store.state.Home.regions;
     },
     siteColor() {
-      if (this.$store.state.siteColor) {
-        return this.$store.state.siteColor;
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor;
       } else {
         return "red darken-4";
       }

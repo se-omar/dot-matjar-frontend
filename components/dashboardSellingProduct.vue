@@ -86,19 +86,15 @@ export default {
     },
   },
   computed: {
-    products() {
-      return this.$store.state.products;
-    },
-
     filteredProducts() {
-      return this.$store.state.products;
+      return this.$store.state.Home.products;
     },
 
     nodeHost() {
       return this.$store.state.nodeHost;
     },
     currentuser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
   },
 };

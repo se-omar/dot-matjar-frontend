@@ -177,13 +177,13 @@ export default {
   },
   computed: {
     siteColor() {
-      return this.$store.state.siteColor;
+      return this.$store.state.Home.siteColor;
     },
     supplier() {
-      return this.$store.state.supplier;
+      return this.$store.state.SupplierPage.supplier;
     },
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
   },
   created() {

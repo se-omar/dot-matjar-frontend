@@ -278,7 +278,7 @@
                 v-model="review.rating"
                 :hover="hover"
                 :size="size2"
-                :color="pageColor"
+                :color="siteColor"
               ></v-rating>
             </v-col>
           </v-row>
@@ -359,7 +359,7 @@ export default {
 
   computed: {
     currentProduct() {
-      return this.$store.state.currentProduct;
+      return this.$store.state.ProductDetails.currentProduct;
     },
 
     businesses() {
@@ -367,31 +367,31 @@ export default {
     },
 
     dialog() {
-      return this.$store.state.dialog;
+      return this.$store.state.ProductDetails.dialog;
     },
 
     productRequestDialog() {
-      return this.$store.state.productRequestDialog;
+      return this.$store.state.ProductDetails.productRequestDialog;
     },
 
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
 
     nodeHost() {
       return this.$store.state.nodeHost;
     },
     siteColor() {
-      return this.$store.state.siteColor;
+      return this.$store.state.Home.siteColor;
     },
     productRating() {
-      return this.$store.state.productRating;
+      return this.$store.state.ProductDetails.productRating;
     },
     productReview() {
-      return this.$store.state.productReview;
+      return this.$store.state.ProductDetails.productReview;
     },
     currentProductRatings() {
-      return this.$store.state.currentProductRatings;
+      return this.$store.state.ProductDetails.currentProductRatings;
     },
     barRatingArray() {
       var ar = [0, 0, 0, 0, 0];
@@ -413,7 +413,7 @@ export default {
       return ar;
     },
     userOrderedProductFlag() {
-      return this.$store.state.userOrderedProductFlag;
+      return this.$store.state.ProductDetails.userOrderedProductFlag;
     },
   },
 

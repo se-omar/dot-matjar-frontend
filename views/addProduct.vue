@@ -1,39 +1,38 @@
 <template>
   <v-app class="grey lighten-4">
     <v-container fluid>
-      <v-row class="mr-10" >
+      <v-row class="mr-10">
         <v-col lg="7" md="7" sm="12" cols="12">
           <v-form v-model="valid">
-          <v-row>
-            <v-col cols="12">
-              <v-text-field
-                v-model="productName"
-                dense
-               required
-                outlined
-               :rules="rules"
-                rounded
-                label="Product name"
-              ></v-text-field>
-            </v-col>
-          </v-row>
+            <v-row>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="productName"
+                  dense
+                  required
+                  outlined
+                  :rules="rules"
+                  rounded
+                  label="Product name"
+                ></v-text-field>
+              </v-col>
+            </v-row>
 
-          <v-row>
-            <v-col cols="12">
-              <v-select
-              
-                v-model="categoryName"
-                :items="category"
-                dense
-                required
-                outlined
-                :rules="rules"
-                label="Category"
-                @click="categoriesDB"
-              ></v-select>
-            </v-col>
-          </v-row>
-</v-form>
+            <v-row>
+              <v-col cols="12">
+                <v-select
+                  v-model="categoryName"
+                  :items="category"
+                  dense
+                  required
+                  outlined
+                  :rules="rules"
+                  label="Category"
+                  @click="categoriesDB"
+                ></v-select>
+              </v-col>
+            </v-row>
+          </v-form>
           <v-row>
             <v-col cols="6">
               <v-text-field :rules="Rules" v-model="productCode" dense outlined label="Code"></v-text-field>
@@ -46,9 +45,9 @@
 
           <v-row>
             <v-form v-model="valid">
-            <v-col cols="12">
-              <v-text-field :rules="rules" dense v-model="unitPrice" outlined label="Price"></v-text-field>
-            </v-col>
+              <v-col cols="12">
+                <v-text-field :rules="rules" dense v-model="unitPrice" outlined label="Price"></v-text-field>
+              </v-col>
             </v-form>
             <v-col cols="6">
               <v-text-field
@@ -110,7 +109,7 @@
         <v-col lg="7" md="8" sm="8" cols="10">
           <v-row justify="center">
             <v-col cols="4">
-              <v-btn :disabled="!valid"  @click="addProduct" rounded class="primary">
+              <v-btn :disabled="!valid" @click="addProduct" rounded class="primary">
                 <span style="font-size: 18px">Add product</span>
               </v-btn>
             </v-col>
@@ -133,7 +132,7 @@ export default {
 
   computed: {
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
   },
 
@@ -154,10 +153,8 @@ export default {
       size: "",
       discountAmount: "",
       description: "",
-      
-      rules:[
-        (v)=> !!v || "Required."
-      ],
+
+      rules: [(v) => !!v || "Required."],
       category: "",
       valid: true,
     };

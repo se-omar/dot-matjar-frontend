@@ -15,14 +15,14 @@
 export default {
   data() {
     return {
-      responseDetails: ""
+      responseDetails: "",
     };
   },
 
   computed: {
     responseDialog() {
-      return this.$store.state.responseDialog;
-    }
+      return this.$store.state.Requests.responseDialog;
+    },
   },
 
   methods: {
@@ -33,7 +33,7 @@ export default {
     sendRequestResponse() {
       this.$store.commit("toggleResponse");
       this.$store.dispatch("sendRequestResponse", this.responseDetails);
-    }
-  }
+    },
+  },
 };
 </script>

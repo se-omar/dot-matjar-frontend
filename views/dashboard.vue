@@ -254,16 +254,16 @@ export default {
 
   computed: {
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
     topProduct() {
-      return this.$store.state.topProduct;
+      return this.$store.state.Dashboard.topProduct;
     },
     leastProduct() {
-      return this.$store.state.leastProduct;
+      return this.$store.state.Dashboard.leastProduct;
     },
     myProducts() {
-      return this.$store.state.myProducts;
+      return this.$store.state.Dashboard.myProducts;
     },
     pieSeries() {
       return this.categoryPercentageArray;
@@ -287,8 +287,9 @@ export default {
       };
     },
     notSortedDashboardOrders() {
-      return this.$store.state.notSortedDashboardOrders;
+      return this.$store.state.Dashboard.notSortedDashboardOrders;
     },
+
     salesChartSeries() {
       return [
         {

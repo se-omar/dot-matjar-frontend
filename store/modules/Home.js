@@ -1,0 +1,238 @@
+import axios from 'axios'
+//import router from '../router'
+
+export default {
+    state: {
+        siteColor: localStorage.getItem('siteColor') ? localStorage.getItem('siteColor') : 'red darken-4',
+        currentUser: '',
+        filteredProducts: [],
+        regions: [],
+        governorates: [],
+        products: [],
+        suppliers: [],
+        allSuppliers: [],
+        category: [],
+    },
+
+    mutations: {
+        // eslint-disable-next-line no-unused-vars
+
+
+        getSiteColor(state, color) {
+            localStorage.setItem('siteColor', color)
+            state.siteColor = localStorage.getItem('siteColor')
+        },
+
+        refreshCurrentUser(state, user) {
+            console.log('new user is ', user)
+            state.currentUser = user;
+        },
+
+        emptyProductsArray(state) {
+            state.filteredProducts = [];
+        },
+
+        getRegions(state, regions) {
+            console.log('sate entered')
+            state.regions = []
+            for (var i = 0; i < regions.length; i++) {
+                state.regions.push(regions[i].city)
+            }
+            console.log(state.regions)
+        },
+
+        getGovernorate(state, res) {
+            state.governorates = res
+        },
+
+        getProducts(state, products) {
+            state.products.push(...products);
+            state.filteredProducts.push(...products);
+        },
+
+        getSuppliers(state, suppliers) {
+            state.suppliers.push(...suppliers);
+            state.allSuppliers.push(...suppliers);
+        },
+
+        categoriesDB(state, data) {
+            console.log(data)
+            state.category = data.map(e => {
+                return e.category_name
+            })
+            console.log(state.category)
+        },
+
+        filterProducts(state, products) {
+            state.filteredProducts = products;
+        },
+
+        filterSuppliers(state, users) {
+            state.suppliers = users;
+        },
+
+        emptySearch(state) {
+            state.filteredProducts = state.products
+        },
+
+        emptySupplierName(state) {
+            state.suppliers = state.allSuppliers
+        },
+
+        changeSiteColor(state, supplier) {
+            console.log('entered change site color')
+            localStorage.setItem('siteColor', supplier.page_color)
+            state.siteColor = localStorage.getItem('siteColor');
+        },
+
+        supplierPageColor(state, color) {
+            console.log('color of supp', color)
+            localStorage.setItem('siteColor', color)
+            state.siteColor = localStorage.getItem('siteColor')
+        },
+
+
+
+
+    },
+
+    actions: {
+        removeSupplierPageData(context) {
+            context.commit('removeSupplierPageData')
+        },
+
+        getSiteColor(context) {
+            axios.put('http://localhost:3000/api/getSiteColor')
+                .then(response => {
+                    console.log(response.data.data)
+                    console.log(response.data.message)
+                    context.commit('getSiteColor', response.data.data)
+                })
+        },
+
+        async refreshCurrentUser(context) {
+            await axios.post('http://localhost:3000/api/refreshCurrentUser', {
+                token: context.rootState.RegisterLogin.loginToken
+            }).then(response => {
+                context.commit('refreshCurrentUser', response.data.user)
+            })
+        },
+
+        getGovernorate(context) {
+            axios.put('http://localhost:3000/api/getGovernorate')
+                .then(res => {
+                    console.log(res.data.data)
+                    context.commit('getGovernorate', res.data.data)
+                })
+        },
+
+        getProducts(context, {
+            productFilterFlag,
+            productName,
+            categoryName
+        }) {
+            if (!productFilterFlag) {
+                axios.post('http://localhost:3000/api/products', {
+                    product_id: context.state.filteredProducts.length > 0 ? context.state.filteredProducts[context.state.filteredProducts.length - 1].product_id : null
+                }).then(response => {
+                    context.commit('getProducts', response.data.products);
+                    console.log('productss iss', response.data)
+                })
+            }
+            else {
+                axios.post('http://localhost:3000/api/loadMoreProductsWithFilter', {
+                    product_id: context.state.filteredProducts.length > 0 ? context.state.filteredProducts[context.state.filteredProducts.length - 1].product_id : null,
+                    product_name: productName,
+                    category_name: categoryName
+                }).then(response => {
+                    context.commit('getProducts', response.data.products);
+                    console.log('productss iss', response.data)
+                })
+            }
+        },
+
+        getSuppliers(context, {
+            supplierFilterFlag,
+            supplierName,
+            governorate,
+            region
+        }) {
+            if (!supplierFilterFlag) {
+                axios.post('http://localhost:3000/api/getSuppliers', {
+                    user_id: context.state.suppliers.length > 0 ? context.state.suppliers[context.state.suppliers.length - 1].user_id : null
+                }).then(response => {
+                    console.log(response.data.users)
+                    context.commit('getSuppliers', response.data.users)
+                })
+            }
+            else {
+                axios.post('http://localhost:3000/api/loadMoreSuppliersWithFilter', {
+                    user_id: context.state.suppliers.length > 0 ? context.state.suppliers[context.state.suppliers.length - 1].user_id : null,
+                    name: supplierName,
+                    governorate,
+                    region
+                }).then(response => {
+                    console.log(response.data.users)
+                    context.commit('getSuppliers', response.data.users)
+                })
+            }
+        },
+
+        categoriesDB(context) {
+            axios.get('http://localhost:3000/api/selectCategory')
+                .then((res) => {
+                    console.log(res.data.data)
+                    context.commit('categoriesDB', res.data.data)
+                })
+        },
+
+        filterProducts(context, {
+            product_name,
+            category_name,
+            governorate,
+            region
+        }) {
+            console.log(product_name)
+            axios.put('http://localhost:3000/api/filterProducts', {
+                product_name,
+                category_name,
+                governorate,
+                region
+            })
+                .then(response => {
+                    console.log('message:', response.data.message)
+                    console.log('products:', response.data.data)
+
+                    context.commit('filterProducts', response.data.data);
+                })
+        },
+
+        filterSuppliers(context, {
+            supplierName,
+            governorate,
+            region
+        }) {
+            console.log('governorate', governorate)
+            console.log('region', region)
+
+            axios.put('http://localhost:3000/api/filterSuppliers', {
+                user_id: context.state.suppliers.length > 0 ? context.state.suppliers[context.state.suppliers.length - 1].user_id : null,
+                name: supplierName,
+                governorate: governorate,
+                region: region
+            }).then(response => {
+                console.log(response)
+                context.commit('filterSuppliers', response.data.users)
+            })
+        },
+
+        getRegions(context, governorate) {
+            console.log(governorate)
+            axios.put('http://localhost:3000/api/getRegions', { governorate: governorate })
+                .then(regions => {
+                    console.log('regionss', regions.data.data)
+                    context.commit('getRegions', regions.data.data)
+                })
+        },
+    }
+}

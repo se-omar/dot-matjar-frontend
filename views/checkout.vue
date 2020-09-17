@@ -81,27 +81,12 @@
 <script>
 export default {
   name: "checkOut",
-  components: {
-    ToolBar,
-  },
+
   data: () => ({
     governorate: "",
     village: "",
     address: "",
 
-    //   headers:[
-    //   {text:"Product", value:"product"},
-    //   {text:"price" , value:'price'}
-
-    //   ],
-    //   items: [
-    //     {
-    //       product:'machinegun'
-    //     },
-    //     {
-    //         product:'anything'
-    //     }
-    //   ]
     fields: [
       { key: "product_name", label: "المنتجات" },
       { key: "unit_price", label: "السعر" },
@@ -109,12 +94,17 @@ export default {
     items: [],
   }),
   created() {
-    this.address = this.$store.state.currentUser.address;
+    this.address = this.currentUser;
     this.village = this.$store.state.currentUser.village;
-    this.governorate = this.$store.state.currentUser.governorate;
+    this.governorate = this.currentUser;
     this.items = this.$store.state.table;
   },
   mounted: {},
+  computed: {
+    currentUser() {
+      return this.$store.state.Home.currentUser;
+    },
+  },
 };
 </script>
 <style scoped>

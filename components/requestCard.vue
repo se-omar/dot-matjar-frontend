@@ -52,27 +52,23 @@ export default {
   created() {
     console.log(this.request);
   },
-  computed: {
-    requests() {
-      return this.$store.state.requests;
-    }
-  },
+
   props: {
     request: {
       type: Object,
-      default: () => null
+      default: () => null,
     },
 
     requestType: {
       type: String,
-      default: () => ""
-    }
+      default: () => "",
+    },
   },
   methods: {
     setCurrentRequest() {
       this.$store.commit("viewRequestDetails");
       this.$store.dispatch("getCurrentRequest", this.request);
-    }
-  }
+    },
+  },
 };
 </script>

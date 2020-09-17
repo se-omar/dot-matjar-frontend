@@ -124,7 +124,7 @@
                       :key="i"
                       rounded
                       :value="barRatingArray[5-i]"
-                      :color="pageColor? pageColor : siteColor"
+                      :color="pageColor"
                     >{{6-i}} Star ({{barRatingArray[5-i]/20}} Ratings)</v-progress-linear>
                   </div>
                 </v-col>
@@ -258,45 +258,39 @@ export default {
   }),
   computed: {
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
     supplier() {
-      return this.$store.state.supplier;
+      return this.$store.state.SupplierPage.supplier;
     },
     myProducts() {
-      return this.$store.state.myProducts;
+      return this.$store.state.Dashboard.myProducts;
     },
     nodeHost() {
       return this.$store.state.nodeHost;
     },
     pageColor() {
-      if (this.$store.state.siteColor) {
-        return this.$store.state.siteColor;
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor;
       } else {
         return "red darken-4";
       }
     },
-    siteColor() {
-      if (this.$store.state.siteColor) {
-        return this.$store.state.siteColor;
-      } else {
-        return "red darken-4";
-      }
-    },
+
     supplierProducts() {
-      return this.$store.state.supplierProducts;
+      return this.$store.state.SupplierPage.supplierProducts;
     },
     supplierPageInfo() {
-      return this.$store.state.supplierPageInfo;
+      return this.$store.state.SupplierPage.supplierPageInfo;
     },
     supplierRating() {
-      return this.$store.state.supplierRating;
+      return this.$store.state.SupplierPage.supplierRating;
     },
     supplierReview() {
-      return this.$store.state.supplierReview;
+      return this.$store.state.SupplierPage.supplierReview;
     },
     currentSupplierRatings() {
-      return this.$store.state.currentSupplierRatings;
+      return this.$store.state.SupplierPage.currentSupplierRatings;
     },
     barRatingArray() {
       var ar = [0, 0, 0, 0, 0];
@@ -348,20 +342,19 @@ export default {
     },
   },
   async created() {
-    await this.$store.dispatch("getSupplier", this.$route.params.supplier_id);
     await this.$store.dispatch("refreshCurrentUser");
+    await this.$store.dispatch("getSupplier", this.$route.params.supplier_id);
     console.log("current user", this.currentUser);
 
     await this.$store.dispatch(
       "getSupplierPageData",
       this.$route.params.supplier_id
     );
-    this.$store.state.supplierPageColor = [];
     await this.$store.dispatch(
       "getSupplierProducts",
       this.$route.params.supplier_id
     );
-    this.pageColor = this.$store.state.supplierPageColor;
+
     await this.$store.dispatch("getSupplierReview", {
       supplier_id: this.supplier.user_id,
       user_id: this.currentUser.user_id,

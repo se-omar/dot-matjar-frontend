@@ -101,13 +101,13 @@ export default {
 
   computed: {
     myProducts() {
-      return this.$store.state.myProducts;
+      return this.$store.state.Dashboard.myProducts;
     },
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
     siteColor() {
-      return this.$store.state.siteColor;
+      return this.$store.state.Home.siteColor;
     },
   },
 

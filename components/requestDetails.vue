@@ -128,26 +128,26 @@ export default {
   props: {
     requestClicked: {
       type: Boolean,
-      default: false
+      default: false,
     },
     requestType: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   computed: {
     currentRequest() {
-      return this.$store.state.currentRequest;
-    }
+      return this.$store.state.Requests.currentRequest;
+    },
   },
   methods: {
     toggleResponse() {
       this.$store.commit("toggleResponse");
       console.log(this.requestType);
-    }
+    },
   },
   mounted() {
     console.log(this.currentRequest);
-  }
+  },
 };
 </script>
