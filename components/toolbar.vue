@@ -152,7 +152,7 @@
               rounded
               @click="$router.push('/orderedProducts')"
             >
-              <span class="mos">Ordered Products</span>
+              <span class="mos">Order Management</span>
             </v-btn>
           </v-col>
           <v-divider></v-divider>
@@ -319,7 +319,8 @@ export default {
   components: {},
   created() {
     this.$store.dispatch("refreshCurrentUser");
-    console.log(this.siteColor);
+
+    console.log("color from toolbar", this.siteColor);
   },
 
   props: {
@@ -332,23 +333,23 @@ export default {
   },
   computed: {
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
     nodeHost() {
       return this.$store.state.nodeHost;
     },
     siteColor() {
-      if (this.$store.state.siteColor) {
-        return this.$store.state.siteColor;
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor;
       } else {
         return "red darken-4";
       }
     },
     supplierPageInfo() {
-      return this.$store.state.supplierPageInfo;
+      return this.$store.state.SupplierPage.supplierPageInfo;
     },
     supplier() {
-      return this.$store.state.supplier;
+      return this.$store.state.SupplierPage.supplier;
     },
   },
 
@@ -376,7 +377,9 @@ export default {
       this.$router.push(`/supplierPage/` + this.currentUser.user_id);
     },
     goSupplierPage() {
-      this.$router.push("/supplierPage/" + this.supplier.user_id);
+      this.$router
+        .push("/supplierPage/" + this.supplier.user_id)
+        .catch(() => {});
     },
   },
   data: () => ({

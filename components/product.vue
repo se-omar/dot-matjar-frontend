@@ -98,6 +98,10 @@ export default {
       type: Boolean,
       default: () => true,
     },
+    currentUser: {
+      type: Object,
+      default: () => {},
+    },
   },
 
   methods: {
@@ -124,26 +128,20 @@ export default {
     },
   },
   computed: {
-    products() {
-      return this.$store.state.products;
-    },
-
     filteredProducts() {
-      return this.$store.state.products;
+      return this.$store.state.Home.products;
     },
 
     nodeHost() {
       return this.$store.state.nodeHost;
     },
-    currentUser() {
-      return this.$store.state.currentUser;
-    },
+
     cart() {
-      return this.$store.state.cart;
+      return this.$store.state.Cart.cart;
     },
     siteColor() {
-      if (this.$store.state.siteColor) {
-        return this.$store.state.siteColor;
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor;
       } else {
         return "red darken-4";
       }

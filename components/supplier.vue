@@ -55,7 +55,6 @@
 import moment from "moment";
 export default {
   async created() {
-    console.log(this.selectedMonth);
     await this.$store.dispatch(
       "calculateSupplierRating",
       this.supplier.user_id
@@ -88,7 +87,7 @@ export default {
   },
   computed: {
     suppliers() {
-      return this.$store.state.suppliers;
+      return this.$store.state.Home.suppliers;
     },
     averageSupplierRating() {
       return this.$store.state.averageSupplierRating;

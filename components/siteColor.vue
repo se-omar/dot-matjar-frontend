@@ -36,10 +36,10 @@ export default {
       return this.$store.state.supplierPageColor;
     },
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
     siteColor() {
-      return this.$store.state.siteColor;
+      return this.$store.state.Home.siteColor;
     },
   },
 };

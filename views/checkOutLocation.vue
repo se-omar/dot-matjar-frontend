@@ -88,19 +88,19 @@ export default {
 
   computed: {
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
     items() {
       return this.$store.state.table;
     },
     siteColor() {
-      return this.$store.state.siteColor;
+      return this.$store.state.Home.siteColor;
     },
     regions() {
-      return this.$store.state.regions;
+      return this.$store.state.Home.regions;
     },
     egyptGovernorates() {
-      return this.$store.state.governorates;
+      return this.$store.state.Home.governorates;
     },
   },
   async created() {

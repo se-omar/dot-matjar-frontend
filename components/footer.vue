@@ -95,14 +95,14 @@ export default {
   }),
   computed: {
     siteColor() {
-      if (this.$store.state.siteColor) {
-        return this.$store.state.siteColor;
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor;
       } else {
         return "red darken-4";
       }
     },
     supplierPageInfo() {
-      return this.$store.state.supplierPageInfo;
+      return this.$store.state.SupplierPage.supplierPageInfo;
     },
   },
   created() {

@@ -26,7 +26,7 @@
           max-width="80"
         >Search</v-btn>
       </v-col>
-      <v-col cols="6" lg="7">
+      <!-- <v-col cols="6" lg="7">
         <carousel
           :autoplay="true"
           :per-page="1"
@@ -35,19 +35,19 @@
           :navigationEnabled="true"
         >
           <slide>
-            <v-img height="400" src="..\assets\images/car1.jpg"></v-img>
+            <v-img height="400" src="..\assets\images/download.jpg"></v-img>
           </slide>
           <slide>
-            <v-img height="400" src="..\assets\images/car1.jpg"></v-img>
+            <v-img height="400" src="..\assets\images/download.jpg"></v-img>
           </slide>
           <slide>
-            <v-img height="400" src="..\assets\images/car1.jpg"></v-img>
+            <v-img height="400" src="..\assets\images/download.jpg"></v-img>
           </slide>
           <slide>
-            <v-img height="400" src="..\assets\images/car1.jpg"></v-img>
+            <v-img height="400" src="..\assets\images/download.jpg"></v-img>
           </slide>
         </carousel>
-      </v-col>
+      </v-col>-->
 
       <v-col class="mr-n10" lg="1" v-if="currentUser.user_type == 'admin'">
         <SiteColor disabled></SiteColor>
@@ -102,7 +102,7 @@
         </v-row>
 
         <v-row justify="center">
-          <v-col lg="4">
+          <!-- <v-col lg="4">
             <v-select
               v-if="radioGroup === '1'"
               @keyup="emptySelectBox"
@@ -127,7 +127,7 @@
               :items="categoryItems"
               @change="categoriesDB"
             ></v-select>
-          </v-col>
+          </v-col>-->
 
           <v-col lg="4">
             <v-select
@@ -193,7 +193,7 @@
               max-width="80"
             >Search</v-btn>
           </v-col>
-          <v-row justify="start">
+          <!-- <v-row justify="start">
             <v-card max-height class="ml-2" :color="siteColor" rounded max-width="200">
               <v-row>
                 <v-col cols="12" v-for="category in category" :key="category">
@@ -213,7 +213,7 @@
                       </v-btn>
                     </template>
                     <v-card>
-                      <v-list :color="siteColor" v-for="item in categoryItems" :key="item.id">
+                      <v-list :color="siteColor" v-for="item in categoryItems" :key="item">
                         <v-btn class="white--text" @click="filterProductsWithItem(item)" text>
                           - {{item}}
                           <i :class="`fa fa-${item} fa-lg ml-2`"></i>
@@ -225,13 +225,11 @@
                 </v-col>
               </v-row>
             </v-card>
-          </v-row>
+          </v-row>-->
         </v-row>
 
-        <!-- <v-toolbar shaped dark dense :color="siteColor">
+        <v-toolbar shaped dark dense :color="siteColor">
           <v-row justify="center">
-         
-
             <v-col cols="2" v-for="category in category" :key="category.id">
               <v-menu offset-x :close-on-content-click="false" open-on-hover>
                 <template v-slot:activator="{ on,attrs }">
@@ -258,11 +256,8 @@
                 </v-card>
               </v-menu>
             </v-col>
-
-            
-         
           </v-row>
-        </v-toolbar>-->
+        </v-toolbar>
         <v-row class="ml-7 mr-7" v-if="radioGroup === '1'">
           <v-col
             lg="3"
@@ -273,7 +268,11 @@
             v-for="filteredProduct in filteredProducts"
             :key="filteredProduct.id"
           >
-            <product class="ml-n2 mr-n2" :filteredProduct="filteredProduct"></product>
+            <product
+              class="ml-n2 mr-n2"
+              :currentUser="currentUser"
+              :filteredProduct="filteredProduct"
+            ></product>
           </v-col>
         </v-row>
 
@@ -297,9 +296,7 @@
 
       <v-col lg="2" style="max-width: 12%">
         <v-card height="95%">
-          <v-card-title>
-            <span>ad here</span>
-          </v-card-title>
+          <v-img src="../assets/images/603-150x600.jpg"></v-img>
         </v-card>
       </v-col>
     </v-row>
@@ -332,23 +329,24 @@ export default {
       isLoading: false,
       categoryItems: [],
       categoryItem: "",
-      categories: [
-        { name: "Clothing", icon: "fa fa-user-tie fa-2x ml-2" },
-        { name: "Furniture", icon: "fa fa-couch fa-2x ml-2" },
-        { name: "Labtops", icon: "fa fa-laptop fa-2x ml-2" },
-        { name: "Mobile Phones", icon: "fa fa-mobile fa-2x ml-2" },
-        { name: "Cars", icon: "fa fa-car fa-2x ml-2" },
-      ],
+      // categories: [
+      //   { name: "Clothing", icon: "fa fa-user-tie fa-2x ml-2" },
+      //   { name: "Furniture", icon: "fa fa-couch fa-2x ml-2" },
+      //   { name: "Labtops", icon: "fa fa-laptop fa-2x ml-2" },
+      //   { name: "Mobile Phones", icon: "fa fa-mobile fa-2x ml-2" },
+      //   { name: "Cars", icon: "fa fa-car fa-2x ml-2" },
+      // ],
     };
   },
   async created() {
     await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getCategoryItems");
     this.isLoading = true;
-    this.$store.commit("removeSupplierPageData");
+    this.$store.dispatch("removeSupplierPageData");
     await this.$store.dispatch("getSiteColor");
-
+    console.log(this.loginToken);
     if (this.loginToken) {
+      console.log("x");
       await this.$store.dispatch("refreshCurrentUser");
     }
     this.$store.commit("emptyProductsArray");
@@ -368,45 +366,46 @@ export default {
     return new Promise((resolve) => {
       setTimeout(() => {
         this.isLoading = false;
-        this.$store.dispatch("categoriesDB");
+        // this.$store.dispatch("categoriesDB");
         resolve();
       });
     });
   },
 
   computed: {
-    row() {
-      return this.$store.state.row;
-    },
     products() {
-      return this.$store.state.products;
+      return this.$store.state.Home.products;
     },
     filteredProducts() {
-      return this.$store.state.filteredProducts;
+      return this.$store.state.Home.filteredProducts;
     },
     suppliers() {
-      return this.$store.state.suppliers;
+      return this.$store.state.Home.suppliers;
     },
     regions() {
-      return this.$store.state.regions;
+      return this.$store.state.Home.regions;
     },
     egyptGovernorates() {
-      return this.$store.state.governorates;
+      return this.$store.state.Home.governorates;
     },
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
     loginToken() {
-      return this.$store.state.loginToken;
+      return this.$store.state.RegisterLogin.loginToken;
     },
     siteColor() {
-      return this.$store.state.siteColor;
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor;
+      } else {
+        return "red darken-4";
+      }
     },
     category() {
-      return this.$store.state.category;
+      return this.$store.state.Home.category;
     },
     categoriesItems() {
-      return this.$store.state.categoriesItems;
+      return this.$store.state.Home.categoriesItems;
     },
   },
 
@@ -493,6 +492,9 @@ export default {
       this.$store.commit("emptySupplierName");
     },
     gettingCategoryItems() {
+      console.log("categoriestems", this.categoriesItems);
+      console.log(this.categoryName);
+      console.log(this.categoryItems);
       this.categoryItems = [];
       for (let i = 0; i < this.categoriesItems.length; i++) {
         if (this.categoriesItems[i].category_name == this.categoryName) {
@@ -518,6 +520,10 @@ export default {
     filterProductsWithCategory(category) {
       console.log(category);
       this.$store.dispatch("filterProducts", { category_name: category });
+    },
+    testModule() {
+      this.$store.dispatch("testAct", "assdfsaf");
+      console.log(this.$store.state.test.testVar);
     },
   },
   components: {

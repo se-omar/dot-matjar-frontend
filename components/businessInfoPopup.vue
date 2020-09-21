@@ -49,7 +49,6 @@
               </v-card-text>
             </v-col>
           </v-row>
-          <v-btn @click="closeDialog">اغلاق</v-btn>
         </v-card>
       </v-dialog>
     </v-app>
@@ -61,17 +60,11 @@ export default {
   name: "business-info-popup",
   computed: {
     currentProduct() {
-      return this.$store.state.currentProduct;
+      return this.$store.state.ProductDetails.currentProduct;
     },
 
     dialog() {
       return this.$store.state.dialog;
-    },
-  },
-
-  methods: {
-    closeDialog() {
-      this.$store.dispatch("toggleDialog");
     },
   },
 };

@@ -255,28 +255,25 @@ export default {
   },
   computed: {
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
     ordersMade() {
-      return this.$store.state.ordersMade;
+      return this.$store.state.Orders.ordersMade;
     },
     usersMadeOrders() {
-      return this.$store.state.usersMadeOrders;
+      return this.$store.state.Orders.usersMadeOrders;
     },
     showOrderProducts() {
-      return this.$store.state.showOrderProducts;
+      return this.$store.state.Orders.showOrderProducts;
     },
     userOrderAddress() {
-      return this.$store.state.userOrderAddress;
+      return this.$store.state.Orders.userOrderAddress;
     },
-    //  OrderAddressDetails(){
-    //    return this.$store.state.OrderAddressDetails
-    //  },
     pressedOrder() {
       return this.$store.state.pressedOrder;
     },
     siteColor() {
-      return this.$store.state.siteColor;
+      return this.$store.state.Home.siteColor;
     },
   },
 };

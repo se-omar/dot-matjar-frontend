@@ -137,13 +137,13 @@ export default {
 
   computed: {
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
     categoriesItems() {
-      return this.$store.state.categoriesItems;
+      return this.$store.state.Home.categoriesItems;
     },
     category() {
-      return this.$store.state.category;
+      return this.$store.state.Home.category;
     },
   },
 

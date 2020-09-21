@@ -53,8 +53,11 @@
       </v-row>
 
       <v-row justify="center">
-        <v-col cols="2"  lg="2" >
-          <v-btn  rounded @click="updatePassword" :color="siteColor" class="white--text" block>Update<br/> password</v-btn>
+        <v-col cols="2" lg="2">
+          <v-btn rounded @click="updatePassword" :color="siteColor" class="white--text" block>
+            Update
+            <br />password
+          </v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -99,18 +102,17 @@ export default {
         this.newPassword === this.repeatPassword || "Password must match";
     },
     currentUser() {
-      return this.$store.state.currentUser;
+      return this.$store.state.Home.currentUser;
     },
-    siteColor(){
-      return this.$store.state.siteColor
-    }
+    siteColor() {
+      return this.$store.state.Home.siteColor;
+    },
   },
 
   methods: {
     updatePassword() {
       var self = this;
       var route = "http://localhost:3000/api/updatePassword";
-
       if (this.currentUser.password !== this.password) {
         alert("كلمة السر الحالية غير صحيحة");
         return;
