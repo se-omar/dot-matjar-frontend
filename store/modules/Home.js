@@ -194,14 +194,16 @@ export default {
             product_name,
             category_name,
             governorate,
-            region
+            region,
+            categoryItem
         }) {
-            console.log(product_name)
+
             axios.put('http://localhost:3000/api/filterProducts', {
                 product_name,
                 category_name,
                 governorate,
-                region
+                region,
+                categoryItem
             })
                 .then(response => {
                     console.log('message:', response.data.message)

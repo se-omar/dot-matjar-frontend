@@ -230,7 +230,7 @@
 
         <v-toolbar shaped dark dense :color="siteColor">
           <v-row justify="center">
-            <v-col cols="2" v-for="category in category" :key="category.id">
+            <v-col cols="2" v-for="category in category" :key="category">
               <v-menu offset-x :close-on-content-click="false" open-on-hover>
                 <template v-slot:activator="{ on,attrs }">
                   <v-btn
@@ -247,7 +247,7 @@
                   </v-btn>
                 </template>
                 <v-card style="background-color:red">
-                  <v-list v-for="item in categoryItems" :key="item.id">
+                  <v-list v-for="(item,index) in categoryItems" :key="index">
                     <v-btn @click="filterProductsWithItem(item)" text>
                       - {{item}}
                       <i :class="`fa fa-${item} fa-lg ml-2`"></i>
@@ -265,8 +265,8 @@
             xmd="4"
             sm="12"
             cols="12"
-            v-for="filteredProduct in filteredProducts"
-            :key="filteredProduct.id"
+            v-for="(filteredProduct,index) in filteredProducts"
+            :key="index"
           >
             <product
               class="ml-n2 mr-n2"
@@ -511,7 +511,7 @@ export default {
           this.categoryItems.push(this.categoriesItems[i].category_items);
         }
       }
-      console.log(this.category);
+      console.log("category itemsis", this.categoryItems);
     },
     filterProductsWithItem(item) {
       console.log(item);

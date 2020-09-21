@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app>
-      <v-container v-if="!currentUser" style="width: 60%">
+      <v-container class="mt-16" v-if="!currentUser" style="width: 60%">
         <div>
           <v-tabs v-model="tab" show-arrows icons-and-text dark grow>
             <v-tabs-slider></v-tabs-slider>
