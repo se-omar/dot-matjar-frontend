@@ -10,7 +10,7 @@
           v-if="supplier.user_id == currentUser.user_id"
           class="white--text"
           @click="updatePage"
-          :color="pageColor"
+          :color="siteColor"
         >Update My page</v-btn>
       </v-col>
     </v-row>
@@ -51,7 +51,7 @@
         </v-row>
         <v-divider></v-divider>
 
-        <v-row justify="center">
+        <!-- <v-row justify="center">
           <v-col :lg="supplierPageInfo? supplierPageInfo.carousel_width : 10">
             <carousel
               :autoplay="true"
@@ -86,7 +86,7 @@
               </slide>
             </carousel>
           </v-col>
-        </v-row>
+        </v-row>-->
 
         <v-row justify="center">
           <v-col lg="6">
@@ -99,7 +99,7 @@
             <v-card elevation="1" height="250">
               <v-row justify="center">
                 <v-col lg="6" class="text-center ml-n10 mt-5">
-                  <v-avatar fab :color="pageColor" size="100">
+                  <v-avatar fab :color="siteColor" size="100">
                     <span class="white--text headline text-h3">{{supplier.rating}}.0</span>
                   </v-avatar>
 
@@ -109,7 +109,7 @@
                     v-model="supplier.rating"
                     :hover="hover"
                     :size="size"
-                    :color="pageColor"
+                    :color="siteColor"
                   ></v-rating>
 
                   <p class="text-center text-subtitle">(based on {{supplier.rate_counter}} Ratings)</p>
@@ -124,7 +124,7 @@
                       :key="i"
                       rounded
                       :value="barRatingArray[5-i]"
-                      :color="pageColor"
+                      :color="siteColor"
                     >{{6-i}} Star ({{barRatingArray[5-i]/20}} Ratings)</v-progress-linear>
                   </div>
                 </v-col>
@@ -135,11 +135,67 @@
 
         <v-tabs v-model="tab" show-arrows icons-and-text dark grow>
           <v-tabs-slider></v-tabs-slider>
-          <v-tab :style="`background-color: ${pageColor}`" v-for="i in tabs" :key="i.name">
+          <v-tab :style="`background-color: ${siteColor}`" v-for="i in tabs" :key="i.name">
             <div class="caption py-1 font-weight-medium text-subtitle-1">{{ i.name }}</div>
           </v-tab>
 
           <v-tab-item class="grey lighten-4">
+            <v-row>
+              <v-col cols="8">
+                <v-text-field
+                  v-model="supplierProductsSearch"
+                  :color="siteColor"
+                  rounded
+                  outlined
+                  label="What are you loking for ?"
+                  @keyup="returnAllProducts"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="2">
+                <v-btn
+                  @click="filterSupplierProducts"
+                  rounded
+                  :color="siteColor"
+                  class="white--text mt-3"
+                >Search</v-btn>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <!-- search category toolbar -->
+                <v-toolbar shaped dark dense :color="siteColor">
+                  <v-row justify="center">
+                    <v-col cols="2" v-for="category in category" :key="category.id">
+                      <v-menu offset-x :close-on-content-click="false" open-on-hover>
+                        <template v-slot:activator="{ on,attrs }">
+                          <v-btn
+                            @mouseover="mouseOver(category)"
+                            v-bind="attrs"
+                            v-on="on"
+                            text
+                            rounded
+                            class="white--text"
+                            @click="filterProductsWithCategory(category)"
+                          >
+                            {{category}}
+                            <i :class="`fas fa-${category} fa-2x ml-2` "></i>
+                          </v-btn>
+                        </template>
+                        <v-card style="background-color:red">
+                          <v-list v-for="item in categoryItems" :key="item.id">
+                            <v-btn @click="filterProductsWithItem(item)" text>
+                              - {{item}}
+                              <i :class="`fa fa-${item} fa-lg ml-2`"></i>
+                            </v-btn>
+                          </v-list>
+                        </v-card>
+                      </v-menu>
+                    </v-col>
+                  </v-row>
+                </v-toolbar>
+                <!-- search category toolbar -->
+              </v-col>
+            </v-row>
             <v-row>
               <v-col
                 lg="3"
@@ -178,7 +234,7 @@
                         v-model="review.rating"
                         :hover="hover"
                         :size="size2"
-                        :color="pageColor"
+                        :color="siteColor"
                       ></v-rating>
                     </v-col>
                   </v-row>
@@ -202,7 +258,7 @@
                   v-model="rating"
                   :hover="hover"
                   :size="size"
-                  :color="pageColor"
+                  :color="siteColor"
                 ></v-rating>
                 <v-textarea :disabled="supplierRating > 0" height="150" outlined v-model="review"></v-textarea>
                 <v-btn
@@ -210,7 +266,7 @@
                   class="white--text"
                   @click="submitReview"
                   block
-                  :color="pageColor"
+                  :color="siteColor"
                 >submit</v-btn>
               </v-col>
             </v-row>
@@ -255,6 +311,8 @@ export default {
       { name: "Reviews" },
       { name: "Rate Supplier" },
     ],
+    supplierProductsSearch: "",
+    categoryItems: [],
   }),
   computed: {
     currentUser() {
@@ -269,7 +327,7 @@ export default {
     nodeHost() {
       return this.$store.state.nodeHost;
     },
-    pageColor() {
+    siteColor() {
       if (this.$store.state.Home.siteColor) {
         return this.$store.state.Home.siteColor;
       } else {
@@ -311,6 +369,12 @@ export default {
       });
       return ar;
     },
+    category() {
+      return this.$store.state.Home.category;
+    },
+    categoriesItems() {
+      return this.$store.state.Home.categoriesItems;
+    },
   },
   methods: {
     updatePage() {
@@ -339,6 +403,43 @@ export default {
         (r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r),
         {}
       );
+    },
+    filterSupplierProducts() {
+      console.log(this.supplierProductsSearch);
+      console.log(this.$route.params.supplier_id);
+      this.$store.dispatch("filterSupplierProducts", {
+        productsSearch: this.supplierProductsSearch,
+        user_id: this.$route.params.supplier_id,
+      });
+    },
+    filterProductsWithCategory(category) {
+      console.log(this.category);
+      console.log(this.categoriesItems);
+      console.log(category);
+
+      this.$store.dispatch("filterProductsWithCategory", {
+        categoryName: category,
+        user_id: this.$route.params.supplier_id,
+      });
+    },
+    filterProductsWithItem(item) {
+      console.log(item);
+      this.$store.dispatch("filterProductsWithItem", {
+        user_id: this.$route.params.supplier_id,
+        itemName: item,
+      });
+    },
+    mouseOver(category) {
+      this.categoryItems = [];
+      console.log(category);
+      for (var i = 0; i < this.categoriesItems.length; i++) {
+        if (this.categoriesItems[i].category_name == category) {
+          this.categoryItems.push(this.categoriesItems[i].category_items);
+        }
+      }
+    },
+    returnAllProducts() {
+      this.$store.commit("returnAllProducts");
     },
   },
   async created() {
@@ -377,6 +478,8 @@ export default {
       }
     }
     console.log(this.barRatingArray);
+    await this.$store.dispatch("categoriesDB");
+    await this.$store.dispatch("getCategoryItems");
     this.isLoading = false;
   },
 };

@@ -177,7 +177,11 @@ export default {
   },
   computed: {
     siteColor() {
-      return this.$store.state.Home.siteColor;
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor;
+      } else {
+        return "red darken-4";
+      }
     },
     supplier() {
       return this.$store.state.SupplierPage.supplier;

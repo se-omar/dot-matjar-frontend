@@ -9,6 +9,8 @@ export default {
         supplierReview: '',
         currentSupplierRatings: [],
         supplier: {},
+        pendingSuppliers: [],
+        supplierProductsSave: []
     },
 
     mutations: {
@@ -29,6 +31,7 @@ export default {
         getSupplierProducts(state, supplierProducts) {
             localStorage.setItem('supplierProducts', JSON.stringify(supplierProducts))
             state.supplierProducts = JSON.parse(localStorage.getItem('supplierProducts'));
+            state.supplierProductsSave = state.supplierProducts
         },
 
         getSupplierReview(state, row) {
@@ -55,6 +58,22 @@ export default {
         removeSupplierPageData(state) {
             state.supplierPageInfo = []
         },
+        getPendingSuppliers(state, suppliers) {
+            state.pendingSuppliers = suppliers
+        },
+        filterSupplierProducts(state, products) {
+            state.supplierProducts = products
+        },
+        returnAllProducts(state) {
+            state.supplierProducts = state.supplierProductsSave
+        },
+        filterProductsWithCategory(state, products) {
+            state.supplierProducts = products
+        },
+        filterProductsWithItem(state, products) {
+            state.supplierProducts = products
+
+        }
     },
 
     actions: {
@@ -134,6 +153,7 @@ export default {
                 page_color: color,
                 user_id: context.state.supplier.user_id
             })
+
                 .then(response => {
                     console.log(response.data.message)
                     console.log(response.data.data)
@@ -148,6 +168,42 @@ export default {
                 console.log(response.message)
             })
         },
+        getPendingSuppliers(context) {
+            axios.put('http://localhost:3000/api/getPendingSuppliers')
+                .then(suppliers => {
+                    console.log(suppliers.data.message)
+                    console.log(suppliers.data.data)
+                    context.commit('getPendingSuppliers', suppliers.data.data)
+                })
+        },
+        acceptSupplierRequest(context, user_id) {
+            axios.put('http://localhost:3000/api/acceptSupplierRequest', { user_id: user_id })
+                .then(message => {
+                    alert(message.data.message)
+                })
+        },
+        filterSupplierProducts(context, { productsSearch, user_id }) {
 
+            axios.put('http://localhost:3000/api/filterSupplierProducts', { productsSearch, user_id })
+                .then(products => {
+                    console.log(products.data.data)
+                    console.log(products.data.message)
+                    context.commit('filterSupplierProducts', products.data.data)
+                })
+        },
+        filterProductsWithCategory(context, { categoryName, user_id }) {
+            console.log('testing', categoryName, user_id)
+            axios.put('http://localhost:3000/api/filterSupplierProducts', { categoryName, user_id })
+                .then(products => {
+                    context.commit('filterProductsWithCategory', products.data.data)
+                })
+        },
+        filterProductsWithItem(context, { user_id, itemName }) {
+            axios.put('http://localhost:3000/api/filterSupplierProducts', { user_id, itemName })
+                .then(products => {
+                    console.log('testing products items', products.data.data)
+                    context.commit('filterProductsWithItem', products.data.data)
+                })
+        }
     }
 }

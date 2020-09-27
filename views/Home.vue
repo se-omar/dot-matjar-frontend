@@ -6,7 +6,27 @@
     </div>
 
     <v-row justify="center">
-      <v-col lg="7">
+      <v-col cols="6">
+        <v-text-field
+          append-icon="fa fa-search"
+          :color="siteColor"
+          outlined
+          rounded
+          placeholder="What are you looking for ?"
+          @keyup="emptySearchBox"
+          v-model="toolbarSearch"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="1" sm="6" lg="1">
+        <v-btn
+          class="white--text mt-3"
+          @click="filterProducts"
+          :color="siteColor"
+          rounded
+          max-width="80"
+        >Search</v-btn>
+      </v-col>
+      <!-- <v-col cols="6" lg="7">
         <carousel
           :autoplay="true"
           :per-page="1"
@@ -15,19 +35,19 @@
           :navigationEnabled="true"
         >
           <slide>
-            <v-img height="400" src="..\assets\images/car1.jpg"></v-img>
+            <v-img height="400" src="..\assets\images/download.jpg"></v-img>
           </slide>
           <slide>
-            <v-img height="400" src="..\assets\images/car1.jpg"></v-img>
+            <v-img height="400" src="..\assets\images/download.jpg"></v-img>
           </slide>
           <slide>
-            <v-img height="400" src="..\assets\images/car1.jpg"></v-img>
+            <v-img height="400" src="..\assets\images/download.jpg"></v-img>
           </slide>
           <slide>
-            <v-img height="400" src="..\assets\images/car1.jpg"></v-img>
+            <v-img height="400" src="..\assets\images/download.jpg"></v-img>
           </slide>
         </carousel>
-      </v-col>
+      </v-col>-->
 
       <v-col class="mr-n10" lg="1" v-if="currentUser.user_type == 'admin'">
         <SiteColor disabled></SiteColor>
@@ -82,7 +102,7 @@
         </v-row>
 
         <v-row justify="center">
-          <v-col lg="4">
+          <!-- <v-col lg="4">
             <v-select
               v-if="radioGroup === '1'"
               @keyup="emptySelectBox"
@@ -92,9 +112,22 @@
               outlined
               v-model="categoryName"
               :items="category"
-              @click="categoriesDB"
+              @change="gettingCategoryItems"
             ></v-select>
           </v-col>
+          <v-col lg="4">
+            <v-select
+              v-if="radioGroup === '1'"
+              @keyup="emptySelectBox"
+              :disabled="radioGroup === '2'"
+              placeholder="Search By item"
+              dense
+              outlined
+              v-model="categoryItem"
+              :items="categoryItems"
+              @change="categoriesDB"
+            ></v-select>
+          </v-col>-->
 
           <v-col lg="4">
             <v-select
@@ -160,8 +193,71 @@
               max-width="80"
             >Search</v-btn>
           </v-col>
+          <!-- <v-row justify="start">
+            <v-card max-height class="ml-2" :color="siteColor" rounded max-width="200">
+              <v-row>
+                <v-col cols="12" v-for="category in category" :key="category">
+                  <v-menu offset-x :close-on-content-click="false" open-on-hover>
+                    <template v-slot:activator="{ on,attrs }">
+                      <v-btn
+                        @mouseover="mouseOver(category)"
+                        v-bind="attrs"
+                        v-on="on"
+                        text
+                        rounded
+                        class="white--text"
+                        @click="filterProductsWithCategory(category)"
+                      >
+                        {{category}}
+                        <i :class="`fas fa-${category} fa-2x ml-2` "></i>
+                      </v-btn>
+                    </template>
+                    <v-card>
+                      <v-list :color="siteColor" v-for="item in categoryItems" :key="item">
+                        <v-btn class="white--text" @click="filterProductsWithItem(item)" text>
+                          - {{item}}
+                          <i :class="`fa fa-${item} fa-lg ml-2`"></i>
+                        </v-btn>
+                      </v-list>
+                    </v-card>
+                  </v-menu>
+                  <v-divider class="white"></v-divider>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-row>-->
         </v-row>
 
+        <v-toolbar shaped dark dense :color="siteColor">
+          <v-row justify="center">
+            <v-col cols="2" v-for="category in category" :key="category">
+              <v-menu offset-x :close-on-content-click="false" open-on-hover>
+                <template v-slot:activator="{ on,attrs }">
+                  <v-btn
+                    @mouseover="mouseOver(category)"
+                    v-bind="attrs"
+                    v-on="on"
+                    text
+                    rounded
+                    class="white--text"
+                    @click="filterProductsWithCategory(category)"
+                  >
+                    {{category}}
+                    <i :class="`fas fa-${category} fa-2x ml-2` "></i>
+                  </v-btn>
+                </template>
+                <v-card style="background-color:red">
+                  <v-list v-for="(item,index) in categoryItems" :key="index">
+                    <v-btn @click="filterProductsWithItem(item)" text>
+                      - {{item}}
+                      <i :class="`fa fa-${item} fa-lg ml-2`"></i>
+                    </v-btn>
+                  </v-list>
+                </v-card>
+              </v-menu>
+            </v-col>
+          </v-row>
+        </v-toolbar>
         <v-row class="ml-7 mr-7" v-if="radioGroup === '1'">
           <v-col
             lg="3"
@@ -169,8 +265,8 @@
             xmd="4"
             sm="12"
             cols="12"
-            v-for="filteredProduct in filteredProducts"
-            :key="filteredProduct.id"
+            v-for="(filteredProduct,index) in filteredProducts"
+            :key="index"
           >
             <product
               class="ml-n2 mr-n2"
@@ -200,9 +296,7 @@
 
       <v-col lg="2" style="max-width: 12%">
         <v-card height="95%">
-          <v-card-title>
-            <span>ad here</span>
-          </v-card-title>
+          <v-img src="../assets/images/603-150x600.jpg"></v-img>
         </v-card>
       </v-col>
     </v-row>
@@ -228,14 +322,25 @@ export default {
       items: [],
       productFilterFlag: false,
       supplierFilterFlag: false,
-      category: [],
+      // category: [],
       radioGroup: 1,
       governorate: "",
       region: "",
       isLoading: false,
+      categoryItems: [],
+      categoryItem: "",
+      // categories: [
+      //   { name: "Clothing", icon: "fa fa-user-tie fa-2x ml-2" },
+      //   { name: "Furniture", icon: "fa fa-couch fa-2x ml-2" },
+      //   { name: "Labtops", icon: "fa fa-laptop fa-2x ml-2" },
+      //   { name: "Mobile Phones", icon: "fa fa-mobile fa-2x ml-2" },
+      //   { name: "Cars", icon: "fa fa-car fa-2x ml-2" },
+      // ],
     };
   },
   async created() {
+    await this.$store.dispatch("categoriesDB");
+    await this.$store.dispatch("getCategoryItems");
     this.isLoading = true;
     this.$store.dispatch("removeSupplierPageData");
     await this.$store.dispatch("getSiteColor");
@@ -261,7 +366,7 @@ export default {
     return new Promise((resolve) => {
       setTimeout(() => {
         this.isLoading = false;
-        this.$store.dispatch("categoriesDB");
+        // this.$store.dispatch("categoriesDB");
         resolve();
       });
     });
@@ -290,7 +395,17 @@ export default {
       return this.$store.state.RegisterLogin.loginToken;
     },
     siteColor() {
-      return this.$store.state.Home.siteColor;
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor;
+      } else {
+        return "red darken-4";
+      }
+    },
+    category() {
+      return this.$store.state.Home.category;
+    },
+    categoriesItems() {
+      return this.$store.state.Home.categoriesItems;
     },
   },
 
@@ -343,7 +458,7 @@ export default {
       }
     },
     categoriesDB() {
-      this.category = this.$store.state.category;
+      console.log(this.categoryName);
     },
 
     loadMore() {
@@ -376,7 +491,36 @@ export default {
       this.$store.commit("emptySearch");
       this.$store.commit("emptySupplierName");
     },
-
+    gettingCategoryItems() {
+      console.log("categoriestems", this.categoriesItems);
+      console.log(this.categoryName);
+      console.log(this.categoryItems);
+      this.categoryItems = [];
+      for (let i = 0; i < this.categoriesItems.length; i++) {
+        if (this.categoriesItems[i].category_name == this.categoryName) {
+          this.categoryItems.push(this.categoriesItems[i].category_items);
+        }
+      }
+      console.log(this.categoryItems);
+    },
+    mouseOver(name) {
+      this.categoryItems = [];
+      console.log(name);
+      for (let i = 0; i < this.categoriesItems.length; i++) {
+        if (this.categoriesItems[i].category_name == name) {
+          this.categoryItems.push(this.categoriesItems[i].category_items);
+        }
+      }
+      console.log("category itemsis", this.categoryItems);
+    },
+    filterProductsWithItem(item) {
+      console.log(item);
+      this.$store.dispatch("filterProducts", { categoryItem: item });
+    },
+    filterProductsWithCategory(category) {
+      console.log(category);
+      this.$store.dispatch("filterProducts", { category_name: category });
+    },
     testModule() {
       this.$store.dispatch("testAct", "assdfsaf");
       console.log(this.$store.state.test.testVar);

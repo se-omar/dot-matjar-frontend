@@ -1,11 +1,141 @@
 <template>
-  <v-app>
+  <v-app v-if="currentUser.user_type">
     <div class="vld-parent">
       <div v-if="currentUser.user_type == 'admin'">
         <SiteColor></SiteColor>
       </div>
       <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
     </div>
+    <!-- ADDING Categories -->
+    <v-row justify="center">
+      <h2>Add a new Category</h2>
+    </v-row>
+    <v-row justify="center">
+      <v-form v-model="addCategoryValidation">
+        <v-col>
+          <v-text-field
+            :rules="required"
+            v-model="newCategoryName"
+            placeholder="Category name"
+            rounded
+            outlined
+          ></v-text-field>
+        </v-col>
+      </v-form>
+    </v-row>
+    <v-row justify="center">
+      <v-btn
+        :disabled="!addCategoryValidation"
+        rounded
+        :color="siteColor"
+        class="white--text"
+        @click="addNewCategory"
+      >Add Category</v-btn>
+    </v-row>
+    <v-divider class="mx-16"></v-divider>
+    <!-- Adding category items -->
+    <v-row justify="center">
+      <h3>Add category items</h3>
+    </v-row>
+
+    <v-form justify="center" v-model="valid">
+      <v-row justify="center">
+        <v-col cols="3">
+          <v-select
+            :rules="required"
+            outlined
+            rounded
+            :items="productCategory"
+            v-model="categoryName"
+            placeholder="Category Name"
+          ></v-select>
+        </v-col>
+
+        <v-col cols="3">
+          <v-text-field
+            v-model="categoryItem"
+            placeholder="Category item"
+            class="text-xl"
+            rounded
+            outlined
+            :rules="required"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+    </v-form>
+
+    <v-row justify="center">
+      <v-btn
+        :disabled="!valid"
+        rounded
+        :color="siteColor"
+        class="white--text"
+        @click="addCategoryItem"
+      >Add item</v-btn>
+    </v-row>
+    <v-divider class="mx-16"></v-divider>
+    <!-- Removing category items -->
+    <v-row justify="center">
+      <h2>Remove Category</h2>
+    </v-row>
+    <v-row justify="center">
+      <v-col cols="3">
+        <v-select
+          @change="gettingCategoryItems"
+          :items="productCategory"
+          outlined
+          rounded
+          label="Choose Category to remove"
+          v-model="chooseCategoryToRemove"
+        ></v-select>
+      </v-col>
+      <v-col cols="3">
+        <v-select
+          rounded
+          outlined
+          placeholder="Choose item to remove"
+          v-model="chooseItemToRemove"
+          :items="categoryItems"
+        >
+          <!-- ========================================================================= -->
+        </v-select>
+      </v-col>
+    </v-row>
+
+    <v-row justify="center">
+      <v-btn
+        :disabled="!chooseCategoryToRemove"
+        rounded
+        :color="siteColor"
+        class="white--text"
+        @click="confirmingRemovingCategory = true"
+      >Remove Category</v-btn>
+      <!-- dialoge testing ============ -->
+      <v-dialog v-model="confirmingRemovingCategory" max-width="400">
+        <v-card>
+          <v-card-title class="headline">Are you sure you want to Delete this category ?</v-card-title>
+
+          <v-card-text>Please be aware that by proceeding all products in this category will not have a unique category to search for.</v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+
+            <v-btn :color="siteColor" text @click="confirmingRemovingCategory = false">Disagree</v-btn>
+
+            <v-btn :color="siteColor" text @click="removeCategory">Agree</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-btn
+        :disabled="chooseItemToRemove.length ==0"
+        rounded
+        :color="siteColor"
+        class="white--text"
+        @click="removeItem"
+      >Remove item</v-btn>
+    </v-row>
+
+    <v-divider class="mx-16"></v-divider>
     <v-row justify="center">
       <p class="display-1 mt-8">Top 10 Selling Suppliers</p>
     </v-row>
@@ -245,6 +375,8 @@ export default {
     await this.getTopMonthlySuppliers();
     this.isLoading = false;
     console.log("suppliers sorted by sales", this.suppliersSortedBySales);
+    this.$store.dispatch("categoriesDB");
+    this.$store.dispatch("getCategoryItems");
   },
 
   data: () => {
@@ -279,6 +411,16 @@ export default {
         "December",
       ],
       loadingTimer: 10000,
+      newCategoryName: "",
+      categoryName: "",
+      categoryItem: "",
+      required: [(v) => !!v || "You must add your item"],
+      valid: true,
+      chooseCategoryToRemove: "",
+      categoryItems: [],
+      chooseItemToRemove: [],
+      addCategoryValidation: true,
+      confirmingRemovingCategory: false,
     };
   },
 
@@ -363,6 +505,12 @@ export default {
 
     siteColor() {
       return this.$store.state.Home.siteColor;
+    },
+    productCategory() {
+      return this.$store.state.Home.category;
+    },
+    categoriesItems() {
+      return this.$store.state.Home.categoriesItems;
     },
   },
 
@@ -527,6 +675,50 @@ export default {
     getYearsArray(back) {
       const year = new Date().getFullYear();
       return Array.from({ length: back }, (v, i) => year - back + i + 1);
+    },
+    addNewCategory() {
+      console.log(this.newCategoryName);
+      this.$store.dispatch("addNewCategory", this.newCategoryName);
+      this.$router.go();
+    },
+    async addCategoryItem() {
+      console.log(this.categoryName, this.categoryItem);
+      await this.$store.dispatch("addCategoryItems", {
+        categoryName: this.categoryName,
+        categoryItem: this.categoryItem,
+      });
+      // this.$router.go();
+    },
+    gettingCategoryItems() {
+      this.chooseItemToRemove = [];
+      console.log(this.category);
+      console.log("categories items", this.categoriesItems);
+      this.categoryItems = [];
+      for (let i = 0; i < this.categoriesItems.length; i++) {
+        if (
+          this.categoriesItems[i].category_name == this.chooseCategoryToRemove
+        ) {
+          this.categoryItems.push(this.categoriesItems[i].category_items);
+        }
+      }
+      console.log(this.categoryItems);
+    },
+    removeItem() {
+      console.log(this.chooseCategoryToRemove, this.chooseItemToRemove);
+
+      this.$store.dispatch("removeCategoryAndItems", {
+        categoryName: this.chooseCategoryToRemove,
+        categoryItem: this.chooseItemToRemove,
+      });
+      // this.$router.go();
+    },
+    removeCategory() {
+      this.confirmingRemovingCategory = false;
+      this.$store.dispatch("removeCategoryAndItems", {
+        categoryName: this.chooseCategoryToRemove,
+        categoryItem: [],
+      });
+      // this.$router.go();
     },
   },
 

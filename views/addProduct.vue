@@ -19,7 +19,7 @@
             </v-row>
 
             <v-row>
-              <v-col cols="12">
+              <v-col cols="6">
                 <v-select
                   v-model="categoryName"
                   :items="category"
@@ -28,18 +28,29 @@
                   outlined
                   :rules="rules"
                   label="Category"
-                  @click="categoriesDB"
+                  @change="gettingCategoryItems"
+                ></v-select>
+              </v-col>
+              <v-col cols="6">
+                <v-select
+                  v-model="categoryItem"
+                  :items="categoryItems"
+                  dense
+                  required
+                  outlined
+                  :rules="rules"
+                  label="Item"
                 ></v-select>
               </v-col>
             </v-row>
           </v-form>
           <v-row>
             <v-col cols="6">
-              <v-text-field :rules="Rules" v-model="productCode" dense outlined label="Code"></v-text-field>
+              <v-text-field v-model="productCode" dense outlined label="Code"></v-text-field>
             </v-col>
 
             <v-col cols="6">
-              <v-text-field dense v-model="HScode" :rules="Rules" outlined label="HS code"></v-text-field>
+              <v-text-field dense v-model="HScode" outlined label="HS code"></v-text-field>
             </v-col>
           </v-row>
 
@@ -50,13 +61,7 @@
               </v-col>
             </v-form>
             <v-col cols="6">
-              <v-text-field
-                dense
-                v-model="minUnits"
-                :rules="Rules"
-                outlined
-                label="Minimum required orders"
-              ></v-text-field>
+              <v-text-field dense v-model="minUnits" outlined label="Minimum required orders"></v-text-field>
             </v-col>
           </v-row>
 
@@ -72,7 +77,7 @@
 
           <v-row>
             <v-col cols="12">
-              <v-textarea v-model="description" :rules="Rules" dense outlined label="Description"></v-textarea>
+              <v-textarea v-model="description" dense outlined label="Description"></v-textarea>
             </v-col>
           </v-row>
         </v-col>
@@ -134,6 +139,12 @@ export default {
     currentUser() {
       return this.$store.state.Home.currentUser;
     },
+    categoriesItems() {
+      return this.$store.state.Home.categoriesItems;
+    },
+    category() {
+      return this.$store.state.Home.category;
+    },
   },
 
   data() {
@@ -155,8 +166,11 @@ export default {
       description: "",
 
       rules: [(v) => !!v || "Required."],
-      category: "",
+
       valid: true,
+      categoryName: "",
+      catgoryItems: [],
+      categoryItem: "",
     };
   },
   methods: {
@@ -189,6 +203,7 @@ export default {
       form.set("color", self.color);
       form.set("discount_amount", self.discountAmount);
       form.set("category_name", self.categoryName);
+      form.set("category_item", this.categoryItem);
 
       files.forEach((element) => {
         form.append("file", element);
@@ -206,11 +221,19 @@ export default {
           this.$router.push("/myProducts").catch(() => {});
         });
     },
-    categoriesDB() {
-      this.category = this.$store.state.category;
+
+    gettingCategoryItems() {
+      this.categoryItems = [];
+      for (let i = 0; i < this.categoriesItems.length; i++) {
+        if (this.categoriesItems[i].category_name == this.categoryName) {
+          this.categoryItems.push(this.categoriesItems[i].category_items);
+        }
+      }
+      console.log(this.categoryItems);
     },
   },
   created() {
+    console.log(this.$store.state.category);
     this.$store.dispatch("refreshCurrentUser");
     return new Promise((resolve) => {
       setTimeout(() => {

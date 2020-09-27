@@ -12,6 +12,7 @@ export default {
         suppliers: [],
         allSuppliers: [],
         category: [],
+        categoriesItems: []
     },
 
     mutations: {
@@ -56,7 +57,8 @@ export default {
         },
 
         categoriesDB(state, data) {
-            console.log(data)
+            console.log('category state entered', data)
+            state.categoriesItems = data
             state.category = data.map(e => {
                 return e.category_name
             })
@@ -91,7 +93,9 @@ export default {
             state.siteColor = localStorage.getItem('siteColor')
         },
 
-
+        getCategoryItems(state, items) {
+            state.categoriesItems = items
+        }
 
 
     },
@@ -179,7 +183,7 @@ export default {
         },
 
         categoriesDB(context) {
-            axios.get('http://localhost:3000/api/selectCategory')
+            axios.put('http://localhost:3000/api/selectCategory')
                 .then((res) => {
                     console.log(res.data.data)
                     context.commit('categoriesDB', res.data.data)
@@ -190,14 +194,16 @@ export default {
             product_name,
             category_name,
             governorate,
-            region
+            region,
+            categoryItem
         }) {
-            console.log(product_name)
+
             axios.put('http://localhost:3000/api/filterProducts', {
                 product_name,
                 category_name,
                 governorate,
-                region
+                region,
+                categoryItem
             })
                 .then(response => {
                     console.log('message:', response.data.message)
@@ -234,5 +240,41 @@ export default {
                     context.commit('getRegions', regions.data.data)
                 })
         },
+
+        addNewCategory(context, categoryName) {
+            axios.post('http://localhost:3000/api/addNewCategory', { categoryName: categoryName })
+                .then(message => {
+                    console.log(message.data.message)
+                    alert(message.data.message)
+
+                })
+        },
+        addCategoryItems(context, { categoryName, categoryItem }) {
+            axios.post('http://localhost:3000/api/addCategoryItems', { categoryName: categoryName, categoryItem: categoryItem })
+                .then(message => {
+                    console.log(message.data.message)
+                    alert(message.data.message)
+                })
+        },
+        getCategoryItems(context) {
+            axios.put('http://localhost:3000/api/getCategoryItems')
+                .then(response => {
+                    console.log(response.data.message)
+                    console.log('get category items', response.data.data)
+                    context.commit('getCategoryItems', response.data.data)
+                })
+
+
+        },
+        removeCategoryAndItems(context, { categoryName, categoryItem }) {
+            axios.put('http://localhost:3000/api/removeCategoryAndItems', { categoryName: categoryName, categoryItem: categoryItem })
+                .then(message => {
+                    console.log(message.data.message)
+                    alert(message.data.message)
+                })
+        },
+
+
+
     }
 }
