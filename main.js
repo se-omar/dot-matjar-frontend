@@ -9,9 +9,9 @@ import vuetify from './plugins/vuetify';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+// import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+// import 'bootstrap/dist/css/bootstrap.css'
+// import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueApexCharts from 'vue-apexcharts'
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
@@ -28,9 +28,9 @@ Vue.use(Loading)
 Vue.component('loading', Loading)
 
 Vue.config.productionTip = false
-Vue.use(BootstrapVue)
+// Vue.use(BootstrapVue)
 
-Vue.use(IconsPlugin)
+// Vue.use(IconsPlugin)
 
 Vue.use(Moment);
 
