@@ -5,7 +5,12 @@
         <v-row>
           <v-col cols="12" sm="6">
             <v-col cols="12">
-              <v-select v-model="gender" :items="genderr" label="Gender" shaped></v-select>
+              <v-select
+                v-model="gender"
+                :items="genderr"
+                label="Gender"
+                shaped
+              ></v-select>
             </v-col>
 
             <!-- <v-text-field
@@ -18,7 +23,11 @@
           </v-col>
 
           <v-col cols="12" sm="6">
-            <v-text-field v-model="fullArabicName" label="Name" outlined></v-text-field>
+            <v-text-field
+              v-model="fullArabicName"
+              label="Name"
+              outlined
+            ></v-text-field>
           </v-col>
 
           <v-col cols="12" sm="6">
@@ -50,7 +59,11 @@
           </v-col>
 
           <v-col cols="12" sm="6">
-            <v-text-field v-model="qualifications" label="Qualification" outlined></v-text-field>
+            <v-text-field
+              v-model="qualifications"
+              label="Qualification"
+              outlined
+            ></v-text-field>
           </v-col>
 
           <v-col cols="12" sm="6">
@@ -69,10 +82,20 @@
           </v-col>
 
           <v-col cols="12" sm="6">
-            <v-select v-model="region" :items="regions" dense label="Region" outlined></v-select>
+            <v-select
+              v-model="region"
+              :items="regions"
+              dense
+              label="Region"
+              outlined
+            ></v-select>
           </v-col>
           <v-col cols="12" sm="6">
-            <v-text-field v-model="phoneNumber" label="Mobile number" outlined></v-text-field>
+            <v-text-field
+              v-model="phoneNumber"
+              label="Mobile number"
+              outlined
+            ></v-text-field>
           </v-col>
           <v-col cols="12" sm="6">
             <v-text-field
@@ -86,18 +109,36 @@
             <v-text-field v-model="fax" label="Fax" outlined></v-text-field>
           </v-col>
           <v-col cols="6" sm="6">
-            <v-text-field v-model="email" label="Email" filled outlined disabled></v-text-field>
+            <v-text-field
+              v-model="email"
+              label="Email"
+              filled
+              outlined
+              disabled
+            ></v-text-field>
           </v-col>
 
           <v-col cols="12" sm="6">
-            <v-text-field v-model="facebookAccount" label="Facebook" outlined></v-text-field>
+            <v-text-field
+              v-model="facebookAccount"
+              label="Facebook"
+              outlined
+            ></v-text-field>
           </v-col>
           <v-col cols="12" sm="6">
-            <v-text-field v-model="linkedin" label="Linkedin" outlined></v-text-field>
+            <v-text-field
+              v-model="linkedin"
+              label="Linkedin"
+              outlined
+            ></v-text-field>
           </v-col>
 
           <v-col cols="12" sm="6">
-            <v-text-field v-model="website" label="Website" outlined></v-text-field>
+            <v-text-field
+              v-model="website"
+              label="Website"
+              outlined
+            ></v-text-field>
           </v-col>
 
           <v-col cols="12">
@@ -113,7 +154,9 @@
             <v-btn x-large block color="blue" @click="completedata">Save</v-btn>
           </v-col>
           <v-col cols="12" sm="3" xsm="12">
-            <v-btn x-large block color="red" @click="$router.push('/')">Cancel</v-btn>
+            <v-btn x-large block color="red" @click="$router.push('/')"
+              >Cancel</v-btn
+            >
           </v-col>
         </v-row>
       </v-container>
@@ -152,26 +195,27 @@ export default {
       this.$store.dispatch("getRegions", this.governorate);
     },
   },
-  created() {
+  async created() {
+    await this.$store.dispatch("refreshCurrentUser");
     this.$store.dispatch("getGovernorate");
-    this.nationalNumber = this.$store.state.currentUser.national_number;
-    this.fullArabicName = this.$store.state.currentUser.full_arabic_name;
-    this.email = this.$store.state.currentUser.email;
-    this.gender = this.$store.state.currentUser.gender;
-    this.fullEnglishName = this.$store.state.currentUser.fullEnglishName;
-    this.birthDate = this.$store.state.currentUser.birthDate;
-    this.qualifications = this.$store.state.currentUser.qualifications;
-    this.job = this.$store.state.currentUser.job;
-    this.governorate = this.$store.state.currentUser.governorate;
-    this.region = this.$store.state.currentUser.region;
-
-    this.phoneNumber = this.$store.state.currentUser.phoneNumber;
-    this.mobileNumber = this.$store.state.currentUser.mobileNumber;
-    this.fax = this.$store.state.currentUser.fax;
-    this.facebookAccount = this.$store.state.currentUser.facebookAccount;
-    this.linkedin = this.$store.state.currentUser.linkedin;
-    this.website = this.$store.state.currentUser.website;
-    this.address = this.$store.state.currentUser.address;
+    this.nationalNumber = this.currentUser.national_number;
+    this.fullArabicName = this.currentUser.full_arabic_name;
+    this.email = this.currentUser.email;
+    this.gender = this.currentUser.gender;
+    this.fullEnglishName = this.currentUser.fullEnglishName;
+    this.birthDate = this.currentUser.birthDate;
+    this.qualifications = this.currentUser.qualifications;
+    this.job = this.currentUser.job;
+    this.governorate = this.currentUser.governorate;
+    this.region = this.currentUser.region;
+    this.phoneNumber = this.currentUser.phoneNumber;
+    this.mobileNumber = this.currentUser.mobileNumber;
+    this.fax = this.currentUser.fax;
+    this.facebookAccount = this.currentUser.facebookAccount;
+    this.linkedin = this.currentUser.linkedin;
+    this.website = this.currentUser.website;
+    this.address = this.currentUser.address;
+    console.log("current user ", this.currentUser);
   },
   data: () => ({
     rules: {
