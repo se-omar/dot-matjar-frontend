@@ -29,7 +29,12 @@
               ></v-select>
             </v-col>
             <v-col cols="12" lg="12">
-              <v-textarea outlined color="teal" label="Address" v-model="address"></v-textarea>
+              <v-textarea
+                outlined
+                color="teal"
+                label="Address"
+                v-model="address"
+              ></v-textarea>
             </v-col>
           </v-row>
           <v-row justify="center">
@@ -39,15 +44,28 @@
                 @click="createOrder"
                 :color="siteColor"
                 class="white--text"
-              >Pay on Receiving</v-btn>
+                >Pay on Receiving</v-btn
+              >
 
               <!-- =============== -->
 
-              <v-snackbar v-model="snackbar" :vertical="vertical" :color="siteColor">
-                <span style="font-weight:bold ; font-size:large">{{ text }}</span>
+              <v-snackbar
+                v-model="snackbar"
+                :vertical="vertical"
+                :color="siteColor"
+              >
+                <span style="font-weight: bold; font-size: large">{{
+                  text
+                }}</span>
 
                 <template v-slot:action="{ attrs }">
-                  <v-btn color="white" text v-bind="attrs" @click="snackbar = false">Close</v-btn>
+                  <v-btn
+                    color="white"
+                    text
+                    v-bind="attrs"
+                    @click="snackbar = false"
+                    >Close</v-btn
+                  >
                 </template>
               </v-snackbar>
               <!-- ====================== -->
@@ -58,7 +76,8 @@
                 :color="siteColor"
                 class="white--text"
                 @click="getSession"
-              >Visa</v-btn>
+                >Visa</v-btn
+              >
             </v-col>
           </v-row>
         </v-container>
@@ -94,7 +113,11 @@ export default {
       return this.$store.state.table;
     },
     siteColor() {
-      return this.$store.state.Home.siteColor;
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor;
+      } else {
+        return "red darken-4";
+      }
     },
     regions() {
       return this.$store.state.Home.regions;

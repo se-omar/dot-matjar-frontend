@@ -15,12 +15,12 @@
                 :headers="usersTableHeaders"
                 :items="usersMadeOrders"
                 :footer-props="{
-      showFirstLastPage: true,
-      firstIcon: 'mdi-arrow-collapse-left',
-      lastIcon: 'mdi-arrow-collapse-right',
-      prevIcon: 'mdi-minus',
-      nextIcon: 'mdi-plus'
-    }"
+                  showFirstLastPage: true,
+                  firstIcon: 'mdi-arrow-collapse-left',
+                  lastIcon: 'mdi-arrow-collapse-right',
+                  prevIcon: 'mdi-minus',
+                  nextIcon: 'mdi-plus',
+                }"
               >
                 <template v-slot:item.showProducts>
                   <v-btn small>Show Products</v-btn>
@@ -35,9 +35,9 @@
                 hide-default-footer
                 @click:row="productClicked"
               >
-                <template v-slot:item.status="{item}">
+                <template v-slot:item.status="{ item }">
                   <h5>
-                    {{item.products_orders.status}}
+                    {{ item.products_orders.status }}
                     <i
                       v-if="item.products_orders.status == 'Delivered'"
                       class="fa fa-check"
@@ -46,7 +46,10 @@
                       v-if="item.products_orders.status == 'Pending'"
                       class="fas fa-spinner fa-pulse"
                     ></i>
-                    <i v-if="item.products_orders.status == 'Rejected'" class="fa fa-trash fa-lg"></i>
+                    <i
+                      v-if="item.products_orders.status == 'Rejected'"
+                      class="fa fa-trash fa-lg"
+                    ></i>
                     <v-btn icon @click="productStatus">
                       <i class="fa fa-edit fa-2x ml-4"></i>
                     </v-btn>
@@ -56,7 +59,9 @@
                     <v-card tile>
                       <v-toolbar flat dark :color="siteColor" max-height="80">
                         <v-row class="mr-6" justify="end">
-                          <v-toolbar-title>{{clickedProductInfo.product_name}}</v-toolbar-title>
+                          <v-toolbar-title>{{
+                            clickedProductInfo.product_name
+                          }}</v-toolbar-title>
                         </v-row>
                         <v-spacer></v-spacer>
                       </v-toolbar>
@@ -64,16 +69,23 @@
                         <v-col cols="8">
                           <v-card-text>
                             <v-list three-line subheader>
-                              <v-subheader>Product Status</v-subheader>
+                              <v-subheader class="font-weight-black"
+                                >Product Status</v-subheader
+                              >
 
-                              <v-select v-model="productStatusUpdate" outlined :items="statusItems"></v-select>
+                              <v-select
+                                v-model="productStatusUpdate"
+                                outlined
+                                :items="statusItems"
+                              ></v-select>
 
                               <v-btn
                                 @click="updateStatus"
                                 rounded
                                 :color="siteColor"
                                 class="white--text"
-                              >Update</v-btn>
+                                >Update</v-btn
+                              >
                               <v-snackbar v-model="snackbar" :timeout="timeout">
                                 <template v-slot:action="{ attrs }">
                                   Product status Updated successfully
@@ -82,7 +94,8 @@
                                     text
                                     v-bind="attrs"
                                     @click="snackbar = false"
-                                  >Close</v-btn>
+                                    >Close</v-btn
+                                  >
                                 </template>
                               </v-snackbar>
                               <v-btn
@@ -90,12 +103,13 @@
                                 rounded
                                 class="ml-2 white--text"
                                 :color="siteColor"
-                              >Close</v-btn>
+                                >Close</v-btn
+                              >
                             </v-list>
                           </v-card-text>
                         </v-col>
                       </v-row>
-                      <div style="flex: 1 1 auto;"></div>
+                      <div style="flex: 1 1 auto"></div>
                     </v-card>
                   </v-dialog>
 
@@ -114,8 +128,9 @@
                   dark
                   v-bind="attrs"
                   v-on="on"
-                  @click="dialog=true"
-                >Show Address Details</v-btn>
+                  @click="dialog = true"
+                  >Show Address Details</v-btn
+                >
               </template>
               <v-card>
                 <v-card-title>
@@ -125,7 +140,11 @@
                   <v-container>
                     <v-row>
                       <v-col cols="12" sm="6" md="4">
-                        <v-text-field label="Country" disabled v-model="country"></v-text-field>
+                        <v-text-field
+                          label="Country"
+                          disabled
+                          v-model="country"
+                        ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
@@ -169,7 +188,9 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+                  <v-btn color="blue darken-1" text @click="dialog = false"
+                    >Close</v-btn
+                  >
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -216,6 +237,7 @@ export default {
   }),
   methods: {
     async showProducts(event) {
+      console.log("pressed order is ", this.pressedOrder);
       this.userMadeOrder = event;
       console.log("user made order", event);
       await this.$store.commit("showOrderProducts", event.order_number);
@@ -270,10 +292,14 @@ export default {
       return this.$store.state.Orders.userOrderAddress;
     },
     pressedOrder() {
-      return this.$store.state.pressedOrder;
+      return this.$store.state.Orders.pressedOrder;
     },
     siteColor() {
-      return this.$store.state.Home.siteColor;
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor;
+      } else {
+        return "red darken-4";
+      }
     },
   },
 };

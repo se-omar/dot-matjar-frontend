@@ -2,7 +2,7 @@
   <div class="tool-bar">
     <v-app-bar :color="siteColor" dark>
       <span v-if="!supplierPageInfo.logo">
-        <v-btn text @click="$router.push('/').catch(()=>{})">
+        <v-btn text @click="$router.push('/').catch(() => {})">
           <i class="fa fa-shopping-cart fa-lg"></i>
           <span class="mt-2">Dot-Matjar</span>
         </v-btn>
@@ -17,14 +17,14 @@
             max-width="100"
             contain
           ></v-img>
-          <span class="mt-3">{{supplierPageInfo.site_name}}</span>
+          <span class="mt-3">{{ supplierPageInfo.site_name }}</span>
         </v-btn>
       </span>
 
       <v-spacer></v-spacer>
 
       <v-menu
-        v-if="currentUser "
+        v-if="currentUser"
         transition="fab-transition"
         :close-on-content-click="false"
         :nudge-width="200"
@@ -44,7 +44,7 @@
           <v-card-title>
             <v-img
               v-if="currentUser.profile_photo"
-              style="width:70%; height:90%"
+              style="width: 70%; height: 90%"
               id="picture"
               :src="nodeHost + currentUser.profile_photo"
             />
@@ -62,14 +62,18 @@
 
           </v-card-text>-->
 
-          <div v-if="! currentUser.profile_photo" id="fileUpload" class="file is-boxed is-primary">
+          <div
+            v-if="!currentUser.profile_photo"
+            id="fileUpload"
+            class="file is-boxed is-primary"
+          >
             <label class="file-label">
               <span class="file-cta">
                 <span class="file-icon">
-                  <i class="fa fa-camera fa-2x" style="color:blue"></i>
+                  <i class="fa fa-camera fa-2x" style="color: blue"></i>
                   <br />
                 </span>
-                <span class="file-label" style="font-weight:bold">
+                <span class="file-label" style="font-weight: bold">
                   Upload your photo here
                   <br />
                 </span>
@@ -86,14 +90,18 @@
             </label>
           </div>
 
-          <div v-if=" currentUser.profile_photo" id="fileUpload" class="file is-boxed is-primary">
+          <div
+            v-if="currentUser.profile_photo"
+            id="fileUpload"
+            class="file is-boxed is-primary"
+          >
             <label class="file-label">
               <span class="file-cta">
                 <span class="file-icon">
-                  <i class="fa fa-camera fa-2x" style="color:blue"></i>
+                  <i class="fa fa-camera fa-2x" style="color: blue"></i>
                   <br />
                 </span>
-                <span class="file-label" style="font-weight:bold">
+                <span class="file-label" style="font-weight: bold">
                   Change profile photo
                   <br />
                 </span>
@@ -112,17 +120,25 @@
 
           <v-card-text>
             <v-row justify="center">
-              <span class="username">{{currentUser.full_arabic_name}}</span>
+              <span class="username">{{ currentUser.full_arabic_name }}</span>
             </v-row>
           </v-card-text>
 
           <v-row></v-row>
           <v-divider></v-divider>
 
-          <v-col
-            v-if="currentUser.user_type == 'bussines' || currentUser.user_type == 'admin'"
-            cols="12 ml-6  "
-          >
+          <v-col v-if="currentUser.user_type == 'business'" cols="12 ml-6  ">
+            <v-btn
+              class="btn1"
+              :color="siteColor"
+              x-large
+              rounded
+              @click="supplierPage"
+            >
+              <span class="mos">My Page</span>
+            </v-btn>
+          </v-col>
+          <v-col v-if="currentUser.user_type == 'business'" cols="12 ml-6  ">
             <v-btn
               class="btn1"
               :color="siteColor"
@@ -134,15 +150,10 @@
             </v-btn>
           </v-col>
           <v-col
-            v-if="currentUser.user_type == 'bussines' ||   currentUser.user_type ==  'business'"
-            cols="12 ml-6  "
-          >
-            <v-btn class="btn1" :color="siteColor" x-large rounded @click="supplierPage">
-              <span class="mos">My Page</span>
-            </v-btn>
-          </v-col>
-          <v-col
-            v-if="currentUser.user_type == 'business'  || currentUser.user_type == 'admin'"
+            v-if="
+              currentUser.user_type == 'business' ||
+              currentUser.user_type == 'admin'
+            "
             cols="12 ml-6  "
           >
             <v-btn
@@ -160,20 +171,32 @@
           <v-col cols="12">
             <v-card-text>
               <a class="size" @click="$router.push('/editPassword')">
-                <i class="fa fa-cog" aria-hidden="true" style="color:black"></i>
+                <i
+                  class="fa fa-cog"
+                  aria-hidden="true"
+                  style="color: black"
+                ></i>
                 <span :color="siteColor">Change your password</span>
               </a>
               <br />
               <br />
 
               <a @click="$router.push('/completedata')" class="size">
-                <i class="fa fa-edit" aria-hidden="true" style="color:black"></i>
+                <i
+                  class="fa fa-edit"
+                  aria-hidden="true"
+                  style="color: black"
+                ></i>
                 Update/complete Info
               </a>
               <br />
               <br />
               <a class="size" @click="logout">
-                <i class="fa fa-power-off" aria-hidden="true" style="color:black"></i>
+                <i
+                  class="fa fa-power-off"
+                  aria-hidden="true"
+                  style="color: black"
+                ></i>
                 Logout
               </a>
             </v-card-text>
@@ -184,56 +207,93 @@
       <!-- ================= -->
       <v-btn
         class="font"
-        v-if="!currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        v-if="
+          !currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs
+        "
         text
         @click="$router.push('/reglogin').catch((err) => {})"
-      >Register</v-btn>
+        >Register</v-btn
+      >
 
       <v-btn
         class="font"
-        v-if="currentUser && currentUser.user_type == 'business' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        v-if="
+          currentUser &&
+          currentUser.user_type == 'business' &&
+          !$vuetify.breakpoint.sm &&
+          !$vuetify.breakpoint.xs
+        "
         text
         @click="$router.push('/requestsPage').catch((err) => {})"
-      >Requests</v-btn>
+        >Requests</v-btn
+      >
 
-      <v-btn
+      <!-- <v-btn
         class="font"
-        v-if="currentUser && currentUser.user_type == 'business' || currentUser.user_type == 'admin' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        v-if="
+          (currentUser && currentUser.user_type == 'business') ||
+          (currentUser.user_type == 'admin' &&
+            !$vuetify.breakpoint.sm &&
+            !$vuetify.breakpoint.xs)
+        "
         text
         @click="$router.push('/myProducts').catch((err) => {})"
-      >My Products</v-btn>
+        >My Products</v-btn
+      > -->
 
       <v-btn
         class="font"
-        v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        v-if="
+          currentUser.user_type == 'user' &&
+          !$vuetify.breakpoint.sm &&
+          !$vuetify.breakpoint.xs
+        "
         text
         @click="$router.push('/userOrders').catch((err) => {})"
-      >my orders</v-btn>
+        >my orders</v-btn
+      >
 
       <v-btn
         class="font"
-        v-if="currentUser && currentUser.user_type == 'business' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        v-if="
+          currentUser &&
+          currentUser.user_type == 'business' &&
+          !$vuetify.breakpoint.sm &&
+          !$vuetify.breakpoint.xs
+        "
         text
         @click="$router.push('/dashboard').catch((err) => {})"
-      >Dashboard</v-btn>
+        >Dashboard</v-btn
+      >
 
-      <v-btn class="font" v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs" text>
+      <v-btn
+        class="font"
+        v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        text
+      >
         <span>About us</span>
       </v-btn>
 
       <v-btn
         class="font"
-        v-if="currentUser && currentUser.user_type == 'admin' && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        v-if="
+          currentUser &&
+          currentUser.user_type == 'admin' &&
+          !$vuetify.breakpoint.sm &&
+          !$vuetify.breakpoint.xs
+        "
         text
         @click="$router.push('/adminPage').catch((err) => {})"
-      >admin dashboard</v-btn>
+        >admin dashboard</v-btn
+      >
 
       <v-btn
         class="font"
         v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
         @click="logout"
-      >Logout</v-btn>
+        >Logout</v-btn
+      >
 
       <!--============================
 
@@ -251,7 +311,9 @@
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
-            <v-list-item-title @click="$router.push('/home').catch((err) => {})">
+            <v-list-item-title
+              @click="$router.push('/home').catch((err) => {})"
+            >
               <span style="font-size: 17px">home page</span>
             </v-list-item-title>
           </v-list-item>
@@ -260,34 +322,48 @@
             <v-list-item-icon>
               <v-icon>mdi-lock-reset</v-icon>
             </v-list-item-icon>
-            <v-list-item-title @click="$router.push('/editPassword').catch((err) => {})">
+            <v-list-item-title
+              @click="$router.push('/editPassword').catch((err) => {})"
+            >
               <span style="font-size: 17px">change password</span>
             </v-list-item-title>
           </v-list-item>
 
-          <v-list-item v-if="currentUser && currentUser.user_type == 'business'">
+          <v-list-item
+            v-if="currentUser && currentUser.user_type == 'business'"
+          >
             <v-list-item-icon>
               <v-icon>mdi-email</v-icon>
             </v-list-item-icon>
-            <v-list-item-title @click="$router.push('/requestsPage').catch((err) => {})">
+            <v-list-item-title
+              @click="$router.push('/requestsPage').catch((err) => {})"
+            >
               <span style="font-size: 17px">requests</span>
             </v-list-item-title>
           </v-list-item>
 
-          <v-list-item v-if="currentUser && currentUser.user_type == 'business'">
+          <v-list-item
+            v-if="currentUser && currentUser.user_type == 'business'"
+          >
             <v-list-item-icon>
               <v-icon>mdi-cart-plus</v-icon>
             </v-list-item-icon>
-            <v-list-item-title @click="$router.push('/myProducts').catch((err) => {})">
+            <!-- <v-list-item-title
+              @click="$router.push('/myProducts').catch((err) => {})"
+            >
               <span style="font-size: 17px">my products</span>
-            </v-list-item-title>
+            </v-list-item-title> -->
           </v-list-item>
 
-          <v-list-item v-if="currentUser && currentUser.user_type == 'business'">
+          <v-list-item
+            v-if="currentUser && currentUser.user_type == 'business'"
+          >
             <v-list-item-icon>
               <v-icon>mdi-cart-plus</v-icon>
             </v-list-item-icon>
-            <v-list-item-title @click="$router.push('/dashboard').catch((err) => {})">
+            <v-list-item-title
+              @click="$router.push('/dashboard').catch((err) => {})"
+            >
               <span style="font-size: 17px">Dashboard</span>
             </v-list-item-title>
           </v-list-item>
@@ -296,7 +372,9 @@
             <v-list-item-icon>
               <v-icon>mdi-account-plus</v-icon>
             </v-list-item-icon>
-            <v-list-item-title @click="$router.push('/reglogin').catch((err) => {})">
+            <v-list-item-title
+              @click="$router.push('/reglogin').catch((err) => {})"
+            >
               <span style="font-size: 17px">login and signup</span>
             </v-list-item-title>
           </v-list-item>

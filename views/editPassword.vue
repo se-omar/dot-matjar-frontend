@@ -11,7 +11,7 @@
             label="Current password"
             v-model="password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required, rules.min,rules.valid]"
+            :rules="[rules.required, rules.min, rules.valid]"
             :type="show1 ? 'text' : 'password'"
             name="input-10-1"
             hint="At least 7 characters"
@@ -27,7 +27,7 @@
             label=" New password"
             v-model="newPassword"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required, rules.min,rules.valid]"
+            :rules="[rules.required, rules.min, rules.valid]"
             :type="show1 ? 'text' : 'password'"
             name="input-10-1"
             hint="At least 7 characters"
@@ -54,7 +54,13 @@
 
       <v-row justify="center">
         <v-col cols="2" lg="2">
-          <v-btn rounded @click="updatePassword" :color="siteColor" class="white--text" block>
+          <v-btn
+            rounded
+            @click="updatePassword"
+            :color="siteColor"
+            class="white--text"
+            block
+          >
             Update
             <br />password
           </v-btn>
@@ -105,7 +111,11 @@ export default {
       return this.$store.state.Home.currentUser;
     },
     siteColor() {
-      return this.$store.state.Home.siteColor;
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor;
+      } else {
+        return "red darken-4";
+      }
     },
   },
 
