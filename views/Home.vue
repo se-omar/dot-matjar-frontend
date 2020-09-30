@@ -2,7 +2,11 @@
   <v-app>
     <div v-if="currentUser.user_type == 'admin'"></div>
     <div class="vld-parent">
-      <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
+      <loading
+        :active.sync="isLoading"
+        :can-cancel="false"
+        :is-full-page="true"
+      ></loading>
     </div>
 
     <v-row justify="center">
@@ -24,9 +28,10 @@
           :color="siteColor"
           rounded
           max-width="80"
-        >Search</v-btn>
+          >Search</v-btn
+        >
       </v-col>
-      <!-- <v-col cols="6" lg="7">
+      <v-col cols="6" lg="7">
         <carousel
           :autoplay="true"
           :per-page="1"
@@ -35,19 +40,19 @@
           :navigationEnabled="true"
         >
           <slide>
-            <v-img height="400" src="..\assets\images/download.jpg"></v-img>
+            <v-img height="400" src="..\assets/image.jpg"></v-img>
           </slide>
           <slide>
-            <v-img height="400" src="..\assets\images/download.jpg"></v-img>
+            <v-img height="400" src="..\assets/image.jpg"></v-img>
           </slide>
           <slide>
-            <v-img height="400" src="..\assets\images/download.jpg"></v-img>
+            <v-img height="400" src="..\assets/image.jpg"></v-img>
           </slide>
           <slide>
-            <v-img height="400" src="..\assets\images/download.jpg"></v-img>
+            <v-img height="400" src="..\assets/image.jpg"></v-img>
           </slide>
         </carousel>
-      </v-col>-->
+      </v-col>
 
       <v-col class="mr-n10" lg="1" v-if="currentUser.user_type == 'admin'">
         <SiteColor disabled></SiteColor>
@@ -161,11 +166,21 @@
 
         <v-row class="mt-n3" justify="center">
           <v-col cols="6" sm="6" md="6" lg="6">
-            <v-text-field :disabled="radioGroup === '2'" dense type="number" label="Price From"></v-text-field>
+            <v-text-field
+              :disabled="radioGroup === '2'"
+              dense
+              type="number"
+              label="Price From"
+            ></v-text-field>
           </v-col>
 
           <v-col cols="6" sm="6" md="6" lg="6">
-            <v-text-field :disabled="radioGroup === '2'" dense type="number" label="Price TO"></v-text-field>
+            <v-text-field
+              :disabled="radioGroup === '2'"
+              dense
+              type="number"
+              label="Price TO"
+            ></v-text-field>
           </v-col>
 
           <v-col cols="4" sm="4" md="4" lg="4">
@@ -176,11 +191,14 @@
               :color="siteColor"
               rounded
               max-width="80"
-            >Search</v-btn>
+              >Search</v-btn
+            >
           </v-col>
 
           <v-col cols="4" sm="4" md="4" lg="4">
-            <v-btn class="white--text" @click="All" :color="siteColor" rounded>All</v-btn>
+            <v-btn class="white--text" @click="All" :color="siteColor" rounded
+              >All</v-btn
+            >
           </v-col>
 
           <v-col cols="4" sm="4" md="4" lg="4">
@@ -191,7 +209,8 @@
               :color="siteColor"
               rounded
               max-width="80"
-            >Search</v-btn>
+              >Search</v-btn
+            >
           </v-col>
           <!-- <v-row justify="start">
             <v-card max-height class="ml-2" :color="siteColor" rounded max-width="200">
@@ -232,7 +251,7 @@
           <v-row justify="center">
             <v-col cols="2" v-for="category in category" :key="category">
               <v-menu offset-x :close-on-content-click="false" open-on-hover>
-                <template v-slot:activator="{ on,attrs }">
+                <template v-slot:activator="{ on, attrs }">
                   <v-btn
                     @mouseover="mouseOver(category)"
                     v-bind="attrs"
@@ -242,14 +261,14 @@
                     class="white--text"
                     @click="filterProductsWithCategory(category)"
                   >
-                    {{category}}
-                    <i :class="`fas fa-${category} fa-2x ml-2` "></i>
+                    {{ category }}
+                    <i :class="`fas fa-${category} fa-2x ml-2`"></i>
                   </v-btn>
                 </template>
-                <v-card style="background-color:red">
-                  <v-list v-for="(item,index) in categoryItems" :key="index">
+                <v-card style="background-color: red">
+                  <v-list v-for="(item, index) in categoryItems" :key="index">
                     <v-btn @click="filterProductsWithItem(item)" text>
-                      - {{item}}
+                      - {{ item }}
                       <i :class="`fa fa-${item} fa-lg ml-2`"></i>
                     </v-btn>
                   </v-list>
@@ -265,7 +284,7 @@
             xmd="4"
             sm="12"
             cols="12"
-            v-for="(filteredProduct,index) in filteredProducts"
+            v-for="(filteredProduct, index) in filteredProducts"
             :key="index"
           >
             <product
@@ -290,7 +309,13 @@
           </v-col>
         </v-row>
         <v-row justify="center">
-          <v-btn large :color="siteColor" class="mb-15 white--text" @click="loadMore">load more</v-btn>
+          <v-btn
+            large
+            :color="siteColor"
+            class="mb-15 white--text"
+            @click="loadMore"
+            >load more</v-btn
+          >
         </v-row>
       </v-col>
 
@@ -539,3 +564,4 @@ export default {
   max-width: 960px;
 }
 </style>
+
