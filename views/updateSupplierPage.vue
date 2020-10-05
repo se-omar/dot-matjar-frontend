@@ -14,18 +14,26 @@
           <form enctype="multipart.form/data">
             <label>
               <v-card max-width="200" :color="siteColor">
-                <span class="ml-4 mt-4" style="font-size:25px">Upload your logo here:</span>
+                <span class="ml-4 mt-4" style="font-size: 25px"
+                  >Upload your logo here:</span
+                >
 
                 <i class="fa fa-upload fa-lg"></i>
                 <input @change="fileUploaded" type="file" ref="logo" />
-                <span v-if="logo">{{logo.name}}</span>
+                <span v-if="logo">{{ logo.name }}</span>
               </v-card>
             </label>
           </form>
         </v-col>
         <!-- =================== -->
         <v-col cols="6" lg="4" sm="4" md="6">
-          <v-text-field rounded label="Site Name" v-model="siteName" outlined :color="siteColor"></v-text-field>
+          <v-text-field
+            rounded
+            label="Site Name"
+            v-model="siteName"
+            outlined
+            :color="siteColor"
+          ></v-text-field>
         </v-col>
         <!-- ================ -->
 
@@ -66,11 +74,40 @@
           ></v-text-field>
         </v-col>
         <v-col cols="6" lg="4" sm="4" md="6">
-          <v-text-field label="google account" v-model="google" rounded outlined :color="siteColor"></v-text-field>
+          <v-text-field
+            label="google account"
+            v-model="google"
+            rounded
+            outlined
+            :color="siteColor"
+          ></v-text-field>
+        </v-col>
+
+        <v-col cols="6" lg="2" sm="4" md="6">
+          <v-checkbox
+            label="show carousel"
+            @change="testCheckbox"
+            v-model="carouselCheckbox"
+          ></v-checkbox>
+        </v-col>
+
+        <v-col cols="6" lg="2" sm="4" md="6">
+          <v-checkbox
+            label="show left banner"
+            v-model="leftBannerCheckbox"
+          ></v-checkbox>
+        </v-col>
+
+        <v-col cols="6" lg="2" sm="4" md="6">
+          <v-checkbox
+            label="show right banner"
+            v-model="rightBannerCheckbox"
+          ></v-checkbox>
         </v-col>
 
         <v-col cols="6" lg="4" sm="4" md="6">
           <v-text-field
+            :disabled="!carouselCheckbox"
             label="carousel width from 1 to 12 (default is 10)"
             v-model="carouselWidth"
             rounded
@@ -82,6 +119,7 @@
 
         <v-col cols="6" lg="4" sm="4" md="6">
           <v-text-field
+            :disabled="!carouselCheckbox"
             type="number"
             label="carousel height in pixels (default is 400)"
             v-model="carouselHeight"
@@ -93,10 +131,22 @@
         </v-col>
 
         <v-col cols="12" lg="12" sm="12" md="12">
-          <v-textarea rounded label="Footer" v-model="footer" outlined :color="siteColor"></v-textarea>
+          <v-textarea
+            rounded
+            label="Footer"
+            v-model="footer"
+            outlined
+            :color="siteColor"
+          ></v-textarea>
         </v-col>
         <v-col cols="5" lg="3" sm="3" md="3">
-          <v-btn @click="sendData" x-large :color="siteColor" class="white--text">Update</v-btn>
+          <v-btn
+            @click="sendData"
+            x-large
+            :color="siteColor"
+            class="white--text"
+            >Update</v-btn
+          >
         </v-col>
 
         <!-- ======================== -->
@@ -114,7 +164,9 @@
         >
           Page Updated succesfully
           <template v-slot:action="{ attrs }">
-            <v-btn dark text v-bind="attrs" @click="snackbar = false">Close</v-btn>
+            <v-btn dark text v-bind="attrs" @click="snackbar = false"
+              >Close</v-btn
+            >
           </template>
         </v-snackbar>
 
@@ -150,11 +202,24 @@ export default {
       min_max_width: (v) => (v > 1 && v <= 12) || "must be between 1 and 12",
       min_max_height: (v) => (v > 0 && v <= 3000) || "no more than 3000",
     },
+    carouselCheckbox: false,
+    leftBannerCheckbox: false,
+    rightBannerCheckbox: false,
   }),
   methods: {
     fileUploaded() {
       this.logo = this.$refs.logo.files[0];
       console.log(this.$refs.logo.files[0]);
+    },
+
+    testCheckbox() {
+      console.log(this.carouselCheckbox);
+      console.log(this.convertBoolToInt(this.carouselCheckbox));
+    },
+
+    convertBoolToInt(bool) {
+      if (bool == true) return 1;
+      else return 0;
     },
     sendData() {
       var formdata = new FormData();
@@ -167,6 +232,19 @@ export default {
       formdata.set("google", this.google);
       formdata.set("footer", this.footer);
       formdata.set("supplier_id", this.supplier.user_id);
+      formdata.set(
+        "showCarousel",
+        this.convertBoolToInt(this.carouselCheckbox)
+      );
+      console.log("formdata carousel", formdata.get("showCarousel"));
+      formdata.set(
+        "showLeftBanner",
+        this.convertBoolToInt(this.leftBannerCheckbox)
+      );
+      formdata.set(
+        "showRightBanner",
+        this.convertBoolToInt(this.rightBannerCheckbox)
+      );
       formdata.set("carousel_height", this.carouselHeight);
       formdata.set("carousel_width", this.carouselWidth);
 
@@ -183,6 +261,12 @@ export default {
         return "red darken-4";
       }
     },
+    supplierPageInfo() {
+      return this.$store.state.SupplierPage.supplierPageInfo;
+    },
+    testVar() {
+      return this.$store.state.SupplierPage.testVar;
+    },
     supplier() {
       return this.$store.state.SupplierPage.supplier;
     },
@@ -190,16 +274,21 @@ export default {
       return this.$store.state.Home.currentUser;
     },
   },
-  created() {
-    this.$store.dispatch("refreshCurrentUser");
-    this.$store.dispatch("getSupplier", this.$route.params.supplier_id);
-    this.$store.dispatch("getSupplierPageData", this.$route.params.supplier_id);
+  async mounted() {
+    await this.$store.dispatch("refreshCurrentUser");
+    await this.$store.dispatch("getSupplier", this.$route.params.supplier_id);
+    await this.$store.dispatch(
+      "getSupplierPageData",
+      this.$route.params.supplier_id
+    );
+    console.log("supplier page info", this.supplierPageInfo);
+    console.log("test var", this.testVar);
+
     if (this.currentUser) {
       if (this.$route.params.supplier_id != this.currentUser.user_id) {
         this.$router.push("/notFound");
       }
     }
-
     console.log(this.supplier.user_id);
   },
 };

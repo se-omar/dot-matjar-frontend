@@ -11,7 +11,7 @@
           :navigationEnabled="true"
         >
           <slide>
-            <v-img contain :src=" currentProduct.main_picture"></v-img>
+            <v-img contain :src="currentProduct.main_picture"></v-img>
           </slide>
 
           <slide>
@@ -27,7 +27,9 @@
       <v-col class lg="5" md="7" sm="12" cols="12">
         <v-row class="mb-4">
           <v-col lg="12">
-            <span style="font-size: 35px">{{currentProduct.product_name}}</span>
+            <span style="font-size: 35px">{{
+              currentProduct.product_name
+            }}</span>
           </v-col>
         </v-row>
 
@@ -35,48 +37,55 @@
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
               Supplier:
-              <span class="text--secondary">{{currentProduct.user.full_arabic_name}}</span>
+              <span class="text--secondary">{{
+                currentProduct.user.full_arabic_name
+              }}</span>
             </span>
           </v-col>
 
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
               Location:
-              <span
-                class="text--secondary"
-              >{{currentProduct.user.governorate}} , {{currentProduct.user.region}}</span>
+              <span class="text--secondary"
+                >{{ currentProduct.user.governorate }} ,
+                {{ currentProduct.user.region }}</span
+              >
             </span>
           </v-col>
 
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
               Category:
-              <span
-                class="text--secondary"
-              >{{currentProduct.product_category.category_name}}</span>
+              <span class="text--secondary">{{
+                currentProduct.product_category.category_name
+              }}</span>
             </span>
           </v-col>
 
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
               Color:
-              <span class="text--secondary">{{currentProduct.color}}</span>
+              <span class="text--secondary">{{ currentProduct.color }}</span>
             </span>
           </v-col>
 
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
               Weight:
-              <span class="text--secondary">{{currentProduct.unit_weight}}</span>
+              <span class="text--secondary">{{
+                currentProduct.unit_weight
+              }}</span>
             </span>
           </v-col>
 
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
               Stock Status:
-              <span
-                class="text--secondary"
-              >{{currentProduct.availability === '1'? 'In Stock' : 'Out of Stock'}}</span>
+              <span class="text--secondary">{{
+                currentProduct.availability === "1"
+                  ? "In Stock"
+                  : "Out of Stock"
+              }}</span>
             </span>
           </v-col>
 
@@ -95,11 +104,14 @@
           </v-col>
 
           <v-col class="mr-4 mt-12" lg="12">
-            <p style="font-size: 23px" class="text-center font-weight-medium">About this Product:</p>
+            <p style="font-size: 23px" class="text-center font-weight-medium">
+              About this Product:
+            </p>
             <span
               class="font-weight-medium text--secondary"
               style="font-size: 20px"
-            >{{currentProduct.describtion}}</span>
+              >{{ currentProduct.describtion }}</span
+            >
           </v-col>
         </v-row>
       </v-col>
@@ -107,18 +119,24 @@
       <v-col lg="3" md="6" sm="12">
         <v-row justify="center" class="ml-n10">
           <v-col class="ml-3 text-sm-center" cols="10">
-            <span :style="`color: ${siteColor}`" class="text-h3">{{currentProduct.unit_price}} EGP</span>
+            <span :style="`color: ${siteColor}`" class="text-h3"
+              >{{ currentProduct.unit_price }} EGP</span
+            >
           </v-col>
 
           <v-col cols="9">
             <v-btn
-              v-if="currentUser && currentUser.user_id === currentProduct.user_id"
+              v-if="
+                currentUser && currentUser.user_id === currentProduct.user_id
+              "
               @click="goToEditProduct"
               :color="siteColor"
               block
               x-large
             >
-              <span class="white--text" style="font-size: 18px">Edit product</span>
+              <span class="white--text" style="font-size: 18px"
+                >Edit product</span
+              >
             </v-btn>
 
             <v-btn
@@ -134,23 +152,32 @@
 
           <v-col cols="9">
             <v-btn
-              v-if="currentUser && currentUser.user_id === currentProduct.user_id"
+              v-if="
+                currentUser && currentUser.user_id === currentProduct.user_id
+              "
               @click="toggleRemoveDialog"
               :color="siteColor"
               block
               x-large
             >
-              <span style="font-size: 18px" class="white--text">Remove product</span>
+              <span style="font-size: 18px" class="white--text"
+                >Remove product</span
+              >
             </v-btn>
 
             <v-btn
-              v-if="addToCartButton && currentUser && currentUser.user_id !== currentProduct.user_id"
+              v-if="
+                addToCartButton &&
+                currentUser &&
+                currentUser.user_id !== currentProduct.user_id
+              "
               @click="add()"
               block
               x-large
               class="white--text"
               :color="siteColor"
-            >Add to cart</v-btn>
+              >Add to cart</v-btn
+            >
           </v-col>
 
           <v-col lg="9">
@@ -164,23 +191,28 @@
               :color="siteColor"
             ></v-rating>
 
-            <p class="text-center text-subtitle">(based on {{currentProduct.rate_counter}} Ratings)</p>
+            <p class="text-center text-subtitle">
+              (based on {{ currentProduct.rate_counter }} Ratings)
+            </p>
           </v-col>
 
           <v-col cols="9">
             <v-divider class="mb-8"></v-divider>
-            <p
-              class="text-h5 mb-n2 text-center"
-              v-if="!userOrderedProductFlag"
-            >You can rate this Product once You buy it</p>
+            <p class="text-h5 mb-n2 text-center" v-if="!userOrderedProductFlag">
+              You can rate this Product once You buy it
+            </p>
             <p
               v-if="productRating === 0 && userOrderedProductFlag"
               class="text-h5 mb-n2 text-center"
-            >Rate this Product</p>
+            >
+              Rate this Product
+            </p>
             <p
               v-if="productRating !== 0 && userOrderedProductFlag"
               class="text-h5 mb-n2 text-center"
-            >Your Rating:</p>
+            >
+              Your Rating:
+            </p>
             <v-rating
               v-if="userOrderedProductFlag"
               class="ml-n1"
@@ -204,7 +236,8 @@
               @click="submitReview"
               block
               :color="siteColor"
-            >submit</v-btn>
+              >submit</v-btn
+            >
           </v-col>
         </v-row>
       </v-col>
@@ -222,7 +255,9 @@
           <v-row justify="center">
             <v-col lg="6" class="text-center ml-n10 mt-5">
               <v-avatar fab :color="siteColor" size="100">
-                <span class="white--text headline text-h3">{{currentProduct.rating}}.0</span>
+                <span class="white--text headline text-h3"
+                  >{{ currentProduct.rating }}.0</span
+                >
               </v-avatar>
 
               <v-rating
@@ -234,9 +269,9 @@
                 :color="siteColor"
               ></v-rating>
 
-              <p
-                class="text-center text-subtitle"
-              >(based on {{currentProduct.rate_counter}} Ratings)</p>
+              <p class="text-center text-subtitle">
+                (based on {{ currentProduct.rate_counter }} Ratings)
+              </p>
             </v-col>
 
             <v-col lg="5">
@@ -247,9 +282,13 @@
                   v-for="i in starNum"
                   :key="i"
                   rounded
-                  :value="barRatingArray[5-i]"
+                  :value="barRatingArray[5 - i]"
                   :color="siteColor"
-                >{{6-i}} Star ({{barRatingArray[5-i]/20}} Ratings)</v-progress-linear>
+                  >{{ 6 - i }} Star ({{
+                    barRatingArray[5 - i] / 20
+                  }}
+                  Ratings)</v-progress-linear
+                >
               </div>
             </v-col>
           </v-row>
@@ -259,16 +298,22 @@
     <v-divider></v-divider>
     <v-row justify="center">
       <v-col lg="8">
-        <p class="text-h5">({{reviewsWithText.length}}) Reviews</p>
+        <p class="text-h5">({{ reviewsWithText.length }}) Reviews</p>
       </v-col>
     </v-row>
 
     <v-row justify="center">
-      <v-col lg="8" v-for="review in reviewsWithText" :key="review.products_reviews_id">
+      <v-col
+        lg="8"
+        v-for="review in reviewsWithText"
+        :key="review.products_reviews_id"
+      >
         <v-card class="pa-5" elevation="0">
           <v-row>
             <v-col lg="7">
-              <p class="text-h5 font-weight-medium">By {{review.user.full_arabic_name}}</p>
+              <p class="text-h5 font-weight-medium">
+                By {{ review.user.full_arabic_name }}
+              </p>
             </v-col>
 
             <v-col lg="5">
@@ -283,7 +328,9 @@
             </v-col>
           </v-row>
 
-          <p class="font-weight-medium text--secondary" style="font-size: 17px">{{review.review}}</p>
+          <p class="font-weight-medium text--secondary" style="font-size: 17px">
+            {{ review.review }}
+          </p>
         </v-card>
       </v-col>
     </v-row>
@@ -292,14 +339,24 @@
 
     <v-dialog width="700" persistent v-model="removePressed">
       <v-card>
-        <p style="text-align:center" class="text-h5">Are you sure you want to remove this product?</p>
+        <p style="text-align: center" class="text-h5">
+          Are you sure you want to remove this product?
+        </p>
 
         <v-row justify="center">
           <v-col lg="3">
-            <v-btn large block @click="removeProduct" class="primary mr-15">Yes</v-btn>
+            <v-btn large block @click="removeProduct" class="primary mr-15"
+              >Yes</v-btn
+            >
           </v-col>
           <v-col lg="3">
-            <v-btn large block @click="removePressed = false" class="red white--text">No</v-btn>
+            <v-btn
+              large
+              block
+              @click="removePressed = false"
+              class="red white--text"
+              >No</v-btn
+            >
           </v-col>
         </v-row>
       </v-card>
@@ -315,6 +372,7 @@ export default {
     await this.$store.dispatch("refreshCurrentUser");
     console.log(this.currentProduct);
     await this.$store.dispatch("getSiteColor");
+    console.log(this.siteColor);
     await this.$store.dispatch("getProductReview", {
       product_id: this.currentProduct.product_id,
       user_id: this.currentUser.user_id,
@@ -382,7 +440,9 @@ export default {
       return this.$store.state.nodeHost;
     },
     siteColor() {
-      return this.$store.state.Home.siteColor;
+      if (this.$store.state.Home.siteColor)
+        return this.$store.state.Home.siteColor;
+      else return "red darken-4";
     },
     productRating() {
       return this.$store.state.ProductDetails.productRating;

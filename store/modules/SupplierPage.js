@@ -3,14 +3,15 @@ import axios from 'axios'
 
 export default {
     state: {
-        supplierPageInfo: [],
+        supplierPageInfo: {},
         supplierProducts: JSON.parse(localStorage.getItem('supplierProducts')),
         supplierRating: 0,
         supplierReview: '',
         currentSupplierRatings: [],
         supplier: {},
         pendingSuppliers: [],
-        supplierProductsSave: []
+        supplierProductsSave: [],
+        testVar: 0
     },
 
     mutations: {
@@ -20,6 +21,8 @@ export default {
 
         getSupplierPageData(state, info) {
             state.supplierPageInfo = info
+            state.testVar = 5;
+            console.log('supplier info from mutation', state.supplierPageInfo)
         },
 
         getSupplier(state, supplier) {
@@ -102,8 +105,8 @@ export default {
                 })
         },
 
-        getSupplierPageData(context, id) {
-            axios.put('http://localhost:3000/api/getSupplierPageData', { supplier_id: id })
+        async getSupplierPageData(context, id) {
+            await axios.put('http://localhost:3000/api/getSupplierPageData', { supplier_id: id })
                 .then(info => {
                     context.commit('getSupplierPageData', info.data.data)
                 })
