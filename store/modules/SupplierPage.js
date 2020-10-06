@@ -207,6 +207,17 @@ export default {
                     console.log('testing products items', products.data.data)
                     context.commit('filterProductsWithItem', products.data.data)
                 })
+        },
+
+        async uploadCarouselImages(context, form) {
+            await axios.post('http://localhost:3000/api/uploadCarouselImages', form, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+                .then(response => {
+                    console.log('row resposne', response)
+                })
         }
     }
 }

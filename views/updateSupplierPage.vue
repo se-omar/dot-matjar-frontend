@@ -105,6 +105,50 @@
           ></v-checkbox>
         </v-col>
 
+        <v-col lg="2"></v-col>
+
+        <v-col lg="2">Carousel Images</v-col>
+
+        <v-col lg="2">
+          <v-form enctype="multipart/form-data">
+            <label>Carousel Image 1</label>
+            <v-file-input
+              :disabled="!carouselCheckbox"
+              @change="setCarouselImage1"
+            ></v-file-input>
+          </v-form>
+        </v-col>
+
+        <v-col lg="2">
+          <v-form>
+            <label>Carousel Image 2</label>
+            <v-file-input
+              :disabled="!carouselImage1 || !carouselCheckbox"
+              @change="setCarouselImage2"
+            ></v-file-input>
+          </v-form>
+        </v-col>
+
+        <v-col lg="2">
+          <v-form>
+            <label>Carousel Image 3</label>
+            <v-file-input
+              :disabled="!carouselImage2 || !carouselCheckbox"
+              @change="setCarouselImage3"
+            ></v-file-input>
+          </v-form>
+        </v-col>
+
+        <v-col lg="2">
+          <v-form>
+            <label>Carousel Image 4</label>
+            <v-file-input
+              :disabled="!carouselImage3 || !carouselCheckbox"
+              @change="setCarouselImage4"
+            ></v-file-input>
+          </v-form>
+        </v-col>
+
         <v-col cols="6" lg="4" sm="4" md="6">
           <v-text-field
             :disabled="!carouselCheckbox"
@@ -205,6 +249,10 @@ export default {
     carouselCheckbox: false,
     leftBannerCheckbox: false,
     rightBannerCheckbox: false,
+    carouselImage1: "",
+    carouselImage2: "",
+    carouselImage3: "",
+    carouselImage4: "",
   }),
   methods: {
     fileUploaded() {
@@ -221,8 +269,21 @@ export default {
       if (bool == true) return 1;
       else return 0;
     },
-    sendData() {
+    async sendData() {
       var formdata = new FormData();
+      var carouselformdata = new FormData();
+      var carouselImages = [
+        this.carouselImage1,
+        this.carouselImage2,
+        this.carouselImage3,
+        this.carouselImage4,
+      ];
+
+      carouselformdata.set("supplier_id", this.supplier.user_id);
+      carouselImages.forEach((element) => {
+        carouselformdata.append("file", element ? element : "empty");
+      });
+
       formdata.append("file", this.logo);
       formdata.set("siteName", this.siteName);
       formdata.set("facebook", this.facebook);
@@ -236,7 +297,6 @@ export default {
         "showCarousel",
         this.convertBoolToInt(this.carouselCheckbox)
       );
-      console.log("formdata carousel", formdata.get("showCarousel"));
       formdata.set(
         "showLeftBanner",
         this.convertBoolToInt(this.leftBannerCheckbox)
@@ -249,10 +309,34 @@ export default {
       formdata.set("carousel_width", this.carouselWidth);
 
       this.$store.dispatch("updateSupplierPage", formdata);
+      await this.$store.dispatch("uploadCarouselImages", carouselformdata);
       this.snackbar = true;
       this.$router.push(`/supplierPage/` + this.currentUser.user_id);
     },
+    setCarouselImage1(image) {
+      this.carouselImage1 = image;
+      console.log(image);
+    },
+    setCarouselImage2(image) {
+      this.carouselImage2 = image;
+      console.log(image);
+    },
+    setCarouselImage3(image) {
+      this.carouselImage3 = image;
+      console.log(image);
+    },
+    setCarouselImage4(image) {
+      this.carouselImage4 = image;
+      console.log(image);
+    },
+    setLeftImage(image) {
+      console.log(image);
+    },
+    setRightImage(image) {
+      console.log(image);
+    },
   },
+
   computed: {
     siteColor() {
       if (this.$store.state.Home.siteColor) {

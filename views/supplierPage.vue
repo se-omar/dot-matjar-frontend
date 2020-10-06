@@ -81,36 +81,36 @@
               :loop="true"
               :navigationEnabled="true"
             >
-              <slide>
+              <slide v-if="supplierPageInfo.carousel_image_1">
                 <v-img
                   :height="
                     supplierPageInfo ? supplierPageInfo.carousel_height : 400
                   "
-                  src="..\assets\images/car1.jpg"
+                  :src="nodeHost + supplierPageInfo.carousel_image_1"
                 ></v-img>
               </slide>
-              <slide>
+              <slide v-if="supplierPageInfo.carousel_image_2">
                 <v-img
                   :height="
                     supplierPageInfo ? supplierPageInfo.carousel_height : 400
                   "
-                  src="..\assets\images/car1.jpg"
+                  :src="nodeHost + supplierPageInfo.carousel_image_2"
                 ></v-img>
               </slide>
-              <slide>
+              <slide v-if="supplierPageInfo.carousel_image_3">
                 <v-img
                   :height="
                     supplierPageInfo ? supplierPageInfo.carousel_height : 400
                   "
-                  src="..\assets\images/car1.jpg"
+                  :src="nodeHost + supplierPageInfo.carousel_image_3"
                 ></v-img>
               </slide>
-              <slide>
+              <slide v-if="supplierPageInfo.carousel_image_4">
                 <v-img
                   :height="
                     supplierPageInfo ? supplierPageInfo.carousel_height : 400
                   "
-                  src="..\assets\images/car1.jpg"
+                  :src="nodeHost + supplierPageInfo.carousel_image_4"
                 ></v-img>
               </slide>
             </carousel>
@@ -535,6 +535,8 @@ export default {
       "getSupplierProducts",
       this.$route.params.supplier_id
     );
+
+    console.log(this.carouselImagesArray);
 
     await this.$store.dispatch("getSupplierReview", {
       supplier_id: this.supplier.user_id,

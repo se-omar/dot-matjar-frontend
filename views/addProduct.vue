@@ -46,28 +46,54 @@
           </v-form>
           <v-row>
             <v-col cols="6">
-              <v-text-field v-model="productCode" dense outlined label="Code"></v-text-field>
+              <v-text-field
+                v-model="productCode"
+                dense
+                outlined
+                label="Code"
+              ></v-text-field>
             </v-col>
 
             <v-col cols="6">
-              <v-text-field dense v-model="HScode" outlined label="HS code"></v-text-field>
+              <v-text-field
+                dense
+                v-model="HScode"
+                outlined
+                label="HS code"
+              ></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
             <v-form v-model="valid">
               <v-col cols="12">
-                <v-text-field :rules="rules" dense v-model="unitPrice" outlined label="Price"></v-text-field>
+                <v-text-field
+                  :rules="rules"
+                  dense
+                  v-model="unitPrice"
+                  outlined
+                  label="Price"
+                ></v-text-field>
               </v-col>
             </v-form>
             <v-col cols="6">
-              <v-text-field dense v-model="minUnits" outlined label="Minimum required orders"></v-text-field>
+              <v-text-field
+                dense
+                v-model="minUnits"
+                outlined
+                label="Minimum required orders"
+              ></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
             <v-col cols="6">
-              <v-text-field v-model="color" dense outlined label="Color"></v-text-field>
+              <v-text-field
+                v-model="color"
+                dense
+                outlined
+                label="Color"
+              ></v-text-field>
             </v-col>
 
             <v-col cols="6">
@@ -77,7 +103,12 @@
 
           <v-row>
             <v-col cols="12">
-              <v-textarea v-model="description" dense outlined label="Description"></v-textarea>
+              <v-textarea
+                v-model="description"
+                dense
+                outlined
+                label="Description"
+              ></v-textarea>
             </v-col>
           </v-row>
         </v-col>
@@ -86,7 +117,7 @@
           <v-row justify="center">
             <v-col cols="9">
               <v-form>
-                <label>Main picture</label>>
+                <label>Main picture</label>
                 <v-file-input @change="setImage1"></v-file-input>
               </v-form>
             </v-col>
@@ -114,13 +145,22 @@
         <v-col lg="7" md="8" sm="8" cols="10">
           <v-row justify="center">
             <v-col cols="4">
-              <v-btn :disabled="!valid" @click="addProduct" rounded class="primary">
+              <v-btn
+                :disabled="!valid"
+                @click="addProduct"
+                rounded
+                class="primary"
+              >
                 <span style="font-size: 18px">Add product</span>
               </v-btn>
             </v-col>
 
             <v-col cols="4">
-              <v-btn @click="$router.push('/myProducts')" rounded class="red white--text">
+              <v-btn
+                @click="$router.push('/myProducts')"
+                rounded
+                class="red white--text"
+              >
                 <span style="font-size: 18px">Cancel</span>
               </v-btn>
             </v-col>
