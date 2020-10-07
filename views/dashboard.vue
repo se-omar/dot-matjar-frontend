@@ -1,7 +1,11 @@
 <template>
   <v-app class="grey lighten-4">
     <div class="vld-parent">
-      <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
+      <loading
+        :active.sync="isLoading"
+        :can-cancel="false"
+        :is-full-page="true"
+      ></loading>
     </div>
     <div class="display-1 mb-10 mt-6" style="margin: auto">Dashboard</div>
 
@@ -10,8 +14,18 @@
     </v-row>
 
     <v-row justify="center" v-if="myProducts.length != 0">
-      <v-col lg="2" md="4" sm="6" cols="6" v-for="myProduct in myProducts" :key="myProduct.id">
-        <product :addToCartButton="false" :filteredProduct="myProduct"></product>
+      <v-col
+        lg="2"
+        md="4"
+        sm="6"
+        cols="6"
+        v-for="myProduct in myProducts.slice(0, 5)"
+        :key="myProduct.id"
+      >
+        <product
+          :addToCartButton="false"
+          :filteredProduct="myProduct"
+        ></product>
       </v-col>
     </v-row>
 
@@ -37,7 +51,11 @@
       <v-col lg="4" md="6" sm="12" cols="12">
         <div style="text-align: center">
           <v-hover>
-            <v-card slot-scope="{ hover }" :class="`elevation-${hover ? 5 : 3}` " class="mb-7">
+            <v-card
+              slot-scope="{ hover }"
+              :class="`elevation-${hover ? 5 : 3}`"
+              class="mb-7"
+            >
               <apexchart
                 class="mb-n2 grey lighten-5"
                 id="barChart"
@@ -61,7 +79,7 @@
           <v-hover>
             <v-card
               slot-scope="{ hover }"
-              :class="`elevation-${hover ? 5 : 3}` "
+              :class="`elevation-${hover ? 5 : 3}`"
               class="mb-7 grey lighten-5"
             >
               <apexchart
@@ -87,7 +105,7 @@
           <v-hover>
             <v-card
               slot-scope="{ hover }"
-              :class="`elevation-${hover ? 5 : 3}` "
+              :class="`elevation-${hover ? 5 : 3}`"
               class="mb-5 grey lighten-5"
             >
               <apexchart
@@ -119,7 +137,7 @@
             <v-card
               width="900"
               slot-scope="{ hover }"
-              :class="`elevation-${hover ? 5 : 3}` "
+              :class="`elevation-${hover ? 5 : 3}`"
               class="mb-7 grey lighten-5"
             >
               <apexchart
@@ -134,9 +152,14 @@
           </v-hover>
           <v-row justify="center">
             <v-label for="lineChart">
-              <span
-                style="font-size: 22px"
-              >Revenue This Month: {{revenueChartSeries[0].data[revenueChartSeries[0].data.length-1]}}</span>
+              <span style="font-size: 22px"
+                >Revenue This Month:
+                {{
+                  revenueChartSeries[0].data[
+                    revenueChartSeries[0].data.length - 1
+                  ]
+                }}</span
+              >
             </v-label>
           </v-row>
         </div>
@@ -149,13 +172,12 @@
               height="75"
               width="300"
               slot-scope="{ hover }"
-              :class="`elevation-${hover ? 5 : 3}` "
+              :class="`elevation-${hover ? 5 : 3}`"
               class="grey lighten-5 mb-11"
             >
-              <span
-                class="grey--text text--darken-1"
-                style="font-size: 20px"
-              >Total Revenue: {{currentUser.total_revenue}} EGP</span>
+              <span class="grey--text text--darken-1" style="font-size: 20px"
+                >Total Revenue: {{ currentUser.total_revenue }} EGP</span
+              >
             </v-card>
           </v-hover>
         </div>
@@ -166,13 +188,13 @@
               height="75"
               width="300"
               slot-scope="{ hover }"
-              :class="`elevation-${hover ? 5 : 3}` "
+              :class="`elevation-${hover ? 5 : 3}`"
               class="grey lighten-5 mb-11"
             >
-              <span
-                class="grey--text text--darken-1"
-                style="font-size: 20px"
-              >Amount Recieved: {{currentUser.revenue_recieved || 0}} EGP</span>
+              <span class="grey--text text--darken-1" style="font-size: 20px"
+                >Amount Recieved:
+                {{ currentUser.revenue_recieved || 0 }} EGP</span
+              >
             </v-card>
           </v-hover>
         </div>
@@ -183,13 +205,16 @@
               width="300"
               height="75"
               slot-scope="{ hover }"
-              :class="`elevation-${hover ? 5 : 3}` "
+              :class="`elevation-${hover ? 5 : 3}`"
               class="grey lighten-5 mb-11"
             >
-              <span
-                class="grey--text text--darken-1"
-                style="font-size: 20px"
-              >Amount Left: {{currentUser.total_revenue - currentUser.revenue_recieved || 0}} EGP</span>
+              <span class="grey--text text--darken-1" style="font-size: 20px"
+                >Amount Left:
+                {{
+                  currentUser.total_revenue - currentUser.revenue_recieved || 0
+                }}
+                EGP</span
+              >
             </v-card>
           </v-hover>
         </div>
@@ -200,7 +225,11 @@
 
     <v-row justify="center" style="width: 92%; margin: auto">
       <v-col lg="4">
-        <dashboard-selling-product class="mb-5" id="mostSelling" :filteredProduct="topProduct" />
+        <dashboard-selling-product
+          class="mb-5"
+          id="mostSelling"
+          :filteredProduct="topProduct"
+        />
         <v-row justify="center">
           <v-label for="mostSelling">
             <span style="font-size: 22px">Most Selling Product</span>
@@ -209,7 +238,11 @@
       </v-col>
 
       <v-col lg="4">
-        <dashboard-selling-product class="mb-5" id="leastSelling" :filteredProduct="leastProduct" />
+        <dashboard-selling-product
+          class="mb-5"
+          id="leastSelling"
+          :filteredProduct="leastProduct"
+        />
         <v-row justify="center">
           <v-label for="leastSelling">
             <span style="font-size: 22px">least Selling Product</span>

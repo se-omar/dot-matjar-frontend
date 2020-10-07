@@ -1,9 +1,15 @@
 <template>
   <v-app>
     <div class="vld-parent">
-      <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="fullPage"></loading>
+      <loading
+        :active.sync="isLoading"
+        :can-cancel="false"
+        :is-full-page="fullPage"
+      ></loading>
     </div>
-    <sideButton v-if="this.$route.params.supplier_id == currentUser.user_id"></sideButton>
+    <sideButton
+      v-if="this.$route.params.supplier_id == currentUser.user_id"
+    ></sideButton>
     <v-row justify="end" class="mr-16">
       <v-col cols="6">
         <v-btn
@@ -11,16 +17,26 @@
           class="white--text"
           @click="updatePage"
           :color="siteColor"
-        >Update My page</v-btn>
+          >Update My page</v-btn
+        >
       </v-col>
     </v-row>
 
     <v-row class="ml-2">
-      <v-col lg="2" style="max-width: 12%">
+      <v-col
+        v-if="
+          supplierPageInfo.show_left_banner &&
+          supplierPageInfo.left_banner_image
+        "
+        lg="2"
+        style="max-width: 12%"
+      >
         <v-card height="95%">
-          <v-img src="../assets/images/603-150x600.jpg"></v-img>
+          <v-img :src="nodeHost + supplierPageInfo.left_banner_image"></v-img>
         </v-card>
       </v-col>
+
+      <v-col v-else lg="2" style="max-width: 12%"> </v-col>
 
       <v-col lg="9">
         <v-row justify="center">
@@ -29,30 +45,38 @@
               <v-img id="image" :src="supplier.profile_photo"></v-img>
             </v-card-actions>
             <v-card-title>
-              <span class="black--text ml-13">{{supplier.full_arabic_name}}</span>
+              <span class="black--text ml-13">{{
+                supplier.full_arabic_name
+              }}</span>
             </v-card-title>
             <v-card-actions>
-              <span style="font-weight:bold" class="black--text">Mobile number :</span>
-              <span class="black--text">{{supplier.mobile_number}}</span>
+              <span style="font-weight: bold" class="black--text"
+                >Mobile number :</span
+              >
+              <span class="black--text">{{ supplier.mobile_number }}</span>
             </v-card-actions>
             <v-card-actions>
-              <span style="font-weight:bold" class="black--text">User type :</span>
-              <span class="black--text">{{supplier.user_type}}</span>
+              <span style="font-weight: bold" class="black--text"
+                >User type :</span
+              >
+              <span class="black--text">{{ supplier.user_type }}</span>
             </v-card-actions>
             <v-card-actions>
-              <span style="font-weight:bold" class="black--text">Email :</span>
-              <span class="black--text">{{supplier.email}}</span>
+              <span style="font-weight: bold" class="black--text">Email :</span>
+              <span class="black--text">{{ supplier.email }}</span>
             </v-card-actions>
             <v-card-actions>
-              <span style="font-weight:bold" class="black--text">Facbook-account :</span>
-              <span class="black--text">{{supplier.facebook_account}}</span>
+              <span style="font-weight: bold" class="black--text"
+                >Facbook-account :</span
+              >
+              <span class="black--text">{{ supplier.facebook_account }}</span>
             </v-card-actions>
           </v-card>
         </v-row>
         <v-divider></v-divider>
 
-        <!-- <v-row justify="center">
-          <v-col :lg="supplierPageInfo? supplierPageInfo.carousel_width : 10">
+        <v-row v-if="supplierPageInfo.show_carousel" justify="center">
+          <v-col :lg="supplierPageInfo ? supplierPageInfo.carousel_width : 10">
             <carousel
               :autoplay="true"
               :per-page="1"
@@ -60,33 +84,41 @@
               :loop="true"
               :navigationEnabled="true"
             >
-              <slide>
+              <slide v-if="supplierPageInfo.carousel_image_1">
                 <v-img
-                  :height="supplierPageInfo? supplierPageInfo.carousel_height : 400"
-                  src="..\assets\images/car1.jpg"
+                  :height="
+                    supplierPageInfo ? supplierPageInfo.carousel_height : 400
+                  "
+                  :src="nodeHost + supplierPageInfo.carousel_image_1"
                 ></v-img>
               </slide>
-              <slide>
+              <slide v-if="supplierPageInfo.carousel_image_2">
                 <v-img
-                  :height="supplierPageInfo? supplierPageInfo.carousel_height : 400"
-                  src="..\assets\images/car1.jpg"
+                  :height="
+                    supplierPageInfo ? supplierPageInfo.carousel_height : 400
+                  "
+                  :src="nodeHost + supplierPageInfo.carousel_image_2"
                 ></v-img>
               </slide>
-              <slide>
+              <slide v-if="supplierPageInfo.carousel_image_3">
                 <v-img
-                  :height="supplierPageInfo? supplierPageInfo.carousel_height : 400"
-                  src="..\assets\images/car1.jpg"
+                  :height="
+                    supplierPageInfo ? supplierPageInfo.carousel_height : 400
+                  "
+                  :src="nodeHost + supplierPageInfo.carousel_image_3"
                 ></v-img>
               </slide>
-              <slide>
+              <slide v-if="supplierPageInfo.carousel_image_4">
                 <v-img
-                  :height="supplierPageInfo? supplierPageInfo.carousel_height : 400"
-                  src="..\assets\images/car1.jpg"
+                  :height="
+                    supplierPageInfo ? supplierPageInfo.carousel_height : 400
+                  "
+                  :src="nodeHost + supplierPageInfo.carousel_image_4"
                 ></v-img>
               </slide>
             </carousel>
           </v-col>
-        </v-row>-->
+        </v-row>
 
         <v-row justify="center">
           <v-col lg="6">
@@ -100,7 +132,9 @@
               <v-row justify="center">
                 <v-col lg="6" class="text-center ml-n10 mt-5">
                   <v-avatar fab :color="siteColor" size="100">
-                    <span class="white--text headline text-h3">{{supplier.rating}}.0</span>
+                    <span class="white--text headline text-h3"
+                      >{{ supplier.rating }}.0</span
+                    >
                   </v-avatar>
 
                   <v-rating
@@ -112,7 +146,9 @@
                     :color="siteColor"
                   ></v-rating>
 
-                  <p class="text-center text-subtitle">(based on {{supplier.rate_counter}} Ratings)</p>
+                  <p class="text-center text-subtitle">
+                    (based on {{ supplier.rate_counter }} Ratings)
+                  </p>
                 </v-col>
 
                 <v-col lg="5">
@@ -123,9 +159,13 @@
                       v-for="i in starNum"
                       :key="i"
                       rounded
-                      :value="barRatingArray[5-i]"
+                      :value="barRatingArray[5 - i]"
                       :color="siteColor"
-                    >{{6-i}} Star ({{barRatingArray[5-i]/20}} Ratings)</v-progress-linear>
+                      >{{ 6 - i }} Star ({{
+                        barRatingArray[5 - i] / 20
+                      }}
+                      Ratings)</v-progress-linear
+                    >
                   </div>
                 </v-col>
               </v-row>
@@ -135,8 +175,14 @@
 
         <v-tabs v-model="tab" show-arrows icons-and-text dark grow>
           <v-tabs-slider></v-tabs-slider>
-          <v-tab :style="`background-color: ${siteColor}`" v-for="i in tabs" :key="i.name">
-            <div class="caption py-1 font-weight-medium text-subtitle-1">{{ i.name }}</div>
+          <v-tab
+            :style="`background-color: ${siteColor}`"
+            v-for="i in tabs"
+            :key="i.name"
+          >
+            <div class="caption py-1 font-weight-medium text-subtitle-1">
+              {{ i.name }}
+            </div>
           </v-tab>
 
           <v-tab-item class="grey lighten-4">
@@ -157,7 +203,8 @@
                   rounded
                   :color="siteColor"
                   class="white--text mt-3"
-                >Search</v-btn>
+                  >Search</v-btn
+                >
               </v-col>
             </v-row>
             <v-row>
@@ -165,9 +212,17 @@
                 <!-- search category toolbar -->
                 <v-toolbar shaped dark dense :color="siteColor">
                   <v-row justify="center">
-                    <v-col cols="2" v-for="category in category" :key="category.id">
-                      <v-menu offset-x :close-on-content-click="false" open-on-hover>
-                        <template v-slot:activator="{ on,attrs }">
+                    <v-col
+                      cols="2"
+                      v-for="category in category"
+                      :key="category.id"
+                    >
+                      <v-menu
+                        offset-x
+                        :close-on-content-click="false"
+                        open-on-hover
+                      >
+                        <template v-slot:activator="{ on, attrs }">
                           <v-btn
                             @mouseover="mouseOver(category)"
                             v-bind="attrs"
@@ -177,14 +232,14 @@
                             class="white--text"
                             @click="filterProductsWithCategory(category)"
                           >
-                            {{category}}
-                            <i :class="`fas fa-${category} fa-2x ml-2` "></i>
+                            {{ category }}
+                            <i :class="`fas fa-${category} fa-2x ml-2`"></i>
                           </v-btn>
                         </template>
-                        <v-card style="background-color:red">
+                        <v-card style="background-color: red">
                           <v-list v-for="item in categoryItems" :key="item.id">
                             <v-btn @click="filterProductsWithItem(item)" text>
-                              - {{item}}
+                              - {{ item }}
                               <i :class="`fa fa-${item} fa-lg ml-2`"></i>
                             </v-btn>
                           </v-list>
@@ -202,11 +257,14 @@
                 md="4"
                 sm="6"
                 cols="6"
-                v-for="(supplierProduct,product_id) in supplierProducts"
+                v-for="(supplierProduct, product_id) in supplierProducts"
                 :key="product_id"
               >
                 <v-hover>
-                  <product :addToCartButton="false" :filteredProduct="supplierProduct"></product>
+                  <product
+                    :addToCartButton="false"
+                    :filteredProduct="supplierProduct"
+                  ></product>
                 </v-hover>
               </v-col>
             </v-row>
@@ -215,16 +273,22 @@
           <v-tab-item class="grey lighten-4">
             <v-row justify="center">
               <v-col lg="8">
-                <p class="text-h5">({{reviewsWithText.length}}) Reviews</p>
+                <p class="text-h5">({{ reviewsWithText.length }}) Reviews</p>
               </v-col>
             </v-row>
 
             <v-row justify="center">
-              <v-col lg="8" v-for="review in reviewsWithText" :key="review.suppliers_reviews_id">
+              <v-col
+                lg="8"
+                v-for="review in reviewsWithText"
+                :key="review.suppliers_reviews_id"
+              >
                 <v-card class="pa-5" elevation="0">
                   <v-row>
                     <v-col lg="7">
-                      <p class="text-h5 font-weight-medium">By {{review.user.full_arabic_name}}</p>
+                      <p class="text-h5 font-weight-medium">
+                        By {{ review.user.full_arabic_name }}
+                      </p>
                     </v-col>
 
                     <v-col lg="5">
@@ -241,7 +305,9 @@
                   <p
                     class="font-weight-medium text--secondary"
                     style="font-size: 17px"
-                  >{{review.review}}</p>
+                  >
+                    {{ review.review }}
+                  </p>
                 </v-card>
               </v-col>
             </v-row>
@@ -250,7 +316,12 @@
           <v-tab-item class="grey lighten-4">
             <v-row justify="center">
               <v-col lg="8">
-                <p v-if="supplierRating === 0" class="text-h5 mb-n2 text-center">Rate this Product</p>
+                <p
+                  v-if="supplierRating === 0"
+                  class="text-h5 mb-n2 text-center"
+                >
+                  Rate this Product
+                </p>
                 <p v-else class="text-h5 mb-n2 text-center">Your Rating:</p>
                 <v-rating
                   :readonly="supplierRating > 0"
@@ -260,25 +331,40 @@
                   :size="size"
                   :color="siteColor"
                 ></v-rating>
-                <v-textarea :disabled="supplierRating > 0" height="150" outlined v-model="review"></v-textarea>
+                <v-textarea
+                  :disabled="supplierRating > 0"
+                  height="150"
+                  outlined
+                  v-model="review"
+                ></v-textarea>
                 <v-btn
                   :disabled="supplierRating > 0"
                   class="white--text"
                   @click="submitReview"
                   block
                   :color="siteColor"
-                >submit</v-btn>
+                  >submit</v-btn
+                >
               </v-col>
             </v-row>
           </v-tab-item>
         </v-tabs>
       </v-col>
 
-      <v-col lg="2" style="max-width: 12%">
+      <v-col
+        lg="2"
+        v-if="
+          supplierPageInfo.show_right_banner &&
+          supplierPageInfo.right_banner_image
+        "
+        style="max-width: 12%"
+      >
         <v-card height="95%">
-          <v-img src="../assets/images/603-150x600.jpg"></v-img>
+          <v-img :src="nodeHost + supplierPageInfo.right_banner_image"></v-img>
         </v-card>
       </v-col>
+
+      <v-col lg="2" v-else style="max-width: 12%"> </v-col>
     </v-row>
   </v-app>
 </template>
@@ -455,6 +541,8 @@ export default {
       "getSupplierProducts",
       this.$route.params.supplier_id
     );
+
+    console.log(this.carouselImagesArray);
 
     await this.$store.dispatch("getSupplierReview", {
       supplier_id: this.supplier.user_id,

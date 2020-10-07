@@ -62,11 +62,21 @@
 
           <v-row>
             <v-col cols="6">
-              <v-text-field v-model="currentProduct.color" dense outlined label="Color"></v-text-field>
+              <v-text-field
+                v-model="currentProduct.color"
+                dense
+                outlined
+                label="Color"
+              ></v-text-field>
             </v-col>
 
             <v-col cols="6">
-              <v-text-field currentProduct.discount_amount dense outlined label="Sale"></v-text-field>
+              <v-text-field
+                currentProduct.discount_amount
+                dense
+                outlined
+                label="Sale"
+              ></v-text-field>
             </v-col>
           </v-row>
 
@@ -116,12 +126,17 @@
           <v-row justify="center">
             <v-col cols="5">
               <v-btn rounded @click="updateProduct" block class="primary">
-                <span style="font-size: 18px">Edite product</span>
+                <span style="font-size: 18px">Edit product</span>
               </v-btn>
             </v-col>
 
             <v-col cols="5" lg="4">
-              <v-btn rounded @click="$router.go(-1)" block class="red white--text">
+              <v-btn
+                rounded
+                @click="$router.go(-1)"
+                block
+                class="red white--text"
+              >
                 <span style="font-size: 18px">Cancel</span>
               </v-btn>
             </v-col>
@@ -146,7 +161,7 @@ export default {
     },
 
     currentProduct() {
-      return this.$store.state.currentProduct;
+      return this.$store.state.ProductDetails.currentProduct;
     },
   },
 

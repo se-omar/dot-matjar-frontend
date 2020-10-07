@@ -233,16 +233,16 @@
           :navigationEnabled="true"
         >
           <slide>
-            <v-img height="400" src="..\assets\images/download.jpg"></v-img>
+            <v-img height="400" src="..\assets/image.jpg"></v-img>
           </slide>
           <slide>
-            <v-img height="400" src="..\assets\images/download.jpg"></v-img>
+            <v-img height="400" src="..\assets/image.jpg"></v-img>
           </slide>
           <slide>
-            <v-img height="400" src="..\assets\images/download.jpg"></v-img>
+            <v-img height="400" src="..\assets/image.jpg"></v-img>
           </slide>
           <slide>
-            <v-img height="400" src="..\assets\images/download.jpg"></v-img>
+            <v-img height="400" src="..\assets/image.jpg"></v-img>
           </slide>
         </carousel>
       </v-col>
@@ -609,3 +609,4 @@ export default {
   max-width: 960px;
 }
 </style>
+

@@ -238,7 +238,7 @@
           <v-row justify="center">
             <v-col cols="9">
               <v-form>
-                <label>Main picture</label>>
+                <label>Main picture</label>
                 <v-file-input @change="setImage1"></v-file-input>
               </v-form>
             </v-col>
