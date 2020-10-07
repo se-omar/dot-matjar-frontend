@@ -20,7 +20,6 @@ import VueCarousel from 'vue-carousel';
 
 Vue.use(VueCarousel);
 
-
 Vue.use(VueApexCharts)
 Vue.component('apexchart', VueApexCharts)
 

@@ -4,7 +4,11 @@
       <div v-if="currentUser.user_type == 'admin'">
         <SiteColor></SiteColor>
       </div>
-      <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
+      <loading
+        :active.sync="isLoading"
+        :can-cancel="false"
+        :is-full-page="true"
+      ></loading>
     </div>
     <!-- ADDING Categories -->
     <v-row justify="center">
@@ -30,7 +34,8 @@
         :color="siteColor"
         class="white--text"
         @click="addNewCategory"
-      >Add Category</v-btn>
+        >Add Category</v-btn
+      >
     </v-row>
     <v-divider class="mx-16"></v-divider>
     <!-- Adding category items -->
@@ -71,7 +76,8 @@
         :color="siteColor"
         class="white--text"
         @click="addCategoryItem"
-      >Add item</v-btn>
+        >Add item</v-btn
+      >
     </v-row>
     <v-divider class="mx-16"></v-divider>
     <!-- Removing category items -->
@@ -109,30 +115,42 @@
         :color="siteColor"
         class="white--text"
         @click="confirmingRemovingCategory = true"
-      >Remove Category</v-btn>
+        >Remove Category</v-btn
+      >
       <!-- dialoge testing ============ -->
       <v-dialog v-model="confirmingRemovingCategory" max-width="400">
         <v-card>
-          <v-card-title class="headline">Are you sure you want to Delete this category ?</v-card-title>
+          <v-card-title class="headline"
+            >Are you sure you want to Delete this category ?</v-card-title
+          >
 
-          <v-card-text>Please be aware that by proceeding all products in this category will not have a unique category to search for.</v-card-text>
+          <v-card-text
+            >Please be aware that by proceeding all products in this category
+            will not have a unique category to search for.</v-card-text
+          >
 
           <v-card-actions>
             <v-spacer></v-spacer>
 
-            <v-btn :color="siteColor" text @click="confirmingRemovingCategory = false">Disagree</v-btn>
+            <v-btn
+              :color="siteColor"
+              text
+              @click="confirmingRemovingCategory = false"
+              >Disagree</v-btn
+            >
 
             <v-btn :color="siteColor" text @click="removeCategory">Agree</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
       <v-btn
-        :disabled="chooseItemToRemove.length ==0"
+        :disabled="chooseItemToRemove.length == 0"
         rounded
         :color="siteColor"
         class="white--text"
         @click="removeItem"
-      >Remove item</v-btn>
+        >Remove item</v-btn
+      >
     </v-row>
 
     <v-divider class="mx-16"></v-divider>
@@ -157,11 +175,11 @@
     </v-row>
     <v-divider></v-divider>
     <v-row justify="center" v-if="selectedMonth !== 'all'">
-      <p class="display-1 mt-8">Top Selling Suppliers in {{selectedMonth}}</p>
+      <p class="display-1 mt-8">Top Selling Suppliers in {{ selectedMonth }}</p>
     </v-row>
 
     <v-row justify="center" v-if="selectedMonth === 'all'">
-      <p class="display-1 mt-8">Top Selling Suppliers in {{selectedYear}}</p>
+      <p class="display-1 mt-8">Top Selling Suppliers in {{ selectedYear }}</p>
     </v-row>
 
     <v-row class="mb-n7" style="width: 92%; margin: auto">
@@ -186,10 +204,20 @@
       </v-col>
 
       <v-col class="mt-2" lg="2">
-        <v-btn large @click="getTopMonthlySuppliers(); isLoading = true ">Filter</v-btn>
+        <v-btn
+          large
+          @click="
+            getTopMonthlySuppliers();
+            isLoading = true;
+          "
+          >Filter</v-btn
+        >
       </v-col>
     </v-row>
-    <v-row justify="center" v-if="topYearSuppliers.length < 1 && topMonthSuppliers.length < 1">
+    <v-row
+      justify="center"
+      v-if="topYearSuppliers.length < 1 && topMonthSuppliers.length < 1"
+    >
       <v-col lg="7">
         <p class="text-h4">No Data available</p>
       </v-col>
@@ -245,12 +273,16 @@
             <v-card
               width="900"
               slot-scope="{ hover }"
-              :class="`elevation-${hover ? 5 : 3}` "
+              :class="`elevation-${hover ? 5 : 3}`"
               class="mb-7 grey lighten-5"
             >
               <apexchart
                 class="mb-n2"
-                :height="suppliersSortedBySales.length > 0 ? suppliersSortedBySales.length *20 : 250"
+                :height="
+                  suppliersSortedBySales.length > 0
+                    ? suppliersSortedBySales.length * 20
+                    : 250
+                "
                 id="lineChart"
                 type="bar"
                 :options="chartOptions"
@@ -263,25 +295,40 @@
 
       <v-col style="max-width: 18%" lg="3">
         <v-card @click="supplierClicked(suppliersSortedBySales[0])">
-          <supplier height="100" :supplier="suppliersSortedBySales[0]"></supplier>
+          <supplier
+            height="100"
+            :supplier="suppliersSortedBySales[0]"
+          ></supplier>
         </v-card>
         <v-row class="mt-4" justify="center">
           <v-label>
-            <span style="font-size: 22px; text-align: center">top selling supplier</span>
+            <span style="font-size: 22px; text-align: center"
+              >top selling supplier</span
+            >
           </v-label>
         </v-row>
       </v-col>
 
       <v-col style="max-width: 18%" lg="3">
-        <v-card @click="supplierClicked(suppliersSortedBySales[suppliersSortedBySales.length-1])">
+        <v-card
+          @click="
+            supplierClicked(
+              suppliersSortedBySales[suppliersSortedBySales.length - 1]
+            )
+          "
+        >
           <supplier
             height="100"
-            :supplier="suppliersSortedBySales[suppliersSortedBySales.length-1]"
+            :supplier="
+              suppliersSortedBySales[suppliersSortedBySales.length - 1]
+            "
           ></supplier>
         </v-card>
         <v-row class="mt-4" justify="center">
           <v-label>
-            <span style="font-size: 22px; text-align: center">least selling supplier</span>
+            <span style="font-size: 22px; text-align: center"
+              >least selling supplier</span
+            >
           </v-label>
         </v-row>
       </v-col>
@@ -314,11 +361,19 @@
       </v-col>
 
       <v-col lg="3">
-        <v-select :items="regions" placeholder="Region" dense outlined v-model="region"></v-select>
+        <v-select
+          :items="regions"
+          placeholder="Region"
+          dense
+          outlined
+          v-model="region"
+        ></v-select>
       </v-col>
 
       <v-col lg="1">
-        <v-btn class="white--text" @click="filterSuppliers" :color="siteColor">Search</v-btn>
+        <v-btn class="white--text" @click="filterSuppliers" :color="siteColor"
+          >Search</v-btn
+        >
       </v-col>
 
       <v-col lg="1">
@@ -343,7 +398,13 @@
     </v-row>
 
     <v-row justify="center">
-      <v-btn large :color="siteColor" class="mb-15 white--text" @click="loadMore">load more</v-btn>
+      <v-btn
+        large
+        :color="siteColor"
+        class="mb-15 white--text"
+        @click="loadMore"
+        >load more</v-btn
+      >
     </v-row>
   </v-app>
 </template>
@@ -702,6 +763,7 @@ export default {
         }
       }
       console.log(this.categoryItems);
+      console.log("categories items is", this.categoriesItems);
     },
     removeItem() {
       console.log(this.chooseCategoryToRemove, this.chooseItemToRemove);

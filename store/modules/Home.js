@@ -57,12 +57,10 @@ export default {
         },
 
         categoriesDB(state, data) {
-            console.log('category state entered', data)
-            state.categoriesItems = data
             state.category = data.map(e => {
                 return e.category_name
             })
-            console.log(state.category)
+
         },
 
         filterProducts(state, products) {
@@ -95,6 +93,7 @@ export default {
 
         getCategoryItems(state, items) {
             state.categoriesItems = items
+            console.log('get categories ittems', items)
         }
 
 
@@ -273,7 +272,25 @@ export default {
                     alert(message.data.message)
                 })
         },
+        requestNewCategoryAndItem(context, {
+            newCategoryName,
+            newCategoryDescription,
+            newCategoryItem,
+            newCategoryItemDescription,
+            categoryName }) {
 
+            axios.post('http://localhost:3000/api/requestNewCategoryAndItem', {
+                newCategoryName,
+                newCategoryDescription,
+                newCategoryItem,
+                newCategoryItemDescription,
+                categoryName,
+                user_id: context.state.currentUser.user_id
+            }).then(res => {
+                console.log(res.data.message)
+                console.log(res.data.data)
+            })
+        }
 
 
     }

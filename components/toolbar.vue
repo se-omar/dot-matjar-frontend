@@ -1,11 +1,22 @@
 <template>
   <div class="tool-bar">
-    <v-app-bar :color="siteColor" dark>
+    <!-- <div class="vld-parent">
+      <loading
+        :active.sync="isLoading"
+        :can-cancel="false"
+        :is-full-page="true"
+      ></loading>
+    </div> -->
+    <v-app-bar fixed class="white" shaped>
       <span v-if="!supplierPageInfo.logo">
-        <v-btn text @click="$router.push('/').catch(() => {})">
-          <i class="fa fa-shopping-cart fa-lg"></i>
-          <span class="mt-2">Dot-Matjar</span>
-        </v-btn>
+        <a @click="$router.push('/').catch(() => {})">
+          <v-img
+            src="../assets/images/dotmatjar_logo.png"
+            max-height="150"
+            max-width="160"
+            contain
+          ></v-img>
+        </a>
       </span>
 
       <span v-else class="ml-4">
@@ -22,7 +33,31 @@
       </span>
 
       <v-spacer></v-spacer>
-
+      <v-row justify="center">
+        <v-col cols="12" lg="12" sm="12" md="10">
+          <v-text-field
+            class="mt-8"
+            outlined
+            rounded
+            placeholder="SEARCH"
+            append-icon="fa fa-search"
+            @keyup="emptySearchBox"
+            v-model="toolbarSearch"
+            @keypress="filterProducts"
+          ></v-text-field>
+        </v-col>
+        <!-- <v-col cols="2">
+          <v-btn
+            class="white--text"
+            style="margin-top: 40px"
+            :color="siteColor"
+            rounded
+            max-width="80"
+            @click="filterProducts"
+            >Search</v-btn
+          >
+        </v-col> -->
+      </v-row>
       <v-menu
         v-if="currentUser"
         transition="fab-transition"
@@ -34,9 +69,14 @@
         min-width="300px"
       >
         <template v-slot:activator="{ on, attrs }">
-          <v-btn text dark v-bind="attrs" v-on="on">
-            <i class="fa fa-user fa-lg mt-n1 mr-1"></i>
-            <span class="font">Profile</span>
+          <v-btn
+            class="font blue--text text--darken-4"
+            text
+            v-bind="attrs"
+            v-on="on"
+          >
+            <i class="fa fa-user fa-lg mt-n1 mr-1" style="color: black"></i>
+            <span>Profile</span>
           </v-btn>
         </template>
 
@@ -206,7 +246,7 @@
 
       <!-- ================= -->
       <v-btn
-        class="font"
+        class="font black--text"
         v-if="
           !currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs
         "
@@ -216,7 +256,7 @@
       >
 
       <v-btn
-        class="font"
+        class="font blue--text text--darken-4"
         v-if="
           currentUser &&
           currentUser.user_type == 'business' &&
@@ -242,7 +282,7 @@
       > -->
 
       <v-btn
-        class="font"
+        class="font blue--text text--darken-4"
         v-if="
           currentUser.user_type == 'user' &&
           !$vuetify.breakpoint.sm &&
@@ -254,7 +294,7 @@
       >
 
       <v-btn
-        class="font"
+        class="font blue--text text--darken-4"
         v-if="
           currentUser &&
           currentUser.user_type == 'business' &&
@@ -267,7 +307,7 @@
       >
 
       <v-btn
-        class="font"
+        class="font blue--text text--darken-4"
         v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
       >
@@ -275,7 +315,7 @@
       </v-btn>
 
       <v-btn
-        class="font"
+        class="font blue--text text--darken-4"
         v-if="
           currentUser &&
           currentUser.user_type == 'admin' &&
@@ -288,7 +328,7 @@
       >
 
       <v-btn
-        class="font"
+        class="font blue--text text--darken-4"
         v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
         @click="logout"
@@ -459,10 +499,31 @@ export default {
         .push("/supplierPage/" + this.supplier.user_id)
         .catch(() => {});
     },
+    emptySearchBox() {
+      if (!this.toolbarSearch) {
+        this.$store.commit("emptySearch");
+      }
+    },
+    async filterProducts() {
+      this.productFilterFlag = true;
+
+      await this.$store.dispatch("filterProducts", {
+        product_name: this.toolbarSearch,
+        category_name: this.categoryName,
+        governorate: this.governorate,
+        region: this.region,
+      });
+    },
   },
   data: () => ({
     profilephoto: [],
     drawer: false,
+    isLoading: false,
+    categoryName: "",
+    governorate: "",
+    region: "",
+    productFilterFlag: false,
+    toolbarSearch: "",
   }),
 };
 </script>

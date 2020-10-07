@@ -10,6 +10,13 @@
         <v-card>
           <v-row>
             <v-col cols="12" lg="6">
+              <v-toolbar shaped dark dense :color="siteColor">
+                <v-spacer></v-spacer>
+                <v-toolbar-title>
+                  <p class="text-h4 white--text mt-4">Users</p>
+                </v-toolbar-title>
+                <v-spacer></v-spacer>
+              </v-toolbar>
               <v-data-table
                 @click:row="showProducts"
                 :headers="usersTableHeaders"
@@ -29,6 +36,13 @@
             </v-col>
             <v-divider></v-divider>
             <v-col cols="12" lg="6">
+              <v-toolbar shaped dark dense :color="siteColor">
+                <v-spacer></v-spacer>
+                <v-toolbar-title>
+                  <p class="text-h4 white--text mt-4">Products</p>
+                </v-toolbar-title>
+                <v-spacer></v-spacer>
+              </v-toolbar>
               <v-data-table
                 :headers="productsTableHeaders"
                 :items="showOrderProducts"
@@ -234,6 +248,7 @@ export default {
     userMadeOrder: "",
     snackbar: false,
     timeout: 2000,
+    // updating this page
   }),
   methods: {
     async showProducts(event) {
@@ -268,6 +283,7 @@ export default {
         productId: this.clickedProductInfo.product_id,
       });
     },
+    // uppdating page
   },
   async created() {
     await this.$store.dispatch("refreshCurrentUser");
@@ -301,6 +317,7 @@ export default {
         return "red darken-4";
       }
     },
+    // updating page
   },
 };
 </script>

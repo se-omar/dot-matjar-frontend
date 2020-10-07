@@ -1,9 +1,9 @@
 <template>
-  <v-footer :color="siteColor" height="auto">
-    <v-card flat tile :color="siteColor" width="100%">
+  <v-footer color="blue lighten-3" height="auto">
+    <v-card flat tile color="white" width="100%">
       <v-card-text>
         <v-row justify="center">
-          <v-btn v-for="icon in icons" :key="icon" class="mx-8 white--text" icon>
+          <v-btn v-for="icon in icons" :key="icon" class="mx-8 blue--text" icon>
             <v-icon @click="iconPressed(icon)" size="24px">{{ icon }}</v-icon>
           </v-btn>
         </v-row>
@@ -12,15 +12,30 @@
       <v-row justify="center">
         <v-card-text
           v-if="!supplierPageInfo.footer"
-          class="white--text pt-1 mx-1"
-        >Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehicula lacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursus iaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</v-card-text>
-        <v-card-text class="white--text" v-else>{{supplierPageInfo.footer}}</v-card-text>
+          class="blue--text pt-1 mx-1"
+          >Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet.
+          Mauris cursus commodo interdum. Praesent ut risus eget metus luctus
+          accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim
+          a sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehicula
+          lacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursus
+          iaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementum
+          tempor vel ut orci. Orci varius natoque penatibus et magnis dis
+          parturient montes, nascetur ridiculus mus.</v-card-text
+        >
+        <v-card-text class="white--text" v-else>{{
+          supplierPageInfo.footer
+        }}</v-card-text>
       </v-row>
       <v-divider></v-divider>
 
-      <v-card-text class="white--text pt-2">
-        &copy; Copywrites 2020 -
-        <strong>Dot-Matjar</strong>
+      <v-card-text class="blue--text pt-2">
+        &copy; Copywrites 2020 to Dot-Matjar
+        <v-img
+          src="../assets/images/dotmatjar_logo.png"
+          max-height="100"
+          max-width="50"
+          contain
+        ></v-img>
       </v-card-text>
     </v-card>
   </v-footer>

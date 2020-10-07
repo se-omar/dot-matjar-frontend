@@ -8,8 +8,8 @@
         :is-full-page="true"
       ></loading>
     </div>
-
-    <v-row justify="center">
+    <!-- testin g sub mrnu  -->
+    <!-- <v-row justify="center">
       <v-col cols="6">
         <v-text-field
           append-icon="fa fa-search"
@@ -31,7 +31,200 @@
           >Search</v-btn
         >
       </v-col>
-      <!-- <v-col cols="6" lg="7">
+    </v-row> -->
+    <v-row>
+      <v-col>
+        <span></span>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <span></span>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <span></span>
+      </v-col>
+    </v-row>
+    <!-- search woth supplier and proucts -->
+    <v-row justify="center">
+      <v-radio-group style="margin-right: 50px" mandatory v-model="radioGroup">
+        <v-row class="mb-n5" justify="center">
+          <v-col cols="3" lg="4" sm="5" md="5">
+            <v-radio label="Search for Products" value="1"></v-radio>
+          </v-col>
+
+          <v-col cols="3" lg="4" sm="5" md="5">
+            <v-radio label="Search for suppliers" value="2"></v-radio>
+          </v-col>
+        </v-row>
+      </v-radio-group>
+    </v-row>
+    <v-row justify="center">
+      <v-col cols="3" sm="2" lg="3"></v-col>
+      <v-col cols="3" lg="3" sm="4" md="3">
+        <v-select
+          rounded
+          v-if="radioGroup === '1'"
+          :items="egyptGovernorates"
+          :disabled="radioGroup === '2'"
+          placeholder="Governorate"
+          dense
+          outlined
+          v-model="governorate"
+          @change="getCountryRegions()"
+        ></v-select>
+      </v-col>
+
+      <v-col cols="3" lg="3" sm="4" md="3">
+        <v-select
+          rounded
+          v-if="radioGroup === '1'"
+          :items="regions"
+          :disabled="radioGroup === '2'"
+          placeholder="Region"
+          dense
+          outlined
+          v-model="region"
+        ></v-select>
+      </v-col>
+      <v-col lg="3" cols="3" sm="2"></v-col>
+      <v-col cols="2" lg="3" sm="4" md="4">
+        <v-select
+          rounded
+          v-if="radioGroup === '2'"
+          :items="egyptGovernorates"
+          :disabled="radioGroup === '1'"
+          placeholder="Governorate"
+          dense
+          outlined
+          v-model="governorate"
+          @change="getCountryRegions()"
+        ></v-select>
+      </v-col>
+
+      <v-col cols="2" lg="3" sm="4" md="4">
+        <v-text-field
+          rounded
+          v-if="radioGroup === '2'"
+          :disabled="radioGroup === '1'"
+          @keyup="emptySupplierName"
+          dense
+          outlined
+          v-model="supplierName"
+          placeholder="Search Suppliers by Name"
+        ></v-text-field>
+      </v-col>
+      <v-col lg="3" cols="2" sm="4" md="4">
+        <v-select
+          rounded
+          v-if="radioGroup === '2'"
+          :items="regions"
+          :disabled="radioGroup === '1'"
+          placeholder="Region"
+          dense
+          outlined
+          v-model="region"
+        ></v-select>
+      </v-col>
+    </v-row>
+    <v-row class="mt-n3" justify="center">
+      <v-col sm="3" lg="3" md="3"></v-col>
+      <v-col cols="6" sm="3" md="3" lg="3">
+        <v-text-field
+          :disabled="radioGroup === '2'"
+          dense
+          rounded
+          outlined
+          type="number"
+          label="Price From"
+        ></v-text-field>
+      </v-col>
+
+      <v-col cols="6" sm="3" md="3" lg="3">
+        <v-text-field
+          :disabled="radioGroup === '2'"
+          dense
+          outlined
+          rounded
+          type="number"
+          label="Price TO"
+        ></v-text-field>
+      </v-col>
+      <v-col sm="3" lg="3" md="3"></v-col>
+      <v-col lg="3" sm="3" md="3"></v-col>
+      <v-col cols="4" sm="2" md="2" lg="2">
+        <v-btn
+          :disabled="radioGroup === '2'"
+          class="white--text"
+          @click="filterProducts"
+          :color="siteColor"
+          rounded
+          max-width="80"
+          >Search</v-btn
+        >
+      </v-col>
+
+      <v-col cols="4" sm="2" md="2" lg="2">
+        <v-btn class="white--text" @click="All" :color="siteColor" rounded
+          >All</v-btn
+        >
+      </v-col>
+
+      <v-col cols="4" sm="2" md="2" lg="2">
+        <v-btn
+          :disabled="radioGroup === '1'"
+          class="white--text"
+          @click="filterSuppliers"
+          :color="siteColor"
+          rounded
+          max-width="80"
+          >Search</v-btn
+        >
+      </v-col>
+      <v-col sm="3" lg="3" md="3"></v-col>
+    </v-row>
+    <v-row justify="center">
+      <!-- <v-col cols="3" class="ml-4">
+        <v-card class="ml-2" max-width="250">
+          <v-row justify="center"
+            ><v-card-title>Categories</v-card-title>
+          </v-row>
+          <v-divider class="mx-16"></v-divider>
+          <v-col cols="12" v-for="category in category" :key="category">
+            <v-menu offset-x :close-on-content-click="false" open-on-hover>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  @mouseover="mouseOver(category)"
+                  v-bind="attrs"
+                  v-on="on"
+                  text
+                  @click="filterProductsWithCategory(category)"
+                >
+                  <i :class="`fas fa-${category} fa-2x mr-4`"></i>
+                  {{ category }}
+                  <i class="fa fa-chevron-right ml-4" aria-hidden="true"></i>
+                </v-btn>
+              </template>
+              <v-card>
+                <v-list v-for="item in categoryItems" :key="item">
+                  <v-btn
+                    class="black--text"
+                    @click="filterProductsWithItem(item)"
+                    text
+                  >
+                    -
+                    <i :class="`fa fa-${item} fa-lg ml-2 mr-2`"></i>
+                    {{ item }}
+                  </v-btn>
+                </v-list>
+              </v-card>
+            </v-menu>
+          </v-col>
+        </v-card>
+      </v-col> -->
+      <v-col cols="11">
         <carousel
           :autoplay="true"
           :per-page="1"
@@ -52,21 +245,70 @@
             <v-img height="400" src="..\assets\images/download.jpg"></v-img>
           </slide>
         </carousel>
-      </v-col>-->
-
-      <v-col class="mr-n10" lg="1" v-if="currentUser.user_type == 'admin'">
+      </v-col>
+      <v-col cols="1" class="mr-n10" v-if="currentUser.user_type == 'admin'">
         <SiteColor disabled></SiteColor>
       </v-col>
     </v-row>
 
-    <v-row class="ml-2 mt-n7">
-      <v-col lg="2" style="max-width: 12%">
+    <v-row class="ml-8 mt-n7">
+      <v-col lg="1" sm="3" md="3">
         <v-card height="95%">
-          <v-img src="../assets/images/603-150x600.jpg"></v-img>
+          <!-- <v-row justify="center"
+            ><v-card-title>Categories</v-card-title>
+          </v-row> -->
+          <v-divider class="mx-16"></v-divider>
+
+          <v-row>
+            <v-col
+              cols="6"
+              sm="12"
+              lg="12"
+              v-for="category in category"
+              :key="category"
+            >
+              <v-menu offset-x :close-on-content-click="false" open-on-hover>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-row justify="center">
+                    <v-card-actions>
+                      <v-btn
+                        @mouseover="mouseOver(category)"
+                        v-bind="attrs"
+                        v-on="on"
+                        text
+                        @click="filterProductsWithCategory(category)"
+                      >
+                        <i :class="`fas fa-${category} fa-lg `"></i>
+                        <span style="font-size: 15px"> {{ category }}</span>
+                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                      </v-btn>
+                    </v-card-actions>
+                  </v-row>
+                </template>
+                <v-card>
+                  <v-list
+                    class="ml-2"
+                    v-for="item in categoryItems"
+                    :key="item"
+                  >
+                    <v-btn
+                      class="black--text"
+                      @click="filterProductsWithItem(item)"
+                      text
+                    >
+                      -
+                      <i :class="`fa fa-${item} fa-lg ml-2 mr-2`"></i>
+                      {{ item }}
+                    </v-btn>
+                  </v-list>
+                </v-card>
+              </v-menu>
+            </v-col>
+          </v-row>
         </v-card>
       </v-col>
 
-      <v-col lg="9">
+      <v-col lg="9" sm="7" md="7">
         <v-radio-group mandatory v-model="radioGroup">
           <v-row class="mb-n5" justify="center">
             <v-col lg="4">
@@ -78,254 +320,6 @@
             </v-col>
           </v-row>
         </v-radio-group>
-
-        <v-row justify="center">
-          <!-- <v-col lg="4">
-            <v-text-field
-              v-if="radioGroup === '1'"
-              :disabled="radioGroup === '2'"
-              items="items"
-              @keyup="emptySearchBox"
-              dense
-              outlined
-              v-model="toolbarSearch"
-              placeholder="Search for your Product"
-            ></v-text-field>
-          </v-col> -->
-          <v-row justify="center">
-            <!-- <v-col lg="4">
-              <v-select
-                v-if="radioGroup === '1'"
-                @keyup="emptySelectBox"
-                :disabled="radioGroup === '2'"
-                placeholder="Search By category"
-                dense
-                outlined
-                v-model="categoryName"
-                :items="category"
-                @change="gettingCategoryItems"
-              ></v-select>
-            </v-col>
-            <v-col lg="4">
-              <v-select
-                v-if="radioGroup === '1'"
-                @keyup="emptySelectBox"
-                :disabled="radioGroup === '2'"
-                placeholder="Search By item"
-                dense
-                outlined
-                v-model="categoryItem"
-                :items="categoryItems"
-                @change="categoriesDB"
-              ></v-select>
-            </v-col> -->
-
-            <v-col lg="4">
-              <v-select
-                rounded
-                v-if="radioGroup === '1'"
-                :items="egyptGovernorates"
-                :disabled="radioGroup === '2'"
-                placeholder="Governorate"
-                dense
-                outlined
-                v-model="governorate"
-                @change="getCountryRegions()"
-              ></v-select>
-            </v-col>
-
-            <v-col lg="4">
-              <v-select
-                rounded
-                v-if="radioGroup === '1'"
-                :items="regions"
-                :disabled="radioGroup === '2'"
-                placeholder="Region"
-                dense
-                outlined
-                v-model="region"
-              ></v-select>
-            </v-col>
-
-            <v-col lg="4">
-              <v-select
-                rounded
-                v-if="radioGroup === '2'"
-                :items="egyptGovernorates"
-                :disabled="radioGroup === '1'"
-                placeholder="Governorate"
-                dense
-                outlined
-                v-model="governorate"
-                @change="getCountryRegions()"
-              ></v-select>
-            </v-col>
-          </v-row>
-
-          <v-col lg="3">
-            <v-text-field
-              rounded
-              v-if="radioGroup === '2'"
-              :disabled="radioGroup === '1'"
-              @keyup="emptySupplierName"
-              dense
-              outlined
-              v-model="supplierName"
-              placeholder="Search Suppliers by Name"
-            ></v-text-field>
-          </v-col>
-        </v-row>
-
-        <v-row justify="center">
-          <v-col lg="4"></v-col>
-
-          <v-col lg="4">
-            <v-select
-              rounded
-              v-if="radioGroup === '2'"
-              :items="regions"
-              :disabled="radioGroup === '1'"
-              placeholder="Region"
-              dense
-              outlined
-              v-model="region"
-            ></v-select>
-          </v-col>
-        </v-row>
-
-        <v-row class="mt-n3" justify="center">
-          <v-col cols="6" sm="6" md="6" lg="6">
-            <v-text-field
-              :disabled="radioGroup === '2'"
-              dense
-              type="number"
-              label="Price From"
-            ></v-text-field>
-          </v-col>
-
-          <v-col cols="6" sm="6" md="6" lg="6">
-            <v-text-field
-              :disabled="radioGroup === '2'"
-              dense
-              type="number"
-              label="Price TO"
-            ></v-text-field>
-          </v-col>
-
-          <v-col cols="4" sm="4" md="4" lg="4">
-            <v-btn
-              :disabled="radioGroup === '2'"
-              class="white--text"
-              @click="filterProducts"
-              :color="siteColor"
-              rounded
-              max-width="80"
-              >Search</v-btn
-            >
-          </v-col>
-
-          <v-col cols="4" sm="4" md="4" lg="4">
-            <v-btn class="white--text" @click="All" :color="siteColor" rounded
-              >All</v-btn
-            >
-          </v-col>
-
-          <v-col cols="4" sm="4" md="4" lg="4">
-            <v-btn
-              :disabled="radioGroup === '1'"
-              class="white--text"
-              @click="filterSuppliers"
-              :color="siteColor"
-              rounded
-              max-width="80"
-              >Search</v-btn
-            >
-          </v-col>
-          <!-- <v-row justify="start">
-            <v-card
-              max-height
-              class="ml-2"
-              :color="siteColor"
-              rounded
-              max-width="600"
-            >
-              <v-row>
-                <v-col cols="4" v-for="category in category" :key="category">
-                  <v-menu
-                    offset-x
-                    :close-on-content-click="false"
-                    open-on-hover
-                  >
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-btn
-                        @mouseover="mouseOver(category)"
-                        v-bind="attrs"
-                        v-on="on"
-                        text
-                        rounded
-                        class="white--text"
-                        @click="filterProductsWithCategory(category)"
-                      >
-                        {{ category }}
-                        <i :class="`fas fa-${category} fa-2x ml-2`"></i>
-                      </v-btn>
-                    </template>
-
-                    <v-card>
-                      <v-list
-                        :color="siteColor"
-                        v-for="item in categoryItems"
-                        :key="item"
-                      >
-                        <v-btn
-                          class="white--text"
-                          @click="filterProductsWithItem(item)"
-                          text
-                        >
-                          - {{ item }}
-                          <i :class="`fa fa-${item} fa-lg ml-2`"></i>
-                        </v-btn>
-                      </v-list>
-                    </v-card>
-                  </v-menu>
-                  <v-col cols="6">
-                    <v-divider class="white"></v-divider>
-                  </v-col>
-                </v-col>
-              </v-row>
-            </v-card>
-          </v-row> -->
-        </v-row>
-        <v-row justify="center">
-          <v-toolbar shaped dark dense :color="siteColor">
-            <v-col cols="2" v-for="category in category" :key="category">
-              <v-menu offset-x :close-on-content-click="false" open-on-hover>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    @mouseover="mouseOver(category)"
-                    v-bind="attrs"
-                    v-on="on"
-                    text
-                    rounded
-                    class="white--text"
-                    @click="filterProductsWithCategory(category)"
-                  >
-                    {{ category }}
-                    <i :class="`fas fa-${category} fa-2x ml-2`"></i>
-                  </v-btn>
-                </template>
-                <v-card style="background-color: red">
-                  <v-list v-for="(item, index) in categoryItems" :key="index">
-                    <v-btn @click="filterProductsWithItem(item)" text>
-                      - {{ item }}
-                      <i :class="`fa fa-${item} fa-lg ml-2`"></i>
-                    </v-btn>
-                  </v-list>
-                </v-card>
-              </v-menu>
-            </v-col>
-          </v-toolbar>
-        </v-row>
 
         <v-row class="ml-7 mr-7" v-if="radioGroup === '1'">
           <v-col
@@ -369,7 +363,7 @@
         </v-row>
       </v-col>
 
-      <v-col lg="2" style="max-width: 12%">
+      <v-col lg="2" sm="2" md="2">
         <v-card height="95%">
           <v-img src="../assets/images/603-150x600.jpg"></v-img>
         </v-card>
@@ -404,13 +398,14 @@ export default {
       isLoading: false,
       categoryItems: [],
       categoryItem: "",
-      // categories: [
+      // testCategories: [
       //   { name: "Clothing", icon: "fa fa-user-tie fa-2x ml-2" },
       //   { name: "Furniture", icon: "fa fa-couch fa-2x ml-2" },
       //   { name: "Labtops", icon: "fa fa-laptop fa-2x ml-2" },
       //   { name: "Mobile Phones", icon: "fa fa-mobile fa-2x ml-2" },
       //   { name: "Cars", icon: "fa fa-car fa-2x ml-2" },
       // ],
+      menuButton: false,
     };
   },
   async created() {

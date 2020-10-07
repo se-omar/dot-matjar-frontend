@@ -46,28 +46,54 @@
           </v-form>
           <v-row>
             <v-col cols="6">
-              <v-text-field v-model="productCode" dense outlined label="Code"></v-text-field>
+              <v-text-field
+                v-model="productCode"
+                dense
+                outlined
+                label="Code"
+              ></v-text-field>
             </v-col>
 
             <v-col cols="6">
-              <v-text-field dense v-model="HScode" outlined label="HS code"></v-text-field>
+              <v-text-field
+                dense
+                v-model="HScode"
+                outlined
+                label="HS code"
+              ></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
             <v-form v-model="valid">
               <v-col cols="12">
-                <v-text-field :rules="rules" dense v-model="unitPrice" outlined label="Price"></v-text-field>
+                <v-text-field
+                  :rules="rules"
+                  dense
+                  v-model="unitPrice"
+                  outlined
+                  label="Price"
+                ></v-text-field>
               </v-col>
             </v-form>
             <v-col cols="6">
-              <v-text-field dense v-model="minUnits" outlined label="Minimum required orders"></v-text-field>
+              <v-text-field
+                dense
+                v-model="minUnits"
+                outlined
+                label="Minimum required orders"
+              ></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
             <v-col cols="6">
-              <v-text-field v-model="color" dense outlined label="Color"></v-text-field>
+              <v-text-field
+                v-model="color"
+                dense
+                outlined
+                label="Color"
+              ></v-text-field>
             </v-col>
 
             <v-col cols="6">
@@ -77,8 +103,134 @@
 
           <v-row>
             <v-col cols="12">
-              <v-textarea v-model="description" dense outlined label="Description"></v-textarea>
+              <v-textarea
+                v-model="description"
+                dense
+                outlined
+                label="Description"
+              ></v-textarea>
             </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12">
+              <h4>Want to add your own category ?</h4>
+              <v-btn @click.stop="dialog = true" :color="siteColor" text
+                >Click here</v-btn
+              >
+            </v-col>
+            <v-dialog
+              persistent
+              v-model="dialog"
+              fullscreen
+              hide-overlay
+              transition="dialog-bottom-transition"
+            >
+              <v-toolbar dark :color="siteColor">
+                <v-btn icon dark @click="dialog = false">
+                  <i class="fa fa-times fa-lg"></i>
+                </v-btn>
+                <v-spacer></v-spacer>
+                <v-toolbar-title>Category Request</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-toolbar-items>
+                  <v-btn dark text @click="dialog = false"> Save </v-btn>
+                </v-toolbar-items>
+              </v-toolbar>
+              <v-card>
+                <!-- Adding cateogryiessssss -->
+                <v-row justify="center">
+                  <h2>Request for new Category</h2>
+                </v-row>
+                <v-row justify="center">
+                  <v-form v-model="addCategoryValidation">
+                    <v-col cols="12">
+                      <v-text-field
+                        :rules="rules"
+                        v-model="newCategoryName"
+                        placeholder="Category name"
+                        rounded
+                        outlined
+                        :color="siteColor"
+                      ></v-text-field>
+                    </v-col>
+                  </v-form>
+                </v-row>
+                <v-row justify="center">
+                  <v-col cols="6">
+                    <v-textarea
+                      label="Description"
+                      rounded
+                      outlined
+                      v-model="newCategoryDescription"
+                    ></v-textarea>
+                  </v-col>
+                </v-row>
+                <v-row justify="center">
+                  <v-btn
+                    :disabled="!addCategoryValidation"
+                    rounded
+                    :color="siteColor"
+                    class="white--text"
+                    @click="requestNewCategoryAndItem"
+                    >Add Category</v-btn
+                  >
+                </v-row>
+                <v-divider class="mx-16"></v-divider>
+                <!-- Adding category items -->
+                <v-row justify="center">
+                  <h2>Request a Category item</h2>
+                </v-row>
+
+                <v-form justify="center" v-model="addingItemsValidation">
+                  <v-row justify="center">
+                    <v-col cols="3">
+                      <v-select
+                        :rules="rules"
+                        outlined
+                        rounded
+                        :items="category"
+                        v-model="categoryName"
+                        placeholder="Category Name"
+                      ></v-select>
+                    </v-col>
+
+                    <v-col cols="3">
+                      <v-text-field
+                        v-model="newCategoryItem"
+                        placeholder="Category item"
+                        class="text-xl"
+                        rounded
+                        outlined
+                        :rules="rules"
+                        :color="siteColor"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-row justify="center">
+                    <v-col cols="6">
+                      <v-textarea
+                        label="Description"
+                        rounded
+                        outlined
+                        v-model="newCategoryItemDescription"
+                      ></v-textarea>
+                    </v-col>
+                  </v-row>
+                </v-form>
+
+                <v-row justify="center">
+                  <v-btn
+                    :disabled="!addingItemsValidation"
+                    rounded
+                    :color="siteColor"
+                    class="white--text"
+                    @click="requestNewCategoryAndItem"
+                    >Add item</v-btn
+                  >
+                </v-row>
+                <v-divider class="mx-16"></v-divider>
+              </v-card>
+            </v-dialog>
           </v-row>
         </v-col>
 
@@ -114,13 +266,22 @@
         <v-col lg="7" md="8" sm="8" cols="10">
           <v-row justify="center">
             <v-col cols="4">
-              <v-btn :disabled="!valid" @click="addProduct" rounded class="primary">
+              <v-btn
+                :disabled="!valid"
+                @click="addProduct"
+                rounded
+                class="primary"
+              >
                 <span style="font-size: 18px">Add product</span>
               </v-btn>
             </v-col>
 
             <v-col cols="4">
-              <v-btn @click="$router.push('/myProducts')" rounded class="red white--text">
+              <v-btn
+                @click="$router.push('/myProducts')"
+                rounded
+                class="red white--text"
+              >
                 <span style="font-size: 18px">Cancel</span>
               </v-btn>
             </v-col>
@@ -144,6 +305,9 @@ export default {
     },
     category() {
       return this.$store.state.Home.category;
+    },
+    siteColor() {
+      return this.$store.state.Home.siteColor;
     },
   },
 
@@ -169,8 +333,15 @@ export default {
 
       valid: true,
       categoryName: "",
-      catgoryItems: [],
+      categoryItems: [],
       categoryItem: "",
+      dialog: false,
+      addCategoryValidation: false,
+      addingItemsValidation: false,
+      newCategoryName: "",
+      newCategoryItemDescription: "",
+      newCategoryDescription: "",
+      newCategoryItem: "",
     };
   },
   methods: {
@@ -223,17 +394,30 @@ export default {
     },
 
     gettingCategoryItems() {
+      this.$store.dispatch("getCategoryItems");
       this.categoryItems = [];
       for (let i = 0; i < this.categoriesItems.length; i++) {
         if (this.categoriesItems[i].category_name == this.categoryName) {
           this.categoryItems.push(this.categoriesItems[i].category_items);
         }
       }
-      console.log(this.categoryItems);
+      console.log("categiry items is", this.categoryItems);
+      console.log("categories items is", this.categoriesItems);
+    },
+    requestNewCategoryAndItem() {
+      this.$store.dispatch("requestNewCategoryAndItem", {
+        newCategoryName: this.newCategoryName,
+        newCategoryDescription: this.newCategoryDescription,
+        newCategoryItem: this.newCategoryItem,
+        newCategoryItemDescription: this.newCategoryItemDescription,
+        categoryName: this.categoryName,
+      });
     },
   },
   created() {
-    console.log(this.$store.state.category);
+    this.$store.dispatch("getCategoryItems");
+    this.$store.dispatch("categoriesDB");
+
     this.$store.dispatch("refreshCurrentUser");
     return new Promise((resolve) => {
       setTimeout(() => {
