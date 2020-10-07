@@ -24,12 +24,15 @@
 
     <v-row class="ml-2">
       <v-col
-        v-if="supplierPageInfo.show_left_banner"
+        v-if="
+          supplierPageInfo.show_left_banner &&
+          supplierPageInfo.left_banner_image
+        "
         lg="2"
         style="max-width: 12%"
       >
         <v-card height="95%">
-          <v-img src="../assets/images/603-150x600.jpg"></v-img>
+          <v-img :src="nodeHost + supplierPageInfo.left_banner_image"></v-img>
         </v-card>
       </v-col>
 
@@ -350,11 +353,14 @@
 
       <v-col
         lg="2"
-        v-if="supplierPageInfo.show_right_banner"
+        v-if="
+          supplierPageInfo.show_right_banner &&
+          supplierPageInfo.right_banner_image
+        "
         style="max-width: 12%"
       >
         <v-card height="95%">
-          <v-img src="../assets/images/603-150x600.jpg"></v-img>
+          <v-img :src="nodeHost + supplierPageInfo.right_banner_image"></v-img>
         </v-card>
       </v-col>
 
