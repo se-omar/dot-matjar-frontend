@@ -231,52 +231,22 @@ export default {
                 })
         },
 
-        async removeCarouselImage1(context, { id }) {
-            await axios.post('http://localhost:3000/api/removeCarouselImage1', {
-                id
+        async removeCarouselImage(context, { id, imgName }) {
+            await axios.post('http://localhost:3000/api/removeCarouselImage', {
+                id, imgName
             }).then(response => {
                 console.log('remove img response', response)
             })
         },
 
-        async removeCarouselImage2(context, { id }) {
-            await axios.post('http://localhost:3000/api/removeCarouselImage2', {
-                id
+
+        async removeBannerImage(context, { id, imgName }) {
+            await axios.post('http://localhost:3000/api/removeBannerImage', {
+                id, imgName
             }).then(response => {
                 console.log('remove img response', response)
             })
         },
 
-        async removeCarouselImage3(context, { id }) {
-            await axios.post('http://localhost:3000/api/removeCarouselImage3', {
-                id
-            }).then(response => {
-                console.log('remove img response', response)
-            })
-        },
-
-        async removeCarouselImage4(context, { id }) {
-            await axios.post('http://localhost:3000/api/removeCarouselImage4', {
-                id
-            }).then(response => {
-                console.log('remove img response', response)
-            })
-        },
-
-        async removeLeftBannerImage(context, { id }) {
-            await axios.post('http://localhost:3000/api/removeLeftBannerImage', {
-                id
-            }).then(response => {
-                console.log('remove img response', response)
-            })
-        },
-
-        async removeRightBannerImage(context, { id }) {
-            await axios.post('http://localhost:3000/api/removeRightBannerImage', {
-                id
-            }).then(response => {
-                console.log('remove img response', response)
-            })
-        }
     }
 }
