@@ -27,6 +27,8 @@ import suppliersDashboard from '../views/allSuppliersDashboard'
 import orderedProducts from '../views/orderedProducts'
 import updateSupplierPage from '../views/updateSupplierPage'
 import pendingSuppliers from '../views/pendingSuppliers'
+import categoryAndItemRequests from '../views/categoryAndItemRequests.vue'
+import siteColors from '../views/siteColors.vue'
 // import { isInteger } from 'core-js/fn/number'
 Vue.use(VueRouter)
 
@@ -168,6 +170,16 @@ var routes = [{
   path: '/pendingSuppliers',
   name: 'pendingSuppliers',
   component: pendingSuppliers
+},
+{
+  path: '/categoryAndItemRequests',
+  name: 'categoryAndItemRequests',
+  component: categoryAndItemRequests
+},
+{
+  path: '/siteColors',
+  name: 'siteColors',
+  component: siteColors
 },
 {
   path: '*',

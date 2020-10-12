@@ -1,26 +1,30 @@
 <template>
   <div>
-    <v-row justify="start" class="ml-2" v-if="currentUser.user_type == 'user'">
-      <v-col cols="1" lg="1">
+    <v-row justify="end" class="ml-2" v-if="currentUser.user_type == 'user'">
+      <v-col cols="12">
         <v-btn
-          :color="siteColor"
-          dark
+          color="white"
           x-large
           @click.stop="dialog = true"
           @click="table"
           v-if="currentUser"
-          fab
           fixed
+          fab
+          style="margin-top: 80px; margin-left: 85%"
         >
-          <i class="fa fa-2x fa-shopping-cart mr-1" aria-hidden="true"></i>
-          <!-- <v-icon medium >shopping cart</v-icon> -->
+          <!-- <i class="fa fa-2x fa-shopping-cart" aria-hidden="true"></i> -->
+          <v-img
+            max-height="60"
+            max-width="50"
+            src="../assets/images/cart-logo.png"
+          ></v-img>
         </v-btn>
       </v-col>
       <!-- =============== -->
 
-      <v-row>
+      <v-row justify="end">
         <v-col cols="12" sm="6" md="6" lg="12">
-          <v-dialog v-model="dialog" max-width="600px">
+          <v-dialog style="overflow: hidden" v-model="dialog" max-width="600px">
             <v-data-table
               hide-default-footer
               @click:row="rowclicked"
@@ -35,7 +39,7 @@
                     <v-btn x-small @click="decrement(item.product_id)">-</v-btn>
                   </v-col>
                   <v-col cols="1">
-                    <h4>{{item.quantity}}</h4>
+                    <h4>{{ item.quantity }}</h4>
                   </v-col>
                   <v-col cols="1">
                     <v-btn x-small @click="increment(item.product_id)">+</v-btn>
@@ -43,14 +47,20 @@
                 </v-row>
               </template>
               <template v-slot:item.remove="{ item }">
-                <v-btn depressed small color="error" @click="removeCartItem(item.product_id)">X</v-btn>
+                <v-btn
+                  depressed
+                  small
+                  color="error"
+                  @click="removeCartItem(item.product_id)"
+                  >X</v-btn
+                >
               </template>
               <!-- =============== -->
 
               <!-- =================== -->
             </v-data-table>
 
-            <v-card>
+            <v-card style="overflow: hidden">
               <v-row>
                 <v-col cols="4"></v-col>
                 <v-col cols="6">
@@ -60,7 +70,13 @@
 
               <v-row justify="center">
                 <v-col lg="3" sm="3" cols="3">
-                  <v-btn v-if="intable.length>0" dark large @click="getSession">Checkout</v-btn>
+                  <v-btn
+                    v-if="intable.length > 0"
+                    dark
+                    large
+                    @click="getSession"
+                    >Checkout</v-btn
+                  >
                 </v-col>
 
                 <v-col lg="3" sm="3" cols="3">
@@ -68,11 +84,12 @@
                     dark
                     large
                     @click="cleanCart"
-                    v-if="intable.length>0"
+                    v-if="intable.length > 0"
                     depressed
                     small
                     color="error"
-                  >Clean</v-btn>
+                    >Clean</v-btn
+                  >
                 </v-col>
               </v-row>
             </v-card>

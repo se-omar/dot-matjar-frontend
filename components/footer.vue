@@ -1,9 +1,15 @@
 <template>
-  <v-footer color="blue lighten-3" height="auto">
-    <v-card flat tile color="white" width="100%">
+  <v-footer height="auto">
+    <v-card :color="`${siteColor.footer_color}`" flat tile width="100%">
       <v-card-text>
         <v-row justify="center">
-          <v-btn v-for="icon in icons" :key="icon" class="mx-8 blue--text" icon>
+          <v-btn
+            v-for="icon in icons"
+            :key="icon"
+            class="mx-8"
+            :style="`color:${siteColor.footer_text_color}`"
+            icon
+          >
             <v-icon @click="iconPressed(icon)" size="24px">{{ icon }}</v-icon>
           </v-btn>
         </v-row>
@@ -11,8 +17,9 @@
 
       <v-row justify="center">
         <v-card-text
+          :style="`color:${siteColor.footer_text_color}`"
           v-if="!supplierPageInfo.footer"
-          class="blue--text pt-1 mx-1"
+          class="pt-1 mx-1"
           >Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet.
           Mauris cursus commodo interdum. Praesent ut risus eget metus luctus
           accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim
@@ -22,13 +29,13 @@
           tempor vel ut orci. Orci varius natoque penatibus et magnis dis
           parturient montes, nascetur ridiculus mus.</v-card-text
         >
-        <v-card-text class="white--text" v-else>{{
+        <v-card-text :style="`color:${siteColor.footer_text_color}`" v-else>{{
           supplierPageInfo.footer
         }}</v-card-text>
       </v-row>
       <v-divider></v-divider>
 
-      <v-card-text class="blue--text pt-2">
+      <v-card-text class="pt-2" :style="`color:${siteColor.footer_text_color}`">
         &copy; Copywrites 2020 to Dot-Matjar
         <v-img
           src="../assets/images/dotmatjar_logo.png"
@@ -111,7 +118,7 @@ export default {
   computed: {
     siteColor() {
       if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor;
+        return this.$store.state.Home.siteColor[0];
       } else {
         return "red darken-4";
       }
