@@ -148,7 +148,7 @@
             <label>Carousel Image 2</label>
             <v-file-input
               accept="image/*"
-              :disabled="!carouselImage1"
+              :disabled="!carouselImage1 && !supplierPageInfo.carousel_image_1"
               @change="setCarouselImage2"
             ></v-file-input>
             <v-img
@@ -183,7 +183,7 @@
             <label>Carousel Image 3</label>
             <v-file-input
               accept="image/*"
-              :disabled="!carouselImage2"
+              :disabled="!carouselImage2 && !supplierPageInfo.carousel_image_2"
               @change="setCarouselImage3"
             ></v-file-input>
             <v-img
@@ -218,7 +218,7 @@
             <label>Carousel Image 4</label>
             <v-file-input
               accept="image/*"
-              :disabled="!carouselImage3"
+              :disabled="!carouselImage3 && !supplierPageInfo.carousel_image_3"
               @change="setCarouselImage4"
             ></v-file-input>
             <v-img
@@ -549,38 +549,44 @@ export default {
     removeCarouselImage(imgNum) {
       if (imgNum == 1) {
         this.supplierPageInfo.carousel_image_1 = "";
-        this.$store.dispatch("removeCarouselImage1", {
+        this.$store.dispatch("removeCarouselImage", {
           id: this.supplier.user_id,
+          imgName: "carousel_image_1",
         });
       }
       if (imgNum == 2) {
         this.supplierPageInfo.carousel_image_2 = "";
-        this.$store.dispatch("removeCarouselImage2", {
+        this.$store.dispatch("removeCarouselImage", {
           id: this.supplier.user_id,
+          imgName: "carousel_image_2",
         });
       }
       if (imgNum == 3) {
         this.supplierPageInfo.carousel_image_3 = "";
-        this.$store.dispatch("removeCarouselImage3", {
+        this.$store.dispatch("removeCarouselImage", {
           id: this.supplier.user_id,
+          imgName: "carousel_image_3",
         });
       }
       if (imgNum == 4) {
         this.supplierPageInfo.carousel_image_4 = "";
-        this.$store.dispatch("removeCarouselImage4", {
+        this.$store.dispatch("removeCarouselImage", {
           id: this.supplier.user_id,
+          imgName: "carousel_image_4",
         });
       }
       if (imgNum == 5) {
         this.supplierPageInfo.left_banner_image = "";
-        this.$store.dispatch("removeLeftBannerImage", {
+        this.$store.dispatch("removeBannerImage", {
           id: this.supplier.user_id,
+          imgName: "left_banner_image",
         });
       }
       if (imgNum == 6) {
         this.supplierPageInfo.right_banner_image = "";
-        this.$store.dispatch("removeRightBannerImage", {
+        this.$store.dispatch("removeBannerImage", {
           id: this.supplier.user_id,
+          imgName: "right_banner_image",
         });
       }
     },

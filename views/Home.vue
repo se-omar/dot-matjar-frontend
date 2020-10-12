@@ -176,7 +176,6 @@
               ></v-btn
             >
           </v-col>
-
           <!-- <v-col cols="4" sm="2" md="2" lg="2">
             <v-btn
               class="white--text"
@@ -246,7 +245,25 @@
           </v-col>
         </v-card>
       </v-col> -->
-      <v-col cols="11">
+      <v-col cols="11"></v-col>
+      <!-- // Current  -->
+      <!-- <v-col cols="4" sm="2" md="2" lg="2">
+        <v-btn
+          :disabled="radioGroup === '1'"
+          class="white--text"
+          @click="filterSuppliers"
+          :color="siteColor"
+          rounded
+          max-width="80"
+          >Search</v-btn
+        >
+      </v-col> -->
+      <v-col sm="3" lg="3" md="3"></v-col>
+    </v-row>
+
+    <v-row v-if="homePageInfo.show_carousel" justify="center">
+      <v-col :lg="homePageInfo ? homePageInfo.carousel_width : 10">
+        <!-- change -->
         <carousel
           :autoplay="true"
           :per-page="1"
@@ -254,20 +271,33 @@
           :loop="true"
           :navigationEnabled="true"
         >
-          <slide>
-            <v-img height="400" src="../assets/images/images.jpg"></v-img>
+          <slide v-if="homePageInfo.carousel_image_1">
+            <v-img
+              :height="homePageInfo ? homePageInfo.carousel_height : 400"
+              :src="nodeHost + homePageInfo.carousel_image_1"
+            ></v-img>
           </slide>
-          <slide>
-            <v-img height="400" src="../assets/images/images.jpg"></v-img>
+          <slide v-if="homePageInfo.carousel_image_2">
+            <v-img
+              :height="homePageInfo ? homePageInfo.carousel_height : 400"
+              :src="nodeHost + homePageInfo.carousel_image_2"
+            ></v-img>
           </slide>
-          <slide>
-            <v-img height="400" src="../assets/images/images.jpg"></v-img>
+          <slide v-if="homePageInfo.carousel_image_3">
+            <v-img
+              :height="homePageInfo ? homePageInfo.carousel_height : 400"
+              :src="nodeHost + homePageInfo.carousel_image_3"
+            ></v-img>
           </slide>
-          <slide>
-            <v-img height="400" src="../assets/images/images.jpg"></v-img>
+          <slide v-if="homePageInfo.carousel_image_4">
+            <v-img
+              :height="homePageInfo ? homePageInfo.carousel_height : 400"
+              :src="nodeHost + homePageInfo.carousel_image_4"
+            ></v-img>
           </slide>
         </carousel>
       </v-col>
+
       <!-- <v-col cols="1" class="mr-n10" v-if="currentUser.user_type == 'admin'">
         <SiteColor disabled></SiteColor>
       </v-col> -->
@@ -346,7 +376,8 @@
         </v-card>
       </v-col>
 
-      <v-col lg="8" sm="5" md="7">
+      <!-- <v-col lg="8" sm="5" md="7"> -->
+      <v-col :lg="homePageInfo.show_right_banner ? 9 : 11" sm="7" md="7">
         <v-radio-group mandatory v-model="radioGroup">
           <v-row class="mb-n5" justify="center">
             <v-col lg="4">
@@ -402,9 +433,14 @@
         </v-row>
       </v-col>
 
-      <v-col lg="2" sm="2" md="2">
+      <v-col
+        v-if="homePageInfo.show_right_banner && homePageInfo.right_banner_image"
+        lg="2"
+        sm="2"
+        md="2"
+      >
         <v-card height="95%">
-          <v-img src="../assets/images/603-150x600.jpg"></v-img>
+          <v-img :src="nodeHost + homePageInfo.right_banner_image"></v-img>
         </v-card>
       </v-col>
     </v-row>
@@ -455,6 +491,7 @@ export default {
     this.$store.dispatch("removeSupplierPageData");
     await this.$store.dispatch("getSiteColor");
     console.log(this.loginToken);
+    await this.$store.dispatch("getHomePageData");
     if (this.loginToken) {
       console.log("x");
       await this.$store.dispatch("refreshCurrentUser");
@@ -520,6 +557,12 @@ export default {
     },
     categoriesItems() {
       return this.$store.state.Home.categoriesItems;
+    },
+    homePageInfo() {
+      return this.$store.state.Home.homePageInfo;
+    },
+    nodeHost() {
+      return this.$store.state.nodeHost;
     },
   },
 

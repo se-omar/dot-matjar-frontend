@@ -396,7 +396,9 @@
                 rounded
                 @click="$router.push('/categoryAndItemRequests')"
                 ><span :style="`color:${siteColor.button_text_color};`"
-                  >Category and item requests</span
+                  >Category <br />
+                  and item <br />
+                  requests</span
                 ></v-btn
               >
               <v-divider class="mr-4"></v-divider>

@@ -15,7 +15,8 @@ export default {
         categoriesItems: [],
         categoryAndItemRequests: [],
         categoryRequestMessage: '',
-        supplierCategoriesRequests: []
+        supplierCategoriesRequests: [],
+        homePageInfo: {}
     },
 
     mutations: {
@@ -107,8 +108,15 @@ export default {
         },
         getSupplierCategoriesRequests(state, supplierCategoriesRequests) {
             state.supplierCategoriesRequests = supplierCategoriesRequests
-        }
+        },
 
+        updateHomePage(state, pageData) {
+            state.homePageInfo = pageData
+        },
+
+        getHomePageData(state, info) {
+            state.homePageInfo = info
+        },
 
     },
 
@@ -362,6 +370,75 @@ export default {
                     console.log(message.data.message);
                 })
         },
+
+        async updateHomePage(context, { show_carousel,
+            show_right_banner,
+            carousel_width,
+            carousel_height, }) {
+
+            await axios.post('http://localhost:3000/api/updateHomePage', {
+                show_carousel,
+                show_right_banner,
+                carousel_width,
+                carousel_height,
+            })
+                .then(response => {
+
+                    console.log(response.data.message, response.data.data)
+                    context.commit('updateHomePage', response.data.data)
+
+                })
+        },
+
+        async uploadHomeCarouselImages(context, form) {
+            await axios.post('http://localhost:3000/api/uploadHomeCarouselImages', form, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+                .then(response => {
+
+                    console.log('row resposne', response)
+                })
+        },
+
+        async uploadHomeBannerImages(context, form) {
+            await axios.post('http://localhost:3000/api/uploadHomeBannerImages', form, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+                .then(response => {
+
+                    console.log('row resposne', response)
+                })
+        },
+
+        async removeHomeCarouselImage(context, { imgName }) {
+            await axios.post('http://localhost:3000/api/removeHomeCarouselImage', {
+                imgName
+            }).then(response => {
+                console.log('remove img response', response)
+            })
+        },
+
+        async removeHomeBannerImage(context, { imgName }) {
+            await axios.post('http://localhost:3000/api/removeHomeBannerImage', {
+                imgName
+            }).then(response => {
+                console.log('remove img response', response)
+            })
+        },
+
+        async getHomePageData(context) {
+            await axios.put('http://localhost:3000/api/getHomePageData')
+                .then(info => {
+                    context.commit('getHomePageData', info.data.data)
+                })
+        },
+
+
+
 
 
     }
