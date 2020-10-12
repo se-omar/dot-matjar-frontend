@@ -284,7 +284,7 @@
         </v-card>
       </v-col>
 
-      <v-col lg="9" sm="7" md="7">
+      <v-col :lg="homePageInfo.show_right_banner ? 9 : 11" sm="7" md="7">
         <v-radio-group mandatory v-model="radioGroup">
           <v-row class="mb-n5" justify="center">
             <v-col lg="4">
