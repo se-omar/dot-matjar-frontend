@@ -148,7 +148,7 @@
             <label>Carousel Image 2</label>
             <v-file-input
               accept="image/*"
-              :disabled="!carouselImage1"
+              :disabled="!carouselImage1 && !supplierPageInfo.carousel_image_1"
               @change="setCarouselImage2"
             ></v-file-input>
             <v-img
@@ -183,7 +183,7 @@
             <label>Carousel Image 3</label>
             <v-file-input
               accept="image/*"
-              :disabled="!carouselImage2"
+              :disabled="!carouselImage2 && !supplierPageInfo.carousel_image_2"
               @change="setCarouselImage3"
             ></v-file-input>
             <v-img
@@ -218,7 +218,7 @@
             <label>Carousel Image 4</label>
             <v-file-input
               accept="image/*"
-              :disabled="!carouselImage3"
+              :disabled="!carouselImage3 && !supplierPageInfo.carousel_image_3"
               @change="setCarouselImage4"
             ></v-file-input>
             <v-img

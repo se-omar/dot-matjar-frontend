@@ -185,46 +185,9 @@
       </v-col>
       <v-col sm="3" lg="3" md="3"></v-col>
     </v-row>
-    <v-row justify="center">
-      <!-- <v-col cols="3" class="ml-4">
-        <v-card class="ml-2" max-width="250">
-          <v-row justify="center"
-            ><v-card-title>Categories</v-card-title>
-          </v-row>
-          <v-divider class="mx-16"></v-divider>
-          <v-col cols="12" v-for="category in category" :key="category">
-            <v-menu offset-x :close-on-content-click="false" open-on-hover>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  @mouseover="mouseOver(category)"
-                  v-bind="attrs"
-                  v-on="on"
-                  text
-                  @click="filterProductsWithCategory(category)"
-                >
-                  <i :class="`fas fa-${category} fa-2x mr-4`"></i>
-                  {{ category }}
-                  <i class="fa fa-chevron-right ml-4" aria-hidden="true"></i>
-                </v-btn>
-              </template>
-              <v-card>
-                <v-list v-for="item in categoryItems" :key="item">
-                  <v-btn
-                    class="black--text"
-                    @click="filterProductsWithItem(item)"
-                    text
-                  >
-                    -
-                    <i :class="`fa fa-${item} fa-lg ml-2 mr-2`"></i>
-                    {{ item }}
-                  </v-btn>
-                </v-list>
-              </v-card>
-            </v-menu>
-          </v-col>
-        </v-card>
-      </v-col> -->
-      <v-col cols="11">
+
+    <v-row v-if="homePageInfo.show_carousel" justify="center">
+      <v-col :lg="homePageInfo ? homePageInfo.carousel_width : 10">
         <carousel
           :autoplay="true"
           :per-page="1"
@@ -232,20 +195,33 @@
           :loop="true"
           :navigationEnabled="true"
         >
-          <slide>
-            <v-img height="400" src="..\assets/image.jpg"></v-img>
+          <slide v-if="homePageInfo.carousel_image_1">
+            <v-img
+              :height="homePageInfo ? homePageInfo.carousel_height : 400"
+              :src="nodeHost + homePageInfo.carousel_image_1"
+            ></v-img>
           </slide>
-          <slide>
-            <v-img height="400" src="..\assets/image.jpg"></v-img>
+          <slide v-if="homePageInfo.carousel_image_2">
+            <v-img
+              :height="homePageInfo ? homePageInfo.carousel_height : 400"
+              :src="nodeHost + homePageInfo.carousel_image_2"
+            ></v-img>
           </slide>
-          <slide>
-            <v-img height="400" src="..\assets/image.jpg"></v-img>
+          <slide v-if="homePageInfo.carousel_image_3">
+            <v-img
+              :height="homePageInfo ? homePageInfo.carousel_height : 400"
+              :src="nodeHost + homePageInfo.carousel_image_3"
+            ></v-img>
           </slide>
-          <slide>
-            <v-img height="400" src="..\assets/image.jpg"></v-img>
+          <slide v-if="homePageInfo.carousel_image_4">
+            <v-img
+              :height="homePageInfo ? homePageInfo.carousel_height : 400"
+              :src="nodeHost + homePageInfo.carousel_image_4"
+            ></v-img>
           </slide>
         </carousel>
       </v-col>
+
       <v-col cols="1" class="mr-n10" v-if="currentUser.user_type == 'admin'">
         <SiteColor disabled></SiteColor>
       </v-col>
@@ -363,9 +339,14 @@
         </v-row>
       </v-col>
 
-      <v-col lg="2" sm="2" md="2">
+      <v-col
+        v-if="homePageInfo.show_right_banner && homePageInfo.right_banner_image"
+        lg="2"
+        sm="2"
+        md="2"
+      >
         <v-card height="95%">
-          <v-img src="../assets/images/603-150x600.jpg"></v-img>
+          <v-img :src="nodeHost + homePageInfo.right_banner_image"></v-img>
         </v-card>
       </v-col>
     </v-row>
@@ -415,6 +396,7 @@ export default {
     this.$store.dispatch("removeSupplierPageData");
     await this.$store.dispatch("getSiteColor");
     console.log(this.loginToken);
+    await this.$store.dispatch("getHomePageData");
     if (this.loginToken) {
       console.log("x");
       await this.$store.dispatch("refreshCurrentUser");
@@ -476,6 +458,12 @@ export default {
     },
     categoriesItems() {
       return this.$store.state.Home.categoriesItems;
+    },
+    homePageInfo() {
+      return this.$store.state.Home.homePageInfo;
+    },
+    nodeHost() {
+      return this.$store.state.nodeHost;
     },
   },
 
