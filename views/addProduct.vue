@@ -1,7 +1,7 @@
 <template>
   <v-app class="grey lighten-4">
-    <v-container fluid>
-      <v-row class="mr-10">
+    <v-container class="mx-8" fluid>
+      <v-row class="mr-10 mt-16">
         <v-col lg="7" md="7" sm="12" cols="12">
           <v-form v-model="valid">
             <v-row>
@@ -132,9 +132,7 @@
                 <v-spacer></v-spacer>
                 <v-toolbar-title>Category Request</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-toolbar-items>
-                  <v-btn dark text @click="dialog = false"> Save </v-btn>
-                </v-toolbar-items>
+                <v-toolbar-items> </v-toolbar-items>
               </v-toolbar>
               <v-card>
                 <!-- Adding cateogryiessssss -->
@@ -175,7 +173,7 @@
                     >Add Category</v-btn
                   >
                 </v-row>
-                <v-divider class="mx-16"></v-divider>
+                <v-divider class="mx-16 mt-6"></v-divider>
                 <!-- Adding category items -->
                 <v-row justify="center">
                   <h2>Request a Category item</h2>
@@ -228,7 +226,17 @@
                     >Add item</v-btn
                   >
                 </v-row>
-                <v-divider class="mx-16"></v-divider>
+                <v-divider class="mx-16 mt-6"></v-divider>
+
+                <v-row class="mt-10" justify="center">
+                  <v-col cols="6" lg="6" md="6" sm="8">
+                    <v-data-table
+                      :items="supplierCategoriesRequests"
+                      :headers="categoriesRequestHeaders"
+                    >
+                    </v-data-table>
+                  </v-col>
+                </v-row>
               </v-card>
             </v-dialog>
           </v-row>
@@ -307,7 +315,17 @@ export default {
       return this.$store.state.Home.category;
     },
     siteColor() {
-      return this.$store.state.Home.siteColor;
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor[0];
+      } else {
+        return {
+          button_text_color: "black",
+          button_color: "white",
+        };
+      }
+    },
+    supplierCategoriesRequests() {
+      return this.$store.state.Home.supplierCategoriesRequests;
     },
   },
 
@@ -342,6 +360,12 @@ export default {
       newCategoryItemDescription: "",
       newCategoryDescription: "",
       newCategoryItem: "",
+      categoriesRequestHeaders: [
+        { text: "Request Type", value: "request_type" },
+        { text: "New Category Name", value: "new_category_name" },
+        { text: "New Category Item", value: "new_category_item" },
+        { text: "Request Status", value: "status" },
+      ],
     };
   },
   methods: {
@@ -414,11 +438,12 @@ export default {
       });
     },
   },
-  created() {
-    this.$store.dispatch("getCategoryItems");
-    this.$store.dispatch("categoriesDB");
+  async created() {
+    await this.$store.dispatch("refreshCurrentUser");
+    await this.$store.dispatch("getCategoryItems");
+    await this.$store.dispatch("categoriesDB");
+    await this.$store.dispatch("getSupplierCategoriesRequests");
 
-    this.$store.dispatch("refreshCurrentUser");
     return new Promise((resolve) => {
       setTimeout(() => {
         this.$store.dispatch("categoriesDB");

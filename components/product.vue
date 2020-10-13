@@ -5,19 +5,21 @@
 
       <v-row class="mt-n5">
         <v-col cols="12">
-          <v-card-title
-            style="font-size: 19.5px;  overflow: hidden"
-          >{{ add3Dots(filteredProduct.product_name, 45) }}</v-card-title>
+          <v-card-title style="font-size: 19.5px; overflow: hidden">{{
+            add3Dots(filteredProduct.product_name, 45)
+          }}</v-card-title>
           <v-card-text>
-            <v-row style="height: 25%; ">
+            <v-row style="height: 25%">
               <v-col lg="12" md="12" sm="12" cols="12">
                 <span
-                  :style="`color: ${siteColor} ; font-weight: 800; font-size:23px`"
-                >{{ filteredProduct.unit_price }}</span>
+                  :style="`color: ${siteColor.button_text_color} ; font-weight: 800; font-size:23px`"
+                  >{{ filteredProduct.unit_price }}</span
+                >
                 <span
                   class="ml-1"
-                  :style="`color: ${siteColor} ; font-weight: 800; font-size:17px`"
-                >EGP</span>
+                  :style="`color: ${siteColor.button_text_color} ; font-weight: 800; font-size:17px`"
+                  >EGP</span
+                >
               </v-col>
 
               <v-col class="mt-n2" lg="12" md="12" sm="12" cols="12">
@@ -35,7 +37,15 @@
 
           <v-row justify="center">
             <v-col cols="11" lg="10" sm="11" md="11">
-              <v-btn outlined block @click="setCurrentRow" :color="siteColor" text>Details</v-btn>
+              <v-btn
+                outlined
+                block
+                @click="setCurrentRow"
+                :color="siteColor.button_color"
+                :style="`color: ${siteColor.button_text_color}`"
+                text
+                >Details</v-btn
+              >
             </v-col>
             <v-col
               cols="11"
@@ -48,11 +58,11 @@
                 block
                 @click="add(filteredProduct)"
                 variant="primary"
-                :color="siteColor"
+                :color="siteColor.button_color"
+                :style="`color: ${siteColor.button_text_color}`"
                 class="white--text"
               >
-                Add to
-                cart
+                Add to cart
               </v-btn>
 
               <!-- <b-button
@@ -141,9 +151,12 @@ export default {
     },
     siteColor() {
       if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor;
+        return this.$store.state.Home.siteColor[0];
       } else {
-        return "red darken-4";
+        return {
+          button_text_color: "black",
+          button_color: "white",
+        };
       }
     },
   },

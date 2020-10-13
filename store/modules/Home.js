@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export default {
     state: {
-        siteColor: localStorage.getItem('siteColor') ? localStorage.getItem('siteColor') : 'red darken-4',
+        siteColor: JSON.parse(localStorage.getItem('siteColor')) ? JSON.parse(localStorage.getItem('siteColor')) : 'blue',
         currentUser: '',
         filteredProducts: [],
         regions: [],
@@ -13,6 +13,9 @@ export default {
         allSuppliers: [],
         category: [],
         categoriesItems: [],
+        categoryAndItemRequests: [],
+        categoryRequestMessage: '',
+        supplierCategoriesRequests: [],
         homePageInfo: {}
     },
 
@@ -20,9 +23,10 @@ export default {
         // eslint-disable-next-line no-unused-vars
 
 
-        getSiteColor(state, color) {
-            localStorage.setItem('siteColor', color)
-            state.siteColor = localStorage.getItem('siteColor')
+        getSiteColor(state, siteColors) {
+            localStorage.setItem('siteColor', JSON.stringify(siteColors))
+
+            state.siteColor = JSON.parse(localStorage.getItem('siteColor'))
         },
 
         refreshCurrentUser(state, user) {
@@ -100,6 +104,15 @@ export default {
             state.categoriesItems = items
             console.log('get categories ittems', items)
         },
+        getCategoryAndItemRequests(state, requests) {
+            state.categoryAndItemRequests = requests
+        },
+        categoryAndItemRequestStatus(state, message) {
+            state.categoryRequestMessage = message
+        },
+        getSupplierCategoriesRequests(state, supplierCategoriesRequests) {
+            state.supplierCategoriesRequests = supplierCategoriesRequests
+        },
 
         updateHomePage(state, pageData) {
             state.homePageInfo = pageData
@@ -110,6 +123,7 @@ export default {
         },
 
     },
+
 
     actions: {
         removeSupplierPageData(context) {
@@ -307,18 +321,77 @@ export default {
                 console.log(res.data.data)
             })
         },
+        getCategoryAndItemRequests(context) {
+            axios.get('http://localhost:3000/api/getCategoryAndItemRequests')
+                .then(requests => {
 
-       async updateHomePage(context, {show_carousel,
-        show_right_banner,
-        carousel_width,
-        carousel_height,}) {
-          
-            await axios.post('http://localhost:3000/api/updateHomePage', {show_carousel,
+                    context.commit('getCategoryAndItemRequests', requests.data.data)
+                })
+        },
+        categoryAndItemRequestStatus(context, { id, status,
+            newCategoryName,
+            newCategoryDescription,
+            newCategoryItem,
+            newItemCategoryName,
+            requestType,
+        }) {
+            axios.put('http://localhost:3000/api/categoryAndItemRequestStatus', {
+                id, status,
+                newCategoryName,
+                newCategoryDescription,
+                newCategoryItem,
+                newItemCategoryName,
+                requestType,
+            })
+                .then(message => {
+                    context.commit('categoryAndItemRequestStatus', message.data.message)
+                })
+        },
+        getSupplierCategoriesRequests(context) {
+            console.log('user idd issssss', context.state.currentUser.user_id)
+            axios.put('http://localhost:3000/api/getSupplierCategoriesRequests', { user_id: context.state.currentUser.user_id })
+                .then(requests => {
+                    console.log(requests.data.message);
+                    console.log('Requueests get', requests.data.data)
+                    context.commit('getSupplierCategoriesRequests', requests.data.data)
+                }
+
+                )
+        },
+        updateSiteColors(context, {
+            toolBarColor,
+            footerColor,
+            buttonsColor,
+            buttonsTextColor,
+            footerTextColor,
+            toolBarTextColor
+        }) {
+            axios.post('http://localhost:3000/api/updateSiteColors', {
+                toolBarColor,
+                footerColor,
+                buttonsColor,
+                buttonsTextColor,
+                footerTextColor,
+                toolBarTextColor
+            })
+                .then(message => {
+                    console.log(message.data.message);
+                })
+        },
+
+        async updateHomePage(context, { show_carousel,
             show_right_banner,
             carousel_width,
-            carousel_height,})
+            carousel_height, }) {
+
+            await axios.post('http://localhost:3000/api/updateHomePage', {
+                show_carousel,
+                show_right_banner,
+                carousel_width,
+                carousel_height,
+            })
                 .then(response => {
-                
+
                     console.log(response.data.message, response.data.data)
                     context.commit('updateHomePage', response.data.data)
 
@@ -349,17 +422,17 @@ export default {
                 })
         },
 
-        async removeHomeCarouselImage(context, {  imgName }) {
+        async removeHomeCarouselImage(context, { imgName }) {
             await axios.post('http://localhost:3000/api/removeHomeCarouselImage', {
-                 imgName
+                imgName
             }).then(response => {
                 console.log('remove img response', response)
             })
         },
 
-        async removeHomeBannerImage(context, {  imgName }) {
+        async removeHomeBannerImage(context, { imgName }) {
             await axios.post('http://localhost:3000/api/removeHomeBannerImage', {
-                 imgName
+                imgName
             }).then(response => {
                 console.log('remove img response', response)
             })
@@ -372,7 +445,7 @@ export default {
                 })
         },
 
-        
+
 
 
 

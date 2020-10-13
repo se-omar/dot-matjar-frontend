@@ -7,7 +7,7 @@
         :is-full-page="true"
       ></loading>
     </div> -->
-    <v-app-bar fixed class="white" shaped>
+    <v-app-bar fixed :color="siteColor.toolbar_color" shaped>
       <span v-if="!supplierPageInfo.logo">
         <a @click="$router.push('/').catch(() => {})">
           <v-img
@@ -32,9 +32,9 @@
         </v-btn>
       </span>
 
-      <v-spacer></v-spacer>
+      <!-- <v-spacer></v-spacer> -->
       <v-row justify="center">
-        <v-col cols="12" lg="12" sm="12" md="10">
+        <v-col cols="12" lg="6" sm="7" md="6">
           <v-text-field
             class="mt-8"
             outlined
@@ -46,31 +46,195 @@
             @keypress="filterProducts"
           ></v-text-field>
         </v-col>
-        <!-- <v-col cols="2">
+        <v-col cols="12" md="3" lg="3" sm="5">
           <v-btn
-            class="white--text"
-            style="margin-top: 40px"
-            :color="siteColor"
+            class="mt-10 mr-1 blue white--text"
             rounded
-            max-width="80"
-            @click="filterProducts"
-            >Search</v-btn
+            @click="advancedSearch = true"
+            ><span style="font-size: 12px"
+              >Advanced<br />
+              Search</span
+            ></v-btn
           >
-        </v-col> -->
+        </v-col>
+        <v-dialog
+          style="overflow: hidden"
+          v-model="advancedSearch"
+          max-width="80%"
+        >
+          <v-card style="overflow: hidden">
+            <v-row justify="center">
+              <v-radio-group
+                style="margin-right: 50px"
+                mandatory
+                v-model="radioGroup"
+              >
+                <v-row class="mb-n5" justify="center">
+                  <v-col cols="3" lg="4" sm="5" md="5">
+                    <v-radio label="Search for Products" value="1"></v-radio>
+                  </v-col>
+
+                  <v-col cols="3" lg="4" sm="5" md="5">
+                    <v-radio label="Search for suppliers" value="2"></v-radio>
+                  </v-col>
+                </v-row>
+              </v-radio-group>
+            </v-row>
+            <v-row justify="center">
+              <v-col cols="3" sm="1" lg="2"></v-col>
+              <v-col cols="3" lg="4" sm="5" md="3">
+                <v-select
+                  rounded
+                  v-if="radioGroup === '1'"
+                  :items="egyptGovernorates"
+                  :disabled="radioGroup === '2'"
+                  placeholder="Governorate"
+                  dense
+                  outlined
+                  v-model="governorate"
+                  @change="getCountryRegions()"
+                ></v-select>
+              </v-col>
+
+              <v-col cols="3" lg="4" sm="5" md="3">
+                <v-select
+                  rounded
+                  v-if="radioGroup === '1'"
+                  :items="regions"
+                  :disabled="radioGroup === '2'"
+                  placeholder="Region"
+                  dense
+                  outlined
+                  v-model="region"
+                ></v-select>
+              </v-col>
+              <v-col lg="2" sm="1" cols="3"></v-col>
+              <v-col cols="2" lg="3" sm="4" md="4">
+                <v-select
+                  rounded
+                  v-if="radioGroup === '2'"
+                  :items="egyptGovernorates"
+                  :disabled="radioGroup === '1'"
+                  placeholder="Governorate"
+                  dense
+                  outlined
+                  v-model="governorate"
+                  @change="getCountryRegions()"
+                ></v-select>
+              </v-col>
+
+              <v-col cols="2" lg="3" sm="4" md="4">
+                <v-text-field
+                  rounded
+                  v-if="radioGroup === '2'"
+                  :disabled="radioGroup === '1'"
+                  @keyup="emptySupplierName"
+                  dense
+                  outlined
+                  v-model="supplierName"
+                  placeholder="Search Suppliers by Name"
+                ></v-text-field>
+              </v-col>
+              <v-col lg="3" cols="2" sm="4" md="4">
+                <v-select
+                  rounded
+                  v-if="radioGroup === '2'"
+                  :items="regions"
+                  :disabled="radioGroup === '1'"
+                  placeholder="Region"
+                  dense
+                  outlined
+                  v-model="region"
+                ></v-select>
+              </v-col>
+            </v-row>
+
+            <v-row class="mt-n3" justify="center">
+              <v-col sm="3" lg="3" md="3"></v-col>
+              <v-col cols="6" sm="3" md="3" lg="3">
+                <v-text-field
+                  :disabled="radioGroup === '2'"
+                  dense
+                  rounded
+                  outlined
+                  type="number"
+                  label="Price From"
+                ></v-text-field>
+              </v-col>
+
+              <v-col cols="6" sm="3" md="3" lg="3">
+                <v-text-field
+                  :disabled="radioGroup === '2'"
+                  dense
+                  outlined
+                  rounded
+                  type="number"
+                  label="Price TO"
+                ></v-text-field>
+              </v-col>
+              <v-col sm="3" lg="3" md="3"></v-col>
+              <v-col lg="5" sm="3" md="3"></v-col>
+              <v-col cols="4" sm="2" md="2" lg="2">
+                <v-btn
+                  class="white--text"
+                  @click="filterProducts"
+                  :color="siteColor.button_color"
+                  rounded
+                  x-large
+                  ><span :style="`color: ${siteColor.button_text_color}`"
+                    >Search</span
+                  ></v-btn
+                >
+              </v-col>
+
+              <!-- <v-col cols="4" sm="2" md="2" lg="2">
+            <v-btn
+              class="white--text"
+              @click="All"
+              :color="siteColor.button_color"
+              rounded
+              ><span :style="`color: ${siteColor.button_text_color}`"
+                >All</span
+              ></v-btn
+            >
+          </v-col> -->
+
+              <v-col cols="4" sm="2" md="2" lg="5">
+                <!-- <v-btn
+              :disabled="radioGroup === '1'"
+              class="white--text"
+              @click="filterSuppliers"
+              :color="siteColor.button_color"
+              :style="`color: ${siteColor.button_text_color}`"
+              rounded
+              max-width="80"
+              ><span :style="`color: ${siteColor.button_text_color}`"
+                >Search</span
+              ></v-btn
+            > -->
+              </v-col>
+              <v-col sm="3" lg="3" md="3"></v-col>
+            </v-row>
+          </v-card>
+        </v-dialog>
       </v-row>
       <v-menu
         v-if="currentUser"
         transition="fab-transition"
         :close-on-content-click="false"
         :nudge-width="200"
-        offset-x
+        max-width="25%"
+        max-height="90%"
+        offset-y
         class="menu"
-        max-width="30%"
-        min-width="300px"
+        style="overflow: hidden"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-            class="font blue--text text--darken-4"
+            rounded
+            style="overflow: hidden"
+            class="font"
+            :style="`color:${siteColor.toolbar_text_color}`"
             text
             v-bind="attrs"
             v-on="on"
@@ -80,15 +244,19 @@
           </v-btn>
         </template>
 
-        <v-card>
-          <v-card-title>
-            <v-img
-              v-if="currentUser.profile_photo"
-              style="width: 70%; height: 90%"
-              id="picture"
-              :src="nodeHost + currentUser.profile_photo"
-            />
-          </v-card-title>
+        <v-card max-width="100%">
+          <v-img
+            v-if="currentUser.profile_photo"
+            style="
+              width: 60%;
+              height: 80%;
+              margin-left: auto;
+              margin-right: auto;
+            "
+            id="picture"
+            :src="nodeHost + currentUser.profile_photo"
+          />
+
           <!-- <v-card-text>
             <span>
             <input type="file" 
@@ -164,89 +332,122 @@
             </v-row>
           </v-card-text>
 
-          <v-row></v-row>
-          <v-divider></v-divider>
+          <v-row justify="center">
+            <v-col cols="6" sm="11" lg="4">
+              <v-btn
+                class="btn1"
+                :color="siteColor.button_color"
+                large
+                rounded
+                @click="supplierPage"
+              >
+                <span
+                  :style="`color:${siteColor.button_text_color}; `"
+                  class="mos"
+                  >My Page</span
+                >
+              </v-btn>
+              <v-divider class="mr-4"></v-divider>
+            </v-col>
+          </v-row>
+          <v-row justify="center" v-if="currentUser.user_type == 'business'">
+            <v-col cols="6" sm="11" lg="4">
+              <v-btn
+                class="btn1"
+                :color="siteColor.button_color"
+                large
+                rounded
+                @click="$router.push('/myProducts')"
+              >
+                <span
+                  :style="`color:${siteColor.button_text_color}; `"
+                  class="mos"
+                  >My <br />products</span
+                >
+              </v-btn>
+              <v-divider class="mr-4"></v-divider>
+            </v-col>
+          </v-row>
 
-          <v-col v-if="currentUser.user_type == 'business'" cols="12 ml-6  ">
-            <v-btn
-              class="btn1"
-              :color="siteColor"
-              x-large
-              rounded
-              @click="supplierPage"
-            >
-              <span class="mos">My Page</span>
-            </v-btn>
-          </v-col>
-          <v-col v-if="currentUser.user_type == 'business'" cols="12 ml-6  ">
-            <v-btn
-              class="btn1"
-              :color="siteColor"
-              x-large
-              rounded
-              @click="$router.push('/myProducts')"
-            >
-              <span class="mos">My products</span>
-            </v-btn>
-          </v-col>
-          <v-col
-            v-if="
-              currentUser.user_type == 'business' ||
-              currentUser.user_type == 'admin'
-            "
-            cols="12 ml-6  "
-          >
-            <v-btn
-              class="btn1"
-              :color="siteColor"
-              x-large
-              rounded
-              @click="$router.push('/orderedProducts')"
-            >
-              <span class="mos">Order Management</span>
-            </v-btn>
-          </v-col>
-          <v-divider></v-divider>
+          <v-row justify="center" v-if="currentUser.user_type == 'business'">
+            <v-col cols="6" sm="11" lg="4">
+              <v-btn
+                class="btn1"
+                :color="siteColor.button_color"
+                large
+                rounded
+                @click="$router.push('/orderedProducts')"
+              >
+                <span
+                  :style="`color:${siteColor.button_text_color};`"
+                  class="mos"
+                  >Order <br />Manage</span
+                >
+              </v-btn>
+              <v-divider class="mr-4"></v-divider>
+            </v-col>
+          </v-row>
 
-          <v-col cols="12">
-            <v-card-text>
-              <a class="size" @click="$router.push('/editPassword')">
-                <i
-                  class="fa fa-cog"
-                  aria-hidden="true"
-                  style="color: black"
-                ></i>
-                <span :color="siteColor">Change your password</span>
-              </a>
-              <br />
-              <br />
+          <v-row justify="center" v-if="currentUser.user_type == 'admin'">
+            <v-col cols="6" sm="11" lg="4">
+              <v-btn
+                :color="siteColor.button_color"
+                large
+                rounded
+                @click="$router.push('/categoryAndItemRequests')"
+                ><span :style="`color:${siteColor.button_text_color};`"
+                  >Category <br />
+                  and item <br />
+                  requests</span
+                ></v-btn
+              >
+              <v-divider class="mr-4"></v-divider>
+            </v-col>
+          </v-row>
 
-              <a @click="$router.push('/completedata')" class="size">
-                <i
-                  class="fa fa-edit"
-                  aria-hidden="true"
-                  style="color: black"
-                ></i>
-                Update/complete Info
-              </a>
-              <br />
-              <br />
-              <a class="size" @click="logout">
-                <i
-                  class="fa fa-power-off"
-                  aria-hidden="true"
-                  style="color: black"
-                ></i>
-                Logout
-              </a>
-            </v-card-text>
-          </v-col>
+          <v-row>
+            <v-col cols="12">
+              <v-card-text>
+                <a class="size" @click="$router.push('/editPassword')">
+                  <i
+                    class="fa fa-cog"
+                    aria-hidden="true"
+                    style="color: black"
+                  ></i>
+                  <span class="ml-2" :color="siteColor.toolbar_text_color"
+                    >Change your password</span
+                  >
+                </a>
+                <br />
+                <br />
+                <a @click="$router.push('/completedata')" class="size">
+                  <i
+                    class="fa fa-edit"
+                    aria-hidden="true"
+                    style="color: black"
+                  ></i>
+                  Update or Complete Info
+                </a>
+                <br />
+                <br />
+                <a class="size" @click="logout">
+                  <i
+                    class="fa fa-power-off"
+                    aria-hidden="true"
+                    style="color: black"
+                  ></i>
+                  Logout
+                </a>
+              </v-card-text>
+            </v-col>
+          </v-row>
         </v-card>
       </v-menu>
 
       <!-- ================= -->
       <v-btn
-        class="font black--text"
+        class="font"
+        :style="`color:${siteColor.toolbar_text_color}`"
         v-if="
           !currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs
         "
@@ -256,7 +457,8 @@
       >
 
       <v-btn
-        class="font blue--text text--darken-4"
+        class="font"
+        :style="`color:${siteColor.toolbar_text_color}`"
         v-if="
           currentUser &&
           currentUser.user_type == 'business' &&
@@ -282,7 +484,8 @@
       > -->
 
       <v-btn
-        class="font blue--text text--darken-4"
+        class="font"
+        :style="`color:${siteColor.toolbar_text_color}`"
         v-if="
           currentUser.user_type == 'user' &&
           !$vuetify.breakpoint.sm &&
@@ -294,7 +497,8 @@
       >
 
       <v-btn
-        class="font blue--text text--darken-4"
+        class="font"
+        :style="`color:${siteColor.toolbar_text_color}`"
         v-if="
           currentUser &&
           currentUser.user_type == 'business' &&
@@ -307,7 +511,8 @@
       >
 
       <v-btn
-        class="font blue--text text--darken-4"
+        class="font"
+        :style="`color:${siteColor.toolbar_text_color}`"
         v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
       >
@@ -315,7 +520,8 @@
       </v-btn>
 
       <v-btn
-        class="font blue--text text--darken-4"
+        class="font"
+        :style="`color:${siteColor.toolbar_text_color}`"
         v-if="
           currentUser &&
           currentUser.user_type == 'admin' &&
@@ -328,7 +534,8 @@
       >
 
       <v-btn
-        class="font blue--text text--darken-4"
+        class="font"
+        :style="`color:${siteColor.toolbar_text_color}`"
         v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
         @click="logout"
@@ -458,9 +665,12 @@ export default {
     },
     siteColor() {
       if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor;
+        return this.$store.state.Home.siteColor[0];
       } else {
-        return "red darken-4";
+        return {
+          button_text_color: "black",
+          button_color: "white",
+        };
       }
     },
     supplierPageInfo() {
@@ -468,6 +678,12 @@ export default {
     },
     supplier() {
       return this.$store.state.SupplierPage.supplier;
+    },
+    egyptGovernorates() {
+      return this.$store.state.Home.governorates;
+    },
+    regions() {
+      return this.$store.state.Home.regions;
     },
   },
 
@@ -485,8 +701,8 @@ export default {
       var form = new FormData();
       console.log("profile function starts");
       form.append("profile", this.profilephoto);
-      form.set("email", this.$store.state.currentUser.email);
-      console.log(this.$store.state.currentUser.email);
+      form.set("email", this.$store.state.Home.currentUser.email);
+      console.log(this.$store.state.Home.currentUser.email);
       this.$store.dispatch("profilePhoto", form);
     },
     supplierPage() {
@@ -499,13 +715,35 @@ export default {
         .push("/supplierPage/" + this.supplier.user_id)
         .catch(() => {});
     },
+
+    // async filterProducts() {
+    //   this.productFilterFlag = true;
+
+    //   await this.$store.dispatch("filterProducts", {
+    //     product_name: this.toolbarSearch,
+    //     category_name: this.categoryName,
+    //     governorate: this.governorate,
+    //     region: this.region,
+    //   });
+    // },
+    getCountryRegions() {
+      console.log(this.governorate);
+      this.$store.dispatch("getRegions", this.governorate);
+    },
+    emptySupplierName() {
+      if (!this.supplierName) {
+        this.$store.commit("emptySupplierName");
+      }
+    },
     emptySearchBox() {
       if (!this.toolbarSearch) {
         this.$store.commit("emptySearch");
       }
     },
     async filterProducts() {
+      this.isLoading = true;
       this.productFilterFlag = true;
+      console.log(this.toolbarSearch, this.categoryName);
 
       await this.$store.dispatch("filterProducts", {
         product_name: this.toolbarSearch,
@@ -513,6 +751,15 @@ export default {
         governorate: this.governorate,
         region: this.region,
       });
+      if (this.supplierName) {
+        await this.$store.dispatch("filterSuppliers", {
+          supplierName: this.supplierName,
+          governorate: this.governorate,
+          region: this.region,
+        });
+      }
+
+      this.isLoading = false;
     },
   },
   data: () => ({
@@ -520,10 +767,15 @@ export default {
     drawer: false,
     isLoading: false,
     categoryName: "",
-    governorate: "",
+
     region: "",
     productFilterFlag: false,
     toolbarSearch: "",
+    advancedSearch: false,
+    radioGroup: 1,
+    governorate: "",
+
+    supplierName: "",
   }),
 };
 </script>
@@ -546,10 +798,7 @@ export default {
   text-align: center;
   color: black;
 }
-.btn1 {
-  margin-right: 10%;
-  width: 80%;
-}
+
 .mos {
   color: beige;
 }
@@ -568,4 +817,7 @@ export default {
 .font {
   font-size: 14px;
 }
+/* .btn1 {
+  margin-left: 30%;
+} */
 </style>
