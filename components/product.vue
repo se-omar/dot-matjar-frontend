@@ -1,6 +1,10 @@
 <template>
   <div>
-    <v-card class="grey lighten-5" :elevation="7" max-width="280">
+    <v-card
+      class="grey lighten-5"
+      :elevation="7"
+      :min-width="show_right_banner == 1 ? hundred : hundredten"
+    >
       <v-img height="250" :src="filteredProduct.main_picture"></v-img>
 
       <v-row class="mt-n5">
@@ -83,6 +87,7 @@
 export default {
   components: {},
   async created() {
+    console.log("show right carousel", this.show_right_carousel);
     await this.$store.dispatch(
       "calculateProductRating",
       this.filteredProduct.product_id
@@ -91,6 +96,8 @@ export default {
   name: "product",
   data() {
     return {
+      hundred: "100%",
+      hundredten: "110%",
       i: 0,
     };
   },
@@ -110,6 +117,10 @@ export default {
     },
     currentUser: {
       type: Object,
+      default: () => {},
+    },
+    show_right_banner: {
+      type: Number,
       default: () => {},
     },
   },

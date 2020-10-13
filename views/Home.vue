@@ -328,8 +328,8 @@
       </v-col> -->
     </v-row>
 
-    <v-row class="ml-2 mt-n7">
-      <v-col lg="2" sm="4" md="3">
+    <v-row justify="space-between" class="mt-n7">
+      <v-col lg="2" sm="3" md="2">
         <v-card height="95%" style="overflow: hidden" max-width>
           <!-- <v-row justify="center"
             ><v-card-title>Categories</v-card-title>
@@ -367,7 +367,7 @@
                         <v-btn
                           @click="filterProductsWithCategory(category)"
                           icon
-                          style="overflow: hidden"
+                          style="overflow: hidden; color: black"
                         >
                           <i class="fa fa-chevron-right"></i>
                         </v-btn>
@@ -402,7 +402,11 @@
       </v-col>
 
       <!-- <v-col lg="8" sm="5" md="7"> -->
-      <v-col :lg="homePageInfo.show_right_banner ? 9 : 11" sm="7" md="7">
+      <v-col
+        :lg="homePageInfo.show_right_banner ? 8 : 10"
+        sm="7"
+        :md="homePageInfo.show_right_banner ? 8 : 10"
+      >
         <v-radio-group mandatory v-model="radioGroup">
           <v-row class="mb-n5" justify="center">
             <v-col lg="4">
@@ -415,19 +419,26 @@
           </v-row>
         </v-radio-group>
 
-        <v-row class="ml-7 mr-7" v-if="radioGroup === '1'">
+        <v-row
+          justify-lg="start"
+          justify-md="center"
+          justify-sm="start"
+          v-if="radioGroup === '1'"
+        >
           <v-col
-            lg="3"
-            md="6"
+            :class="homePageInfo.show_right_banner ? '' : productsClass"
+            :lg="homePageInfo.show_right_banner ? 3 : 2"
+            :md="homePageInfo.show_right_banner ? 4 : 3"
             xmd="4"
-            sm="12"
-            cols="12"
+            sm="10  "
+            cols="5"
             v-for="(filteredProduct, index) in filteredProducts"
             :key="index"
           >
             <product
               class="ml-n2 mr-n2"
               :currentUser="currentUser"
+              :show_right_banner="homePageInfo.show_right_banner"
               :filteredProduct="filteredProduct"
             ></product>
           </v-col>
@@ -459,10 +470,12 @@
       </v-col>
 
       <v-col
+        :class="{ 'ml-n15': $vuetify.breakpoint.smAndDown }"
         v-if="homePageInfo.show_right_banner && homePageInfo.right_banner_image"
         lg="2"
         sm="2"
         md="2"
+        cols="2"
       >
         <v-card height="95%">
           <v-img :src="nodeHost + homePageInfo.right_banner_image"></v-img>
@@ -509,6 +522,7 @@ export default {
       priceFrom: "",
       priceTo: "",
       advancedSearch: false,
+      productsClass: "mr-4 ml-4",
     };
   },
   async created() {
@@ -735,6 +749,10 @@ export default {
 }
 .v-btn__content {
   background-color: red;
+}
+.padding-0 {
+  padding-right: 0;
+  padding-left: 0;
 }
 </style>
 
