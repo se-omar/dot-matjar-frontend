@@ -133,6 +133,7 @@
       <v-col sm="3" lg="3" md="3"></v-col>
       <v-col cols="6" sm="3" md="3" lg="3">
         <v-text-field
+          v-model="priceFrom"
           :disabled="radioGroup === '2'"
           dense
           rounded
@@ -144,6 +145,7 @@
 
       <v-col cols="6" sm="3" md="3" lg="3">
         <v-text-field
+          v-model="priceTo"
           :disabled="radioGroup === '2'"
           dense
           outlined
@@ -158,7 +160,7 @@
         <v-btn
           :disabled="radioGroup === '2'"
           class="white--text"
-          @click="filterProducts"
+          @click="filterProducts('search')"
           :color="siteColor"
           rounded
           max-width="80"
@@ -333,7 +335,7 @@
             large
             :color="siteColor"
             class="mb-15 white--text"
-            @click="loadMore"
+            @click="radioGroup == 1 ? filterProducts('loadmore') : loadMore()"
             >load more</v-btn
           >
         </v-row>
@@ -387,6 +389,8 @@ export default {
       //   { name: "Cars", icon: "fa fa-car fa-2x ml-2" },
       // ],
       menuButton: false,
+      priceFrom: "",
+      priceTo: "",
     };
   },
   async created() {
@@ -468,8 +472,9 @@ export default {
   },
 
   methods: {
-    async filterProducts() {
-      this.isLoading = true;
+    async filterProducts(buttonPressed) {
+      // this.isLoading = true;
+      // debugger
       this.productFilterFlag = true;
       console.log(this.toolbarSearch, this.categoryName);
       await this.$store.dispatch("filterProducts", {
@@ -477,6 +482,14 @@ export default {
         category_name: this.categoryName,
         governorate: this.governorate,
         region: this.region,
+        priceFrom: this.priceFrom,
+        priceTo: this.priceTo,
+        product_id:
+          buttonPressed == "search"
+            ? this.products[0].product_id
+            : this.filteredProducts[this.filteredProducts.length - 1]
+                .product_id,
+        buttonPressed,
       });
       this.isLoading = false;
     },
@@ -519,24 +532,17 @@ export default {
       console.log(this.categoryName);
     },
 
-    loadMore() {
+    async loadMore() {
+      console.log("clicked");
       this.isLoading = true;
       var self = this;
-      if (this.radioGroup === "1") {
-        console.log("filter products condition");
-        this.$store.dispatch("getProducts", {
-          productFilterFlag: this.productFilterFlag,
-          productName: this.toolbarSearch,
-          categoryName: this.categoryName,
-        });
-      } else {
-        self.$store.dispatch("getSuppliers", {
-          supplierFilterFlag: this.supplierFilterFlag,
-          supplierName: this.supplierName,
-          governorate: this.governorate,
-          region: this.region,
-        });
-      }
+      self.$store.dispatch("getSuppliers", {
+        supplierFilterFlag: this.supplierFilterFlag,
+        supplierName: this.supplierName,
+        governorate: this.governorate,
+        region: this.region,
+      });
+
       this.isLoading = false;
     },
 
