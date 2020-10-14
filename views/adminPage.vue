@@ -31,10 +31,12 @@
       <v-btn
         :disabled="!addCategoryValidation"
         rounded
-        :color="siteColor"
+        :color="siteColor.button_color"
         class="white--text"
         @click="addNewCategory"
-        >Add Category</v-btn
+        ><span :style="`color:${siteColor.button_text_color}`"
+          >Add Category</span
+        ></v-btn
       >
     </v-row>
     <v-divider class="mx-16"></v-divider>
@@ -73,10 +75,11 @@
       <v-btn
         :disabled="!valid"
         rounded
-        :color="siteColor"
-        class="white--text"
+        :color="siteColor.button_color"
         @click="addCategoryItem"
-        >Add item</v-btn
+        ><span :style="`color:${siteColor.button_text_color}`"
+          >Add item</span
+        ></v-btn
       >
     </v-row>
     <v-divider class="mx-16"></v-divider>
@@ -112,10 +115,12 @@
       <v-btn
         :disabled="!chooseCategoryToRemove"
         rounded
-        :color="siteColor"
+        :color="siteColor.button_color"
         class="white--text"
         @click="confirmingRemovingCategory = true"
-        >Remove Category</v-btn
+        ><span :style="`color:${siteColor.button_text_color}`"
+          >Remove Category</span
+        ></v-btn
       >
       <!-- dialoge testing ============ -->
       <v-dialog v-model="confirmingRemovingCategory" max-width="400">
@@ -133,23 +138,29 @@
             <v-spacer></v-spacer>
 
             <v-btn
-              :color="siteColor"
+              :color="siteColor.button_color"
               text
               @click="confirmingRemovingCategory = false"
-              >Disagree</v-btn
+              ><span :style="`color:${siteColor.button_text_color}`"
+                >Disagree</span
+              ></v-btn
             >
 
-            <v-btn :color="siteColor" text @click="removeCategory">Agree</v-btn>
+            <v-btn :color="siteColor" text @click="removeCategory"
+              ><span :style="`color:${siteColor.button_text_color}`"
+                >Agree</span
+              ></v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-dialog>
       <v-btn
         :disabled="chooseItemToRemove.length == 0"
         rounded
-        :color="siteColor"
-        class="white--text"
+        :color="siteColor.button_color"
         @click="removeItem"
-        >Remove item</v-btn
+        ><span :style="`color:${siteColor.button_text_color}`">Disagree</span
+        >>Remove item</v-btn
       >
     </v-row>
 
@@ -408,7 +419,11 @@
       </v-col>
     </v-row>
     <v-row justify="center">
-      <v-btn @click="sendData">Update</v-btn>
+      <v-btn :color="siteColor.button_color" @click="sendData"
+        ><span :style="`color:${siteColor.button_text_color}`"
+          >Disagree</span
+        ></v-btn
+      >
     </v-row>
 
     <v-row justify="center">
@@ -462,12 +477,15 @@
 
       <v-col class="mt-2" lg="2">
         <v-btn
+          :color="siteColor.button_color"
           large
           @click="
             getTopMonthlySuppliers();
             isLoading = true;
           "
-          >Filter</v-btn
+          ><span :style="`color:${siteColor.button_text_color}`"
+            >Filter</span
+          ></v-btn
         >
       </v-col>
     </v-row>
@@ -628,13 +646,23 @@
       </v-col>
 
       <v-col lg="1">
-        <v-btn class="white--text" @click="filterSuppliers" :color="siteColor"
-          >Search</v-btn
+        <v-btn
+          class="white--text"
+          @click="filterSuppliers"
+          :color="siteColor.button_color"
+        >
+          <span :style="`color:${siteColor.button_text_color}`"
+            >Search</span
+          ></v-btn
         >
       </v-col>
 
       <v-col lg="1">
-        <v-btn class="white--text" @click="All" :color="siteColor">All</v-btn>
+        <v-btn class="white--text" @click="All" :color="siteColor.button_color"
+          ><span :style="`color:${siteColor.button_text_color}`"
+            >All</span
+          ></v-btn
+        >
       </v-col>
     </v-row>
 
@@ -657,10 +685,12 @@
     <v-row justify="center">
       <v-btn
         large
-        :color="siteColor"
+        :color="siteColor.button_color"
         class="mb-15 white--text"
         @click="loadMore"
-        >load more</v-btn
+        ><span :style="`color:${siteColor.button_text_color}`"
+          >load more</span
+        ></v-btn
       >
     </v-row>
   </v-app>
@@ -861,7 +891,14 @@ export default {
     },
 
     siteColor() {
-      return this.$store.state.Home.siteColor;
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor[0];
+      } else {
+        return {
+          button_text_color: "black",
+          button_color: "white",
+        };
+      }
     },
     productCategory() {
       return this.$store.state.Home.category;
@@ -1197,3 +1234,8 @@ export default {
   },
 };
 </script>
+
+
+
+<style scoped>
+</style>

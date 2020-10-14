@@ -29,6 +29,7 @@ import updateSupplierPage from '../views/updateSupplierPage'
 import pendingSuppliers from '../views/pendingSuppliers'
 import categoryAndItemRequests from '../views/categoryAndItemRequests.vue'
 import siteColors from '../views/siteColors.vue'
+import supplierDetails from '../views/supplierDetails'
 // import { isInteger } from 'core-js/fn/number'
 Vue.use(VueRouter)
 
@@ -180,6 +181,11 @@ var routes = [{
   path: '/siteColors',
   name: 'siteColors',
   component: siteColors
+},
+{
+  path: '/supplierDetails/:supplier_id',
+  name: 'supplierDetails',
+  component: supplierDetails
 },
 {
   path: '*',

@@ -1,19 +1,33 @@
 <template>
   <v-app>
     <v-container
-      v-if="currentUser && currentUser.user_type == 'business' && (recievedRequests || sentRequests)"
+      v-if="
+        currentUser &&
+        currentUser.user_type == 'business' &&
+        (recievedRequests || sentRequests)
+      "
       fluid
     >
       <v-row>
         <v-col class="light-blue lighten-5" cols="2">
           <v-list class="light-blue lighten-5">
             <v-list-item-group>
-              <v-list-item @click="requestType = 'sent'; toggleRequestType()">
-                <span style="font-size: 25px">الطلبات الصادرة</span>
+              <v-list-item
+                @click="
+                  requestType = 'sent';
+                  toggleRequestType();
+                "
+              >
+                <span style="font-size: 25px">Issued Requests</span>
               </v-list-item>
               <br />
-              <v-list-item @click="requestType = 'recieved'; toggleRequestType()">
-                <span style="font-size: 25px">الطلبات الواردة</span>
+              <v-list-item
+                @click="
+                  requestType = 'recieved';
+                  toggleRequestType();
+                "
+              >
+                <span style="font-size: 25px">Incoming Requests</span>
               </v-list-item>
             </v-list-item-group>
           </v-list>
@@ -24,7 +38,7 @@
           cols="10"
           class="scrollable"
         >
-          <p class="display-1">الطلبات الواردة</p>
+          <p class="display-1">Incoming Requests</p>
           <request-card
             :requestType="requestType"
             :request="request"
@@ -40,7 +54,7 @@
           cols="10"
           class="scrollable"
         >
-          <p class="display-1">الطلبات الصادرة</p>
+          <p class="display-1">Issued Requests</p>
           <request-card
             :requestType="requestType"
             :request="request"
@@ -56,20 +70,25 @@
         <request-response-dialog></request-response-dialog>
 
         <v-col v-if="viewRequestDetails" cols="10 scrollable">
-          <request-details :requestType="requestType" :requestClicked="toggle"></request-details>
+          <request-details
+            :requestType="requestType"
+            :requestClicked="toggle"
+          ></request-details>
         </v-col>
       </v-row>
     </v-container>
 
-    <v-container v-else-if="!currentUser || currentUser.user_type != 'business'">
+    <v-container
+      v-else-if="!currentUser || currentUser.user_type != 'business'"
+    >
       <v-row justify="center">
-        <p class="display-1">ليس لديك صلاحيات لإظهار هذه الصفحة</p>
+        <p class="display-1">No Availability to request this PAGE</p>
       </v-row>
     </v-container>
 
     <v-container v-else>
       <v-row justify="center">
-        <p class="display-1">لا يوجد طلبات</p>
+        <p class="display-1">No requsts Found</p>
       </v-row>
     </v-container>
   </v-app>

@@ -20,11 +20,19 @@
         </v-row>
         <v-row justify="center">
           <v-col cols="3">
-            <v-text-field label="المحافظه" outlined v-model="governorate"></v-text-field>
+            <v-text-field
+              label="المحافظه"
+              outlined
+              v-model="governorate"
+            ></v-text-field>
           </v-col>
 
           <v-col cols="3">
-            <v-text-field label="القريه" v-model="village" outlined></v-text-field>
+            <v-text-field
+              label="القريه"
+              v-model="village"
+              outlined
+            ></v-text-field>
           </v-col>
         </v-row>
 
@@ -53,11 +61,19 @@
       </v-row>
       <v-row justify="center">
         <v-col cols="3">
-          <v-text-field label="المحافظه" outlined v-model="governorate"></v-text-field>
+          <v-text-field
+            label="المحافظه"
+            outlined
+            v-model="governorate"
+          ></v-text-field>
         </v-col>
 
         <v-col cols="3">
-          <v-text-field label="القريه" v-model="village" outlined></v-text-field>
+          <v-text-field
+            label="القريه"
+            v-model="village"
+            outlined
+          ></v-text-field>
         </v-col>
       </v-row>
 
@@ -103,6 +119,16 @@ export default {
   computed: {
     currentUser() {
       return this.$store.state.Home.currentUser;
+    },
+    siteColor() {
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor[0];
+      } else {
+        return {
+          button_text_color: "black",
+          button_color: "white",
+        };
+      }
     },
   },
 };

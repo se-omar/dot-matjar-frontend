@@ -24,8 +24,8 @@ export default {
 
 
         getSiteColor(state, siteColors) {
+            localStorage.removeItem('siteColor')
             localStorage.setItem('siteColor', JSON.stringify(siteColors))
-
             state.siteColor = JSON.parse(localStorage.getItem('siteColor'))
         },
 
@@ -92,6 +92,7 @@ export default {
 
         supplierPageColor(state, color) {
             console.log('color of supp', color)
+            localStorage.removeItem('siteColor')
             localStorage.setItem('siteColor', color)
             state.siteColor = localStorage.getItem('siteColor')
         },
@@ -117,6 +118,13 @@ export default {
         getHomePageData(state, info) {
             state.homePageInfo = info
         },
+        updateSupplierPageColors(state, supplierPageColors) {
+            console.log('supplier page colors', supplierPageColors)
+            var pageDataArray = [supplierPageColors]
+
+            localStorage.setItem('siteColor', JSON.stringify(pageDataArray));
+            state.siteColor = JSON.parse(localStorage.getItem('siteColor')) ? JSON.parse(localStorage.getItem('siteColor')) : []
+        }
 
     },
 
@@ -436,7 +444,27 @@ export default {
                     context.commit('getHomePageData', info.data.data)
                 })
         },
-
+        updateSupplierSiteColors(context, {
+            toolBarColor,
+            footerColor,
+            buttonsColor,
+            buttonsTextColor,
+            footerTextColor,
+            toolBarTextColor
+        }) {
+            axios.post('http://localhost:3000/api/updateSupplierSiteColors', {
+                toolBarColor,
+                footerColor,
+                buttonsColor,
+                buttonsTextColor,
+                footerTextColor,
+                toolBarTextColor,
+                user_id: context.state.currentUser.user_id
+            })
+                .then(message => {
+                    console.log(message.data.message);
+                })
+        },
 
 
 

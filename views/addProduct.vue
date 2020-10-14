@@ -114,8 +114,13 @@
           <v-row>
             <v-col cols="12">
               <h4>Want to add your own category ?</h4>
-              <v-btn @click.stop="dialog = true" :color="siteColor" text
-                >Click here</v-btn
+              <v-btn
+                @click.stop="dialog = true"
+                :color="siteColor.button_color"
+                text
+                ><span :style="`color:${siteColor.button_text_color}`"
+                  >Click here</span
+                ></v-btn
               >
             </v-col>
             <v-dialog
@@ -125,9 +130,12 @@
               hide-overlay
               transition="dialog-bottom-transition"
             >
-              <v-toolbar dark :color="siteColor">
+              <v-toolbar dark :color="siteColor.button_color">
                 <v-btn icon dark @click="dialog = false">
-                  <i class="fa fa-times fa-lg"></i>
+                  <i
+                    :style="`color:${siteColor.button_text_color}`"
+                    class="fa fa-times fa-lg"
+                  ></i>
                 </v-btn>
                 <v-spacer></v-spacer>
                 <v-toolbar-title>Category Request</v-toolbar-title>
@@ -167,10 +175,12 @@
                   <v-btn
                     :disabled="!addCategoryValidation"
                     rounded
-                    :color="siteColor"
+                    :color="siteColor.button_color"
                     class="white--text"
                     @click="requestNewCategoryAndItem"
-                    >Add Category</v-btn
+                    ><span :style="`color:${siteColor.button_text_color}`"
+                      >Add Category</span
+                    ></v-btn
                   >
                 </v-row>
                 <v-divider class="mx-16 mt-6"></v-divider>
@@ -220,10 +230,12 @@
                   <v-btn
                     :disabled="!addingItemsValidation"
                     rounded
-                    :color="siteColor"
+                    :color="siteColor.button_color"
                     class="white--text"
                     @click="requestNewCategoryAndItem"
-                    >Add item</v-btn
+                    ><span :style="`color:${siteColor.button_text_color}`"
+                      >Add item</span
+                    ></v-btn
                   >
                 </v-row>
                 <v-divider class="mx-16 mt-6"></v-divider>
@@ -278,9 +290,12 @@
                 :disabled="!valid"
                 @click="addProduct"
                 rounded
-                class="primary"
+                :color="siteColor.button_color"
               >
-                <span style="font-size: 18px">Add product</span>
+                <span
+                  :style="`color:${siteColor.button_text_color};font-size: 18px`"
+                  >Add product</span
+                >
               </v-btn>
             </v-col>
 

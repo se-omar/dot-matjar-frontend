@@ -125,8 +125,15 @@
         <v-col lg="6" md="8" sm="8" cols="10">
           <v-row justify="center">
             <v-col cols="5">
-              <v-btn rounded @click="updateProduct" block class="primary">
-                <span style="font-size: 18px">Edit product</span>
+              <v-btn
+                :color="siteColor.button_color"
+                rounded
+                @click="updateProduct"
+                block
+              >
+                <span :style="`color:${siteColor.button_text_color}`"
+                  >Edit product</span
+                >
               </v-btn>
             </v-col>
 
@@ -162,6 +169,17 @@ export default {
 
     currentProduct() {
       return this.$store.state.ProductDetails.currentProduct;
+    },
+
+    siteColor() {
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor[0];
+      } else {
+        return {
+          button_text_color: "black",
+          button_color: "white",
+        };
+      }
     },
   },
 

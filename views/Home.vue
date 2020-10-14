@@ -48,9 +48,9 @@
       </v-col>
     </v-row>
     <!-- search woth supplier and proucts -->
-    <v-col>
+    <!-- <v-col>
       <v-btn @click="advancedSearch = true">Expand Search Options</v-btn>
-    </v-col>
+    </v-col> -->
     <v-dialog style="overflow: hidden" v-model="advancedSearch" max-width="80%">
       <v-card style="overflow: hidden">
         <v-row justify="center">
@@ -333,11 +333,7 @@
                       >
                         <v-row justify="start">
                           <i :class="`fas fa-${category} fa-lg mr-2`"></i>
-                          <span
-                            :style="`color: ${siteColor.button_text_color}`"
-                          >
-                            {{ category }}</span
-                          >
+                          <span style="color: black"> {{ category }}</span>
                         </v-row>
                         <v-btn
                           @click="filterProductsWithCategory(category)"
@@ -364,9 +360,7 @@
                     >
                       -
                       <i :class="`fa fa-${item} fa-lg ml-2 mr-2`"></i>
-                      <span :style="`color: ${siteColor.button_text_color}`">
-                        {{ item }}</span
-                      >
+                      <span style="color: black"> {{ item }}</span>
                     </v-btn>
                   </v-list>
                 </v-card>

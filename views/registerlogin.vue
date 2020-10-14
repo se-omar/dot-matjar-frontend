@@ -5,9 +5,18 @@
         <div>
           <v-tabs v-model="tab" show-arrows icons-and-text dark grow>
             <v-tabs-slider></v-tabs-slider>
-            <v-tab class="red darken-4" v-for="i in tabs" :key="i.name">
+            <v-tab
+              :color="siteColor.toolbar_color"
+              v-for="i in tabs"
+              :key="i.name"
+            >
               <v-icon large>{{ i.icon }}</v-icon>
-              <div class="caption py-1">{{ i.name }}</div>
+              <div
+                :style="`color:${siteColor.toolbar_text_color}`"
+                class="caption py-1"
+              >
+                {{ i.name }}
+              </div>
             </v-tab>
             <v-tab-item>
               <v-card class="px-4">
@@ -41,16 +50,20 @@
                           x-large
                           block
                           :disabled="!valid"
-                          class="red darken-4 white--text"
+                          :color="siteColor.button_color"
                           @click="login"
-                        >Login</v-btn>
+                          ><span :style="`color:${siteColor.button_text_color}`"
+                            >Login</span
+                          ></v-btn
+                        >
                       </v-col>
 
                       <v-col class="d-flex" cols="12" sm="12" xsm="12">
-                        <v-btn
-                          @click="$router.push('/resetPassword')"
-                          text
-                        >Do yo forget you Password ?</v-btn>
+                        <v-btn @click="$router.push('/resetPassword')" text
+                          ><span :style="`color:${siteColor.button_text_color}`"
+                            >Do yo forget you Password ?</span
+                          ></v-btn
+                        >
                       </v-col>
                     </v-row>
                   </v-form>
@@ -63,7 +76,12 @@
                   <v-form ref="registerForm" v-model="valid" lazy-validation>
                     <v-row>
                       <v-col cols="6" sm="12">
-                        <v-text-field v-model="email" :rules="emailRules" label="Email" required></v-text-field>
+                        <v-text-field
+                          v-model="email"
+                          :rules="emailRules"
+                          label="Email"
+                          required
+                        ></v-text-field>
                       </v-col>
 
                       <v-col cols="6" sm="12" md="6">
@@ -145,7 +163,8 @@
                                     href="http://vuetifyjs.com"
                                     @click.stop
                                     v-on="on"
-                                  >terms and conditions</a>
+                                    >terms and conditions</a
+                                  >
                                 </template>
                                 Opens in new window
                               </v-tooltip>
@@ -160,16 +179,20 @@
                           block
                           :disabled="!valid || !checkbox"
                           id="btn"
-                          class="red darken-4 white--text"
+                          :color="siteColor.button_color"
                           @click="validateSignup"
-                        >Sign up</v-btn>
+                          ><span :style="`color:${siteColor.button_text_color}`"
+                            >Sign up</span
+                          ></v-btn
+                        >
                         <v-btn
                           x-large
                           block
                           :disabled="!valid || !checkbox"
                           class="red darken-4 white--text"
                           @click="$router.push('/')"
-                        >Cancel</v-btn>
+                          >Cancel</v-btn
+                        >
                       </v-col>
                     </v-row>
                   </v-form>
@@ -235,7 +258,11 @@
                         ></v-select>
                       </v-col>
                       <v-col cols="6">
-                        <v-text-field outlined label="Store Name" v-model="storeName"></v-text-field>
+                        <v-text-field
+                          outlined
+                          label="Store Name"
+                          v-model="storeName"
+                        ></v-text-field>
                       </v-col>
                       <v-col cols="6" sm="12">
                         <v-text-field
@@ -276,7 +303,8 @@
                                     href="http://vuetifyjs.com"
                                     @click.stop
                                     v-on="on"
-                                  >terms and conditions</a>
+                                    >terms and conditions</a
+                                  >
                                 </template>
                                 Opens in new window
                               </v-tooltip>
@@ -289,18 +317,26 @@
                         <v-btn
                           x-large
                           block
-                          :disabled="!businessOwnerValidation || !businessOwnerCheckbox"
+                          :disabled="
+                            !businessOwnerValidation || !businessOwnerCheckbox
+                          "
                           id="btn"
-                          class="red darken-4 white--text"
+                          :color="siteColor.button_color"
                           @click="businessOwnerRegistration"
-                        >Register as a Business Owner</v-btn>
+                          ><span :style="`color:${siteColor.button_text_color}`"
+                            >Register as a Business Owner</span
+                          ></v-btn
+                        >
                         <v-btn
                           x-large
                           block
-                          :disabled="!businessOwnerValidation || !businessOwnerCheckbox"
+                          :disabled="
+                            !businessOwnerValidation || !businessOwnerCheckbox
+                          "
                           class="red darken-4 white--text"
                           @click="$router.push('/')"
-                        >Cancel</v-btn>
+                          >Cancel</v-btn
+                        >
                       </v-col>
                     </v-row>
                   </v-form>
@@ -343,9 +379,16 @@ export default {
     },
     siteColor() {
       if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor;
+        return this.$store.state.Home.siteColor[0];
       } else {
-        return "red darken-4";
+        return {
+          button_text_color: "black",
+          button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
+          footer_color: "white",
+          footer_text_color: "black",
+        };
       }
     },
     businessOwnerPasswordMatch() {

@@ -34,7 +34,7 @@
 
       <!-- <v-spacer></v-spacer> -->
       <v-row justify="center">
-        <v-col cols="12" lg="6" sm="7" md="6">
+        <v-col v-if="!$route.params.supplier_id" cols="12" lg="6" sm="7" md="6">
           <v-text-field
             class="mt-8"
             outlined
@@ -44,6 +44,17 @@
             @keyup="emptySearchBox"
             v-model="toolbarSearch"
             @keypress="filterProducts"
+          ></v-text-field>
+        </v-col>
+        <v-col v-else cols="12" lg="6" sm="7" md="6">
+          <v-text-field
+            class="mt-8"
+            outlined
+            rounded
+            placeholder="SEARCH"
+            append-icon="fa fa-search"
+            @keyup="filterSupplierProducts($route.params.supplier_id)"
+            v-model="supplierProductsSearch"
           ></v-text-field>
         </v-col>
         <v-col cols="12" md="3" lg="3" sm="5">
@@ -333,7 +344,7 @@
           </v-card-text>
 
           <v-row justify="center">
-            <v-col cols="6" sm="11" lg="4">
+            <v-col cols="12" sm="10" lg="5">
               <v-btn
                 class="btn1"
                 :color="siteColor.button_color"
@@ -351,7 +362,7 @@
             </v-col>
           </v-row>
           <v-row justify="center" v-if="currentUser.user_type == 'business'">
-            <v-col cols="6" sm="11" lg="4">
+            <v-col cols="12" sm="10" lg="5">
               <v-btn
                 class="btn1"
                 :color="siteColor.button_color"
@@ -368,9 +379,25 @@
               <v-divider class="mr-4"></v-divider>
             </v-col>
           </v-row>
+          <v-row justify="center" v-if="currentUser.user_type == 'admin'">
+            <v-col cols="12" sm="10" lg="5">
+              <v-btn
+                @click="$router.push('/siteColors')"
+                large
+                rounded
+                :color="siteColor.button_color"
+              >
+                <span :style="`color:${siteColor.button_text_color};`">
+                  Site <br />
+                  Colors</span
+                >
+              </v-btn>
+              <v-divider class="mr-4"></v-divider>
+            </v-col>
+          </v-row>
 
           <v-row justify="center" v-if="currentUser.user_type == 'business'">
-            <v-col cols="6" sm="11" lg="4">
+            <v-col cols="12" sm="10" lg="5">
               <v-btn
                 class="btn1"
                 :color="siteColor.button_color"
@@ -389,7 +416,7 @@
           </v-row>
 
           <v-row justify="center" v-if="currentUser.user_type == 'admin'">
-            <v-col cols="6" sm="11" lg="4">
+            <v-col cols="12x" sm="11" lg="6">
               <v-btn
                 :color="siteColor.button_color"
                 large
@@ -397,7 +424,7 @@
                 @click="$router.push('/categoryAndItemRequests')"
                 ><span :style="`color:${siteColor.button_text_color};`"
                   >Category <br />
-                  and item <br />
+
                   requests</span
                 ></v-btn
               >
@@ -655,6 +682,12 @@ export default {
     // return this.siteColor
     //       }
     //     },
+    radioGroup: {
+      type: Number,
+      default() {
+        return 1;
+      },
+    },
   },
   computed: {
     currentUser() {
@@ -706,9 +739,8 @@ export default {
       this.$store.dispatch("profilePhoto", form);
     },
     supplierPage() {
-      console.log("worked");
       this.$store.commit("supplierPage", this.currentUser);
-      this.$router.push(`/supplierPage/` + this.currentUser.user_id);
+      this.$router.push("/supplierPage/" + this.currentUser.user_id);
     },
     goSupplierPage() {
       this.$router
@@ -761,6 +793,21 @@ export default {
 
       this.isLoading = false;
     },
+    filterSupplierProducts() {
+      console.log(this.supplierProductsSearch);
+      console.log(this.$route.params.supplier_id);
+      this.$store.dispatch("filterSupplierProducts", {
+        productsSearch: this.supplierProductsSearch,
+        user_id: this.$route.params.supplier_id,
+      });
+      console.log(this.$route.params.supplier_id);
+    },
+    async emptySupplierSearchBox() {
+      await this.$store.dispatch(
+        "getSupplierProducts",
+        this.$route.params.supplier_id
+      );
+    },
   },
   data: () => ({
     profilephoto: [],
@@ -772,10 +819,11 @@ export default {
     productFilterFlag: false,
     toolbarSearch: "",
     advancedSearch: false,
-    radioGroup: 1,
+
     governorate: "",
 
     supplierName: "",
+    supplierProductsSearch: "",
   }),
 };
 </script>

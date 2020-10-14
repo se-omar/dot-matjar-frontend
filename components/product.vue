@@ -12,12 +12,12 @@
             <v-row style="height: 25%">
               <v-col lg="12" md="12" sm="12" cols="12">
                 <span
-                  :style="`color: ${siteColor.button_text_color} ; font-weight: 800; font-size:23px`"
+                  :style="`color: black ; font-weight: 800; font-size:23px`"
                   >{{ filteredProduct.unit_price }}</span
                 >
                 <span
                   class="ml-1"
-                  :style="`color: ${siteColor.button_text_color} ; font-weight: 800; font-size:17px`"
+                  :style="`color: black; font-weight: 800; font-size:17px`"
                   >EGP</span
                 >
               </v-col>
@@ -38,14 +38,13 @@
           <v-row justify="center">
             <v-col cols="11" lg="10" sm="11" md="11">
               <v-btn
-                outlined
-                block
+                rounded
+                class="font"
                 @click="setCurrentRow"
                 :color="siteColor.button_color"
-                :style="`color: ${siteColor.button_text_color}`"
                 text
-                >Details</v-btn
-              >
+                >Details
+              </v-btn>
             </v-col>
             <v-col
               cols="11"
@@ -59,10 +58,11 @@
                 @click="add(filteredProduct)"
                 variant="primary"
                 :color="siteColor.button_color"
-                :style="`color: ${siteColor.button_text_color}`"
                 class="white--text"
               >
-                Add to cart
+                <span :style="`color:${siteColor.button_text_color}`"
+                  >Add to cart</span
+                >
               </v-btn>
 
               <!-- <b-button

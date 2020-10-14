@@ -10,10 +10,14 @@
         <v-card>
           <v-row>
             <v-col cols="12" lg="6">
-              <v-toolbar shaped dark dense :color="siteColor">
+              <v-toolbar shaped dark dense :color="siteColor.toolbar_color">
                 <v-spacer></v-spacer>
                 <v-toolbar-title>
-                  <p class="text-h4 white--text mt-4">Users</p>
+                  <p class="text-h4 mt-4">
+                    <span :style="`color:${siteColor.toolbar_text_color}`"
+                      >Users</span
+                    >
+                  </p>
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
               </v-toolbar>
@@ -30,7 +34,11 @@
                 }"
               >
                 <template v-slot:item.showProducts>
-                  <v-btn small>Show Products</v-btn>
+                  <v-btn :color="siteColor.button_color" small
+                    ><span :style="`color:${siteColor.button_text.color}`"
+                      >Show Products</span
+                    ></v-btn
+                  >
                 </template>
               </v-data-table>
             </v-col>
@@ -96,15 +104,18 @@
                               <v-btn
                                 @click="updateStatus"
                                 rounded
-                                :color="siteColor"
+                                :color="siteColor.button_color"
                                 class="white--text"
-                                >Update</v-btn
+                                ><span
+                                  :style="`color:${siteColor.button_text.color}`"
+                                  >Update</span
+                                ></v-btn
                               >
                               <v-snackbar v-model="snackbar" :timeout="timeout">
                                 <template v-slot:action="{ attrs }">
                                   Product status Updated successfully
                                   <v-btn
-                                    color="blue"
+                                    class="red white--text"
                                     text
                                     v-bind="attrs"
                                     @click="snackbar = false"
@@ -115,8 +126,7 @@
                               <v-btn
                                 @click="statusDialog = false"
                                 rounded
-                                class="ml-2 white--text"
-                                :color="siteColor"
+                                class="ml-2 red white--text"
                                 >Close</v-btn
                               >
                             </v-list>
@@ -138,12 +148,14 @@
             <v-dialog v-model="dialog" persistent max-width="600px">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  color="primary"
+                  :color="siteColor.button_color"
                   dark
                   v-bind="attrs"
                   v-on="on"
                   @click="dialog = true"
-                  >Show Address Details</v-btn
+                  ><span :style="`color:${siteColor.button_text.color}`"
+                    >Show Address Details</span
+                  ></v-btn
                 >
               </template>
               <v-card>
@@ -202,7 +214,7 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="dialog = false"
+                  <v-btn color="red white--text" text @click="dialog = false"
                     >Close</v-btn
                   >
                 </v-card-actions>
@@ -312,12 +324,14 @@ export default {
     },
     siteColor() {
       if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor;
+        return this.$store.state.Home.siteColor[0];
       } else {
-        return "red darken-4";
+        return {
+          button_text_color: "black",
+          button_color: "white",
+        };
       }
     },
-    // updating page
   },
 };
 </script>

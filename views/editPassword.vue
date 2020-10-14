@@ -57,13 +57,14 @@
           <v-btn
             rounded
             @click="updatePassword"
-            :color="siteColor"
+            :color="siteColor.button_color"
             class="white--text"
             block
           >
-            Update
-            <br />password
-          </v-btn>
+            <span :style="`color:${siteColor.button_text_color} `"
+              >Update <br />password
+            </span></v-btn
+          >
         </v-col>
       </v-row>
     </v-container>
@@ -112,9 +113,12 @@ export default {
     },
     siteColor() {
       if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor;
+        return this.$store.state.Home.siteColor[0];
       } else {
-        return "red darken-4";
+        return {
+          button_text_color: "black",
+          button_color: "white",
+        };
       }
     },
   },

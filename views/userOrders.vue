@@ -32,10 +32,17 @@
                   :headers="headers"
                   :items="items"
                 >
-                  <template v-slot:item.showProducts="{item}">
+                  <template v-slot:item.showProducts="{ item }">
                     <v-row>
                       <v-col cols="6" lg="4">
-                        <v-btn small @click="showProducts(item.order_id)">ShowProducts</v-btn>
+                        <v-btn
+                          :color="siteColor.button_coloe"
+                          small
+                          @click="showProducts(item.order_id)"
+                          ><span :style="`color:${siteColor.button_text_color}`"
+                            >ShowProducts</span
+                          ></v-btn
+                        >
                       </v-col>
                     </v-row>
                   </template>
@@ -51,15 +58,21 @@
                   :headers="productHeaders"
                   :items="productsInOrder"
                 >
-                  <template v-slot:item.status="{item}">
+                  <template v-slot:item.status="{ item }">
                     <h5>
-                      {{item.pending_status}}
+                      {{ item.pending_status }}
                       <i
                         v-if="item.pending_status == 'Delivered'"
                         class="fa fa-check"
                       ></i>
-                      <i v-if="item.pending_status == 'Pending'" class="fas fa-spinner fa-pulse"></i>
-                      <i v-if="item.pending_status == 'Rejected'" class="fa fa-ban"></i>
+                      <i
+                        v-if="item.pending_status == 'Pending'"
+                        class="fas fa-spinner fa-pulse"
+                      ></i>
+                      <i
+                        v-if="item.pending_status == 'Rejected'"
+                        class="fa fa-ban"
+                      ></i>
                     </h5>
                   </template>
                 </v-data-table>
@@ -109,6 +122,20 @@ export default {
     },
     items() {
       return this.$store.state.Orders.orders;
+    },
+    siteColor() {
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor[0];
+      } else {
+        return {
+          button_text_color: "black",
+          button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
+          footer_color: "white",
+          footer_text_color: "black",
+        };
+      }
     },
   },
 

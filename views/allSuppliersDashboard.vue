@@ -1,9 +1,15 @@
 <template>
   <v-app class="grey lighten-4">
     <div class="vld-parent">
-      <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
+      <loading
+        :active.sync="isLoading"
+        :can-cancel="false"
+        :is-full-page="true"
+      ></loading>
     </div>
-    <div class="display-1 mb-10 mt-6" style="margin: auto">{{supplier.full_arabic_name}}'s Dashboard</div>
+    <div class="display-1 mb-10 mt-6" style="margin: auto">
+      {{ supplier.full_arabic_name }}'s Dashboard
+    </div>
     <v-row justify="center">
       <p style="font-size: 28px">All Products</p>
     </v-row>
@@ -18,7 +24,10 @@
         v-for="supplierProduct in supplierProducts"
         :key="supplierProduct.id"
       >
-        <product :addToCartButton="false" :filteredProduct="supplierProduct"></product>
+        <product
+          :addToCartButton="false"
+          :filteredProduct="supplierProduct"
+        ></product>
       </v-col>
     </v-row>
 
@@ -44,7 +53,11 @@
       <v-col lg="4" md="6" sm="12" cols="12">
         <div style="text-align: center">
           <v-hover>
-            <v-card slot-scope="{ hover }" :class="`elevation-${hover ? 5 : 3}` " class="mb-7">
+            <v-card
+              slot-scope="{ hover }"
+              :class="`elevation-${hover ? 5 : 3}`"
+              class="mb-7"
+            >
               <apexchart
                 class="mb-n2 grey lighten-5"
                 id="barChart"
@@ -68,7 +81,7 @@
           <v-hover>
             <v-card
               slot-scope="{ hover }"
-              :class="`elevation-${hover ? 5 : 3}` "
+              :class="`elevation-${hover ? 5 : 3}`"
               class="mb-7 grey lighten-5"
             >
               <apexchart
@@ -94,7 +107,7 @@
           <v-hover>
             <v-card
               slot-scope="{ hover }"
-              :class="`elevation-${hover ? 5 : 3}` "
+              :class="`elevation-${hover ? 5 : 3}`"
               class="mb-5 grey lighten-5"
             >
               <apexchart
@@ -126,7 +139,7 @@
             <v-card
               width="900"
               slot-scope="{ hover }"
-              :class="`elevation-${hover ? 5 : 3}` "
+              :class="`elevation-${hover ? 5 : 3}`"
               class="mb-7 grey lighten-5"
             >
               <apexchart
@@ -141,9 +154,14 @@
           </v-hover>
           <v-row justify="center">
             <v-label for="lineChart">
-              <span
-                style="font-size: 22px"
-              >Revenue This Month: {{revenueChartSeries[0].data[revenueChartSeries[0].data.length-1]}}</span>
+              <span style="font-size: 22px"
+                >Revenue This Month:
+                {{
+                  revenueChartSeries[0].data[
+                    revenueChartSeries[0].data.length - 1
+                  ]
+                }}</span
+              >
             </v-label>
           </v-row>
         </div>
@@ -156,13 +174,12 @@
               height="75"
               width="300"
               slot-scope="{ hover }"
-              :class="`elevation-${hover ? 5 : 3}` "
+              :class="`elevation-${hover ? 5 : 3}`"
               class="grey lighten-5 mb-11"
             >
-              <span
-                class="grey--text text--darken-1"
-                style="font-size: 20px"
-              >Total Revenue: {{supplier.total_revenue}} EGP</span>
+              <span class="grey--text text--darken-1" style="font-size: 20px"
+                >Total Revenue: {{ supplier.total_revenue }} EGP</span
+              >
             </v-card>
           </v-hover>
         </div>
@@ -173,13 +190,12 @@
               height="75"
               width="300"
               slot-scope="{ hover }"
-              :class="`elevation-${hover ? 5 : 3}` "
+              :class="`elevation-${hover ? 5 : 3}`"
               class="grey lighten-5 mb-11"
             >
-              <span
-                class="grey--text text--darken-1"
-                style="font-size: 20px"
-              >Amount Recieved: {{supplier.revenue_recieved || 0}} EGP</span>
+              <span class="grey--text text--darken-1" style="font-size: 20px"
+                >Amount Recieved: {{ supplier.revenue_recieved || 0 }} EGP</span
+              >
             </v-card>
           </v-hover>
         </div>
@@ -190,13 +206,16 @@
               width="300"
               height="75"
               slot-scope="{ hover }"
-              :class="`elevation-${hover ? 5 : 3}` "
+              :class="`elevation-${hover ? 5 : 3}`"
               class="grey lighten-5 mb-11"
             >
-              <span
-                class="grey--text text--darken-1"
-                style="font-size: 20px"
-              >Amount Left: {{supplier.total_revenue - supplier.revenue_recieved || 0}} EGP</span>
+              <span class="grey--text text--darken-1" style="font-size: 20px"
+                >Amount Left:
+                {{
+                  supplier.total_revenue - supplier.revenue_recieved || 0
+                }}
+                EGP</span
+              >
             </v-card>
           </v-hover>
         </div>
@@ -207,7 +226,11 @@
 
     <v-row justify="center" style="width: 92%; margin: auto">
       <v-col lg="4">
-        <dashboard-selling-product class="mb-5" id="mostSelling" :filteredProduct="topProduct" />
+        <dashboard-selling-product
+          class="mb-5"
+          id="mostSelling"
+          :filteredProduct="topProduct"
+        />
         <v-row justify="center">
           <v-label for="mostSelling">
             <span style="font-size: 22px">Most Selling Product</span>
@@ -216,7 +239,11 @@
       </v-col>
 
       <v-col lg="4">
-        <dashboard-selling-product class="mb-5" id="leastSelling" :filteredProduct="leastProduct" />
+        <dashboard-selling-product
+          class="mb-5"
+          id="leastSelling"
+          :filteredProduct="leastProduct"
+        />
         <v-row justify="center">
           <v-label for="leastSelling">
             <span style="font-size: 22px">least Selling Product</span>
@@ -374,6 +401,16 @@ export default {
 
     supplier() {
       return this.$store.state.SupplierPage.supplier;
+    },
+    siteColor() {
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor[0];
+      } else {
+        return {
+          button_text_color: "black",
+          button_color: "white",
+        };
+      }
     },
   },
 

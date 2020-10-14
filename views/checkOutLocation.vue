@@ -42,9 +42,11 @@
               <v-btn
                 :disabled="!valid"
                 @click="createOrder"
-                :color="siteColor"
+                :color="siteColor.button_color"
                 class="white--text"
-                >Pay on Receiving</v-btn
+                ><span :style="`color:${siteColor.button_text_color}`"
+                  >Pay on Receiving</span
+                ></v-btn
               >
 
               <!-- =============== -->
@@ -60,7 +62,7 @@
 
                 <template v-slot:action="{ attrs }">
                   <v-btn
-                    color="white"
+                    color="red white--text"
                     text
                     v-bind="attrs"
                     @click="snackbar = false"
@@ -73,10 +75,10 @@
             <v-col lg="2">
               <v-btn
                 :disabled="!valid"
-                :color="siteColor"
+                :color="siteColor.button_color"
                 class="white--text"
                 @click="getSession"
-                >Visa</v-btn
+                ><span :style="siteColor.button_text_color">Visa</span></v-btn
               >
             </v-col>
           </v-row>
@@ -112,18 +114,22 @@ export default {
     items() {
       return this.$store.state.table;
     },
-    siteColor() {
-      if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor;
-      } else {
-        return "red darken-4";
-      }
-    },
+
     regions() {
       return this.$store.state.Home.regions;
     },
     egyptGovernorates() {
       return this.$store.state.Home.governorates;
+    },
+    siteColor() {
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor[0];
+      } else {
+        return {
+          button_text_color: "black",
+          button_color: "white",
+        };
+      }
     },
   },
   async created() {

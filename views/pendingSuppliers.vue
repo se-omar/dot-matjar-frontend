@@ -1,14 +1,24 @@
 <template>
   <v-app>
     <v-row justify="center">
-      <h1 style="font-weight:bold">Pending Supplier</h1>
+      <h1 style="font-weight: bold">Pending Supplier</h1>
     </v-row>
     <v-container class="grey">
       <v-row>
-        <v-col cols="4" v-for="(supplier,user_id) in pendingSuppliers" :key="user_id">
+        <v-col
+          cols="4"
+          v-for="(supplier, user_id) in pendingSuppliers"
+          :key="user_id"
+        >
           <v-card height="500" width="300" class="overflow-hidden">
             <v-row justify="end">
-              <v-navigation-drawer width="300" :color="siteColor" v-model="drawer" absolute dark>
+              <v-navigation-drawer
+                width="300"
+                :color="siteColor"
+                v-model="drawer"
+                absolute
+                dark
+              >
                 <v-list dense nav class="py-0">
                   <v-list-item two-line>
                     <v-list-item-content>
@@ -16,7 +26,7 @@
                       <v-list-item-title>
                         <h5>
                           <i class="fa fa-user fa-md mr-2"></i>
-                          {{supplier.full_arabic_name}}
+                          {{ supplier.full_arabic_name }}
                         </h5>
                       </v-list-item-title>
                     </v-list-item-content>
@@ -26,48 +36,55 @@
                   <v-list-item>
                     <v-list-item-content>
                       <v-list-item-title>
-                        <h5>
-                          <i class="fa fa-mobile"></i> Mobile Number :
-                        </h5>
-                        <span style="font-size:large">{{supplier.mobile_number}}</span>
+                        <h5><i class="fa fa-mobile"></i> Mobile Number :</h5>
+                        <span style="font-size: large">{{
+                          supplier.mobile_number
+                        }}</span>
                       </v-list-item-title>
                       <v-divider></v-divider>
 
                       <v-list-item-title>
-                        <h5>
-                          <i class="fa fa-email"></i>Email :
-                        </h5>
-                        <span style="font-size:large">{{supplier.email}}</span>
+                        <h5><i class="fa fa-email"></i>Email :</h5>
+                        <span style="font-size: large">{{
+                          supplier.email
+                        }}</span>
                       </v-list-item-title>
                       <v-divider></v-divider>
 
                       <v-list-item-title>
                         <h5>Governorate :</h5>
-                        <span style="font-size:large">{{supplier.governorate}}</span>
+                        <span style="font-size: large">{{
+                          supplier.governorate
+                        }}</span>
                       </v-list-item-title>
                       <v-divider></v-divider>
 
                       <v-list-item-title>
                         <h5>Region :</h5>
-                        <span style="font-size:large">{{supplier.region}}</span>
+                        <span style="font-size: large">{{
+                          supplier.region
+                        }}</span>
                       </v-list-item-title>
                       <v-divider></v-divider>
 
                       <v-list-item-title>
                         <h5>Store Name :</h5>
-                        <span style="font-size:large">{{supplier.store_name}}</span>
+                        <span style="font-size: large">{{
+                          supplier.store_name
+                        }}</span>
                       </v-list-item-title>
                       <v-divider></v-divider>
                       <v-list-item-action-text>
                         <v-btn
                           @click="acceptSupplierRequest(supplier.user_id)"
-                          :color="siteColor"
+                          :color="siteColor.button_color"
                           class="green"
                         >
-                          Accept
-                          <br />request
+                          <span :style="`color:${siteColor.button_text_color}`">
+                            Accept <br />request
+                          </span>
                         </v-btn>
-                        <v-btn class="ml-2 green">Decline</v-btn>
+                        <v-btn class="ml-2 red white--text">Decline</v-btn>
                       </v-list-item-action-text>
                     </v-list-item-content>
                   </v-list-item>
@@ -97,7 +114,14 @@ export default {
       return this.$store.state.SupplierPage.pendingSuppliers;
     },
     siteColor() {
-      return this.$store.state.Home.siteColor;
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor[0];
+      } else {
+        return {
+          button_text_color: "black",
+          button_color: "white",
+        };
+      }
     },
   },
   methods: {

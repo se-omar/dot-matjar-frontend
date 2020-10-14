@@ -76,9 +76,12 @@
           <v-col lg="3">
             <v-btn
               rounded
+              :color="siteColor.button_color"
               class="white--text blue"
               @click="acceptRequest(request)"
-              >Accept</v-btn
+              ><span :style="`color:${siteColor.button_text_color}`"
+                >Accept</span
+              ></v-btn
             >
           </v-col>
           <v-col lg="3">
@@ -160,6 +163,16 @@ export default {
     },
     categoryRequestMessage() {
       return this.$store.state.Home.categoryRequestMessage;
+    },
+    siteColor() {
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor[0];
+      } else {
+        return {
+          button_text_color: "black",
+          button_color: "white",
+        };
+      }
     },
   },
   components: { supplier },

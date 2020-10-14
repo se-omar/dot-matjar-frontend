@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-container class="mt-16">
+    <v-container v-if="currentUser.user_type == 'admin'" class="mt-16">
       <v-card>
         <v-row justify="center">
           <h2>Pick the Button color</h2>
@@ -233,6 +233,11 @@
         </v-row>
       </v-card>
     </v-container>
+    <v-container class="mt-16" v-else>
+      <v-row justify="center">
+        <h1>404 Not Found</h1>
+      </v-row>
+    </v-container>
   </v-app>
 </template>
 
@@ -267,6 +272,7 @@ export default {
     },
   },
   async created() {
+    await this.$store.dispatch("refreshCurrentUser");
     await this.$store.dispatch("getSiteColor");
     setTimeout(() => {
       this.toolBarColor = this.siteColor.toolbar_color;
@@ -279,7 +285,21 @@ export default {
   },
   computed: {
     siteColor() {
-      return this.$store.state.Home.siteColor[0];
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor[0];
+      } else {
+        return {
+          button_text_color: "black",
+          button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
+          footer_color: "white",
+          footer_text_color: "black",
+        };
+      }
+    },
+    currentUser() {
+      return this.$store.state.Home.currentUser;
     },
   },
 };

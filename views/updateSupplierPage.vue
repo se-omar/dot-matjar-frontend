@@ -1,388 +1,658 @@
 <template>
   <v-app>
-    <v-row class="mt-6" justify="center">
-      <h1>Welcome to Dot-Market</h1>
-    </v-row>
-    <v-row class="mt-6" justify="center">
-      <h2>Please be aware that your logo has to be a PNG file</h2>
-    </v-row>
-    <!-- <v-row class="mb-8" justify="center"> -->
-    <v-container>
-      <!-- =============== photo -->
-      <v-row justify="center">
-        <v-col lg="3"></v-col>
-        <v-col lg="5" class="mr-5">
-          <form enctype="multipart.form/data">
-            <label>
-              <v-card max-width="200" :color="siteColor">
-                <span class="mt-4" style="font-size: 25px"
-                  >Upload your logo here:</span
+    <div v-if="currentUser.user_id == $route.params.supplier_id">
+      <div class="vld-parent">
+        <loading
+          :active.sync="isLoading"
+          :can-cancel="false"
+          :is-full-page="true"
+        ></loading>
+      </div>
+      <v-row class="mt-6" justify="center">
+        <h1>Welcome to Dot-Market</h1>
+      </v-row>
+      <v-row class="mt-6" justify="center">
+        <h2>Please be aware that your logo has to be a PNG file</h2>
+      </v-row>
+      <!-- <v-row class="mb-8" justify="center"> -->
+      <v-container>
+        <!-- =============== photo -->
+        <v-row justify="center">
+          <v-col lg="3"></v-col>
+          <v-col lg="5" class="mr-5">
+            <form enctype="multipart.form/data">
+              <label>
+                <v-card max-width="200">
+                  <span class="mt-4" style="font-size: 25px"
+                    >Upload your logo here:</span
+                  >
+
+                  <i class="fa fa-upload fa-lg"></i>
+                  <input @change="fileUploaded" type="file" ref="logo" />
+                  <span v-if="logo">{{ logo.name }}</span>
+                </v-card>
+              </label>
+            </form>
+          </v-col>
+        </v-row>
+        <!-- =================== -->
+        <v-row justify="center">
+          <v-col cols="6" lg="4" sm="4" md="6">
+            <v-text-field
+              rounded
+              label="Site Name"
+              v-model="siteName"
+              outlined
+            ></v-text-field>
+          </v-col>
+          <!-- ================ -->
+
+          <v-col cols="6" lg="4" sm="4" md="6">
+            <v-text-field
+              label="Facebook account"
+              v-model="facebook"
+              rounded
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col cols="6" lg="4" sm="4" md="6">
+            <v-text-field
+              label="Twitter account"
+              v-model="twitter"
+              rounded
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col cols="6" lg="4" sm="4" md="6">
+            <v-text-field
+              label="linkedin account"
+              v-model="linkedin"
+              rounded
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col cols="6" lg="4" sm="4" md="6">
+            <v-text-field
+              label="Instgram account"
+              v-model="instgram"
+              rounded
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col cols="6" lg="4" sm="4" md="6">
+            <v-text-field
+              label="google account"
+              v-model="google"
+              rounded
+              outlined
+            ></v-text-field>
+          </v-col>
+
+          <v-col cols="6" lg="2" sm="4" md="6">
+            <v-switch
+              label="show carousel"
+              @change="testCheckbox"
+              v-model="carouselCheckbox"
+            ></v-switch>
+          </v-col>
+
+          <v-col cols="6" lg="2" sm="4" md="6">
+            <v-switch
+              label="show left banner"
+              v-model="leftBannerCheckbox"
+            ></v-switch>
+          </v-col>
+
+          <v-col cols="6" lg="2" sm="4" md="6">
+            <v-switch
+              label="show right banner"
+              v-model="rightBannerCheckbox"
+            ></v-switch>
+          </v-col>
+        </v-row>
+
+        <v-row justify="center">
+          <v-col lg="3" v-if="carouselCheckbox">
+            <v-form enctype="multipart/form-data">
+              <label>Carousel Image 1</label>
+              <v-file-input
+                accept="image/*"
+                @change="setCarouselImage1"
+              ></v-file-input>
+              <v-img
+                v-if="supplierPageInfo.carousel_image_1 || carouselViewImg1"
+                :src="
+                  carouselViewImg1
+                    ? carouselViewImg1
+                    : nodeHost + supplierPageInfo.carousel_image_1
+                "
+                width="300px"
+                height="250px"
+              ></v-img>
+              <v-row
+                v-if="supplierPageInfo.carousel_image_1 || carouselViewImg1"
+                class="mt-2"
+                justify="center"
+              >
+                <v-btn
+                  @click="removeCarouselImage(1)"
+                  small
+                  class="red white--text"
+                  fab
+                  >X</v-btn
                 >
+              </v-row>
+            </v-form>
+          </v-col>
 
-                <i class="fa fa-upload fa-lg"></i>
-                <input @change="fileUploaded" type="file" ref="logo" />
-                <span v-if="logo">{{ logo.name }}</span>
-              </v-card>
-            </label>
-          </form>
-        </v-col>
-      </v-row>
-      <!-- =================== -->
-      <v-row justify="center">
-        <v-col cols="6" lg="4" sm="4" md="6">
-          <v-text-field
-            rounded
-            label="Site Name"
-            v-model="siteName"
-            outlined
-            :color="siteColor"
-          ></v-text-field>
-        </v-col>
-        <!-- ================ -->
-
-        <v-col cols="6" lg="4" sm="4" md="6">
-          <v-text-field
-            label="Facebook account"
-            v-model="facebook"
-            rounded
-            outlined
-            :color="siteColor"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="6" lg="4" sm="4" md="6">
-          <v-text-field
-            label="Twitter account"
-            v-model="twitter"
-            rounded
-            outlined
-            :color="siteColor"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="6" lg="4" sm="4" md="6">
-          <v-text-field
-            label="linkedin account"
-            v-model="linkedin"
-            rounded
-            outlined
-            :color="siteColor"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="6" lg="4" sm="4" md="6">
-          <v-text-field
-            label="Instgram account"
-            v-model="instgram"
-            rounded
-            outlined
-            :color="siteColor"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="6" lg="4" sm="4" md="6">
-          <v-text-field
-            label="google account"
-            v-model="google"
-            rounded
-            outlined
-            :color="siteColor"
-          ></v-text-field>
-        </v-col>
-
-        <v-col cols="6" lg="2" sm="4" md="6">
-          <v-switch
-            label="show carousel"
-            @change="testCheckbox"
-            v-model="carouselCheckbox"
-          ></v-switch>
-        </v-col>
-
-        <v-col cols="6" lg="2" sm="4" md="6">
-          <v-switch
-            label="show left banner"
-            v-model="leftBannerCheckbox"
-          ></v-switch>
-        </v-col>
-
-        <v-col cols="6" lg="2" sm="4" md="6">
-          <v-switch
-            label="show right banner"
-            v-model="rightBannerCheckbox"
-          ></v-switch>
-        </v-col>
-      </v-row>
-
-      <v-row justify="center">
-        <v-col lg="3" v-if="carouselCheckbox">
-          <v-form enctype="multipart/form-data">
-            <label>Carousel Image 1</label>
-            <v-file-input
-              accept="image/*"
-              @change="setCarouselImage1"
-            ></v-file-input>
-            <v-img
-              v-if="supplierPageInfo.carousel_image_1 || carouselViewImg1"
-              :src="
-                carouselViewImg1
-                  ? carouselViewImg1
-                  : nodeHost + supplierPageInfo.carousel_image_1
-              "
-              width="300px"
-              height="250px"
-            ></v-img>
-            <v-row
-              v-if="supplierPageInfo.carousel_image_1 || carouselViewImg1"
-              class="mt-2"
-              justify="center"
-            >
-              <v-btn
-                @click="removeCarouselImage(1)"
-                small
-                class="red white--text"
-                fab
-                >X</v-btn
-              >
-            </v-row>
-          </v-form>
-        </v-col>
-
-        <v-col lg="3" v-if="carouselCheckbox">
-          <v-form>
-            <label>Carousel Image 2</label>
-            <v-file-input
-              accept="image/*"
-              :disabled="!carouselImage1 && !supplierPageInfo.carousel_image_1"
-              @change="setCarouselImage2"
-            ></v-file-input>
-            <v-img
-              v-if="supplierPageInfo.carousel_image_2 || carouselViewImg2"
-              :src="
-                carouselViewImg2
-                  ? carouselViewImg2
-                  : nodeHost + supplierPageInfo.carousel_image_2
-              "
-              width="300px"
-              height="250px"
-            ></v-img>
-            <v-row
-              v-if="supplierPageInfo.carousel_image_2 || carouselViewImg2"
-              class="mt-2"
-              justify="center"
-            >
-              <v-btn
+          <v-col lg="3" v-if="carouselCheckbox">
+            <v-form>
+              <label>Carousel Image 2</label>
+              <v-file-input
+                accept="image/*"
+                :disabled="
+                  !carouselImage1 && !supplierPageInfo.carousel_image_1
+                "
+                @change="setCarouselImage2"
+              ></v-file-input>
+              <v-img
                 v-if="supplierPageInfo.carousel_image_2 || carouselViewImg2"
-                @click="removeCarouselImage(2)"
-                small
-                class="red white--text"
-                fab
-                >X</v-btn
+                :src="
+                  carouselViewImg2
+                    ? carouselViewImg2
+                    : nodeHost + supplierPageInfo.carousel_image_2
+                "
+                width="300px"
+                height="250px"
+              ></v-img>
+              <v-row
+                v-if="supplierPageInfo.carousel_image_2 || carouselViewImg2"
+                class="mt-2"
+                justify="center"
               >
-            </v-row>
-          </v-form>
-        </v-col>
+                <v-btn
+                  v-if="supplierPageInfo.carousel_image_2 || carouselViewImg2"
+                  @click="removeCarouselImage(2)"
+                  small
+                  class="red white--text"
+                  fab
+                  >X</v-btn
+                >
+              </v-row>
+            </v-form>
+          </v-col>
 
-        <v-col lg="3" v-if="carouselCheckbox">
-          <v-form>
-            <label>Carousel Image 3</label>
-            <v-file-input
-              accept="image/*"
-              :disabled="!carouselImage2 && !supplierPageInfo.carousel_image_2"
-              @change="setCarouselImage3"
-            ></v-file-input>
-            <v-img
-              v-if="supplierPageInfo.carousel_image_3 || carouselViewImg3"
-              :src="
-                carouselViewImg3
-                  ? carouselViewImg3
-                  : nodeHost + supplierPageInfo.carousel_image_3
-              "
-              width="300px"
-              height="250px"
-            ></v-img>
-            <v-row
-              v-if="supplierPageInfo.carousel_image_3 || carouselViewImg3"
-              class="mt-2"
-              justify="center"
-            >
-              <v-btn
+          <v-col lg="3" v-if="carouselCheckbox">
+            <v-form>
+              <label>Carousel Image 3</label>
+              <v-file-input
+                accept="image/*"
+                :disabled="
+                  !carouselImage2 && !supplierPageInfo.carousel_image_2
+                "
+                @change="setCarouselImage3"
+              ></v-file-input>
+              <v-img
                 v-if="supplierPageInfo.carousel_image_3 || carouselViewImg3"
-                @click="removeCarouselImage(3)"
-                small
-                class="red white--text"
-                fab
-                >X</v-btn
+                :src="
+                  carouselViewImg3
+                    ? carouselViewImg3
+                    : nodeHost + supplierPageInfo.carousel_image_3
+                "
+                width="300px"
+                height="250px"
+              ></v-img>
+              <v-row
+                v-if="supplierPageInfo.carousel_image_3 || carouselViewImg3"
+                class="mt-2"
+                justify="center"
               >
-            </v-row>
-          </v-form>
-        </v-col>
+                <v-btn
+                  v-if="supplierPageInfo.carousel_image_3 || carouselViewImg3"
+                  @click="removeCarouselImage(3)"
+                  small
+                  class="red white--text"
+                  fab
+                  >X</v-btn
+                >
+              </v-row>
+            </v-form>
+          </v-col>
 
-        <v-col lg="3" v-if="carouselCheckbox">
-          <v-form>
-            <label>Carousel Image 4</label>
-            <v-file-input
-              accept="image/*"
-              :disabled="!carouselImage3 && !supplierPageInfo.carousel_image_3"
-              @change="setCarouselImage4"
-            ></v-file-input>
-            <v-img
-              v-if="supplierPageInfo.carousel_image_4 || carouselViewImg4"
-              :src="
-                carouselViewImg4
-                  ? carouselViewImg4
-                  : nodeHost + supplierPageInfo.carousel_image_4
-              "
-              width="300px"
-              height="250px"
-            ></v-img>
-            <v-row
-              v-if="supplierPageInfo.carousel_image_4 || carouselViewImg4"
-              class="mt-2"
-              justify="center"
-            >
-              <v-btn
+          <v-col lg="3" v-if="carouselCheckbox">
+            <v-form>
+              <label>Carousel Image 4</label>
+              <v-file-input
+                accept="image/*"
+                :disabled="
+                  !carouselImage3 && !supplierPageInfo.carousel_image_3
+                "
+                @change="setCarouselImage4"
+              ></v-file-input>
+              <v-img
                 v-if="supplierPageInfo.carousel_image_4 || carouselViewImg4"
-                @click="removeCarouselImage(4)"
-                small
-                class="red white--text"
-                fab
-                >X</v-btn
+                :src="
+                  carouselViewImg4
+                    ? carouselViewImg4
+                    : nodeHost + supplierPageInfo.carousel_image_4
+                "
+                width="300px"
+                height="250px"
+              ></v-img>
+              <v-row
+                v-if="supplierPageInfo.carousel_image_4 || carouselViewImg4"
+                class="mt-2"
+                justify="center"
               >
-            </v-row>
-          </v-form>
-        </v-col>
-      </v-row>
+                <v-btn
+                  v-if="supplierPageInfo.carousel_image_4 || carouselViewImg4"
+                  @click="removeCarouselImage(4)"
+                  small
+                  class="red white--text"
+                  fab
+                  >X</v-btn
+                >
+              </v-row>
+            </v-form>
+          </v-col>
+        </v-row>
 
-      <v-row justify="center">
-        <v-col v-if="carouselCheckbox" cols="6" lg="4" sm="4" md="6">
-          <v-text-field
-            label="carousel width from 1 to 12 (default is 10)"
-            v-model="carouselWidth"
-            rounded
-            :rules="[rules.min_max_width]"
-            outlined
-            :color="siteColor"
-          ></v-text-field>
-        </v-col>
+        <v-row justify="center">
+          <v-col v-if="carouselCheckbox" cols="6" lg="4" sm="4" md="6">
+            <v-text-field
+              label="carousel width from 1 to 12 (default is 10)"
+              v-model="carouselWidth"
+              rounded
+              :rules="[rules.min_max_width]"
+              outlined
+            ></v-text-field>
+          </v-col>
 
-        <v-col v-if="carouselCheckbox" cols="6" lg="4" sm="4" md="6">
-          <v-text-field
-            type="number"
-            label="carousel height in pixels (default is 400)"
-            v-model="carouselHeight"
-            :rules="[rules.min_max_height]"
-            rounded
-            outlined
-            :color="siteColor"
-          ></v-text-field>
-        </v-col>
-      </v-row>
+          <v-col v-if="carouselCheckbox" cols="6" lg="4" sm="4" md="6">
+            <v-text-field
+              type="number"
+              label="carousel height in pixels (default is 400)"
+              v-model="carouselHeight"
+              :rules="[rules.min_max_height]"
+              rounded
+              outlined
+            ></v-text-field>
+          </v-col>
+        </v-row>
 
-      <v-row justify="space-around">
-        <v-col lg="4" v-if="leftBannerCheckbox">
-          <v-form>
-            <label>left banner image</label>
-            <v-file-input
-              accept="image/*"
-              @change="setLeftImage"
-            ></v-file-input>
-            <v-img
-              :src="
-                leftBannerViewImg
-                  ? leftBannerViewImg
-                  : nodeHost + supplierPageInfo.left_banner_image
-              "
-              width="300px"
-              height="250px"
-            ></v-img>
+        <v-row justify="space-around">
+          <v-col lg="4" v-if="leftBannerCheckbox">
+            <v-form>
+              <label>left banner image</label>
+              <v-file-input
+                accept="image/*"
+                @change="setLeftImage"
+              ></v-file-input>
+              <v-img
+                :src="
+                  leftBannerViewImg
+                    ? leftBannerViewImg
+                    : nodeHost + supplierPageInfo.left_banner_image
+                "
+                width="300px"
+                height="250px"
+              ></v-img>
 
-            <v-row
-              v-if="supplierPageInfo.left_banner_image || leftBannerViewImg"
-              class="mt-2"
-              justify="center"
-            >
-              <v-btn
+              <v-row
                 v-if="supplierPageInfo.left_banner_image || leftBannerViewImg"
-                @click="removeCarouselImage(5)"
-                small
-                class="red white--text"
-                fab
-                >X</v-btn
+                class="mt-2"
+                justify="center"
               >
-            </v-row>
-          </v-form>
-        </v-col>
+                <v-btn
+                  v-if="supplierPageInfo.left_banner_image || leftBannerViewImg"
+                  @click="removeCarouselImage(5)"
+                  small
+                  class="red white--text"
+                  fab
+                  >X</v-btn
+                >
+              </v-row>
+            </v-form>
+          </v-col>
 
-        <v-col lg="4" v-if="rightBannerCheckbox">
-          <v-form>
-            <label>right banner image</label>
-            <v-file-input
-              accept="image/*"
-              @change="setRightImage"
-            ></v-file-input>
-            <v-img
-              :src="
-                rightBannerViewImg
-                  ? rightBannerViewImg
-                  : nodeHost + supplierPageInfo.right_banner_image
-              "
-              width="300px"
-              height="250px"
-            ></v-img>
+          <v-col lg="4" v-if="rightBannerCheckbox">
+            <v-form>
+              <label>right banner image</label>
+              <v-file-input
+                accept="image/*"
+                @change="setRightImage"
+              ></v-file-input>
+              <v-img
+                :src="
+                  rightBannerViewImg
+                    ? rightBannerViewImg
+                    : nodeHost + supplierPageInfo.right_banner_image
+                "
+                width="300px"
+                height="250px"
+              ></v-img>
 
-            <v-row
-              v-if="supplierPageInfo.right_banner_image || rightBannerViewImg"
-              class="mt-2"
-              justify="center"
-            >
-              <v-btn
+              <v-row
                 v-if="supplierPageInfo.right_banner_image || rightBannerViewImg"
-                @click="removeCarouselImage(6)"
-                small
-                class="red white--text"
-                fab
-                >X</v-btn
+                class="mt-2"
+                justify="center"
               >
-            </v-row>
-          </v-form>
+                <v-btn
+                  v-if="
+                    supplierPageInfo.right_banner_image || rightBannerViewImg
+                  "
+                  @click="removeCarouselImage(6)"
+                  small
+                  class="red white--text"
+                  fab
+                  >X</v-btn
+                >
+              </v-row>
+            </v-form>
+          </v-col>
+        </v-row>
+
+        <v-col cols="12" lg="12" sm="12" md="12">
+          <v-textarea
+            rounded
+            label="Footer"
+            v-model="footer"
+            outlined
+          ></v-textarea>
         </v-col>
-      </v-row>
+        <v-row justify="center">
+          <v-col cols="5" lg="3" sm="3" md="3">
+            <v-btn @click="sendData" x-large :color="siteColor.button_color"
+              ><span :style="`color: ${buttonsTextColor}`">Update</span></v-btn
+            >
+          </v-col>
+        </v-row>
+        <!-- ======================== -->
 
-      <v-col cols="12" lg="12" sm="12" md="12">
-        <v-textarea
-          rounded
-          label="Footer"
-          v-model="footer"
-          outlined
-          :color="siteColor"
-        ></v-textarea>
-      </v-col>
-      <v-col cols="5" lg="3" sm="3" md="3">
-        <v-btn @click="sendData" x-large :color="siteColor" class="white--text"
-          >Update</v-btn
+        <v-snackbar
+          v-model="snackbar"
+          :bottom="y === 'bottom'"
+          :color="siteColor.footer_color"
+          :left="x === 'left'"
+          :multi-line="mode === 'multi-line'"
+          :right="x === 'right'"
+          :timeout="timeout"
+          :top="y === 'top'"
+          :vertical="mode === 'vertical'"
         >
-      </v-col>
+          Page Updated succesfully
+          <template v-slot:action="{ attrs }">
+            <v-btn dark text v-bind="attrs" @click="snackbar = false"
+              >Close</v-btn
+            >
+          </template>
+        </v-snackbar>
+      </v-container>
+      <v-row justify="center">
+        <h2>Site Colors</h2>
+      </v-row>
+      <!-- Site colorssssssssssssssssssssss -->
+      <v-container class="mt-16">
+        <v-card>
+          <v-row justify="center">
+            <h2>Pick the Button color</h2>
+          </v-row>
+          <v-row justify="center">
+            <v-col cols="3" lg="3">
+              <v-color-picker
+                dot-size="25"
+                mode="rgba"
+                swatches-max-height="200"
+                v-model="buttonsColor"
+              ></v-color-picker>
+            </v-col>
+            <v-col cols="3" lg="3">
+              <v-btn x-large :color="this.buttonsColor"> </v-btn>
+            </v-col>
+          </v-row>
+        </v-card>
+        <v-card>
+          <v-row justify="center">
+            <h2>Pick the Button text color</h2>
+          </v-row>
+          <v-row justify="center">
+            <v-col cols="3" lg="3">
+              <v-color-picker
+                dot-size="25"
+                mode="rgba"
+                swatches-max-height="200"
+                v-model="buttonsTextColor"
+              ></v-color-picker>
+            </v-col>
+            <v-col cols="3" lg="3">
+              <v-btn :color="buttonsColor" x-large>
+                <h4 :style="`color: ${this.buttonsTextColor}`">Text Color</h4>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-card>
+        <v-card>
+          <v-row justify="center">
+            <h2>Pick the ToolBar color</h2>
+          </v-row>
+          <v-row justify="center">
+            <v-col cols="3" lg="3">
+              <v-color-picker
+                dot-size="25"
+                mode="rgba"
+                swatches-max-height="200"
+                v-model="toolBarColor"
+              ></v-color-picker>
+            </v-col>
+            <v-col cols="6" lg="6">
+              <v-app-bar :color="toolBarColor" shaped rounded>
+                <span v-if="!supplierPageInfo.logo">
+                  <a>
+                    <v-img
+                      src="../assets/images/dotmatjar_logo.png"
+                      max-height="110"
+                      max-width="130"
+                      contain
+                    ></v-img>
+                  </a>
+                </span>
+                <span v-else>
+                  <a>
+                    <v-img
+                      src="../assets/images/dotmatjar_logo.png"
+                      max-height="110"
+                      max-width="130"
+                      contain
+                    ></v-img>
+                  </a>
+                </span>
+                <v-spacer></v-spacer>
+                <v-row justify="center">
+                  <v-col cols="12" lg="12" sm="12" md="10">
+                    <v-text-field
+                      class="mt-8"
+                      outlined
+                      rounded
+                      placeholder="SEARCH"
+                      append-icon="fa fa-search"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-spacer></v-spacer>
 
-      <!-- ======================== -->
+                <v-btn :style="`color:${toolBarTextColor}`" text> TEXT</v-btn>
+              </v-app-bar>
+            </v-col>
+          </v-row>
+        </v-card>
+        <v-card>
+          <v-row justify="center">
+            <h2>Pick the ToolBar Text color</h2>
+          </v-row>
+          <v-row justify="center">
+            <v-col cols="3" lg="3">
+              <v-color-picker
+                dot-size="25"
+                mode="rgba"
+                swatches-max-height="200"
+                v-model="toolBarTextColor"
+              ></v-color-picker>
+            </v-col>
+            <v-col cols="6" lg="6">
+              <v-app-bar :color="toolBarColor" shaped rounded>
+                <span v-if="!supplierPageInfo.logo">
+                  <a>
+                    <v-img
+                      src="../assets/images/dotmatjar_logo.png"
+                      max-height="110"
+                      max-width="130"
+                      contain
+                    ></v-img>
+                  </a>
+                </span>
+                <span v-else>
+                  <a>
+                    <v-img
+                      src="../assets/images/dotmatjar_logo.png"
+                      max-height="110"
+                      max-width="130"
+                      contain
+                    ></v-img>
+                  </a>
+                </span>
+                <v-spacer></v-spacer>
+                <v-row justify="center">
+                  <v-col cols="12" lg="12" sm="12" md="10">
+                    <v-text-field
+                      class="mt-8"
+                      outlined
+                      rounded
+                      placeholder="SEARCH"
+                      append-icon="fa fa-search"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-spacer></v-spacer>
 
-      <v-snackbar
-        v-model="snackbar"
-        :bottom="y === 'bottom'"
-        :color="siteColor"
-        :left="x === 'left'"
-        :multi-line="mode === 'multi-line'"
-        :right="x === 'right'"
-        :timeout="timeout"
-        :top="y === 'top'"
-        :vertical="mode === 'vertical'"
-      >
-        Page Updated succesfully
-        <template v-slot:action="{ attrs }">
-          <v-btn dark text v-bind="attrs" @click="snackbar = false"
-            >Close</v-btn
-          >
-        </template>
-      </v-snackbar>
-
-      <!-- ======================= -->
-    </v-container>
-    <!-- </v-row> -->
+                <v-btn :style="`color:${toolBarTextColor}`" text> TEXT</v-btn>
+              </v-app-bar>
+            </v-col>
+          </v-row>
+        </v-card>
+        <v-card>
+          <v-row justify="center">
+            <h2>Pick the Footer</h2>
+          </v-row>
+          <v-row justify="center">
+            <v-col cols="3" lg="3">
+              <v-color-picker
+                dot-size="25"
+                mode="rgba"
+                swatches-max-height="200"
+                v-model="footerColor"
+              ></v-color-picker>
+            </v-col>
+            <v-col cols="6" lg="6">
+              <v-footer>
+                <v-card :color="footerColor">
+                  <v-card-text>
+                    <v-row justify="center">
+                      <v-btn
+                        v-for="icon in icons"
+                        :key="icon"
+                        class="mx-8"
+                        :style="`color:${footerTextColor}`"
+                        icon
+                      >
+                        <v-icon size="24px">{{ icon }}</v-icon>
+                      </v-btn>
+                    </v-row>
+                  </v-card-text>
+                  <v-row justify="center">
+                    <v-card-text
+                      class="pt-1 mx-1"
+                      :style="`color:${footerTextColor}`"
+                      >Phasellus feugiat arcu sapien, et iaculis ipsum elementum
+                      sit amet. Mauris cursus commodo interdum. Praesent ut
+                      risus eget metus luctus accumsan id ultrices nunc. Sed at
+                      orci sed massa consectetur dignissim a sit amet dui. Duis
+                      commodo vitae velit et faucibus. Morbi vehicula lacinia
+                      malesuada. Nulla placerat augue vel ipsum ultrices, cursus
+                      iaculis dui sollicitudin. Vestibulum eu ipsum vel diam
+                      elementum tempor vel ut orci. Orci varius natoque
+                      penatibus et magnis dis parturient montes, nascetur
+                      ridiculus mus.</v-card-text
+                    >
+                  </v-row>
+                </v-card>
+              </v-footer>
+            </v-col>
+          </v-row>
+        </v-card>
+        <v-card>
+          <v-row justify="center">
+            <h2>Pick the Footer Text Color</h2>
+          </v-row>
+          <v-row justify="center">
+            <v-col cols="3" lg="3">
+              <v-color-picker
+                dot-size="25"
+                mode="rgba"
+                swatches-max-height="200"
+                v-model="footerTextColor"
+              ></v-color-picker>
+            </v-col>
+            <v-col cols="6" lg="6">
+              <v-footer>
+                <v-card :color="footerColor">
+                  <v-card-text>
+                    <v-row justify="center">
+                      <v-btn
+                        v-for="icon in icons"
+                        :key="icon"
+                        class="mx-8"
+                        :style="`color:${footerTextColor}`"
+                        icon
+                      >
+                        <v-icon size="24px">{{ icon }}</v-icon>
+                      </v-btn>
+                    </v-row>
+                  </v-card-text>
+                  <v-row justify="center">
+                    <v-card-text
+                      class="pt-1 mx-1"
+                      :style="`color:${footerTextColor}`"
+                      >Phasellus feugiat arcu sapien, et iaculis ipsum elementum
+                      sit amet. Mauris cursus commodo interdum. Praesent ut
+                      risus eget metus luctus accumsan id ultrices nunc. Sed at
+                      orci sed massa consectetur dignissim a sit amet dui. Duis
+                      commodo vitae velit et faucibus. Morbi vehicula lacinia
+                      malesuada. Nulla placerat augue vel ipsum ultrices, cursus
+                      iaculis dui sollicitudin. Vestibulum eu ipsum vel diam
+                      elementum tempor vel ut orci. Orci varius natoque
+                      penatibus et magnis dis parturient montes, nascetur
+                      ridiculus mus.</v-card-text
+                    >
+                  </v-row>
+                </v-card>
+              </v-footer>
+            </v-col>
+          </v-row>
+          <v-row justify="center">
+            <v-col cols="1">
+              <v-btn @click="updateSiteColors" :color="buttonsColor" x-large>
+                <h4 :style="`color: ${buttonsTextColor}`">Update</h4>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-container>
+    </div>
+    <div class="mt-16" v-else>
+      <v-row justify="center">
+        <h1>404 Not Found</h1>
+      </v-row>
+    </div>
   </v-app>
 </template>
 
@@ -426,6 +696,20 @@ export default {
     carouselViewImg4: "",
     leftBannerViewImg: "",
     rightBannerViewImg: "",
+    buttonsColor: "",
+    buttonsTextColor: "",
+    toolBarColor: "",
+    toolBarTextColor: "",
+    footerColor: "",
+    footerTextColor: "",
+    icons: [
+      "fab fa-facebook",
+      "fab fa-twitter",
+      "fab fa-google-plus",
+      "fab fa-linkedin",
+      "fab fa-instagram",
+    ],
+    isLoading: false,
   }),
   methods: {
     fileUploaded() {
@@ -590,14 +874,32 @@ export default {
         });
       }
     },
+    updateSiteColors() {
+      this.$store.dispatch("updateSupplierSiteColors", {
+        toolBarColor: this.toolBarColor,
+        footerColor: this.footerColor,
+        buttonsColor: this.buttonsColor,
+        buttonsTextColor: this.buttonsTextColor,
+        footerTextColor: this.footerTextColor,
+        toolBarTextColor: this.toolBarTextColor,
+      });
+      location.reload();
+    },
   },
 
   computed: {
     siteColor() {
-      if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor;
+      if (this.$store.state.SupplierPage.supplierPageInfo) {
+        return this.$store.state.SupplierPage.supplierPageInfo;
       } else {
-        return "red darken-4";
+        return {
+          button_text_color: "black",
+          button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
+          footer_color: "white",
+          footer_text_color: "black",
+        };
       }
     },
     supplierPageInfo() {
@@ -617,12 +919,23 @@ export default {
     },
   },
   async created() {
+    this.isLoading = true;
     await this.$store.dispatch("refreshCurrentUser");
     await this.$store.dispatch("getSupplier", this.$route.params.supplier_id);
     await this.$store.dispatch(
       "getSupplierPageData",
       this.$route.params.supplier_id
     );
+
+    await setTimeout(() => {
+      this.toolBarColor = this.siteColor.toolbar_color;
+      this.footerColor = this.siteColor.footer_color;
+      this.buttonsColor = this.siteColor.button_color;
+      this.buttonsTextColor = this.siteColor.button_text_color;
+      this.footerTextColor = this.siteColor.footer_text_color;
+      this.toolBarTextColor = this.siteColor.toolbar_text_color;
+    }, 500);
+
     console.log("supplier page info", this.supplierPageInfo);
 
     if (this.supplierPageInfo.show_carousel === 1) this.carouselCheckbox = true;
@@ -638,7 +951,7 @@ export default {
         this.$router.push("/notFound");
       }
     }
-    console.log(this.supplier.user_id);
+    this.isLoading = false;
   },
 };
 </script>

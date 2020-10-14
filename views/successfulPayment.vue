@@ -1,14 +1,22 @@
 <template>
   <v-app>
     <div v-if="paymentToken === $route.params.hash">
-      <h3
-        class="mb-10 mt-10"
-        style="text-align: center"
-      >the payment was successful and the order is placed, you can check on it from the my orders page</h3>
+      <h3 class="mb-10 mt-10" style="text-align: center">
+        the payment was successful and the order is placed, you can check on it
+        from the my orders page
+      </h3>
 
       <v-row justify="center">
-        <v-btn :to="'/home'" class="secondary">home page</v-btn>
-        <v-btn :to="'/userorders'" class="primary ml-6">orders page</v-btn>
+        <v-btn :to="'/home'" :color="siteColor.button_color">
+          <span :style="`color:${siteColor.button_text_color}`"
+            >home page</span
+          ></v-btn
+        >
+        <v-btn :to="'/userorders'" class="ml-6" :color="siteColoe.button_color">
+          <span :style="`color:${siteColor.button_text_color};fontsize:18px`"
+            >orders page</span
+          ></v-btn
+        >
       </v-row>
     </div>
 
@@ -74,6 +82,20 @@ export default {
 
     productsQuantityArray() {
       return this.$store.state.Orders.productsQuantityArray;
+    },
+    siteColor() {
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor[0];
+      } else {
+        return {
+          button_text_color: "black",
+          button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
+          footer_color: "white",
+          footer_text_color: "black",
+        };
+      }
     },
   },
 };

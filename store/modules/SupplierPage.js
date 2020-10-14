@@ -12,7 +12,7 @@ export default {
         pendingSuppliers: [],
         supplierProductsSave: [],
         testVar: 0,
-        
+
     },
 
     mutations: {
@@ -20,15 +20,16 @@ export default {
             state.supplierPageInfo = pageData
         },
 
-       
+
 
         getSupplierPageData(state, info) {
             state.supplierPageInfo = info
             state.testVar = 5;
             console.log('supplier info from mutation', state.supplierPageInfo)
+
         },
 
-        
+
 
         getSupplier(state, supplier) {
             state.supplier = supplier
@@ -114,10 +115,11 @@ export default {
             await axios.put('http://localhost:3000/api/getSupplierPageData', { supplier_id: id })
                 .then(info => {
                     context.commit('getSupplierPageData', info.data.data)
+                    context.commit('updateSupplierPageColors', info.data.data)
                 })
         },
 
-       
+
 
         async getSupplierProducts(context, id) {
             console.log('the id is', id);
@@ -158,7 +160,7 @@ export default {
                 })
         },
 
-       
+
 
         supplierPageColor(context, color) {
             axios.put('http://localhost:3000/api/supplierPageColor', {
@@ -229,7 +231,7 @@ export default {
                 })
         },
 
-      
+
 
         async uploadBannerImages(context, form) {
             await axios.post('http://localhost:3000/api/uploadBannerImages', form, {
@@ -242,7 +244,7 @@ export default {
                 })
         },
 
-       
+
         async removeCarouselImage(context, { id, imgName }) {
             await axios.post('http://localhost:3000/api/removeCarouselImage', {
                 id, imgName
@@ -251,7 +253,7 @@ export default {
             })
         },
 
-     
+
 
 
         async removeBannerImage(context, { id, imgName }) {
@@ -262,7 +264,7 @@ export default {
             })
         },
 
-       
+
 
     }
 }

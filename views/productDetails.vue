@@ -134,19 +134,23 @@
               block
               x-large
             >
-              <span class="white--text" style="font-size: 18px"
-                >Edit product</span
+              <span :color="siteColor.button_color" style="font-size: 18px"
+                ><span :style="`color:${siteColor.button_text_color}`"
+                  >Edit product</span
+                ></span
               >
             </v-btn>
 
             <v-btn
               x-large
               block
-              :color="siteColor"
+              :color="siteColor.button_color"
               v-else
               @click="supplierClicked(currentProduct.user)"
             >
-              <span class="white--text">Visit Supplier's Page</span>
+              <span :style="`color:${siteColor.button_text_color}`"
+                >Visit Supplier's Page</span
+              >
             </v-btn>
           </v-col>
 
@@ -156,11 +160,11 @@
                 currentUser && currentUser.user_id === currentProduct.user_id
               "
               @click="toggleRemoveDialog"
-              :color="siteColor"
+              :color="siteColor.button_color"
               block
               x-large
             >
-              <span style="font-size: 18px" class="white--text"
+              <span :style="`color:${siteColor.button_text_color}`"
                 >Remove product</span
               >
             </v-btn>
@@ -175,8 +179,10 @@
               block
               x-large
               class="white--text"
-              :color="siteColor"
-              >Add to cart</v-btn
+              :color="siteColor.button_color"
+              ><span :style="`color:${siteColor.button_text_color}`"
+                >Add to cart</span
+              ></v-btn
             >
           </v-col>
 
@@ -231,12 +237,13 @@
             ></v-textarea>
             <v-btn
               v-if="userOrderedProductFlag"
-              class="white--text"
               :disabled="productRating > 0"
               @click="submitReview"
               block
-              :color="siteColor"
-              >submit</v-btn
+              :color="siteColor.button_color"
+              ><span :style="`color:${siteColor.button_text_color}`"
+                >Submit</span
+              ></v-btn
             >
           </v-col>
         </v-row>
@@ -345,8 +352,15 @@
 
         <v-row justify="center">
           <v-col lg="3">
-            <v-btn large block @click="removeProduct" class="primary mr-15"
-              >Yes</v-btn
+            <v-btn
+              large
+              block
+              @click="removeProduct"
+              class="mr-15"
+              :color="siteColor.button_color"
+              ><span :style="`color:${siteColor.button_text_color}`"
+                >Yes</span
+              ></v-btn
             >
           </v-col>
           <v-col lg="3">
@@ -354,8 +368,10 @@
               large
               block
               @click="removePressed = false"
-              class="red white--text"
-              >No</v-btn
+              :color="soteColor.button_color"
+              ><span :style="`color:${siteColor.button_text_color}`"
+                >No</span
+              ></v-btn
             >
           </v-col>
         </v-row>
@@ -439,11 +455,7 @@ export default {
     nodeHost() {
       return this.$store.state.nodeHost;
     },
-    siteColor() {
-      if (this.$store.state.Home.siteColor)
-        return this.$store.state.Home.siteColor;
-      else return "red darken-4";
-    },
+
     productRating() {
       return this.$store.state.ProductDetails.productRating;
     },
@@ -474,6 +486,16 @@ export default {
     },
     userOrderedProductFlag() {
       return this.$store.state.ProductDetails.userOrderedProductFlag;
+    },
+    siteColor() {
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor[0];
+      } else {
+        return {
+          button_text_color: "black",
+          button_color: "white",
+        };
+      }
     },
   },
 

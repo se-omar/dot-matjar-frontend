@@ -151,10 +151,22 @@
         </v-row>
         <v-row justify="center">
           <v-col cols="12" sm="3" xsm="12">
-            <v-btn x-large block color="blue" @click="completedata">Save</v-btn>
+            <v-btn
+              x-large
+              block
+              :color="siteColor.button_color"
+              @click="completedata"
+              ><span :style="`color:${siteColor.button_text_color}`"
+                >Save</span
+              ></v-btn
+            >
           </v-col>
           <v-col cols="12" sm="3" xsm="12">
-            <v-btn x-large block color="red" @click="$router.push('/')"
+            <v-btn
+              x-large
+              block
+              color="red white--text"
+              @click="$router.push('/')"
               >Cancel</v-btn
             >
           </v-col>
@@ -288,6 +300,16 @@ export default {
     },
     regions() {
       return this.$store.state.Home.regions;
+    },
+    siteColor() {
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor[0];
+      } else {
+        return {
+          button_text_color: "black",
+          button_color: "white",
+        };
+      }
     },
   },
 };

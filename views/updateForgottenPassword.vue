@@ -8,10 +8,10 @@
       <v-row justify="center">
         <v-col cols="6">
           <v-text-field
-            label="كلمة السر"
+            label="password"
             v-model="password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required, rules.min,rules.valid]"
+            :rules="[rules.required, rules.min, rules.valid]"
             :type="show1 ? 'text' : 'password'"
             name="input-10-1"
             hint="At least 7 characters"
@@ -24,7 +24,7 @@
       <v-row justify="center">
         <v-col cols="6">
           <v-text-field
-            label="تاكيد كلمة السر "
+            label="Confirm Password"
             v-model="repeatPassword"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, passwordMatch]"
@@ -38,7 +38,11 @@
 
       <v-row justify="center">
         <v-col cols="5">
-          <v-btn @click="updatePassword" class="primary" block>تجديد كلمة السر</v-btn>
+          <v-btn @click="updatePassword" :color="siteColor.button_color" block>
+            <span :style="`color:${siteColor.button_text_color};fontsize:18px`"
+              >Update Password</span
+            ></v-btn
+          >
         </v-col>
       </v-row>
     </v-container>
@@ -54,14 +58,14 @@ export default {
       repeatPassword: "",
       show1: false,
       rules: {
-        required: value => !!value || "Required.",
-        min: v => (v && v.length >= 7) || "Min 7 characters",
-        valid: v =>
+        required: (value) => !!value || "Required.",
+        min: (v) => (v && v.length >= 7) || "Min 7 characters",
+        valid: (v) =>
           /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
             v
           ) ||
-          "password must have at least one letter, one number and one special character"
-      }
+          "password must have at least one letter, one number and one special character",
+      },
     };
   },
 
@@ -69,7 +73,21 @@ export default {
     passwordMatch() {
       return () =>
         this.password === this.repeatPassword || "Password must match";
-    }
+    },
+    siteColor() {
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor[0];
+      } else {
+        return {
+          button_text_color: "black",
+          button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
+          footer_color: "white",
+          footer_text_color: "black",
+        };
+      }
+    },
   },
 
   methods: {
@@ -80,15 +98,15 @@ export default {
         this.$route.params.hash;
       this.$axios
         .post(route, {
-          password: this.password
+          password: this.password,
         })
-        .then(response => {
+        .then((response) => {
           alert(response.data);
           if (response.data === "password updated successfully") {
             self.$router.push("/reglogin");
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
