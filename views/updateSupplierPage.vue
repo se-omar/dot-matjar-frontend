@@ -512,7 +512,9 @@ export default {
       await this.$store.dispatch("uploadCarouselImages", carouselformdata);
       await this.$store.dispatch("uploadBannerImages", bannerformdata);
       this.snackbar = true;
-      this.$router.push(`/supplierPage/` + this.currentUser.user_id);
+      this.$router.push(
+        `/${this.$i18n.locale}/supplierPage/` + this.currentUser.user_id
+      );
     },
     setCarouselImage1(image) {
       this.carouselImage1 = image;
@@ -635,7 +637,7 @@ export default {
 
     if (this.currentUser) {
       if (this.$route.params.supplier_id != this.currentUser.user_id) {
-        this.$router.push("/notFound");
+        this.$router.push(`/${this.$i18n.locale}/notFound`);
       }
     }
     console.log(this.supplier.user_id);

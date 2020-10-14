@@ -8,25 +8,28 @@
     <v-img height="150" :src="nodeHost + filteredProduct.main_picture"></v-img>
 
     <v-row justify="center" class="mb-n3">
-      <v-card-title
-        class="grey--text text--darken-2"
-        style="font-size: 25px"
-      >{{ filteredProduct.product_name }}</v-card-title>
+      <v-card-title class="grey--text text--darken-2" style="font-size: 25px">{{
+        filteredProduct.product_name
+      }}</v-card-title>
     </v-row>
     <v-card-text>
       <div class="mb-1">
-        <span style="font-size: 17px">Product Code: {{ filteredProduct.product_code }}</span>
+        <span style="font-size: 17px"
+          >Product Code: {{ filteredProduct.product_code }}</span
+        >
       </div>
       <div>
         <span style="font-size: 17px">
           Unit Price:
-          <span style="color: red; ">{{ filteredProduct.unit_price }}</span>
+          <span style="color: red">{{ filteredProduct.unit_price }}</span>
         </span>
       </div>
       <div>
         <v-row class="mt-n2">
           <v-col cols="8">
-            <span style="font-size: 17px">Number of Times Sold: {{ filteredProduct.buy_counter }}</span>
+            <span style="font-size: 17px"
+              >Number of Times Sold: {{ filteredProduct.buy_counter }}</span
+            >
           </v-col>
 
           <v-col class="mt-n2" cols="4">
@@ -75,7 +78,7 @@ export default {
   methods: {
     setCurrentRow() {
       this.$store.dispatch("setCurrentProduct", this.filteredProduct);
-      this.$router.push("/productDetails");
+      this.$router.push(`/${this.$i18n.locale}/productDetails`);
     },
     add(product) {
       this.$store.dispatch("table", product);

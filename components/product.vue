@@ -24,6 +24,7 @@
                   :style="`color: ${siteColor.button_text_color} ; font-weight: 800; font-size:17px`"
                   >EGP</span
                 >
+                <p>{{ $t("nest.nest1") }}</p>
               </v-col>
 
               <v-col class="mt-n2" lg="12" md="12" sm="12" cols="12">
@@ -87,7 +88,7 @@
 export default {
   components: {},
   async created() {
-    console.log("show right carousel", this.show_right_carousel);
+    console.log(this.$i18n);
     await this.$store.dispatch(
       "calculateProductRating",
       this.filteredProduct.product_id
@@ -128,7 +129,7 @@ export default {
   methods: {
     setCurrentRow() {
       this.$store.dispatch("setCurrentProduct", this.filteredProduct);
-      this.$router.push("/productDetails");
+      this.$router.push(`/${this.$i18n.locale}/productDetails`);
     },
     add(product) {
       this.$store.dispatch("table", product);

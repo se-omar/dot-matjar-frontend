@@ -175,7 +175,7 @@ export default {
     },
 
     getSession() {
-      this.$router.push("/checkOutLocation");
+      this.$router.push(`/${this.$i18n.locale}/checkOutLocation`);
       this.$store.commit("putTotalPriceInStore", this.total);
       // var self = this;
       // self.quantityArray = [];

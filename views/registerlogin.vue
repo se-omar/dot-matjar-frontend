@@ -43,14 +43,18 @@
                           :disabled="!valid"
                           class="red darken-4 white--text"
                           @click="login"
-                        >Login</v-btn>
+                          >Login</v-btn
+                        >
                       </v-col>
 
                       <v-col class="d-flex" cols="12" sm="12" xsm="12">
                         <v-btn
-                          @click="$router.push('/resetPassword')"
+                          @click="
+                            $router.push(`/${$i18n.locale}/resetPassword`)
+                          "
                           text
-                        >Do yo forget you Password ?</v-btn>
+                          >Do yo forget you Password ?</v-btn
+                        >
                       </v-col>
                     </v-row>
                   </v-form>
@@ -63,7 +67,12 @@
                   <v-form ref="registerForm" v-model="valid" lazy-validation>
                     <v-row>
                       <v-col cols="6" sm="12">
-                        <v-text-field v-model="email" :rules="emailRules" label="Email" required></v-text-field>
+                        <v-text-field
+                          v-model="email"
+                          :rules="emailRules"
+                          label="Email"
+                          required
+                        ></v-text-field>
                       </v-col>
 
                       <v-col cols="6" sm="12" md="6">
@@ -145,7 +154,8 @@
                                     href="http://vuetifyjs.com"
                                     @click.stop
                                     v-on="on"
-                                  >terms and conditions</a>
+                                    >terms and conditions</a
+                                  >
                                 </template>
                                 Opens in new window
                               </v-tooltip>
@@ -162,14 +172,16 @@
                           id="btn"
                           class="red darken-4 white--text"
                           @click="validateSignup"
-                        >Sign up</v-btn>
+                          >Sign up</v-btn
+                        >
                         <v-btn
                           x-large
                           block
                           :disabled="!valid || !checkbox"
                           class="red darken-4 white--text"
                           @click="$router.push('/')"
-                        >Cancel</v-btn>
+                          >Cancel</v-btn
+                        >
                       </v-col>
                     </v-row>
                   </v-form>
@@ -235,7 +247,11 @@
                         ></v-select>
                       </v-col>
                       <v-col cols="6">
-                        <v-text-field outlined label="Store Name" v-model="storeName"></v-text-field>
+                        <v-text-field
+                          outlined
+                          label="Store Name"
+                          v-model="storeName"
+                        ></v-text-field>
                       </v-col>
                       <v-col cols="6" sm="12">
                         <v-text-field
@@ -276,7 +292,8 @@
                                     href="http://vuetifyjs.com"
                                     @click.stop
                                     v-on="on"
-                                  >terms and conditions</a>
+                                    >terms and conditions</a
+                                  >
                                 </template>
                                 Opens in new window
                               </v-tooltip>
@@ -289,18 +306,24 @@
                         <v-btn
                           x-large
                           block
-                          :disabled="!businessOwnerValidation || !businessOwnerCheckbox"
+                          :disabled="
+                            !businessOwnerValidation || !businessOwnerCheckbox
+                          "
                           id="btn"
                           class="red darken-4 white--text"
                           @click="businessOwnerRegistration"
-                        >Register as a Business Owner</v-btn>
+                          >Register as a Business Owner</v-btn
+                        >
                         <v-btn
                           x-large
                           block
-                          :disabled="!businessOwnerValidation || !businessOwnerCheckbox"
+                          :disabled="
+                            !businessOwnerValidation || !businessOwnerCheckbox
+                          "
                           class="red darken-4 white--text"
                           @click="$router.push('/')"
-                        >Cancel</v-btn>
+                          >Cancel</v-btn
+                        >
                       </v-col>
                     </v-row>
                   </v-form>

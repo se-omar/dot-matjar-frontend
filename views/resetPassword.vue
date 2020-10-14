@@ -1,37 +1,39 @@
 <template>
   <v-app>
-   
     <v-container mt-16>
       <v-row justify="center">
         <p class="display-1">Forgot your password ?</p>
       </v-row>
       <br />
       <v-row justify="center">
-        <p style="font-size: 30px;">Enter your email</p>
+        <p style="font-size: 30px">Enter your email</p>
       </v-row>
       <v-row justify="center">
         <v-col cols="7">
-          <v-text-field :rules="emailRules" required v-model="email" label="Email"></v-text-field>
+          <v-text-field
+            :rules="emailRules"
+            required
+            v-model="email"
+            label="Email"
+          ></v-text-field>
         </v-col>
-        
       </v-row>
 
       <v-row justify="center">
         <v-col cols="3">
-          <v-btn @click="validateResetPassword" class="red darken-4" dense block>
+          <v-btn
+            @click="validateResetPassword"
+            class="red darken-4"
+            dense
+            block
+          >
             <span class="white--text" style="font-size: 18">Send</span>
           </v-btn>
         </v-col>
       </v-row>
     </v-container>
 
- 
-     <!-- all other page content -->
- 
-   
-
-
-   
+    <!-- all other page content -->
   </v-app>
 </template>
 
@@ -40,17 +42,15 @@
 
 export default {
   name: "reset-password",
-  components:{
- 
-  },
+  components: {},
   data() {
     return {
       email: "",
       nationalNumber: "",
       emailRules: [
-        v => !!v || "Required",
-        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
-      ]
+        (v) => !!v || "Required",
+        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      ],
     };
   },
   methods: {
@@ -58,30 +58,29 @@ export default {
       var self = this;
       this.$axios
         .post("http://localhost:3000/api/resetPassword", {
-          email: this.email
-        
+          email: this.email,
         })
-        .then(response => {
+        .then((response) => {
           console.log(response.data);
           if (response.data != "authentication succesfull") {
             alert(response.data);
           } else {
             this.$axios
               .post("http://localhost:3000/api/sendResetPassword", {
-                email: this.email
+                email: this.email,
               })
-              .then(response => {
+              .then((response) => {
                 console.log(response.data);
                 console.log("ALL ROUTES", self.$router.options.routes);
-                self.$router.push("/resetPasswordSent");
+                self.$router.push(`/${self.$i18n.locale}/resetPasswordSent`);
               });
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log("error", error);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -92,7 +91,7 @@ export default {
 }
 
 #content-wrap {
-  padding-bottom: 2.5rem;   
+  padding-bottom: 2.5rem;
 }
 
 #footer {

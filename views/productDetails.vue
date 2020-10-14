@@ -510,12 +510,12 @@ export default {
           console.log(response);
         })
         .then(() => {
-          this.$router.push("/myProducts");
+          this.$router.push(`/${this.$i18n.locale}/myProducts`);
         });
     },
 
     goToEditProduct() {
-      this.$router.push("/editProduct");
+      this.$router.push(`/${this.$i18n.locale}/editProduct`);
     },
     add() {
       this.$store.dispatch("table", this.currentProduct);
@@ -524,7 +524,9 @@ export default {
     supplierClicked(supplier) {
       console.log("current supplier id", supplier.user_id);
       this.$store.commit("supplierPage", supplier);
-      this.$router.push("/supplierPage/" + supplier.user_id);
+      this.$router.push(
+        `/${this.$i18n.locale}/supplierPage/` + supplier.user_id
+      );
     },
 
     async submitReview() {

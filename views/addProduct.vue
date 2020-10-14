@@ -13,7 +13,7 @@
                   outlined
                   :rules="rules"
                   rounded
-                  label="Product name"
+                  :label="$t('addProduct.productName')"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -27,7 +27,7 @@
                   required
                   outlined
                   :rules="rules"
-                  label="Category"
+                  :label="$t('addProduct.category')"
                   @change="gettingCategoryItems"
                 ></v-select>
               </v-col>
@@ -39,7 +39,7 @@
                   required
                   outlined
                   :rules="rules"
-                  label="Item"
+                  :label="$t('addProduct.item')"
                 ></v-select>
               </v-col>
             </v-row>
@@ -50,7 +50,7 @@
                 v-model="productCode"
                 dense
                 outlined
-                label="Code"
+                :label="$t('addProduct.code')"
               ></v-text-field>
             </v-col>
 
@@ -59,7 +59,7 @@
                 dense
                 v-model="HScode"
                 outlined
-                label="HS code"
+                :label="$t('addProduct.hsCode')"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -72,7 +72,7 @@
                   dense
                   v-model="unitPrice"
                   outlined
-                  label="Price"
+                  :label="$t('addProduct.price')"
                 ></v-text-field>
               </v-col>
             </v-form>
@@ -81,7 +81,7 @@
                 dense
                 v-model="minUnits"
                 outlined
-                label="Minimum required orders"
+                :label="$t('addProduct.minOrders')"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -92,12 +92,16 @@
                 v-model="color"
                 dense
                 outlined
-                label="Color"
+                :label="$t('addProduct.color')"
               ></v-text-field>
             </v-col>
 
             <v-col cols="6">
-              <v-text-field dense outlined label="Sale"></v-text-field>
+              <v-text-field
+                dense
+                outlined
+                :label="$t('addProduct.sale')"
+              ></v-text-field>
             </v-col>
           </v-row>
 
@@ -107,16 +111,16 @@
                 v-model="description"
                 dense
                 outlined
-                label="Description"
+                :label="$t('addProduct.description')"
               ></v-textarea>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="12">
-              <h4>Want to add your own category ?</h4>
-              <v-btn @click.stop="dialog = true" :color="siteColor" text
-                >Click here</v-btn
-              >
+              <h4>{{ $t("addProduct.wantMoreCategories") }}</h4>
+              <v-btn @click.stop="dialog = true" :color="siteColor" text>{{
+                $t("addProduct.clickHere")
+              }}</v-btn>
             </v-col>
             <v-dialog
               persistent
@@ -130,14 +134,16 @@
                   <i class="fa fa-times fa-lg"></i>
                 </v-btn>
                 <v-spacer></v-spacer>
-                <v-toolbar-title>Category Request</v-toolbar-title>
+                <v-toolbar-title>{{
+                  $t("addProduct.categoryRequest")
+                }}</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-toolbar-items> </v-toolbar-items>
               </v-toolbar>
               <v-card>
                 <!-- Adding cateogryiessssss -->
                 <v-row justify="center">
-                  <h2>Request for new Category</h2>
+                  <h2>{{ $t("addProduct.requestNewCategory") }}</h2>
                 </v-row>
                 <v-row justify="center">
                   <v-form v-model="addCategoryValidation">
@@ -145,7 +151,7 @@
                       <v-text-field
                         :rules="rules"
                         v-model="newCategoryName"
-                        placeholder="Category name"
+                        :placeholder="$t('addProduct.categoryName')"
                         rounded
                         outlined
                         :color="siteColor"
@@ -156,7 +162,7 @@
                 <v-row justify="center">
                   <v-col cols="6">
                     <v-textarea
-                      label="Description"
+                      :label="$t('addProduct.description')"
                       rounded
                       outlined
                       v-model="newCategoryDescription"
@@ -170,13 +176,13 @@
                     :color="siteColor"
                     class="white--text"
                     @click="requestNewCategoryAndItem"
-                    >Add Category</v-btn
+                    >{{ $t("addProduct.addCategory") }}</v-btn
                   >
                 </v-row>
                 <v-divider class="mx-16 mt-6"></v-divider>
                 <!-- Adding category items -->
                 <v-row justify="center">
-                  <h2>Request a Category item</h2>
+                  <h2>{{ $t("addProduct.requestItem") }}</h2>
                 </v-row>
 
                 <v-form justify="center" v-model="addingItemsValidation">
@@ -188,14 +194,14 @@
                         rounded
                         :items="category"
                         v-model="categoryName"
-                        placeholder="Category Name"
+                        :placeholder="$t('addProduct.categoryName')"
                       ></v-select>
                     </v-col>
 
                     <v-col cols="3">
                       <v-text-field
                         v-model="newCategoryItem"
-                        placeholder="Category item"
+                        :placeholder="$t('addProduct.requestItem')"
                         class="text-xl"
                         rounded
                         outlined
@@ -207,7 +213,7 @@
                   <v-row justify="center">
                     <v-col cols="6">
                       <v-textarea
-                        label="Description"
+                        :label="$t('addProduct.description')"
                         rounded
                         outlined
                         v-model="newCategoryItemDescription"
@@ -223,7 +229,7 @@
                     :color="siteColor"
                     class="white--text"
                     @click="requestNewCategoryAndItem"
-                    >Add item</v-btn
+                    >{{ $t("addProduct.addItem") }}</v-btn
                   >
                 </v-row>
                 <v-divider class="mx-16 mt-6"></v-divider>
@@ -246,7 +252,7 @@
           <v-row justify="center">
             <v-col cols="9">
               <v-form>
-                <label>Main picture</label>
+                <label>{{ $t("addProduct.mainPicture") }}</label>
                 <v-file-input @change="setImage1"></v-file-input>
               </v-form>
             </v-col>
@@ -255,7 +261,7 @@
           <v-row justify="center">
             <v-col cols="9">
               <v-form>
-                <label>Extra picture</label>
+                <label>{{ $t("addProduct.extraPicture") }}</label>
                 <v-file-input @change="setImage2"></v-file-input>
               </v-form>
             </v-col>
@@ -264,7 +270,7 @@
           <v-row justify="center">
             <v-col cols="9">
               <v-form>
-                <label>Extra picture</label>
+                <label>{{ $t("addProduct.extraPicture") }}</label>
                 <v-file-input @change="setImage3"></v-file-input>
               </v-form>
             </v-col>
@@ -280,17 +286,21 @@
                 rounded
                 class="primary"
               >
-                <span style="font-size: 18px">Add product</span>
+                <span style="font-size: 18px">{{
+                  $t("addProduct.addProduct")
+                }}</span>
               </v-btn>
             </v-col>
 
             <v-col cols="4">
               <v-btn
-                @click="$router.push('/myProducts')"
+                @click="$router.push(`/${$i18n.locale}myProducts`)"
                 rounded
                 class="red white--text"
               >
-                <span style="font-size: 18px">Cancel</span>
+                <span style="font-size: 18px">{{
+                  $t("addProduct.cancel")
+                }}</span>
               </v-btn>
             </v-col>
           </v-row>
@@ -413,7 +423,7 @@ export default {
         .then((response) => {
           console.log(response);
           alert("Product added successfully");
-          this.$router.push("/myProducts").catch(() => {});
+          this.$router.push(`/${this.$i18n.locale}/myProducts`).catch(() => {});
         });
     },
 

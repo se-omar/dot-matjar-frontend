@@ -17,6 +17,7 @@ import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 import Moment from 'moment'
 import VueCarousel from 'vue-carousel';
+import i18n from './i18n'
 
 Vue.use(VueCarousel);
 
@@ -42,18 +43,32 @@ Vue.config.productionTip = false
 Vue.config.productionTip = false
 Vue.use(vaxios, axios);
 Vue.prototype.$axios = axios;
+
+
+router.beforeEach((to, from, next) => {
+  let language = to.params.lang;
+  if (!language) {
+    language = 'en'
+  }
+
+  i18n.locale = language
+  next()
+})
+
+
 new Vue({
   icons: {
     iconfont: 'fa' // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4' || 'faSvg'
   },
+
   router,
   store,
   vuetify,
+
   created: () => {
 
   },
 
-
-
+  i18n,
   render: h => h(App)
 }).$mount('#app')

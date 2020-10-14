@@ -465,7 +465,8 @@ export default {
   methods: {
     updatePage() {
       this.$router.push(
-        "/updateSupplierPage/" + this.$route.params.supplier_id
+        `/${this.$i18n.locale}/updateSupplierPage` +
+          this.$route.params.supplier_id
       );
     },
 

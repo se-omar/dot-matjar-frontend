@@ -49,7 +49,7 @@
     </v-row>
     <!-- search woth supplier and proucts -->
     <v-col>
-      <v-btn @click="advancedSearch = true">Expand Search Options</v-btn>
+      <v-btn @click="advancedSearch = true"> {{ $t('homePage.expandSearch') }}</v-btn>
     </v-col>
     <v-dialog style="overflow: hidden" v-model="advancedSearch" max-width="80%">
       <v-card style="overflow: hidden">
@@ -464,7 +464,8 @@
             :style="`color: ${siteColor.button_text_color}`"
             class="mb-15 white--text"
             @click="radioGroup == 1 ? filterProducts('loadmore') : loadMore()"
-            >load more</v-btn
+          >
+            {{ $t("homePage.loadMore") }}</v-btn
           >
         </v-row>
       </v-col>
@@ -528,7 +529,7 @@ export default {
   async created() {
     await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getCategoryItems");
-    this.isLoading = true;
+    // this.isLoading = true;
     this.$store.dispatch("removeSupplierPageData");
     await this.$store.dispatch("getSiteColor");
     console.log(this.loginToken);

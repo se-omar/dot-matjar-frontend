@@ -11,7 +11,7 @@
             label="كلمة السر"
             v-model="password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required, rules.min,rules.valid]"
+            :rules="[rules.required, rules.min, rules.valid]"
             :type="show1 ? 'text' : 'password'"
             name="input-10-1"
             hint="At least 7 characters"
@@ -38,7 +38,9 @@
 
       <v-row justify="center">
         <v-col cols="5">
-          <v-btn @click="updatePassword" class="primary" block>تجديد كلمة السر</v-btn>
+          <v-btn @click="updatePassword" class="primary" block
+            >تجديد كلمة السر</v-btn
+          >
         </v-col>
       </v-row>
     </v-container>
@@ -54,14 +56,14 @@ export default {
       repeatPassword: "",
       show1: false,
       rules: {
-        required: value => !!value || "Required.",
-        min: v => (v && v.length >= 7) || "Min 7 characters",
-        valid: v =>
+        required: (value) => !!value || "Required.",
+        min: (v) => (v && v.length >= 7) || "Min 7 characters",
+        valid: (v) =>
           /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
             v
           ) ||
-          "password must have at least one letter, one number and one special character"
-      }
+          "password must have at least one letter, one number and one special character",
+      },
     };
   },
 
@@ -69,7 +71,7 @@ export default {
     passwordMatch() {
       return () =>
         this.password === this.repeatPassword || "Password must match";
-    }
+    },
   },
 
   methods: {
@@ -80,15 +82,15 @@ export default {
         this.$route.params.hash;
       this.$axios
         .post(route, {
-          password: this.password
+          password: this.password,
         })
-        .then(response => {
+        .then((response) => {
           alert(response.data);
           if (response.data === "password updated successfully") {
-            self.$router.push("/reglogin");
+            self.$router.push(`/${self.$i18n.locale}/reglogin`);
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
