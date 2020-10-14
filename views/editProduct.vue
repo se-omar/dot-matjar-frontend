@@ -244,7 +244,7 @@ export default {
         })
         .then(() => {
           alert("Product changed");
-          this.$router.push("/myProducts");
+          this.$router.push(`/${this.$i18n.locale}/myProducts`);
         });
     },
   },

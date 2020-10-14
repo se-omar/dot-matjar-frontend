@@ -43,6 +43,19 @@ Vue.config.productionTip = false
 Vue.config.productionTip = false
 Vue.use(vaxios, axios);
 Vue.prototype.$axios = axios;
+
+
+router.beforeEach((to, from, next) => {
+  let language = to.params.lang;
+  if (!language) {
+    language = 'en'
+  }
+
+  i18n.locale = language
+  next()
+})
+
+
 new Vue({
   icons: {
     iconfont: 'fa' // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4' || 'faSvg'

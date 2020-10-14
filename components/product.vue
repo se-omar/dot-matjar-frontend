@@ -1,6 +1,10 @@
 <template>
   <div>
-    <v-card class="grey lighten-5" :elevation="7" max-width="280">
+    <v-card
+      class="grey lighten-5"
+      :elevation="7"
+      :min-width="show_right_banner == 1 ? hundred : hundredten"
+    >
       <v-img height="250" :src="filteredProduct.main_picture"></v-img>
 
       <v-row class="mt-n5">
@@ -20,6 +24,7 @@
                   :style="`color: black; font-weight: 800; font-size:17px`"
                   >EGP</span
                 >
+                <p>{{ $t("nest.nest1") }}</p>
               </v-col>
 
               <v-col class="mt-n2" lg="12" md="12" sm="12" cols="12">
@@ -83,6 +88,7 @@
 export default {
   components: {},
   async created() {
+    console.log(this.$i18n);
     await this.$store.dispatch(
       "calculateProductRating",
       this.filteredProduct.product_id
@@ -91,6 +97,8 @@ export default {
   name: "product",
   data() {
     return {
+      hundred: "100%",
+      hundredten: "110%",
       i: 0,
     };
   },
@@ -112,12 +120,16 @@ export default {
       type: Object,
       default: () => {},
     },
+    show_right_banner: {
+      type: Number,
+      default: () => {},
+    },
   },
 
   methods: {
     setCurrentRow() {
       this.$store.dispatch("setCurrentProduct", this.filteredProduct);
-      this.$router.push("/productDetails");
+      this.$router.push(`/${this.$i18n.locale}/productDetails`);
     },
     add(product) {
       this.$store.dispatch("table", product);

@@ -12,7 +12,7 @@
     </div>
     <!-- ADDING Categories -->
     <v-row justify="center">
-      <h2>Add a new Category</h2>
+      <h2>{{ $t("adminPage.addNewCategory") }}</h2>
     </v-row>
     <v-row justify="center">
       <v-form v-model="addCategoryValidation">
@@ -20,7 +20,7 @@
           <v-text-field
             :rules="required"
             v-model="newCategoryName"
-            placeholder="Category name"
+            :placeholder="$t('adminPage.categoryName')"
             rounded
             outlined
           ></v-text-field>
@@ -34,15 +34,15 @@
         :color="siteColor.button_color"
         class="white--text"
         @click="addNewCategory"
-        ><span :style="`color:${siteColor.button_text_color}`"
-          >Add Category</span
-        ></v-btn
+        ><span :style="`color:${siteColor.button_text_color}`">{{
+          $t("adminPage.addCategory")
+        }}</span></v-btn
       >
     </v-row>
     <v-divider class="mx-16"></v-divider>
     <!-- Adding category items -->
     <v-row justify="center">
-      <h3>Add category items</h3>
+      <h3>{{ $t("adminPage.addCategoryItems") }}</h3>
     </v-row>
 
     <v-form justify="center" v-model="valid">
@@ -54,14 +54,14 @@
             rounded
             :items="productCategory"
             v-model="categoryName"
-            placeholder="Category Name"
+            :placeholder="$t('adminPage.categoryName')"
           ></v-select>
         </v-col>
 
         <v-col cols="3">
           <v-text-field
             v-model="categoryItem"
-            placeholder="Category item"
+            :placeholder="$t('adminPage.categoryItem')"
             class="text-xl"
             rounded
             outlined
@@ -77,15 +77,15 @@
         rounded
         :color="siteColor.button_color"
         @click="addCategoryItem"
-        ><span :style="`color:${siteColor.button_text_color}`"
-          >Add item</span
-        ></v-btn
+        ><span :style="`color:${siteColor.button_text_color}`">{{
+          $t("adminPage.addItem")
+        }}</span></v-btn
       >
     </v-row>
     <v-divider class="mx-16"></v-divider>
     <!-- Removing category items -->
     <v-row justify="center">
-      <h2>Remove Category</h2>
+      <h2>{{ $t("adminPage.removeCategory") }}</h2>
     </v-row>
     <v-row justify="center">
       <v-col cols="3">
@@ -94,7 +94,7 @@
           :items="productCategory"
           outlined
           rounded
-          label="Choose Category to remove"
+          :label="$t('adminPage.chooseCategoryRemoved')"
           v-model="chooseCategoryToRemove"
         ></v-select>
       </v-col>
@@ -102,7 +102,7 @@
         <v-select
           rounded
           outlined
-          placeholder="Choose item to remove"
+          :placeholder="$t('adminPage.chooseItemRemoved')"
           v-model="chooseItemToRemove"
           :items="categoryItems"
         >
@@ -118,21 +118,18 @@
         :color="siteColor.button_color"
         class="white--text"
         @click="confirmingRemovingCategory = true"
-        ><span :style="`color:${siteColor.button_text_color}`"
-          >Remove Category</span
-        ></v-btn
+        ><span :style="`color:${siteColor.button_text_color}`">{{
+          $t("adminPage.removeCategory")
+        }}</span></v-btn
       >
       <!-- dialoge testing ============ -->
       <v-dialog v-model="confirmingRemovingCategory" max-width="400">
         <v-card>
-          <v-card-title class="headline"
-            >Are you sure you want to Delete this category ?</v-card-title
-          >
+          <v-card-title class="headline">{{
+            $t("adminPage.deleteCategoryCheck")
+          }}</v-card-title>
 
-          <v-card-text
-            >Please be aware that by proceeding all products in this category
-            will not have a unique category to search for.</v-card-text
-          >
+          <v-card-text>{{ $t("adminPage.deleteCategoryCheck2") }}</v-card-text>
 
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -141,9 +138,9 @@
               :color="siteColor.button_color"
               text
               @click="confirmingRemovingCategory = false"
-              ><span :style="`color:${siteColor.button_text_color}`"
-                >Disagree</span
-              ></v-btn
+              ><span :style="`color:${siteColor.button_text_color}`">{{
+                $t("adminPage.disagree")
+              }}</span></v-btn
             >
 
             <v-btn :color="siteColor" text @click="removeCategory"
@@ -160,19 +157,22 @@
         :color="siteColor.button_color"
         @click="removeItem"
         ><span :style="`color:${siteColor.button_text_color}`">Disagree</span
-        >>Remove item</v-btn
+        >>{{ $t("adminPage.removeItem") }}</v-btn
       >
     </v-row>
 
     <v-divider class="mx-16"></v-divider>
 
     <v-row justify="center" class="mt-7">
-      <p class="text-h4">edit carousel and banners</p>
+      <p class="text-h4">{{ $t("adminPage.editCarousel") }}</p>
     </v-row>
 
     <v-row justify="center">
       <v-col cols="6" lg="2" sm="4" md="6">
-        <v-switch label="show carousel" v-model="carouselCheckbox"></v-switch>
+        <v-switch
+          :label="$t('adminPage.showCarousel')"
+          v-model="carouselCheckbox"
+        ></v-switch>
       </v-col>
 
       <!-- <v-col cols="6" lg="2" sm="4" md="6">
@@ -184,7 +184,7 @@
 
       <v-col cols="6" lg="2" sm="4" md="6">
         <v-switch
-          label="show right banner"
+          :label="$t('adminPage.showRightBanner')"
           v-model="rightBannerCheckbox"
         ></v-switch>
       </v-col>
@@ -193,7 +193,7 @@
     <v-row justify="center">
       <v-col lg="2" v-if="carouselCheckbox">
         <v-form enctype="multipart/form-data">
-          <label>Carousel Image 1</label>
+          <label>{{ $t("adminPage.carouselImage") }} 1</label>
           <v-file-input
             accept="image/*"
             @change="setCarouselImage1"
@@ -226,7 +226,7 @@
 
       <v-col lg="2" v-if="carouselCheckbox">
         <v-form>
-          <label>Carousel Image 2</label>
+          <label>{{ $t("adminPage.carouselImage") }} 2</label>
           <v-file-input
             accept="image/*"
             :disabled="!carouselImage1 && !homePageInfo.carousel_image_1"
@@ -261,7 +261,7 @@
 
       <v-col lg="2" v-if="carouselCheckbox">
         <v-form>
-          <label>Carousel Image 3</label>
+          <label>{{ $t("adminPage.carouselImage") }} 3</label>
           <v-file-input
             accept="image/*"
             :disabled="!carouselImage2 && !homePageInfo.carousel_image_2"
@@ -296,7 +296,7 @@
 
       <v-col lg="2" v-if="carouselCheckbox">
         <v-form>
-          <label>Carousel Image 4</label>
+          <label>{{ $t("adminPage.carouselImage") }} 4</label>
           <v-file-input
             accept="image/*"
             :disabled="!carouselImage3 && !homePageInfo.carousel_image_3"
@@ -333,7 +333,7 @@
     <v-row justify="center">
       <v-col v-if="carouselCheckbox" cols="6" lg="3" sm="4" md="6">
         <v-text-field
-          label="carousel width from 1 to 12 (default is 10)"
+          :label="$t('adminPage.carouselWidth')"
           v-model="carouselWidth"
           rounded
           :rules="[rules.min_max_width]"
@@ -345,7 +345,7 @@
       <v-col v-if="carouselCheckbox" cols="6" lg="3" sm="4" md="6">
         <v-text-field
           type="number"
-          label="carousel height in pixels (default is 400)"
+          :label="$t('adminPage.carouselHeight')"
           v-model="carouselHeight"
           :rules="[rules.min_max_height]"
           rounded
@@ -389,7 +389,7 @@
 
       <v-col lg="3" v-if="rightBannerCheckbox">
         <v-form>
-          <label>right banner image</label>
+          <label>{{ $t("adminPage.rightBannerImage") }}</label>
           <v-file-input accept="image/*" @change="setRightImage"></v-file-input>
           <v-img
             :src="
@@ -424,10 +424,11 @@
           >Disagree</span
         ></v-btn
       >
+      <v-btn @click="sendData">{{ $t("adminPage.update") }}</v-btn>
     </v-row>
 
     <v-row justify="center">
-      <p class="display-1 mt-8">Top 10 Selling Suppliers</p>
+      <p class="display-1 mt-8">{{ $t("adminPage.top10Suppliers") }}</p>
     </v-row>
 
     <v-row>
@@ -447,11 +448,15 @@
     </v-row>
     <v-divider></v-divider>
     <v-row justify="center" v-if="selectedMonth !== 'all'">
-      <p class="display-1 mt-8">Top Selling Suppliers in {{ selectedMonth }}</p>
+      <p class="display-1 mt-8">
+        {{ $t("adminPage.topYearMonthSuppliers") }} {{ selectedMonth }}
+      </p>
     </v-row>
 
     <v-row justify="center" v-if="selectedMonth === 'all'">
-      <p class="display-1 mt-8">Top Selling Suppliers in {{ selectedYear }}</p>
+      <p class="display-1 mt-8">
+        {{ $t("adminPage.topYearMonthSuppliers") }} {{ selectedYear }}
+      </p>
     </v-row>
 
     <v-row class="mb-n7" style="width: 92%; margin: auto">
@@ -461,7 +466,7 @@
           v-model="selectedYear"
           outlined
           :items="years"
-          label="Select Year"
+          :label="$t('adminPage.selectYear')"
         ></v-select>
       </v-col>
 
@@ -471,7 +476,7 @@
           v-model="selectedMonth"
           outlined
           :items="months"
-          label="Select Month"
+          :label="$t('adminPage.selectMonth')"
         ></v-select>
       </v-col>
 
@@ -483,9 +488,9 @@
             getTopMonthlySuppliers();
             isLoading = true;
           "
-          ><span :style="`color:${siteColor.button_text_color}`"
-            >Filter</span
-          ></v-btn
+          ><span :style="`color:${siteColor.button_text_color}`">{{
+            $t("adminPage.filter")
+          }}</span></v-btn
         >
       </v-col>
     </v-row>
@@ -538,7 +543,7 @@
     </v-row>
     <v-divider></v-divider>
     <v-row justify="center">
-      <p class="display-1 mt-8">Suppliers Ranking Chart</p>
+      <p class="display-1 mt-8">{{ $t("adminPage.suppliersChart") }}</p>
     </v-row>
 
     <v-row justify="center">
@@ -577,9 +582,9 @@
         </v-card>
         <v-row class="mt-4" justify="center">
           <v-label>
-            <span style="font-size: 22px; text-align: center"
-              >top selling supplier</span
-            >
+            <span style="font-size: 22px; text-align: center">{{
+              $t("adminPage.topSellingSupplier")
+            }}</span>
           </v-label>
         </v-row>
       </v-col>
@@ -601,16 +606,16 @@
         </v-card>
         <v-row class="mt-4" justify="center">
           <v-label>
-            <span style="font-size: 22px; text-align: center"
-              >least selling supplier</span
-            >
+            <span style="font-size: 22px; text-align: center">{{
+              $t("adminPage.leastSellingSupplier")
+            }}</span>
           </v-label>
         </v-row>
       </v-col>
     </v-row>
     <v-divider></v-divider>
     <v-row justify="center">
-      <p class="display-1 mt-8">All Suppliers</p>
+      <p class="display-1 mt-8">{{ $t("adminPage.allSuppliers") }}</p>
     </v-row>
 
     <v-row justify="center">
@@ -620,14 +625,14 @@
           dense
           outlined
           v-model="supplierName"
-          placeholder="Search Suppliers by Name"
+          :placeholder="$t('adminPage.supplierNameSearch')"
         ></v-text-field>
       </v-col>
 
       <v-col lg="3">
         <v-select
           :items="egyptGovernorates"
-          placeholder="Governorate"
+          :placeholder="$t('adminPage.governorate')"
           dense
           outlined
           v-model="governorate"
@@ -638,7 +643,7 @@
       <v-col lg="3">
         <v-select
           :items="regions"
-          placeholder="Region"
+          :placeholder="$t('adminPage.region')"
           dense
           outlined
           v-model="region"
@@ -651,9 +656,9 @@
           @click="filterSuppliers"
           :color="siteColor.button_color"
         >
-          <span :style="`color:${siteColor.button_text_color}`"
-            >Search</span
-          ></v-btn
+          <span :style="`color:${siteColor.button_text_color}`">{{
+            $t("adminPage.search")
+          }}</span></v-btn
         >
       </v-col>
 
@@ -688,9 +693,9 @@
         :color="siteColor.button_color"
         class="mb-15 white--text"
         @click="loadMore"
-        ><span :style="`color:${siteColor.button_text_color}`"
-          >load more</span
-        ></v-btn
+        ><span :style="`color:${siteColor.button_text_color}`">{{
+          $t("adminPage.loadmore")
+        }}</span></v-btn
       >
     </v-row>
   </v-app>
@@ -925,7 +930,7 @@ export default {
 
     supplierClicked(supplier) {
       this.$store.commit("supplierPage", supplier);
-      this.$router.push("/suppliersDashboard");
+      this.$router.push(`/${this.$i18n.locale}/suppliersDashboard`);
       // console.log(this.supplier);
     },
 

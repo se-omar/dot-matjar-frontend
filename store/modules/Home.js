@@ -68,8 +68,12 @@ export default {
 
         },
 
-        filterProducts(state, products) {
-            state.filteredProducts = products;
+        filterProducts(state, {products, pressed}) {
+          //  debugger
+            if(pressed == 'search')
+                state.filteredProducts = products;
+            else
+                state.filteredProducts.push(...products)
         },
 
         filterSuppliers(state, users) {
@@ -224,7 +228,10 @@ export default {
             category_name,
             governorate,
             region,
-            categoryItem
+            categoryItem,
+            priceFrom,
+            priceTo,
+            product_id, buttonPressed
         }) {
 
             axios.put('http://localhost:3000/api/filterProducts', {
@@ -232,13 +239,14 @@ export default {
                 category_name,
                 governorate,
                 region,
-                categoryItem
+                categoryItem, priceFrom, priceTo, product_id
             })
                 .then(response => {
                     console.log('message:', response.data.message)
-                    console.log('products:', response.data.data)
+                    
+                    //debugger
 
-                    context.commit('filterProducts', response.data.data);
+                    context.commit('filterProducts', {products:response.data.data, pressed:buttonPressed});
                 })
         },
 

@@ -74,7 +74,7 @@ export default {
               .then((response) => {
                 console.log(response.data);
                 console.log("ALL ROUTES", self.$router.options.routes);
-                self.$router.push("/resetPasswordSent");
+                self.$router.push(`/${self.$i18n.locale}/resetPasswordSent`);
               });
           }
         })

@@ -62,10 +62,9 @@
             class="mt-10 mr-1 blue white--text"
             rounded
             @click="advancedSearch = true"
-            ><span style="font-size: 12px"
-              >Advanced<br />
-              Search</span
-            ></v-btn
+            ><span style="font-size: 12px">{{
+              $t("toolbar.advancedSearch")
+            }}</span></v-btn
           >
         </v-col>
         <v-dialog
@@ -82,11 +81,17 @@
               >
                 <v-row class="mb-n5" justify="center">
                   <v-col cols="3" lg="4" sm="5" md="5">
-                    <v-radio label="Search for Products" value="1"></v-radio>
+                    <v-radio
+                      :label="$t('toolbar.searchProducts')"
+                      value="1"
+                    ></v-radio>
                   </v-col>
 
                   <v-col cols="3" lg="4" sm="5" md="5">
-                    <v-radio label="Search for suppliers" value="2"></v-radio>
+                    <v-radio
+                      :label="$t('toolbar.searchSuppliers')"
+                      value="2"
+                    ></v-radio>
                   </v-col>
                 </v-row>
               </v-radio-group>
@@ -99,7 +104,7 @@
                   v-if="radioGroup === '1'"
                   :items="egyptGovernorates"
                   :disabled="radioGroup === '2'"
-                  placeholder="Governorate"
+                  :placeholder="$t('toolbar.governorate')"
                   dense
                   outlined
                   v-model="governorate"
@@ -113,7 +118,7 @@
                   v-if="radioGroup === '1'"
                   :items="regions"
                   :disabled="radioGroup === '2'"
-                  placeholder="Region"
+                  :placeholder="$t('toolbar.region')"
                   dense
                   outlined
                   v-model="region"
@@ -126,7 +131,7 @@
                   v-if="radioGroup === '2'"
                   :items="egyptGovernorates"
                   :disabled="radioGroup === '1'"
-                  placeholder="Governorate"
+                  :placeholder="$t('toolbar.governorate')"
                   dense
                   outlined
                   v-model="governorate"
@@ -143,7 +148,7 @@
                   dense
                   outlined
                   v-model="supplierName"
-                  placeholder="Search Suppliers by Name"
+                  :placeholder="$t('toolbar.supplierNameSearch')"
                 ></v-text-field>
               </v-col>
               <v-col lg="3" cols="2" sm="4" md="4">
@@ -152,7 +157,7 @@
                   v-if="radioGroup === '2'"
                   :items="regions"
                   :disabled="radioGroup === '1'"
-                  placeholder="Region"
+                  :placeholder="$t('toolbar.region')"
                   dense
                   outlined
                   v-model="region"
@@ -169,7 +174,7 @@
                   rounded
                   outlined
                   type="number"
-                  label="Price From"
+                  :label="$t('toolbar.priceFrom')"
                 ></v-text-field>
               </v-col>
 
@@ -180,7 +185,7 @@
                   outlined
                   rounded
                   type="number"
-                  label="Price TO"
+                  :label="$t('toolbar.priceTo')"
                 ></v-text-field>
               </v-col>
               <v-col sm="3" lg="3" md="3"></v-col>
@@ -192,9 +197,9 @@
                   :color="siteColor.button_color"
                   rounded
                   x-large
-                  ><span :style="`color: ${siteColor.button_text_color}`"
-                    >Search</span
-                  ></v-btn
+                  ><span :style="`color: ${siteColor.button_text_color}`">{{
+                    $t("toolbar.search")
+                  }}</span></v-btn
                 >
               </v-col>
 
@@ -251,7 +256,7 @@
             v-on="on"
           >
             <i class="fa fa-user fa-lg mt-n1 mr-1" style="color: black"></i>
-            <span>Profile</span>
+            <span>{{ $t("toolbar.profile") }}</span>
           </v-btn>
         </template>
 
@@ -293,7 +298,7 @@
                   <br />
                 </span>
                 <span class="file-label" style="font-weight: bold">
-                  Upload your photo here
+                  {{ $t("toolbar.uploadPhoto") }}
                   <br />
                 </span>
               </span>
@@ -321,7 +326,7 @@
                   <br />
                 </span>
                 <span class="file-label" style="font-weight: bold">
-                  Change profile photo
+                  {{ $t("toolbar.changeProfilePhoto") }}
                   <br />
                 </span>
               </span>
@@ -355,7 +360,8 @@
                 <span
                   :style="`color:${siteColor.button_text_color}; `"
                   class="mos"
-                  >My Page</span
+                >
+                  {{ $t("toolbar.myPage") }}</span
                 >
               </v-btn>
               <v-divider class="mr-4"></v-divider>
@@ -368,12 +374,13 @@
                 :color="siteColor.button_color"
                 large
                 rounded
-                @click="$router.push('/myProducts')"
+                @click="$router.push(`/${$i18n.locale}/myProducts`)"
               >
                 <span
                   :style="`color:${siteColor.button_text_color}; `"
                   class="mos"
-                  >My <br />products</span
+                >
+                  {{ $t("toolbar.myProducts") }}</span
                 >
               </v-btn>
               <v-divider class="mr-4"></v-divider>
@@ -403,12 +410,13 @@
                 :color="siteColor.button_color"
                 large
                 rounded
-                @click="$router.push('/orderedProducts')"
+                @click="$router.push(`/${$i18n.locale}/orderedProducts`)"
               >
                 <span
                   :style="`color:${siteColor.button_text_color};`"
                   class="mos"
-                  >Order <br />Manage</span
+                >
+                  {{ $t("toolbar.orderManage") }}</span
                 >
               </v-btn>
               <v-divider class="mr-4"></v-divider>
@@ -421,11 +429,11 @@
                 :color="siteColor.button_color"
                 large
                 rounded
-                @click="$router.push('/categoryAndItemRequests')"
-                ><span :style="`color:${siteColor.button_text_color};`"
-                  >Category <br />
-
-                  requests</span
+                @click="
+                  $router.push(`/${$i18n.locale}/categoryAndItemRequests`)
+                "
+                ><span :style="`color:${siteColor.button_text_color};`">
+                  {{ $t("toolbar.categoryRequests") }}</span
                 ></v-btn
               >
               <v-divider class="mr-4"></v-divider>
@@ -435,25 +443,31 @@
           <v-row>
             <v-col cols="12">
               <v-card-text>
-                <a class="size" @click="$router.push('/editPassword')">
+                <a
+                  class="size"
+                  @click="$router.push(`/${$i18n.locale}/editPassword`)"
+                >
                   <i
                     class="fa fa-cog"
                     aria-hidden="true"
                     style="color: black"
                   ></i>
-                  <span class="ml-2" :color="siteColor.toolbar_text_color"
-                    >Change your password</span
+                  <span class="ml-2" :color="siteColor.toolbar_text_color">
+                    {{ $t("toolbar.changeYourPassword") }}</span
                   >
                 </a>
                 <br />
                 <br />
-                <a @click="$router.push('/completedata')" class="size">
+                <a
+                  @click="$router.push(`/${$i18n.locale}/completedata`)"
+                  class="size"
+                >
                   <i
                     class="fa fa-edit"
                     aria-hidden="true"
                     style="color: black"
                   ></i>
-                  Update or Complete Info
+                  {{ $t("toolbar.updateOrCompleteInfo") }}
                 </a>
                 <br />
                 <br />
@@ -463,7 +477,7 @@
                     aria-hidden="true"
                     style="color: black"
                   ></i>
-                  Logout
+                  {{ $t("toolbar.logout") }}
                 </a>
               </v-card-text>
             </v-col>
@@ -479,8 +493,9 @@
           !currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs
         "
         text
-        @click="$router.push('/reglogin').catch((err) => {})"
-        >Register</v-btn
+        @click="$router.push(`/${$i18n.locale}/reglogin`).catch((err) => {})"
+      >
+        {{ $t("toolbar.register") }}</v-btn
       >
 
       <v-btn
@@ -493,8 +508,11 @@
           !$vuetify.breakpoint.xs
         "
         text
-        @click="$router.push('/requestsPage').catch((err) => {})"
-        >Requests</v-btn
+        @click="
+          $router.push(`/${$i18n.locale}/requestsPage`).catch((err) => {})
+        "
+      >
+        {{ $t("toolbar.requests") }}</v-btn
       >
 
       <!-- <v-btn
@@ -519,8 +537,9 @@
           !$vuetify.breakpoint.xs
         "
         text
-        @click="$router.push('/userOrders').catch((err) => {})"
-        >my orders</v-btn
+        @click="$router.push(`/${$i18n.locale}/userOrders`).catch((err) => {})"
+      >
+        {{ $t("toolbar.myOrders") }}</v-btn
       >
 
       <v-btn
@@ -533,8 +552,9 @@
           !$vuetify.breakpoint.xs
         "
         text
-        @click="$router.push('/dashboard').catch((err) => {})"
-        >Dashboard</v-btn
+        @click="$router.push(`/${$i18n.locale}/dashboard`).catch((err) => {})"
+      >
+        {{ $t("toolbar.dashboard") }}</v-btn
       >
 
       <v-btn
@@ -542,8 +562,9 @@
         :style="`color:${siteColor.toolbar_text_color}`"
         v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
+        @click="$router.push(`/${$i18n.locale}/myProducts`)"
       >
-        <span>About us</span>
+        <span> {{ $t("toolbar.aboutUs") }}</span>
       </v-btn>
 
       <v-btn
@@ -556,8 +577,9 @@
           !$vuetify.breakpoint.xs
         "
         text
-        @click="$router.push('/adminPage').catch((err) => {})"
-        >admin dashboard</v-btn
+        @click="$router.push(`/${$i18n.locale}/adminPage`).catch((err) => {})"
+      >
+        {{ $t("toolbar.adminDashboard") }}</v-btn
       >
 
       <v-btn
@@ -566,8 +588,19 @@
         v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
         @click="logout"
-        >Logout</v-btn
       >
+        {{ $t("toolbar.logout") }}</v-btn
+      >
+
+      <v-select
+        @change="changeLang"
+        class="mt-7"
+        style="max-width: 85px"
+        solo-inverted
+        :items="$i18n.availableLocales"
+        v-model="$i18n.locale"
+      >
+      </v-select>
 
       <!--============================
 
@@ -585,10 +618,8 @@
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
-            <v-list-item-title
-              @click="$router.push('/home').catch((err) => {})"
-            >
-              <span style="font-size: 17px">home page</span>
+            <v-list-item-title @click="$router.push('/').catch((err) => {})">
+              <span style="font-size: 17px"> {{ $t("toolbar.homePage") }}</span>
             </v-list-item-title>
           </v-list-item>
 
@@ -597,9 +628,13 @@
               <v-icon>mdi-lock-reset</v-icon>
             </v-list-item-icon>
             <v-list-item-title
-              @click="$router.push('/editPassword').catch((err) => {})"
+              @click="
+                $router.push(`/${$i18n.locale}/editPassword`).catch((err) => {})
+              "
             >
-              <span style="font-size: 17px">change password</span>
+              <span style="font-size: 17px">
+                {{ $t("toolbar.changeYourPassword") }}</span
+              >
             </v-list-item-title>
           </v-list-item>
 
@@ -610,9 +645,11 @@
               <v-icon>mdi-email</v-icon>
             </v-list-item-icon>
             <v-list-item-title
-              @click="$router.push('/requestsPage').catch((err) => {})"
+              @click="
+                $router.push(`/${$i18n.locale}/requestsPage`).catch((err) => {})
+              "
             >
-              <span style="font-size: 17px">requests</span>
+              <span style="font-size: 17px"> {{ $t("toolbar.requests") }}</span>
             </v-list-item-title>
           </v-list-item>
 
@@ -636,9 +673,13 @@
               <v-icon>mdi-cart-plus</v-icon>
             </v-list-item-icon>
             <v-list-item-title
-              @click="$router.push('/dashboard').catch((err) => {})"
+              @click="
+                $router.push(`/${$i18n.locale}/dashboard`).catch((err) => {})
+              "
             >
-              <span style="font-size: 17px">Dashboard</span>
+              <span style="font-size: 17px">
+                {{ $t("toolbar.dashboard") }}</span
+              >
             </v-list-item-title>
           </v-list-item>
 
@@ -647,9 +688,13 @@
               <v-icon>mdi-account-plus</v-icon>
             </v-list-item-icon>
             <v-list-item-title
-              @click="$router.push('/reglogin').catch((err) => {})"
+              @click="
+                $router.push(`/${$i18n.locale}/reglogin`).catch((err) => {})
+              "
             >
-              <span style="font-size: 17px">login and signup</span>
+              <span style="font-size: 17px">
+                {{ $t("toolbar.loginSignup") }}</span
+              >
             </v-list-item-title>
           </v-list-item>
 
@@ -658,7 +703,7 @@
               <v-icon>mdi-information</v-icon>
             </v-list-item-icon>
             <v-list-item-title>
-              <span style="font-size: 17px">about us</span>
+              <span style="font-size: 17px"> {{ $t("toolbar.aboutUs") }}</span>
             </v-list-item-title>
           </v-list-item>
         </v-list-item-group>
@@ -721,11 +766,16 @@ export default {
   },
 
   methods: {
+    changeLang(value) {
+      this.$router.push({
+        params: { lang: value },
+      });
+    },
     logout() {
       this.$store.commit("removeCurrentUser");
 
       setTimeout(() => {
-        this.$router.push("/reglogin").catch(() => {});
+        this.$router.push(`/${this.$i18n.locale}/reglogin`).catch(() => {});
       }, 10);
     },
 
@@ -740,7 +790,9 @@ export default {
     },
     supplierPage() {
       this.$store.commit("supplierPage", this.currentUser);
-      this.$router.push("/supplierPage/" + this.currentUser.user_id);
+      this.$router.push(
+        `/${this.$i18n.locale}/supplierPage/` + this.currentUser.user_id
+      );
     },
     goSupplierPage() {
       this.$router

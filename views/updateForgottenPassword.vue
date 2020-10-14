@@ -103,7 +103,7 @@ export default {
         .then((response) => {
           alert(response.data);
           if (response.data === "password updated successfully") {
-            self.$router.push("/reglogin");
+            self.$router.push(`/${self.$i18n.locale}/reglogin`);
           }
         });
     },

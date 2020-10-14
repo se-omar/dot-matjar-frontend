@@ -21,10 +21,15 @@
 
       <v-col lg="9">
         <v-container
-          v-if="currentUser && currentUser.user_type == 'business' || currentUser.user_type == 'admin'"
+          v-if="
+            (currentUser && currentUser.user_type == 'business') ||
+            currentUser.user_type == 'admin'
+          "
         >
           <v-row justify="center">
-            <p class="display-1">{{currentUser.full_arabic_name}}'s products</p>
+            <p class="display-1">
+              {{ currentUser.full_arabic_name }}'s products
+            </p>
           </v-row>
           <v-row>
             <v-col></v-col>
@@ -35,7 +40,9 @@
               :color="siteColor"
               fab
               large
-              @click="$router.push('/addProduct').catch((err) => {})"
+              @click="
+                $router.push(`/${$i18n.locale}/addProduct`).catch((err) => {})
+              "
             >
               <i class="fa fa-plus fa-2x"></i>
             </v-btn>
@@ -52,7 +59,11 @@
               v-for="myProduct in myProducts"
               :key="myProduct.id"
             >
-              <product class="ml-n2 mr-n2" :addToCartButton="false" :filteredProduct="myProduct"></product>
+              <product
+                class="ml-n2 mr-n2"
+                :addToCartButton="false"
+                :filteredProduct="myProduct"
+              ></product>
             </v-col>
           </v-row>
 
@@ -61,7 +72,9 @@
           </v-row>
         </v-container>
 
-        <v-container v-else-if="!currentUser || currentUser.user_type != 'business'">
+        <v-container
+          v-else-if="!currentUser || currentUser.user_type != 'business'"
+        >
           <v-row justify="center">
             <p class="display-1">You cannot proceed to this page</p>
           </v-row>

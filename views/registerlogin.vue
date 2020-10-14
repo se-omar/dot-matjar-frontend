@@ -59,7 +59,11 @@
                       </v-col>
 
                       <v-col class="d-flex" cols="12" sm="12" xsm="12">
-                        <v-btn @click="$router.push('/resetPassword')" text
+                        <v-btn
+                          @click="
+                            $router.push(`/${$i18n.locale}/resetPassword`)
+                          "
+                          text
                           ><span :style="`color:${siteColor.button_text_color}`"
                             >Do yo forget you Password ?</span
                           ></v-btn

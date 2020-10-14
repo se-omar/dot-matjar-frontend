@@ -70,7 +70,9 @@
       <v-col cols="2">
         <v-btn
           :color="siteColor.button_color"
-          @click="$router.push('/supplierDetails/' + supplier.user_id)"
+          @click="
+            $router.push(`/${$i18n.locale}/supplierDetails/` + supplier.user_id)
+          "
           rounded
         >
           <span :style="`color:${siteColor.button_text_color}`">
@@ -224,7 +226,8 @@ export default {
   methods: {
     updatePage() {
       this.$router.push(
-        "/updateSupplierPage/" + this.$route.params.supplier_id
+        `/${this.$i18n.locale}/updateSupplierPage` +
+          this.$route.params.supplier_id
       );
     },
 
