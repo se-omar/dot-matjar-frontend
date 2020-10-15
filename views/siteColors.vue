@@ -269,6 +269,7 @@ export default {
         toolBarTextColor: this.toolBarTextColor,
       });
       console.log(this.siteColor[0]);
+      location.reload();
     },
   },
   async created() {

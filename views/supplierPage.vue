@@ -82,7 +82,7 @@
       </v-col>
     </v-row>
     <v-row class="ml-2">
-      <v-col
+      <!-- <v-col
         v-if="
           supplierPageInfo.show_left_banner &&
           supplierPageInfo.left_banner_image
@@ -93,8 +93,74 @@
         <v-card height="95%">
           <v-img src="https://picsum.photos/id/237/200/300"></v-img>
         </v-card>
-      </v-col>
+      </v-col> -->
+      <!-- category -->
+      <v-col lg="2" sm="3" md="2">
+        <v-card height="95%" style="overflow: hidden" max-width>
+          <!-- <v-row justify="center"
+            ><v-card-title>Categories</v-card-title>
+          </v-row> -->
 
+          <v-row>
+            <v-col cols="6" sm="12" lg="12">
+              <v-menu
+                v-for="category in category"
+                :key="category"
+                offset-x
+                :close-on-content-click="false"
+                open-on-hover
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-row class="mx-3" justify="start">
+                    <v-col cols="12" lg="12" sm="12">
+                      <v-btn
+                        width="110%"
+                        @mouseover="mouseOver(category)"
+                        v-bind="attrs"
+                        v-on="on"
+                        text
+                        @click="filterProductsWithCategory(category)"
+                        style="overflow: hidden"
+                      >
+                        <v-row justify="start">
+                          <i :class="`fas fa-${category} fa-lg mr-2`"></i>
+                          <span style="color: black"> {{ category }}</span>
+                        </v-row>
+                        <v-btn
+                          @click="filterProductsWithCategory(category)"
+                          icon
+                          style="overflow: hidden; color: black"
+                        >
+                          <i class="fa fa-chevron-right"></i>
+                        </v-btn>
+                      </v-btn>
+                    </v-col>
+                    <!-- <v-col lg="3" sm="4"> </v-col> -->
+                  </v-row>
+                </template>
+                <v-card>
+                  <v-list
+                    class="ml-2"
+                    v-for="item in categoryItems"
+                    :key="item"
+                  >
+                    <v-btn
+                      class="black--text"
+                      @click="filterProductsWithItem(item)"
+                      text
+                    >
+                      -
+                      <i :class="`fa fa-${item} fa-lg ml-2 mr-2`"></i>
+                      <span style="color: black"> {{ item }}</span>
+                    </v-btn>
+                  </v-list>
+                </v-card>
+              </v-menu>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+      <!-- category -->
       <v-col lg="8" md="4" sm="6" cols="6">
         <v-row>
           <v-col
@@ -226,7 +292,7 @@ export default {
   methods: {
     updatePage() {
       this.$router.push(
-        `/${this.$i18n.locale}/updateSupplierPage` +
+        `/${this.$i18n.locale}/updateSupplierPage/` +
           this.$route.params.supplier_id
       );
     },

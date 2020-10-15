@@ -57,6 +57,20 @@
             v-model="supplierProductsSearch"
           ></v-text-field>
         </v-col>
+
+        <!-- <span v-else>
+          <v-col cols="12" lg="6" sm="7" md="6">
+            <v-text-field
+              class="mt-8"
+              outlined
+              rounded
+              placeholder="SEARCH"
+              append-icon="fa fa-search"
+              @keyup="filterSuppliers()"
+              v-model="filterSuppliersByName"
+            ></v-text-field>
+          </v-col>
+        </span> -->
         <v-col cols="12" md="3" lg="3" sm="5">
           <v-btn
             class="mt-10 mr-1 blue white--text"
@@ -147,7 +161,7 @@
                   @keyup="emptySupplierName"
                   dense
                   outlined
-                  v-model="supplierName"
+                  v-model="filterSuppliersByName"
                   :placeholder="$t('toolbar.supplierNameSearch')"
                 ></v-text-field>
               </v-col>
@@ -193,7 +207,7 @@
               <v-col cols="4" sm="2" md="2" lg="2">
                 <v-btn
                   class="white--text"
-                  @click="filterProducts"
+                  @click="filterSuppliers()"
                   :color="siteColor.button_color"
                   rounded
                   x-large
@@ -835,13 +849,6 @@ export default {
         governorate: this.governorate,
         region: this.region,
       });
-      if (this.supplierName) {
-        await this.$store.dispatch("filterSuppliers", {
-          supplierName: this.supplierName,
-          governorate: this.governorate,
-          region: this.region,
-        });
-      }
 
       this.isLoading = false;
     },
@@ -859,6 +866,13 @@ export default {
         "getSupplierProducts",
         this.$route.params.supplier_id
       );
+    },
+    async filterSuppliers() {
+      await this.$store.dispatch("filterSuppliers", {
+        supplierName: this.filterSuppliersByName,
+        governorate: this.governorate,
+        region: this.region,
+      });
     },
   },
   data: () => ({

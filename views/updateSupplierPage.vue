@@ -647,6 +647,168 @@
           </v-row>
         </v-card>
       </v-container>
+
+      <v-container>
+        <v-toolbar shaped>
+          <v-row justify="center">
+            <h2>Choose your Categories</h2>
+          </v-row>
+        </v-toolbar>
+        <v-card>
+          <!-- <v-responsive max-width="400" class="mx-auto mb-4">
+            <v-text-field
+              v-model="benched"
+              type="number"
+              label="Total Benched"
+              min="0"
+              max="10"
+            ></v-text-field>
+          </v-responsive> -->
+          <v-row justify="center">
+            <v-col cols="6">
+              <v-card elevation="16" max-width="400" class="mx-auto">
+                <v-toolbar shaped>
+                  <v-row justify="center">
+                    <h2 style="text-align: center">Category</h2>
+                  </v-row>
+                </v-toolbar>
+                <v-virtual-scroll
+                  :items="category"
+                  height="300"
+                  item-height="64"
+                >
+                  <template v-slot="{ item }">
+                    <v-list-item>
+                      <v-list-item-action>
+                        <v-btn
+                          @click="getCategoryItems(item)"
+                          fab
+                          small
+                          depressed
+                          color="primary"
+                        >
+                          <i :class="`fa fa-${item} fa-2x`"></i>
+                        </v-btn>
+                      </v-list-item-action>
+                      <v-list-item-content>
+                        <v-list-item-title :key="item">
+                          <v-btn
+                            @click="getCategoryItems(item)"
+                            text
+                            width="100%"
+                          >
+                            {{ item }}</v-btn
+                          >
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </template>
+                </v-virtual-scroll>
+              </v-card>
+            </v-col>
+            <v-col cols="6">
+              <v-card elevation="16" max-width="400" class="mx-auto">
+                <v-toolbar shaped>
+                  <v-row justify="center">
+                    <h2 style="text-align: center">Items</h2>
+                  </v-row>
+                </v-toolbar>
+                <v-virtual-scroll
+                  :items="categoryItems"
+                  height="300"
+                  item-height="64"
+                >
+                  <template v-slot="{ item }">
+                    <v-list-item>
+                      <v-list-item-action>
+                        <v-btn fab small depressed color="primary">
+                          <i :class="`fa fa-${item} fa-2x`"></i>
+                        </v-btn>
+                      </v-list-item-action>
+                      <v-list-item-content>
+                        <v-list-item-title
+                          style="text-align: center"
+                          :key="item"
+                        >
+                          {{ item }}
+                        </v-list-item-title>
+                      </v-list-item-content>
+                      <v-list-item-action>
+                        <v-btn @click="addItem(item)" large icon>
+                          <i class="fa fa-plus fa-2x"></i
+                        ></v-btn>
+                      </v-list-item-action>
+                    </v-list-item>
+                  </template>
+                </v-virtual-scroll>
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-row justify="center">
+            <v-col cols="6">
+              <v-card elevation="16" max-width="400" class="mx-auto">
+                <v-toolbar shaped>
+                  <v-row justify="center">
+                    <h2 style="text-align: center">Selected Items</h2>
+                  </v-row>
+                </v-toolbar>
+
+                <v-virtual-scroll
+                  :items="supplierItems"
+                  height="300"
+                  item-height="64"
+                >
+                  <template v-slot="{ item }">
+                    <v-list-item>
+                      <v-list-item-action>
+                        <v-btn
+                          @click="getCategoryItems(item)"
+                          fab
+                          small
+                          depressed
+                          color="primary"
+                        >
+                          <i :class="`fa fa-${item} fa-2x`"></i>
+                        </v-btn>
+                      </v-list-item-action>
+                      <v-list-item-content>
+                        <v-list-item-title
+                          style="text-align: center"
+                          :key="item"
+                        >
+                          {{ item }}
+                        </v-list-item-title>
+                      </v-list-item-content>
+                      <v-list-item-action>
+                        <v-btn @click="RemoveItem(item)" large icon>
+                          <i
+                            class="fa fa-trash-alt fa-2x"
+                            style="color: red"
+                          ></i
+                        ></v-btn>
+                      </v-list-item-action>
+                    </v-list-item>
+                  </template>
+                </v-virtual-scroll>
+                <v-snackbar v-model="itemExists" :timeout="timeout">
+                  <v-row justify="center">
+                    <h2>Item already exists</h2>
+                  </v-row>
+                </v-snackbar>
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-row class="mt-8 mb-8" justify="center">
+            <v-btn
+              rounded
+              large
+              :color="buttonsColor"
+              @click="addCategoryAndItemsToSupplier()"
+              ><span :style="`color:${buttonsTextColor}`">Add</span></v-btn
+            >
+          </v-row>
+        </v-card>
+      </v-container>
     </div>
     <div class="mt-16" v-else>
       <v-row justify="center">
@@ -661,6 +823,9 @@ export default {
   name: "updateSupplierPage",
   components: {},
   data: () => ({
+    benched: 0,
+    selectionType: "leaf",
+    tree: [],
     logo: "",
     siteName: "",
     facebook: "",
@@ -710,6 +875,9 @@ export default {
       "fab fa-instagram",
     ],
     isLoading: false,
+    categoryItems: [],
+    supplierItems: [],
+    itemExists: false,
   }),
   methods: {
     fileUploaded() {
@@ -887,6 +1055,83 @@ export default {
       });
       location.reload();
     },
+    getCategoryItems(category) {
+      this.categoryItems = [];
+      console.log(category);
+      for (var i = 0; i < this.categoriesItems.length; i++) {
+        if (this.categoriesItems[i].category_name == category) {
+          this.categoryItems.push(this.categoriesItems[i].category_items);
+        }
+      }
+    },
+    treeView() {
+      console.log(this.tree.name);
+      console.log("category", this.category);
+      console.log("items", this.categoriesItems);
+      for (let i = 0; i < this.category.length; i++) {
+        var counter = 1;
+        var children = [];
+
+        for (var j = 0; j < this.categoriesItems.length; j++) {
+          if (this.category[i] == this.categoriesItems[j].category_name) {
+            children.push({
+              id: counter,
+              name: this.categoriesItems[j].category_items,
+            });
+          } else {
+            children.push({ type: "null" });
+          }
+          counter++;
+        }
+
+        // this.categoriesItems.map((e) => {
+        //   if (this.category[i] == e.category_name) {
+        //     children.push({ id: counter, name: e.category_items });
+        //   }
+        //   counter++;
+        // });
+        console.log("map function", children);
+        this.categoryItemstest.push({
+          id: i + 1,
+          name: this.category[i],
+          children: children,
+        });
+      }
+      console.log("treee array test result", this.categoryItemstest);
+      console.log("items", this.items);
+    },
+    addItem(item) {
+      console.log(item);
+      var check = false;
+      if (this.supplierItems.length > 0) {
+        for (let i = 0; i < this.supplierItems.length; i++) {
+          if (item == this.supplierItems[i]) {
+            check = true;
+            break;
+          }
+        }
+      }
+      if (!check) {
+        this.supplierItems.push(item);
+      } else {
+        this.itemExists = true;
+      }
+    },
+    RemoveItem(item) {
+      for (let i = 0; i < this.supplierItems.length; i++) {
+        if (this.supplierItems[i] == item) {
+          this.supplierItems.splice(i, 1);
+          console.log(this.supplierItems);
+        }
+      }
+    },
+    addCategoryAndItemsToSupplier() {
+      console.log(this.supplierItems);
+      this.$store.dispatch("addCategoryAndItemsToSupplier", {
+        supplierItems: this.supplierItems,
+        user_id: this.currentUser.user_id,
+      });
+    },
   },
 
   computed: {
@@ -919,6 +1164,18 @@ export default {
     nodeHost() {
       return this.$store.state.nodeHost;
     },
+    category() {
+      return this.$store.state.Home.category;
+    },
+    categoriesItems() {
+      return this.$store.state.Home.categoriesItems;
+    },
+    items() {
+      return Array.from({ length: this.length }, (k, v) => v + 1);
+    },
+    length() {
+      return 7000;
+    },
   },
   async created() {
     this.isLoading = true;
@@ -928,7 +1185,8 @@ export default {
       "getSupplierPageData",
       this.$route.params.supplier_id
     );
-
+    await this.$store.dispatch("categoriesDB");
+    await this.$store.dispatch("getCategoryItems");
     await setTimeout(() => {
       this.toolBarColor = this.siteColor.toolbar_color;
       this.footerColor = this.siteColor.footer_color;

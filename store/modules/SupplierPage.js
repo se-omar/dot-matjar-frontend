@@ -264,7 +264,12 @@ export default {
             })
         },
 
-
+        addCategoryAndItemsToSupplier(context, supplierItems) {
+            axios.post('http://localhost:3000/api/addCategoryAndItemsToSupplier', { supplierItems: supplierItems, user_id: context.state.currentUser.user_id })
+                .then(message => {
+                    console.log(message.data.message)
+                })
+        }
 
     }
 }
