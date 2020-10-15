@@ -2,7 +2,7 @@
   <v-app>
     <ToolBar></ToolBar>
     <cartTable></cartTable>
-    <router-view class="grey lighten-4" />
+    <router-view class="grey lighten-4 mt-10" />
     <!-- <link
       href="https://cdn.jsdelivr.net/npm/font-awesome@4.x/css/font-awesome.min.css"
       rel="stylesheet"

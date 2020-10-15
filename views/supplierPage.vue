@@ -226,7 +226,7 @@ export default {
   methods: {
     updatePage() {
       this.$router.push(
-        `/${this.$i18n.locale}/updateSupplierPage` +
+        `/${this.$i18n.locale}/updateSupplierPage/` +
           this.$route.params.supplier_id
       );
     },
@@ -291,7 +291,7 @@ export default {
     },
   },
   async created() {
-    this.isLoading = true;
+    //this.isLoading = true;
     await this.$store.dispatch("refreshCurrentUser");
     await this.$store.dispatch("getSupplier", this.$route.params.supplier_id);
     console.log("current user", this.currentUser);

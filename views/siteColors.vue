@@ -3,7 +3,7 @@
     <v-container v-if="currentUser.user_type == 'admin'" class="mt-16">
       <v-card>
         <v-row justify="center">
-          <h2>Pick the Button color</h2>
+          <h2>{{ $t("siteColors.pickButColor") }}</h2>
         </v-row>
         <v-row justify="center">
           <v-col cols="3" lg="3">
@@ -21,7 +21,7 @@
       </v-card>
       <v-card>
         <v-row justify="center">
-          <h2>Pick the Button text color</h2>
+          <h2>{{ $t("siteColors.pickButTextColor") }}</h2>
         </v-row>
         <v-row justify="center">
           <v-col cols="3" lg="3">
@@ -34,14 +34,16 @@
           </v-col>
           <v-col cols="3" lg="3">
             <v-btn :color="buttonsColor" x-large>
-              <h4 :style="`color: ${buttonsTextColor}`">Text Color</h4>
+              <h4 :style="`color: ${buttonsTextColor}`">
+                {{ $t("siteColors.textColor") }}
+              </h4>
             </v-btn>
           </v-col>
         </v-row>
       </v-card>
       <v-card>
         <v-row justify="center">
-          <h2>Pick the ToolBar color</h2>
+          <h2>{{ $t("siteColors.pickToolbarColor") }}</h2>
         </v-row>
         <v-row justify="center">
           <v-col cols="3" lg="3">
@@ -85,7 +87,7 @@
       </v-card>
       <v-card>
         <v-row justify="center">
-          <h2>Pick the ToolBar Text color</h2>
+          <h2>{{ $t("siteColors.pickToolbarTextColor") }}</h2>
         </v-row>
         <v-row justify="center">
           <v-col cols="3" lg="3">
@@ -129,7 +131,7 @@
       </v-card>
       <v-card>
         <v-row justify="center">
-          <h2>Pick the Footer</h2>
+          <h2>{{ $t("siteColors.pickFooterColor") }}</h2>
         </v-row>
         <v-row justify="center">
           <v-col cols="3" lg="3">
@@ -178,7 +180,7 @@
       </v-card>
       <v-card>
         <v-row justify="center">
-          <h2>Pick the Footer Text Color</h2>
+          <h2>{{ $t("siteColors.pickFooterTextColor") }}</h2>
         </v-row>
         <v-row justify="center">
           <v-col cols="3" lg="3">
@@ -227,7 +229,9 @@
         <v-row justify="center">
           <v-col cols="1">
             <v-btn @click="updateSiteColors" :color="buttonsColor" x-large>
-              <h4 :style="`color: ${buttonsTextColor}`">Update</h4>
+              <h4 :style="`color: ${buttonsTextColor}`">
+                {{ $t("siteColors.update") }}
+              </h4>
             </v-btn>
           </v-col>
         </v-row>
@@ -235,7 +239,7 @@
     </v-container>
     <v-container class="mt-16" v-else>
       <v-row justify="center">
-        <h1>404 Not Found</h1>
+        <h1>{{ $t("siteColors.accessDenied") }}</h1>
       </v-row>
     </v-container>
   </v-app>

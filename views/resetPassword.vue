@@ -2,11 +2,11 @@
   <v-app>
     <v-container mt-16>
       <v-row justify="center">
-        <p class="display-1">Forgot your password ?</p>
+        <p class="display-1">{{ $t("resetPassword.forgotPassword") }}</p>
       </v-row>
       <br />
       <v-row justify="center">
-        <p style="font-size: 30px">Enter your email</p>
+        <p style="font-size: 30px">{{ $t("resetPassword.enterEmail") }}</p>
       </v-row>
       <v-row justify="center">
         <v-col cols="7">
@@ -14,7 +14,7 @@
             :rules="emailRules"
             required
             v-model="email"
-            label="Email"
+            :label="$t('resetPassword.email')"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -27,8 +27,9 @@
             dense
             block
           >
-            <span :style="`color:${siteColor.button_text_color};fontsize:18px`"
-              >Send</span
+            <span
+              :style="`color:${siteColor.button_text_color};fontsize:18px`"
+              >{{ $t("resetPassword.send") }}</span
             >
           </v-btn>
         </v-col>

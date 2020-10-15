@@ -8,14 +8,14 @@
               <v-select
                 v-model="gender"
                 :items="genderr"
-                label="Gender"
+                :label="$t('completedata.gender')"
                 shaped
               ></v-select>
             </v-col>
 
             <!-- <v-text-field
             v-model="gender"
-            label="النوع"
+            :label="النوع"
             
             shaped
             outlined
@@ -25,7 +25,7 @@
           <v-col cols="12" sm="6">
             <v-text-field
               v-model="fullArabicName"
-              label="Name"
+              :label="$t('completedata.name')"
               outlined
             ></v-text-field>
           </v-col>
@@ -41,7 +41,7 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                   v-model="birthDate"
-                  label="Birthday date"
+                  :label="$t('completedata.birthday')"
                   prepend-icon="event"
                   readonly
                   v-bind="attrs"
@@ -61,13 +61,17 @@
           <v-col cols="12" sm="6">
             <v-text-field
               v-model="qualifications"
-              label="Qualification"
+              :label="$t('completedata.qualification')"
               outlined
             ></v-text-field>
           </v-col>
 
           <v-col cols="12" sm="6">
-            <v-text-field v-model="job" label="Job" outlined></v-text-field>
+            <v-text-field
+              v-model="job"
+              :label="$t('completedata.job')"
+              outlined
+            ></v-text-field>
           </v-col>
 
           <v-col class="d-flex" cols="12" sm="6">
@@ -75,7 +79,7 @@
               dense
               v-model="governorate"
               :items="governorates"
-              label="Governorate"
+              :label="$t('completedata.governorate')"
               outlined
               @change="getCountryRegions"
             ></v-select>
@@ -86,32 +90,36 @@
               v-model="region"
               :items="regions"
               dense
-              label="Region"
+              :label="$t('completedata.region')"
               outlined
             ></v-select>
           </v-col>
           <v-col cols="12" sm="6">
             <v-text-field
               v-model="phoneNumber"
-              label="Mobile number"
+              :label="$t('completedata.mobileNumber')"
               outlined
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="6">
             <v-text-field
               v-model="mobileNumber"
-              label="telephone number"
+              :label="$t('completedata.telephoneNumber')"
               outlined
               :rules="[rules.numbers]"
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="6">
-            <v-text-field v-model="fax" label="Fax" outlined></v-text-field>
+            <v-text-field
+              v-model="fax"
+              :label="$t('completedata.fax')"
+              outlined
+            ></v-text-field>
           </v-col>
           <v-col cols="6" sm="6">
             <v-text-field
               v-model="email"
-              label="Email"
+              :label="$t('completedata.email')"
               filled
               outlined
               disabled
@@ -121,7 +129,7 @@
           <v-col cols="12" sm="6">
             <v-text-field
               v-model="facebookAccount"
-              label="Facebook"
+              :label="$t('completedata.facebook')"
               outlined
             ></v-text-field>
           </v-col>
@@ -136,15 +144,20 @@
           <v-col cols="12" sm="6">
             <v-text-field
               v-model="website"
-              label="Website"
+              :label="$t('completedata.website')"
               outlined
             ></v-text-field>
           </v-col>
 
           <v-col cols="12">
-            <v-textarea v-model="address" outlined color="teal">
-              <template v-slot:label>
-                <div>Address</div>
+            <v-textarea
+              v-model="address"
+              :label="$t('completedata.address')"
+              outlined
+              color="teal"
+            >
+              <template v-slot::label>
+                <div>{{ $t("completedata.address") }}</div>
               </template>
             </v-textarea>
           </v-col>
@@ -156,9 +169,9 @@
               block
               :color="siteColor.button_color"
               @click="completedata"
-              ><span :style="`color:${siteColor.button_text_color}`"
-                >Save</span
-              ></v-btn
+              ><span :style="`color:${siteColor.button_text_color}`">{{
+                $t("completedata.save")
+              }}</span></v-btn
             >
           </v-col>
           <v-col cols="12" sm="3" xsm="12">
@@ -167,7 +180,7 @@
               block
               color="red white--text"
               @click="$router.push('/')"
-              >Cancel</v-btn
+              >{{ $t("completedata.cancel") }}</v-btn
             >
           </v-col>
         </v-row>

@@ -8,10 +8,10 @@
       ></loading>
     </div>
     <div class="display-1 mb-10 mt-6" style="margin: auto">
-      {{ supplier.full_arabic_name }}'s Dashboard
+      {{ supplier.full_arabic_name }} {{ $t("suppliersDashboard.dashboard") }}
     </div>
     <v-row justify="center">
-      <p style="font-size: 28px">All Products</p>
+      <p style="font-size: 28px">{{ $t("suppliersDashboard.allProducts") }}</p>
     </v-row>
 
     <v-row justify="center" v-if="supplierProducts.length != 0">
@@ -32,7 +32,9 @@
     </v-row>
 
     <v-row class="mt-16" justify="center" v-else>
-      <p style="font-size: 25px">No products available for this supplier</p>
+      <p style="font-size: 25px">
+        {{ $t("suppliersDashboard.noAvailableProducts") }}
+      </p>
     </v-row>
 
     <v-divider class="mt- mb-10"></v-divider>
@@ -44,7 +46,7 @@
           v-model="selectedYear"
           outlined
           :items="years"
-          label="Select Year"
+          :label="$t('suppliersDashboard.selectYear')"
         ></v-select>
       </v-col>
     </v-row>
@@ -70,7 +72,9 @@
           </v-hover>
           <v-row justify="center">
             <v-label for="barChart">
-              <span style="font-size: 22px">Monthly Sales Bar Chart</span>
+              <span style="font-size: 22px">{{
+                $t("suppliersDashboard.monthlySalesBar")
+              }}</span>
             </v-label>
           </v-row>
         </div>
@@ -96,7 +100,9 @@
           </v-hover>
           <v-row justify="center">
             <v-label for="lineChart">
-              <span style="font-size: 22px">Monthly Sales Line Chart</span>
+              <span style="font-size: 22px">{{
+                $t("suppliersDashboard.monthlySalesLine")
+              }}</span>
             </v-label>
           </v-row>
         </div>
@@ -123,7 +129,9 @@
           </v-hover>
           <v-row justify="center">
             <v-label for="pieChart">
-              <span style="font-size: 22px">Category Sales Percentage</span>
+              <span style="font-size: 22px">{{
+                $t("suppliersDashboard.categoryChart")
+              }}</span>
             </v-label>
           </v-row>
         </div>
@@ -155,7 +163,7 @@
           <v-row justify="center">
             <v-label for="lineChart">
               <span style="font-size: 22px"
-                >Revenue This Month:
+                >{{ $t("suppliersDashboard.monthlyRevenue") }}:
                 {{
                   revenueChartSeries[0].data[
                     revenueChartSeries[0].data.length - 1
@@ -178,7 +186,8 @@
               class="grey lighten-5 mb-11"
             >
               <span class="grey--text text--darken-1" style="font-size: 20px"
-                >Total Revenue: {{ supplier.total_revenue }} EGP</span
+                >{{ $t("suppliersDashboard.totalRevenue") }}:
+                {{ supplier.total_revenue }} EGP</span
               >
             </v-card>
           </v-hover>
@@ -194,7 +203,8 @@
               class="grey lighten-5 mb-11"
             >
               <span class="grey--text text--darken-1" style="font-size: 20px"
-                >Amount Recieved: {{ supplier.revenue_recieved || 0 }} EGP</span
+                >{{ $t("suppliersDashboard.amountRecieved") }}:
+                {{ supplier.revenue_recieved || 0 }} EGP</span
               >
             </v-card>
           </v-hover>
@@ -210,10 +220,8 @@
               class="grey lighten-5 mb-11"
             >
               <span class="grey--text text--darken-1" style="font-size: 20px"
-                >Amount Left:
-                {{
-                  supplier.total_revenue - supplier.revenue_recieved || 0
-                }}
+                >{{ $t("suppliersDashboard.amountLeft") }}:
+                {{ supplier.total_revenue - supplier.revenue_recieved || 0 }}
                 EGP</span
               >
             </v-card>
@@ -233,7 +241,9 @@
         />
         <v-row justify="center">
           <v-label for="mostSelling">
-            <span style="font-size: 22px">Most Selling Product</span>
+            <span style="font-size: 22px">{{
+              $t("suppliersDashboard.mostSellingProduct")
+            }}</span>
           </v-label>
         </v-row>
       </v-col>
@@ -246,7 +256,9 @@
         />
         <v-row justify="center">
           <v-label for="leastSelling">
-            <span style="font-size: 22px">least Selling Product</span>
+            <span style="font-size: 22px">{{
+              $t("suppliersDashboard.leastSellingProduct")
+            }}</span>
           </v-label>
         </v-row>
       </v-col>
@@ -259,10 +271,12 @@ import product from "../components/product";
 import dashboardSellingProduct from "../components/dashboardSellingProduct";
 export default {
   async mounted() {
-    this.isloading = true;
+    //this.isloading = true;
+    this.$store.dispatch("getMyProducts", this.supplier.user_id);
+    console.log("the supplier", this.supplier);
     await this.$store.dispatch("refreshCurrentUser");
     this.$store.commit("supplierPage", this.supplier);
-    await this.$store.dispatch("getMyProducts", this.supplier.user_id);
+    // await this.$store.dispatch("getMyProducts", this.supplier.user_id);
     await this.$store.dispatch("getTopSellingProduct", this.supplier.user_id);
     await this.$store.dispatch("getLeastSellingProduct", this.supplier.user_id);
     console.log("most selling is", this.topProduct);
@@ -288,6 +302,10 @@ export default {
       return this.$store.state.Home.currentUser;
     },
 
+    supplier() {
+      return JSON.parse(localStorage.getItem("clickedSupplier"));
+    },
+
     topProduct() {
       return this.$store.state.Dashboard.topProduct;
     },
@@ -297,7 +315,7 @@ export default {
     },
 
     supplierProducts() {
-      return this.$store.state.myProducts;
+      return this.$store.state.Dashboard.myProducts;
     },
 
     pieSeries() {
@@ -399,9 +417,6 @@ export default {
       };
     },
 
-    supplier() {
-      return this.$store.state.SupplierPage.supplier;
-    },
     siteColor() {
       if (this.$store.state.Home.siteColor) {
         return this.$store.state.Home.siteColor[0];

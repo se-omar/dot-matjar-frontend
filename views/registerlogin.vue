@@ -27,7 +27,7 @@
                         <v-text-field
                           v-model="loginEmail"
                           :rules="loginEmailRules"
-                          label="E-mail"
+                          :label="$t('registerLogin.email')"
                           required
                         ></v-text-field>
                       </v-col>
@@ -38,8 +38,8 @@
                           :rules="[rules.required, rules.min]"
                           :type="show1 ? 'text' : 'password'"
                           name="input-10-1"
-                          label="Password"
-                          hint="At least 8 characters"
+                          :label="$t('registerLogin.password')"
+                          hint="$t('registerLogin.minCharacters')"
                           counter
                           @click:append="show1 = !show1"
                         ></v-text-field>
@@ -52,8 +52,9 @@
                           :disabled="!valid"
                           :color="siteColor.button_color"
                           @click="login"
-                          ><span :style="`color:${siteColor.button_text_color}`"
-                            >Login</span
+                          ><span
+                            :style="`color:${siteColor.button_text_color}`"
+                            >{{ $t("registerLogin.login") }}</span
                           ></v-btn
                         >
                       </v-col>
@@ -64,8 +65,9 @@
                             $router.push(`/${$i18n.locale}/resetPassword`)
                           "
                           text
-                          ><span :style="`color:${siteColor.button_text_color}`"
-                            >Do yo forget you Password ?</span
+                          ><span
+                            :style="`color:${siteColor.button_text_color}`"
+                            >{{ $t("registerLogin.forgotPassword") }}</span
                           ></v-btn
                         >
                       </v-col>
@@ -83,7 +85,7 @@
                         <v-text-field
                           v-model="email"
                           :rules="emailRules"
-                          label="Email"
+                          :label="$t('registerLogin.email')"
                           required
                         ></v-text-field>
                       </v-col>
@@ -92,7 +94,7 @@
                         <v-text-field
                           v-model="fullArabicName"
                           :rules="[rules.required]"
-                          label="Full Name"
+                          :label="$t('registerLogin.fullName')"
                           maxlength="20"
                           required
                         ></v-text-field>
@@ -101,7 +103,7 @@
                         <v-text-field
                           v-model="mobileNumber"
                           :rules="[rules.mobilenumber]"
-                          label="Mobile number"
+                          :label="$t('registerLogin.mobileNumber')"
                           maxlength="11"
                           required
                         ></v-text-field>
@@ -110,7 +112,7 @@
                       <v-col cols="6" sm="12" md="6">
                         <v-select
                           :items="governorates"
-                          placeholder="Governorate"
+                          :placeholder="$t('registerLogin.governorate')"
                           dense
                           outlined
                           v-model="governorate"
@@ -121,7 +123,7 @@
                       <v-col cols="6" sm="12" md="6">
                         <v-select
                           :items="regions"
-                          placeholder="Region"
+                          :placeholder="$t('registerLogin.region')"
                           dense
                           outlined
                           v-model="region"
@@ -135,8 +137,8 @@
                           :rules="[rules.required, rules.min, rules.valid]"
                           :type="show1 ? 'text' : 'password'"
                           name="input-10-1"
-                          label="Password"
-                          hint="At least 7 characters"
+                          :label="$t('registerLogin.password')"
+                          hint="$t('registerLogin.minCharacters')"
                           counter
                           @click:append="show1 = !show1"
                         ></v-text-field>
@@ -149,7 +151,7 @@
                           :rules="[rules.required, passwordMatch]"
                           :type="show1 ? 'text' : 'password'"
                           name="input-10-1"
-                          label="Confirm you Password"
+                          :label="$t('registerLogin.confirmPassword')"
                           counter
                           @click:append="show1 = !show1"
                         ></v-text-field>
@@ -158,23 +160,11 @@
 
                       <v-col cols="12">
                         <v-checkbox v-model="checkbox">
-                          <template v-slot:label>
-                            <div>
-                              I have read the
-                              <v-tooltip bottom>
-                                <template v-slot:activator="{ on }">
-                                  <a
-                                    href="http://vuetifyjs.com"
-                                    @click.stop
-                                    v-on="on"
-                                    >terms and conditions</a
-                                  >
-                                </template>
-                                Opens in new window
-                              </v-tooltip>
-                            </div>
-                          </template>
+                          <!-- <div>
+                            <span v-html="$t('registerLogin.termsAndCond')"></span>
+                          </div> -->
                         </v-checkbox>
+                        <span v-html="$t('registerLogin.termsAndCond')"></span>
                       </v-col>
 
                       <v-col class="d-flex" cols="12" sm="6" xsm="12">
@@ -185,8 +175,9 @@
                           id="btn"
                           :color="siteColor.button_color"
                           @click="validateSignup"
-                          ><span :style="`color:${siteColor.button_text_color}`"
-                            >Sign up</span
+                          ><span
+                            :style="`color:${siteColor.button_text_color}`"
+                            >{{ $t("registerLogin.signup") }}</span
                           ></v-btn
                         >
                         <v-btn
@@ -195,7 +186,7 @@
                           :disabled="!valid || !checkbox"
                           class="red darken-4 white--text"
                           @click="$router.push('/')"
-                          >Cancel</v-btn
+                          >{{ $t("registerLogin.cancel") }}</v-btn
                         >
                       </v-col>
                     </v-row>
@@ -217,7 +208,7 @@
                         <v-text-field
                           v-model="businessOwnerEmail"
                           :rules="emailRules"
-                          label="Email"
+                          :label="$t('registerLogin.email')"
                           required
                         ></v-text-field>
                       </v-col>
@@ -226,7 +217,7 @@
                         <v-text-field
                           v-model="businessOwnerFullArabicName"
                           :rules="[rules.required]"
-                          label="Full Name"
+                          :label="$t('registerLogin.fullName')"
                           maxlength="20"
                           required
                         ></v-text-field>
@@ -235,7 +226,7 @@
                         <v-text-field
                           v-model="businessOwnerMobileNumber"
                           :rules="[rules.mobilenumber]"
-                          label="Mobile number"
+                          :label="$t('registerLogin.mobileNumber')"
                           maxlength="11"
                           required
                         ></v-text-field>
@@ -244,7 +235,7 @@
                       <v-col cols="6" sm="12" md="6">
                         <v-select
                           :items="governorates"
-                          placeholder="Governorate"
+                          :placeholder="$t('registerLogin.governorate')"
                           dense
                           outlined
                           v-model="governorate"
@@ -255,7 +246,7 @@
                       <v-col cols="6" sm="12" md="6">
                         <v-select
                           :items="regions"
-                          placeholder="Region"
+                          :placeholder="$t('registerLogin.region')"
                           dense
                           outlined
                           v-model="region"
@@ -264,7 +255,7 @@
                       <v-col cols="6">
                         <v-text-field
                           outlined
-                          label="Store Name"
+                          :label="$t('registerLogin.storeName')"
                           v-model="storeName"
                         ></v-text-field>
                       </v-col>
@@ -275,7 +266,7 @@
                           :rules="[rules.required, rules.min, rules.valid]"
                           :type="show1 ? 'text' : 'password'"
                           name="input-10-1"
-                          label="Password"
+                          :label="$t('registerLogin.password')"
                           hint="At least 7 characters"
                           counter
                           @click:append="show1 = !show1"
@@ -289,7 +280,7 @@
                           :rules="[rules.required, businessOwnerPasswordMatch]"
                           :type="show1 ? 'text' : 'password'"
                           name="input-10-1"
-                          label="Confirm you Password"
+                          :label="$t('registerLogin.confirmPassword')"
                           counter
                           @click:append="show1 = !show1"
                         ></v-text-field>
@@ -297,24 +288,8 @@
                       <v-spacer></v-spacer>
 
                       <v-col cols="12">
-                        <v-checkbox v-model="businessOwnerCheckbox">
-                          <template v-slot:label>
-                            <div>
-                              I have read the
-                              <v-tooltip bottom>
-                                <template v-slot:activator="{ on }">
-                                  <a
-                                    href="http://vuetifyjs.com"
-                                    @click.stop
-                                    v-on="on"
-                                    >terms and conditions</a
-                                  >
-                                </template>
-                                Opens in new window
-                              </v-tooltip>
-                            </div>
-                          </template>
-                        </v-checkbox>
+                        <v-checkbox v-model="checkbox"> </v-checkbox>
+                        <span v-html="$t('registerLogin.termsAndCond')"></span>
                       </v-col>
 
                       <v-col class="d-flex" cols="12" sm="6" xsm="12">
@@ -327,8 +302,9 @@
                           id="btn"
                           :color="siteColor.button_color"
                           @click="businessOwnerRegistration"
-                          ><span :style="`color:${siteColor.button_text_color}`"
-                            >Register as a Business Owner</span
+                          ><span
+                            :style="`color:${siteColor.button_text_color}`"
+                            >{{ $t("registerLogin.registerBusiOwner") }}</span
                           ></v-btn
                         >
                         <v-btn
@@ -339,7 +315,7 @@
                           "
                           class="red darken-4 white--text"
                           @click="$router.push('/')"
-                          >Cancel</v-btn
+                          >{{ $t("registerLogin.cancel") }}</v-btn
                         >
                       </v-col>
                     </v-row>
@@ -353,7 +329,7 @@
 
       <v-container v-else>
         <v-row justify="center">
-          <p class="display-1">You have already Login</p>
+          <p class="display-1">{{ $t("registerLogin.alreadyLogged") }}</p>
         </v-row>
       </v-container>
     </v-app>
@@ -480,64 +456,69 @@ export default {
     },
   },
 
-  data: () => ({
-    dialog: true,
-    tab: 0,
-    tabs: [
-      { name: "Login", icon: "mdi-account" },
-      { name: "Register", icon: "mdi-account-outline" },
-      { name: "Register as a Business owner" },
-    ],
-    valid: true,
+  data() {
+    return {
+      dialog: true,
+      tab: 0,
+      tabs: [
+        { name: this.$t("registerLogin.login"), icon: "mdi-account" },
+        {
+          name: this.$t("registerLogin.register"),
+          icon: "mdi-account-outline",
+        },
+        { name: this.$t("registerLogin.registerBusiOwner") },
+      ],
+      valid: true,
 
-    fullArabicName: "",
-    email: "",
-    nationalNumber: "",
-    password: "",
-    verify: "",
-    mobileNumber: "",
-    loginPassword: "",
-    loginEmail: "",
-    businessOwnerFullArabicName: "",
-    businessOwnerEmail: "",
-    businessOwnerPassword: "",
-    businessOwnerCheckbox: false,
-    businessOwnerMobileNumber: "",
-    bussinessOwnerCompany: "",
-    storeName: "",
-    businessOwnerVerifyPass: "",
-    loginEmailRules: [
-      (v) => !!v || "Required",
-      (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
-    ],
-    emailRules: [
-      (v) => !!v || "Required",
-      (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
-    ],
+      fullArabicName: "",
+      email: "",
+      nationalNumber: "",
+      password: "",
+      verify: "",
+      mobileNumber: "",
+      loginPassword: "",
+      loginEmail: "",
+      businessOwnerFullArabicName: "",
+      businessOwnerEmail: "",
+      businessOwnerPassword: "",
+      businessOwnerCheckbox: false,
+      businessOwnerMobileNumber: "",
+      bussinessOwnerCompany: "",
+      storeName: "",
+      businessOwnerVerifyPass: "",
+      loginEmailRules: [
+        (v) => !!v || "Required",
+        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      ],
+      emailRules: [
+        (v) => !!v || "Required",
+        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      ],
 
-    show1: false,
-    rules: {
-      required: (value) => !!value || "Required.",
-      min: (v) => (v && v.length >= 7) || "Min 7 characters",
-      valid: (v) =>
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
-          v
-        ) ||
-        "password must have at least one letter, one number and one special character",
-      national: (v) => /\d+/.test(v) || "ID must be numbers only",
-      must: (v) => (v && v.length == 14) || "ID must be 14 NUMBERS",
-      mobilenumber: (v) => /\d+/.test(v) || "Enter numbers",
-    },
-    checkbox: false,
-    governorate: "",
-    region: "",
-    // name: "",
-    // FB: undefined,
-    // facebookEmail: "",
-    // isConnected: false,
-    BusinessOwnerDialog: false,
-    businessOwnerValidation: true,
-  }),
+      show1: false,
+      rules: {
+        required: (value) => !!value || "Required.",
+        min: (v) => (v && v.length >= 7) || "Min 7 characters",
+        valid: (v) =>
+          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
+            v
+          ) ||
+          "password must have at least one letter, one number and one special character",
+        national: (v) => /\d+/.test(v) || "ID must be numbers only",
+        must: (v) => (v && v.length == 14) || "ID must be 14 NUMBERS",
+        mobilenumber: (v) => /\d+/.test(v) || "Enter numbers",
+      },
+      checkbox: false,
+      governorate: "",
+      region: "",
+      // name: "",
+      // FB: undefined,
+      // facebookEmail: "",
+      // isConnected: false,
+      BusinessOwnerDialog: false,
+      businessOwnerValidation: true,
+    };
+  },
 
   components: {
     // facebookLogin

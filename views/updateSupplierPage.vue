@@ -9,10 +9,10 @@
         ></loading>
       </div>
       <v-row class="mt-6" justify="center">
-        <h1>Welcome to Dot-Market</h1>
+        <h1>{{ $t("updateSupplierPage.welcome") }}</h1>
       </v-row>
       <v-row class="mt-6" justify="center">
-        <h2>Please be aware that your logo has to be a PNG file</h2>
+        <h2>{{ $t("updateSupplierPage.pngFormat") }}</h2>
       </v-row>
       <!-- <v-row class="mb-8" justify="center"> -->
       <v-container>
@@ -24,7 +24,7 @@
               <label>
                 <v-card max-width="200">
                   <span class="mt-4" style="font-size: 25px"
-                    >Upload your logo here:</span
+                    >{{ $t("updateSupplierPage.uploadLogo") }}:</span
                   >
 
                   <i class="fa fa-upload fa-lg"></i>
@@ -40,7 +40,7 @@
           <v-col cols="6" lg="4" sm="4" md="6">
             <v-text-field
               rounded
-              label="Site Name"
+              :label="$t('updateSupplierPage.siteName')"
               v-model="siteName"
               outlined
             ></v-text-field>
@@ -49,7 +49,7 @@
 
           <v-col cols="6" lg="4" sm="4" md="6">
             <v-text-field
-              label="Facebook account"
+              :label="$t('updateSupplierPage.facebook')"
               v-model="facebook"
               rounded
               outlined
@@ -57,7 +57,7 @@
           </v-col>
           <v-col cols="6" lg="4" sm="4" md="6">
             <v-text-field
-              label="Twitter account"
+              :label="$t('updateSupplierPage.twitter')"
               v-model="twitter"
               rounded
               outlined
@@ -73,7 +73,7 @@
           </v-col>
           <v-col cols="6" lg="4" sm="4" md="6">
             <v-text-field
-              label="Instgram account"
+              :label="$t('updateSupplierPage.instagram')"
               v-model="instgram"
               rounded
               outlined
@@ -81,7 +81,7 @@
           </v-col>
           <v-col cols="6" lg="4" sm="4" md="6">
             <v-text-field
-              label="google account"
+              :label="$t('updateSupplierPage.google')"
               v-model="google"
               rounded
               outlined
@@ -90,22 +90,22 @@
 
           <v-col cols="6" lg="2" sm="4" md="6">
             <v-switch
-              label="show carousel"
+              :label="$t('updateSupplierPage.showCarousel')"
               @change="testCheckbox"
               v-model="carouselCheckbox"
             ></v-switch>
           </v-col>
 
-          <v-col cols="6" lg="2" sm="4" md="6">
+          <!-- <v-col cols="6" lg="2" sm="4" md="6">
             <v-switch
-              label="show left banner"
+              :label="show left banner"
               v-model="leftBannerCheckbox"
             ></v-switch>
-          </v-col>
+          </v-col> -->
 
           <v-col cols="6" lg="2" sm="4" md="6">
             <v-switch
-              label="show right banner"
+              :label="$t('updateSupplierPage.showRightBanner')"
               v-model="rightBannerCheckbox"
             ></v-switch>
           </v-col>
@@ -114,7 +114,7 @@
         <v-row justify="center">
           <v-col lg="3" v-if="carouselCheckbox">
             <v-form enctype="multipart/form-data">
-              <label>Carousel Image 1</label>
+              <label>{{ $t("updateSupplierPage.carouselImage") }} 1</label>
               <v-file-input
                 accept="image/*"
                 @change="setCarouselImage1"
@@ -147,7 +147,7 @@
 
           <v-col lg="3" v-if="carouselCheckbox">
             <v-form>
-              <label>Carousel Image 2</label>
+              <label>{{ $t("updateSupplierPage.carouselImage") }} 2</label>
               <v-file-input
                 accept="image/*"
                 :disabled="
@@ -184,7 +184,7 @@
 
           <v-col lg="3" v-if="carouselCheckbox">
             <v-form>
-              <label>Carousel Image 3</label>
+              <label>{{ $t("updateSupplierPage.carouselImage") }} 3</label>
               <v-file-input
                 accept="image/*"
                 :disabled="
@@ -221,7 +221,7 @@
 
           <v-col lg="3" v-if="carouselCheckbox">
             <v-form>
-              <label>Carousel Image 4</label>
+              <label>{{ $t("updateSupplierPage.carouselImage") }} 4</label>
               <v-file-input
                 accept="image/*"
                 :disabled="
@@ -260,7 +260,7 @@
         <v-row justify="center">
           <v-col v-if="carouselCheckbox" cols="6" lg="4" sm="4" md="6">
             <v-text-field
-              label="carousel width from 1 to 12 (default is 10)"
+              :label="$t('updateSupplierPage.carouselWidth')"
               v-model="carouselWidth"
               rounded
               :rules="[rules.min_max_width]"
@@ -271,7 +271,7 @@
           <v-col v-if="carouselCheckbox" cols="6" lg="4" sm="4" md="6">
             <v-text-field
               type="number"
-              label="carousel height in pixels (default is 400)"
+              :label="$t('updateSupplierPage.carouselHeight')"
               v-model="carouselHeight"
               :rules="[rules.min_max_height]"
               rounded
@@ -281,7 +281,7 @@
         </v-row>
 
         <v-row justify="space-around">
-          <v-col lg="4" v-if="leftBannerCheckbox">
+          <!-- <v-col lg="4" v-if="leftBannerCheckbox">
             <v-form>
               <label>left banner image</label>
               <v-file-input
@@ -313,11 +313,11 @@
                 >
               </v-row>
             </v-form>
-          </v-col>
+          </v-col> -->
 
           <v-col lg="4" v-if="rightBannerCheckbox">
             <v-form>
-              <label>right banner image</label>
+              <label>{{ $t("updateSupplierPage.rightBannerImage") }}</label>
               <v-file-input
                 accept="image/*"
                 @change="setRightImage"
@@ -355,7 +355,7 @@
         <v-col cols="12" lg="12" sm="12" md="12">
           <v-textarea
             rounded
-            label="Footer"
+            :label="$t('updateSupplierPage.footer')"
             v-model="footer"
             outlined
           ></v-textarea>
@@ -363,7 +363,9 @@
         <v-row justify="center">
           <v-col cols="5" lg="3" sm="3" md="3">
             <v-btn @click="sendData" x-large :color="siteColor.button_color"
-              ><span :style="`color: ${buttonsTextColor}`">Update</span></v-btn
+              ><span :style="`color: ${buttonsTextColor}`">{{
+                $t("updateSupplierPage.update")
+              }}</span></v-btn
             >
           </v-col>
         </v-row>
@@ -380,22 +382,22 @@
           :top="y === 'top'"
           :vertical="mode === 'vertical'"
         >
-          Page Updated succesfully
+          {{ $t("updateSupplierPage.pageUpdated") }}
           <template v-slot:action="{ attrs }">
-            <v-btn dark text v-bind="attrs" @click="snackbar = false"
-              >Close</v-btn
-            >
+            <v-btn dark text v-bind="attrs" @click="snackbar = false">{{
+              $t("updateSupplierPage.close")
+            }}</v-btn>
           </template>
         </v-snackbar>
       </v-container>
       <v-row justify="center">
-        <h2>Site Colors</h2>
+        <h2>{{ $t("updateSupplierPage.siteColors") }}</h2>
       </v-row>
       <!-- Site colorssssssssssssssssssssss -->
       <v-container class="mt-16">
         <v-card>
           <v-row justify="center">
-            <h2>Pick the Button color</h2>
+            <h2>{{ $t("updateSupplierPage.pickButColor") }}</h2>
           </v-row>
           <v-row justify="center">
             <v-col cols="3" lg="3">
@@ -413,7 +415,7 @@
         </v-card>
         <v-card>
           <v-row justify="center">
-            <h2>Pick the Button text color</h2>
+            <h2>{{ $t("updateSupplierPage.pickButTextColor") }}</h2>
           </v-row>
           <v-row justify="center">
             <v-col cols="3" lg="3">
@@ -426,14 +428,16 @@
             </v-col>
             <v-col cols="3" lg="3">
               <v-btn :color="buttonsColor" x-large>
-                <h4 :style="`color: ${this.buttonsTextColor}`">Text Color</h4>
+                <h4 :style="`color: ${this.buttonsTextColor}`">
+                  {{ $t("updateSupplierPage.textColor") }}
+                </h4>
               </v-btn>
             </v-col>
           </v-row>
         </v-card>
         <v-card>
           <v-row justify="center">
-            <h2>Pick the ToolBar color</h2>
+            <h2>{{ $t("updateSupplierPage.pickToolbarColor") }}</h2>
           </v-row>
           <v-row justify="center">
             <v-col cols="3" lg="3">
@@ -487,7 +491,7 @@
         </v-card>
         <v-card>
           <v-row justify="center">
-            <h2>Pick the ToolBar Text color</h2>
+            <h2>{{ $t("updateSupplierPage.pickToolbarTextColor") }}</h2>
           </v-row>
           <v-row justify="center">
             <v-col cols="3" lg="3">
@@ -541,7 +545,7 @@
         </v-card>
         <v-card>
           <v-row justify="center">
-            <h2>Pick the Footer</h2>
+            <h2>{{ $t("updateSupplierPage.pickFooterColor") }}</h2>
           </v-row>
           <v-row justify="center">
             <v-col cols="3" lg="3">
@@ -591,7 +595,7 @@
         </v-card>
         <v-card>
           <v-row justify="center">
-            <h2>Pick the Footer Text Color</h2>
+            <h2>{{ $t("updateSupplierPage.pickFooterTextColor") }}</h2>
           </v-row>
           <v-row justify="center">
             <v-col cols="3" lg="3">
@@ -641,7 +645,9 @@
           <v-row justify="center">
             <v-col cols="1">
               <v-btn @click="updateSiteColors" :color="buttonsColor" x-large>
-                <h4 :style="`color: ${buttonsTextColor}`">Update</h4>
+                <h4 :style="`color: ${buttonsTextColor}`">
+                  {{ $t("updateSupplierPage.update") }}
+                </h4>
               </v-btn>
             </v-col>
           </v-row>
@@ -650,7 +656,7 @@
     </div>
     <div class="mt-16" v-else>
       <v-row justify="center">
-        <h1>404 Not Found</h1>
+        <h1>{{ $t("updateSupplierPage.accessDenied") }}</h1>
       </v-row>
     </div>
   </v-app>
@@ -921,7 +927,7 @@ export default {
     },
   },
   async created() {
-    this.isLoading = true;
+    //this.isLoading = true;
     await this.$store.dispatch("refreshCurrentUser");
     await this.$store.dispatch("getSupplier", this.$route.params.supplier_id);
     await this.$store.dispatch(

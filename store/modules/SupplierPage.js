@@ -82,7 +82,7 @@ export default {
         filterProductsWithItem(state, products) {
             state.supplierProducts = products
 
-        }
+        },
     },
 
     actions: {
