@@ -68,9 +68,9 @@ export default {
 
         },
 
-        filterProducts(state, {products, pressed}) {
-          //  debugger
-            if(pressed == 'search')
+        filterProducts(state, { products, pressed }) {
+            //  debugger
+            if (pressed == 'search')
                 state.filteredProducts = products;
             else
                 state.filteredProducts.push(...products)
@@ -243,10 +243,10 @@ export default {
             })
                 .then(response => {
                     console.log('message:', response.data.message)
-                    
+
                     //debugger
 
-                    context.commit('filterProducts', {products:response.data.data, pressed:buttonPressed});
+                    context.commit('filterProducts', { products: response.data.data, pressed: buttonPressed });
                 })
         },
 
@@ -391,6 +391,7 @@ export default {
             show_right_banner,
             carousel_width,
             carousel_height, }) {
+            console.log('show right banner from action', show_right_banner);
 
             await axios.post('http://localhost:3000/api/updateHomePage', {
                 show_carousel,
