@@ -2,19 +2,19 @@
   <v-app>
     <v-container v-if="currentUser">
       <v-row justify="center">
-        <p class="display-1">Change password</p>
+        <p class="display-1">{{ $t("editPassword.changePassword") }}</p>
       </v-row>
 
       <v-row justify="center">
         <v-col cols="6">
           <v-text-field
-            label="Current password"
+            :label="$t('editPassword.currentPassword')"
             v-model="password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min, rules.valid]"
             :type="show1 ? 'text' : 'password'"
             name="input-10-1"
-            hint="At least 7 characters"
+            :hint="$t('editPassword.minCharacters')"
             counter
             @click:append="show1 = !show1"
           ></v-text-field>
@@ -24,13 +24,13 @@
       <v-row justify="center">
         <v-col cols="6">
           <v-text-field
-            label=" New password"
+            :label="$t('editPassword.newPassword')"
             v-model="newPassword"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min, rules.valid]"
             :type="show1 ? 'text' : 'password'"
             name="input-10-1"
-            hint="At least 7 characters"
+            :hint="$t('editPassword.minCharacters')"
             counter
             @click:append="show1 = !show1"
           ></v-text-field>
@@ -40,7 +40,7 @@
       <v-row justify="center">
         <v-col cols="6">
           <v-text-field
-            label=" Confirm password"
+            :label="$t('editPassword.confirmPassword')"
             v-model="repeatPassword"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, passwordMatch]"
@@ -62,7 +62,7 @@
             block
           >
             <span :style="`color:${siteColor.button_text_color} `"
-              >Update <br />password
+              >{{ $t("editPassword.updatePassword") }}
             </span></v-btn
           >
         </v-col>
@@ -71,7 +71,7 @@
 
     <v-container v-else>
       <v-row justify="center">
-        <p class="display-1">Cureent page cant be loaded</p>
+        <p class="display-1">{{ $t("editPassword.cantLoad") }}</p>
       </v-row>
     </v-container>
   </v-app>
@@ -93,12 +93,12 @@ export default {
       show1: false,
       rules: {
         required: (value) => !!value || "Required.",
-        min: (v) => (v && v.length >= 7) || "Min 7 characters",
+        min: (v) =>
+          (v && v.length >= 7) || this.$t("editPassword.minCharacters"),
         valid: (v) =>
           /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
             v
-          ) ||
-          "password must have at least one letter, one number and one special character",
+          ) || this.$t("editPassword.passwordReq"),
       },
     };
   },
@@ -128,12 +128,12 @@ export default {
       var self = this;
       var route = "http://localhost:3000/api/updatePassword";
       if (this.currentUser.password !== this.password) {
-        alert("كلمة السر الحالية غير صحيحة");
+        alert(this.$t("editPassword.incorrectCurrentPassword"));
         return;
       }
 
       if (this.newPassword === this.password) {
-        alert(" كلمة السر الجديدة لا يمكن ان تساوي كلمة السر الحالية ");
+        alert(this.$t("editPassword.newEqualOld"));
         return;
       }
       this.$axios

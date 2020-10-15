@@ -36,7 +36,7 @@
                 <v-toolbar shaped :color="siteColor.toolbar_color">
                   <v-row justify="center">
                     <h2 :style="`color:${siteColor.toolbar_text_color}`">
-                      Supplier Info
+                      {{ $t("supplierDetails.supplierInfo") }}
                     </h2>
                   </v-row>
                 </v-toolbar>
@@ -61,26 +61,21 @@
                 }}</span>
               </v-card-title>
               <v-card-actions>
-                <span style="font-weight: bold" class="black--text"
-                  >Mobile number :</span
+                <span style="font-weight: bold" class="black--text">
+                  {{ $t("supplierDetails.mobileNumber") }} :</span
                 >
                 <span class="black--text">{{ supplier.mobile_number }}</span>
               </v-card-actions>
+
               <v-card-actions>
-                <span style="font-weight: bold" class="black--text"
-                  >User type :</span
-                >
-                <span class="black--text">{{ supplier.user_type }}</span>
-              </v-card-actions>
-              <v-card-actions>
-                <span style="font-weight: bold" class="black--text"
-                  >Email :</span
+                <span style="font-weight: bold" class="black--text">
+                  {{ $t("supplierDetails.email") }} :</span
                 >
                 <span class="black--text">{{ supplier.email }}</span>
               </v-card-actions>
               <v-card-actions>
-                <span style="font-weight: bold" class="black--text"
-                  >Facbook-account :</span
+                <span style="font-weight: bold" class="black--text">
+                  {{ $t("supplierDetails.facebook") }} :</span
                 >
                 <span class="black--text">{{ supplier.facebook_account }}</span>
               </v-card-actions>
@@ -94,7 +89,7 @@
                 <v-toolbar shaped :color="siteColor.toolbar_color">
                   <v-row justify="center">
                     <h2 :style="`color:${siteColor.toolbar_text_color}`">
-                      Customers Rating
+                      {{ $t("supplierDetails.customerRating") }}
                     </h2>
                   </v-row>
                 </v-toolbar>
@@ -315,7 +310,8 @@
                   <v-row>
                     <v-col lg="7">
                       <p class="text-h5 font-weight-medium">
-                        By {{ review.user.full_arabic_name }}
+                        {{ $t("supplierDetails.by") }}
+                        {{ review.user.full_arabic_name }}
                       </p>
                     </v-col>
 
@@ -391,9 +387,11 @@
                   v-if="supplierRating === 0"
                   class="text-h5 mb-n2 text-center"
                 >
-                  Rate this Product
+                  {{ $t("supplierDetails.rateSupplier") }}
                 </p>
-                <p v-else class="text-h5 mb-n2 text-center">Your Rating:</p>
+                <p v-else class="text-h5 mb-n2 text-center">
+                  {{ $t("supplierDetails.yourRating") }}:
+                </p>
                 <v-rating
                   :readonly="supplierRating > 0"
                   class="ml-n1 text-center mt-1"
@@ -414,8 +412,8 @@
                   @click="submitReview"
                   block
                   :color="siteColor.button_color"
-                  ><span :style="`color:${siteColor.button_text_color}`"
-                    >submit</span
+                  ><span :style="`color:${siteColor.button_text_color}`">
+                    {{ $t("supplierDetails.submit") }}</span
                   ></v-btn
                 >
               </v-col>
@@ -452,21 +450,26 @@ export default {
     sideButton,
     Loading,
   },
-  data: () => ({
-    isLoading: false,
-    fullPage: "",
-    hover: true,
-    size: 45,
-    size2: 30,
-    starNum: 5,
-    rating: 0,
-    review: "",
-    groupedRatings: [],
-    tab: 0,
-    tabs: [{ name: "Reviews" }, { name: "Rate Supplier" }],
-    supplierProductsSearch: "",
-    categoryItems: [],
-  }),
+  data() {
+    return {
+      isLoading: false,
+      fullPage: "",
+      hover: true,
+      size: 45,
+      size2: 30,
+      starNum: 5,
+      rating: 0,
+      review: "",
+      groupedRatings: [],
+      tab: 0,
+      tabs: [
+        { name: this.$t("supplierDetails.reviews") },
+        { name: this.$t("supplierDetails.rateSupplier") },
+      ],
+      supplierProductsSearch: "",
+      categoryItems: [],
+    };
+  },
   computed: {
     currentUser() {
       return this.$store.state.Home.currentUser;

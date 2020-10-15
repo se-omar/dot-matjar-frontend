@@ -1,7 +1,9 @@
 <template>
   <v-app>
     <v-row justify="center">
-      <h1 style="font-weight: bold">Pending Supplier</h1>
+      <h1 style="font-weight: bold">
+        {{ $t("pendingSuppliers.pendingSupplier") }}
+      </h1>
     </v-row>
     <v-container class="grey">
       <v-row>
@@ -36,7 +38,10 @@
                   <v-list-item>
                     <v-list-item-content>
                       <v-list-item-title>
-                        <h5><i class="fa fa-mobile"></i> Mobile Number :</h5>
+                        <h5>
+                          <i class="fa fa-mobile"></i
+                          >{{ $t("pendingSuppliers.mobileNumber") }} :
+                        </h5>
                         <span style="font-size: large">{{
                           supplier.mobile_number
                         }}</span>
@@ -44,7 +49,10 @@
                       <v-divider></v-divider>
 
                       <v-list-item-title>
-                        <h5><i class="fa fa-email"></i>Email :</h5>
+                        <h5>
+                          <i class="fa fa-email"></i
+                          >{{ $t("pendingSuppliers.email") }} :
+                        </h5>
                         <span style="font-size: large">{{
                           supplier.email
                         }}</span>
@@ -52,7 +60,7 @@
                       <v-divider></v-divider>
 
                       <v-list-item-title>
-                        <h5>Governorate :</h5>
+                        <h5>{{ $t("pendingSuppliers.governorate") }} :</h5>
                         <span style="font-size: large">{{
                           supplier.governorate
                         }}</span>
@@ -60,7 +68,7 @@
                       <v-divider></v-divider>
 
                       <v-list-item-title>
-                        <h5>Region :</h5>
+                        <h5>{{ $t("pendingSuppliers.region") }} :</h5>
                         <span style="font-size: large">{{
                           supplier.region
                         }}</span>
@@ -68,7 +76,7 @@
                       <v-divider></v-divider>
 
                       <v-list-item-title>
-                        <h5>Store Name :</h5>
+                        <h5>{{ $t("pendingSuppliers.storeName") }} :</h5>
                         <span style="font-size: large">{{
                           supplier.store_name
                         }}</span>
@@ -80,11 +88,15 @@
                           :color="siteColor.button_color"
                           class="green"
                         >
-                          <span :style="`color:${siteColor.button_text_color}`">
-                            Accept <br />request
+                          <span
+                            v-html="$t('pendingSuppliers.acceptRequest')"
+                            :style="`color:${siteColor.button_text_color}`"
+                          >
                           </span>
                         </v-btn>
-                        <v-btn class="ml-2 red white--text">Decline</v-btn>
+                        <v-btn class="ml-2 red white--text">{{
+                          $t("pendingSuppliers.decline")
+                        }}</v-btn>
                       </v-list-item-action-text>
                     </v-list-item-content>
                   </v-list-item>

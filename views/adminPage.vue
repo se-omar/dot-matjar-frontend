@@ -929,7 +929,10 @@ export default {
     },
 
     supplierClicked(supplier) {
-      this.$store.commit("supplierPage", supplier);
+      localStorage.setItem("clickedSupplier", JSON.stringify(supplier));
+      console.log("supplier is", supplier);
+      console.log("supplier id is", supplier.user_id);
+      //this.$store.commit("supplierPage", supplier);
       this.$router.push(`/${this.$i18n.locale}/suppliersDashboard`);
       // console.log(this.supplier);
     },

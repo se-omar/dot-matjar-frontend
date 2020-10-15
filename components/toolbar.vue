@@ -446,10 +446,12 @@
                 @click="
                   $router.push(`/${$i18n.locale}/categoryAndItemRequests`)
                 "
-                ><span :style="`color:${siteColor.button_text_color};`">
-                  {{ $t("toolbar.categoryRequests") }}</span
-                ></v-btn
-              >
+                ><span
+                  v-html="$t('toolbar.categoryRequests')"
+                  :style="`color:${siteColor.button_text_color};`"
+                >
+                </span
+              ></v-btn>
               <v-divider class="mr-4"></v-divider>
             </v-col>
           </v-row>
@@ -784,6 +786,7 @@ export default {
       this.$router.push({
         params: { lang: value },
       });
+      this.$vuetify.rtl = value == "ar" ? true : false;
     },
     logout() {
       this.$store.commit("removeCurrentUser");

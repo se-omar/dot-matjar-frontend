@@ -24,7 +24,6 @@
                   :style="`color: black; font-weight: 800; font-size:17px`"
                   >EGP</span
                 >
-                <p>{{ $t("nest.nest1") }}</p>
               </v-col>
 
               <v-col class="mt-n2" lg="12" md="12" sm="12" cols="12">
@@ -88,7 +87,6 @@
 export default {
   components: {},
   async created() {
-    console.log(this.$i18n);
     await this.$store.dispatch(
       "calculateProductRating",
       this.filteredProduct.product_id
