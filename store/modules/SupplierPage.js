@@ -12,7 +12,9 @@ export default {
         pendingSuppliers: [],
         supplierProductsSave: [],
         testVar: 0,
-
+        supplierItems: [],
+        supplierCategories: [],
+        supplierCategoriesAndItems: []
     },
 
     mutations: {
@@ -83,6 +85,43 @@ export default {
             state.supplierProducts = products
 
         },
+        // getSupplierItems(state, items) {
+        //     state.supplierItems = items.map(e => {
+        //         return e.item_name
+        //     })
+        //     console.log('muttated supplier items', state.supplierItems)
+
+        // },
+        getSupplierCategoriesAndItems(state, data) {
+            console.log('datafrom db ', data)
+            state.supplierItems = data.map(e => {
+                return e.item_name
+            })
+
+            state.supplierCategoriesAndItems = data;
+            for (var i = 0; i < data.length; i++) {
+
+                var check = false;
+                if (state.supplierCategories.length > 0) {
+                    for (var j = 0; j < state.supplierCategories.length; j++) {
+
+                        if (state.supplierCategories[j] == data[i].product_category.category_name) {
+                            check = true
+                        }
+                    }
+                }
+                else if (state.supplierCategories.length == 0) {
+                    state.supplierCategories.push(data[i].product_category.category_name)
+                    check = true;
+
+                }
+                if (check == false) {
+                    state.supplierCategories.push(data[i].product_category.category_name)
+                }
+
+            }
+            console.log('supplier categories', state.supplierCategories)
+        }
     },
 
     actions: {
@@ -264,10 +303,26 @@ export default {
             })
         },
 
-        addCategoryAndItemsToSupplier(context, supplierItems) {
-            axios.post('http://localhost:3000/api/addCategoryAndItemsToSupplier', { supplierItems: supplierItems, user_id: context.state.currentUser.user_id })
+        addCategoryAndItemsToSupplier(context, { supplierItems, user_id }) {
+            axios.post('http://localhost:3000/api/addCategoryAndItemsToSupplier', { supplierItems: supplierItems, user_id: user_id })
                 .then(message => {
                     console.log(message.data.message)
+                })
+        },
+        // async getSupplierItems(context, user_id) {
+        //     console.log('action entered')
+        //     await axios.put('http://localhost:3000/api/getSupplierItems', user_id)
+        //         .then(items => {
+
+        //             context.commit('getSupplierItems', items.data.data)
+        //         })
+        // },
+        async getSupplierCategoriesAndItems(context, user_id) {
+            console.log('proplem user_id', user_id)
+            await axios.put('http://localhost:3000/api/getSupplierCategoriesAndItems', { user_id: user_id })
+                .then(data => {
+                    console.log(data.data.message);
+                    context.commit('getSupplierCategoriesAndItems', data.data.data)
                 })
         }
 

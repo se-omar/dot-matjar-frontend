@@ -76,10 +76,11 @@
             class="mt-10 mr-1 blue white--text"
             rounded
             @click="advancedSearch = true"
-            ><span style="font-size: 12px">{{
-              $t("toolbar.advancedSearch")
-            }}</span></v-btn
-          >
+            ><span
+              style="font-size: 12px"
+              v-html="$t('toolbar.advancedSearch')"
+            ></span
+          ></v-btn>
         </v-col>
         <v-dialog
           style="overflow: hidden"
@@ -91,11 +92,12 @@
               <v-radio-group
                 style="margin-right: 50px"
                 mandatory
-                v-model="radioGroup"
+                :value="radioGroup"
               >
                 <v-row class="mb-n5" justify="center">
                   <v-col cols="3" lg="4" sm="5" md="5">
                     <v-radio
+                      @change="changeRadioGroup()"
                       :label="$t('toolbar.searchProducts')"
                       value="1"
                     ></v-radio>
@@ -103,6 +105,7 @@
 
                   <v-col cols="3" lg="4" sm="5" md="5">
                     <v-radio
+                      @change="changeRadioGroup()"
                       :label="$t('toolbar.searchSuppliers')"
                       value="2"
                     ></v-radio>
@@ -743,12 +746,6 @@ export default {
     // return this.siteColor
     //       }
     //     },
-    radioGroup: {
-      type: Number,
-      default() {
-        return 1;
-      },
-    },
   },
   computed: {
     currentUser() {
@@ -778,6 +775,9 @@ export default {
     },
     regions() {
       return this.$store.state.Home.regions;
+    },
+    radioGroup() {
+      return this.$store.state.Home.radioGroup;
     },
   },
 
@@ -876,6 +876,16 @@ export default {
         governorate: this.governorate,
         region: this.region,
       });
+    },
+    changeRadioGroup() {
+      if (this.radioGroup == "1") {
+        this.$store.commit("changeRadioGroup", "2");
+      } else {
+        this.$store.commit("changeRadioGroup", "1");
+      }
+
+      console.log("test");
+      console.log(this.radioGroup);
     },
   },
   data: () => ({

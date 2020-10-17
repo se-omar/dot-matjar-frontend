@@ -390,15 +390,19 @@
           </template>
         </v-snackbar>
       </v-container>
-      <v-row justify="center">
-        <h2>{{ $t("updateSupplierPage.siteColors") }}</h2>
-      </v-row>
+
       <!-- Site colorssssssssssssssssssssss -->
       <v-container class="mt-16">
+        <v-toolbar shaped :color="toolBarColor">
+          <v-row justify="center">
+            <h2>{{ $t("updateSupplierPage.siteColors") }}</h2>
+          </v-row>
+        </v-toolbar>
         <v-card>
           <v-row justify="center">
             <h2>{{ $t("updateSupplierPage.pickButColor") }}</h2>
           </v-row>
+
           <v-row justify="center">
             <v-col cols="3" lg="3">
               <v-color-picker
@@ -796,31 +800,49 @@
                     </v-list-item>
                   </template>
                 </v-virtual-scroll>
-                <v-snackbar v-model="itemExists" :timeout="timeout">
+                <v-snackbar v-model="snackBarAlert" :timeout="timeout">
                   <v-row justify="center">
-                    <h2>Item already exists</h2>
+                    <h2>{{ snackBarMessage }}</h2>
                   </v-row>
                 </v-snackbar>
               </v-card>
             </v-col>
           </v-row>
           <v-row class="mt-8 mb-8" justify="center">
-            <v-btn
-              rounded
-              large
-              :color="buttonsColor"
-              @click="addCategoryAndItemsToSupplier()"
+            <v-btn rounded large :color="buttonsColor" @click="addButtonEvent()"
               ><span :style="`color:${buttonsTextColor}`">Add</span></v-btn
             >
+            <v-dialog v-model="dialog" persistent max-width="290">
+              <v-card>
+                <v-card-title class="headline"> Sure? </v-card-title>
+                <v-card-text
+                  >Be aware that by updating the items , all of your previews
+                  items will be overwritten</v-card-text
+                >
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="red" text @click="dialog = false">
+                    Disagree
+                  </v-btn>
+                  <v-btn
+                    @click="addCategoryAndItemsToSupplier()"
+                    text
+                    :color="buttonsColor"
+                  >
+                    Agree
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </v-row>
         </v-card>
       </v-container>
     </div>
-    <div class="mt-16" v-else>
+    <!-- <div class="mt-16" v-else>
       <v-row justify="center">
         <h1>{{ $t("updateSupplierPage.accessDenied") }}</h1>
       </v-row>
-    </div>
+    </div> -->
   </v-app>
 </template>
 
@@ -829,9 +851,6 @@ export default {
   name: "updateSupplierPage",
   components: {},
   data: () => ({
-    benched: 0,
-    selectionType: "leaf",
-    tree: [],
     logo: "",
     siteName: "",
     facebook: "",
@@ -883,7 +902,9 @@ export default {
     isLoading: false,
     categoryItems: [],
     supplierItems: [],
-    itemExists: false,
+    snackBarAlert: false,
+    snackBarMessage: "",
+    dialog: false,
   }),
   methods: {
     fileUploaded() {
@@ -1120,7 +1141,8 @@ export default {
       if (!check) {
         this.supplierItems.push(item);
       } else {
-        this.itemExists = true;
+        this.snackBarMessage = "Item Already exists";
+        this.snackBarAlert = true;
       }
     },
     RemoveItem(item) {
@@ -1132,11 +1154,22 @@ export default {
       }
     },
     addCategoryAndItemsToSupplier() {
+      this.dialog = false;
+      console.log(this.currentUser);
       console.log(this.supplierItems);
       this.$store.dispatch("addCategoryAndItemsToSupplier", {
         supplierItems: this.supplierItems,
         user_id: this.currentUser.user_id,
       });
+      location.reload();
+    },
+    addButtonEvent() {
+      if (this.supplierItems.length == 0) {
+        this.snackBarMessage = "Please add item to proceed";
+        this.snackBarAlert = true;
+      } else {
+        this.dialog = true;
+      }
     },
   },
 
@@ -1176,11 +1209,12 @@ export default {
     categoriesItems() {
       return this.$store.state.Home.categoriesItems;
     },
-    items() {
-      return Array.from({ length: this.length }, (k, v) => v + 1);
+
+    supplierItemsFromDB() {
+      return this.$store.state.SupplierPage.supplierItems;
     },
-    length() {
-      return 7000;
+    supplierCategoriesAndItems() {
+      return this.$store.state.SupplierPage.supplierCategoriesAndItems;
     },
   },
   async created() {
@@ -1193,6 +1227,13 @@ export default {
     );
     await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getCategoryItems");
+    // await this.$store.dispatch("getSupplierItems", {
+    //   user_id: this.currentUser.user_id,
+    // });
+    await this.$store.dispatch(
+      "getSupplierCategoriesAndItems",
+      this.currentUser.user_id
+    );
     await setTimeout(() => {
       this.toolBarColor = this.siteColor.toolbar_color;
       this.footerColor = this.siteColor.footer_color;
@@ -1217,6 +1258,9 @@ export default {
         this.$router.push(`/${this.$i18n.locale}/notFound`);
       }
     }
+
+    this.supplierItems = this.supplierItemsFromDB;
+    console.log("array in table", this.supplierItems);
     this.isLoading = false;
   },
 };

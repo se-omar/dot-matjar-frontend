@@ -104,7 +104,7 @@
           <v-row>
             <v-col cols="6" sm="12" lg="12">
               <v-menu
-                v-for="category in category"
+                v-for="category in supplierCategories"
                 :key="category"
                 offset-x
                 :close-on-content-click="false"
@@ -282,11 +282,17 @@ export default {
       });
       return ar;
     },
-    category() {
-      return this.$store.state.Home.category;
+    // category() {
+    //   return this.$store.state.Home.category;
+    // },
+    // categoriesItems() {
+    //   return this.$store.state.Home.categoriesItems;
+    // },
+    supplierCategoriesAndItems() {
+      return this.$store.state.SupplierPage.supplierCategoriesAndItems;
     },
-    categoriesItems() {
-      return this.$store.state.Home.categoriesItems;
+    supplierCategories() {
+      return this.$store.state.SupplierPage.supplierCategories;
     },
   },
   methods: {
@@ -344,11 +350,20 @@ export default {
       });
     },
     mouseOver(category) {
+      console.log(this.supplierCategories);
       this.categoryItems = [];
       console.log(category);
-      for (var i = 0; i < this.categoriesItems.length; i++) {
-        if (this.categoriesItems[i].category_name == category) {
-          this.categoryItems.push(this.categoriesItems[i].category_items);
+      // for (var i = 0; i < this.categoriesItems.length; i++) {
+      //   if (this.categoriesItems[i].category_name == category) {
+      //     this.categoryItems.push(this.categoriesItems[i].category_items);
+      //   }
+      // }
+      for (var i = 0; i < this.supplierCategoriesAndItems.length; i++) {
+        if (
+          this.supplierCategoriesAndItems[i].product_category.category_name ==
+          category
+        ) {
+          this.categoryItems.push(this.supplierCategoriesAndItems[i].item_name);
         }
       }
     },
@@ -370,8 +385,10 @@ export default {
       "getSupplierProducts",
       this.$route.params.supplier_id
     );
-
-    console.log(this.carouselImagesArray);
+    await this.$store.dispatch(
+      "getSupplierCategoriesAndItems",
+      this.currentUser.user_id
+    );
 
     await this.$store.dispatch("getSupplierReview", {
       supplier_id: this.supplier.user_id,

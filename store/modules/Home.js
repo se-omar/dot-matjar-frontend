@@ -16,7 +16,8 @@ export default {
         categoryAndItemRequests: [],
         categoryRequestMessage: '',
         supplierCategoriesRequests: [],
-        homePageInfo: {}
+        homePageInfo: {},
+        radioGroup: '1'
     },
 
     mutations: {
@@ -128,6 +129,11 @@ export default {
 
             localStorage.setItem('siteColor', JSON.stringify(pageDataArray));
             state.siteColor = JSON.parse(localStorage.getItem('siteColor')) ? JSON.parse(localStorage.getItem('siteColor')) : []
+        },
+        changeRadioGroup(state, radioValue) {
+            state.radioGroup = radioValue;
+            console.log('radio value', radioValue)
+            console.log('radio group', state.radioGroup)
         }
 
     },
@@ -478,5 +484,6 @@ export default {
 
 
 
-    }
+    },
+
 }
