@@ -57,10 +57,10 @@
           <v-radio-group
             style="margin-right: 50px"
             mandatory
-            v-model="radioGroup"
+            :value="radioGroup"
           >
             <v-row class="mb-n5" justify="center">
-              <v-col cols="3" lg="4" sm="5" md="5">
+              <v-col @click="changeRadioGroup()" cols="3" lg="4" sm="5" md="5">
                 <v-radio label="Search for Products" value="1"></v-radio>
               </v-col>
 
@@ -401,14 +401,22 @@
         sm="7"
         :md="homePageInfo.show_right_banner ? 8 : 10"
       >
-        <v-radio-group mandatory v-model="radioGroup">
+        <v-radio-group mandatory :value="radioGroup">
           <v-row class="mb-n5" justify="center">
             <v-col lg="4">
-              <v-radio label="Search for Products" value="1"></v-radio>
+              <v-radio
+                @change="changeRadioGroup"
+                label="Search for Products"
+                value="1"
+              ></v-radio>
             </v-col>
 
             <v-col lg="4">
-              <v-radio label="Search for suppliers" value="2"></v-radio>
+              <v-radio
+                @change="changeRadioGroup"
+                label="Search for suppliers"
+                value="2"
+              ></v-radio>
             </v-col>
           </v-row>
         </v-radio-group>
@@ -457,7 +465,7 @@
             :color="siteColor.button_color"
             :style="`color: ${siteColor.button_text_color}`"
             class="mb-15 white--text"
-            @click="radioGroup == 1 ? filterProducts('loadmore') : loadMore()"
+            @click="radioGroup == '1' ? filterProducts('loadmore') : loadMore()"
           >
             {{ $t("homePage.loadMore") }}</v-btn
           >
@@ -500,7 +508,7 @@ export default {
       productFilterFlag: false,
       supplierFilterFlag: false,
       // category: [],
-      radioGroup: 1,
+      // radioGroup:1,
       governorate: "",
       region: "",
       isLoading: false,
@@ -600,8 +608,11 @@ export default {
     nodeHost() {
       return this.$store.state.nodeHost;
     },
-  },
 
+    radioGroup() {
+      return this.$store.state.Home.radioGroup;
+    },
+  },
   methods: {
     async filterProducts(buttonPressed) {
       // this.isLoading = true;
@@ -728,6 +739,16 @@ export default {
     testModule() {
       this.$store.dispatch("testAct", "assdfsaf");
       console.log(this.$store.state.test.testVar);
+    },
+    changeRadioGroup() {
+      if (this.radioGroup == "1") {
+        this.$store.commit("changeRadioGroup", "2");
+      } else {
+        this.$store.commit("changeRadioGroup", "1");
+      }
+
+      console.log("test");
+      console.log(this.radioGroup);
     },
   },
   components: {

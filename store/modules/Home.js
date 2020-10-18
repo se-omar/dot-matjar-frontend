@@ -16,7 +16,8 @@ export default {
         categoryAndItemRequests: [],
         categoryRequestMessage: '',
         supplierCategoriesRequests: [],
-        homePageInfo: {}
+        homePageInfo: {},
+        radioGroup: '1'
     },
 
     mutations: {
@@ -68,9 +69,9 @@ export default {
 
         },
 
-        filterProducts(state, {products, pressed}) {
-          //  debugger
-            if(pressed == 'search')
+        filterProducts(state, { products, pressed }) {
+            //  debugger
+            if (pressed == 'search')
                 state.filteredProducts = products;
             else
                 state.filteredProducts.push(...products)
@@ -128,6 +129,11 @@ export default {
 
             localStorage.setItem('siteColor', JSON.stringify(pageDataArray));
             state.siteColor = JSON.parse(localStorage.getItem('siteColor')) ? JSON.parse(localStorage.getItem('siteColor')) : []
+        },
+        changeRadioGroup(state, radioValue) {
+            state.radioGroup = radioValue;
+            console.log('radio value', radioValue)
+            console.log('radio group', state.radioGroup)
         }
 
     },
@@ -243,10 +249,10 @@ export default {
             })
                 .then(response => {
                     console.log('message:', response.data.message)
-                    
+
                     //debugger
 
-                    context.commit('filterProducts', {products:response.data.data, pressed:buttonPressed});
+                    context.commit('filterProducts', { products: response.data.data, pressed: buttonPressed });
                 })
         },
 
@@ -391,6 +397,7 @@ export default {
             show_right_banner,
             carousel_width,
             carousel_height, }) {
+            console.log('show right banner from action', show_right_banner);
 
             await axios.post('http://localhost:3000/api/updateHomePage', {
                 show_carousel,
@@ -477,5 +484,6 @@ export default {
 
 
 
-    }
+    },
+
 }

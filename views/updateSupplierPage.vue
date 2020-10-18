@@ -390,15 +390,19 @@
           </template>
         </v-snackbar>
       </v-container>
-      <v-row justify="center">
-        <h2>{{ $t("updateSupplierPage.siteColors") }}</h2>
-      </v-row>
+
       <!-- Site colorssssssssssssssssssssss -->
       <v-container class="mt-16">
+        <v-toolbar shaped :color="toolBarColor">
+          <v-row justify="center">
+            <h2>{{ $t("updateSupplierPage.siteColors") }}</h2>
+          </v-row>
+        </v-toolbar>
         <v-card>
           <v-row justify="center">
             <h2>{{ $t("updateSupplierPage.pickButColor") }}</h2>
           </v-row>
+
           <v-row justify="center">
             <v-col cols="3" lg="3">
               <v-color-picker
@@ -653,12 +657,192 @@
           </v-row>
         </v-card>
       </v-container>
+
+      <v-container>
+        <v-toolbar shaped>
+          <v-row justify="center">
+            <h2>Choose your Categories</h2>
+          </v-row>
+        </v-toolbar>
+        <v-card>
+          <!-- <v-responsive max-width="400" class="mx-auto mb-4">
+            <v-text-field
+              v-model="benched"
+              type="number"
+              label="Total Benched"
+              min="0"
+              max="10"
+            ></v-text-field>
+          </v-responsive> -->
+          <v-row justify="center">
+            <v-col cols="6">
+              <v-card elevation="16" max-width="400" class="mx-auto">
+                <v-toolbar shaped>
+                  <v-row justify="center">
+                    <h2 style="text-align: center">Category</h2>
+                  </v-row>
+                </v-toolbar>
+                <v-virtual-scroll
+                  :items="category"
+                  height="300"
+                  item-height="64"
+                >
+                  <template v-slot="{ item }">
+                    <v-list-item>
+                      <v-list-item-action>
+                        <v-btn
+                          @click="getCategoryItems(item)"
+                          fab
+                          small
+                          depressed
+                          color="primary"
+                        >
+                          <i :class="`fa fa-${item} fa-2x`"></i>
+                        </v-btn>
+                      </v-list-item-action>
+                      <v-list-item-content>
+                        <v-list-item-title :key="item">
+                          <v-btn
+                            @click="getCategoryItems(item)"
+                            text
+                            width="100%"
+                          >
+                            {{ item }}</v-btn
+                          >
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </template>
+                </v-virtual-scroll>
+              </v-card>
+            </v-col>
+            <v-col cols="6">
+              <v-card elevation="16" max-width="400" class="mx-auto">
+                <v-toolbar shaped>
+                  <v-row justify="center">
+                    <h2 style="text-align: center">Items</h2>
+                  </v-row>
+                </v-toolbar>
+                <v-virtual-scroll
+                  :items="categoryItems"
+                  height="300"
+                  item-height="64"
+                >
+                  <template v-slot="{ item }">
+                    <v-list-item>
+                      <v-list-item-action>
+                        <v-btn fab small depressed color="primary">
+                          <i :class="`fa fa-${item} fa-2x`"></i>
+                        </v-btn>
+                      </v-list-item-action>
+                      <v-list-item-content>
+                        <v-list-item-title
+                          style="text-align: center"
+                          :key="item"
+                        >
+                          {{ item }}
+                        </v-list-item-title>
+                      </v-list-item-content>
+                      <v-list-item-action>
+                        <v-btn @click="addItem(item)" large icon>
+                          <i class="fa fa-plus fa-2x"></i
+                        ></v-btn>
+                      </v-list-item-action>
+                    </v-list-item>
+                  </template>
+                </v-virtual-scroll>
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-row justify="center">
+            <v-col cols="6">
+              <v-card elevation="16" max-width="400" class="mx-auto">
+                <v-toolbar shaped>
+                  <v-row justify="center">
+                    <h2 style="text-align: center">Selected Items</h2>
+                  </v-row>
+                </v-toolbar>
+
+                <v-virtual-scroll
+                  :items="supplierItems"
+                  height="300"
+                  item-height="64"
+                >
+                  <template v-slot="{ item }">
+                    <v-list-item>
+                      <v-list-item-action>
+                        <v-btn
+                          @click="getCategoryItems(item)"
+                          fab
+                          small
+                          depressed
+                          color="primary"
+                        >
+                          <i :class="`fa fa-${item} fa-2x`"></i>
+                        </v-btn>
+                      </v-list-item-action>
+                      <v-list-item-content>
+                        <v-list-item-title
+                          style="text-align: center"
+                          :key="item"
+                        >
+                          {{ item }}
+                        </v-list-item-title>
+                      </v-list-item-content>
+                      <v-list-item-action>
+                        <v-btn @click="RemoveItem(item)" large icon>
+                          <i
+                            class="fa fa-trash-alt fa-2x"
+                            style="color: red"
+                          ></i
+                        ></v-btn>
+                      </v-list-item-action>
+                    </v-list-item>
+                  </template>
+                </v-virtual-scroll>
+                <v-snackbar v-model="snackBarAlert" :timeout="timeout">
+                  <v-row justify="center">
+                    <h2>{{ snackBarMessage }}</h2>
+                  </v-row>
+                </v-snackbar>
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-row class="mt-8 mb-8" justify="center">
+            <v-btn rounded large :color="buttonsColor" @click="addButtonEvent()"
+              ><span :style="`color:${buttonsTextColor}`">Add</span></v-btn
+            >
+            <v-dialog v-model="dialog" persistent max-width="290">
+              <v-card>
+                <v-card-title class="headline"> Sure? </v-card-title>
+                <v-card-text
+                  >Be aware that by updating the items , all of your previews
+                  items will be overwritten</v-card-text
+                >
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="red" text @click="dialog = false">
+                    Disagree
+                  </v-btn>
+                  <v-btn
+                    @click="addCategoryAndItemsToSupplier()"
+                    text
+                    :color="buttonsColor"
+                  >
+                    Agree
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-row>
+        </v-card>
+      </v-container>
     </div>
-    <div class="mt-16" v-else>
+    <!-- <div class="mt-16" v-else>
       <v-row justify="center">
         <h1>{{ $t("updateSupplierPage.accessDenied") }}</h1>
       </v-row>
-    </div>
+    </div> -->
   </v-app>
 </template>
 
@@ -716,6 +900,11 @@ export default {
       "fab fa-instagram",
     ],
     isLoading: false,
+    categoryItems: [],
+    supplierItems: [],
+    snackBarAlert: false,
+    snackBarMessage: "",
+    dialog: false,
   }),
   methods: {
     fileUploaded() {
@@ -893,6 +1082,95 @@ export default {
       });
       location.reload();
     },
+    getCategoryItems(category) {
+      this.categoryItems = [];
+      console.log(category);
+      for (var i = 0; i < this.categoriesItems.length; i++) {
+        if (this.categoriesItems[i].category_name == category) {
+          this.categoryItems.push(this.categoriesItems[i].category_items);
+        }
+      }
+    },
+    treeView() {
+      console.log(this.tree.name);
+      console.log("category", this.category);
+      console.log("items", this.categoriesItems);
+      for (let i = 0; i < this.category.length; i++) {
+        var counter = 1;
+        var children = [];
+
+        for (var j = 0; j < this.categoriesItems.length; j++) {
+          if (this.category[i] == this.categoriesItems[j].category_name) {
+            children.push({
+              id: counter,
+              name: this.categoriesItems[j].category_items,
+            });
+          } else {
+            children.push({ type: "null" });
+          }
+          counter++;
+        }
+
+        // this.categoriesItems.map((e) => {
+        //   if (this.category[i] == e.category_name) {
+        //     children.push({ id: counter, name: e.category_items });
+        //   }
+        //   counter++;
+        // });
+        console.log("map function", children);
+        this.categoryItemstest.push({
+          id: i + 1,
+          name: this.category[i],
+          children: children,
+        });
+      }
+      console.log("treee array test result", this.categoryItemstest);
+      console.log("items", this.items);
+    },
+    addItem(item) {
+      console.log(item);
+      var check = false;
+      if (this.supplierItems.length > 0) {
+        for (let i = 0; i < this.supplierItems.length; i++) {
+          if (item == this.supplierItems[i]) {
+            check = true;
+            break;
+          }
+        }
+      }
+      if (!check) {
+        this.supplierItems.push(item);
+      } else {
+        this.snackBarMessage = "Item Already exists";
+        this.snackBarAlert = true;
+      }
+    },
+    RemoveItem(item) {
+      for (let i = 0; i < this.supplierItems.length; i++) {
+        if (this.supplierItems[i] == item) {
+          this.supplierItems.splice(i, 1);
+          console.log(this.supplierItems);
+        }
+      }
+    },
+    addCategoryAndItemsToSupplier() {
+      this.dialog = false;
+      console.log(this.currentUser);
+      console.log(this.supplierItems);
+      this.$store.dispatch("addCategoryAndItemsToSupplier", {
+        supplierItems: this.supplierItems,
+        user_id: this.currentUser.user_id,
+      });
+      location.reload();
+    },
+    addButtonEvent() {
+      if (this.supplierItems.length == 0) {
+        this.snackBarMessage = "Please add item to proceed";
+        this.snackBarAlert = true;
+      } else {
+        this.dialog = true;
+      }
+    },
   },
 
   computed: {
@@ -925,6 +1203,19 @@ export default {
     nodeHost() {
       return this.$store.state.nodeHost;
     },
+    category() {
+      return this.$store.state.Home.category;
+    },
+    categoriesItems() {
+      return this.$store.state.Home.categoriesItems;
+    },
+
+    supplierItemsFromDB() {
+      return this.$store.state.SupplierPage.supplierItems;
+    },
+    supplierCategoriesAndItems() {
+      return this.$store.state.SupplierPage.supplierCategoriesAndItems;
+    },
   },
   async created() {
     //this.isLoading = true;
@@ -934,7 +1225,15 @@ export default {
       "getSupplierPageData",
       this.$route.params.supplier_id
     );
-
+    await this.$store.dispatch("categoriesDB");
+    await this.$store.dispatch("getCategoryItems");
+    // await this.$store.dispatch("getSupplierItems", {
+    //   user_id: this.currentUser.user_id,
+    // });
+    await this.$store.dispatch(
+      "getSupplierCategoriesAndItems",
+      this.currentUser.user_id
+    );
     await setTimeout(() => {
       this.toolBarColor = this.siteColor.toolbar_color;
       this.footerColor = this.siteColor.footer_color;
@@ -959,6 +1258,9 @@ export default {
         this.$router.push(`/${this.$i18n.locale}/notFound`);
       }
     }
+
+    this.supplierItems = this.supplierItemsFromDB;
+    console.log("array in table", this.supplierItems);
     this.isLoading = false;
   },
 };

@@ -1134,7 +1134,7 @@ export default {
     async sendData() {
       var carouselformdata = new FormData();
       var bannerformdata = new FormData();
-
+      console.log("right banne checkbox", this.rightBannerCheckbox);
       var carouselImages = [
         this.carouselImage1,
         this.carouselImage2,
