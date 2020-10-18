@@ -62,8 +62,8 @@
           @click="updatePage"
           :color="siteColor.button_color"
           rounded
-          ><span :style="`color:${siteColor.button_text_color}`"
-            >Update My page</span
+          ><span :style="`color:${siteColor.button_text_color}`">
+            {{ $t("supplierPage.updatePage") }}</span
           ></v-btn
         >
       </v-col>
@@ -76,7 +76,7 @@
           rounded
         >
           <span :style="`color:${siteColor.button_text_color}`">
-            Supplier Details</span
+            {{ $t("supplierPage.supplierDetails") }}</span
           >
         </v-btn>
       </v-col>

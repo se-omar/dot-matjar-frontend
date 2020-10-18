@@ -8,7 +8,9 @@
             <supplier :supplier="request.user"></supplier>
           </v-col>
           <v-col lg="4" class="mt-8">
-            <h4 style="font-size: 25px; color: orange">Request type :</h4>
+            <h4 style="font-size: 25px; color: orange">
+              {{ $t("categoryAndItemRequests.requestType") }} :
+            </h4>
             <span class="ml-3 mb-8" style="font-size: 25px; color: blue">{{
               request.request_type
             }}</span>
@@ -19,7 +21,7 @@
               v-if="request.new_category_name"
               style="font-size: 25px; color: orange"
             >
-              New Category name :
+              {{ $t("categoryAndItemRequests.newCategoryName") }} :
             </h4>
             <span
               v-if="request.new_category_name"
@@ -29,7 +31,7 @@
             >
             <v-divider class="divider"></v-divider>
             <h4 style="font-size: 25px; color: orange">
-              New Category Description :
+              {{ $t("categoryAndItemRequests.newCategoryDesc") }} :
             </h4>
             <span
               v-if="request.new_category_description"
@@ -37,7 +39,9 @@
               >{{ request.new_category_description }}</span
             >
             <v-divider class="divider"></v-divider>
-            <h4 style="font-size: 25px; color: orange">New Category Item :</h4>
+            <h4 style="font-size: 25px; color: orange">
+              {{ $t("categoryAndItemRequests.newCategoryItem") }} :
+            </h4>
             <span
               v-if="request.new_category_item"
               style="font-size: 25px; color: blue"
@@ -45,7 +49,7 @@
             >
             <v-divider class="divider"></v-divider>
             <h4 style="font-size: 25px; color: orange">
-              New Item Description:
+              {{ $t("categoryAndItemRequests.newItemDesc") }}:
             </h4>
             <span
               v-if="request.new_item_description"
@@ -54,7 +58,7 @@
             >
             <v-divider class="divider"></v-divider>
             <h4 style="font-size: 25px; color: orange">
-              New Item Category name:
+              {{ $t("categoryAndItemRequests.newItemCatName") }}:
             </h4>
             <span
               v-if="request.new_item_category_name"
@@ -62,7 +66,9 @@
               >{{ request.new_item_category_name }}</span
             >
             <v-divider class="divider"></v-divider>
-            <h4 style="font-size: 25px; color: orange">Request Status:</h4>
+            <h4 style="font-size: 25px; color: orange">
+              {{ $t("categoryAndItemRequests.requestStatus") }}:
+            </h4>
             <span style="font-size: 25px; color: blue">{{
               request.status
             }}</span>
@@ -79,9 +85,9 @@
               :color="siteColor.button_color"
               class="white--text blue"
               @click="acceptRequest(request)"
-              ><span :style="`color:${siteColor.button_text_color}`"
-                >Accept</span
-              ></v-btn
+              ><span :style="`color:${siteColor.button_text_color}`">{{
+                $t("categoryAndItemRequests.accept")
+              }}</span></v-btn
             >
           </v-col>
           <v-col lg="3">
@@ -89,7 +95,7 @@
               rounded
               class="white--text red"
               @click="rejectRequest(request)"
-              >Reject</v-btn
+              >{{ $t("categoryAndItemRequests.reject") }}</v-btn
             >
           </v-col>
           <v-snackbar

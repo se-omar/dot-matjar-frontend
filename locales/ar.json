@@ -225,5 +225,36 @@
         "pageUpdated": "تم تحديث الصفحة بنجاح",
         "textColor": "لون الكلمات",
         "accessDenied": "ليس لديك صلاحية لاظهار هذه الصفحة"
+    },
+    "supplierPage": {
+        "updatePage": "تحديث صفحتي",
+        "supplierDetails": "بيانات البائع"
+    },
+    "updateForgottenPassword": {
+        "updatePasswordPage": "صفحة تجديد كلمة السر",
+        "password": "كلمة السر",
+        "confirmPassword": "تأكيد كلمة السر",
+        "updatePassword": "تحديث كلمة السر"
+    },
+    "categoryAndItemRequests": {
+        "requestType": "نوع الطلب",
+        "newCategoryName": "اسم فئة جديدة",
+        "newCategoryDesc": "وصف الفئة الجديدة",
+        "newCategoryItem": "بند جديد",
+        "newItemDesc": "وصف البند",
+        "newItemCatName": "اسم فئة البند الجديد",
+        "requestStatus": "حالة الطلب",
+        "accept": "قبول",
+        "reject": "رفض"
+    },
+    "checkoutLocation": {
+        "productsDelivered": "سوف يتم توصيل المنتجات الي هذا العنوان",
+        "governorate": "المحافظة",
+        "region": "المنطقة",
+        "address": "العنوان",
+        "payOnRecieving": "الدفع عند الاستلام",
+        "close": "اغلاق",
+        "visa": "البطاقة الائتمانية",
+        "orderPlaced": "تم الطلب بنجاح"
     }
 }

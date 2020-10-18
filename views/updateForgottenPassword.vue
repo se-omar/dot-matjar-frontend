@@ -2,13 +2,15 @@
   <v-app>
     <v-container>
       <v-row justify="center">
-        <p class="display-1">update password page</p>
+        <p class="display-1">
+          {{ $t("updateForgottenPassword.updatePasswordPage") }}
+        </p>
       </v-row>
 
       <v-row justify="center">
         <v-col cols="6">
           <v-text-field
-            label="password"
+            :label="$t('updateForgottenPassword.password')"
             v-model="password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min, rules.valid]"
@@ -24,7 +26,7 @@
       <v-row justify="center">
         <v-col cols="6">
           <v-text-field
-            label="Confirm Password"
+            :label="$t('updateForgottenPassword.confirmPassword')"
             v-model="repeatPassword"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, passwordMatch]"
@@ -39,8 +41,9 @@
       <v-row justify="center">
         <v-col cols="5">
           <v-btn @click="updatePassword" :color="siteColor.button_color" block>
-            <span :style="`color:${siteColor.button_text_color};fontsize:18px`"
-              >Update Password</span
+            <span
+              :style="`color:${siteColor.button_text_color};fontsize:18px`"
+              >{{ $t("updateForgottenPassword.updatePassword") }}</span
             ></v-btn
           >
         </v-col>

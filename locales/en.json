@@ -226,5 +226,36 @@
     "pageUpdated": "page updated successfully",
     "close": "close",
     "accessDenied": "you don't have access to this page"
+  },
+  "supplierPage": {
+    "updatePage": "update my page",
+    "supplierDetails": "supplier details"
+  },
+  "updateForgottenPassword": {
+    "updatePasswordPage": "update password page",
+    "password": "password",
+    "confirmPassword": "confirm password",
+    "updatePassword": "update password"
+  },
+  "categoryAndItemRequests": {
+    "requestType": "request type",
+    "newCategoryName": "new category name",
+    "newCategoryDesc": "new category description",
+    "newCategoryItem": "new category item",
+    "newItemDesc": "new item description",
+    "newItemCatName": "new item category name",
+    "requestStatus": "request status",
+    "accept": "accept",
+    "reject": "reject"
+  },
+  "checkoutLocation": {
+    "productsDelivered": "products will be delivered to this location",
+    "governorate": "governorate",
+    "region": "region",
+    "address": "address",
+    "payOnRecieving": "pay on recieving",
+    "close": "close",
+    "visa": "visa",
+    "orderPlaced": "order is placed successfully"
   }
 }

@@ -4,14 +4,14 @@
       <v-form v-model="valid">
         <v-container>
           <v-row justify="center" class="mt-16">
-            <h1>Products will be delivered to this location</h1>
+            <h1>{{ $t("checkoutLocation.productsDelivered") }}</h1>
           </v-row>
           <v-row>
             <v-col lg="6" sm="6">
               <v-select
                 :rules="rules"
                 :items="egyptGovernorates"
-                placeholder="Governorate"
+                :placeholder="$t('checkoutLocation.governorate')"
                 dense
                 outlined
                 v-model="governorate"
@@ -22,7 +22,7 @@
               <v-select
                 :rules="rules"
                 :items="regions"
-                placeholder="Region"
+                :placeholder="$t('checkoutLocation.region')"
                 dense
                 outlined
                 v-model="region"
@@ -32,7 +32,7 @@
               <v-textarea
                 outlined
                 color="teal"
-                label="Address"
+                :label="$t('checkoutLocation.address')"
                 v-model="address"
               ></v-textarea>
             </v-col>
@@ -44,9 +44,9 @@
                 @click="createOrder"
                 :color="siteColor.button_color"
                 class="white--text"
-                ><span :style="`color:${siteColor.button_text_color}`"
-                  >Pay on Receiving</span
-                ></v-btn
+                ><span :style="`color:${siteColor.button_text_color}`">{{
+                  $t("checkoutLocation.payOnRecieving")
+                }}</span></v-btn
               >
 
               <!-- =============== -->
@@ -66,7 +66,7 @@
                     text
                     v-bind="attrs"
                     @click="snackbar = false"
-                    >Close</v-btn
+                    >{{ $t("checkoutLocation.close") }}</v-btn
                   >
                 </template>
               </v-snackbar>
@@ -78,7 +78,9 @@
                 :color="siteColor.button_color"
                 class="white--text"
                 @click="getSession"
-                ><span :style="siteColor.button_text_color">Visa</span></v-btn
+                ><span :style="siteColor.button_text_color">{{
+                  $t("checkoutLocation.visa")
+                }}</span></v-btn
               >
             </v-col>
           </v-row>
@@ -103,7 +105,7 @@ export default {
     quantityArray: [],
     rules: [(v) => !!v || "Required"],
     snackbar: false,
-    text: "Order is Placed Successfully",
+    text: this.$t("checkoutLocation.orderPlaced"),
     vertical: true,
   }),
 
