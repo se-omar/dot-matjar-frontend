@@ -96,14 +96,10 @@
         </v-card>
       </v-col>
     </v-row>
-    <!-- <v-container>
-      <ordersChart />
-    </v-container>-->
   </v-app>
 </template>
 
 <script>
-// import ordersChart from "../components/ordersChart";
 import Product from "../components/product.vue";
 
 export default {

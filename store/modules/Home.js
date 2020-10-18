@@ -239,7 +239,14 @@ export default {
             priceTo,
             product_id, buttonPressed
         }) {
-
+            console.log(product_name,
+                category_name,
+                governorate,
+                region,
+                categoryItem,
+                priceFrom,
+                priceTo,
+                product_id, buttonPressed)
             axios.put('http://localhost:3000/api/filterProducts', {
                 product_name,
                 category_name,
@@ -251,7 +258,7 @@ export default {
                     console.log('message:', response.data.message)
 
                     //debugger
-
+                    console.log('filtered products', response.data.data)
                     context.commit('filterProducts', { products: response.data.data, pressed: buttonPressed });
                 })
         },

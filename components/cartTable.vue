@@ -64,7 +64,7 @@
               <v-row>
                 <v-col cols="4"></v-col>
                 <v-col cols="6">
-                  <h2>Total: {{ total }}.00$</h2>
+                  <h2>{{ $t("cartTable.total") }}{{ total }}.00$</h2>
                 </v-col>
               </v-row>
 
@@ -75,7 +75,8 @@
                     dark
                     large
                     @click="getSession"
-                    >Checkout</v-btn
+                  >
+                    {{ $t("cartTable.checkout") }}</v-btn
                   >
                 </v-col>
 
@@ -88,7 +89,7 @@
                     depressed
                     small
                     color="error"
-                    >Clean</v-btn
+                    >{{ $t("cartTable.clean") }}</v-btn
                   >
                 </v-col>
               </v-row>

@@ -329,7 +329,7 @@
     </v-row>
 
     <v-row justify="space-between" class="mt-n7">
-      <v-col lg="2" sm="3" md="2">
+      <v-col lg="2" sm="4" md="2">
         <v-card height="95%" style="overflow: hidden" max-width>
           <!-- <v-row justify="center"
             ><v-card-title>Categories</v-card-title>
@@ -340,7 +340,7 @@
               <v-menu
                 v-for="category in category"
                 :key="category"
-                offset-x
+                offset-y
                 :close-on-content-click="false"
                 open-on-hover
               >
@@ -398,7 +398,7 @@
       <!-- <v-col lg="8" sm="5" md="7"> -->
       <v-col
         :lg="homePageInfo.show_right_banner ? 8 : 10"
-        sm="7"
+        sm="6"
         :md="homePageInfo.show_right_banner ? 8 : 10"
       >
         <v-radio-group mandatory :value="radioGroup">

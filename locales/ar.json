@@ -28,7 +28,8 @@
         "region": "المنطقة",
         "supplierNameSearch": "البحث باسم البائع",
         "priceFrom": "السعر من",
-        "priceTo": "السعر الي"
+        "priceTo": "السعر الي",
+        "siteColors": "الوان <br/>الموقع"
     },
     "homePage": {
         "loadMore": "المزيد",
@@ -256,5 +257,51 @@
         "close": "اغلاق",
         "visa": "البطاقة الائتمانية",
         "orderPlaced": "تم الطلب بنجاح"
+    },
+    "dashboardSellingProduct": {
+        "productCode": "كود المنتج ",
+        "unitPrice": "السعر",
+        "numberOfTimesSold": "عدد مرات البيع",
+        "details": "التفاصيل",
+        "noProductFound": "لا يوجد منتجانت"
+    },
+    "footer": {
+        "footerText": "اينما كنت و كيفما كانت سلعتك, سنوفر لك المكان لتعرض ما تريد بيعه, حيث يمكنك بناء متجرك الأن و التحكم في كيقيه ادارته وكيفيه تعامل الزبائن معه"
+    },
+    "product": {
+        "details": "التفاصيل",
+        "addToCart": "اضافه الي السله"
+    },
+    "productRequestDialog": {
+        "productDescription": "وصف الطلب",
+        "close": "اغلاق",
+        "serviceRequest": "طلب الخدمة"
+    },
+    "requestDetails": {
+        "backToRequests": "الرجوع للطلبات",
+        "respondToTheRequest": "الرد علي الطلب",
+        "requestNumber": "رقم الطلب:",
+        "senderName": "اسم المرسل:",
+        "ReceiverName": "اسم المرسل اليه:",
+        "email": "البريد الالكتروني:",
+        "mobileNumber": "رقم الموبايل:",
+        "requestDescription": "وصف الطلب",
+        "requestRespond": "الرد علي الطلب"
+    },
+    "supplier": {
+        "totalSales": "اجمالي المبيعات",
+        "sales": "المبيعات",
+        "revenue": "الايرادات"
+    },
+    "cartTable": {
+        "total": "المجموع",
+        "checkout": "الدفع",
+        "clean": "مسح"
+    },
+    "requestCard": {
+        "requestNumber": "رقم الطلب:",
+        "senderName": "اسم المرسل:",
+        "receiverName": "اسم المرسل اليه:",
+        "respondSent": "تم الرد"
     }
 }

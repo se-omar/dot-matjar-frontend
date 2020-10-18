@@ -39,7 +39,7 @@
             class="mt-8"
             outlined
             rounded
-            placeholder="SEARCH"
+            :placeholder="$t('toolbar.search')"
             append-icon="fa fa-search"
             @keyup="emptySearchBox"
             v-model="toolbarSearch"
@@ -51,7 +51,7 @@
             class="mt-8"
             outlined
             rounded
-            placeholder="SEARCH"
+            :placeholder="$t('toolbar.search')"
             append-icon="fa fa-search"
             @keyup="filterSupplierProducts($route.params.supplier_id)"
             v-model="supplierProductsSearch"
@@ -114,6 +114,20 @@
               </v-radio-group>
             </v-row>
             <v-row justify="center">
+              <v-col cols="4"></v-col>
+              <v-col cols="4">
+                <v-text-field
+                  class="mt-8"
+                  outlined
+                  rounded
+                  :placeholder="$t('toolbar.search')"
+                  append-icon="fa fa-search"
+                  @keyup="emptySearchBox"
+                  v-model="toolbarSearch"
+                  v-if="radioGroup === '1'"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="4"></v-col>
               <v-col cols="3" sm="1" lg="2"></v-col>
               <v-col cols="3" lg="4" sm="5" md="3">
                 <v-select
@@ -207,10 +221,22 @@
               </v-col>
               <v-col sm="3" lg="3" md="3"></v-col>
               <v-col lg="5" sm="3" md="3"></v-col>
-              <v-col cols="4" sm="2" md="2" lg="2">
+              <v-col v-if="radioGroup === '2'" cols="4" sm="2" md="2" lg="2">
                 <v-btn
                   class="white--text"
                   @click="filterSuppliers()"
+                  :color="siteColor.button_color"
+                  rounded
+                  x-large
+                  ><span :style="`color: ${siteColor.button_text_color}`">{{
+                    $t("toolbar.search")
+                  }}</span></v-btn
+                >
+              </v-col>
+              <v-col v-else cols="4" sm="2" md="2" lg="2">
+                <v-btn
+                  class="white--text"
+                  @click="filterProducts('search')"
                   :color="siteColor.button_color"
                   rounded
                   x-large
@@ -264,6 +290,21 @@
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn
+            v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs"
+            rounded
+            style="overflow: hidden"
+            class="font"
+            :style="`color:${siteColor.toolbar_text_color}`"
+            v-bind="attrs"
+            v-on="on"
+            icon
+            small
+          >
+            <i class="fa fa-user fa-lg mt-n1 mr-1" style="color: black"></i>
+            <!-- <span>{{ $t("toolbar.profile") }}</span> -->
+          </v-btn>
+          <v-btn
+            v-else
             rounded
             style="overflow: hidden"
             class="font"
@@ -385,7 +426,7 @@
             </v-col>
           </v-row>
           <v-row justify="center" v-if="currentUser.user_type == 'business'">
-            <v-col cols="12" sm="10" lg="5">
+            <v-col cols="12" sm="11" lg="5">
               <v-btn
                 class="btn1"
                 :color="siteColor.button_color"
@@ -396,8 +437,9 @@
                 <span
                   :style="`color:${siteColor.button_text_color}; `"
                   class="mos"
+                  v-html="$t('toolbar.myProducts')"
                 >
-                  {{ $t("toolbar.myProducts") }}</span
+                  {</span
                 >
               </v-btn>
               <v-divider class="mr-4"></v-divider>
@@ -411,10 +453,11 @@
                 rounded
                 :color="siteColor.button_color"
               >
-                <span :style="`color:${siteColor.button_text_color};`">
-                  Site <br />
-                  Colors</span
+                <span
+                  v-html="$t('toolbar.siteColors')"
+                  :style="`color:${siteColor.button_text_color};`"
                 >
+                </span>
               </v-btn>
               <v-divider class="mr-4"></v-divider>
             </v-col>
@@ -432,9 +475,9 @@
                 <span
                   :style="`color:${siteColor.button_text_color};`"
                   class="mos"
+                  v-html="$t('toolbar.orderManage')"
                 >
-                  {{ $t("toolbar.orderManage") }}</span
-                >
+                </span>
               </v-btn>
               <v-divider class="mr-4"></v-divider>
             </v-col>
@@ -851,6 +894,7 @@ export default {
         category_name: this.categoryName,
         governorate: this.governorate,
         region: this.region,
+        buttonPressed: "search",
       });
 
       this.isLoading = false;

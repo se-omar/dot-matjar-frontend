@@ -16,11 +16,11 @@
     "changeYourPassword": "change your password",
     "updateOrCompleteInfo": "update or complete info",
     "categoryRequests": "category <br/> and item <br/> requests",
-    "myProducts": "my products",
+    "myProducts": "my<br/>products",
     "myPage": "my page",
     "uploadPhoto": "upload your photo here",
-    "orderManage": "order manage",
-    "search": "search",
+    "orderManage": "order <br/> manage",
+    "search": "Search",
     "searchSuppliers": "search for suppliers",
     "searchProducts": "search for products",
     "homePage": "home page",
@@ -28,7 +28,8 @@
     "region": "region",
     "supplierNameSearch": "search supplier by name",
     "priceFrom": "price from",
-    "priceTo": "price to"
+    "priceTo": "price to",
+    "siteColors": "Site <br/> Colors"
   },
   "homePage": {
     "loadMore": "load more",
@@ -257,5 +258,51 @@
     "close": "close",
     "visa": "visa",
     "orderPlaced": "order is placed successfully"
+  },
+  "dashboardSellingProduct": {
+    "productCode": "Product Code :",
+    "unitPrice": " Unit Price:",
+    "numberOfTimesSold": "Number of Times Sold:",
+    "details": "details",
+    "noProductFound": "no product found"
+  },
+  "footer": {
+    "footerText": "Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet.Mauris cursus commodo interdum. Praesent ut risus eget metus luctusaccumsan id ultrices nunc. Sed at orci sed massa consectetur dignissima sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehiculalacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursusiaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementumtempor vel ut orci. Orci varius natoque penatibus et magnis disparturient montes, nascetur ridiculus mus."
+  },
+  "product": {
+    "details": "Details",
+    "addToCart": "Add To Cart"
+  },
+  "productRequestDialog": {
+    "productDescription": "Product Description",
+    "close": "Close",
+    "serviceRequest": "Service Request"
+  },
+  "requestDetails": {
+    "backToRequests": "Back to Requests",
+    "respondToTheRequest": "Respond to the Request",
+    "requestNumber": "Request Number",
+    "senderName": "Sender Name",
+    "receiverName": "Receiver Name",
+    "email": "email",
+    "mobileNumber": "Mobile Number",
+    "requestDescription": "Request Description",
+    "requestRespond": "Request Respond"
+  },
+  "supplier": {
+    "totalSales": "total sales:",
+    "sales": "Sales",
+    "revenue": "Revenue"
+  },
+  "cartTable": {
+    "total": "Total:",
+    "checkout": "Checkout",
+    "clean": "Clean"
+  },
+  "requestCard": {
+    "requestNumber": "Request Number",
+    "senderName": "Sender Name",
+    "receiverName": "Receiver Name",
+    "respondSent": "Respond Sent"
   }
 }
