@@ -11,7 +11,7 @@
                 required
                 outlined
                 :rules="Rules"
-                label="Product name"
+                :label="$t('editProduct.productName')"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -23,7 +23,7 @@
                 v-model="currentProduct.product_code"
                 dense
                 outlined
-                label="Code"
+                :label="$t('editProduct.code')"
               ></v-text-field>
             </v-col>
 
@@ -33,7 +33,7 @@
                 v-model="currentProduct.HS_code"
                 :rules="Rules"
                 outlined
-                label="HS code"
+                :label="$t('editProduct.hsCode')"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -45,7 +45,7 @@
                 dense
                 v-model="currentProduct.unit_price"
                 outlined
-                label="Price"
+                :label="$t('editProduct.price')"
               ></v-text-field>
             </v-col>
 
@@ -55,7 +55,7 @@
                 v-model="currentProduct.min_units_per_order"
                 :rules="Rules"
                 outlined
-                label="Minimum required Products"
+                :label="$t('editProduct.minOrders')"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -66,7 +66,7 @@
                 v-model="currentProduct.color"
                 dense
                 outlined
-                label="Color"
+                :label="$t('editProduct.color')"
               ></v-text-field>
             </v-col>
 
@@ -75,7 +75,7 @@
                 currentProduct.discount_amount
                 dense
                 outlined
-                label="Sale"
+                :label="$t('editProduct.sale')"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -87,7 +87,7 @@
                 :rules="Rules"
                 dense
                 outlined
-                label="Description"
+                :label="$t('editProduct.description')"
               ></v-textarea>
             </v-col>
           </v-row>
@@ -97,7 +97,7 @@
           <v-row justify="center">
             <v-col cols="9">
               <v-form>
-                <label>Main photo</label>
+                <label>{{ $t("editProduct.mainPicture") }}</label>
                 <v-file-input @change="setImage1"></v-file-input>
               </v-form>
             </v-col>
@@ -106,7 +106,7 @@
           <v-row justify="center">
             <v-col cols="9">
               <v-form>
-                <label>Extra photo</label>
+                <label>{{ $t("editProduct.extraPicture") }}</label>
                 <v-file-input @change="setImage2"></v-file-input>
               </v-form>
             </v-col>
@@ -115,7 +115,7 @@
           <v-row justify="center">
             <v-col cols="9">
               <v-form>
-                <label>Extra photo</label>
+                <label>{{ $t("editProduct.extraPicture") }}</label>
                 <v-file-input @change="setImage3"></v-file-input>
               </v-form>
             </v-col>
@@ -131,9 +131,9 @@
                 @click="updateProduct"
                 block
               >
-                <span :style="`color:${siteColor.button_text_color}`"
-                  >Edit product</span
-                >
+                <span :style="`color:${siteColor.button_text_color}`">{{
+                  $t("editProduct.editProduct")
+                }}</span>
               </v-btn>
             </v-col>
 
@@ -144,7 +144,9 @@
                 block
                 class="red white--text"
               >
-                <span style="font-size: 18px">Cancel</span>
+                <span style="font-size: 18px">{{
+                  $t("editProduct.cancel")
+                }}</span>
               </v-btn>
             </v-col>
           </v-row>

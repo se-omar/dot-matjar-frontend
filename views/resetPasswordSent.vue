@@ -13,13 +13,15 @@
       </v-row>
 
       <v-row justify="center">
-        <p class="display-1">A message is sent to your Email , Please verify</p>
+        <p class="display-1">{{ $t("resetPasswordSent.messageSent") }}</p>
       </v-row>
 
       <v-row justify="center">
         <v-col cols="5">
           <v-btn block @click="$router.push('/')" class="primary">
-            <span style="font-size: 20px">Back to Home page</span>
+            <span style="font-size: 20px">{{
+              $t("resetPasswordSent.backHome")
+            }}</span>
           </v-btn>
         </v-col>
       </v-row>

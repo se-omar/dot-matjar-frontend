@@ -2,19 +2,18 @@
   <v-app>
     <div v-if="paymentToken === $route.params.hash">
       <h3 class="mb-10 mt-10" style="text-align: center">
-        the payment was successful and the order is placed, you can check on it
-        from the my orders page
+        {{ $t("successfulPayment.paymentSuccessful") }}
       </h3>
 
       <v-row justify="center">
         <v-btn :to="'/home'" :color="siteColor.button_color">
-          <span :style="`color:${siteColor.button_text_color}`"
-            >home page</span
+          <span :style="`color:${siteColor.button_text_color}`">
+            {{ $t("successfulPayment.homePage") }}</span
           ></v-btn
         >
         <v-btn :to="'/userorders'" class="ml-6" :color="siteColoe.button_color">
-          <span :style="`color:${siteColor.button_text_color};fontsize:18px`"
-            >orders page</span
+          <span :style="`color:${siteColor.button_text_color};fontsize:18px`">
+            {{ $t("successfulPayment.ordersPage") }}</span
           ></v-btn
         >
       </v-row>
@@ -22,7 +21,7 @@
 
     <div v-else>
       <v-row justify="center">
-        <h2>you dont have access to this page</h2>
+        <h2>{{ $t("successfulPayment.noAccess") }}</h2>
       </v-row>
     </div>
   </v-app>

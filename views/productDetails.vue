@@ -36,7 +36,7 @@
         <v-row>
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
-              Supplier:
+              {{ $t("productDetails.supplier") }}:
               <span class="text--secondary">{{
                 currentProduct.user.full_arabic_name
               }}</span>
@@ -45,7 +45,7 @@
 
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
-              Location:
+              {{ $t("productDetails.location") }}::
               <span class="text--secondary"
                 >{{ currentProduct.user.governorate }} ,
                 {{ currentProduct.user.region }}</span
@@ -55,7 +55,7 @@
 
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
-              Category:
+              {{ $t("productDetails.category") }}::
               <span class="text--secondary">{{
                 currentProduct.product_category.category_name
               }}</span>
@@ -64,14 +64,14 @@
 
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
-              Color:
+              {{ $t("productDetails.color") }}:
               <span class="text--secondary">{{ currentProduct.color }}</span>
             </span>
           </v-col>
 
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
-              Weight:
+              {{ $t("productDetails.weight") }}::
               <span class="text--secondary">{{
                 currentProduct.unit_weight
               }}</span>
@@ -80,7 +80,7 @@
 
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
-              Stock Status:
+              {{ $t("productDetails.stockStatus") }}::
               <span class="text--secondary">{{
                 currentProduct.availability === "1"
                   ? "In Stock"
@@ -91,21 +91,21 @@
 
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
-              Brand:
+              {{ $t("productDetails.brand") }}:
               <span class="text--secondary">brand name</span>
             </span>
           </v-col>
 
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
-              Condition:
+              {{ $t("productDetails.condition") }}::
               <span class="text--secondary">New</span>
             </span>
           </v-col>
 
           <v-col class="mr-4 mt-12" lg="12">
             <p style="font-size: 23px" class="text-center font-weight-medium">
-              About this Product:
+              {{ $t("productDetails.aboutProduct") }}::
             </p>
             <span
               class="font-weight-medium text--secondary"
@@ -135,8 +135,8 @@
               x-large
             >
               <span :color="siteColor.button_color" style="font-size: 18px"
-                ><span :style="`color:${siteColor.button_text_color}`"
-                  >Edit product</span
+                ><span :style="`color:${siteColor.button_text_color}`">
+                  {{ $t("productDetails.editProduct") }}:</span
                 ></span
               >
             </v-btn>
@@ -148,8 +148,8 @@
               v-else
               @click="supplierClicked(currentProduct.user)"
             >
-              <span :style="`color:${siteColor.button_text_color}`"
-                >Visit Supplier's Page</span
+              <span :style="`color:${siteColor.button_text_color}`">
+                {{ $t("productDetails.visitSupplier") }}:</span
               >
             </v-btn>
           </v-col>
@@ -164,8 +164,8 @@
               block
               x-large
             >
-              <span :style="`color:${siteColor.button_text_color}`"
-                >Remove product</span
+              <span :style="`color:${siteColor.button_text_color}`">
+                {{ $t("productDetails.removeProduct") }}:</span
               >
             </v-btn>
 
@@ -180,14 +180,16 @@
               x-large
               class="white--text"
               :color="siteColor.button_color"
-              ><span :style="`color:${siteColor.button_text_color}`"
-                >Add to cart</span
+              ><span :style="`color:${siteColor.button_text_color}`">
+                {{ $t("productDetails.addToCart") }}:</span
               ></v-btn
             >
           </v-col>
 
           <v-col lg="9">
-            <p class="text-h5 mb-n2 text-center">Product Rating</p>
+            <p class="text-h5 mb-n2 text-center">
+              {{ $t("productDetails.productRating") }}:
+            </p>
             <v-rating
               readonly
               class="ml-n1"
@@ -205,19 +207,19 @@
           <v-col cols="9">
             <v-divider class="mb-8"></v-divider>
             <p class="text-h5 mb-n2 text-center" v-if="!userOrderedProductFlag">
-              You can rate this Product once You buy it
+              {{ $t("productDetails.canRateIfBuy") }}:
             </p>
             <p
               v-if="productRating === 0 && userOrderedProductFlag"
               class="text-h5 mb-n2 text-center"
             >
-              Rate this Product
+              {{ $t("productDetails.rateProduct") }}:
             </p>
             <p
               v-if="productRating !== 0 && userOrderedProductFlag"
               class="text-h5 mb-n2 text-center"
             >
-              Your Rating:
+              {{ $t("productDetails.yourRating") }}::
             </p>
             <v-rating
               v-if="userOrderedProductFlag"
@@ -241,8 +243,8 @@
               @click="submitReview"
               block
               :color="siteColor.button_color"
-              ><span :style="`color:${siteColor.button_text_color}`"
-                >Submit</span
+              ><span :style="`color:${siteColor.button_text_color}`">
+                {{ $t("productDetails.submit") }}:</span
               ></v-btn
             >
           </v-col>
@@ -252,7 +254,7 @@
     <v-divider></v-divider>
     <v-row justify="center">
       <v-col lg="8">
-        <p class="text-h4">Customer Reviews</p>
+        <p class="text-h4">{{ $t("productDetails.customerReviews") }}:</p>
       </v-col>
     </v-row>
 
@@ -305,7 +307,9 @@
     <v-divider></v-divider>
     <v-row justify="center">
       <v-col lg="8">
-        <p class="text-h5">({{ reviewsWithText.length }}) Reviews</p>
+        <p class="text-h5">
+          ({{ reviewsWithText.length }}) {{ $t("productDetails.reviews") }}:
+        </p>
       </v-col>
     </v-row>
 
@@ -319,7 +323,8 @@
           <v-row>
             <v-col lg="7">
               <p class="text-h5 font-weight-medium">
-                By {{ review.user.full_arabic_name }}
+                {{ $t("productDetails.by") }}:
+                {{ review.user.full_arabic_name }}
               </p>
             </v-col>
 
@@ -347,7 +352,7 @@
     <v-dialog width="700" persistent v-model="removePressed">
       <v-card>
         <p style="text-align: center" class="text-h5">
-          Are you sure you want to remove this product?
+          {{ $t("productDetails.removeProductConfirm") }}:
         </p>
 
         <v-row justify="center">
@@ -358,8 +363,8 @@
               @click="removeProduct"
               class="mr-15"
               :color="siteColor.button_color"
-              ><span :style="`color:${siteColor.button_text_color}`"
-                >Yes</span
+              ><span :style="`color:${siteColor.button_text_color}`">
+                {{ $t("productDetails.yes") }}:</span
               ></v-btn
             >
           </v-col>
@@ -368,9 +373,9 @@
               large
               block
               @click="removePressed = false"
-              :color="soteColor.button_color"
-              ><span :style="`color:${siteColor.button_text_color}`"
-                >No</span
+              :color="siteColor.button_color"
+              ><span :style="`color:${siteColor.button_text_color}`">
+                {{ $t("productDetails.no") }}:</span
               ></v-btn
             >
           </v-col>
