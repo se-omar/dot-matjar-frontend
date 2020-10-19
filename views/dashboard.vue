@@ -7,10 +7,12 @@
         :is-full-page="true"
       ></loading>
     </div>
-    <div class="display-1 mb-10 mt-6" style="margin: auto">Dashboard</div>
+    <div class="display-1 mb-10 mt-6" style="margin: auto">
+      {{ $t("dashboard.dashboard") }}
+    </div>
 
     <v-row justify="center">
-      <p style="font-size: 28px">All Products</p>
+      <p style="font-size: 28px">{{ $t("dashboard.allProducts") }}</p>
     </v-row>
 
     <v-row justify="center" v-if="myProducts.length != 0">
@@ -30,7 +32,7 @@
     </v-row>
 
     <v-row class="mt-16" justify="center" v-else>
-      <p style="font-size: 25px">No products available for this supplier</p>
+      <p style="font-size: 25px">{{ $t("dashboard.noAvailableProducts") }}</p>
     </v-row>
 
     <v-divider class="mt- mb-10"></v-divider>
@@ -42,7 +44,7 @@
           v-model="selectedYear"
           outlined
           :items="years"
-          label="Select Year"
+          :label="$t('dashboard.selectYear')"
         ></v-select>
       </v-col>
     </v-row>
@@ -68,7 +70,9 @@
           </v-hover>
           <v-row justify="center">
             <v-label for="barChart">
-              <span style="font-size: 22px">Monthly Sales Bar Chart</span>
+              <span style="font-size: 22px">{{
+                $t("dashboard.monthlySalesBar")
+              }}</span>
             </v-label>
           </v-row>
         </div>
@@ -94,7 +98,9 @@
           </v-hover>
           <v-row justify="center">
             <v-label for="lineChart">
-              <span style="font-size: 22px">Monthly Sales Line Chart</span>
+              <span style="font-size: 22px">{{
+                $t("dashboard.monthlySalesLine")
+              }}</span>
             </v-label>
           </v-row>
         </div>
@@ -121,7 +127,9 @@
           </v-hover>
           <v-row justify="center">
             <v-label for="pieChart">
-              <span style="font-size: 22px">Category Sales Percentage</span>
+              <span style="font-size: 22px">{{
+                $t("dashboard.categoryChart")
+              }}</span>
             </v-label>
           </v-row>
         </div>
@@ -153,7 +161,7 @@
           <v-row justify="center">
             <v-label for="lineChart">
               <span style="font-size: 22px"
-                >Revenue This Month:
+                >{{ $t("dashboard.monthlyRevenue") }}:
                 {{
                   revenueChartSeries[0].data[
                     revenueChartSeries[0].data.length - 1
@@ -176,7 +184,8 @@
               class="grey lighten-5 mb-11"
             >
               <span class="grey--text text--darken-1" style="font-size: 20px"
-                >Total Revenue: {{ currentUser.total_revenue }} EGP</span
+                >{{ $t("dashboard.totalRevenue") }}:
+                {{ currentUser.total_revenue }} EGP</span
               >
             </v-card>
           </v-hover>
@@ -192,7 +201,7 @@
               class="grey lighten-5 mb-11"
             >
               <span class="grey--text text--darken-1" style="font-size: 20px"
-                >Amount Recieved:
+                >{{ $t("dashboard.amountRecieved") }}:
                 {{ currentUser.revenue_recieved || 0 }} EGP</span
               >
             </v-card>
@@ -209,7 +218,7 @@
               class="grey lighten-5 mb-11"
             >
               <span class="grey--text text--darken-1" style="font-size: 20px"
-                >Amount Left:
+                >{{ $t("dashboard.amountLeft") }}:
                 {{
                   currentUser.total_revenue - currentUser.revenue_recieved || 0
                 }}
@@ -232,7 +241,9 @@
         />
         <v-row justify="center">
           <v-label for="mostSelling">
-            <span style="font-size: 22px">Most Selling Product</span>
+            <span style="font-size: 22px">{{
+              $t("dashboard.mostSellingProduct")
+            }}</span>
           </v-label>
         </v-row>
       </v-col>
@@ -245,7 +256,9 @@
         />
         <v-row justify="center">
           <v-label for="leastSelling">
-            <span style="font-size: 22px">least Selling Product</span>
+            <span style="font-size: 22px">{{
+              $t("dashboard.leastSellingProduct")
+            }}</span>
           </v-label>
         </v-row>
       </v-col>

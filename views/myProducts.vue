@@ -37,14 +37,15 @@
 
           <v-row justify="center">
             <v-btn
-              :color="siteColor"
-              fab
               large
               @click="
                 $router.push(`/${$i18n.locale}/addProduct`).catch((err) => {})
               "
+              :color="siteColor.button_color"
             >
-              <i class="fa fa-plus fa-2x"></i>
+              <span :style="`color:${siteColor.button_text_color}`">
+                <i class="fa fa-plus fa-2x"></i
+              ></span>
             </v-btn>
           </v-row>
           <v-row>

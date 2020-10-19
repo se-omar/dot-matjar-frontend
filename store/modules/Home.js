@@ -17,7 +17,9 @@ export default {
         categoryRequestMessage: '',
         supplierCategoriesRequests: [],
         homePageInfo: {},
-        radioGroup: '1'
+        radioGroup: '1',
+        siteLanguage: 'en',
+        availableCountries: ''
     },
 
     mutations: {
@@ -63,9 +65,18 @@ export default {
         },
 
         categoriesDB(state, data) {
-            state.category = data.map(e => {
-                return e.category_name
-            })
+
+            if (state.siteLanguage == 'en') {
+                state.category = data.map(e => {
+                    return e.category_name
+                })
+            }
+            else {
+                state.category = data.map(e => {
+                    return e.category_arabic_name
+                })
+            }
+
 
         },
 
@@ -134,6 +145,12 @@ export default {
             state.radioGroup = radioValue;
             console.log('radio value', radioValue)
             console.log('radio group', state.radioGroup)
+        },
+        siteLanguage(state, value) {
+            state.siteLanguage = value
+        },
+        getAvailableCountries(state, countries) {
+            state.availableCountries = countries
         }
 
     },
@@ -252,7 +269,8 @@ export default {
                 category_name,
                 governorate,
                 region,
-                categoryItem, priceFrom, priceTo, product_id
+                categoryItem, priceFrom, priceTo, product_id,
+                siteLanguage: context.state.siteLanguage
             })
                 .then(response => {
                     console.log('message:', response.data.message)
@@ -291,16 +309,16 @@ export default {
                 })
         },
 
-        addNewCategory(context, categoryName) {
-            axios.post('http://localhost:3000/api/addNewCategory', { categoryName: categoryName })
+        addNewCategory(context, { categoryName, categoryArabicName }) {
+            axios.post('http://localhost:3000/api/addNewCategory', { categoryName, categoryArabicName })
                 .then(message => {
                     console.log(message.data.message)
                     alert(message.data.message)
 
                 })
         },
-        addCategoryItems(context, { categoryName, categoryItem }) {
-            axios.post('http://localhost:3000/api/addCategoryItems', { categoryName: categoryName, categoryItem: categoryItem })
+        addCategoryItems(context, { categoryName, categoryItem, itemArabicName }) {
+            axios.post('http://localhost:3000/api/addCategoryItems', { categoryName: categoryName, categoryItem: categoryItem, itemArabicName: itemArabicName })
                 .then(message => {
                     console.log(message.data.message)
                     alert(message.data.message)
@@ -328,7 +346,7 @@ export default {
             newCategoryDescription,
             newCategoryItem,
             newCategoryItemDescription,
-            categoryName }) {
+            categoryName, itemArabicName, categoryArabicName }) {
 
             axios.post('http://localhost:3000/api/requestNewCategoryAndItem', {
                 newCategoryName,
@@ -336,6 +354,8 @@ export default {
                 newCategoryItem,
                 newCategoryItemDescription,
                 categoryName,
+                itemArabicName,
+                categoryArabicName,
                 user_id: context.state.currentUser.user_id
             }).then(res => {
                 console.log(res.data.message)
@@ -355,6 +375,8 @@ export default {
             newCategoryItem,
             newItemCategoryName,
             requestType,
+            categoryArabicName,
+            itemArabicName
         }) {
             axios.put('http://localhost:3000/api/categoryAndItemRequestStatus', {
                 id, status,
@@ -363,6 +385,8 @@ export default {
                 newCategoryItem,
                 newItemCategoryName,
                 requestType,
+                categoryArabicName,
+                itemArabicName
             })
                 .then(message => {
                     context.commit('categoryAndItemRequestStatus', message.data.message)
@@ -488,9 +512,16 @@ export default {
                 })
         },
 
-
+        async getAvailableCountries(context) {
+            await axios.put('http://localhost:3000/api/getAvailableCountries')
+                .then(countries => {
+                    console.log('available countries', countries.data.data)
+                    context.commit('getAvailableCountries', countries.data.data)
+                })
+        }
 
 
     },
+
 
 }

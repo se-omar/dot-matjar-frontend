@@ -21,5 +21,6 @@ export default new Vuetify({
                 background: colors.shades.black
             }
         }
-    }
+    },
+
 });

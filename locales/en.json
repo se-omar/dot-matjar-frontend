@@ -29,7 +29,8 @@
     "supplierNameSearch": "search supplier by name",
     "priceFrom": "price from",
     "priceTo": "price to",
-    "siteColors": "Site <br/> Colors"
+    "siteColors": "Site <br/> Colors",
+    "country": "Country"
   },
   "homePage": {
     "loadMore": "load more",
@@ -57,7 +58,10 @@
     "extraPicture": "extra picture",
     "addProduct": "add product",
     "cancel": "cancel",
-    "addCategory": "add category"
+    "addCategory": "add category",
+    "myCategoryRequests": "My Category Requests",
+    "categoryArabicName": "Category Arabic Name",
+    "itemArabicName": "Item Arabic Name"
   },
   "adminPage": {
     "addNewCategory": "add a new category",
@@ -94,7 +98,9 @@
     "loadmore": "loadmore",
     "deleteCategoryCheck": "Are you sure you want to Delete this category ?",
     "deleteCategoryCheck2": "Please be aware that by proceeding all products in this category will not have a unique category to search for.",
-    "disagree": "disagree"
+    "disagree": "disagree",
+    "newCategoryArabicName": "Category Arabic Name",
+    "newCategoryItemArabicName": "Item Arabic Name"
   },
   "suppliersDashboard": {
     "dashboard": "dashboard",
@@ -226,7 +232,15 @@
     "textColor": "text color",
     "pageUpdated": "page updated successfully",
     "close": "close",
-    "accessDenied": "you don't have access to this page"
+    "accessDenied": "you don't have access to this page",
+    "chooseYourCategory": "Choose Your Category",
+    "items": "Items",
+    "category": "Category",
+    "selectedItems": "Selected Items",
+    "dialogApprovalQuestion": "Sure ?",
+    "dialogApprovalDescription": "Be aware that by updating the items , all of your previews items will be overwritten...",
+    "dialogApprovalButton": "Agree",
+    "dialogDisApprovalButton": "Disagree"
   },
   "supplierPage": {
     "updatePage": "update my page",
@@ -247,7 +261,9 @@
     "newItemCatName": "new item category name",
     "requestStatus": "request status",
     "accept": "accept",
-    "reject": "reject"
+    "reject": "reject",
+    "newCategoryArabicName": "Category Arabic Name",
+    "newItemArabicName": "New Item Arabic Name"
   },
   "checkoutLocation": {
     "productsDelivered": "products will be delivered to this location",
@@ -304,5 +320,111 @@
     "senderName": "Sender Name",
     "receiverName": "Receiver Name",
     "respondSent": "Respond Sent"
+  },
+  "dashboard": {
+    "dashboard": "dashboard",
+    "allProducts": "all products",
+    "noAvailableProducts": "No products available for this supplier",
+    "monthlySalesBar": "monthly sales bar chart",
+    "monthlySalesLine": "monthly sales line chart",
+    "categoryChart": "category sales percentage",
+    "selectYear": "select year",
+    "totalRevenue": "total revenue",
+    "amountRecieved": "amount recieved",
+    "amountLeft": "amount left",
+    "monthlyRevenue": "revenue this month",
+    "mostSellingProduct": "most selling product",
+    "leastSellingProduct": "least selling product"
+  },
+  "editProduct": {
+    "productName": "product name",
+    "category": "category",
+    "item": "item",
+    "code": "code",
+    "hsCode": "HS code",
+    "price": "price",
+    "minOrders": "minimum number of orders",
+    "color": "color",
+    "sale": "sale",
+    "description": "description",
+    "wantMoreCategories": "Want to add your own category ?",
+    "clickHere": "Click here",
+    "categoryRequest": "Category Request",
+    "requestNewCategory": "Request for new Category",
+    "categoryName": "category name",
+    "requestItem": "request a category item",
+    "addItem": "add item",
+    "mainPicture": "Main picture",
+    "extraPicture": "extra picture",
+    "editProduct": "edit product",
+    "cancel": "cancel"
+  },
+  "orderedProducts": {
+    "productsPlaced": "products placed in orders",
+    "users": "users",
+    "showProducts": "showProducts",
+    "products": "products",
+    "productStatus": "product status",
+    "update": "update",
+    "statusUpdated": "product status updated successfully",
+    "close": "close",
+    "showAddress": "show address details",
+    "addressDetails": "address details",
+    "country": "country",
+    "city": "city",
+    "state": "state",
+    "address1": "address line 1",
+    "address2": "address line 2",
+    "username": "user name",
+    "userMobile": "user mobile number",
+    "orderNumber": "order number",
+    "orderDate": "order date",
+    "productName": "product name",
+    "productId": "product ID",
+    "productCode": "product code",
+    "productQuantity": "product quantity",
+    "status": "status"
+  },
+  "productDetails": {
+    "supplier": "supplier",
+    "location": "location",
+    "category": "category",
+    "color": "color",
+    "weight": "weight",
+    "stockStatus": "stock status",
+    "brand": "brand",
+    "condition": "condition",
+    "aboutProduct": "about this product",
+    "editProduct": "edit product",
+    "visitSupplier": "visit supplier's page",
+    "removeProduct": "removeProduct",
+    "addToCart": "add to cart",
+    "productRating": "product rating",
+    "canRateIfBuy": "you can rate this product once you buy it",
+    "rateProduct": "rate this product",
+    "yourRating": "your rating",
+    "submit": "submit",
+    "customerReviews": "customer reviews",
+    "reviews": "reviews",
+    "by": "by",
+    "removeProductConfirm": "are you sure you want to remove this product",
+    "yes": "yes",
+    "no": "no"
+  },
+  "requestsPage": {
+    "issuedRequests": "issued requests",
+    "incomingRequests": "incoming requests",
+    "noPermissions": "you don't have permissions to view this page",
+    "noRequests": "no requests found"
+  },
+  "resetPasswordSent": {
+    "messageSent": "A message is sent to your Email , Please verify",
+    "backHome": "back to home page"
+  },
+  "successfulPayment": {
+    "paymentSuccessful": " the payment was successful and the order is placed, you can check on itfrom the my orders page",
+    "homePage": "home page",
+    "ordersPage": "orders page",
+    "noAccess": "you dont have access to this page"
   }
 }

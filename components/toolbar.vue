@@ -128,8 +128,22 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="4"></v-col>
-              <v-col cols="3" sm="1" lg="2"></v-col>
-              <v-col cols="3" lg="4" sm="5" md="3">
+              <v-col cols="4"></v-col>
+              <v-col cols="4">
+                <v-select
+                  rounded
+                  v-if="radioGroup === '1'"
+                  :items="availableCountries"
+                  :disabled="radioGroup === '2'"
+                  :placeholder="$t('toolbar.country')"
+                  dense
+                  outlined
+                  v-model="country"
+                ></v-select>
+              </v-col>
+              <v-col cols="4"></v-col>
+              <v-col cols="2"></v-col>
+              <v-col cols="4" md="3">
                 <v-select
                   rounded
                   v-if="radioGroup === '1'"
@@ -143,7 +157,7 @@
                 ></v-select>
               </v-col>
 
-              <v-col cols="3" lg="4" sm="5" md="3">
+              <v-col cols="4" md="3">
                 <v-select
                   rounded
                   v-if="radioGroup === '1'"
@@ -155,7 +169,7 @@
                   v-model="region"
                 ></v-select>
               </v-col>
-              <v-col lg="2" sm="1" cols="3"></v-col>
+              <v-col cols="2"></v-col>
               <v-col cols="2" lg="3" sm="4" md="4">
                 <v-select
                   rounded
@@ -422,7 +436,7 @@
                   {{ $t("toolbar.myPage") }}</span
                 >
               </v-btn>
-              <v-divider class="mr-4"></v-divider>
+              <!-- <v-divider class="mr-4"></v-divider> -->
             </v-col>
           </v-row>
           <v-row justify="center" v-if="currentUser.user_type == 'business'">
@@ -435,14 +449,14 @@
                 @click="$router.push(`/${$i18n.locale}/myProducts`)"
               >
                 <span
-                  :style="`color:${siteColor.button_text_color}; `"
+                  style="color: white"
                   class="mos"
                   v-html="$t('toolbar.myProducts')"
                 >
                   {</span
                 >
               </v-btn>
-              <v-divider class="mr-4"></v-divider>
+              <!-- <v-divider class="mr-4"></v-divider> -->
             </v-col>
           </v-row>
           <v-row justify="center" v-if="currentUser.user_type == 'admin'">
@@ -453,13 +467,10 @@
                 rounded
                 :color="siteColor.button_color"
               >
-                <span
-                  v-html="$t('toolbar.siteColors')"
-                  :style="`color:${siteColor.button_text_color};`"
-                >
+                <span v-html="$t('toolbar.siteColors')" style="color: white">
                 </span>
               </v-btn>
-              <v-divider class="mr-4"></v-divider>
+              <!-- <v-divider class="mr-4"></v-divider> -->
             </v-col>
           </v-row>
 
@@ -473,13 +484,13 @@
                 @click="$router.push(`/${$i18n.locale}/orderedProducts`)"
               >
                 <span
-                  :style="`color:${siteColor.button_text_color};`"
+                  style="color: white"
                   class="mos"
                   v-html="$t('toolbar.orderManage')"
                 >
                 </span>
               </v-btn>
-              <v-divider class="mr-4"></v-divider>
+              <!-- <v-divider class="mr-4"></v-divider> -->
             </v-col>
           </v-row>
 
@@ -494,11 +505,11 @@
                 "
                 ><span
                   v-html="$t('toolbar.categoryRequests')"
-                  :style="`color:${siteColor.button_text_color};`"
+                  style="color: white"
                 >
                 </span
               ></v-btn>
-              <v-divider class="mr-4"></v-divider>
+              <!-- <v-divider class="mr-4"></v-divider> -->
             </v-col>
           </v-row>
 
@@ -776,10 +787,13 @@
 <script>
 export default {
   components: {},
-  created() {
-    this.$store.dispatch("refreshCurrentUser");
-
+  async created() {
+    await this.$store.dispatch("refreshCurrentUser");
+    await this.$store.dispatch("getAvailableCountries");
     console.log("color from toolbar", this.siteColor);
+    if (this.availableCountries) {
+      console.log(this.availableCountries);
+    }
   },
 
   props: {
@@ -814,13 +828,23 @@ export default {
       return this.$store.state.SupplierPage.supplier;
     },
     egyptGovernorates() {
-      return this.$store.state.Home.governorates;
+      if (this.country == "Egypt") {
+        return this.$store.state.Home.governorates;
+      } else return [];
     },
     regions() {
       return this.$store.state.Home.regions;
     },
     radioGroup() {
       return this.$store.state.Home.radioGroup;
+    },
+    availableCountries() {
+      if (this.$store.state.Home.availableCountries) {
+        var data = this.$store.state.Home.availableCountries.map((e) => {
+          return e.country_name;
+        });
+        return data;
+      } else return [];
     },
   },
 
@@ -830,6 +854,9 @@ export default {
         params: { lang: value },
       });
       this.$vuetify.rtl = value == "ar" ? true : false;
+      this.$store.commit("siteLanguage", value);
+
+      this.$store.dispatch("categoriesDB");
     },
     logout() {
       this.$store.commit("removeCurrentUser");
@@ -947,6 +974,8 @@ export default {
 
     supplierName: "",
     supplierProductsSearch: "",
+    filterSuppliersByName: "",
+    country: "",
   }),
 };
 </script>

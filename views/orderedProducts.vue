@@ -2,7 +2,7 @@
   <v-app class="grey lighten-4">
     <v-row justify="center">
       <v-col cols="12" lg="4" class="mt-8">
-        <h1>Products placed in order</h1>
+        <h1>{{ $t("orderedProducts.productsPlaced") }}</h1>
       </v-col>
       <!-- <product :filteredProduct="filteredProduct"></product> -->
 
@@ -14,9 +14,9 @@
                 <v-spacer></v-spacer>
                 <v-toolbar-title>
                   <p class="text-h4 mt-4">
-                    <span :style="`color:${siteColor.toolbar_text_color}`"
-                      >Users</span
-                    >
+                    <span :style="`color:${siteColor.toolbar_text_color}`">{{
+                      $t("orderedProducts.users")
+                    }}</span>
                   </p>
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
@@ -35,9 +35,9 @@
               >
                 <template v-slot:item.showProducts>
                   <v-btn :color="siteColor.button_color" small
-                    ><span :style="`color:${siteColor.button_text.color}`"
-                      >Show Products</span
-                    ></v-btn
+                    ><span :style="`color:${siteColor.button_text.color}`">{{
+                      $t("orderedProducts.showProducts")
+                    }}</span></v-btn
                   >
                 </template>
               </v-data-table>
@@ -47,7 +47,9 @@
               <v-toolbar shaped dark dense :color="siteColor">
                 <v-spacer></v-spacer>
                 <v-toolbar-title>
-                  <p class="text-h4 white--text mt-4">Products</p>
+                  <p class="text-h4 white--text mt-4">
+                    {{ $t("orderedProducts.products") }}
+                  </p>
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
               </v-toolbar>
@@ -91,9 +93,9 @@
                         <v-col cols="8">
                           <v-card-text>
                             <v-list three-line subheader>
-                              <v-subheader class="font-weight-black"
-                                >Product Status</v-subheader
-                              >
+                              <v-subheader class="font-weight-black">{{
+                                $t("orderedProducts.productStatus")
+                              }}</v-subheader>
 
                               <v-select
                                 v-model="productStatusUpdate"
@@ -108,18 +110,18 @@
                                 class="white--text"
                                 ><span
                                   :style="`color:${siteColor.button_text.color}`"
-                                  >Update</span
+                                  >{{ $t("orderedProducts.update") }}</span
                                 ></v-btn
                               >
                               <v-snackbar v-model="snackbar" :timeout="timeout">
                                 <template v-slot:action="{ attrs }">
-                                  Product status Updated successfully
+                                  {{ $t("orderedProducts.statusUpdated") }}
                                   <v-btn
                                     class="red white--text"
                                     text
                                     v-bind="attrs"
                                     @click="snackbar = false"
-                                    >Close</v-btn
+                                    >{{ $t("orderedProducts.close") }}</v-btn
                                   >
                                 </template>
                               </v-snackbar>
@@ -127,7 +129,7 @@
                                 @click="statusDialog = false"
                                 rounded
                                 class="ml-2 red white--text"
-                                >Close</v-btn
+                                >{{ $t("orderedProducts.close") }}</v-btn
                               >
                             </v-list>
                           </v-card-text>
@@ -153,21 +155,23 @@
                   v-bind="attrs"
                   v-on="on"
                   @click="dialog = true"
-                  ><span :style="`color:${siteColor.button_text.color}`"
-                    >Show Address Details</span
-                  ></v-btn
+                  ><span :style="`color:${siteColor.button_text.color}`">{{
+                    $t("orderedProducts.showAddress")
+                  }}</span></v-btn
                 >
               </template>
               <v-card>
                 <v-card-title>
-                  <span class="headline">Address Details</span>
+                  <span class="headline">{{
+                    $t("orderedProducts.addressDetails")
+                  }}</span>
                 </v-card-title>
                 <v-card-text>
                   <v-container>
                     <v-row>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          label="Country"
+                          :label="$t('orderedProducts.country')"
                           disabled
                           v-model="country"
                         ></v-text-field>
@@ -175,7 +179,7 @@
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
                           disabled
-                          label="City"
+                          :label="$t('orderedProducts.city')"
                           v-model="city"
                           hint="example of helper text only on focus"
                         ></v-text-field>
@@ -183,7 +187,7 @@
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
                           disabled
-                          label="State"
+                          :label="$t('orderedProducts.state')"
                           hint="example of persistent helper text"
                           v-model="state"
                         ></v-text-field>
@@ -193,7 +197,7 @@
                         <v-text-field
                           disabled
                           v-model="address1"
-                          label="Address Line-1"
+                          :label="$t('orderedProducts.address1')"
                           textarea
                           class="mx-4"
                           outlined
@@ -203,7 +207,7 @@
                         <v-text-field
                           disabled
                           v-model="address2"
-                          label="Address Line-2"
+                          :label="$t('orderedProducts.address2')"
                           textarea
                           class="mx-4"
                           outlined
@@ -214,9 +218,9 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="red white--text" text @click="dialog = false"
-                    >Close</v-btn
-                  >
+                  <v-btn color="red white--text" text @click="dialog = false">{{
+                    $t("orderedProducts.close")
+                  }}</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -234,19 +238,19 @@ export default {
   data: () => ({
     dialog: false,
     usersTableHeaders: [
-      { text: "User name", value: "full_arabic_name" },
-      { text: "User mobile number", value: "mobile_number" },
-      { text: "Order Number", value: "order_number" },
-      { text: "Order Date", value: "order_date" },
+      { text: this.$t("orderedProducts.username"), value: "full_arabic_name" },
+      { text: this.$t("orderedProducts.userMobile"), value: "mobile_number" },
+      { text: this.$t("orderedProducts.orderNumber"), value: "order_number" },
+      { text: this.$t("orderedProducts.orderDate"), value: "order_date" },
 
-      { text: "Show Products", value: "showProducts" },
+      { text: this.$t("orderedProducts.showProducts"), value: "showProducts" },
     ],
     productsTableHeaders: [
-      { text: "Product name", value: "product_name" },
-      { text: "product ID", value: "product_id" },
-      { text: "product Code", value: "product_code" },
-      { text: "Quantity", value: "quantity" },
-      { text: "Status", value: "status" },
+      { text: this.$t("orderedProducts.productName"), value: "product_name" },
+      { text: this.$t("orderedProducts.productId"), value: "product_id" },
+      { text: this.$t("orderedProducts.productCode"), value: "product_code" },
+      { text: this.$t("orderedProducts.productQuantity"), value: "quantity" },
+      { text: this.$t("orderedProducts.status"), value: "status" },
     ],
     state: "",
     country: "",

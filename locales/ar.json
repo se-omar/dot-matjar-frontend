@@ -29,7 +29,8 @@
         "supplierNameSearch": "البحث باسم البائع",
         "priceFrom": "السعر من",
         "priceTo": "السعر الي",
-        "siteColors": "الوان <br/>الموقع"
+        "siteColors": "الوان <br/>الموقع",
+        "country": "بلد"
     },
     "homePage": {
         "loadMore": "المزيد",
@@ -57,7 +58,10 @@
         "extraPicture": "صورة اضافية",
         "addProduct": "اضافة المنتج",
         "cancel": "الغاء",
-        "addCategory": "اضافة فئة"
+        "addCategory": "اضافة فئة",
+        "myCategoryRequests": "طلبات الفئات ",
+        "categoryArabicName": "فئة الاسم العربي",
+        "itemArabicName": "اسم العنصر بلعربي"
     },
     "adminPage": {
         "addNewCategory": "اضافة فئة جديدة",
@@ -94,7 +98,9 @@
         "loadmore": "المزيد",
         "deleteCategoryCheck": "هل انت متأكد من مسح هذة الفئة؟",
         "deleteCategoryCheck2": "يرجي العلم ان كل منتجات هذة الفئة لن يكون لها فئة مميزة في البحث",
-        "disagree": "الرفض"
+        "disagree": "الرفض",
+        "newCategoryArabicName": " اسم الفئة بلعربي",
+        "newCategoryItemArabicName": "اسم العنصر بلعربي"
     },
     "suppliersDashboard": {
         "dashboard": "لوحة تحكم",
@@ -225,7 +231,15 @@
         "pickFooterTextColor": "اختر لون كلام التذييل",
         "pageUpdated": "تم تحديث الصفحة بنجاح",
         "textColor": "لون الكلمات",
-        "accessDenied": "ليس لديك صلاحية لاظهار هذه الصفحة"
+        "accessDenied": "ليس لديك صلاحية لاظهار هذه الصفحة",
+        "chooseYourCategory": "اختر فئتك",
+        "items": "العناصر",
+        "category": "الفئة",
+        "selectedItems": "العناصر المحددة",
+        "dialogApprovalQuestion": "أكيد؟",
+        "dialogApprovalDescription": "اعلم أنه من خلال تحديث العناصر ، سيتم تجديد جميع عناصر المعاينة الخاصة بك ...",
+        "dialogApprovalButton": "اوافق",
+        "dialogDisApprovalButton": "لا اوافق"
     },
     "supplierPage": {
         "updatePage": "تحديث صفحتي",
@@ -243,10 +257,12 @@
         "newCategoryDesc": "وصف الفئة الجديدة",
         "newCategoryItem": "بند جديد",
         "newItemDesc": "وصف البند",
-        "newItemCatName": "اسم فئة البند الجديد",
+        "newItemCatName": "اسم الفئة الجديده",
         "requestStatus": "حالة الطلب",
         "accept": "قبول",
-        "reject": "رفض"
+        "reject": "رفض",
+        "newCategoryArabicName": " اسم الفئة بلعربي",
+        "newItemArabicName": "اسم العنصر بلعربي"
     },
     "checkoutLocation": {
         "productsDelivered": "سوف يتم توصيل المنتجات الي هذا العنوان",
@@ -303,5 +319,111 @@
         "senderName": "اسم المرسل:",
         "receiverName": "اسم المرسل اليه:",
         "respondSent": "تم الرد"
+    },
+    "dashboard": {
+        "dashboard": "لوحة تحكم",
+        "allProducts": "كل المنتجات",
+        "noAvailableProducts": "لا يوجد منتجات لهذا البائع",
+        "monthlySalesBar": "المبيعات الشهرية",
+        "monthlySalesLine": "المبيعات الشهرية",
+        "categoryChart": "نسبة مبيعات كل فئة",
+        "selectYear": "اختر السنة",
+        "totalRevenue": "العائد الكلي",
+        "amountRecieved": "المبلغ المستلم",
+        "amountLeft": "المبلغ المتبقي",
+        "monthlyRevenue": "عائد هذا الشهر",
+        "mostSellingProduct": "اكثر المنتجات مبيعا",
+        "leastSellingProduct": "اقل المنتجات مبيعا"
+    },
+    "editProduct": {
+        "productName": "اسم المنتج",
+        "category": "الفئة",
+        "item": "البند",
+        "code": "الكود",
+        "hsCode": "الكود السلعي",
+        "price": "السعر",
+        "minOrders": "اقل عدد ممكن من الطلبات",
+        "color": "اللون",
+        "sale": "الخصم",
+        "description": "الوصف",
+        "wantMoreCategories": "هل ترغب بالمزيد من الفئات ?",
+        "clickHere": "اضغط هنا",
+        "categoryRequest": "طلب فئة",
+        "requestNewCategory": "طلب فئة جديدة",
+        "categoryName": "اسم الفئة",
+        "requestItem": "طلب بند من الفئة ",
+        "addItem": "اضافة البند",
+        "mainPicture": "الصورة الرئيسية ",
+        "extraPicture": "صورة اضافية",
+        "editProduct": "اضافة المنتج",
+        "cancel": "الغاء"
+    },
+    "orderedProducts": {
+        "productsPlaced": "المنتجات التي في طلبات",
+        "users": "المستخدمين",
+        "showProducts": "اظهار المنتجات",
+        "products": "المنتجات",
+        "productStatus": "حالة المنتج",
+        "update": "تحديث",
+        "statusUpdated": "تم تجديد حالة المنتج بنجاح",
+        "close": "اغلاق",
+        "showAddress": "اظهار بيانات العنوان",
+        "addressDetails": "بيانات العنوان",
+        "country": "البلد",
+        "city": "المدينة",
+        "state": "كمتن",
+        "address1": "عنوان 1",
+        "address2": "عنوان 2",
+        "username": "اسم المستخدم",
+        "userMobile": "رقم المستخدم",
+        "orderNumber": "رقم الطلب",
+        "orderDate": "تاريخ الطلب",
+        "productName": "اسم المنتج",
+        "productsId": "رقم المنتج",
+        "productsCode": "كود المنتج",
+        "productsQuantity": "الكمية المتاحة",
+        "status": "الحالة"
+    },
+    "productDetails": {
+        "supplier": "البائع",
+        "location": "المكان",
+        "category": "الفئة",
+        "color": "اللون",
+        "weight": "الوزن",
+        "stockStatus": "المخزون",
+        "brand": "الماركة",
+        "condition": "الحالة",
+        "aboutProduct": "عن المنتج",
+        "editProduct": "تعديل المنتج",
+        "visitSupplier": "زيارة صفحة البائع",
+        "removeProduct": "مسح المنتج",
+        "addToCart": "اضافة الي العربة",
+        "productRating": "تقييم المنتج",
+        "canRateIfBuy": "يمكنك تقييم المنتج اذا قمت بشراؤه",
+        "rateProduct": "قيم المنتج",
+        "yourRating": "تقييمك",
+        "submit": "ارسال",
+        "customerReviews": "تقييمات العملاء",
+        "reviews": "التقييمات",
+        "by": "من",
+        "removeProductConfirm": "هل انت متأكد من ازالة هذا المنتج",
+        "yes": "نعم",
+        "no": "لا"
+    },
+    "requestsPage": {
+        "issuedRequests": "الطلبات المرسلة",
+        "incomingRequests": "الطلبات القادمة",
+        "noPermissions": "ليس لديك صلاحية لاظهار هذه الصفحة",
+        "noRequests": "لا يوجد طلبات"
+    },
+    "resetPasswordSent": {
+        "messageSent": "تم ارسال رسالة الي بريدك الالكتروني, برجاء التحقق منها",
+        "backHome": "الرجوع الي الصفحة الرئيسية"
+    },
+    "successfulPayment": {
+        "paymentSuccessful": "عملية الدفع نجحت و تم تسجيل طلبك, يمكنك متابعته من صفحة الطلبات",
+        "homePage": "الصفحة الرئيسية",
+        "ordersPage": "صفحة الطلبات",
+        "noAccess": "ليس لديك صلاحية لاظهار هذه الصفحة"
     }
 }

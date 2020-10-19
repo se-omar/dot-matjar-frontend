@@ -11,7 +11,7 @@
                   dense
                   required
                   outlined
-                  :rules="rules"
+                  :rules="[rules.required]"
                   rounded
                   :label="$t('addProduct.productName')"
                 ></v-text-field>
@@ -26,7 +26,7 @@
                   dense
                   required
                   outlined
-                  :rules="rules"
+                  :rules="[rules.required]"
                   :label="$t('addProduct.category')"
                   @change="gettingCategoryItems"
                 ></v-select>
@@ -38,7 +38,7 @@
                   dense
                   required
                   outlined
-                  :rules="rules"
+                  :rules="[rules.required]"
                   :label="$t('addProduct.item')"
                 ></v-select>
               </v-col>
@@ -68,7 +68,7 @@
             <v-form v-model="valid">
               <v-col cols="12">
                 <v-text-field
-                  :rules="rules"
+                  :rules="[rules.required && rules.numbersOnly]"
                   dense
                   v-model="unitPrice"
                   outlined
@@ -118,9 +118,12 @@
           <v-row>
             <v-col cols="12">
               <h4>{{ $t("addProduct.wantMoreCategories") }}</h4>
-              <v-btn @click.stop="dialog = true" :color="siteColor" text>{{
-                $t("addProduct.clickHere")
-              }}</v-btn>
+              <v-btn
+                @click.stop="dialog = true"
+                :color="siteColor.button_color"
+                text
+                >{{ $t("addProduct.clickHere") }}</v-btn
+              >
             </v-col>
             <v-dialog
               persistent
@@ -148,11 +151,12 @@
                 <v-row justify="center">
                   <h2>{{ $t("addProduct.requestNewCategory") }}</h2>
                 </v-row>
-                <v-row justify="center">
-                  <v-form v-model="addCategoryValidation">
-                    <v-col cols="12">
+
+                <v-form v-model="addCategoryValidation">
+                  <v-row justify="center">
+                    <v-col cols="3">
                       <v-text-field
-                        :rules="rules"
+                        :rules="[rules.required]"
                         v-model="newCategoryName"
                         :placeholder="$t('addProduct.categoryName')"
                         rounded
@@ -160,8 +164,19 @@
                         :color="siteColor"
                       ></v-text-field>
                     </v-col>
-                  </v-form>
-                </v-row>
+                    <v-col cols="3">
+                      <v-text-field
+                        :rules="[rules.required]"
+                        v-model="newCategoryArabicName"
+                        :placeholder="$t('addProduct.categoryArabicName')"
+                        rounded
+                        outlined
+                        :color="siteColor"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-form>
+
                 <v-row justify="center">
                   <v-col cols="6">
                     <v-textarea
@@ -194,7 +209,7 @@
                   <v-row justify="center">
                     <v-col cols="3">
                       <v-select
-                        :rules="rules"
+                        :rules="[rules.required]"
                         outlined
                         rounded
                         :items="category"
@@ -210,8 +225,20 @@
                         class="text-xl"
                         rounded
                         outlined
-                        :rules="rules"
+                        :rules="[rules.required]"
                         :color="siteColor"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-row justify="center">
+                    <v-col cols="3">
+                      <v-text-field
+                        v-model="newItemArabicName"
+                        :placeholder="$t('addProduct.itemArabicName')"
+                        class="text-xl"
+                        rounded
+                        outlined
+                        :rules="[rules.required]"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -243,6 +270,11 @@
 
                 <v-row class="mt-10" justify="center">
                   <v-col cols="6" lg="6" md="6" sm="8">
+                    <v-toolbar shaped :color="siteColor.toolbar_color">
+                      <v-row justify="center">
+                        <h2>{{ $t("addProduct.myCategoryRequests") }}</h2>
+                      </v-row>
+                    </v-toolbar>
                     <v-data-table
                       :items="supplierCategoriesRequests"
                       :headers="categoriesRequestHeaders"
@@ -365,7 +397,10 @@ export default {
       discountAmount: "",
       description: "",
 
-      rules: [(v) => !!v || "Required."],
+      rules: {
+        required: (v) => !!v || "Required.",
+        numbersOnly: (v) => /\d+/.test(v) || "Enter numbers",
+      },
 
       valid: true,
       categoryName: "",
@@ -384,6 +419,9 @@ export default {
         { text: "New Category Item", value: "new_category_item" },
         { text: "Request Status", value: "status" },
       ],
+
+      newCategoryArabicName: "",
+      newItemArabicName: "",
     };
   },
   methods: {
@@ -453,6 +491,8 @@ export default {
         newCategoryItem: this.newCategoryItem,
         newCategoryItemDescription: this.newCategoryItemDescription,
         categoryName: this.categoryName,
+        itemArabicName: this.newItemArabicName,
+        categoryArabicName: this.newCategoryArabicName,
       });
     },
   },

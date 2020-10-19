@@ -18,7 +18,9 @@
                   toggleRequestType();
                 "
               >
-                <span style="font-size: 25px">Issued Requests</span>
+                <span style="font-size: 25px">
+                  {{ $t("requestsPage.issuedRequests") }}</span
+                >
               </v-list-item>
               <br />
               <v-list-item
@@ -27,7 +29,9 @@
                   toggleRequestType();
                 "
               >
-                <span style="font-size: 25px">Incoming Requests</span>
+                <span style="font-size: 25px">
+                  {{ $t("requestsPage.incomingRequests") }}</span
+                >
               </v-list-item>
             </v-list-item-group>
           </v-list>
@@ -38,7 +42,7 @@
           cols="10"
           class="scrollable"
         >
-          <p class="display-1">Incoming Requests</p>
+          <p class="display-1">{{ $t("requestsPage.incomingRequests") }}</p>
           <request-card
             :requestType="requestType"
             :request="request"
@@ -54,7 +58,7 @@
           cols="10"
           class="scrollable"
         >
-          <p class="display-1">Issued Requests</p>
+          <p class="display-1">{{ $t("requestsPage.issuedRequests") }}</p>
           <request-card
             :requestType="requestType"
             :request="request"
@@ -82,13 +86,13 @@
       v-else-if="!currentUser || currentUser.user_type != 'business'"
     >
       <v-row justify="center">
-        <p class="display-1">No Availability to request this PAGE</p>
+        <p class="display-1">{{ $t("requestsPage.noPermissions") }}</p>
       </v-row>
     </v-container>
 
     <v-container v-else>
       <v-row justify="center">
-        <p class="display-1">No requsts Found</p>
+        <p class="display-1">{{ $t("requestsPage.noRequests") }}</p>
       </v-row>
     </v-container>
   </v-app>
