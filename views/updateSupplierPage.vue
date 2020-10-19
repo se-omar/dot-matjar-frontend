@@ -1229,11 +1229,9 @@ export default {
   async created() {
     //this.isLoading = true;
     await this.$store.dispatch("refreshCurrentUser");
-    await this.$store.dispatch("getSupplier", this.$route.params.supplier_id);
-    await this.$store.dispatch(
-      "getSupplierPageData",
-      this.$route.params.supplier_id
-    );
+    await this.$store.dispatch("getSupplier", this.currentUser.user_id);
+    await this.$store.dispatch("getSupplierPageData", this.currentUser.user_id);
+    console.log("paraaamsss");
     await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getCategoryItems");
     // await this.$store.dispatch("getSupplierItems", {
@@ -1243,6 +1241,7 @@ export default {
       "getSupplierCategoriesAndItems",
       this.currentUser.user_id
     );
+    console.log("siteColor", this.siteColor);
     await setTimeout(() => {
       this.toolBarColor = this.siteColor.toolbar_color;
       this.footerColor = this.siteColor.footer_color;

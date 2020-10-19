@@ -58,13 +58,11 @@
     <v-row justify="center" class="mt-16">
       <v-col cols="2">
         <v-btn
-          v-if="supplier.user_id == currentUser.user_id"
+          v-if="$route.params.supplier_id == currentUser.user_id"
           @click="updatePage"
           :color="siteColor.button_color"
           rounded
-          ><span :style="`color:${siteColor.button_text_color}`">
-            {{ $t("supplierPage.updatePage") }}</span
-          ></v-btn
+          ><span> {{ $t("supplierPage.updatePage") }}</span></v-btn
         >
       </v-col>
       <v-col cols="2">
@@ -165,15 +163,13 @@
         <v-row>
           <v-col
             lg="3"
-            v-for="(supplierProduct, product_id) in supplierProducts"
-            :key="product_id"
+            v-for="supplierProduct in supplierProducts"
+            :key="supplierProduct.product_id"
           >
-            <v-hover>
-              <product
-                :addToCartButton="false"
-                :filteredProduct="supplierProduct"
-              ></product>
-            </v-hover>
+            <product
+              :addToCartButton="false"
+              :filteredProduct="supplierProduct"
+            ></product>
           </v-col>
         </v-row>
       </v-col>
@@ -244,6 +240,10 @@ export default {
         return {
           button_text_color: "black",
           button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
+          footer_color: "white",
+          footer_text_color: "black",
         };
       }
     },
@@ -373,22 +373,27 @@ export default {
   },
   async created() {
     //this.isLoading = true;
+    await this.$store.dispatch("getCurrencies");
     await this.$store.dispatch("refreshCurrentUser");
     await this.$store.dispatch("getSupplier", this.$route.params.supplier_id);
+    console.log("user paramasss", this.$route.params.supplier_id);
     console.log("current user", this.currentUser);
 
     await this.$store.dispatch(
       "getSupplierPageData",
       this.$route.params.supplier_id
     );
+    //this.$store.commit("emptySupplierProducts");
+
     await this.$store.dispatch(
       "getSupplierProducts",
       this.$route.params.supplier_id
     );
-    await this.$store.dispatch(
-      "getSupplierCategoriesAndItems",
-      this.currentUser.user_id
-    );
+    console.log("supplier products from supplier apge", this.supplierProducts);
+    // await this.$store.dispatch(
+    //   "getSupplierCategoriesAndItems",
+    //   this.currentUser.user_id
+    // );
 
     await this.$store.dispatch("getSupplierReview", {
       supplier_id: this.supplier.user_id,

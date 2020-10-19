@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios'
 //import router from '../router'
 
 export default {
     state: {
-        siteColor: JSON.parse(localStorage.getItem('siteColor')) ? JSON.parse(localStorage.getItem('siteColor')) : 'blue',
+        siteColor: localStorage.getItem('siteColor') ? JSON.parse(localStorage.getItem('siteColor')) : [],
         currentUser: '',
         filteredProducts: [],
         regions: [],
@@ -18,6 +19,7 @@ export default {
         supplierCategoriesRequests: [],
         homePageInfo: {},
         radioGroup: '1',
+        currencies: JSON.parse(localStorage.getItem('rates')),
         siteLanguage: 'en',
         availableCountries: '',
         worldCountries: []
@@ -34,7 +36,7 @@ export default {
         },
 
         refreshCurrentUser(state, user) {
-            console.log('new user is ', user)
+            //console.log('new user is ', user)
             state.currentUser = user;
         },
 
@@ -43,12 +45,12 @@ export default {
         },
 
         getRegions(state, regions) {
-            console.log('sate entered')
+            //console.log('sate entered')
             state.regions = []
             for (var i = 0; i < regions.length; i++) {
                 state.regions.push(regions[i].city)
             }
-            console.log(state.regions)
+            //console.log(state.regions)
         },
 
         getGovernorate(state, res) {
@@ -56,6 +58,27 @@ export default {
         },
 
         getProducts(state, products) {
+            var currencies = JSON.parse(localStorage.getItem('rates'))
+            var currentCurrency = localStorage.getItem('currentCurrency')
+            products.forEach(element => {
+                if (element.currency !== currentCurrency) {
+                    if (currencies.EGP) {
+                        var egp = currencies.EGP;
+                        if (element.currency == 'egp') {
+                            element.unit_price = Math.trunc(element.unit_price / egp)
+                        }
+                        else if (element.currency == 'usd') {
+                            element.unit_price = Math.trunc(element.unit_price * egp)
+                        }
+                        else {
+                            console.log('error in currency conversion')
+                        }
+                    }
+                    else {
+                        console.log('currencies from api are empty')
+                    }
+                }
+            });
             state.products.push(...products);
             state.filteredProducts.push(...products);
         },
@@ -82,7 +105,28 @@ export default {
         },
 
         filterProducts(state, { products, pressed }) {
-            //  debugger
+            var currencies = JSON.parse(localStorage.getItem('rates'))
+            var currentCurrency = localStorage.getItem('currentCurrency')
+            products.forEach(element => {
+                if (element.currency !== currentCurrency) {
+                    if (currencies.EGP) {
+                        var egp = currencies.EGP;
+                        if (element.currency == 'egp') {
+                            element.unit_price = Math.trunc(element.unit_price / egp)
+                        }
+                        else if (element.currency == 'usd') {
+                            element.unit_price = Math.trunc(element.unit_price * egp)
+                        }
+                        else {
+                            console.log('error in currency conversion')
+                        }
+                    }
+                    else {
+                        console.log('currencies from api are empty')
+                    }
+                }
+            });
+
             if (pressed == 'search')
                 state.filteredProducts = products;
             else
@@ -102,13 +146,13 @@ export default {
         },
 
         changeSiteColor(state, supplier) {
-            console.log('entered change site color')
+            //console.log('entered change site color')
             localStorage.setItem('siteColor', supplier.page_color)
             state.siteColor = localStorage.getItem('siteColor');
         },
 
         supplierPageColor(state, color) {
-            console.log('color of supp', color)
+            //console.log('color of supp', color)
             localStorage.removeItem('siteColor')
             localStorage.setItem('siteColor', color)
             state.siteColor = localStorage.getItem('siteColor')
@@ -116,7 +160,7 @@ export default {
 
         getCategoryItems(state, items) {
             state.categoriesItems = items
-            console.log('get categories ittems', items)
+            //console.log('get categories ittems', items)
         },
         getCategoryAndItemRequests(state, requests) {
             state.categoryAndItemRequests = requests
@@ -136,7 +180,7 @@ export default {
             state.homePageInfo = info
         },
         updateSupplierPageColors(state, supplierPageColors) {
-            console.log('supplier page colors', supplierPageColors)
+            //console.log('supplier page colors', supplierPageColors)
             var pageDataArray = [supplierPageColors]
 
             localStorage.setItem('siteColor', JSON.stringify(pageDataArray));
@@ -144,8 +188,11 @@ export default {
         },
         changeRadioGroup(state, radioValue) {
             state.radioGroup = radioValue;
-            console.log('radio value', radioValue)
-            console.log('radio group', state.radioGroup)
+        },
+
+        getCurrencies(state, rates) {
+            localStorage.setItem('rates', JSON.stringify(rates))
+            state.currencies = JSON.parse(localStorage.getItem('rates'))
         },
         siteLanguage(state, value) {
             state.siteLanguage = value
@@ -168,8 +215,8 @@ export default {
         getSiteColor(context) {
             axios.put('http://localhost:3000/api/getSiteColor')
                 .then(response => {
-                    console.log(response.data.data)
-                    console.log(response.data.message)
+                    //console.log(response.data.data)
+                    //console.log(response.data.message)
                     context.commit('getSiteColor', response.data.data)
                 })
         },
@@ -185,7 +232,7 @@ export default {
         getGovernorate(context) {
             axios.put('http://localhost:3000/api/getGovernorate')
                 .then(res => {
-                    console.log(res.data.data)
+                    //console.log(res.data.data)
                     context.commit('getGovernorate', res.data.data)
                 })
         },
@@ -195,12 +242,15 @@ export default {
             productName,
             categoryName
         }) {
+
             if (!productFilterFlag) {
+
                 axios.post('http://localhost:3000/api/products', {
                     product_id: context.state.filteredProducts.length > 0 ? context.state.filteredProducts[context.state.filteredProducts.length - 1].product_id : null
                 }).then(response => {
+
                     context.commit('getProducts', response.data.products);
-                    console.log('productss iss', response.data)
+                    //console.log('productss iss', response.data)
                 })
             }
             else {
@@ -210,7 +260,7 @@ export default {
                     category_name: categoryName
                 }).then(response => {
                     context.commit('getProducts', response.data.products);
-                    console.log('productss iss', response.data)
+                    //console.log('productss iss', response.data)
                 })
             }
         },
@@ -225,7 +275,7 @@ export default {
                 axios.post('http://localhost:3000/api/getSuppliers', {
                     user_id: context.state.suppliers.length > 0 ? context.state.suppliers[context.state.suppliers.length - 1].user_id : null
                 }).then(response => {
-                    console.log(response.data.users)
+                    //console.log(response.data.users)
                     context.commit('getSuppliers', response.data.users)
                 })
             }
@@ -236,7 +286,7 @@ export default {
                     governorate,
                     region
                 }).then(response => {
-                    console.log(response.data.users)
+                    //console.log(response.data.users)
                     context.commit('getSuppliers', response.data.users)
                 })
             }
@@ -245,7 +295,7 @@ export default {
         categoriesDB(context) {
             axios.put('http://localhost:3000/api/selectCategory')
                 .then((res) => {
-                    console.log(res.data.data)
+                    //console.log(res.data.data)
                     context.commit('categoriesDB', res.data.data)
                 })
         },
@@ -277,7 +327,7 @@ export default {
                 siteLanguage: context.state.siteLanguage
             })
                 .then(response => {
-                    console.log('message:', response.data.message)
+                    //console.log('message:', response.data.message)
 
                     //debugger
                     console.log('filtered products', response.data.data)
@@ -290,8 +340,8 @@ export default {
             governorate,
             region
         }) {
-            console.log('governorate', governorate)
-            console.log('region', region)
+            //console.log('governorate', governorate)
+            //console.log('region', region)
 
             axios.put('http://localhost:3000/api/filterSuppliers', {
                 user_id: context.state.suppliers.length > 0 ? context.state.suppliers[context.state.suppliers.length - 1].user_id : null,
@@ -299,16 +349,16 @@ export default {
                 governorate: governorate,
                 region: region
             }).then(response => {
-                console.log(response)
+                //console.log(response)
                 context.commit('filterSuppliers', response.data.users)
             })
         },
 
         getRegions(context, governorate) {
-            console.log(governorate)
+            //console.log(governorate)
             axios.put('http://localhost:3000/api/getRegions', { governorate: governorate })
                 .then(regions => {
-                    console.log('regionss', regions.data.data)
+                    //console.log('regionss', regions.data.data)
                     context.commit('getRegions', regions.data.data)
                 })
         },
@@ -316,7 +366,7 @@ export default {
         addNewCategory(context, { categoryName, categoryArabicName }) {
             axios.post('http://localhost:3000/api/addNewCategory', { categoryName, categoryArabicName })
                 .then(message => {
-                    console.log(message.data.message)
+                    //console.log(message.data.message)
                     alert(message.data.message)
 
                 })
@@ -324,15 +374,15 @@ export default {
         addCategoryItems(context, { categoryName, categoryItem, itemArabicName }) {
             axios.post('http://localhost:3000/api/addCategoryItems', { categoryName: categoryName, categoryItem: categoryItem, itemArabicName: itemArabicName })
                 .then(message => {
-                    console.log(message.data.message)
+                    //console.log(message.data.message)
                     alert(message.data.message)
                 })
         },
         getCategoryItems(context) {
             axios.put('http://localhost:3000/api/getCategoryItems')
                 .then(response => {
-                    console.log(response.data.message)
-                    console.log('get category items', response.data.data)
+                    //console.log(response.data.message)
+                    //console.log('get category items', response.data.data)
                     context.commit('getCategoryItems', response.data.data)
                 })
 
@@ -341,7 +391,7 @@ export default {
         removeCategoryAndItems(context, { categoryName, categoryItem }) {
             axios.put('http://localhost:3000/api/removeCategoryAndItems', { categoryName: categoryName, categoryItem: categoryItem })
                 .then(message => {
-                    console.log(message.data.message)
+                    //console.log(message.data.message)
                     alert(message.data.message)
                 })
         },
@@ -362,8 +412,8 @@ export default {
                 categoryArabicName,
                 user_id: context.state.currentUser.user_id
             }).then(res => {
-                console.log(res.data.message)
-                console.log(res.data.data)
+                //console.log(res.data.message)
+                //console.log(res.data.data)
             })
         },
         getCategoryAndItemRequests(context) {
@@ -397,11 +447,11 @@ export default {
                 })
         },
         getSupplierCategoriesRequests(context) {
-            console.log('user idd issssss', context.state.currentUser.user_id)
+            //console.log('user idd issssss', context.state.currentUser.user_id)
             axios.put('http://localhost:3000/api/getSupplierCategoriesRequests', { user_id: context.state.currentUser.user_id })
                 .then(requests => {
-                    console.log(requests.data.message);
-                    console.log('Requueests get', requests.data.data)
+                    //console.log(requests.data.message);
+                    //console.log('Requueests get', requests.data.data)
                     context.commit('getSupplierCategoriesRequests', requests.data.data)
                 }
 
@@ -424,7 +474,7 @@ export default {
                 toolBarTextColor
             })
                 .then(message => {
-                    console.log(message.data.message);
+                    //console.log(message.data.message);
                 })
         },
 
@@ -432,7 +482,7 @@ export default {
             show_right_banner,
             carousel_width,
             carousel_height, }) {
-            console.log('show right banner from action', show_right_banner);
+            //console.log('show right banner from action', show_right_banner);
 
             await axios.post('http://localhost:3000/api/updateHomePage', {
                 show_carousel,
@@ -442,7 +492,7 @@ export default {
             })
                 .then(response => {
 
-                    console.log(response.data.message, response.data.data)
+                    //console.log(response.data.message, response.data.data)
                     context.commit('updateHomePage', response.data.data)
 
                 })
@@ -456,7 +506,7 @@ export default {
             })
                 .then(response => {
 
-                    console.log('row resposne', response)
+                    //console.log('row resposne', response)
                 })
         },
 
@@ -468,7 +518,7 @@ export default {
             })
                 .then(response => {
 
-                    console.log('row resposne', response)
+                    //console.log('row resposne', response)
                 })
         },
 
@@ -476,7 +526,7 @@ export default {
             await axios.post('http://localhost:3000/api/removeHomeCarouselImage', {
                 imgName
             }).then(response => {
-                console.log('remove img response', response)
+                //console.log('remove img response', response)
             })
         },
 
@@ -484,7 +534,7 @@ export default {
             await axios.post('http://localhost:3000/api/removeHomeBannerImage', {
                 imgName
             }).then(response => {
-                console.log('remove img response', response)
+                //console.log('remove img response', response)
             })
         },
 
@@ -512,7 +562,15 @@ export default {
                 user_id: context.state.currentUser.user_id
             })
                 .then(message => {
-                    console.log(message.data.message);
+                    //console.log(message.data.message);
+                })
+        },
+
+        getCurrencies(context) {
+            axios
+                .get('https://openexchangerates.org/api/latest.json?app_id=b63ccfa73efc490f8d97677229662f48').then(response => {
+                    console.log('currencies from action ', response.data.rates)
+                    context.commit('getCurrencies', response.data.rates)
                 })
         },
 

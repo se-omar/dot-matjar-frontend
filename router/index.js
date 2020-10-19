@@ -31,6 +31,7 @@ import categoryAndItemRequests from '../views/categoryAndItemRequests.vue'
 import siteColors from '../views/siteColors.vue'
 import supplierDetails from '../views/supplierDetails'
 import i18n from '../i18n'
+import testSupplierProducts from '../views/testSupplierProducts.vue'
 // import { isInteger } from 'core-js/fn/number'
 Vue.use(VueRouter)
 
@@ -118,6 +119,11 @@ var routes = [
         path: 'myProducts',
         name: 'myProducts',
         component: myProducts
+      },
+      {
+        path: 'testSupplierProducts',
+        name: 'testSupplierProducts',
+        component: testSupplierProducts
       },
       {
         path: 'addProduct',

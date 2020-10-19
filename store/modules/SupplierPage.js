@@ -4,7 +4,7 @@ import axios from 'axios'
 export default {
     state: {
         supplierPageInfo: {},
-        supplierProducts: JSON.parse(localStorage.getItem('supplierProducts')),
+        supplierProducts: [],
         supplierRating: 0,
         supplierReview: '',
         currentSupplierRatings: [],
@@ -37,12 +37,36 @@ export default {
             state.supplier = supplier
         },
 
-
+        emptySupplierProducts(state) {
+            state.supplierProducts = [];
+        },
 
         getSupplierProducts(state, supplierProducts) {
-            localStorage.setItem('supplierProducts', JSON.stringify(supplierProducts))
-            state.supplierProducts = JSON.parse(localStorage.getItem('supplierProducts'));
-            state.supplierProductsSave = state.supplierProducts
+            var currencies = JSON.parse(localStorage.getItem('rates'))
+            var currentCurrency = localStorage.getItem('currentCurrency')
+            console.log('currencies from home ', currencies)
+            supplierProducts.forEach(element => {
+                if (element.currency !== currentCurrency) {
+                    if (currencies.EGP) {
+                        var egp = currencies.EGP;
+                        if (element.currency == 'egp') {
+                            element.unit_price = Math.trunc(element.unit_price / egp)
+                        }
+                        else if (element.currency == 'usd') {
+                            element.unit_price = Math.trunc(element.unit_price * egp)
+                        }
+                        else {
+                            console.log('error in currency conversion')
+                        }
+                    }
+                    else {
+                        console.log('currencies from api are empty')
+                    }
+                }
+            });
+            console.log('supplier products are ', supplierProducts)
+            state.supplierProducts.push(...supplierProducts)
+            state.supplierProductsSave.push(...supplierProducts)
         },
 
         getSupplierReview(state, row) {
@@ -153,6 +177,7 @@ export default {
         async getSupplierPageData(context, id) {
             await axios.put('http://localhost:3000/api/getSupplierPageData', { supplier_id: id })
                 .then(info => {
+                    console.log('supplier page datat', info.data.data)
                     context.commit('getSupplierPageData', info.data.data)
                     context.commit('updateSupplierPageColors', info.data.data)
                 })

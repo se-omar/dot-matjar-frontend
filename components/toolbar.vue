@@ -675,6 +675,15 @@
       >
       </v-select>
 
+      <v-select
+        @change="changeCurrency"
+        class="mt-7"
+        style="max-width: 85px"
+        solo-inverted
+        :items="currencies"
+        v-model="currentCurrency"
+      >
+      </v-select>
       <!--============================
 
       />-->
@@ -788,8 +797,9 @@
 export default {
   components: {},
   async created() {
+    localStorage.setItem("currentCurrency", "egp");
     await this.$store.dispatch("refreshCurrentUser");
-    await this.$store.dispatch("getAvailableCountries");
+    // await this.$store.dispatch("getAvailableCountries");
     console.log("color from toolbar", this.siteColor);
     if (this.availableCountries) {
       console.log(this.availableCountries);
@@ -959,6 +969,27 @@ export default {
       console.log("test");
       console.log(this.radioGroup);
     },
+
+    async changeCurrency(currency) {
+      //this.$store.commit("emptyProductsArray");
+      //location.reload();
+      localStorage.setItem("currentCurrency", currency);
+      if (this.$route.name == "home") {
+        this.$store.commit("emptyProductsArray");
+        await this.$store.dispatch("getProducts", {
+          productFilterFlagss: this.productFilterFlag,
+          productName: this.toolbarSearch,
+          categoryName: this.categoryName,
+        });
+        console.log(currency);
+      } else if (this.$route.name == "supplierPage") {
+        this.$store.commit("emptySupplierProducts");
+        await this.$store.dispatch(
+          "getSupplierProducts",
+          this.$route.params.supplier_id
+        );
+      }
+    },
   },
   data: () => ({
     profilephoto: [],
@@ -975,6 +1006,8 @@ export default {
 
     supplierName: "",
     supplierProductsSearch: "",
+    currentCurrency: localStorage.getItem("currentCurrency"),
+    currencies: ["egp", "usd"],
     filterSuppliersByName: "",
     country: "",
   }),

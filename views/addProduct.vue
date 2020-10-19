@@ -66,7 +66,7 @@
 
           <v-row>
             <v-form v-model="valid">
-              <v-col cols="12">
+              <v-col cols="6">
                 <v-text-field
                   :rules="[rules.required && rules.numbersOnly]"
                   dense
@@ -75,15 +75,16 @@
                   :label="$t('addProduct.price')"
                 ></v-text-field>
               </v-col>
+
+              <v-col cols="6">
+                <v-text-field
+                  dense
+                  v-model="minUnits"
+                  outlined
+                  :label="$t('addProduct.minOrders')"
+                ></v-text-field>
+              </v-col>
             </v-form>
-            <v-col cols="6">
-              <v-text-field
-                dense
-                v-model="minUnits"
-                outlined
-                :label="$t('addProduct.minOrders')"
-              ></v-text-field>
-            </v-col>
           </v-row>
 
           <v-row>
@@ -377,6 +378,12 @@ export default {
     supplierCategoriesRequests() {
       return this.$store.state.Home.supplierCategoriesRequests;
     },
+    currencies() {
+      return this.$store.state.ProductDetails.currencies;
+    },
+    currencyNames() {
+      return this.$store.state.ProductDetails.currencyNames;
+    },
   },
 
   data() {
@@ -501,7 +508,7 @@ export default {
     await this.$store.dispatch("getCategoryItems");
     await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getSupplierCategoriesRequests");
-
+    console.log("currency names ", this.currencyNames);
     return new Promise((resolve) => {
       setTimeout(() => {
         this.$store.dispatch("categoriesDB");

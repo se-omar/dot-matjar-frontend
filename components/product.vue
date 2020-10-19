@@ -22,7 +22,7 @@
                 <span
                   class="ml-1"
                   :style="`color: black; font-weight: 800; font-size:17px`"
-                  >EGP</span
+                  >{{ currentCurrency }}</span
                 >
               </v-col>
 
@@ -38,6 +38,7 @@
               </v-col>
             </v-row>
           </v-card-text>
+          <v-card-text>{{ filteredProduct.product_id }}</v-card-text>
 
           <v-row justify="center">
             <v-col cols="11" lg="10" sm="11" md="11">
@@ -97,6 +98,7 @@ export default {
     return {
       hundred: "100%",
       hundredten: "110%",
+      currentCurrency: localStorage.getItem("currentCurrency"),
       i: 0,
     };
   },
