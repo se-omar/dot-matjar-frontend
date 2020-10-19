@@ -794,6 +794,7 @@ export default {
     if (this.availableCountries) {
       console.log(this.availableCountries);
     }
+    // this.$store.dispatch('getWorldCountries');
   },
 
   props: {

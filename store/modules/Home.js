@@ -19,7 +19,8 @@ export default {
         homePageInfo: {},
         radioGroup: '1',
         siteLanguage: 'en',
-        availableCountries: ''
+        availableCountries: '',
+        worldCountries: []
     },
 
     mutations: {
@@ -151,6 +152,9 @@ export default {
         },
         getAvailableCountries(state, countries) {
             state.availableCountries = countries
+        },
+        getWorldCountries(state, data) {
+            state.worldCountries = data
         }
 
     },
@@ -517,6 +521,19 @@ export default {
                 .then(countries => {
                     console.log('available countries', countries.data.data)
                     context.commit('getAvailableCountries', countries.data.data)
+                })
+        },
+        async getWorldCountries(context) {
+            axios.put('http://localhost:3000/api/getWorldCountries')
+                .then(data => {
+                    console.log('world countries', data.data.data)
+                    context.commit('getWorldCountries', data.data.data)
+                })
+        },
+        addCountry(context, country) {
+            axios.post('http://localhost:3000/api/addCountry', { country })
+                .then(message => {
+                    alert(message.data.message)
                 })
         }
 

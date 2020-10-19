@@ -184,7 +184,26 @@
     </v-row>
 
     <v-divider class="mx-16"></v-divider>
-
+    <v-row justify="center">
+      <h2>Pick country to ADD</h2>
+    </v-row>
+    <v-row justify="center">
+      <v-col cols="3">
+        <v-select
+          v-model="country"
+          dense
+          outlined
+          rounded
+          :items="worldCountries"
+        ></v-select>
+      </v-col>
+    </v-row>
+    <v-row justify="center">
+      <v-col cols="3">
+        <v-btn @click="addCountry">Add Country</v-btn>
+      </v-col>
+    </v-row>
+    <v-divider class="mx-16"></v-divider>
     <v-row justify="center" class="mt-7">
       <p class="text-h4">{{ $t("adminPage.editCarousel") }}</p>
     </v-row>
@@ -741,7 +760,7 @@ export default {
       governorate: this.governorate,
       region: this.region,
     });
-
+    await this.$store.dispatch("getWorldCountries");
     await this.$store.dispatch("getHomePageData");
     // console.log("supplier page info", this.supplierPageInfo);
 
@@ -832,6 +851,7 @@ export default {
       rightBannerViewImg: "",
       newCategoryArabicName: "",
       itemArabicName: "",
+      country: "",
     };
   },
 
@@ -937,6 +957,9 @@ export default {
     },
     homePageInfo() {
       return this.$store.state.Home.homePageInfo;
+    },
+    worldCountries() {
+      return this.$store.state.Home.worldCountries;
     },
   },
 
@@ -1261,6 +1284,10 @@ export default {
           imgName: "right_banner_image",
         });
       }
+    },
+    addCountry() {
+      console.log("country is", this.country);
+      this.$store.dispatch("addCountry", { country: this.country });
     },
   },
 
