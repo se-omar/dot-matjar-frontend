@@ -165,15 +165,13 @@
         <v-row>
           <v-col
             lg="3"
-            v-for="(supplierProduct, product_id) in supplierProducts"
-            :key="product_id"
+            v-for="supplierProduct in supplierProducts"
+            :key="supplierProduct.product_id"
           >
-            <v-hover>
-              <product
-                :addToCartButton="false"
-                :filteredProduct="supplierProduct"
-              ></product>
-            </v-hover>
+            <product
+              :addToCartButton="false"
+              :filteredProduct="supplierProduct"
+            ></product>
           </v-col>
         </v-row>
       </v-col>
@@ -381,14 +379,17 @@ export default {
       "getSupplierPageData",
       this.$route.params.supplier_id
     );
+    //this.$store.commit("emptySupplierProducts");
+
     await this.$store.dispatch(
       "getSupplierProducts",
       this.$route.params.supplier_id
     );
-    await this.$store.dispatch(
-      "getSupplierCategoriesAndItems",
-      this.currentUser.user_id
-    );
+    console.log("supplier products from supplier apge", this.supplierProducts);
+    // await this.$store.dispatch(
+    //   "getSupplierCategoriesAndItems",
+    //   this.currentUser.user_id
+    // );
 
     await this.$store.dispatch("getSupplierReview", {
       supplier_id: this.supplier.user_id,

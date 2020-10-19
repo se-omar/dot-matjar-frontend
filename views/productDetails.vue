@@ -45,7 +45,7 @@
 
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
-              {{ $t("productDetails.location") }}::
+              {{ $t("productDetails.location") }}:
               <span class="text--secondary"
                 >{{ currentProduct.user.governorate }} ,
                 {{ currentProduct.user.region }}</span
@@ -55,7 +55,7 @@
 
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
-              {{ $t("productDetails.category") }}::
+              {{ $t("productDetails.category") }}:
               <span class="text--secondary">{{
                 currentProduct.product_category.category_name
               }}</span>
@@ -71,7 +71,7 @@
 
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
-              {{ $t("productDetails.weight") }}::
+              {{ $t("productDetails.weight") }}:
               <span class="text--secondary">{{
                 currentProduct.unit_weight
               }}</span>
@@ -80,7 +80,7 @@
 
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
-              {{ $t("productDetails.stockStatus") }}::
+              {{ $t("productDetails.stockStatus") }}:
               <span class="text--secondary">{{
                 currentProduct.availability === "1"
                   ? "In Stock"
@@ -98,14 +98,14 @@
 
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
-              {{ $t("productDetails.condition") }}::
+              {{ $t("productDetails.condition") }}:
               <span class="text--secondary">New</span>
             </span>
           </v-col>
 
           <v-col class="mr-4 mt-12" lg="12">
             <p style="font-size: 23px" class="text-center font-weight-medium">
-              {{ $t("productDetails.aboutProduct") }}::
+              {{ $t("productDetails.aboutProduct") }}:
             </p>
             <span
               class="font-weight-medium text--secondary"
@@ -119,9 +119,7 @@
       <v-col lg="3" md="6" sm="12">
         <v-row justify="center" class="ml-n10">
           <v-col class="ml-3 text-sm-center" cols="10">
-            <span :style="`color: ${siteColor}`" class="text-h3"
-              >{{ currentProduct.unit_price }} EGP</span
-            >
+            <span class="text-h3">{{ currentProduct.unit_price }} EGP</span>
           </v-col>
 
           <v-col cols="9">
@@ -130,22 +128,20 @@
                 currentUser && currentUser.user_id === currentProduct.user_id
               "
               @click="goToEditProduct"
-              :color="siteColor"
+              :color="siteColor.button_color"
               block
               x-large
             >
-              <span :color="siteColor.button_color" style="font-size: 18px"
-                ><span :style="`color:${siteColor.button_text_color}`">
-                  {{ $t("productDetails.editProduct") }}:</span
-                ></span
+              <span :style="`color:${siteColor.button_text_color}`">
+                {{ $t("productDetails.editProduct") }}:</span
               >
             </v-btn>
 
             <v-btn
               x-large
               block
-              :color="siteColor.button_color"
               v-else
+              :color="siteColor.button_color"
               @click="supplierClicked(currentProduct.user)"
             >
               <span :style="`color:${siteColor.button_text_color}`">
@@ -196,7 +192,7 @@
               v-model="currentProduct.rating"
               :hover="hover"
               :size="size"
-              :color="siteColor"
+              :color="siteColor.button_color"
             ></v-rating>
 
             <p class="text-center text-subtitle">
@@ -219,7 +215,7 @@
               v-if="productRating !== 0 && userOrderedProductFlag"
               class="text-h5 mb-n2 text-center"
             >
-              {{ $t("productDetails.yourRating") }}::
+              {{ $t("productDetails.yourRating") }}:
             </p>
             <v-rating
               v-if="userOrderedProductFlag"
@@ -228,7 +224,7 @@
               v-model="rating"
               :hover="hover"
               :size="size"
-              :color="siteColor"
+              :color="siteColor.button_color"
             ></v-rating>
             <v-textarea
               v-if="userOrderedProductFlag"
@@ -263,7 +259,7 @@
         <v-card elevation="1" height="250">
           <v-row justify="center">
             <v-col lg="6" class="text-center ml-n10 mt-5">
-              <v-avatar fab :color="siteColor" size="100">
+              <v-avatar fab :color="siteColor.button_color" size="100">
                 <span class="white--text headline text-h3"
                   >{{ currentProduct.rating }}.0</span
                 >
@@ -275,7 +271,7 @@
                 v-model="currentProduct.rating"
                 :hover="hover"
                 :size="size"
-                :color="siteColor"
+                :color="siteColor.button_color"
               ></v-rating>
 
               <p class="text-center text-subtitle">
@@ -292,7 +288,7 @@
                   :key="i"
                   rounded
                   :value="barRatingArray[5 - i]"
-                  :color="siteColor"
+                  :color="siteColor.button_color"
                   >{{ 6 - i }} Star ({{
                     barRatingArray[5 - i] / 20
                   }}
@@ -335,7 +331,7 @@
                 v-model="review.rating"
                 :hover="hover"
                 :size="size2"
-                :color="siteColor"
+                :color="siteColor.button_color"
               ></v-rating>
             </v-col>
           </v-row>
@@ -389,11 +385,10 @@
 //import businessInfoPopup from "../components/businessInfoPopup.vue";
 // import productRequestDialog from "../components/productRequestDialog";
 export default {
-  async mounted() {
+  async created() {
     await this.$store.dispatch("refreshCurrentUser");
     console.log(this.currentProduct);
     await this.$store.dispatch("getSiteColor");
-    console.log(this.siteColor);
     await this.$store.dispatch("getProductReview", {
       product_id: this.currentProduct.product_id,
       user_id: this.currentUser.user_id,

@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <ToolBar></ToolBar>
+    <ToolBar class="mb-6"></ToolBar>
     <cartTable></cartTable>
     <router-view class="grey lighten-4 mt-10" />
     <!-- <link

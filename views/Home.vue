@@ -238,36 +238,7 @@
             ><v-card-title>Categories</v-card-title>
           </v-row>
           <v-divider class="mx-16"></v-divider>
-          <v-col cols="12" v-for="category in category" :key="category">
-            <v-menu offset-x :close-on-content-click="false" open-on-hover>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  @mouseover="mouseOver(category)"
-                  v-bind="attrs"
-                  v-on="on"
-                  text
-                  @click="filterProductsWithCategory(category)"
-                >
-                  <i :class="`fas fa-${category} fa-2x mr-4`"></i>
-                  {{ category }}
-                  <i class="fa fa-chevron-right ml-4" aria-hidden="true"></i>
-                </v-btn>
-              </template>
-              <v-card>
-                <v-list v-for="item in categoryItems" :key="item">
-                  <v-btn
-                    class="black--text"
-                    @click="filterProductsWithItem(item)"
-                    text
-                  >
-                    -
-                    <i :class="`fa fa-${item} fa-lg ml-2 mr-2`"></i>
-                    {{ item }}
-                  </v-btn>
-                </v-list>
-              </v-card>
-            </v-menu>
-          </v-col>
+          
         </v-card>
       </v-col> -->
       <v-col cols="11"></v-col>
@@ -328,7 +299,10 @@
       </v-col> -->
     </v-row>
 
-    <v-row justify="space-between" class="mt-n7">
+    <v-row
+      :justify="homePageInfo.show_right_banner == 1 ? 'space-between' : 'start'"
+      class="mt-n7"
+    >
       <v-col lg="2" sm="3" md="2">
         <v-card height="95%" style="overflow: hidden" max-width>
           <!-- <v-row justify="center"
@@ -465,7 +439,7 @@
             :color="siteColor.button_color"
             :style="`color: ${siteColor.button_text_color}`"
             class="mb-15 white--text"
-            @click="radioGroup == '1' ? filterProducts('loadmore') : loadMore()"
+            @click="filterProducts('loadmore')"
           >
             {{ $t("homePage.loadMore") }}</v-btn
           >
@@ -529,6 +503,7 @@ export default {
     };
   },
   async created() {
+    await this.$store.dispatch("getCurrencies");
     await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getCategoryItems");
     // this.isLoading = true;
@@ -542,6 +517,7 @@ export default {
     }
     this.$store.commit("emptyProductsArray");
     await this.$store.dispatch("getGovernorate");
+
     await this.$store.dispatch("getProducts", {
       productFilterFlagss: this.productFilterFlag,
       productName: this.toolbarSearch,
