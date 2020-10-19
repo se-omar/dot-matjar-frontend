@@ -17,55 +17,79 @@
             <br />
 
             <v-divider class="divider"></v-divider>
-            <h4
-              v-if="request.new_category_name"
-              style="font-size: 25px; color: orange"
-            >
-              {{ $t("categoryAndItemRequests.newCategoryName") }} :
-            </h4>
-            <span
-              v-if="request.new_category_name"
-              style="font-size: 25px; color: blue"
-            >
-              {{ request.new_category_name }}</span
-            >
-            <v-divider class="divider"></v-divider>
-            <h4 style="font-size: 25px; color: orange">
-              {{ $t("categoryAndItemRequests.newCategoryDesc") }} :
-            </h4>
-            <span
-              v-if="request.new_category_description"
-              style="font-size: 25px; color: blue"
-              >{{ request.new_category_description }}</span
-            >
-            <v-divider class="divider"></v-divider>
-            <h4 style="font-size: 25px; color: orange">
-              {{ $t("categoryAndItemRequests.newCategoryItem") }} :
-            </h4>
-            <span
-              v-if="request.new_category_item"
-              style="font-size: 25px; color: blue"
-              >{{ request.new_category_item }}</span
-            >
-            <v-divider class="divider"></v-divider>
-            <h4 style="font-size: 25px; color: orange">
-              {{ $t("categoryAndItemRequests.newItemDesc") }}:
-            </h4>
-            <span
-              v-if="request.new_item_description"
-              style="font-size: 25px; color: blue"
-              >{{ request.new_item_description }}</span
-            >
-            <v-divider class="divider"></v-divider>
-            <h4 style="font-size: 25px; color: orange">
-              {{ $t("categoryAndItemRequests.newItemCatName") }}:
-            </h4>
-            <span
-              v-if="request.new_item_category_name"
-              style="font-size: 25px; color: blue"
-              >{{ request.new_item_category_name }}</span
-            >
-            <v-divider class="divider"></v-divider>
+            <span v-if="request.new_category_name">
+              <h4 style="font-size: 25px; color: orange">
+                {{ $t("categoryAndItemRequests.newCategoryName") }} :
+              </h4>
+              <span
+                v-if="request.new_category_name"
+                style="font-size: 25px; color: blue"
+              >
+                {{ request.new_category_name }}</span
+              >
+              <v-divider class="divider"></v-divider>
+            </span>
+            <!-- Category arabic name  -->
+            <span v-if="request.new_category_arabic_name">
+              <h4 style="font-size: 25px; color: orange">
+                {{ $t("categoryAndItemRequests.newCategoryArabicName") }} :
+              </h4>
+              <span
+                v-if="request.new_category_arabic_name"
+                style="font-size: 25px; color: blue"
+              >
+                {{ request.new_category_arabic_name }}</span
+              >
+              <v-divider class="divider"></v-divider>
+            </span>
+            <span v-if="request.new_category_description">
+              <h4 style="font-size: 25px; color: orange">
+                {{ $t("categoryAndItemRequests.newCategoryDesc") }} :
+              </h4>
+              <span style="font-size: 25px; color: blue">{{
+                request.new_category_description
+              }}</span>
+              <v-divider class="divider"></v-divider>
+            </span>
+            <span v-if="request.new_category_item">
+              <h4 style="font-size: 25px; color: orange">
+                {{ $t("categoryAndItemRequests.newCategoryItem") }} :
+              </h4>
+              <span style="font-size: 25px; color: blue">{{
+                request.new_category_item
+              }}</span>
+              <v-divider class="divider"></v-divider>
+            </span>
+            <!-- item arabis name -->
+            <span v-if="request.new_item_arabic_name">
+              <h4 style="font-size: 25px; color: orange">
+                {{ $t("categoryAndItemRequests.newItemArabicName") }} :
+              </h4>
+              <span style="font-size: 25px; color: blue">{{
+                request.new_item_arabic_name
+              }}</span>
+              <v-divider class="divider"></v-divider>
+            </span>
+            <!-- item arabis name -->
+            <span v-if="request.new_item_description">
+              <h4 style="font-size: 25px; color: orange">
+                {{ $t("categoryAndItemRequests.newItemDesc") }}:
+              </h4>
+              <span style="font-size: 25px; color: blue">{{
+                request.new_item_description
+              }}</span>
+              <v-divider class="divider"></v-divider>
+            </span>
+            <span v-if="request.new_item_category_name">
+              <h4 style="font-size: 25px; color: orange">
+                {{ $t("categoryAndItemRequests.newItemCatName") }}:
+              </h4>
+              <span style="font-size: 25px; color: blue">{{
+                request.new_item_category_name
+              }}</span>
+
+              <v-divider class="divider"></v-divider>
+            </span>
             <h4 style="font-size: 25px; color: orange">
               {{ $t("categoryAndItemRequests.requestStatus") }}:
             </h4>
@@ -144,6 +168,8 @@ export default {
         newCategoryItem: request.new_category_item,
         newItemCategoryName: request.new_item_category_name,
         requestType: request.request_type,
+        categoryArabicName: request.new_category_arabic_name,
+        itemArabicName: request.new_item_arabic_name,
       });
       this.snackBar = true;
       setTimeout(() => {
@@ -165,7 +191,15 @@ export default {
   },
   computed: {
     categoryAndItemRequests() {
-      return this.$store.state.Home.categoryAndItemRequests;
+      var data = [];
+      for (
+        var i = this.$store.state.Home.categoryAndItemRequests.length - 1;
+        i >= 0;
+        i--
+      ) {
+        data.push(this.$store.state.Home.categoryAndItemRequests[i]);
+      }
+      return data;
     },
     categoryRequestMessage() {
       return this.$store.state.Home.categoryRequestMessage;

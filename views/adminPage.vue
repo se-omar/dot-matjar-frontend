@@ -1,9 +1,7 @@
 <template>
-  <v-app v-if="currentUser.user_type">
+  <v-app class="mt-16" v-if="currentUser.user_type">
     <div class="vld-parent">
-      <div v-if="currentUser.user_type == 'admin'">
-        <SiteColor></SiteColor>
-      </div>
+      <div v-if="currentUser.user_type == 'admin'"></div>
       <loading
         :active.sync="isLoading"
         :can-cancel="false"
@@ -14,19 +12,30 @@
     <v-row justify="center">
       <h2>{{ $t("adminPage.addNewCategory") }}</h2>
     </v-row>
-    <v-row justify="center">
-      <v-form v-model="addCategoryValidation">
-        <v-col>
+
+    <v-form v-model="addCategoryValidation">
+      <v-row justify="center">
+        <v-col cols="3">
           <v-text-field
-            :rules="required"
+            :rules="[rules.required]"
             v-model="newCategoryName"
             :placeholder="$t('adminPage.categoryName')"
             rounded
             outlined
           ></v-text-field>
         </v-col>
-      </v-form>
-    </v-row>
+        <v-col cols="3">
+          <v-text-field
+            :rules="[rules.required]"
+            v-model="newCategoryArabicName"
+            :placeholder="$t('adminPage.newCategoryArabicName')"
+            rounded
+            outlined
+          ></v-text-field>
+        </v-col>
+      </v-row>
+    </v-form>
+
     <v-row justify="center">
       <v-btn
         :disabled="!addCategoryValidation"
@@ -49,7 +58,7 @@
       <v-row justify="center">
         <v-col cols="3">
           <v-select
-            :rules="required"
+            :rules="[rules.required]"
             outlined
             rounded
             :items="productCategory"
@@ -65,7 +74,20 @@
             class="text-xl"
             rounded
             outlined
-            :rules="required"
+            :rules="[rules.required]"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+      <!-- Category item arabic name  -->
+      <v-row justify="center">
+        <v-col cols="3">
+          <v-text-field
+            v-model="itemArabicName"
+            :placeholder="$t('adminPage.newCategoryItemArabicName')"
+            class="text-xl"
+            rounded
+            outlined
+            :rules="[rules.required]"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -704,7 +726,7 @@
 <script>
 import supplier from "../components/supplier";
 import moment from "moment";
-import SiteColor from "../components/siteColor";
+// import SiteColor from "../components/siteColor";
 export default {
   async created() {
     //this.isLoading = true;
@@ -784,7 +806,7 @@ export default {
       newCategoryName: "",
       categoryName: "",
       categoryItem: "",
-      required: [(v) => !!v || "You must add your item"],
+
       valid: true,
       chooseCategoryToRemove: "",
       categoryItems: [],
@@ -808,6 +830,8 @@ export default {
       carouselViewImg4: "",
       // leftBannerViewImg: "",
       rightBannerViewImg: "",
+      newCategoryArabicName: "",
+      itemArabicName: "",
     };
   },
 
@@ -1083,14 +1107,18 @@ export default {
     },
     addNewCategory() {
       // console.log(this.newCategoryName);
-      this.$store.dispatch("addNewCategory", this.newCategoryName);
+      this.$store.dispatch("addNewCategory", {
+        categoryName: this.newCategoryName,
+        categoryArabicName: this.newCategoryArabicName,
+      });
       this.$router.go();
     },
     async addCategoryItem() {
-      // console.log(this.categoryName, this.categoryItem);
+      console.log("item arabic name", this.itemArabicName);
       await this.$store.dispatch("addCategoryItems", {
         categoryName: this.categoryName,
         categoryItem: this.categoryItem,
+        itemArabicName: this.itemArabicName,
       });
       // this.$router.go();
     },
@@ -1238,7 +1266,6 @@ export default {
 
   components: {
     supplier,
-    SiteColor,
   },
 };
 </script>

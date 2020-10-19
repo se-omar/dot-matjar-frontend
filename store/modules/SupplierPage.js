@@ -42,26 +42,28 @@ export default {
         },
 
         getSupplierProducts(state, supplierProducts) {
-            // var currentCurrency = localStorage.getItem('currentCurrency')
-            // supplierProducts.forEach(element => {
-            //     if (element.currency !== currentCurrency) {
-            //         if (state.currencies.EGP) {
-            //             var egp = state.currencies.EGP;
-            //             if (element.currency == 'egp') {
-            //                 element.unit_price = Math.trunc(element.unit_price / egp)
-            //             }
-            //             else if (element.currency == 'usd') {
-            //                 element.unit_price = Math.trunc(element.unit_price * egp)
-            //             }
-            //             else {
-            //                 console.log('error in currency conversion')
-            //             }
-            //         }
-            //         else {
-            //             console.log('currencies from api are empty')
-            //         }
-            //     }
-            // });
+            var currencies = JSON.parse(localStorage.getItem('rates'))
+            var currentCurrency = localStorage.getItem('currentCurrency')
+            console.log('currencies from home ', currencies)
+            supplierProducts.forEach(element => {
+                if (element.currency !== currentCurrency) {
+                    if (currencies.EGP) {
+                        var egp = currencies.EGP;
+                        if (element.currency == 'egp') {
+                            element.unit_price = Math.trunc(element.unit_price / egp)
+                        }
+                        else if (element.currency == 'usd') {
+                            element.unit_price = Math.trunc(element.unit_price * egp)
+                        }
+                        else {
+                            console.log('error in currency conversion')
+                        }
+                    }
+                    else {
+                        console.log('currencies from api are empty')
+                    }
+                }
+            });
             console.log('supplier products are ', supplierProducts)
             state.supplierProducts.push(...supplierProducts)
             state.supplierProductsSave.push(...supplierProducts)
@@ -175,6 +177,7 @@ export default {
         async getSupplierPageData(context, id) {
             await axios.put('http://localhost:3000/api/getSupplierPageData', { supplier_id: id })
                 .then(info => {
+                    console.log('supplier page datat', info.data.data)
                     context.commit('getSupplierPageData', info.data.data)
                     context.commit('updateSupplierPageColors', info.data.data)
                 })

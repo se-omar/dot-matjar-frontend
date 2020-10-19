@@ -661,7 +661,7 @@
       <v-container>
         <v-toolbar shaped>
           <v-row justify="center">
-            <h2>Choose your Categories</h2>
+            <h2>{{ $t("updateSupplierPage.chooseYourCategory") }}</h2>
           </v-row>
         </v-toolbar>
         <v-card>
@@ -679,7 +679,9 @@
               <v-card elevation="16" max-width="400" class="mx-auto">
                 <v-toolbar shaped>
                   <v-row justify="center">
-                    <h2 style="text-align: center">Category</h2>
+                    <h2 style="text-align: center">
+                      {{ $t("updateSupplierPage.category") }}
+                    </h2>
                   </v-row>
                 </v-toolbar>
                 <v-virtual-scroll
@@ -720,7 +722,9 @@
               <v-card elevation="16" max-width="400" class="mx-auto">
                 <v-toolbar shaped>
                   <v-row justify="center">
-                    <h2 style="text-align: center">Items</h2>
+                    <h2 style="text-align: center">
+                      {{ $t("updateSupplierPage.items") }}
+                    </h2>
                   </v-row>
                 </v-toolbar>
                 <v-virtual-scroll
@@ -759,7 +763,9 @@
               <v-card elevation="16" max-width="400" class="mx-auto">
                 <v-toolbar shaped>
                   <v-row justify="center">
-                    <h2 style="text-align: center">Selected Items</h2>
+                    <h2 style="text-align: center">
+                      {{ $t("updateSupplierPage.selectedItems") }}
+                    </h2>
                   </v-row>
                 </v-toolbar>
 
@@ -814,22 +820,25 @@
             >
             <v-dialog v-model="dialog" persistent max-width="290">
               <v-card>
-                <v-card-title class="headline"> Sure? </v-card-title>
-                <v-card-text
-                  >Be aware that by updating the items , all of your previews
-                  items will be overwritten</v-card-text
+                <v-card-title class="headline">
+                  {{ $t("updateSupplierPage.dialogApprovalQuestion") }}
+                </v-card-title>
+                <v-card-text>
+                  {{
+                    $t("updateSupplierPage.dialogApprovalDescription")
+                  }}</v-card-text
                 >
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn color="red" text @click="dialog = false">
-                    Disagree
+                    {{ $t("updateSupplierPage.dialogDisApprovalButton") }}
                   </v-btn>
                   <v-btn
                     @click="addCategoryAndItemsToSupplier()"
                     text
                     :color="buttonsColor"
                   >
-                    Agree
+                    {{ $t("updateSupplierPage.dialogApprovalButton") }}
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -1220,11 +1229,9 @@ export default {
   async created() {
     //this.isLoading = true;
     await this.$store.dispatch("refreshCurrentUser");
-    await this.$store.dispatch("getSupplier", this.$route.params.supplier_id);
-    await this.$store.dispatch(
-      "getSupplierPageData",
-      this.$route.params.supplier_id
-    );
+    await this.$store.dispatch("getSupplier", this.currentUser.user_id);
+    await this.$store.dispatch("getSupplierPageData", this.currentUser.user_id);
+    console.log("paraaamsss");
     await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getCategoryItems");
     // await this.$store.dispatch("getSupplierItems", {
@@ -1234,6 +1241,7 @@ export default {
       "getSupplierCategoriesAndItems",
       this.currentUser.user_id
     );
+    console.log("siteColor", this.siteColor);
     await setTimeout(() => {
       this.toolBarColor = this.siteColor.toolbar_color;
       this.footerColor = this.siteColor.footer_color;

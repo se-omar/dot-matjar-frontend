@@ -314,9 +314,11 @@
               <v-menu
                 v-for="category in category"
                 :key="category"
-                offset-x
                 :close-on-content-click="false"
                 open-on-hover
+                offset-x
+                :left="rtlMenuCondition"
+                transition="scale-transition"
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-row class="mx-3" justify="start">
@@ -328,7 +330,6 @@
                         v-on="on"
                         text
                         @click="filterProductsWithCategory(category)"
-                        style="overflow: hidden"
                       >
                         <v-row justify="start">
                           <i :class="`fas fa-${category} fa-lg mr-2`"></i>
@@ -339,7 +340,11 @@
                           icon
                           style="overflow: hidden; color: black"
                         >
-                          <i class="fa fa-chevron-right"></i>
+                          <i
+                            v-if="siteLanguage == 'en'"
+                            class="fa fa-chevron-right"
+                          ></i>
+                          <i v-else class="fa fa-chevron-left"></i>
                         </v-btn>
                       </v-btn>
                     </v-col>
@@ -372,7 +377,7 @@
       <!-- <v-col lg="8" sm="5" md="7"> -->
       <v-col
         :lg="homePageInfo.show_right_banner ? 8 : 10"
-        sm="7"
+        sm="6"
         :md="homePageInfo.show_right_banner ? 8 : 10"
       >
         <v-radio-group mandatory :value="radioGroup">
@@ -474,6 +479,7 @@ export default {
   name: "Home",
   data() {
     return {
+      offset: true,
       toolbarSearch: "",
       categoryName: "",
       supplierName: "",
@@ -509,7 +515,7 @@ export default {
     // this.isLoading = true;
     this.$store.dispatch("removeSupplierPageData");
     await this.$store.dispatch("getSiteColor");
-    console.log(this.loginToken);
+
     await this.$store.dispatch("getHomePageData");
     if (this.loginToken) {
       console.log("x");
@@ -587,6 +593,19 @@ export default {
 
     radioGroup() {
       return this.$store.state.Home.radioGroup;
+    },
+    siteLanguage() {
+      return this.$store.state.Home.siteLanguage;
+    },
+    rtlMenuCondition() {
+      if (this.$store.state.Home.siteLanguage == "en") {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    availableCountries() {
+      return this.$store.state.Home.availableCountries;
     },
   },
   methods: {
@@ -697,20 +716,38 @@ export default {
     mouseOver(name) {
       this.categoryItems = [];
       console.log(name);
-      for (let i = 0; i < this.categoriesItems.length; i++) {
-        if (this.categoriesItems[i].category_name == name) {
-          this.categoryItems.push(this.categoriesItems[i].category_items);
+      if (this.siteLanguage == "en") {
+        for (let i = 0; i < this.categoriesItems.length; i++) {
+          if (this.categoriesItems[i].category_name == name) {
+            this.categoryItems.push(this.categoriesItems[i].category_items);
+          }
+        }
+      } else {
+        console.log("category name", name);
+        for (let i = 0; i < this.categoriesItems.length; i++) {
+          if (this.categoriesItems[i].category_arabic_name == name) {
+            this.categoryItems.push(
+              this.categoriesItems[i].category_items_arabic_name
+            );
+          }
         }
       }
       console.log("category itemsis", this.categoryItems);
+      console.log("categories item", this.categoriesItems);
     },
     filterProductsWithItem(item) {
       console.log(item);
-      this.$store.dispatch("filterProducts", { categoryItem: item });
+      this.$store.dispatch("filterProducts", {
+        categoryItem: item,
+        buttonPressed: "search",
+      });
     },
     filterProductsWithCategory(category) {
       console.log(category);
-      this.$store.dispatch("filterProducts", { category_name: category });
+      this.$store.dispatch("filterProducts", {
+        category_name: category,
+        buttonPressed: "search",
+      });
     },
     testModule() {
       this.$store.dispatch("testAct", "assdfsaf");

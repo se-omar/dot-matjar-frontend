@@ -1,13 +1,15 @@
 <template>
   <v-card
-    :class="request.request_response === null ? 'light-blue lighten-5 mb-2' : 'light-green mb-2'"
+    :class="
+      request.request_response === null
+        ? 'light-blue lighten-5 mb-2'
+        : 'light-green mb-2'
+    "
     width="100%"
     @click.native="setCurrentRequest"
   >
     <v-card-title style="font-size: 25px" class="mr-1">
-      {{
-      request.product.product_name
-      }}
+      {{ request.product.product_name }}
     </v-card-title>
 
     <v-row justify="space-between" class="mt-n8 mb-n5">
@@ -16,7 +18,10 @@
       </v-col>
 
       <v-col cols="3">
-        <v-card-text>رقم الطلب: {{ request.requests_id }}</v-card-text>
+        <v-card-text
+          >{{ $t("requestCard.requestNumber") }}
+          {{ request.requests_id }}</v-card-text
+        >
       </v-col>
     </v-row>
 
@@ -25,15 +30,19 @@
     <v-row class="mt-n2" justify="space-between">
       <v-col v-if="requestType === 'recieved'" cols="6">
         <v-card-text>
-          <span style="font-size: 20px">اسم المرسل: {{ request.sendingUser.full_arabic_name }}</span>
+          <span style="font-size: 20px"
+            >{{ $t("requestCard.senderName") }}
+            {{ request.sendingUser.full_arabic_name }}</span
+          >
         </v-card-text>
       </v-col>
 
       <v-col v-else-if="requestType === 'sent'" cols="6">
         <v-card-text>
-          <span
-            style="font-size: 20px"
-          >اسم المرسل اليه: {{ request.recievingUser.full_arabic_name }}</span>
+          <span style="font-size: 20px"
+            >{{ $t("requestCard.receiverName")
+            }}{{ request.recievingUser.full_arabic_name }}</span
+          >
         </v-card-text>
       </v-col>
 
@@ -41,7 +50,9 @@
         <p
           style="font-size: 20px"
           v-if="requestType === 'recieved' && request.request_response != null"
-        >تم الرد</p>
+        >
+          {{ $t("requestCard.respondSent") }}
+        </p>
       </v-col>
     </v-row>
   </v-card>

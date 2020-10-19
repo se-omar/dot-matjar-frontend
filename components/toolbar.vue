@@ -39,7 +39,7 @@
             class="mt-8"
             outlined
             rounded
-            placeholder="SEARCH"
+            :placeholder="$t('toolbar.search')"
             append-icon="fa fa-search"
             @keyup="emptySearchBox"
             v-model="toolbarSearch"
@@ -51,7 +51,7 @@
             class="mt-8"
             outlined
             rounded
-            placeholder="SEARCH"
+            :placeholder="$t('toolbar.search')"
             append-icon="fa fa-search"
             @keyup="filterSupplierProducts($route.params.supplier_id)"
             v-model="supplierProductsSearch"
@@ -114,8 +114,36 @@
               </v-radio-group>
             </v-row>
             <v-row justify="center">
-              <v-col cols="3" sm="1" lg="2"></v-col>
-              <v-col cols="3" lg="4" sm="5" md="3">
+              <v-col cols="4"></v-col>
+              <v-col cols="4">
+                <v-text-field
+                  class="mt-8"
+                  outlined
+                  rounded
+                  :placeholder="$t('toolbar.search')"
+                  append-icon="fa fa-search"
+                  @keyup="emptySearchBox"
+                  v-model="toolbarSearch"
+                  v-if="radioGroup === '1'"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="4"></v-col>
+              <v-col cols="4"></v-col>
+              <v-col cols="4">
+                <v-select
+                  rounded
+                  v-if="radioGroup === '1'"
+                  :items="availableCountries"
+                  :disabled="radioGroup === '2'"
+                  :placeholder="$t('toolbar.country')"
+                  dense
+                  outlined
+                  v-model="country"
+                ></v-select>
+              </v-col>
+              <v-col cols="4"></v-col>
+              <v-col cols="2"></v-col>
+              <v-col cols="4" md="3">
                 <v-select
                   rounded
                   v-if="radioGroup === '1'"
@@ -129,7 +157,7 @@
                 ></v-select>
               </v-col>
 
-              <v-col cols="3" lg="4" sm="5" md="3">
+              <v-col cols="4" md="3">
                 <v-select
                   rounded
                   v-if="radioGroup === '1'"
@@ -141,7 +169,7 @@
                   v-model="region"
                 ></v-select>
               </v-col>
-              <v-col lg="2" sm="1" cols="3"></v-col>
+              <v-col cols="2"></v-col>
               <v-col cols="2" lg="3" sm="4" md="4">
                 <v-select
                   rounded
@@ -207,10 +235,22 @@
               </v-col>
               <v-col sm="3" lg="3" md="3"></v-col>
               <v-col lg="5" sm="3" md="3"></v-col>
-              <v-col cols="4" sm="2" md="2" lg="2">
+              <v-col v-if="radioGroup === '2'" cols="4" sm="2" md="2" lg="2">
                 <v-btn
                   class="white--text"
                   @click="filterSuppliers()"
+                  :color="siteColor.button_color"
+                  rounded
+                  x-large
+                  ><span :style="`color: ${siteColor.button_text_color}`">{{
+                    $t("toolbar.search")
+                  }}</span></v-btn
+                >
+              </v-col>
+              <v-col v-else cols="4" sm="2" md="2" lg="2">
+                <v-btn
+                  class="white--text"
+                  @click="filterProducts('search')"
                   :color="siteColor.button_color"
                   rounded
                   x-large
@@ -264,6 +304,21 @@
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn
+            v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs"
+            rounded
+            style="overflow: hidden"
+            class="font"
+            :style="`color:${siteColor.toolbar_text_color}`"
+            v-bind="attrs"
+            v-on="on"
+            icon
+            small
+          >
+            <i class="fa fa-user fa-lg mt-n1 mr-1" style="color: black"></i>
+            <!-- <span>{{ $t("toolbar.profile") }}</span> -->
+          </v-btn>
+          <v-btn
+            v-else
             rounded
             style="overflow: hidden"
             class="font"
@@ -381,11 +436,11 @@
                   {{ $t("toolbar.myPage") }}</span
                 >
               </v-btn>
-              <v-divider class="mr-4"></v-divider>
+              <!-- <v-divider class="mr-4"></v-divider> -->
             </v-col>
           </v-row>
           <v-row justify="center" v-if="currentUser.user_type == 'business'">
-            <v-col cols="12" sm="10" lg="5">
+            <v-col cols="12" sm="11" lg="5">
               <v-btn
                 class="btn1"
                 :color="siteColor.button_color"
@@ -394,13 +449,14 @@
                 @click="$router.push(`/${$i18n.locale}/myProducts`)"
               >
                 <span
-                  :style="`color:${siteColor.button_text_color}; `"
+                  style="color: white"
                   class="mos"
+                  v-html="$t('toolbar.myProducts')"
                 >
-                  {{ $t("toolbar.myProducts") }}</span
+                  {</span
                 >
               </v-btn>
-              <v-divider class="mr-4"></v-divider>
+              <!-- <v-divider class="mr-4"></v-divider> -->
             </v-col>
           </v-row>
           <v-row justify="center" v-if="currentUser.user_type == 'admin'">
@@ -411,12 +467,10 @@
                 rounded
                 :color="siteColor.button_color"
               >
-                <span :style="`color:${siteColor.button_text_color};`">
-                  Site <br />
-                  Colors</span
-                >
+                <span v-html="$t('toolbar.siteColors')" style="color: white">
+                </span>
               </v-btn>
-              <v-divider class="mr-4"></v-divider>
+              <!-- <v-divider class="mr-4"></v-divider> -->
             </v-col>
           </v-row>
 
@@ -430,13 +484,13 @@
                 @click="$router.push(`/${$i18n.locale}/orderedProducts`)"
               >
                 <span
-                  :style="`color:${siteColor.button_text_color};`"
+                  style="color: white"
                   class="mos"
+                  v-html="$t('toolbar.orderManage')"
                 >
-                  {{ $t("toolbar.orderManage") }}</span
-                >
+                </span>
               </v-btn>
-              <v-divider class="mr-4"></v-divider>
+              <!-- <v-divider class="mr-4"></v-divider> -->
             </v-col>
           </v-row>
 
@@ -451,11 +505,11 @@
                 "
                 ><span
                   v-html="$t('toolbar.categoryRequests')"
-                  :style="`color:${siteColor.button_text_color};`"
+                  style="color: white"
                 >
                 </span
               ></v-btn>
-              <v-divider class="mr-4"></v-divider>
+              <!-- <v-divider class="mr-4"></v-divider> -->
             </v-col>
           </v-row>
 
@@ -742,10 +796,14 @@
 <script>
 export default {
   components: {},
-  created() {
+  async created() {
     localStorage.setItem("currentCurrency", "egp");
-    this.$store.dispatch("refreshCurrentUser");
+    await this.$store.dispatch("refreshCurrentUser");
+    // await this.$store.dispatch("getAvailableCountries");
     console.log("color from toolbar", this.siteColor);
+    // if (this.availableCountries) {
+    //   console.log(this.availableCountries);
+    // }
   },
 
   props: {
@@ -780,13 +838,23 @@ export default {
       return this.$store.state.SupplierPage.supplier;
     },
     egyptGovernorates() {
-      return this.$store.state.Home.governorates;
+      if (this.country == "Egypt") {
+        return this.$store.state.Home.governorates;
+      } else return [];
     },
     regions() {
       return this.$store.state.Home.regions;
     },
     radioGroup() {
       return this.$store.state.Home.radioGroup;
+    },
+    availableCountries() {
+      if (this.$store.state.Home.availableCountries) {
+        var data = this.$store.state.Home.availableCountries.map((e) => {
+          return e.country_name;
+        });
+        return data;
+      } else return [];
     },
   },
 
@@ -796,6 +864,9 @@ export default {
         params: { lang: value },
       });
       this.$vuetify.rtl = value == "ar" ? true : false;
+      this.$store.commit("siteLanguage", value);
+
+      this.$store.dispatch("categoriesDB");
     },
     logout() {
       this.$store.commit("removeCurrentUser");
@@ -860,6 +931,7 @@ export default {
         category_name: this.categoryName,
         governorate: this.governorate,
         region: this.region,
+        buttonPressed: "search",
       });
 
       this.isLoading = false;
@@ -911,7 +983,6 @@ export default {
         console.log(currency);
       } else if (this.$route.name == "supplierPage") {
         this.$store.commit("emptySupplierProducts");
-        localStorage.removeItem("supplierProducts");
         await this.$store.dispatch(
           "getSupplierProducts",
           this.$route.params.supplier_id
@@ -936,6 +1007,8 @@ export default {
     supplierProductsSearch: "",
     currentCurrency: localStorage.getItem("currentCurrency"),
     currencies: ["egp", "usd"],
+    filterSuppliersByName: "",
+    country: "",
   }),
 };
 </script>

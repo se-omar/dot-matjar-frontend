@@ -48,7 +48,7 @@
                 @click="setCurrentRow"
                 :color="siteColor.button_color"
                 text
-                >Details
+                >{{ $t("product.details") }}
               </v-btn>
             </v-col>
             <v-col
@@ -65,9 +65,9 @@
                 :color="siteColor.button_color"
                 class="white--text"
               >
-                <span :style="`color:${siteColor.button_text_color}`"
-                  >Add to cart</span
-                >
+                <span :style="`color:${siteColor.button_text_color}`">{{
+                  $t("product.addToCart")
+                }}</span>
               </v-btn>
 
               <!-- <b-button

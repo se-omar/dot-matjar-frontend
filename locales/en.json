@@ -16,11 +16,11 @@
     "changeYourPassword": "change your password",
     "updateOrCompleteInfo": "update or complete info",
     "categoryRequests": "category <br/> and item <br/> requests",
-    "myProducts": "my products",
+    "myProducts": "my<br/>products",
     "myPage": "my page",
     "uploadPhoto": "upload your photo here",
-    "orderManage": "order manage",
-    "search": "search",
+    "orderManage": "order <br/> manage",
+    "search": "Search",
     "searchSuppliers": "search for suppliers",
     "searchProducts": "search for products",
     "homePage": "home page",
@@ -28,7 +28,9 @@
     "region": "region",
     "supplierNameSearch": "search supplier by name",
     "priceFrom": "price from",
-    "priceTo": "price to"
+    "priceTo": "price to",
+    "siteColors": "Site <br/> Colors",
+    "country": "Country"
   },
   "homePage": {
     "loadMore": "load more",
@@ -56,7 +58,10 @@
     "extraPicture": "extra picture",
     "addProduct": "add product",
     "cancel": "cancel",
-    "addCategory": "add category"
+    "addCategory": "add category",
+    "myCategoryRequests": "My Category Requests",
+    "categoryArabicName": "Category Arabic Name",
+    "itemArabicName": "Item Arabic Name"
   },
   "adminPage": {
     "addNewCategory": "add a new category",
@@ -93,7 +98,9 @@
     "loadmore": "loadmore",
     "deleteCategoryCheck": "Are you sure you want to Delete this category ?",
     "deleteCategoryCheck2": "Please be aware that by proceeding all products in this category will not have a unique category to search for.",
-    "disagree": "disagree"
+    "disagree": "disagree",
+    "newCategoryArabicName": "Category Arabic Name",
+    "newCategoryItemArabicName": "Item Arabic Name"
   },
   "suppliersDashboard": {
     "dashboard": "dashboard",
@@ -225,7 +232,15 @@
     "textColor": "text color",
     "pageUpdated": "page updated successfully",
     "close": "close",
-    "accessDenied": "you don't have access to this page"
+    "accessDenied": "you don't have access to this page",
+    "chooseYourCategory": "Choose Your Category",
+    "items": "Items",
+    "category": "Category",
+    "selectedItems": "Selected Items",
+    "dialogApprovalQuestion": "Sure ?",
+    "dialogApprovalDescription": "Be aware that by updating the items , all of your previews items will be overwritten...",
+    "dialogApprovalButton": "Agree",
+    "dialogDisApprovalButton": "Disagree"
   },
   "supplierPage": {
     "updatePage": "update my page",
@@ -246,7 +261,9 @@
     "newItemCatName": "new item category name",
     "requestStatus": "request status",
     "accept": "accept",
-    "reject": "reject"
+    "reject": "reject",
+    "newCategoryArabicName": "Category Arabic Name",
+    "newItemArabicName": "New Item Arabic Name"
   },
   "checkoutLocation": {
     "productsDelivered": "products will be delivered to this location",
@@ -257,6 +274,52 @@
     "close": "close",
     "visa": "visa",
     "orderPlaced": "order is placed successfully"
+  },
+  "dashboardSellingProduct": {
+    "productCode": "Product Code :",
+    "unitPrice": " Unit Price:",
+    "numberOfTimesSold": "Number of Times Sold:",
+    "details": "details",
+    "noProductFound": "no product found"
+  },
+  "footer": {
+    "footerText": "Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet.Mauris cursus commodo interdum. Praesent ut risus eget metus luctusaccumsan id ultrices nunc. Sed at orci sed massa consectetur dignissima sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehiculalacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursusiaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementumtempor vel ut orci. Orci varius natoque penatibus et magnis disparturient montes, nascetur ridiculus mus."
+  },
+  "product": {
+    "details": "Details",
+    "addToCart": "Add To Cart"
+  },
+  "productRequestDialog": {
+    "productDescription": "Product Description",
+    "close": "Close",
+    "serviceRequest": "Service Request"
+  },
+  "requestDetails": {
+    "backToRequests": "Back to Requests",
+    "respondToTheRequest": "Respond to the Request",
+    "requestNumber": "Request Number",
+    "senderName": "Sender Name",
+    "receiverName": "Receiver Name",
+    "email": "email",
+    "mobileNumber": "Mobile Number",
+    "requestDescription": "Request Description",
+    "requestRespond": "Request Respond"
+  },
+  "supplier": {
+    "totalSales": "total sales:",
+    "sales": "Sales",
+    "revenue": "Revenue"
+  },
+  "cartTable": {
+    "total": "Total:",
+    "checkout": "Checkout",
+    "clean": "Clean"
+  },
+  "requestCard": {
+    "requestNumber": "Request Number",
+    "senderName": "Sender Name",
+    "receiverName": "Receiver Name",
+    "respondSent": "Respond Sent"
   },
   "dashboard": {
     "dashboard": "dashboard",

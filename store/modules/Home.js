@@ -4,7 +4,7 @@ import axios from 'axios'
 
 export default {
     state: {
-        siteColor: JSON.parse(localStorage.getItem('siteColor')) ? JSON.parse(localStorage.getItem('siteColor')) : 'blue',
+        siteColor: localStorage.getItem('siteColor') ? JSON.parse(localStorage.getItem('siteColor')) : [],
         currentUser: '',
         filteredProducts: [],
         regions: [],
@@ -19,7 +19,9 @@ export default {
         supplierCategoriesRequests: [],
         homePageInfo: {},
         radioGroup: '1',
-        currencies: {}
+        currencies: JSON.parse(localStorage.getItem('rates')),
+        siteLanguage: 'en',
+        availableCountries: ''
     },
 
     mutations: {
@@ -55,11 +57,12 @@ export default {
         },
 
         getProducts(state, products) {
+            var currencies = JSON.parse(localStorage.getItem('rates'))
             var currentCurrency = localStorage.getItem('currentCurrency')
             products.forEach(element => {
                 if (element.currency !== currentCurrency) {
-                    if (state.currencies.EGP) {
-                        var egp = state.currencies.EGP;
+                    if (currencies.EGP) {
+                        var egp = currencies.EGP;
                         if (element.currency == 'egp') {
                             element.unit_price = Math.trunc(element.unit_price / egp)
                         }
@@ -85,22 +88,33 @@ export default {
         },
 
         categoriesDB(state, data) {
-            state.category = data.map(e => {
-                return e.category_name
-            })
+
+            if (state.siteLanguage == 'en') {
+                state.category = data.map(e => {
+                    return e.category_name
+                })
+            }
+            else {
+                state.category = data.map(e => {
+                    return e.category_arabic_name
+                })
+            }
+
 
         },
 
         filterProducts(state, { products, pressed }) {
+            var currencies = JSON.parse(localStorage.getItem('rates'))
             var currentCurrency = localStorage.getItem('currentCurrency')
             products.forEach(element => {
                 if (element.currency !== currentCurrency) {
-                    if (state.currencies) {
+                    if (currencies.EGP) {
+                        var egp = currencies.EGP;
                         if (element.currency == 'egp') {
-                            element.unit_price = Math.trunc(element.unit_price / state.currencies.EGP)
+                            element.unit_price = Math.trunc(element.unit_price / egp)
                         }
                         else if (element.currency == 'usd') {
-                            element.unit_price = Math.trunc(element.unit_price * state.currencies.EGP)
+                            element.unit_price = Math.trunc(element.unit_price * egp)
                         }
                         else {
                             console.log('error in currency conversion')
@@ -173,12 +187,17 @@ export default {
         },
         changeRadioGroup(state, radioValue) {
             state.radioGroup = radioValue;
-            //console.log('radio value', radioValue)
-            //console.log('radio group', state.radioGroup)
         },
 
         getCurrencies(state, rates) {
-            state.currencies = rates
+            localStorage.setItem('rates', JSON.stringify(rates))
+            state.currencies = JSON.parse(localStorage.getItem('rates'))
+        },
+        siteLanguage(state, value) {
+            state.siteLanguage = value
+        },
+        getAvailableCountries(state, countries) {
+            state.availableCountries = countries
         }
 
     },
@@ -287,19 +306,27 @@ export default {
             priceTo,
             product_id, buttonPressed
         }) {
-
+            console.log(product_name,
+                category_name,
+                governorate,
+                region,
+                categoryItem,
+                priceFrom,
+                priceTo,
+                product_id, buttonPressed)
             axios.put('http://localhost:3000/api/filterProducts', {
                 product_name,
                 category_name,
                 governorate,
                 region,
-                categoryItem, priceFrom, priceTo, product_id
+                categoryItem, priceFrom, priceTo, product_id,
+                siteLanguage: context.state.siteLanguage
             })
                 .then(response => {
                     //console.log('message:', response.data.message)
 
-                    //
-
+                    //debugger
+                    console.log('filtered products', response.data.data)
                     context.commit('filterProducts', { products: response.data.data, pressed: buttonPressed });
                 })
         },
@@ -332,16 +359,16 @@ export default {
                 })
         },
 
-        addNewCategory(context, categoryName) {
-            axios.post('http://localhost:3000/api/addNewCategory', { categoryName: categoryName })
+        addNewCategory(context, { categoryName, categoryArabicName }) {
+            axios.post('http://localhost:3000/api/addNewCategory', { categoryName, categoryArabicName })
                 .then(message => {
                     //console.log(message.data.message)
                     alert(message.data.message)
 
                 })
         },
-        addCategoryItems(context, { categoryName, categoryItem }) {
-            axios.post('http://localhost:3000/api/addCategoryItems', { categoryName: categoryName, categoryItem: categoryItem })
+        addCategoryItems(context, { categoryName, categoryItem, itemArabicName }) {
+            axios.post('http://localhost:3000/api/addCategoryItems', { categoryName: categoryName, categoryItem: categoryItem, itemArabicName: itemArabicName })
                 .then(message => {
                     //console.log(message.data.message)
                     alert(message.data.message)
@@ -369,7 +396,7 @@ export default {
             newCategoryDescription,
             newCategoryItem,
             newCategoryItemDescription,
-            categoryName }) {
+            categoryName, itemArabicName, categoryArabicName }) {
 
             axios.post('http://localhost:3000/api/requestNewCategoryAndItem', {
                 newCategoryName,
@@ -377,6 +404,8 @@ export default {
                 newCategoryItem,
                 newCategoryItemDescription,
                 categoryName,
+                itemArabicName,
+                categoryArabicName,
                 user_id: context.state.currentUser.user_id
             }).then(res => {
                 //console.log(res.data.message)
@@ -396,6 +425,8 @@ export default {
             newCategoryItem,
             newItemCategoryName,
             requestType,
+            categoryArabicName,
+            itemArabicName
         }) {
             axios.put('http://localhost:3000/api/categoryAndItemRequestStatus', {
                 id, status,
@@ -404,6 +435,8 @@ export default {
                 newCategoryItem,
                 newItemCategoryName,
                 requestType,
+                categoryArabicName,
+                itemArabicName
             })
                 .then(message => {
                     context.commit('categoryAndItemRequestStatus', message.data.message)
@@ -532,11 +565,21 @@ export default {
         getCurrencies(context) {
             axios
                 .get('https://openexchangerates.org/api/latest.json?app_id=b63ccfa73efc490f8d97677229662f48').then(response => {
+                    console.log('currencies from action ', response.data.rates)
                     context.commit('getCurrencies', response.data.rates)
+                })
+        },
+
+        async getAvailableCountries(context) {
+            await axios.put('http://localhost:3000/api/getAvailableCountries')
+                .then(countries => {
+                    console.log('available countries', countries.data.data)
+                    context.commit('getAvailableCountries', countries.data.data)
                 })
         }
 
 
     },
+
 
 }

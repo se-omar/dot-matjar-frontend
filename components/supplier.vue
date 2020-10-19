@@ -26,14 +26,15 @@
       </v-card-text>
 
       <v-card-text class="mt-n5" style="font-size: 16px"
-        >total sales: {{ supplier.total_sales }}</v-card-text
+        >{{ $t(supplier.totalSales) }} {{ supplier.total_sales }}</v-card-text
       >
 
       <v-card-text
         v-if="supplier.monthSales"
         style="font-size: 16px"
         class="mt-n5"
-        >{{ selectedMonth }} sales: {{ supplier.monthSales }}</v-card-text
+        >{{ selectedMonth }} {{ $t(supplier.sales) }}
+        {{ supplier.monthSales }}</v-card-text
       >
 
       <v-card-text>
@@ -51,21 +52,24 @@
         v-if="supplier.yearSales"
         style="font-size: 16px"
         class="mt-n5"
-        >{{ selectedYear }} sales: {{ supplier.yearSales }}</v-card-text
+        >{{ selectedYear }} {{ $t(supplier.sales)
+        }}{{ supplier.yearSales }}</v-card-text
       >
 
       <v-card-text
         v-if="supplier.monthRevenue"
         style="font-size: 16px"
         class="mt-n5"
-        >{{ selectedMonth }} Revenue: {{ supplier.monthRevenue }}</v-card-text
+        >{{ selectedMonth }} {{ $t(supplier.revenue) }}
+        {{ supplier.monthRevenue }}</v-card-text
       >
 
       <v-card-text
         v-if="supplier.yearRevenue"
         style="font-size: 16px"
         class="mt-n5"
-        >{{ selectedYear }} Revenue: {{ supplier.yearRevenue }}</v-card-text
+        >{{ selectedYear }} {{ $t(supplier.revenue) }}
+        {{ supplier.yearRevenue }}</v-card-text
       >
     </v-card>
   </v-main>

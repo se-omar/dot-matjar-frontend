@@ -58,13 +58,11 @@
     <v-row justify="center" class="mt-16">
       <v-col cols="2">
         <v-btn
-          v-if="supplier.user_id == currentUser.user_id"
+          v-if="$route.params.supplier_id == currentUser.user_id"
           @click="updatePage"
           :color="siteColor.button_color"
           rounded
-          ><span :style="`color:${siteColor.button_text_color}`">
-            {{ $t("supplierPage.updatePage") }}</span
-          ></v-btn
+          ><span> {{ $t("supplierPage.updatePage") }}</span></v-btn
         >
       </v-col>
       <v-col cols="2">
@@ -242,6 +240,10 @@ export default {
         return {
           button_text_color: "black",
           button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
+          footer_color: "white",
+          footer_text_color: "black",
         };
       }
     },
@@ -371,8 +373,10 @@ export default {
   },
   async created() {
     //this.isLoading = true;
+    await this.$store.dispatch("getCurrencies");
     await this.$store.dispatch("refreshCurrentUser");
     await this.$store.dispatch("getSupplier", this.$route.params.supplier_id);
+    console.log("user paramasss", this.$route.params.supplier_id);
     console.log("current user", this.currentUser);
 
     await this.$store.dispatch(

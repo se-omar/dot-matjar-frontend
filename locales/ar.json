@@ -28,7 +28,9 @@
         "region": "المنطقة",
         "supplierNameSearch": "البحث باسم البائع",
         "priceFrom": "السعر من",
-        "priceTo": "السعر الي"
+        "priceTo": "السعر الي",
+        "siteColors": "الوان <br/>الموقع",
+        "country": "بلد"
     },
     "homePage": {
         "loadMore": "المزيد",
@@ -56,7 +58,10 @@
         "extraPicture": "صورة اضافية",
         "addProduct": "اضافة المنتج",
         "cancel": "الغاء",
-        "addCategory": "اضافة فئة"
+        "addCategory": "اضافة فئة",
+        "myCategoryRequests": "طلبات الفئات ",
+        "categoryArabicName": "فئة الاسم العربي",
+        "itemArabicName": "اسم العنصر بلعربي"
     },
     "adminPage": {
         "addNewCategory": "اضافة فئة جديدة",
@@ -93,7 +98,9 @@
         "loadmore": "المزيد",
         "deleteCategoryCheck": "هل انت متأكد من مسح هذة الفئة؟",
         "deleteCategoryCheck2": "يرجي العلم ان كل منتجات هذة الفئة لن يكون لها فئة مميزة في البحث",
-        "disagree": "الرفض"
+        "disagree": "الرفض",
+        "newCategoryArabicName": " اسم الفئة بلعربي",
+        "newCategoryItemArabicName": "اسم العنصر بلعربي"
     },
     "suppliersDashboard": {
         "dashboard": "لوحة تحكم",
@@ -224,7 +231,15 @@
         "pickFooterTextColor": "اختر لون كلام التذييل",
         "pageUpdated": "تم تحديث الصفحة بنجاح",
         "textColor": "لون الكلمات",
-        "accessDenied": "ليس لديك صلاحية لاظهار هذه الصفحة"
+        "accessDenied": "ليس لديك صلاحية لاظهار هذه الصفحة",
+        "chooseYourCategory": "اختر فئتك",
+        "items": "العناصر",
+        "category": "الفئة",
+        "selectedItems": "العناصر المحددة",
+        "dialogApprovalQuestion": "أكيد؟",
+        "dialogApprovalDescription": "اعلم أنه من خلال تحديث العناصر ، سيتم تجديد جميع عناصر المعاينة الخاصة بك ...",
+        "dialogApprovalButton": "اوافق",
+        "dialogDisApprovalButton": "لا اوافق"
     },
     "supplierPage": {
         "updatePage": "تحديث صفحتي",
@@ -242,10 +257,12 @@
         "newCategoryDesc": "وصف الفئة الجديدة",
         "newCategoryItem": "بند جديد",
         "newItemDesc": "وصف البند",
-        "newItemCatName": "اسم فئة البند الجديد",
+        "newItemCatName": "اسم الفئة الجديده",
         "requestStatus": "حالة الطلب",
         "accept": "قبول",
-        "reject": "رفض"
+        "reject": "رفض",
+        "newCategoryArabicName": " اسم الفئة بلعربي",
+        "newItemArabicName": "اسم العنصر بلعربي"
     },
     "checkoutLocation": {
         "productsDelivered": "سوف يتم توصيل المنتجات الي هذا العنوان",
@@ -256,6 +273,52 @@
         "close": "اغلاق",
         "visa": "البطاقة الائتمانية",
         "orderPlaced": "تم الطلب بنجاح"
+    },
+    "dashboardSellingProduct": {
+        "productCode": "كود المنتج ",
+        "unitPrice": "السعر",
+        "numberOfTimesSold": "عدد مرات البيع",
+        "details": "التفاصيل",
+        "noProductFound": "لا يوجد منتجانت"
+    },
+    "footer": {
+        "footerText": "اينما كنت و كيفما كانت سلعتك, سنوفر لك المكان لتعرض ما تريد بيعه, حيث يمكنك بناء متجرك الأن و التحكم في كيقيه ادارته وكيفيه تعامل الزبائن معه"
+    },
+    "product": {
+        "details": "التفاصيل",
+        "addToCart": "اضافه الي السله"
+    },
+    "productRequestDialog": {
+        "productDescription": "وصف الطلب",
+        "close": "اغلاق",
+        "serviceRequest": "طلب الخدمة"
+    },
+    "requestDetails": {
+        "backToRequests": "الرجوع للطلبات",
+        "respondToTheRequest": "الرد علي الطلب",
+        "requestNumber": "رقم الطلب:",
+        "senderName": "اسم المرسل:",
+        "ReceiverName": "اسم المرسل اليه:",
+        "email": "البريد الالكتروني:",
+        "mobileNumber": "رقم الموبايل:",
+        "requestDescription": "وصف الطلب",
+        "requestRespond": "الرد علي الطلب"
+    },
+    "supplier": {
+        "totalSales": "اجمالي المبيعات",
+        "sales": "المبيعات",
+        "revenue": "الايرادات"
+    },
+    "cartTable": {
+        "total": "المجموع",
+        "checkout": "الدفع",
+        "clean": "مسح"
+    },
+    "requestCard": {
+        "requestNumber": "رقم الطلب:",
+        "senderName": "اسم المرسل:",
+        "receiverName": "اسم المرسل اليه:",
+        "respondSent": "تم الرد"
     },
     "dashboard": {
         "dashboard": "لوحة تحكم",

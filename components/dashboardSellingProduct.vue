@@ -15,12 +15,13 @@
     <v-card-text>
       <div class="mb-1">
         <span style="font-size: 17px"
-          >Product Code: {{ filteredProduct.product_code }}</span
+          >{{ $t("dashboardSellingProduct.productCode") }}
+          {{ filteredProduct.product_code }}</span
         >
       </div>
       <div>
         <span style="font-size: 17px">
-          Unit Price:
+          {{ $t("dashboardSellingProduct.unitPrice") }}
           <span style="color: red">{{ filteredProduct.unit_price }}</span>
         </span>
       </div>
@@ -28,12 +29,15 @@
         <v-row class="mt-n2">
           <v-col cols="8">
             <span style="font-size: 17px"
-              >Number of Times Sold: {{ filteredProduct.buy_counter }}</span
+              >{{ $t("dashboardSellingProduct.numberOfTimesSold")
+              }}{{ filteredProduct.buy_counter }}</span
             >
           </v-col>
 
           <v-col class="mt-n2" cols="4">
-            <v-btn @click="setCurrentRow" class="primary">Details</v-btn>
+            <v-btn @click="setCurrentRow" class="primary">{{
+              $t("dashboardSellingProduct.details")
+            }}</v-btn>
           </v-col>
         </v-row>
       </div>
@@ -41,7 +45,9 @@
   </v-card>
 
   <v-card class="grey lighten-4" height="200" v-else>
-    <v-card-title class="display-1 ml-16">no product found</v-card-title>
+    <v-card-title class="display-1 ml-16">{{
+      $t("dashboardSellingProduct.noProductFound")
+    }}</v-card-title>
   </v-card>
 </template>
 
