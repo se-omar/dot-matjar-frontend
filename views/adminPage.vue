@@ -185,22 +185,92 @@
 
     <v-divider class="mx-16"></v-divider>
     <v-row justify="center">
-      <h2>Pick country to ADD</h2>
-    </v-row>
-    <v-row justify="center">
-      <v-col cols="3">
-        <v-select
-          v-model="country"
-          dense
-          outlined
-          rounded
-          :items="worldCountries"
-        ></v-select>
+      <v-col cols="4" lg="3" sm="6" md="4">
+        <v-card>
+          <v-toolbar shaped :color="siteColor.toolbar_color">
+            <v-row justify="center">
+              <h2>Pick Country to Add</h2>
+            </v-row>
+          </v-toolbar>
+          <v-form v-model="addCountryForm">
+            <v-row justify="center">
+              <v-col cols="6">
+                <v-select
+                  v-model="country"
+                  dense
+                  outlined
+                  rounded
+                  :items="worldCountries"
+                  :rules="[rules.required]"
+                ></v-select>
+              </v-col>
+            </v-row>
+          </v-form>
+          <v-row justify="center">
+            <v-col cols="3" sm="6" lg="5">
+              <v-btn
+                :disabled="!addCountryForm"
+                rounded
+                :color="siteColor.button_color"
+                @click="addCountry"
+                ><span :style="`color:${siteColor.button_text_color}`"
+                  >Add Country</span
+                ></v-btn
+              >
+            </v-col>
+          </v-row>
+        </v-card>
       </v-col>
-    </v-row>
-    <v-row justify="center">
-      <v-col cols="3">
-        <v-btn @click="addCountry">Add Country</v-btn>
+      <v-col cols="4" lg="3" md="4" sm="6">
+        <v-card>
+          <v-toolbar shaped :color="siteColor.toolbar_color">
+            <v-row justify="center">
+              <h2>Choose Country to Remove</h2>
+            </v-row>
+          </v-toolbar>
+
+          <v-virtual-scroll
+            :items="choosenCountries"
+            height="300"
+            item-height="64"
+          >
+            <template v-slot="{ item }">
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title style="text-align: center" :key="item">
+                    {{ item }}
+                  </v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-action>
+                  <v-btn @click="dialog = true" large icon>
+                    <i class="fa fa-trash-alt fa-2x" style="color: red"></i
+                  ></v-btn>
+                </v-list-item-action>
+              </v-list-item>
+              <v-dialog v-model="dialog" persistent max-width="290">
+                <v-card>
+                  <v-card-title style="text-align: center" class="headline">
+                    {{ $t("updateSupplierPage.dialogApprovalQuestion") }}
+                  </v-card-title>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="red" text @click="dialog = false">
+                      {{ $t("updateSupplierPage.dialogDisApprovalButton") }}
+                    </v-btn>
+                    <v-btn
+                      @click="RemoveCountry(item)"
+                      text
+                      :color="siteColor.button_color"
+                    >
+                      {{ $t("updateSupplierPage.dialogApprovalButton") }}
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </template>
+          </v-virtual-scroll>
+        </v-card>
       </v-col>
     </v-row>
     <v-divider class="mx-16"></v-divider>
@@ -762,8 +832,8 @@ export default {
     });
     await this.$store.dispatch("getWorldCountries");
     await this.$store.dispatch("getHomePageData");
-    // console.log("supplier page info", this.supplierPageInfo);
-
+    await this.$store.dispatch("getChoosenWorldCountries");
+    console.log("world countries", this.worldCountries);
     if (this.homePageInfo.show_carousel === 1) this.carouselCheckbox = true;
 
     // if (this.homePageInfo.show_left_banner === 1)
@@ -852,6 +922,8 @@ export default {
       newCategoryArabicName: "",
       itemArabicName: "",
       country: "",
+      addCountryForm: false,
+      dialog: false,
     };
   },
 
@@ -960,6 +1032,9 @@ export default {
     },
     worldCountries() {
       return this.$store.state.Home.worldCountries;
+    },
+    choosenCountries() {
+      return this.$store.state.Home.choosenCountries;
     },
   },
 
@@ -1288,6 +1363,11 @@ export default {
     addCountry() {
       console.log("country is", this.country);
       this.$store.dispatch("addCountry", { country: this.country });
+    },
+    RemoveCountry(country) {
+      console.log(country);
+      this.$store.dispatch("removeCountry", country);
+      location.reload();
     },
   },
 

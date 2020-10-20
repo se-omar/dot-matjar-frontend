@@ -22,7 +22,8 @@ export default {
         currencies: JSON.parse(localStorage.getItem('rates')),
         siteLanguage: 'en',
         availableCountries: '',
-        worldCountries: []
+        worldCountries: [],
+        choosenCountries: []
     },
 
     mutations: {
@@ -202,6 +203,12 @@ export default {
         },
         getWorldCountries(state, data) {
             state.worldCountries = data
+        },
+        getChoosenWorldCountries(state, countries) {
+
+            state.choosenCountries = countries.map(e => {
+                return e.country_name
+            })
         }
 
     },
@@ -308,8 +315,9 @@ export default {
             categoryItem,
             priceFrom,
             priceTo,
-            product_id, buttonPressed
+            buttonPressed
         }) {
+            var product_id = context.state.products[0].product_id
             console.log(product_name,
                 category_name,
                 governorate,
@@ -317,14 +325,15 @@ export default {
                 categoryItem,
                 priceFrom,
                 priceTo,
-                product_id, buttonPressed)
+                buttonPressed, context.state.siteLanguage, product_id)
             axios.put('http://localhost:3000/api/filterProducts', {
                 product_name,
                 category_name,
                 governorate,
                 region,
-                categoryItem, priceFrom, priceTo, product_id,
-                siteLanguage: context.state.siteLanguage
+                categoryItem, priceFrom, priceTo,
+                siteLanguage: context.state.siteLanguage,
+                product_id: product_id
             })
                 .then(response => {
                     //console.log('message:', response.data.message)
@@ -593,6 +602,17 @@ export default {
                 .then(message => {
                     alert(message.data.message)
                 })
+        },
+        getChoosenWorldCountries(context) {
+            axios.put('http://localhost:3000/api/getChoosenWorldCountries')
+                .then(countries => {
+                    console.log('choosen world counties', countries.data.data)
+                    context.commit('getChoosenWorldCountries', countries.data.data)
+                })
+        },
+        removeCountry(context, country) {
+            axios.put('http://localhost:3000/api/removeCountry', { country: country })
+                .then(res => { alert(res.data.message) })
         }
 
 
