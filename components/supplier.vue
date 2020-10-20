@@ -26,15 +26,39 @@
       </v-card-text>
 
       <v-card-text class="mt-n5" style="font-size: 16px"
-        >{{ $t(supplier.totalSales) }} {{ supplier.total_sales }}</v-card-text
+        >{{ $t("supplier.totalSales") }} {{ supplier.total_sales }}</v-card-text
       >
 
       <v-card-text
         v-if="supplier.monthSales"
         style="font-size: 16px"
         class="mt-n5"
-        >{{ selectedMonth }} {{ $t(supplier.sales) }}
+        >{{ selectedMonth }} {{ $t("supplier.sales") }}
         {{ supplier.monthSales }}</v-card-text
+      >
+
+      <v-card-text
+        v-if="supplier.yearSales"
+        style="font-size: 16px"
+        class="mt-n5"
+        >{{ selectedYear }} {{ $t("supplier.sales") }}:
+        {{ supplier.yearSales }}</v-card-text
+      >
+
+      <v-card-text
+        v-if="supplier.monthRevenue"
+        style="font-size: 16px"
+        class="mt-n5"
+        >{{ selectedMonth }} {{ $t("supplier.revenue") }}
+        {{ supplier.monthRevenue }}</v-card-text
+      >
+
+      <v-card-text
+        v-if="supplier.yearRevenue"
+        style="font-size: 16px"
+        class="mt-n5"
+        >{{ selectedYear }} {{ $t("supplier.revenue") }}:
+        {{ supplier.yearRevenue }}</v-card-text
       >
 
       <v-card-text>
@@ -47,36 +71,12 @@
           size="20"
         ></v-rating>
       </v-card-text>
-
-      <v-card-text
-        v-if="supplier.yearSales"
-        style="font-size: 16px"
-        class="mt-n5"
-        >{{ selectedYear }} {{ $t(supplier.sales)
-        }}{{ supplier.yearSales }}</v-card-text
-      >
-
-      <v-card-text
-        v-if="supplier.monthRevenue"
-        style="font-size: 16px"
-        class="mt-n5"
-        >{{ selectedMonth }} {{ $t(supplier.revenue) }}
-        {{ supplier.monthRevenue }}</v-card-text
-      >
-
-      <v-card-text
-        v-if="supplier.yearRevenue"
-        style="font-size: 16px"
-        class="mt-n5"
-        >{{ selectedYear }} {{ $t(supplier.revenue) }}
-        {{ supplier.yearRevenue }}</v-card-text
-      >
     </v-card>
   </v-main>
 </template>
 
 <script>
-import moment from "moment";
+//import moment from "moment";
 export default {
   async created() {
     await this.$store.dispatch(
@@ -103,16 +103,21 @@ export default {
   },
 
   methods: {
-    moment() {
-      return new moment();
-    },
+    // moment() {
+    //   return new moment();
+    // },
 
     supplierClicked(supplier) {
       console.log("current supplier id", supplier.user_id);
-      this.$store.commit("supplierPage", supplier);
-      this.$router.push(
-        `/${this.$i18n.locale}/supplierPage/` + supplier.user_id
-      );
+      if (this.$route.name == "adminPage") {
+        localStorage.setItem("clickedSupplier", JSON.stringify(supplier));
+        this.$router.push(`/${this.$i18n.locale}/suppliersDashboard`);
+      } else {
+        this.$store.commit("supplierPage", supplier);
+        this.$router.push(
+          `/${this.$i18n.locale}/supplierPage/` + supplier.user_id
+        );
+      }
     },
   },
   computed: {

@@ -219,6 +219,7 @@
                   rounded
                   outlined
                   type="number"
+                  v-model="priceFrom"
                   :label="$t('toolbar.priceFrom')"
                 ></v-text-field>
               </v-col>
@@ -229,6 +230,7 @@
                   dense
                   outlined
                   rounded
+                  v-model="priceTo"
                   type="number"
                   :label="$t('toolbar.priceTo')"
                 ></v-text-field>
@@ -857,6 +859,9 @@ export default {
         return data;
       } else return [];
     },
+    products() {
+      return this.$store.state.Home.products;
+    },
   },
 
   methods: {
@@ -926,14 +931,36 @@ export default {
       this.isLoading = true;
       this.productFilterFlag = true;
       console.log(this.toolbarSearch, this.categoryName);
+      var buttonPressed = "search";
+      // await this.$store.dispatch("filterProducts", {
+      //   product_name: this.toolbarSearch,
+      //   category_name: this.categoryName,
+      //   governorate: this.governorate,
+      //   region: this.region,
+      //   buttonPressed: "search",
+      // });
 
       await this.$store.dispatch("filterProducts", {
         product_name: this.toolbarSearch,
         category_name: this.categoryName,
         governorate: this.governorate,
         region: this.region,
-        buttonPressed: "search",
+        priceFrom: this.priceFrom,
+        priceTo: this.priceTo,
+        product_id:
+          buttonPressed == "search"
+            ? this.products[0].product_id
+            : this.filteredProducts[this.filteredProducts.length - 1]
+                .product_id,
+        buttonPressed,
       });
+      if (this.supplierName) {
+        await this.$store.dispatch("filterSuppliers", {
+          supplierName: this.supplierName,
+          governorate: this.governorate,
+          region: this.region,
+        });
+      }
 
       this.isLoading = false;
     },
@@ -996,20 +1023,19 @@ export default {
     drawer: false,
     isLoading: false,
     categoryName: "",
-
     region: "",
     productFilterFlag: false,
     toolbarSearch: "",
     advancedSearch: false,
-
     governorate: "",
-
     supplierName: "",
     supplierProductsSearch: "",
     currentCurrency: localStorage.getItem("currentCurrency"),
     currencies: ["egp", "usd"],
     filterSuppliersByName: "",
     country: "",
+    priceFrom: "",
+    priceTo: "",
   }),
 };
 </script>

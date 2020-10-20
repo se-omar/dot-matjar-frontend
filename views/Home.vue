@@ -471,9 +471,6 @@
 </template>
 
 <script>
-import Product from "../components/product.vue";
-import supplier from "../components/supplier";
-
 // import SiteColor from "../components/siteColor";
 // import { component } from 'vue/types/umd';
 //import usersModel from "../models/usersModel";
@@ -768,8 +765,8 @@ export default {
     },
   },
   components: {
-    Product,
-    supplier,
+    product: () => import("../components/product"),
+    supplier: () => import("../components/supplier"),
 
     // SiteColor,
   },

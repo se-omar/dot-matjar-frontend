@@ -7,15 +7,15 @@ import axios from 'axios';
 import vaxios from 'vue-axios';
 import vuetify from './plugins/vuetify';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+//import { library } from '@fortawesome/fontawesome-svg-core'
+//import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 // import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 // import 'bootstrap/dist/css/bootstrap.css'
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueApexCharts from 'vue-apexcharts'
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
-import Moment from 'moment'
+//import Moment from 'moment'
 import VueCarousel from 'vue-carousel';
 import i18n from './i18n'
 
@@ -32,9 +32,9 @@ Vue.config.productionTip = false
 
 // Vue.use(IconsPlugin)
 
-Vue.use(Moment);
+//Vue.use(Moment);
 
-library.add(faUserSecret)
+//library.add(faUserSecret)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
