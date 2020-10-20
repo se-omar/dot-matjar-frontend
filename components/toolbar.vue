@@ -801,9 +801,10 @@ export default {
     await this.$store.dispatch("refreshCurrentUser");
     // await this.$store.dispatch("getAvailableCountries");
     console.log("color from toolbar", this.siteColor);
-    // if (this.availableCountries) {
-    //   console.log(this.availableCountries);
-    // }
+    if (this.availableCountries) {
+      console.log(this.availableCountries);
+    }
+    // this.$store.dispatch('getWorldCountries');
   },
 
   props: {
