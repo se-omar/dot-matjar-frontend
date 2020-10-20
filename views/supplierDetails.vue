@@ -440,15 +440,12 @@
   </v-app>
 </template>
 <script>
-import sideButton from "../components/sideButton";
-import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/vue-loading.css";
+//import sideButton from "../components/sideButton";
 
 export default {
   name: "supplierDetails",
   components: {
-    sideButton,
-    Loading,
+    sideButton: () => import("../components/sideButton"),
   },
   data() {
     return {

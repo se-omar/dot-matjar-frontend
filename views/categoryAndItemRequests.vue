@@ -144,7 +144,7 @@
 
 
 <script>
-import supplier from "../components/supplier";
+//import supplier from "../components/supplier";
 
 export default {
   data: () => ({
@@ -215,7 +215,7 @@ export default {
       }
     },
   },
-  components: { supplier },
+  components: { supplier: () => import("../components/supplier") },
 };
 </script>
 <style scoped>

@@ -68,11 +68,11 @@ var routes = [
         name: 'reglogin',
         component: () => import('../views/registerlogin'),
       },
-      {
-        path: 'businessownerdata',
-        name: 'businessownerdata',
-        component: () => import('../views/businessownerdata'),
-      },
+      // {
+      //   path: 'businessownerdata',
+      //   name: 'businessownerdata',
+      //   component: () => import('../views/businessownerdata'),
+      // },
 
       {
         path: 'activation/:cryptoo',
@@ -120,11 +120,11 @@ var routes = [
         name: 'myProducts',
         component: () => import('../views/myProducts'),
       },
-      {
-        path: 'testSupplierProducts',
-        name: 'testSupplierProducts',
-        component: () => import('../views/testSupplierProducts'),
-      },
+      // {
+      //   path: 'testSupplierProducts',
+      //   name: 'testSupplierProducts',
+      //   component: () => import('../views/testSupplierProducts'),
+      // },
       {
         path: 'addProduct',
         name: 'addProducts',
@@ -174,7 +174,7 @@ var routes = [
       {
         path: 'suppliersDashboard',
         name: 'suppliersDashboard',
-        component: () => import('../views/suppliersDashboard'),
+        component: () => import('../views/allSuppliersDashboard'),
       },
       {
         path: 'orderedProducts',

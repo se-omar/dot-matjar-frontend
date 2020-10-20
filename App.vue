@@ -17,12 +17,16 @@
 </template>
 
 <script>
-import ToolBar from "./components/toolbar";
-import Footer from "./components/footer";
-import cartTable from "./components/cartTable";
+// import ToolBar from "./components/toolbar";
+// import Footer from "./components/footer";
+// import cartTable from "./components/cartTable";
 export default {
   name: "App",
-  components: { ToolBar, Footer, cartTable },
+  components: {
+    ToolBar: () => import("./components/toolbar"),
+    Footer: () => import("./components/footer"),
+    cartTable: () => import("./components/cartTable"),
+  },
   data: () => ({}),
   computed: {
     currentUser() {

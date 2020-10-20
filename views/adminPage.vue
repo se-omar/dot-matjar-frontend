@@ -792,7 +792,7 @@
 </template>
 
 <script>
-import supplier from "../components/supplier";
+// import supplier from "../components/supplier";
 //import moment from "moment";
 // import SiteColor from "../components/siteColor";
 export default {
@@ -1351,7 +1351,7 @@ export default {
   },
 
   components: {
-    supplier,
+    supplier: () => import("../components/supplier"),
   },
 };
 </script>

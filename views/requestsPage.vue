@@ -99,14 +99,14 @@
 </template>
 
 <script>
-import requestCard from "../components/requestCard.vue";
-import requestDetails from "../components/requestDetails.vue";
-import requestResponseDialog from "../components/requestResponseDialog";
+// import requestCard from "../components/requestCard.vue";
+// import requestDetails from "../components/requestDetails.vue";
+// import requestResponseDialog from "../components/requestResponseDialog";
 export default {
   components: {
-    requestCard,
-    requestDetails,
-    requestResponseDialog,
+    requestCard: () => import("../components/requestCard"),
+    requestDetails: () => import("../components/requestDetails"),
+    requestResponseDialog: () => import("../components/requestResponseDialog"),
   },
   data() {
     return {
