@@ -66,13 +66,16 @@ export default {
                 })
         },
 
-        cleanCart(context) {
+        async cleanCart(context) {
+            debugger
+            console.log('entered clean cart')
             context.commit('cleanCart')
-            axios.put('http://localhost:3000/api/cleanCart', {
+            await axios.put('http://localhost:3000/api/cleanCart', {
                 user_id: context.rootState.Home.currentUser.user_id
             })
                 .then(response => {
-                    console.log(response.data.message)
+                    debugger
+                    console.log('clean cart message', response.data.message)
                 })
         },
 
