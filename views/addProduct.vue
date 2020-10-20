@@ -65,26 +65,31 @@
           </v-row>
 
           <v-row>
-            <v-form v-model="valid">
-              <v-col cols="6">
-                <v-text-field
-                  :rules="[rules.required && rules.numbersOnly]"
-                  dense
-                  v-model="unitPrice"
-                  outlined
-                  :label="$t('addProduct.price')"
-                ></v-text-field>
-              </v-col>
+            <v-col cols="4">
+              <v-text-field
+                :rules="[rules.required && rules.numbersOnly]"
+                v-model="unitPrice"
+                outlined
+                :label="$t('addProduct.price')"
+              ></v-text-field>
+            </v-col>
 
-              <v-col cols="6">
-                <v-text-field
-                  dense
-                  v-model="minUnits"
-                  outlined
-                  :label="$t('addProduct.minOrders')"
-                ></v-text-field>
-              </v-col>
-            </v-form>
+            <v-col lg="3">
+              <v-select
+                solo-inverted
+                :items="currencies"
+                v-model="productCurrency"
+              >
+              </v-select>
+            </v-col>
+
+            <v-col cols="4">
+              <v-text-field
+                v-model="minUnits"
+                outlined
+                :label="$t('addProduct.minOrders')"
+              ></v-text-field>
+            </v-col>
           </v-row>
 
           <v-row>
@@ -378,9 +383,6 @@ export default {
     supplierCategoriesRequests() {
       return this.$store.state.Home.supplierCategoriesRequests;
     },
-    currencies() {
-      return this.$store.state.ProductDetails.currencies;
-    },
     currencyNames() {
       return this.$store.state.ProductDetails.currencyNames;
     },
@@ -403,6 +405,8 @@ export default {
       size: "",
       discountAmount: "",
       description: "",
+      productCurrency: "egp",
+      currencies: ["egp", "usd"],
 
       rules: {
         required: (v) => !!v || "Required.",
@@ -462,6 +466,7 @@ export default {
       form.set("discount_amount", self.discountAmount);
       form.set("category_name", self.categoryName);
       form.set("category_item", this.categoryItem);
+      form.set("currency", self.productCurrency);
 
       files.forEach((element) => {
         form.append("file", element);

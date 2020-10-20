@@ -185,13 +185,15 @@ export default {
       console.log(this.governorate);
       this.$store.dispatch("getRegions", this.governorate);
     },
-    createOrder() {
+    async createOrder() {
       console.log("data che k", this.governorate, this.region, this.address);
-      this.$store.dispatch("createOrder", {
+      await this.$store.dispatch("cleanCart");
+      await this.$store.dispatch("createOrder", {
         governorate: this.governorate,
         region: this.region,
         address: this.address,
       });
+
       console.log(this.$store.state.totalPrice);
       this.snackbar = true;
       setTimeout(() => {

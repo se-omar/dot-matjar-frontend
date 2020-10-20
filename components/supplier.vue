@@ -2,7 +2,7 @@
   <v-main>
     <v-card
       @click="supplierClicked(supplier)"
-      width="290"
+      :min-width="show_right_banner == 1 ? '100%' : '120%'"
       class="grey lighten-5"
     >
       <v-img
@@ -95,6 +95,10 @@ export default {
     },
     selectedYear: {
       type: Number,
+    },
+    show_right_banner: {
+      type: Number,
+      default: () => {},
     },
   },
 

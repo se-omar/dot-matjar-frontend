@@ -39,7 +39,7 @@
           </v-row>
 
           <v-row>
-            <v-col cols="6">
+            <v-col cols="4">
               <v-text-field
                 :rules="Rules"
                 dense
@@ -49,7 +49,16 @@
               ></v-text-field>
             </v-col>
 
-            <v-col cols="6">
+            <v-col lg="3">
+              <v-select
+                solo-inverted
+                :items="currencies"
+                v-model="currentProduct.currency"
+              >
+              </v-select>
+            </v-col>
+
+            <v-col cols="4">
               <v-text-field
                 dense
                 v-model="currentProduct.min_units_per_order"
@@ -194,6 +203,7 @@ export default {
       hasImage3: false,
       image3: null,
       Rules: [(v) => !!v || "Required"],
+      currencies: ["egp", "usd"],
     };
   },
   methods: {
@@ -228,6 +238,7 @@ export default {
       form.set("describtion", self.currentProduct.describtion);
       form.set("color", self.currentProduct.color);
       form.set("discount_amount", self.currentProduct.discount_amount);
+      form.set("currency", self.currentProduct.currency);
 
       files.forEach((element) => {
         if (element) {

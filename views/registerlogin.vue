@@ -39,7 +39,7 @@
                           :type="show1 ? 'text' : 'password'"
                           name="input-10-1"
                           :label="$t('registerLogin.password')"
-                          hint="$t('registerLogin.minCharacters')"
+                          :hint="$t('registerLogin.minCharacters')"
                           counter
                           @click:append="show1 = !show1"
                         ></v-text-field>
@@ -138,7 +138,7 @@
                           :type="show1 ? 'text' : 'password'"
                           name="input-10-1"
                           :label="$t('registerLogin.password')"
-                          hint="$t('registerLogin.minCharacters')"
+                          :hint="$t('registerLogin.minCharacters')"
                           counter
                           @click:append="show1 = !show1"
                         ></v-text-field>

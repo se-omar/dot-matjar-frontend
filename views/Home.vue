@@ -427,15 +427,18 @@
 
         <v-row v-if="radioGroup === '2'">
           <v-col
-            class="mb-15"
             v-for="supplier in suppliers"
             :key="supplier.user_id"
-            lg="3"
-            md="4"
+            :class="homePageInfo.show_right_banner ? '' : productsClass"
+            :lg="homePageInfo.show_right_banner ? 3 : 2"
+            :md="homePageInfo.show_right_banner ? 4 : 3"
             sm="6"
             cols="6"
           >
-            <supplier :supplier="supplier"></supplier>
+            <supplier
+              :show_right_banner="homePageInfo.show_right_banner"
+              :supplier="supplier"
+            ></supplier>
           </v-col>
         </v-row>
         <v-row justify="center">
