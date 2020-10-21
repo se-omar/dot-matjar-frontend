@@ -16,15 +16,16 @@
 
     <v-row justify="center" v-if="supplierProducts.length != 0">
       <v-col
-        class="mx-n8"
-        lg="3"
-        md="4"
-        sm="6"
+        class="mr-4 ml-4"
+        lg="2"
+        md="3"
+        sm="5"
         cols="6"
         v-for="supplierProduct in supplierProducts"
         :key="supplierProduct.id"
       >
         <product
+          minWidth="115%"
           :addToCartButton="false"
           :filteredProduct="supplierProduct"
         ></product>

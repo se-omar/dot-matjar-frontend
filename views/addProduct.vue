@@ -43,84 +43,87 @@
                 ></v-select>
               </v-col>
             </v-row>
+
+            <v-row>
+              <v-col cols="6">
+                <v-text-field
+                  v-model="productCode"
+                  dense
+                  outlined
+                  :label="$t('addProduct.code')"
+                ></v-text-field>
+              </v-col>
+
+              <v-col cols="6">
+                <v-text-field
+                  dense
+                  v-model="HScode"
+                  outlined
+                  :label="$t('addProduct.hsCode')"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col cols="4">
+                <v-text-field
+                  :rules="[rules.required && rules.numbersOnly]"
+                  v-model="unitPrice"
+                  outlined
+                  :label="$t('addProduct.price')"
+                ></v-text-field>
+              </v-col>
+
+              <v-col lg="3">
+                <v-select
+                  solo-inverted
+                  :items="currencies"
+                  v-model="productCurrency"
+                >
+                </v-select>
+              </v-col>
+
+              <v-col cols="4">
+                <v-text-field
+                  v-model="minUnits"
+                  outlined
+                  :label="$t('addProduct.minOrders')"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col cols="6">
+                <v-text-field
+                  v-model="color"
+                  dense
+                  outlined
+                  :label="$t('addProduct.color')"
+                ></v-text-field>
+              </v-col>
+
+              <v-col cols="6">
+                <v-text-field
+                  dense
+                  outlined
+                  :label="$t('addProduct.sale')"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col cols="12">
+                <v-textarea
+                  v-model="description"
+                  dense
+                  :rules="[rules.required]"
+                  outlined
+                  :label="$t('addProduct.description')"
+                ></v-textarea>
+              </v-col>
+            </v-row>
           </v-form>
-          <v-row>
-            <v-col cols="6">
-              <v-text-field
-                v-model="productCode"
-                dense
-                outlined
-                :label="$t('addProduct.code')"
-              ></v-text-field>
-            </v-col>
 
-            <v-col cols="6">
-              <v-text-field
-                dense
-                v-model="HScode"
-                outlined
-                :label="$t('addProduct.hsCode')"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <v-col cols="4">
-              <v-text-field
-                :rules="[rules.required && rules.numbersOnly]"
-                v-model="unitPrice"
-                outlined
-                :label="$t('addProduct.price')"
-              ></v-text-field>
-            </v-col>
-
-            <v-col lg="3">
-              <v-select
-                solo-inverted
-                :items="currencies"
-                v-model="productCurrency"
-              >
-              </v-select>
-            </v-col>
-
-            <v-col cols="4">
-              <v-text-field
-                v-model="minUnits"
-                outlined
-                :label="$t('addProduct.minOrders')"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <v-col cols="6">
-              <v-text-field
-                v-model="color"
-                dense
-                outlined
-                :label="$t('addProduct.color')"
-              ></v-text-field>
-            </v-col>
-
-            <v-col cols="6">
-              <v-text-field
-                dense
-                outlined
-                :label="$t('addProduct.sale')"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <v-col cols="12">
-              <v-textarea
-                v-model="description"
-                dense
-                outlined
-                :label="$t('addProduct.description')"
-              ></v-textarea>
-            </v-col>
-          </v-row>
           <v-row>
             <v-col cols="12">
               <h4>{{ $t("addProduct.wantMoreCategories") }}</h4>
@@ -307,7 +310,10 @@
             <v-col cols="9">
               <v-form>
                 <label>{{ $t("addProduct.extraPicture") }}</label>
-                <v-file-input @change="setImage2"></v-file-input>
+                <v-file-input
+                  :disabled="!image"
+                  @change="setImage2"
+                ></v-file-input>
               </v-form>
             </v-col>
           </v-row>
@@ -316,7 +322,10 @@
             <v-col cols="9">
               <v-form>
                 <label>{{ $t("addProduct.extraPicture") }}</label>
-                <v-file-input @change="setImage3"></v-file-input>
+                <v-file-input
+                  :disabled="!image2 || !image"
+                  @change="setImage3"
+                ></v-file-input>
               </v-form>
             </v-col>
           </v-row>
@@ -326,7 +335,7 @@
           <v-row justify="center">
             <v-col cols="4">
               <v-btn
-                :disabled="!valid"
+                :disabled="!valid || !image"
                 @click="addProduct"
                 rounded
                 :color="siteColor.button_color"

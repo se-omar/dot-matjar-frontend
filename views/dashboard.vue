@@ -17,6 +17,7 @@
 
     <v-row justify="center" v-if="myProducts.length != 0">
       <v-col
+        class="mr-4 ml-4"
         lg="2"
         md="4"
         sm="6"
@@ -25,6 +26,7 @@
         :key="myProduct.id"
       >
         <product
+          minWidth="115%"
           :addToCartButton="false"
           :filteredProduct="myProduct"
         ></product>
