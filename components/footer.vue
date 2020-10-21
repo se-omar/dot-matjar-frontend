@@ -29,6 +29,39 @@
       <v-divider></v-divider>
 
       <v-card-text class="pt-2" :style="`color:${siteColor.footer_text_color}`">
+        <v-row class="mr-10">
+          <v-col lg="1">
+            <label class="white--text" for="langSwitch">{{
+              $t("footer.language")
+            }}</label>
+            <v-select
+              id="langSwitch"
+              @change="changeLang"
+              class="mt-2"
+              background-color="white"
+              solo-inverted
+              :items="$i18n.availableLocales"
+              v-model="$i18n.locale"
+            >
+            </v-select>
+          </v-col>
+
+          <v-col lg="1">
+            <label class="white--text" for="currSwitch">{{
+              $t("footer.currency")
+            }}</label>
+            <v-select
+              id="currSwitch"
+              @change="changeCurrency"
+              class="mt-2"
+              solo-inverted
+              background-color="white"
+              :items="currencies"
+              v-model="currentCurrency"
+            >
+            </v-select>
+          </v-col>
+        </v-row>
         &copy; Copywrites 2020 to Dot-Matjar
         <v-img
           src="../assets/images/dotmatjar_logo.png"
@@ -98,6 +131,42 @@ export default {
           }
       }
     },
+
+    async changeLang(value) {
+      this.$router.push({
+        params: { lang: value },
+      });
+      this.$vuetify.rtl = value == "ar" ? true : false;
+      this.$store.commit("siteLanguage", value);
+
+      this.$store.dispatch("categoriesDB");
+      await this.$store.dispatch(
+        "getSupplierCategoriesAndItems",
+        this.$route.params.supplier_id
+      );
+      // location.reload();
+    },
+
+    async changeCurrency(currency) {
+      //this.$store.commit("emptyProductsArray");
+      //location.reload();
+      localStorage.setItem("currentCurrency", currency);
+      if (this.$route.name == "home") {
+        this.$store.commit("emptyProductsArray");
+        await this.$store.dispatch("getProducts", {
+          productFilterFlagss: this.productFilterFlag,
+          productName: this.toolbarSearch,
+          categoryName: this.categoryName,
+        });
+        console.log(currency);
+      } else if (this.$route.name == "supplierPage") {
+        this.$store.commit("emptySupplierProducts");
+        await this.$store.dispatch(
+          "getSupplierProducts",
+          this.$route.params.supplier_id
+        );
+      }
+    },
   },
   data: () => ({
     icons: [
@@ -107,6 +176,8 @@ export default {
       "fab fa-linkedin",
       "fab fa-instagram",
     ],
+    currentCurrency: localStorage.getItem("currentCurrency"),
+    currencies: ["egp", "usd"],
   }),
   computed: {
     siteColor() {
@@ -121,6 +192,9 @@ export default {
     },
     supplierPageInfo() {
       return this.$store.state.SupplierPage.supplierPageInfo;
+    },
+    siteLanguage() {
+      return this.$store.state.Home.siteLanguage;
     },
   },
   created() {

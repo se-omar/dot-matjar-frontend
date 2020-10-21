@@ -285,7 +285,9 @@
     "noProductFound": "no product found"
   },
   "footer": {
-    "footerText": "Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet.Mauris cursus commodo interdum. Praesent ut risus eget metus luctusaccumsan id ultrices nunc. Sed at orci sed massa consectetur dignissima sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehiculalacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursusiaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementumtempor vel ut orci. Orci varius natoque penatibus et magnis disparturient montes, nascetur ridiculus mus."
+    "footerText": "Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet.Mauris cursus commodo interdum. Praesent ut risus eget metus luctusaccumsan id ultrices nunc. Sed at orci sed massa consectetur dignissima sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehiculalacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursusiaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementumtempor vel ut orci. Orci varius natoque penatibus et magnis disparturient montes, nascetur ridiculus mus.",
+    "language": "language",
+    "currency": "currency"
   },
   "product": {
     "details": "Details",
