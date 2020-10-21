@@ -22,7 +22,7 @@
         md="4"
         sm="6"
         cols="6"
-        v-for="myProduct in myProducts.slice(0, 5)"
+        v-for="myProduct in myProducts"
         :key="myProduct.id"
       >
         <product
@@ -249,7 +249,6 @@
           </v-label>
         </v-row>
       </v-col>
-
       <v-col lg="4">
         <dashboard-selling-product
           class="mb-5"

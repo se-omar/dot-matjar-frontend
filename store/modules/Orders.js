@@ -97,7 +97,6 @@ export default {
                 address: address,
                 cartItems: context.rootState.Cart.table,
                 totalPrice: context.rootState.Cart.totalPrice,
-
             })
                 .then(res => {
                     console.log(res.data.data)

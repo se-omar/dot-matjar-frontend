@@ -42,6 +42,7 @@
     "category": "category",
     "item": "item",
     "code": "code",
+    "quantity": "quantity",
     "hsCode": "HS code",
     "price": "price",
     "minOrders": "minimum number of orders",

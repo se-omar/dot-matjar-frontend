@@ -138,13 +138,12 @@ export default {
       });
       this.$vuetify.rtl = value == "ar" ? true : false;
       this.$store.commit("siteLanguage", value);
-
+      location.reload();
       this.$store.dispatch("categoriesDB");
       await this.$store.dispatch(
         "getSupplierCategoriesAndItems",
         this.$route.params.supplier_id
       );
-      // location.reload();
     },
 
     async changeCurrency(currency) {

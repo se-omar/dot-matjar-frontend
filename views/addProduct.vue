@@ -47,10 +47,12 @@
             <v-row>
               <v-col cols="6">
                 <v-text-field
-                  v-model="productCode"
+                  v-model="quantity"
+                  type="number"
                   dense
+                  :rules="[rules.required]"
                   outlined
-                  :label="$t('addProduct.code')"
+                  :label="$t('addProduct.quantity')"
                 ></v-text-field>
               </v-col>
 
@@ -406,8 +408,8 @@ export default {
       hasImage3: false,
       image3: null,
       productName: "",
-      productCode: "",
       HScode: "",
+      quantity: "",
       minUnits: "",
       unitPrice: "",
       color: "",
@@ -464,7 +466,7 @@ export default {
       console.log(files);
       var form = new FormData();
       form.set("product_name", self.productName);
-      form.set("product_code", self.productCode);
+      form.set("quantity", self.quantity);
       form.set("user_id", self.currentUser.user_id);
       form.set("HS_code", self.HScode);
       form.set("min_units_per_order", self.minUnits);
