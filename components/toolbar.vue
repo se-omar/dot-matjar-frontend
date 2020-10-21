@@ -710,7 +710,7 @@
         <span class="smallerText">{{ $t("toolbar.logout") }}</span></v-btn
       >
 
-      <v-select
+      <!-- <v-select
         @change="changeLang"
         class="mt-7"
         style="max-width: 85px"
@@ -728,7 +728,7 @@
         :items="currencies"
         v-model="currentCurrency"
       >
-      </v-select>
+      </v-select> -->
       <!--============================
 
       />-->
@@ -903,26 +903,23 @@ export default {
     products() {
       return this.$store.state.Home.products;
     },
-    siteLanguage() {
-      return this.$store.state.Home.siteLanguage;
-    },
   },
 
   methods: {
-    async changeLang(value) {
-      this.$router.push({
-        params: { lang: value },
-      });
-      this.$vuetify.rtl = value == "ar" ? true : false;
-      this.$store.commit("siteLanguage", value);
+    // async changeLang(value) {
+    //   this.$router.push({
+    //     params: { lang: value },
+    //   });
+    //   this.$vuetify.rtl = value == "ar" ? true : false;
+    //   this.$store.commit("siteLanguage", value);
 
-      this.$store.dispatch("categoriesDB");
-      await this.$store.dispatch(
-        "getSupplierCategoriesAndItems",
-        this.$route.params.supplier_id
-      );
-      // location.reload();
-    },
+    //   this.$store.dispatch("categoriesDB");
+    //   await this.$store.dispatch(
+    //     "getSupplierCategoriesAndItems",
+    //     this.$route.params.supplier_id
+    //   );
+    //   // location.reload();
+    // },
     logout() {
       this.$store.commit("removeCurrentUser");
 
@@ -1046,26 +1043,26 @@ export default {
       console.log(this.radioGroup);
     },
 
-    async changeCurrency(currency) {
-      //this.$store.commit("emptyProductsArray");
-      //location.reload();
-      localStorage.setItem("currentCurrency", currency);
-      if (this.$route.name == "home") {
-        this.$store.commit("emptyProductsArray");
-        await this.$store.dispatch("getProducts", {
-          productFilterFlagss: this.productFilterFlag,
-          productName: this.toolbarSearch,
-          categoryName: this.categoryName,
-        });
-        console.log(currency);
-      } else if (this.$route.name == "supplierPage") {
-        this.$store.commit("emptySupplierProducts");
-        await this.$store.dispatch(
-          "getSupplierProducts",
-          this.$route.params.supplier_id
-        );
-      }
-    },
+    // async changeCurrency(currency) {
+    //   //this.$store.commit("emptyProductsArray");
+    //   //location.reload();
+    //   localStorage.setItem("currentCurrency", currency);
+    //   if (this.$route.name == "home") {
+    //     this.$store.commit("emptyProductsArray");
+    //     await this.$store.dispatch("getProducts", {
+    //       productFilterFlagss: this.productFilterFlag,
+    //       productName: this.toolbarSearch,
+    //       categoryName: this.categoryName,
+    //     });
+    //     console.log(currency);
+    //   } else if (this.$route.name == "supplierPage") {
+    //     this.$store.commit("emptySupplierProducts");
+    //     await this.$store.dispatch(
+    //       "getSupplierProducts",
+    //       this.$route.params.supplier_id
+    //     );
+    //   }
+    // },
   },
   data: () => ({
     profilephoto: [],
@@ -1081,8 +1078,6 @@ export default {
     governorate: "",
     supplierName: "",
     supplierProductsSearch: "",
-    currentCurrency: localStorage.getItem("currentCurrency"),
-    currencies: ["egp", "usd"],
     filterSuppliersByName: "",
     country: "",
   }),

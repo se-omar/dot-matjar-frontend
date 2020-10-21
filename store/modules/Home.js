@@ -197,7 +197,7 @@ export default {
             state.currencies = JSON.parse(localStorage.getItem('rates'))
         },
         siteLanguage(state, value) {
-            localStorage.setItem('language', 'value')
+            localStorage.setItem('language', value)
             state.siteLanguage = value
         },
         getAvailableCountries(state, countries) {
