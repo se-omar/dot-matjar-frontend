@@ -1352,6 +1352,7 @@ export default {
 
   components: {
     supplier: () => import("../components/supplier"),
+    apexchart: () => import("vue-apexcharts"),
   },
 };
 </script>

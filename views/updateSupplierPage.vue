@@ -116,6 +116,7 @@
             <v-form enctype="multipart/form-data">
               <label>{{ $t("updateSupplierPage.carouselImage") }} 1</label>
               <v-file-input
+                type="file"
                 accept="image/*"
                 @change="setCarouselImage1"
               ></v-file-input>
@@ -961,7 +962,6 @@ export default {
         this.carouselImage3,
         this.carouselImage4,
       ];
-
       bannerformdata.set("supplier_id", this.supplier.user_id);
       if (this.leftImage) bannerformdata.append("file", this.leftImage, "left");
       if (this.rightImage)
@@ -969,6 +969,7 @@ export default {
 
       carouselformdata.set("supplier_id", this.supplier.user_id);
       carouselImages.forEach((element) => {
+        console.log(element);
         carouselformdata.append("file", element ? element : "empty");
       });
 
@@ -1000,9 +1001,9 @@ export default {
       await this.$store.dispatch("uploadCarouselImages", carouselformdata);
       await this.$store.dispatch("uploadBannerImages", bannerformdata);
       this.snackbar = true;
-      this.$router.push(
-        `/${this.$i18n.locale}/supplierPage/` + this.currentUser.user_id
-      );
+      // this.$router.push(
+      //   `/${this.$i18n.locale}/supplierPage/` + this.currentUser.user_id
+      // );
     },
     setCarouselImage1(image) {
       this.carouselImage1 = image;

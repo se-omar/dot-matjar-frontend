@@ -20,7 +20,7 @@ export default {
         homePageInfo: {},
         radioGroup: '1',
         currencies: JSON.parse(localStorage.getItem('rates')),
-        siteLanguage: 'en',
+        siteLanguage: localStorage.getItem('language'),
         availableCountries: '',
         worldCountries: [],
         choosenCountries: []
@@ -197,7 +197,7 @@ export default {
             state.currencies = JSON.parse(localStorage.getItem('rates'))
         },
         siteLanguage(state, value) {
-
+            localStorage.setItem('language', 'value')
             state.siteLanguage = value
         },
         getAvailableCountries(state, countries) {
@@ -516,8 +516,7 @@ export default {
                 },
             })
                 .then(response => {
-
-                    //console.log('row resposne', response)
+                    console.log(response)
                 })
         },
 

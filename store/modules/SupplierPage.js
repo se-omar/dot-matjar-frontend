@@ -316,6 +316,7 @@ export default {
         },
 
         async uploadCarouselImages(context, form) {
+            console.log('form', form)
             await axios.post('http://localhost:3000/api/uploadCarouselImages', form, {
                 headers: {
                     "Content-Type": "multipart/form-data",
