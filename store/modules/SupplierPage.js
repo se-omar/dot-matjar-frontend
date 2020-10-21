@@ -117,8 +117,10 @@ export default {
         //     console.log('muttated supplier items', state.supplierItems)
 
         // },
-        getSupplierCategoriesAndItems(state, { data, siteLanguage }) {
+        getSupplierCategoriesAndItems(state, { data }) {
             state.supplierCategories = []
+            var siteLanguage = localStorage.getItem('language')
+            console.log(siteLanguage)
             if (siteLanguage == 'en') {
                 state.supplierItems = data.map(e => {
                     return e.category_item.category_items
@@ -379,7 +381,7 @@ export default {
             await axios.put('http://localhost:3000/api/getSupplierCategoriesAndItems', { user_id: user_id })
                 .then(data => {
                     console.log(data.data.message);
-                    context.commit('getSupplierCategoriesAndItems', { data: data.data.data, siteLanguage: context.rootState.Home.siteLanguage })
+                    context.commit('getSupplierCategoriesAndItems', { data: data.data.data })
                 })
         }
 

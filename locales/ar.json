@@ -240,7 +240,8 @@
         "dialogApprovalQuestion": "أكيد؟",
         "dialogApprovalDescription": "اعلم أنه من خلال تحديث العناصر ، سيتم تجديد جميع عناصر المعاينة الخاصة بك ...",
         "dialogApprovalButton": "اوافق",
-        "dialogDisApprovalButton": "لا اوافق"
+        "dialogDisApprovalButton": "لا اوافق",
+        "linkedin": "لينكيد ان"
     },
     "supplierPage": {
         "updatePage": "تحديث صفحتي",
@@ -426,5 +427,8 @@
         "homePage": "الصفحة الرئيسية",
         "ordersPage": "صفحة الطلبات",
         "noAccess": "ليس لديك صلاحية لاظهار هذه الصفحة"
+    },
+    "userOrders": {
+        "showProducts": "عرض<br/> المنتجات"
     }
 }

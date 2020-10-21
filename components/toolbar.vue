@@ -734,7 +734,11 @@
       />-->
       <v-app-bar-nav-icon
         @click="drawer = true"
-        v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs"
+        v-if="
+          $vuetify.breakpoint.sm ||
+          $vuetify.breakpoint.xs ||
+          $vuetify.breakpoint.md
+        "
       ></v-app-bar-nav-icon>
     </v-app-bar>
 
