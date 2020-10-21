@@ -241,7 +241,8 @@
     "dialogApprovalQuestion": "Sure ?",
     "dialogApprovalDescription": "Be aware that by updating the items , all of your previews items will be overwritten...",
     "dialogApprovalButton": "Agree",
-    "dialogDisApprovalButton": "Disagree"
+    "dialogDisApprovalButton": "Disagree",
+    "linkedin": "Linkedin Account"
   },
   "supplierPage": {
     "updatePage": "update my page",
@@ -429,5 +430,8 @@
     "homePage": "home page",
     "ordersPage": "orders page",
     "noAccess": "you dont have access to this page"
+  },
+  "userOrders": {
+    "showProducts": "Show<br/> Products"
   }
 }

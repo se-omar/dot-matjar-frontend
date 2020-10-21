@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-app>
     <v-row>
       <v-col>
         <v-card height="120">
@@ -10,88 +10,83 @@
       </v-col>
     </v-row>
 
-    <v-flex>
-      <v-row>
-        <v-col lg="2" style="max-width: 12%">
-          <v-card height="95%">
-            <v-card-title>
-              <span>ad here</span>
-            </v-card-title>
-          </v-card>
-        </v-col>
+    <v-row justify="start">
+      <v-col cols="1" lg="1" sm="1">
+        <v-card height="95%">
+          <v-card-title>
+            <span>ad here</span>
+          </v-card-title>
+        </v-card>
+      </v-col>
 
-        <v-col lg="9">
-          <v-row justify="start">
-            <v-col cols="6 mt-4">
-              <v-card max-width="700">
-                <v-data-table
-                  @click:row="tableClicked"
-                  bordered
-                  hover
-                  hide-default-footer
-                  :headers="headers"
-                  :items="items"
-                >
-                  <template v-slot:item.showProducts="{ item }">
-                    <v-row>
-                      <v-col cols="6" lg="4">
-                        <v-btn
-                          :color="siteColor.button_coloe"
-                          small
-                          @click="showProducts(item.order_id)"
-                          ><span :style="`color:${siteColor.button_text_color}`"
-                            >ShowProducts</span
-                          ></v-btn
-                        >
-                      </v-col>
-                    </v-row>
-                  </template>
-                </v-data-table>
-              </v-card>
-            </v-col>
-            <v-col cols="6 mt-4">
-              <v-card max-width="500">
-                <v-data-table
-                  bordered
-                  hover
-                  hide-default-footer
-                  :headers="productHeaders"
-                  :items="productsInOrder"
-                >
-                  <template v-slot:item.status="{ item }">
-                    <h5>
-                      {{ item.pending_status }}
-                      <i
-                        v-if="item.pending_status == 'Delivered'"
-                        class="fa fa-check"
-                      ></i>
-                      <i
-                        v-if="item.pending_status == 'Pending'"
-                        class="fas fa-spinner fa-pulse"
-                      ></i>
-                      <i
-                        v-if="item.pending_status == 'Rejected'"
-                        class="fa fa-ban"
-                      ></i>
-                    </h5>
-                  </template>
-                </v-data-table>
-              </v-card>
-            </v-col>
-          </v-row>
-          <v-divider></v-divider>
-        </v-col>
+      <v-col sm="5" lg="5" cols="5 mt-4">
+        <v-card>
+          <v-data-table
+            @click:row="tableClicked"
+            bordered
+            hover
+            hide-default-footer
+            :headers="headers"
+            :items="items"
+          >
+            <template v-slot:item.showProducts="{ item }">
+              <v-row>
+                <v-col cols="2" lg="4">
+                  <v-btn
+                    :color="siteColor.button_color"
+                    small
+                    @click="showProducts(item.order_id)"
+                    ><span
+                      class="smallerText"
+                      :style="`color:${siteColor.button_text_color}`"
+                      v-html="$t('userOrders.showProducts')"
+                    ></span
+                  ></v-btn>
+                </v-col>
+              </v-row>
+            </template>
+          </v-data-table>
+        </v-card>
+      </v-col>
+      <v-col sm="5" lg="5" cols="5 mt-4">
+        <v-card>
+          <v-data-table
+            bordered
+            hover
+            hide-default-footer
+            :headers="productHeaders"
+            :items="productsInOrder"
+          >
+            <template v-slot:item.status="{ item }">
+              <h5>
+                {{ item.pending_status }}
+                <i
+                  v-if="item.pending_status == 'Delivered'"
+                  class="fa fa-check"
+                ></i>
+                <i
+                  v-if="item.pending_status == 'Pending'"
+                  class="fas fa-spinner fa-pulse"
+                ></i>
+                <i
+                  v-if="item.pending_status == 'Rejected'"
+                  class="fa fa-ban"
+                ></i>
+              </h5>
+            </template>
+          </v-data-table>
+        </v-card>
+      </v-col>
 
-        <v-col lg="2" style="max-width: 12%">
-          <v-card height="95%">
-            <v-card-title>
-              <span>ad here</span>
-            </v-card-title>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-flex>
-  </div>
+      <v-col cols="1" lg="1" sm="1">
+        <v-card height="95%">
+          <v-card-title>
+            <span>ad here</span>
+          </v-card-title>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-app>
 </template>
 <script>
 export default {
@@ -200,3 +195,26 @@ export default {
   }),
 };
 </script>
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+.smallerText {
+  font-size: 18px;
+}
+h5 {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+</style>

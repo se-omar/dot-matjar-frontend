@@ -23,11 +23,12 @@
             <form enctype="multipart.form/data">
               <label>
                 <v-card max-width="200">
-                  <span class="mt-4" style="font-size: 25px"
+                  <span class="mt-4"
                     >{{ $t("updateSupplierPage.uploadLogo") }}:</span
                   >
-
-                  <i class="fa fa-upload fa-lg"></i>
+                  <v-row justify="center">
+                    <i class="fa fa-upload fa-lg"></i>
+                  </v-row>
                   <input @change="fileUploaded" type="file" ref="logo" />
                   <span v-if="logo">{{ logo.name }}</span>
                 </v-card>
@@ -40,7 +41,8 @@
           <v-col cols="6" lg="4" sm="4" md="6">
             <v-text-field
               rounded
-              :label="$t('updateSupplierPage.siteName')"
+              :placeholder="$t('updateSupplierPage.siteName')"
+              class="arabic"
               v-model="siteName"
               outlined
             ></v-text-field>
@@ -49,42 +51,47 @@
 
           <v-col cols="6" lg="4" sm="4" md="6">
             <v-text-field
-              :label="$t('updateSupplierPage.facebook')"
+              :placeholder="$t('updateSupplierPage.facebook')"
               v-model="facebook"
               rounded
               outlined
+              class="arabic"
             ></v-text-field>
           </v-col>
           <v-col cols="6" lg="4" sm="4" md="6">
             <v-text-field
-              :label="$t('updateSupplierPage.twitter')"
+              :placeholder="$t('updateSupplierPage.twitter')"
               v-model="twitter"
               rounded
               outlined
+              class="arabic"
             ></v-text-field>
           </v-col>
           <v-col cols="6" lg="4" sm="4" md="6">
             <v-text-field
-              label="linkedin account"
+              :placeholder="$t('updateSupplierPage.linkedin')"
               v-model="linkedin"
               rounded
               outlined
+              class="arabic"
             ></v-text-field>
           </v-col>
           <v-col cols="6" lg="4" sm="4" md="6">
             <v-text-field
-              :label="$t('updateSupplierPage.instagram')"
+              :placeholder="$t('updateSupplierPage.instagram')"
               v-model="instgram"
               rounded
               outlined
+              class="arabic"
             ></v-text-field>
           </v-col>
           <v-col cols="6" lg="4" sm="4" md="6">
             <v-text-field
-              :label="$t('updateSupplierPage.google')"
+              :placeholder="$t('updateSupplierPage.google')"
               v-model="google"
               rounded
               outlined
+              class="arabic"
             ></v-text-field>
           </v-col>
 
@@ -114,7 +121,9 @@
         <v-row justify="center">
           <v-col lg="3" v-if="carouselCheckbox">
             <v-form enctype="multipart/form-data">
-              <label>{{ $t("updateSupplierPage.carouselImage") }} 1</label>
+              <label class="arabic"
+                >{{ $t("updateSupplierPage.carouselImage") }} 1</label
+              >
               <v-file-input
                 type="file"
                 accept="image/*"
@@ -148,7 +157,9 @@
 
           <v-col lg="3" v-if="carouselCheckbox">
             <v-form>
-              <label>{{ $t("updateSupplierPage.carouselImage") }} 2</label>
+              <label class="arabic"
+                >{{ $t("updateSupplierPage.carouselImage") }} 2</label
+              >
               <v-file-input
                 accept="image/*"
                 :disabled="
@@ -185,7 +196,9 @@
 
           <v-col lg="3" v-if="carouselCheckbox">
             <v-form>
-              <label>{{ $t("updateSupplierPage.carouselImage") }} 3</label>
+              <label class="arabic"
+                >{{ $t("updateSupplierPage.carouselImage") }} 3</label
+              >
               <v-file-input
                 accept="image/*"
                 :disabled="
@@ -222,7 +235,9 @@
 
           <v-col lg="3" v-if="carouselCheckbox">
             <v-form>
-              <label>{{ $t("updateSupplierPage.carouselImage") }} 4</label>
+              <label class="arabic"
+                >{{ $t("updateSupplierPage.carouselImage") }} 4</label
+              >
               <v-file-input
                 accept="image/*"
                 :disabled="
@@ -318,7 +333,9 @@
 
           <v-col lg="4" v-if="rightBannerCheckbox">
             <v-form>
-              <label>{{ $t("updateSupplierPage.rightBannerImage") }}</label>
+              <label class="arabic">
+                {{ $t("updateSupplierPage.rightBannerImage") }}</label
+              >
               <v-file-input
                 accept="image/*"
                 @change="setRightImage"
@@ -356,9 +373,10 @@
         <v-col cols="12" lg="12" sm="12" md="12">
           <v-textarea
             rounded
-            :label="$t('updateSupplierPage.footer')"
+            :placeholder="$t('updateSupplierPage.footer')"
             v-model="footer"
             outlined
+            class="arabic"
           ></v-textarea>
         </v-col>
         <v-row justify="center">
@@ -383,7 +401,7 @@
           :top="y === 'top'"
           :vertical="mode === 'vertical'"
         >
-          {{ $t("updateSupplierPage.pageUpdated") }}
+          <span> {{ $t("updateSupplierPage.pageUpdated") }}</span>
           <template v-slot:action="{ attrs }">
             <v-btn dark text v-bind="attrs" @click="snackbar = false">{{
               $t("updateSupplierPage.close")
@@ -479,10 +497,10 @@
                 <v-row justify="center">
                   <v-col cols="12" lg="12" sm="12" md="10">
                     <v-text-field
-                      class="mt-8"
+                      class="mt-8 arabic"
                       outlined
                       rounded
-                      placeholder="SEARCH"
+                      :placeholder="$t('toolbar.search')"
                       append-icon="fa fa-search"
                     ></v-text-field>
                   </v-col>
@@ -533,10 +551,10 @@
                 <v-row justify="center">
                   <v-col cols="12" lg="12" sm="12" md="10">
                     <v-text-field
-                      class="mt-8"
+                      class="mt-8 arabic"
                       outlined
                       rounded
-                      placeholder="SEARCH"
+                      :placeholder="$t('toolbar.search')"
                       append-icon="fa fa-search"
                     ></v-text-field>
                   </v-col>
@@ -1296,8 +1314,33 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
 input {
   opacity: 0;
   z-index: inherit;
+}
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+.smallerText {
+  font-size: 20px;
+}
+h1 {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+h2 {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
 }
 </style>

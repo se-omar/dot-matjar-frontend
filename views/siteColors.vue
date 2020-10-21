@@ -2,9 +2,13 @@
   <v-app>
     <v-container v-if="currentUser.user_type == 'admin'" class="mt-16">
       <v-card>
-        <v-row justify="center">
-          <h2>{{ $t("siteColors.pickButColor") }}</h2>
-        </v-row>
+        <v-toolbar shaped :color="toolBarColor">
+          <v-row justify="center">
+            <h2 :style="`color:${toolBarTextColor}`">
+              {{ $t("siteColors.pickButColor") }}
+            </h2>
+          </v-row>
+        </v-toolbar>
         <v-row justify="center">
           <v-col cols="3" lg="3">
             <v-color-picker
@@ -20,9 +24,14 @@
         </v-row>
       </v-card>
       <v-card>
-        <v-row justify="center">
-          <h2>{{ $t("siteColors.pickButTextColor") }}</h2>
-        </v-row>
+        <v-toolbar shaped :color="toolBarColor">
+          <v-row justify="center">
+            <h2 :style="`color:${toolBarTextColor}`">
+              {{ $t("siteColors.pickButTextColor") }}
+            </h2>
+          </v-row>
+        </v-toolbar>
+
         <v-row justify="center">
           <v-col cols="3" lg="3">
             <v-color-picker
@@ -42,9 +51,14 @@
         </v-row>
       </v-card>
       <v-card>
-        <v-row justify="center">
-          <h2>{{ $t("siteColors.pickToolbarColor") }}</h2>
-        </v-row>
+        <v-toolbar shaped :color="toolBarColor">
+          <v-row justify="center">
+            <h2 :style="`color:${toolBarTextColor}`">
+              {{ $t("siteColors.pickToolbarColor") }}
+            </h2>
+          </v-row>
+        </v-toolbar>
+
         <v-row justify="center">
           <v-col cols="3" lg="3">
             <v-color-picker
@@ -86,9 +100,14 @@
         </v-row>
       </v-card>
       <v-card>
-        <v-row justify="center">
-          <h2>{{ $t("siteColors.pickToolbarTextColor") }}</h2>
-        </v-row>
+        <v-toolbar shaped :color="toolBarColor">
+          <v-row justify="center">
+            <h2 :style="`color:${toolBarTextColor}`">
+              {{ $t("siteColors.pickToolbarTextColor") }}
+            </h2>
+          </v-row>
+        </v-toolbar>
+
         <v-row justify="center">
           <v-col cols="3" lg="3">
             <v-color-picker
@@ -130,9 +149,14 @@
         </v-row>
       </v-card>
       <v-card>
-        <v-row justify="center">
-          <h2>{{ $t("siteColors.pickFooterColor") }}</h2>
-        </v-row>
+        <v-toolbar shaped :color="toolBarColor">
+          <v-row justify="center">
+            <h2 :style="`color:${toolBarTextColor}`">
+              {{ $t("siteColors.pickFooterColor") }}
+            </h2>
+          </v-row>
+        </v-toolbar>
+
         <v-row justify="center">
           <v-col cols="3" lg="3">
             <v-color-picker
@@ -179,9 +203,14 @@
         </v-row>
       </v-card>
       <v-card>
-        <v-row justify="center">
-          <h2>{{ $t("siteColors.pickFooterTextColor") }}</h2>
-        </v-row>
+        <v-toolbar shaped :color="toolBarColor">
+          <v-row justify="center">
+            <h2 :style="`color:${toolBarTextColor}`">
+              {{ $t("siteColors.pickFooterTextColor") }}
+            </h2>
+          </v-row>
+        </v-toolbar>
+
         <v-row justify="center">
           <v-col cols="3" lg="3">
             <v-color-picker
@@ -228,7 +257,12 @@
         </v-row>
         <v-row justify="center">
           <v-col cols="1">
-            <v-btn @click="updateSiteColors" :color="buttonsColor" x-large>
+            <v-btn
+              rounded
+              @click="updateSiteColors"
+              :color="buttonsColor"
+              x-large
+            >
               <h4 :style="`color: ${buttonsTextColor}`">
                 {{ $t("siteColors.update") }}
               </h4>
@@ -309,3 +343,30 @@ export default {
   },
 };
 </script>
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+.smallerText {
+  font-size: 20px;
+}
+h2 {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+h3 {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+</style>

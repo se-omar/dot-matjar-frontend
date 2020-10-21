@@ -10,8 +10,9 @@
       <v-row justify="center">
         <v-col cols="6">
           <v-text-field
-            :label="$t('updateForgottenPassword.password')"
+            :placeholder="$t('updateForgottenPassword.password')"
             v-model="password"
+            class="arabic"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min, rules.valid]"
             :type="show1 ? 'text' : 'password'"
@@ -26,7 +27,7 @@
       <v-row justify="center">
         <v-col cols="6">
           <v-text-field
-            :label="$t('updateForgottenPassword.confirmPassword')"
+            :placeholder="$t('updateForgottenPassword.confirmPassword')"
             v-model="repeatPassword"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, passwordMatch]"
@@ -34,6 +35,7 @@
             name="input-10-1"
             counter
             @click:append="show1 = !show1"
+            class="arabic"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -41,10 +43,9 @@
       <v-row justify="center">
         <v-col cols="5">
           <v-btn @click="updatePassword" :color="siteColor.button_color" block>
-            <span
-              :style="`color:${siteColor.button_text_color};fontsize:18px`"
-              >{{ $t("updateForgottenPassword.updatePassword") }}</span
-            ></v-btn
+            <span :style="`color:${siteColor.button_text_color}`">{{
+              $t("updateForgottenPassword.updatePassword")
+            }}</span></v-btn
           >
         </v-col>
       </v-row>
@@ -113,3 +114,22 @@ export default {
   },
 };
 </script>
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+.smallerText {
+  font-size: 20px;
+}
+</style>

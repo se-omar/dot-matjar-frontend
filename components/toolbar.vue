@@ -496,7 +496,7 @@
           <v-row justify="center" v-if="currentUser.user_type == 'admin'">
             <v-col cols="12" sm="10" lg="5">
               <v-btn
-                @click="$router.push('/siteColors')"
+                @click="$router.push(`/${$i18n.locale}/siteColors`)"
                 large
                 rounded
                 :color="siteColor.button_color"
@@ -734,7 +734,11 @@
       />-->
       <v-app-bar-nav-icon
         @click="drawer = true"
-        v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs"
+        v-if="
+          $vuetify.breakpoint.sm ||
+          $vuetify.breakpoint.xs ||
+          $vuetify.breakpoint.md
+        "
       ></v-app-bar-nav-icon>
     </v-app-bar>
 
@@ -1090,6 +1094,21 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+.smallerText {
+  font-size: 20px;
+}
 
 .img {
   border-radius: 50%;
@@ -1126,20 +1145,5 @@ export default {
 }
 .font {
   font-size: 14px;
-}
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-.smallerText {
-  font-size: 20px;
 }
 </style>
