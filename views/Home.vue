@@ -598,7 +598,7 @@ export default {
       return this.$store.state.Home.siteLanguage;
     },
     rtlMenuCondition() {
-      if (this.$store.state.Home.siteLanguage == "en") {
+      if (this.siteLanguage == "en") {
         return false;
       } else {
         return true;

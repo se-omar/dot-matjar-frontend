@@ -22,6 +22,9 @@
 // import cartTable from "./components/cartTable";
 export default {
   name: "App",
+  created() {
+    this.$vuetify.rtl = this.$i18n.locale == "ar" ? true : false;
+  },
   components: {
     ToolBar: () => import("./components/toolbar"),
     Footer: () => import("./components/footer"),

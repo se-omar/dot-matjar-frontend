@@ -42,6 +42,7 @@ export default {
         },
 
         getSupplierProducts(state, supplierProducts) {
+            state.supplierProducts = []
             var currencies = JSON.parse(localStorage.getItem('rates'))
             var currentCurrency = localStorage.getItem('currentCurrency')
             console.log('currencies from home ', currencies)
@@ -285,6 +286,7 @@ export default {
         },
 
         async uploadCarouselImages(context, form) {
+            console.log('form', form)
             await axios.post('http://localhost:3000/api/uploadCarouselImages', form, {
                 headers: {
                     "Content-Type": "multipart/form-data",
