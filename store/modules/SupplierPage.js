@@ -117,32 +117,62 @@ export default {
         //     console.log('muttated supplier items', state.supplierItems)
 
         // },
-        getSupplierCategoriesAndItems(state, data) {
-            console.log('datafrom db ', data)
-            state.supplierItems = data.map(e => {
-                return e.item_name
-            })
+        getSupplierCategoriesAndItems(state, { data, siteLanguage }) {
+            state.supplierCategories = []
+            if (siteLanguage == 'en') {
+                state.supplierItems = data.map(e => {
+                    return e.category_item.category_items
+                })
+            }
+            else {
+                state.supplierItems = data.map(e => {
+                    return e.category_item.category_items_arabic_name
+                })
+            }
 
             state.supplierCategoriesAndItems = data;
             for (var i = 0; i < data.length; i++) {
-
                 var check = false;
-                if (state.supplierCategories.length > 0) {
-                    for (var j = 0; j < state.supplierCategories.length; j++) {
+                if (siteLanguage == 'en') {
+                    console.log("if statment with en")
+                    if (state.supplierCategories.length > 0) {
+                        for (var j = 0; j < state.supplierCategories.length; j++) {
 
-                        if (state.supplierCategories[j] == data[i].product_category.category_name) {
-                            check = true
+                            if (state.supplierCategories[j] == data[i].product_category.category_name) {
+                                check = true
+                            }
                         }
                     }
-                }
-                else if (state.supplierCategories.length == 0) {
-                    state.supplierCategories.push(data[i].product_category.category_name)
-                    check = true;
+                    else if (state.supplierCategories.length == 0) {
+                        state.supplierCategories.push(data[i].product_category.category_name)
+                        check = true;
+
+                    }
+                    if (check == false) {
+                        state.supplierCategories.push(data[i].product_category.category_name)
+                    }
 
                 }
-                if (check == false) {
-                    state.supplierCategories.push(data[i].product_category.category_name)
+                else {
+                    console.log('if stament with ar')
+                    if (state.supplierCategories.length > 0) {
+                        for (var x = 0; x < state.supplierCategories.length; x++) {
+
+                            if (state.supplierCategories[x] == data[i].product_category.category_arabic_name) {
+                                check = true
+                            }
+                        }
+                    }
+                    else if (state.supplierCategories.length == 0) {
+                        state.supplierCategories.push(data[i].product_category.category_arabic_name)
+                        check = true;
+
+                    }
+                    if (check == false) {
+                        state.supplierCategories.push(data[i].product_category.category_arabic_name)
+                    }
                 }
+
 
             }
             console.log('supplier categories', state.supplierCategories)
@@ -270,15 +300,15 @@ export default {
                     context.commit('filterSupplierProducts', products.data.data)
                 })
         },
-        filterProductsWithCategory(context, { categoryName, user_id }) {
+        filterProductsWithCategory(context, { categoryName, user_id, siteLanguage }) {
             console.log('testing', categoryName, user_id)
-            axios.put('http://localhost:3000/api/filterSupplierProducts', { categoryName, user_id })
+            axios.put('http://localhost:3000/api/filterSupplierProducts', { categoryName, user_id, siteLanguage })
                 .then(products => {
                     context.commit('filterProductsWithCategory', products.data.data)
                 })
         },
-        filterProductsWithItem(context, { user_id, itemName }) {
-            axios.put('http://localhost:3000/api/filterSupplierProducts', { user_id, itemName })
+        filterProductsWithItem(context, { user_id, itemName, siteLanguage }) {
+            axios.put('http://localhost:3000/api/filterSupplierProducts', { user_id, itemName, siteLanguage })
                 .then(products => {
                     console.log('testing products items', products.data.data)
                     context.commit('filterProductsWithItem', products.data.data)
@@ -330,8 +360,8 @@ export default {
             })
         },
 
-        addCategoryAndItemsToSupplier(context, { supplierItems, user_id }) {
-            axios.post('http://localhost:3000/api/addCategoryAndItemsToSupplier', { supplierItems: supplierItems, user_id: user_id })
+        addCategoryAndItemsToSupplier(context, { supplierItems, user_id, siteLanguage }) {
+            axios.post('http://localhost:3000/api/addCategoryAndItemsToSupplier', { supplierItems: supplierItems, user_id: user_id, siteLanguage: siteLanguage })
                 .then(message => {
                     console.log(message.data.message)
                 })
@@ -349,7 +379,7 @@ export default {
             await axios.put('http://localhost:3000/api/getSupplierCategoriesAndItems', { user_id: user_id })
                 .then(data => {
                     console.log(data.data.message);
-                    context.commit('getSupplierCategoriesAndItems', data.data.data)
+                    context.commit('getSupplierCategoriesAndItems', { data: data.data.data, siteLanguage: context.rootState.Home.siteLanguage })
                 })
         }
 

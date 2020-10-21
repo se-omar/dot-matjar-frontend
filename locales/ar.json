@@ -1,8 +1,8 @@
 {
     "message": "hello i18n !!",
     "toolbar": {
-        "advancedSearch": "البحث المتقدم",
-        "profile": "الصفحة الشخصية",
+        "advancedSearch": "البحث <br/>المتقدم",
+        "profile": "الصفحةالشخصية",
         "aboutUs": "عن الموقع",
         "register": "التسجيل",
         "requests": "الطلبات",
@@ -34,7 +34,8 @@
     },
     "homePage": {
         "loadMore": "المزيد",
-        "expandSearch": "توسيع البحث"
+        "expandSearch": "توسيع البحث",
+        "allProducts": "الكل"
     },
     "addProduct": {
         "productName": "اسم المنتج",

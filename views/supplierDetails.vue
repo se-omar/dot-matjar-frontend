@@ -7,9 +7,6 @@
         :is-full-page="fullPage"
       ></loading>
     </div>
-    <sideButton
-      v-if="this.$route.params.supplier_id == currentUser.user_id"
-    ></sideButton>
 
     <v-row class="ml-2 mt-16">
       <v-col
@@ -440,12 +437,13 @@
   </v-app>
 </template>
 <script>
-//import sideButton from "../components/sideButton";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 
 export default {
   name: "supplierDetails",
   components: {
-    sideButton: () => import("../components/sideButton"),
+    Loading,
   },
   data() {
     return {

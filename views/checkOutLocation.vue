@@ -186,6 +186,7 @@ export default {
       this.$store.dispatch("getRegions", this.governorate);
     },
     async createOrder() {
+      alert("order placed successfully");
       console.log("data che k", this.governorate, this.region, this.address);
       await this.$store.dispatch("cleanCart");
       await this.$store.dispatch("createOrder", {
@@ -198,7 +199,7 @@ export default {
       this.snackbar = true;
       setTimeout(() => {
         this.$router.push("/");
-      }, 2000);
+      }, 200);
     },
   },
 };
