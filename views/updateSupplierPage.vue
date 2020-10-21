@@ -770,7 +770,7 @@
                 </v-toolbar>
 
                 <v-virtual-scroll
-                  :items="supplierItems"
+                  :items="supplierItemsFromDB"
                   height="300"
                   item-height="64"
                 >
@@ -910,7 +910,7 @@ export default {
     ],
     isLoading: false,
     categoryItems: [],
-    supplierItems: [],
+    // supplierItems: [],
     snackBarAlert: false,
     snackBarMessage: "",
     dialog: false,
@@ -1150,42 +1150,42 @@ export default {
     addItem(item) {
       console.log(item);
       var check = false;
-      if (this.supplierItems.length > 0) {
-        for (let i = 0; i < this.supplierItems.length; i++) {
-          if (item == this.supplierItems[i]) {
+      if (this.supplierItemsFromDB.length > 0) {
+        for (let i = 0; i < this.supplierItemsFromDB.length; i++) {
+          if (item == this.supplierItemsFromDB[i]) {
             check = true;
             break;
           }
         }
       }
       if (!check) {
-        this.supplierItems.push(item);
+        this.supplierItemsFromDB.push(item);
       } else {
         this.snackBarMessage = "Item Already exists";
         this.snackBarAlert = true;
       }
     },
     RemoveItem(item) {
-      for (let i = 0; i < this.supplierItems.length; i++) {
-        if (this.supplierItems[i] == item) {
-          this.supplierItems.splice(i, 1);
-          console.log(this.supplierItems);
+      for (let i = 0; i < this.supplierItemsFromDB.length; i++) {
+        if (this.supplierItemsFromDB[i] == item) {
+          this.supplierItemsFromDB.splice(i, 1);
+          console.log(this.supplierItemsFromDB);
         }
       }
     },
     addCategoryAndItemsToSupplier() {
       this.dialog = false;
       console.log(this.currentUser);
-      console.log(this.supplierItems);
+      console.log(this.supplierItemsFromDB);
       this.$store.dispatch("addCategoryAndItemsToSupplier", {
-        supplierItems: this.supplierItems,
+        supplierItems: this.supplierItemsFromDB,
         user_id: this.currentUser.user_id,
         siteLanguage: this.siteLanguage,
       });
       // location.reload();
     },
     addButtonEvent() {
-      if (this.supplierItems.length == 0) {
+      if (this.supplierItemsFromDB.length == 0) {
         this.snackBarMessage = "Please add item to proceed";
         this.snackBarAlert = true;
       } else {
@@ -1282,7 +1282,7 @@ export default {
       }
     }
 
-    this.supplierItems = this.supplierItemsFromDB;
+    // this.supplierItems = this.supplierItemsFromDB;
     console.log("array in table", this.supplierItems);
     this.isLoading = false;
   },

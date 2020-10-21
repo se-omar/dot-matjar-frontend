@@ -263,7 +263,6 @@
                   v-model="priceTo"
                   type="number"
                   :placeholder="$t('toolbar.priceTo')"
-                  v-model="priceTo"
                   class="arabic"
                 ></v-text-field>
               </v-col>
@@ -1086,8 +1085,6 @@ export default {
     currencies: ["egp", "usd"],
     filterSuppliersByName: "",
     country: "",
-    priceFrom: "",
-    priceTo: "",
   }),
 };
 </script>
