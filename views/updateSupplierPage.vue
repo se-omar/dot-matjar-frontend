@@ -1094,9 +1094,20 @@ export default {
     getCategoryItems(category) {
       this.categoryItems = [];
       console.log(category);
-      for (var i = 0; i < this.categoriesItems.length; i++) {
-        if (this.categoriesItems[i].category_name == category) {
-          this.categoryItems.push(this.categoriesItems[i].category_items);
+      console.log(this.categoriesItems);
+      if (this.siteLanguage == "en") {
+        for (var i = 0; i < this.categoriesItems.length; i++) {
+          if (this.categoriesItems[i].category_name == category) {
+            this.categoryItems.push(this.categoriesItems[i].category_items);
+          }
+        }
+      } else {
+        for (var x = 0; x < this.categoriesItems.length; x++) {
+          if (this.categoriesItems[x].category_arabic_name == category) {
+            this.categoryItems.push(
+              this.categoriesItems[x].category_items_arabic_name
+            );
+          }
         }
       }
     },
@@ -1169,8 +1180,9 @@ export default {
       this.$store.dispatch("addCategoryAndItemsToSupplier", {
         supplierItems: this.supplierItems,
         user_id: this.currentUser.user_id,
+        siteLanguage: this.siteLanguage,
       });
-      location.reload();
+      // location.reload();
     },
     addButtonEvent() {
       if (this.supplierItems.length == 0) {
@@ -1225,9 +1237,12 @@ export default {
     supplierCategoriesAndItems() {
       return this.$store.state.SupplierPage.supplierCategoriesAndItems;
     },
+    siteLanguage() {
+      return this.$store.state.Home.siteLanguage;
+    },
   },
   async created() {
-    //this.isLoading = true;
+    this.isLoading = true;
     await this.$store.dispatch("refreshCurrentUser");
     await this.$store.dispatch("getSupplier", this.currentUser.user_id);
     await this.$store.dispatch("getSupplierPageData", this.currentUser.user_id);

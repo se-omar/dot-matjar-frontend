@@ -12,17 +12,17 @@
     "logout": "log out",
     "changePassword": "change password",
     "loginSignup": "login and signup",
-    "changeProfilePhoto": "change profile photo",
-    "changeYourPassword": "change your password",
-    "updateOrCompleteInfo": "update or complete info",
+    "changeProfilePhoto": "Change Profile Photo",
+    "changeYourPassword": "Change Your Password",
+    "updateOrCompleteInfo": "Update Or Complete Info",
     "categoryRequests": "category <br/> and item <br/> requests",
     "myProducts": "my<br/>products",
     "myPage": "my page",
     "uploadPhoto": "upload your photo here",
     "orderManage": "order <br/> manage",
     "search": "Search",
-    "searchSuppliers": "search for suppliers",
-    "searchProducts": "search for products",
+    "searchSuppliers": "Search For Suppliers",
+    "searchProducts": "Search For Products",
     "homePage": "home page",
     "governorate": "governorate",
     "region": "region",
@@ -34,7 +34,8 @@
   },
   "homePage": {
     "loadMore": "load more",
-    "expandSearch": "expand search options"
+    "expandSearch": "expand search options",
+    "allProducts": "All"
   },
   "addProduct": {
     "productName": "product name",

@@ -8,32 +8,35 @@
       ></loading>
     </div> -->
     <v-app-bar fixed :color="siteColor.toolbar_color" shaped>
-      <span v-if="!supplierPageInfo.logo">
-        <a @click="$router.push('/').catch(() => {})">
-          <v-img
-            src="../assets/images/dotmatjar_logo.png"
-            max-height="150"
-            max-width="160"
-            contain
-          ></v-img>
-        </a>
-      </span>
+      <v-row justify="start">
+        <v-col cols="12">
+          <span v-if="!supplierPageInfo.logo">
+            <a @click="$router.push('/').catch(() => {})">
+              <v-img
+                src="../assets/images/dotmatjar_logo.png"
+                max-height="150"
+                max-width="160"
+                contain
+              ></v-img>
+            </a>
+          </span>
 
-      <span v-else class="ml-4">
-        <v-btn text max-width="150" @click="goSupplierPage">
-          <v-img
-            class="mx-2"
-            :src="nodeHost + supplierPageInfo.logo"
-            max-height="60"
-            max-width="100"
-            contain
-          ></v-img>
-          <span class="mt-3">{{ supplierPageInfo.site_name }}</span>
-        </v-btn>
-      </span>
-
+          <span v-else class="ml-4">
+            <v-btn text rounded @click="goSupplierPage">
+              <v-img
+                class="mx-2"
+                :src="nodeHost + supplierPageInfo.logo"
+                max-height="60"
+                max-width="100"
+                contain
+              ></v-img>
+              <span class="mt-3">{{ supplierPageInfo.site_name }}</span>
+            </v-btn>
+          </span>
+        </v-col>
+      </v-row>
       <!-- <v-spacer></v-spacer> -->
-      <v-row justify="center">
+      <v-row justify="start">
         <v-col v-if="!$route.params.supplier_id" cols="12" lg="6" sm="7" md="6">
           <v-text-field
             class="mt-8"
@@ -46,9 +49,9 @@
             @keypress="filterProducts"
           ></v-text-field>
         </v-col>
-        <v-col v-else cols="12" lg="6" sm="7" md="6">
+        <v-col v-else cols="12" lg="7" sm="7" md="6">
           <v-text-field
-            class="mt-8"
+            class="mt-8 arabic"
             outlined
             rounded
             :placeholder="$t('toolbar.search')"
@@ -77,10 +80,16 @@
             rounded
             @click="advancedSearch = true"
             ><span
-              style="font-size: 12px"
+              class="smallerText"
+              v-if="siteLanguage == 'en'"
               v-html="$t('toolbar.advancedSearch')"
-            ></span
-          ></v-btn>
+            ></span>
+            <span
+              class="smallerText"
+              v-else
+              v-html="$t('toolbar.advancedSearch')"
+            ></span>
+          </v-btn>
         </v-col>
         <v-dialog
           style="overflow: hidden"
@@ -96,11 +105,16 @@
               >
                 <v-row class="mb-n5" justify="center">
                   <v-col cols="3" lg="4" sm="5" md="5">
-                    <v-radio
-                      @change="changeRadioGroup()"
-                      :label="$t('toolbar.searchProducts')"
-                      value="1"
-                    ></v-radio>
+                    <v-radio @change="changeRadioGroup()" value="1">
+                      <template v-slot:label>
+                        <p v-if="siteLanguage == 'ar'" class="mt-4 arabic">
+                          {{ $t("toolbar.searchProducts") }}
+                        </p>
+                        <p v-else class="mt-4">
+                          {{ $t("toolbar.searchProducts") }}
+                        </p>
+                      </template>
+                    </v-radio>
                   </v-col>
 
                   <v-col cols="3" lg="4" sm="5" md="5">
@@ -108,7 +122,16 @@
                       @change="changeRadioGroup()"
                       :label="$t('toolbar.searchSuppliers')"
                       value="2"
-                    ></v-radio>
+                    >
+                      <template v-slot:label>
+                        <p v-if="siteLanguage == 'ar'" class="mt-4 arabic">
+                          {{ $t("toolbar.searchSuppliers") }}
+                        </p>
+                        <p v-else class="mt-4">
+                          {{ $t("toolbar.searchSuppliers") }}
+                        </p>
+                      </template>
+                    </v-radio>
                   </v-col>
                 </v-row>
               </v-radio-group>
@@ -117,7 +140,7 @@
               <v-col cols="4"></v-col>
               <v-col cols="4">
                 <v-text-field
-                  class="mt-8"
+                  class="mt-8 arabic"
                   outlined
                   rounded
                   :placeholder="$t('toolbar.search')"
@@ -139,6 +162,7 @@
                   dense
                   outlined
                   v-model="country"
+                  class="arabic"
                 ></v-select>
               </v-col>
               <v-col cols="4"></v-col>
@@ -154,6 +178,7 @@
                   outlined
                   v-model="governorate"
                   @change="getCountryRegions()"
+                  class="arabic"
                 ></v-select>
               </v-col>
 
@@ -167,6 +192,7 @@
                   dense
                   outlined
                   v-model="region"
+                  class="arabic"
                 ></v-select>
               </v-col>
               <v-col cols="2"></v-col>
@@ -181,6 +207,7 @@
                   outlined
                   v-model="governorate"
                   @change="getCountryRegions()"
+                  class="arabic"
                 ></v-select>
               </v-col>
 
@@ -194,6 +221,7 @@
                   outlined
                   v-model="filterSuppliersByName"
                   :placeholder="$t('toolbar.supplierNameSearch')"
+                  class="arabic"
                 ></v-text-field>
               </v-col>
               <v-col lg="3" cols="2" sm="4" md="4">
@@ -206,6 +234,7 @@
                   dense
                   outlined
                   v-model="region"
+                  class="arabic"
                 ></v-select>
               </v-col>
             </v-row>
@@ -219,7 +248,9 @@
                   rounded
                   outlined
                   type="number"
-                  :label="$t('toolbar.priceFrom')"
+                  :placeholder="$t('toolbar.priceFrom')"
+                  v-model="priceFrom"
+                  class="arabic"
                 ></v-text-field>
               </v-col>
 
@@ -230,7 +261,9 @@
                   outlined
                   rounded
                   type="number"
-                  :label="$t('toolbar.priceTo')"
+                  :placeholder="$t('toolbar.priceTo')"
+                  v-model="priceTo"
+                  class="arabic"
                 ></v-text-field>
               </v-col>
               <v-col sm="3" lg="3" md="3"></v-col>
@@ -242,14 +275,16 @@
                   :color="siteColor.button_color"
                   rounded
                   x-large
-                  ><span :style="`color: ${siteColor.button_text_color}`">{{
-                    $t("toolbar.search")
-                  }}</span></v-btn
+                  ><span
+                    class="arabic"
+                    :style="`color: ${siteColor.button_text_color}`"
+                    >{{ $t("toolbar.search") }}</span
+                  ></v-btn
                 >
               </v-col>
               <v-col v-else cols="4" sm="2" md="2" lg="2">
                 <v-btn
-                  class="white--text"
+                  class="white--text arabic"
                   @click="filterProducts('search')"
                   :color="siteColor.button_color"
                   rounded
@@ -328,7 +363,7 @@
             v-on="on"
           >
             <i class="fa fa-user fa-lg mt-n1 mr-1" style="color: black"></i>
-            <span>{{ $t("toolbar.profile") }}</span>
+            <span class="smallerText">{{ $t("toolbar.profile") }}</span>
           </v-btn>
         </template>
 
@@ -369,7 +404,7 @@
                   <i class="fa fa-camera fa-2x" style="color: blue"></i>
                   <br />
                 </span>
-                <span class="file-label" style="font-weight: bold">
+                <span class="file-label">
                   {{ $t("toolbar.uploadPhoto") }}
                   <br />
                 </span>
@@ -397,7 +432,7 @@
                   <i class="fa fa-camera fa-2x" style="color: blue"></i>
                   <br />
                 </span>
-                <span class="file-label" style="font-weight: bold">
+                <span class="file-label biggerText">
                   {{ $t("toolbar.changeProfilePhoto") }}
                   <br />
                 </span>
@@ -420,7 +455,7 @@
             </v-row>
           </v-card-text>
 
-          <v-row justify="center">
+          <v-row v-if="currentUser.user_type == 'business'" justify="center">
             <v-col cols="12" sm="10" lg="5">
               <v-btn
                 class="btn1"
@@ -431,7 +466,7 @@
               >
                 <span
                   :style="`color:${siteColor.button_text_color}; `"
-                  class="mos"
+                  class="mos smallerText"
                 >
                   {{ $t("toolbar.myPage") }}</span
                 >
@@ -449,12 +484,11 @@
                 @click="$router.push(`/${$i18n.locale}/myProducts`)"
               >
                 <span
-                  style="color: white"
-                  class="mos"
+                  :style="`color: ${siteColor.button_text_color}`"
+                  class="mos smallerText"
                   v-html="$t('toolbar.myProducts')"
                 >
-                  {</span
-                >
+                </span>
               </v-btn>
               <!-- <v-divider class="mr-4"></v-divider> -->
             </v-col>
@@ -467,7 +501,11 @@
                 rounded
                 :color="siteColor.button_color"
               >
-                <span v-html="$t('toolbar.siteColors')" style="color: white">
+                <span
+                  class="smallerText"
+                  v-html="$t('toolbar.siteColors')"
+                  :style="`color: ${siteColor.button_text_color}`"
+                >
                 </span>
               </v-btn>
               <!-- <v-divider class="mr-4"></v-divider> -->
@@ -484,8 +522,8 @@
                 @click="$router.push(`/${$i18n.locale}/orderedProducts`)"
               >
                 <span
-                  style="color: white"
-                  class="mos"
+                  :style="`color: ${siteColor.button_text_color}`"
+                  class="mos smallerText"
                   v-html="$t('toolbar.orderManage')"
                 >
                 </span>
@@ -505,7 +543,8 @@
                 "
                 ><span
                   v-html="$t('toolbar.categoryRequests')"
-                  style="color: white"
+                  :style="`color: ${siteColor.button_text_color}`"
+                  class="smallerText"
                 >
                 </span
               ></v-btn>
@@ -540,7 +579,9 @@
                     aria-hidden="true"
                     style="color: black"
                   ></i>
-                  {{ $t("toolbar.updateOrCompleteInfo") }}
+                  <span class="ml-2" :color="siteColor.toolbar_text_color">{{
+                    $t("toolbar.updateOrCompleteInfo")
+                  }}</span>
                 </a>
                 <br />
                 <br />
@@ -550,7 +591,9 @@
                     aria-hidden="true"
                     style="color: black"
                   ></i>
-                  {{ $t("toolbar.logout") }}
+                  <span class="ml-2" :color="siteColor.toolbar_text_color">
+                    {{ $t("toolbar.logout") }}</span
+                  >
                 </a>
               </v-card-text>
             </v-col>
@@ -568,7 +611,7 @@
         text
         @click="$router.push(`/${$i18n.locale}/reglogin`).catch((err) => {})"
       >
-        {{ $t("toolbar.register") }}</v-btn
+        <span class="smallerText">{{ $t("toolbar.register") }}</span></v-btn
       >
 
       <v-btn
@@ -585,7 +628,7 @@
           $router.push(`/${$i18n.locale}/requestsPage`).catch((err) => {})
         "
       >
-        {{ $t("toolbar.requests") }}</v-btn
+        <span class="smallerText"> {{ $t("toolbar.requests") }}</span></v-btn
       >
 
       <!-- <v-btn
@@ -612,7 +655,7 @@
         text
         @click="$router.push(`/${$i18n.locale}/userOrders`).catch((err) => {})"
       >
-        {{ $t("toolbar.myOrders") }}</v-btn
+        <span class="smallerText"> {{ $t("toolbar.myOrders") }}</span></v-btn
       >
 
       <v-btn
@@ -627,7 +670,7 @@
         text
         @click="$router.push(`/${$i18n.locale}/dashboard`).catch((err) => {})"
       >
-        {{ $t("toolbar.dashboard") }}</v-btn
+        <span class="smallerText">{{ $t("toolbar.dashboard") }}</span></v-btn
       >
 
       <v-btn
@@ -637,7 +680,7 @@
         text
         @click="$router.push(`/${$i18n.locale}/myProducts`)"
       >
-        <span> {{ $t("toolbar.aboutUs") }}</span>
+        <span class="smallerText"> {{ $t("toolbar.aboutUs") }}</span>
       </v-btn>
 
       <v-btn
@@ -652,7 +695,9 @@
         text
         @click="$router.push(`/${$i18n.locale}/adminPage`).catch((err) => {})"
       >
-        {{ $t("toolbar.adminDashboard") }}</v-btn
+        <span class="smallerText">
+          {{ $t("toolbar.adminDashboard") }}</span
+        ></v-btn
       >
 
       <v-btn
@@ -662,7 +707,7 @@
         text
         @click="logout"
       >
-        {{ $t("toolbar.logout") }}</v-btn
+        <span class="smallerText">{{ $t("toolbar.logout") }}</span></v-btn
       >
 
       <v-select
@@ -701,7 +746,7 @@
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
             <v-list-item-title @click="$router.push('/').catch((err) => {})">
-              <span style="font-size: 17px"> {{ $t("toolbar.homePage") }}</span>
+              <span> {{ $t("toolbar.homePage") }}</span>
             </v-list-item-title>
           </v-list-item>
 
@@ -714,9 +759,7 @@
                 $router.push(`/${$i18n.locale}/editPassword`).catch((err) => {})
               "
             >
-              <span style="font-size: 17px">
-                {{ $t("toolbar.changeYourPassword") }}</span
-              >
+              <span> {{ $t("toolbar.changeYourPassword") }}</span>
             </v-list-item-title>
           </v-list-item>
 
@@ -731,7 +774,7 @@
                 $router.push(`/${$i18n.locale}/requestsPage`).catch((err) => {})
               "
             >
-              <span style="font-size: 17px"> {{ $t("toolbar.requests") }}</span>
+              <span> {{ $t("toolbar.requests") }}</span>
             </v-list-item-title>
           </v-list-item>
 
@@ -799,12 +842,12 @@ export default {
   async created() {
     localStorage.setItem("currentCurrency", "egp");
     await this.$store.dispatch("refreshCurrentUser");
-    // await this.$store.dispatch("getAvailableCountries");
+    await this.$store.dispatch("getAvailableCountries");
     console.log("color from toolbar", this.siteColor);
     if (this.availableCountries) {
       console.log(this.availableCountries);
     }
-    // this.$store.dispatch('getWorldCountries');
+    this.$store.dispatch("getWorldCountries");
   },
 
   props: {
@@ -857,10 +900,16 @@ export default {
         return data;
       } else return [];
     },
+    products() {
+      return this.$store.state.Home.products;
+    },
+    siteLanguage() {
+      return this.$store.state.Home.siteLanguage;
+    },
   },
 
   methods: {
-    changeLang(value) {
+    async changeLang(value) {
       this.$router.push({
         params: { lang: value },
       });
@@ -868,6 +917,11 @@ export default {
       this.$store.commit("siteLanguage", value);
 
       this.$store.dispatch("categoriesDB");
+      await this.$store.dispatch(
+        "getSupplierCategoriesAndItems",
+        this.$route.params.supplier_id
+      );
+      // location.reload();
     },
     logout() {
       this.$store.commit("removeCurrentUser");
@@ -894,7 +948,7 @@ export default {
     },
     goSupplierPage() {
       this.$router
-        .push("/supplierPage/" + this.supplier.user_id)
+        .push(`/${this.$i18n.locale}/supplierPage/` + this.supplier.user_id)
         .catch(() => {});
     },
 
@@ -926,14 +980,36 @@ export default {
       this.isLoading = true;
       this.productFilterFlag = true;
       console.log(this.toolbarSearch, this.categoryName);
+      var buttonPressed = "search";
+      // await this.$store.dispatch("filterProducts", {
+      //   product_name: this.toolbarSearch,
+      //   category_name: this.categoryName,
+      //   governorate: this.governorate,
+      //   region: this.region,
+      //   buttonPressed: "search",
+      // });
 
       await this.$store.dispatch("filterProducts", {
         product_name: this.toolbarSearch,
         category_name: this.categoryName,
         governorate: this.governorate,
         region: this.region,
-        buttonPressed: "search",
+        priceFrom: this.priceFrom,
+        priceTo: this.priceTo,
+        product_id:
+          buttonPressed == "search"
+            ? this.products[0].product_id
+            : this.filteredProducts[this.filteredProducts.length - 1]
+                .product_id,
+        buttonPressed,
       });
+      if (this.supplierName) {
+        await this.$store.dispatch("filterSuppliers", {
+          supplierName: this.supplierName,
+          governorate: this.governorate,
+          region: this.region,
+        });
+      }
 
       this.isLoading = false;
     },
@@ -996,7 +1072,8 @@ export default {
     drawer: false,
     isLoading: false,
     categoryName: "",
-
+    priceFrom: "",
+    priceTo: "",
     region: "",
     productFilterFlag: false,
     toolbarSearch: "",
@@ -1015,6 +1092,9 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+
 .img {
   border-radius: 50%;
 }
@@ -1051,7 +1131,19 @@ export default {
 .font {
   font-size: 14px;
 }
-/* .btn1 {
-  margin-left: 30%;
-} */
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+.smallerText {
+  font-size: 20px;
+}
 </style>

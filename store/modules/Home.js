@@ -100,6 +100,7 @@ export default {
                 state.category = data.map(e => {
                     return e.category_arabic_name
                 })
+
             }
 
 
@@ -196,6 +197,7 @@ export default {
             state.currencies = JSON.parse(localStorage.getItem('rates'))
         },
         siteLanguage(state, value) {
+
             state.siteLanguage = value
         },
         getAvailableCountries(state, countries) {
@@ -302,7 +304,7 @@ export default {
         categoriesDB(context) {
             axios.put('http://localhost:3000/api/selectCategory')
                 .then((res) => {
-                    //console.log(res.data.data)
+                    console.log('category from db', res.data.data)
                     context.commit('categoriesDB', res.data.data)
                 })
         },

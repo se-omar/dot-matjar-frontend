@@ -61,11 +61,18 @@
           >
             <v-row class="mb-n5" justify="center">
               <v-col @click="changeRadioGroup()" cols="3" lg="4" sm="5" md="5">
-                <v-radio label="Search for Products" value="1"></v-radio>
+                <v-radio
+                  style="font-family: 'lalezar', cursive; font-size: 25px"
+                  :label="$t('toolbar.searchProducts')"
+                  value="1"
+                ></v-radio>
               </v-col>
 
               <v-col cols="3" lg="4" sm="5" md="5">
-                <v-radio label="Search for suppliers" value="2"></v-radio>
+                <v-radio
+                  :label="$t('toolbar.searchSuppliers')"
+                  value="2"
+                ></v-radio>
               </v-col>
             </v-row>
           </v-radio-group>
@@ -332,8 +339,9 @@
                         @click="filterProductsWithCategory(category)"
                       >
                         <v-row justify="start">
-                          <i :class="`fas fa-${category} fa-lg mr-2`"></i>
-                          <span style="color: black"> {{ category }}</span>
+                          <i :class="`fas fa-${category} fa-lg mr-2 mt-2`"></i>
+
+                          <span> {{ category }}</span>
                         </v-row>
                         <v-btn
                           @click="filterProductsWithCategory(category)"
@@ -364,7 +372,9 @@
                     >
                       -
                       <i :class="`fa fa-${item} fa-lg ml-2 mr-2`"></i>
-                      <span style="color: black"> {{ item }}</span>
+                      <span class="smallerText" style="color: black">
+                        {{ item }}</span
+                      >
                     </v-btn>
                   </v-list>
                 </v-card>
@@ -383,22 +393,33 @@
         <v-radio-group mandatory :value="radioGroup">
           <v-row class="mb-n5" justify="center">
             <v-col lg="4">
-              <v-radio
-                @change="changeRadioGroup"
-                label="Search for Products"
-                value="1"
-              ></v-radio>
+              <v-radio @change="changeRadioGroup" value="1"
+                ><template v-slot:label>
+                  <p class="mt-4">
+                    {{ $t("toolbar.searchProducts") }}
+                  </p>
+                </template>
+              </v-radio>
             </v-col>
 
             <v-col lg="4">
-              <v-radio
-                @change="changeRadioGroup"
-                label="Search for suppliers"
-                value="2"
-              ></v-radio>
+              <v-radio @change="changeRadioGroup" value="2">
+                <template v-slot:label>
+                  <p class="mt-4">
+                    {{ $t("toolbar.searchSuppliers") }}
+                  </p>
+                </template>
+              </v-radio>
             </v-col>
           </v-row>
         </v-radio-group>
+        <v-row justify="center">
+          <v-btn :color="siteColor.button_color" @click="All">
+            <span :style="`color: ${siteColor.button_text_color}`">{{
+              $t("homePage.allProducts")
+            }}</span></v-btn
+          >
+        </v-row>
 
         <v-row
           justify-lg="start"
@@ -699,10 +720,16 @@ export default {
       console.log(this.governorate);
       this.$store.dispatch("getRegions", this.governorate);
     },
-    All() {
+    async All() {
       this.supplierFilterFlag = false;
       this.$store.commit("emptySearch");
       this.$store.commit("emptySupplierName");
+      await this.$store.dispatch("getSuppliers", {
+        supplierFilterFlag: this.supplierFilterFlag,
+        supplierName: this.supplierName,
+        governorate: this.governorate,
+        region: this.region,
+      });
     },
     gettingCategoryItems() {
       console.log("categoriestems", this.categoriesItems);
@@ -719,6 +746,7 @@ export default {
     mouseOver(name) {
       this.categoryItems = [];
       console.log(name);
+      console.log(this.siteLanguage);
       if (this.siteLanguage == "en") {
         for (let i = 0; i < this.categoriesItems.length; i++) {
           if (this.categoriesItems[i].category_name == name) {
@@ -726,9 +754,13 @@ export default {
           }
         }
       } else {
-        console.log("category name", name);
         for (let i = 0; i < this.categoriesItems.length; i++) {
           if (this.categoriesItems[i].category_arabic_name == name) {
+            console.log(
+              "test",
+              this.categoriesItems[i].category_arabic_name,
+              name
+            );
             this.categoryItems.push(
               this.categoriesItems[i].category_items_arabic_name
             );
@@ -776,6 +808,10 @@ export default {
 };
 </script>
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@500&display=swap");
 .container {
   max-width: 960px;
 }
@@ -785,6 +821,21 @@ export default {
 .padding-0 {
   padding-right: 0;
   padding-left: 0;
+}
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+.smallerText {
+  font-size: 20px;
 }
 </style>
 

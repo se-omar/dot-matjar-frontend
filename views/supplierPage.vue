@@ -62,7 +62,10 @@
           @click="updatePage"
           :color="siteColor.button_color"
           rounded
-          ><span> {{ $t("supplierPage.updatePage") }}</span></v-btn
+        >
+          <span :style="`color:${siteColor.button_text_color}`">
+            {{ $t("supplierPage.updatePage") }}</span
+          ></v-btn
         >
       </v-col>
       <v-col cols="2">
@@ -107,6 +110,7 @@
                 offset-x
                 :close-on-content-click="false"
                 open-on-hover
+                :left="leftMenu"
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-row class="mx-3" justify="start">
@@ -117,11 +121,11 @@
                         v-bind="attrs"
                         v-on="on"
                         text
-                        @click="filterProductsWithCategory(category)"
                         style="overflow: hidden"
+                        @click="filterProductsWithCategory(category)"
                       >
                         <v-row justify="start">
-                          <i :class="`fas fa-${category} fa-lg mr-2`"></i>
+                          <i :class="`fas fa-${category} fa-lg mr-2 mt-2`"></i>
                           <span style="color: black"> {{ category }}</span>
                         </v-row>
                         <v-btn
@@ -129,7 +133,11 @@
                           icon
                           style="overflow: hidden; color: black"
                         >
-                          <i class="fa fa-chevron-right"></i>
+                          <i
+                            v-if="siteLanguage == 'en'"
+                            class="fa fa-chevron-right"
+                          ></i>
+                          <i v-else class="fa fa-chevron-left"></i>
                         </v-btn>
                       </v-btn>
                     </v-col>
@@ -149,7 +157,9 @@
                     >
                       -
                       <i :class="`fa fa-${item} fa-lg ml-2 mr-2`"></i>
-                      <span style="color: black"> {{ item }}</span>
+                      <span class="smallerText" style="color: black">
+                        {{ item }}</span
+                      >
                     </v-btn>
                   </v-list>
                 </v-card>
@@ -159,7 +169,15 @@
         </v-card>
       </v-col>
       <!-- category -->
+
       <v-col lg="8" md="4" sm="6" cols="6">
+        <v-row justify="center">
+          <v-btn :color="siteColor.button_color" @click="getAllProducts">
+            <span :style="`color:${siteColor.button_text_color}`">{{
+              $t("homePage.allProducts")
+            }}</span></v-btn
+          >
+        </v-row>
         <v-row>
           <v-col
             lg="3"
@@ -294,6 +312,16 @@ export default {
     supplierCategories() {
       return this.$store.state.SupplierPage.supplierCategories;
     },
+    siteLanguage() {
+      return this.$store.state.Home.siteLanguage;
+    },
+    leftMenu() {
+      if (this.$store.state.Home.siteLanguage == "en") {
+        return false;
+      } else {
+        return true;
+      }
+    },
   },
   methods: {
     updatePage() {
@@ -340,6 +368,7 @@ export default {
       this.$store.dispatch("filterProductsWithCategory", {
         categoryName: category,
         user_id: this.$route.params.supplier_id,
+        siteLanguage: this.siteLanguage,
       });
     },
     filterProductsWithItem(item) {
@@ -347,6 +376,7 @@ export default {
       this.$store.dispatch("filterProductsWithItem", {
         user_id: this.$route.params.supplier_id,
         itemName: item,
+        siteLanguage: this.siteLanguage,
       });
     },
     mouseOver(category) {
@@ -358,17 +388,39 @@ export default {
       //     this.categoryItems.push(this.categoriesItems[i].category_items);
       //   }
       // }
-      for (var i = 0; i < this.supplierCategoriesAndItems.length; i++) {
-        if (
-          this.supplierCategoriesAndItems[i].product_category.category_name ==
-          category
-        ) {
-          this.categoryItems.push(this.supplierCategoriesAndItems[i].item_name);
+      if (this.siteLanguage == "en") {
+        for (var i = 0; i < this.supplierCategoriesAndItems.length; i++) {
+          if (
+            this.supplierCategoriesAndItems[i].product_category.category_name ==
+            category
+          ) {
+            this.categoryItems.push(
+              this.supplierCategoriesAndItems[i].item_name
+            );
+          }
+        }
+      } else {
+        for (var x = 0; x < this.supplierCategoriesAndItems.length; x++) {
+          if (
+            this.supplierCategoriesAndItems[x].product_category
+              .category_arabic_name == category
+          ) {
+            this.categoryItems.push(
+              this.supplierCategoriesAndItems[x].category_item
+                .category_items_arabic_name
+            );
+          }
         }
       }
     },
     returnAllProducts() {
       this.$store.commit("returnAllProducts");
+    },
+    async getAllProducts() {
+      await this.$store.dispatch(
+        "getSupplierProducts",
+        this.$route.params.supplier_id
+      );
     },
   },
   async created() {
@@ -390,10 +442,10 @@ export default {
       this.$route.params.supplier_id
     );
     console.log("supplier products from supplier apge", this.supplierProducts);
-    // await this.$store.dispatch(
-    //   "getSupplierCategoriesAndItems",
-    //   this.currentUser.user_id
-    // );
+    await this.$store.dispatch(
+      "getSupplierCategoriesAndItems",
+      this.$route.params.supplier_id
+    );
 
     await this.$store.dispatch("getSupplierReview", {
       supplier_id: this.supplier.user_id,
@@ -421,11 +473,25 @@ export default {
     await this.$store.dispatch("getCategoryItems");
     this.isLoading = false;
     console.log("supplier info", this.supplier);
+    this.isLoading = false;
   },
 };
 </script>
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+
 #image {
   border-radius: 50%;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+.smallerText {
+  font-size: 20px;
 }
 </style>
