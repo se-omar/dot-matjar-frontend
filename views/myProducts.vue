@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import Product from "../components/product.vue";
+//import Product from "../components/product.vue";
 
 export default {
   async created() {
@@ -122,7 +122,7 @@ export default {
   },
 
   components: {
-    Product,
+    product: () => import("../components/product"),
   },
 };
 </script>

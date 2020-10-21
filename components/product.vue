@@ -3,7 +3,7 @@
     <v-card
       class="grey lighten-5"
       :elevation="7"
-      :min-width="show_right_banner == 1 ? hundred : hundredten"
+      :min-width="show_right_banner == 1 ? '100%' : '110%'"
     >
       <v-img height="250" :src="filteredProduct.main_picture"></v-img>
 

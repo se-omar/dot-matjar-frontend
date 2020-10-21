@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib';
 import '@fortawesome/fontawesome-svg-core'
-import '@fortawesome/free-solid-svg-icons'
-import '@fortawesome/react-fontawesome'
+//import '@fortawesome/free-solid-svg-icons'
+//import '@fortawesome/react-fontawesome'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import colors from 'vuetify/lib/util/colors'
 

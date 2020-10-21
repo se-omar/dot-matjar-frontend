@@ -7,7 +7,7 @@
 
         <v-col lg="4" sm="2" md="1">
           <div v-if="message">
-            <span id="message">{{message}}</span>
+            <span id="message">{{ message }}</span>
           </div>
 
           <v-card>
@@ -16,10 +16,10 @@
                 <label class="file-label">
                   <span class="file-cta">
                     <span class="file-icon">
-                      <i class="fas fa-upload fa-2x" style="color:blue"></i>
+                      <i class="fas fa-upload fa-2x" style="color: blue"></i>
                       <br />
                     </span>
-                    <span class="file-label" style="font-weight:bold">
+                    <span class="file-label" style="font-weight: bold">
                       الرخصه
                       <br />
                     </span>
@@ -33,7 +33,7 @@
                     id="input"
                   />
                   <br />
-                  <span class="fileName" v-if="image1">{{image1.name}}</span>
+                  <span class="fileName" v-if="image1">{{ image1.name }}</span>
                 </label>
               </div>
 
@@ -46,7 +46,7 @@
 
         <v-col lg="4" sm="2" md="1">
           <div v-if="message">
-            <span id="message">{{message}}</span>
+            <span id="message">{{ message }}</span>
           </div>
 
           <v-card>
@@ -55,10 +55,10 @@
                 <label class="file-label">
                   <span class="file-cta">
                     <span class="file-icon">
-                      <i class="fas fa-upload fa-2x" style="color:blue"></i>
+                      <i class="fas fa-upload fa-2x" style="color: blue"></i>
                       <br />
                     </span>
-                    <span class="file-label" style="font-weight:bold">
+                    <span class="file-label" style="font-weight: bold">
                       الرخصه
                       <br />
                     </span>
@@ -72,7 +72,7 @@
                     id="input"
                   />
                   <br />
-                  <span class="fileName" v-if="image2">{{image2.name}}</span>
+                  <span class="fileName" v-if="image2">{{ image2.name }}</span>
                 </label>
               </div>
 
@@ -85,7 +85,7 @@
 
         <v-col lg="4" sm="2" md="1">
           <div v-if="message">
-            <span id="message">{{message}}</span>
+            <span id="message">{{ message }}</span>
           </div>
 
           <v-card>
@@ -94,10 +94,10 @@
                 <label class="file-label">
                   <span class="file-cta">
                     <span class="file-icon">
-                      <i class="fas fa-upload fa-2x" style="color:blue"></i>
+                      <i class="fas fa-upload fa-2x" style="color: blue"></i>
                       <br />
                     </span>
-                    <span class="file-label" style="font-weight:bold">
+                    <span class="file-label" style="font-weight: bold">
                       الرخصه
                       <br />
                     </span>
@@ -111,7 +111,7 @@
                     id="input"
                   />
                   <br />
-                  <span class="fileName" v-if="image3">{{image3.name}}</span>
+                  <span class="fileName" v-if="image3">{{ image3.name }}</span>
                 </label>
               </div>
 
@@ -124,7 +124,7 @@
   </div>
 </template>
 <script>
-import "material-design-icons-iconfont/dist/material-design-icons.css";
+//import "material-design-icons-iconfont/dist/material-design-icons.css";
 export default {
   name: "fileUpload",
   methods: {

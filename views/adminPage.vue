@@ -544,7 +544,7 @@
 
     <v-row>
       <v-col
-        class="mb-15"
+        class="mb-15 ml-6 mr-6"
         v-for="sortedSupplier in suppliersSortedBySales.slice(0, 10)"
         :key="sortedSupplier.user_id"
         lg="2"
@@ -552,9 +552,7 @@
         sm="6"
         cols="6"
       >
-        <v-card @click="supplierClicked(sortedSupplier)">
-          <supplier :supplier="sortedSupplier"></supplier>
-        </v-card>
+        <supplier :supplier="sortedSupplier"></supplier>
       </v-col>
     </v-row>
     <v-divider></v-divider>
@@ -615,7 +613,7 @@
     </v-row>
     <v-row v-if="selectedMonth === 'all'">
       <v-col
-        class="mb-15"
+        class="mb-15 ml-6 mr-6"
         v-for="topSupplier in topYearSuppliers"
         :key="topSupplier.user_id"
         lg="2"
@@ -623,19 +621,17 @@
         sm="6"
         cols="6"
       >
-        <v-card @click="supplierClicked(sortedSupplier)">
-          <supplier
-            :selectedYear="selectedYear"
-            :selectedMonth="selectedMonth"
-            :supplier="topSupplier"
-          ></supplier>
-        </v-card>
+        <supplier
+          :selectedYear="selectedYear"
+          :selectedMonth="selectedMonth"
+          :supplier="topSupplier"
+        ></supplier>
       </v-col>
     </v-row>
 
     <v-row v-else>
       <v-col
-        class="mb-15"
+        class="mb-15 ml-6 mr-6"
         v-for="topSupplier in topMonthSuppliers"
         :key="topSupplier.user_id"
         lg="2"
@@ -643,13 +639,11 @@
         sm="6"
         cols="6"
       >
-        <v-card @click="supplierClicked(sortedSupplier)">
-          <supplier
-            :selectedYear="selectedYear"
-            :selectedMonth="selectedMonth"
-            :supplier="topSupplier"
-          ></supplier>
-        </v-card>
+        <supplier
+          :selectedYear="selectedYear"
+          :selectedMonth="selectedMonth"
+          :supplier="topSupplier"
+        ></supplier>
       </v-col>
     </v-row>
     <v-divider></v-divider>
@@ -658,7 +652,7 @@
     </v-row>
 
     <v-row justify="center">
-      <v-col lg="7" md="6" sm="12" cols="12">
+      <v-col lg="6" md="6" sm="12" cols="12">
         <div style="text-align: center">
           <v-hover>
             <v-card
@@ -684,13 +678,9 @@
         </div>
       </v-col>
 
-      <v-col style="max-width: 18%" lg="3">
-        <v-card @click="supplierClicked(suppliersSortedBySales[0])">
-          <supplier
-            height="100"
-            :supplier="suppliersSortedBySales[0]"
-          ></supplier>
-        </v-card>
+      <v-col style="max-width: 18%" class="mr-6" lg="2">
+        <supplier height="100" :supplier="suppliersSortedBySales[0]"></supplier>
+
         <v-row class="mt-4" justify="center">
           <v-label>
             <span style="font-size: 22px; text-align: center">{{
@@ -700,21 +690,12 @@
         </v-row>
       </v-col>
 
-      <v-col style="max-width: 18%" lg="3">
-        <v-card
-          @click="
-            supplierClicked(
-              suppliersSortedBySales[suppliersSortedBySales.length - 1]
-            )
-          "
-        >
-          <supplier
-            height="100"
-            :supplier="
-              suppliersSortedBySales[suppliersSortedBySales.length - 1]
-            "
-          ></supplier>
-        </v-card>
+      <v-col style="max-width: 18%" class="ml-6" lg="2">
+        <supplier
+          height="100"
+          :supplier="suppliersSortedBySales[suppliersSortedBySales.length - 1]"
+        ></supplier>
+
         <v-row class="mt-4" justify="center">
           <v-label>
             <span style="font-size: 22px; text-align: center">{{
@@ -784,7 +765,7 @@
 
     <v-row>
       <v-col
-        class="mb-15"
+        class="mb-15 ml-6 mr-6"
         v-for="supplier in suppliers"
         :key="supplier.user_id"
         lg="2"
@@ -792,9 +773,7 @@
         sm="6"
         cols="6"
       >
-        <v-card @click="supplierClicked(supplier)">
-          <supplier :supplier="supplier"></supplier>
-        </v-card>
+        <supplier :supplier="supplier"></supplier>
       </v-col>
     </v-row>
 
@@ -813,8 +792,8 @@
 </template>
 
 <script>
-import supplier from "../components/supplier";
-import moment from "moment";
+// import supplier from "../components/supplier";
+//import moment from "moment";
 // import SiteColor from "../components/siteColor";
 export default {
   async created() {
@@ -1039,9 +1018,9 @@ export default {
   },
 
   methods: {
-    moment() {
-      return new moment();
-    },
+    // moment() {
+    //   return new moment();
+    // },
 
     async loadMore() {
       this.isLoading = true;
@@ -1050,14 +1029,14 @@ export default {
       this.isLoading = false;
     },
 
-    supplierClicked(supplier) {
-      localStorage.setItem("clickedSupplier", JSON.stringify(supplier));
-      console.log("supplier is", supplier);
-      console.log("supplier id is", supplier.user_id);
-      //this.$store.commit("supplierPage", supplier);
-      this.$router.push(`/${this.$i18n.locale}/suppliersDashboard`);
-      // console.log(this.supplier);
-    },
+    // supplierClicked(supplier) {
+    //   localStorage.setItem("clickedSupplier", JSON.stringify(supplier));
+    //   console.log("supplier is", supplier);
+    //   console.log("supplier id is", supplier.user_id);
+    //   //this.$store.commit("supplierPage", supplier);
+    //   this.$router.push(`/${this.$i18n.locale}/suppliersDashboard`);
+    //   // console.log(this.supplier);
+    // },
 
     groupBy(xs, f) {
       return xs.reduce(
@@ -1372,7 +1351,7 @@ export default {
   },
 
   components: {
-    supplier,
+    supplier: () => import("../components/supplier"),
   },
 };
 </script>

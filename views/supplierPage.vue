@@ -207,17 +207,13 @@
   </v-app>
 </template>
 <script>
-import product from "../components/product";
+//import product from "../components/product";
 // import sideButton from "../components/sideButton";
-import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/vue-loading.css";
 
 export default {
   name: "supplierPage",
   components: {
-    product,
-    // sideButton,
-    Loading,
+    product: () => import("../components/product"),
   },
   data: () => ({
     isLoading: false,

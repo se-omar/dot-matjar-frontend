@@ -577,9 +577,9 @@ export default {
                 })
         },
 
-        getCurrencies(context) {
-            axios
-                .get('https://openexchangerates.org/api/latest.json?app_id=b63ccfa73efc490f8d97677229662f48').then(response => {
+        async getCurrencies(context) {
+            await axios
+                .get('https://api.exchangerate.host/latest?base=USD').then(response => {
                     console.log('currencies from action ', response.data.rates)
                     context.commit('getCurrencies', response.data.rates)
                 })

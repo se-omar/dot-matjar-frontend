@@ -260,6 +260,7 @@
                   dense
                   outlined
                   rounded
+                  v-model="priceTo"
                   type="number"
                   :placeholder="$t('toolbar.priceTo')"
                   v-model="priceTo"
@@ -1078,15 +1079,15 @@ export default {
     productFilterFlag: false,
     toolbarSearch: "",
     advancedSearch: false,
-
     governorate: "",
-
     supplierName: "",
     supplierProductsSearch: "",
     currentCurrency: localStorage.getItem("currentCurrency"),
     currencies: ["egp", "usd"],
     filterSuppliersByName: "",
     country: "",
+    priceFrom: "",
+    priceTo: "",
   }),
 };
 </script>

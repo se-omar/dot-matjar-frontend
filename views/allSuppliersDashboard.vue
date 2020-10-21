@@ -267,8 +267,8 @@
 </template>
 
 <script>
-import product from "../components/product";
-import dashboardSellingProduct from "../components/dashboardSellingProduct";
+// import product from "../components/product";
+// import dashboardSellingProduct from "../components/dashboardSellingProduct";
 export default {
   async mounted() {
     //this.isloading = true;
@@ -545,8 +545,10 @@ export default {
   },
 
   components: {
-    dashboardSellingProduct,
-    product,
+    dashboardSellingProduct: () =>
+      import("../components/dashboardSellingProduct"),
+    product: () => import("../components/product"),
+    apexchart: () => import("vue-apexcharts"),
   },
 };
 </script>
