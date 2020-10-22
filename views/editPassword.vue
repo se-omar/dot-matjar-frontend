@@ -107,6 +107,9 @@ export default {
   },
 
   computed: {
+    nodeHost() {
+      return this.$store.state.nodeHost;
+    },
     passwordMatch() {
       return () =>
         this.newPassword === this.repeatPassword || "Password must match";
@@ -129,7 +132,7 @@ export default {
   methods: {
     updatePassword() {
       var self = this;
-      var route = "http://localhost:3000/api/updatePassword";
+      var route = this.nodeHost + "/api/updatePassword";
       if (this.currentUser.password !== this.password) {
         alert(this.$t("editPassword.incorrectCurrentPassword"));
         return;

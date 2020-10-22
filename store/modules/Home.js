@@ -233,7 +233,7 @@ export default {
         },
 
         getSiteColor(context) {
-            axios.put('http://localhost:3000/api/getSiteColor')
+            axios.put(context.rootState.nodeHost + '/api/getSiteColor')
                 .then(response => {
                     //console.log(response.data.data)
                     //console.log(response.data.message)
@@ -242,7 +242,7 @@ export default {
         },
 
         async refreshCurrentUser(context) {
-            await axios.post('http://localhost:3000/api/refreshCurrentUser', {
+            await axios.post(context.rootState.nodeHost + '/api/refreshCurrentUser', {
                 token: context.rootState.RegisterLogin.loginToken
             }).then(response => {
                 context.commit('refreshCurrentUser', response.data.user)
@@ -250,7 +250,7 @@ export default {
         },
 
         getGovernorate(context) {
-            axios.put('http://localhost:3000/api/getGovernorate')
+            axios.put(context.rootState.nodeHost + '/api/getGovernorate')
                 .then(res => {
                     //console.log(res.data.data)
                     context.commit('getGovernorate', res.data.data)
@@ -265,7 +265,7 @@ export default {
 
             if (!productFilterFlag) {
 
-                axios.post('http://localhost:3000/api/products', {
+                axios.post(context.rootState.nodeHost + '/api/products', {
                     product_id: context.state.filteredProducts.length > 0 ? context.state.filteredProducts[context.state.filteredProducts.length - 1].product_id : null
                 }).then(response => {
 
@@ -274,7 +274,7 @@ export default {
                 })
             }
             else {
-                axios.post('http://localhost:3000/api/loadMoreProductsWithFilter', {
+                axios.post(context.rootState.nodeHost + '/api/loadMoreProductsWithFilter', {
                     product_id: context.state.filteredProducts.length > 0 ? context.state.filteredProducts[context.state.filteredProducts.length - 1].product_id : null,
                     product_name: productName,
                     category_name: categoryName
@@ -292,7 +292,7 @@ export default {
             region
         }) {
             if (!supplierFilterFlag) {
-                axios.post('http://localhost:3000/api/getSuppliers', {
+                axios.post(context.rootState.nodeHost + '/api/getSuppliers', {
                     user_id: context.state.suppliers.length > 0 ? context.state.suppliers[context.state.suppliers.length - 1].user_id : null
                 }).then(response => {
                     console.log('suppliersssssss', response.data.users)
@@ -300,7 +300,7 @@ export default {
                 })
             }
             else {
-                axios.post('http://localhost:3000/api/loadMoreSuppliersWithFilter', {
+                axios.post(context.rootState.nodeHost + '/api/loadMoreSuppliersWithFilter', {
                     user_id: context.state.suppliers.length > 0 ? context.state.suppliers[context.state.suppliers.length - 1].user_id : null,
                     name: supplierName,
                     governorate,
@@ -313,7 +313,7 @@ export default {
         },
 
         categoriesDB(context) {
-            axios.put('http://localhost:3000/api/selectCategory')
+            axios.put(context.rootState.nodeHost + '/api/selectCategory')
                 .then((res) => {
                     console.log('category from db', res.data.data)
                     context.commit('categoriesDB', res.data.data)
@@ -339,7 +339,7 @@ export default {
                 priceFrom,
                 priceTo,
                 buttonPressed, context.state.siteLanguage, product_id)
-            axios.put('http://localhost:3000/api/filterProducts', {
+            axios.put(context.rootState.nodeHost + '/api/filterProducts', {
                 product_name,
                 category_name,
                 governorate,
@@ -365,7 +365,7 @@ export default {
             //console.log('governorate', governorate)
             //console.log('region', region)
 
-            axios.put('http://localhost:3000/api/filterSuppliers', {
+            axios.put(context.rootState.nodeHost + '/api/filterSuppliers', {
                 user_id: context.state.suppliers.length > 0 ? context.state.suppliers[context.state.suppliers.length - 1].user_id : null,
                 name: supplierName,
                 governorate: governorate,
@@ -378,7 +378,7 @@ export default {
 
         getRegions(context, governorate) {
             //console.log(governorate)
-            axios.put('http://localhost:3000/api/getRegions', { governorate: governorate })
+            axios.put(context.rootState.nodeHost + '/api/getRegions', { governorate: governorate })
                 .then(regions => {
                     //console.log('regionss', regions.data.data)
                     context.commit('getRegions', regions.data.data)
@@ -386,7 +386,7 @@ export default {
         },
 
         addNewCategory(context, { categoryName, categoryArabicName }) {
-            axios.post('http://localhost:3000/api/addNewCategory', { categoryName, categoryArabicName })
+            axios.post(context.rootState.nodeHost + '/api/addNewCategory', { categoryName, categoryArabicName })
                 .then(message => {
                     //console.log(message.data.message)
                     alert(message.data.message)
@@ -394,14 +394,14 @@ export default {
                 })
         },
         addCategoryItems(context, { categoryName, categoryItem, itemArabicName }) {
-            axios.post('http://localhost:3000/api/addCategoryItems', { categoryName: categoryName, categoryItem: categoryItem, itemArabicName: itemArabicName })
+            axios.post(context.rootState.nodeHost + '/api/addCategoryItems', { categoryName: categoryName, categoryItem: categoryItem, itemArabicName: itemArabicName })
                 .then(message => {
                     //console.log(message.data.message)
                     alert(message.data.message)
                 })
         },
         getCategoryItems(context) {
-            axios.put('http://localhost:3000/api/getCategoryItems')
+            axios.put(context.rootState.nodeHost + '/api/getCategoryItems')
                 .then(response => {
                     //console.log(response.data.message)
                     //console.log('get category items', response.data.data)
@@ -411,7 +411,7 @@ export default {
 
         },
         removeCategoryAndItems(context, { categoryName, categoryItem }) {
-            axios.put('http://localhost:3000/api/removeCategoryAndItems', { categoryName: categoryName, categoryItem: categoryItem })
+            axios.put(context.rootState.nodeHost + '/api/removeCategoryAndItems', { categoryName: categoryName, categoryItem: categoryItem })
                 .then(message => {
                     //console.log(message.data.message)
                     alert(message.data.message)
@@ -424,7 +424,7 @@ export default {
             newCategoryItemDescription,
             categoryName, itemArabicName, categoryArabicName }) {
 
-            axios.post('http://localhost:3000/api/requestNewCategoryAndItem', {
+            axios.post(context.rootState.nodeHost + '/api/requestNewCategoryAndItem', {
                 newCategoryName,
                 newCategoryDescription,
                 newCategoryItem,
@@ -439,7 +439,7 @@ export default {
             })
         },
         getCategoryAndItemRequests(context) {
-            axios.get('http://localhost:3000/api/getCategoryAndItemRequests')
+            axios.get(context.rootState.nodeHost + '/api/getCategoryAndItemRequests')
                 .then(requests => {
 
                     context.commit('getCategoryAndItemRequests', requests.data.data)
@@ -454,7 +454,7 @@ export default {
             categoryArabicName,
             itemArabicName
         }) {
-            axios.put('http://localhost:3000/api/categoryAndItemRequestStatus', {
+            axios.put(context.rootState.nodeHost + '/api/categoryAndItemRequestStatus', {
                 id, status,
                 newCategoryName,
                 newCategoryDescription,
@@ -470,7 +470,7 @@ export default {
         },
         getSupplierCategoriesRequests(context) {
             //console.log('user idd issssss', context.state.currentUser.user_id)
-            axios.put('http://localhost:3000/api/getSupplierCategoriesRequests', { user_id: context.state.currentUser.user_id })
+            axios.put(context.rootState.nodeHost + '/api/getSupplierCategoriesRequests', { user_id: context.state.currentUser.user_id })
                 .then(requests => {
                     //console.log(requests.data.message);
                     //console.log('Requueests get', requests.data.data)
@@ -487,7 +487,7 @@ export default {
             footerTextColor,
             toolBarTextColor
         }) {
-            axios.post('http://localhost:3000/api/updateSiteColors', {
+            axios.post(context.rootState.nodeHost + '/api/updateSiteColors', {
                 toolBarColor,
                 footerColor,
                 buttonsColor,
@@ -506,7 +506,7 @@ export default {
             carousel_height, }) {
             //console.log('show right banner from action', show_right_banner);
 
-            await axios.post('http://localhost:3000/api/updateHomePage', {
+            await axios.post(context.rootState.nodeHost + '/api/updateHomePage', {
                 show_carousel,
                 show_right_banner,
                 carousel_width,
@@ -521,7 +521,7 @@ export default {
         },
 
         async uploadHomeCarouselImages(context, form) {
-            await axios.post('http://localhost:3000/api/uploadHomeCarouselImages', form, {
+            await axios.post(context.rootState.nodeHost + '/api/uploadHomeCarouselImages', form, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -532,7 +532,7 @@ export default {
         },
 
         async uploadHomeBannerImages(context, form) {
-            await axios.post('http://localhost:3000/api/uploadHomeBannerImages', form, {
+            await axios.post(context.rootState.nodeHost + '/api/uploadHomeBannerImages', form, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -544,7 +544,7 @@ export default {
         },
 
         async removeHomeCarouselImage(context, { imgName }) {
-            await axios.post('http://localhost:3000/api/removeHomeCarouselImage', {
+            await axios.post(context.rootState.nodeHost + '/api/removeHomeCarouselImage', {
                 imgName
             }).then(response => {
                 //console.log('remove img response', response)
@@ -552,7 +552,7 @@ export default {
         },
 
         async removeHomeBannerImage(context, { imgName }) {
-            await axios.post('http://localhost:3000/api/removeHomeBannerImage', {
+            await axios.post(context.rootState.nodeHost + '/api/removeHomeBannerImage', {
                 imgName
             }).then(response => {
                 //console.log('remove img response', response)
@@ -560,7 +560,7 @@ export default {
         },
 
         async getHomePageData(context) {
-            await axios.put('http://localhost:3000/api/getHomePageData')
+            await axios.put(context.rootState.nodeHost + '/api/getHomePageData')
                 .then(info => {
                     context.commit('getHomePageData', info.data.data)
                 })
@@ -573,7 +573,7 @@ export default {
             footerTextColor,
             toolBarTextColor
         }) {
-            axios.post('http://localhost:3000/api/updateSupplierSiteColors', {
+            axios.post(context.rootState.nodeHost + '/api/updateSupplierSiteColors', {
                 toolBarColor,
                 footerColor,
                 buttonsColor,
@@ -596,34 +596,34 @@ export default {
         },
 
         async getAvailableCountries(context) {
-            await axios.put('http://localhost:3000/api/getAvailableCountries')
+            await axios.put(context.rootState.nodeHost + '/api/getAvailableCountries')
                 .then(countries => {
                     console.log('available countries', countries.data.data)
                     context.commit('getAvailableCountries', countries.data.data)
                 })
         },
         async getWorldCountries(context) {
-            axios.put('http://localhost:3000/api/getWorldCountries')
+            axios.put(context.rootState.nodeHost + '/api/getWorldCountries')
                 .then(data => {
                     console.log('world countries', data.data.data)
                     context.commit('getWorldCountries', data.data.data)
                 })
         },
         addCountry(context, country) {
-            axios.post('http://localhost:3000/api/addCountry', { country })
+            axios.post(context.rootState.nodeHost + '/api/addCountry', { country })
                 .then(message => {
                     alert(message.data.message)
                 })
         },
         getChoosenWorldCountries(context) {
-            axios.put('http://localhost:3000/api/getChoosenWorldCountries')
+            axios.put(context.rootState.nodeHost + '/api/getChoosenWorldCountries')
                 .then(countries => {
                     console.log('choosen world counties', countries.data.data)
                     context.commit('getChoosenWorldCountries', countries.data.data)
                 })
         },
         removeCountry(context, country) {
-            axios.put('http://localhost:3000/api/removeCountry', { country: country })
+            axios.put(context.rootState.nodeHost + '/api/removeCountry', { country: country })
                 .then(res => { alert(res.data.message) })
         },
         getAllUsers(context) {

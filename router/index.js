@@ -49,11 +49,6 @@ var routes = [
     },
     children: [
       {
-        path: 'cart',
-        name: "cart",
-        component: () => import('../views/cart'),
-      },
-      {
         path: '/',
         name: "home",
         component: () => import('../views/Home'),
@@ -214,6 +209,9 @@ var routes = [
         path: 'allUsers',
         name: 'allUsers',
         component: () => import('../views/allUsers'),
+        path: 'addUser',
+        name: 'addUser',
+        component: () => import('../views/addUser'),
       },
       {
         path: '*',

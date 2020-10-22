@@ -180,6 +180,9 @@ export default {
   components: {},
 
   computed: {
+    nodeHost() {
+      return this.$store.state.nodeHost;
+    },
     currentUser() {
       return this.$store.state.Home.currentUser;
     },
@@ -253,7 +256,7 @@ export default {
       });
 
       this.$axios
-        .post("http://localhost:3000/api/updateProduct", form, {
+        .post(this.nodeHost + "/api/updateProduct", form, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

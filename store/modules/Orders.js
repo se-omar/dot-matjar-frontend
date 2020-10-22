@@ -90,7 +90,7 @@ export default {
     actions: {
         createOrder(context, { governorate, region, address }) {
 
-            axios.post('http://localhost:3000/api/createOrder', {
+            axios.post(context.rootState.nodeHost + '/api/createOrder', {
                 user_id: context.rootState.Home.currentUser.user_id
                 , governorate: governorate,
                 region: region,
@@ -125,7 +125,7 @@ export default {
             email
         }) {
 
-            axios.put('http://localhost:3000/api/completedata', {
+            axios.put(context.rootState.nodeHost + '/api/completedata', {
                 national_number,
                 gender,
                 full_arabic_name,
@@ -156,14 +156,14 @@ export default {
 
         updateProductStatus(context, { status, orderId, productId }) {
             console.log('testing befor sending to database', status, orderId, productId)
-            axios.put('http://localhost:3000/api/updateProductStatus', { status: status, orderId: orderId, productId: productId })
+            axios.put(context.rootState.nodeHost + '/api/updateProductStatus', { status: status, orderId: orderId, productId: productId })
                 .then(response => {
                     console.log(response.data.message)
                 })
         },
 
         ordersMade(context, id) {
-            axios.put('http://localhost:3000/api/supplierProductsInOrder', { user_id: id })
+            axios.put(context.rootState.nodeHost + '/api/supplierProductsInOrder', { user_id: id })
                 .then(orders => {
                     console.log('ordersss', orders.data.data)
 
@@ -173,7 +173,7 @@ export default {
 
         async getOrders(context) {
             console.log('user id iss', context.rootState.Home.currentUser.user_id)
-            await axios.put('http://localhost:3000/api/getUserOrders', {
+            await axios.put(context.rootState.nodeHost + '/api/getUserOrders', {
                 user_id: context.rootState.Home.currentUser.user_id
             })
                 .then(orders => {
@@ -183,7 +183,7 @@ export default {
         },
 
         getOrderProducts(context, id) {
-            axios.put('http://localhost:3000/api/getOrderProducts', {
+            axios.put(context.rootState.nodeHost + '/api/getOrderProducts', {
                 order_id: id
             })
                 .then(response => {

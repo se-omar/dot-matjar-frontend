@@ -60,7 +60,7 @@ export default {
     validateResetPassword() {
       var self = this;
       this.$axios
-        .post("http://localhost:3000/api/resetPassword", {
+        .post(this.nodeHost + "/api/resetPassword", {
           email: this.email,
         })
         .then((response) => {
@@ -69,7 +69,7 @@ export default {
             alert(response.data);
           } else {
             this.$axios
-              .post("http://localhost:3000/api/sendResetPassword", {
+              .post(this.nodeHost + "/api/sendResetPassword", {
                 email: this.email,
               })
               .then((response) => {
@@ -85,6 +85,9 @@ export default {
     },
   },
   computed: {
+    nodeHost() {
+      return this.$store.state.nodeHost;
+    },
     siteColor() {
       if (this.$store.state.Home.siteColor) {
         return this.$store.state.Home.siteColor[0];

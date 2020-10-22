@@ -103,7 +103,9 @@
     "deleteCategoryCheck2": "Please be aware that by proceeding all products in this category will not have a unique category to search for.",
     "disagree": "disagree",
     "newCategoryArabicName": "Category Arabic Name",
-    "newCategoryItemArabicName": "Item Arabic Name"
+    "newCategoryItemArabicName": "Item Arabic Name",
+    "addNewUser": "Add new user",
+    "allUsers": "All users"
   },
   "suppliersDashboard": {
     "dashboard": "dashboard",
@@ -447,5 +449,22 @@
     "searchUserByName": "Search User By Name",
     "search": "Search",
     "loadmore": "Load More"
+  },
+  "addUser": {
+    "addNewUser": "Add a new user",
+    "fullName": "full name",
+    "email": "email",
+    "password": "password",
+    "confirmPassword": "confirm password",
+    "mobileNumber": "Mobile Number",
+    "facebook": "facebook",
+    "storeName": "store name",
+    "gender": "gender",
+    "governorate": "governorate",
+    "region": "region",
+    "userType": "user type",
+    "profilePic": "profile picture",
+    "addUser": "Add user",
+    "cancel": "cancel"
   }
 }

@@ -48,7 +48,7 @@ export default {
 
     actions: {
         async removeProductFromCart(context, id) {
-            await axios.put('http://localhost:3000/api/remove', {
+            await axios.put(context.rootState.nodeHost + '/api/remove', {
                 product_id: id
             })
                 .then(response => {
@@ -58,7 +58,7 @@ export default {
         },
 
         async localStorage(context) {
-            await axios.put('http://localhost:3000/api/getProducts', {
+            await axios.put(context.rootState.nodeHost + '/api/getProducts', {
                 user_id: context.rootState.Home.currentUser.user_id
             })
                 .then((response) => {
@@ -70,7 +70,7 @@ export default {
 
             console.log('entered clean cart')
             context.commit('cleanCart')
-            await axios.put('http://localhost:3000/api/cleanCart', {
+            await axios.put(context.rootState.nodeHost + '/api/cleanCart', {
                 user_id: context.rootState.Home.currentUser.user_id
             })
                 .then(response => {
@@ -80,7 +80,7 @@ export default {
         },
 
         table(context, product) {
-            axios.post('http://localhost:3000/api/table', {
+            axios.post(context.rootState.nodeHost + '/api/table', {
                 user_id: context.rootState.Home.currentUser.user_id,
                 product_id: product.product_id
             })
@@ -90,7 +90,7 @@ export default {
         },
 
         cart(context, product_id) {
-            axios.post('http://localhost:3000/api/cart', {
+            axios.post(context.rootState.nodeHost + '/api/cart', {
                 product_id: product_id,
                 user_id: context.rootState.Home.currentUser.user_id
 

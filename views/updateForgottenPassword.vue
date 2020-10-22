@@ -74,6 +74,9 @@ export default {
   },
 
   computed: {
+    nodeHost() {
+      return this.$store.state.nodeHost;
+    },
     passwordMatch() {
       return () =>
         this.password === this.repeatPassword || "Password must match";
@@ -98,8 +101,7 @@ export default {
     updatePassword() {
       var self = this;
       var route =
-        "http://localhost:3000/api/sendResetPassword/" +
-        this.$route.params.hash;
+        this.nodeHost + "/api/sendResetPassword/" + this.$route.params.hash;
       this.$axios
         .post(route, {
           password: this.password,

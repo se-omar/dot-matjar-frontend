@@ -524,8 +524,7 @@ export default {
     removeProduct() {
       console.log(this.currentProduct.product_id);
       var api =
-        "http://localhost:3000/api/removeProduct/" +
-        this.currentProduct.product_id;
+        this.nodeHost + "/api/removeProduct/" + this.currentProduct.product_id;
       this.$axios
         .delete(api)
         .then((response) => {

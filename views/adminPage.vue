@@ -10,6 +10,21 @@
     </div>
     <!-- ADDING Categories -->
     <v-row justify="center">
+      <v-col lg="2">
+        <v-btn
+          class="primary"
+          @click="$router.push(`/${$i18n.locale}/addUser`)"
+          large
+          block
+          >{{ $t("adminPage.addNewUser") }}</v-btn
+        >
+      </v-col>
+
+      <v-col lg="2">
+        <v-btn large block>{{ $t("adminPage.allUsers") }}</v-btn>
+      </v-col>
+    </v-row>
+    <v-row justify="center">
       <h2>{{ $t("adminPage.addNewCategory") }}</h2>
     </v-row>
 
@@ -1063,7 +1078,7 @@ export default {
         totalMonthRevenue = 0;
         totalYearRevenue = 0;
         await self.$axios
-          .post("http://localhost:3000/api/monthlySales", {
+          .post(this.nodeHost + "/api/monthlySales", {
             user_id: self.allSuppliersWithSales[i].user_id,
           })
           .then((response) => {

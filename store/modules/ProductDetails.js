@@ -57,7 +57,7 @@ export default {
             product_id, user_id
         }) {
             await axios
-                .post("http://localhost:3000/api/getProductReview", {
+                .post(context.rootState.nodeHost + "/api/getProductReview", {
                     product_id: product_id,
                     user_id: user_id,
                 }).then(response => {
@@ -67,7 +67,7 @@ export default {
         },
 
         async getProductRatingsArray(context, product_id) {
-            await axios.post('http://localhost:3000/api/getProductRatingsArray', {
+            await axios.post(context.rootState.nodeHost + '/api/getProductRatingsArray', {
                 product_id
             }).then(response => {
                 context.commit('getProductRatingsArray', response.data.rows)
@@ -77,7 +77,7 @@ export default {
         async checkIfUserOrdered(context, {
             user_id, product_id
         }) {
-            await axios.post('http://localhost:3000/api/checkIfUserOrdered', {
+            await axios.post(context.rootState.nodeHost + '/api/checkIfUserOrdered', {
                 product_id,
                 user_id
             }).then(response => {
@@ -102,7 +102,7 @@ export default {
             user_id, product_id, rating, review
         }) {
             axios
-                .post("http://localhost:3000/api/addProductReview", {
+                .post(context.rootState.nodeHost + "/api/addProductReview", {
                     user_id, product_id, rating, review
                 })
                 .then((response) => {
@@ -111,7 +111,7 @@ export default {
         },
 
         calculateProductRating(context, product_id) {
-            axios.post('http://localhost:3000/api/calculateProductRating', {
+            axios.post(context.rootState.nodeHost + '/api/calculateProductRating', {
                 product_id
             }).then(response => {
                 console.log(response.data.message)

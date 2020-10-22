@@ -40,7 +40,7 @@ export default {
       console.log(self.productsQuantityArray);
 
       this.$axios
-        .put("http://localhost:3000/api/cleanCart", {
+        .put(this.nodeHost + "/api/cleanCart", {
           user_id: self.currentUser.user_id,
         })
         .then((response) => {
@@ -63,6 +63,9 @@ export default {
   },
 
   computed: {
+    nodeHost() {
+      return this.$store.state.nodeHost;
+    },
     paymentToken() {
       return this.$store.state.Orders.paymentToken;
     },
