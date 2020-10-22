@@ -16,7 +16,7 @@ Vue.use(Vuex, axios, router);
 
 export default new Vuex.Store({
   state: {
-    nodeHost: "http://localhost:3000/",
+    nodeHost: "http://localhost:3000",
     // viewRequestDetails: false,
     // cart: [],
     // table: JSON.parse(localStorage.getItem('cartItems')) ? JSON.parse(localStorage.getItem('cartItems')) : [],
@@ -323,7 +323,7 @@ export default new Vuex.Store({
 
   actions: {
     profilePhoto(context, form) {
-      axios.post('http://localhost:3000/api/profilePhoto', form, {
+      axios.post(context.state.nodeHost + '/api/profilePhoto', form, {
         headers: {
           'content-type': 'multipart/form-data'
         }
@@ -495,7 +495,7 @@ export default new Vuex.Store({
 
 
     activation(context) {
-      axios.put('http://localhost:3000/api/activate')
+      axios.put(context.state.nodeHost + '/api/activate')
         .then((data) => {
           console.log(data);
           context.commit('activation')
@@ -507,7 +507,7 @@ export default new Vuex.Store({
     // },
 
     changingSiteColor(context, pickerColor) {
-      axios.put('http://localhost:3000/api/changeSiteColor', { user_id: context.state.Home.currentUser.user_id, site_color: pickerColor })
+      axios.put(context.state.nodeHost + '/api/changeSiteColor', { user_id: context.state.Home.currentUser.user_id, site_color: pickerColor })
         .then(response => {
           console.log(response.data.message)
           context.commit('changingSiteColor', pickerColor)

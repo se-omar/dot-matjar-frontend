@@ -15,9 +15,15 @@ export default {
 
     actions: {
         async getAllSuppliersWithSales(context) {
-            return axios.get('http://localhost:3000/api/getAllSuppliersWithSales').then(response => {
+            return axios.get(context.rootState.nodeHost + '/api/getAllSuppliersWithSales').then(response => {
                 context.commit('getAllSuppliersWithSales', response.data.suppliers)
             })
         },
+
+        async addNewUser(context, form) {
+            await axios.post(context.rootState.nodeHost + '/api/addNewUser', form).then(response => {
+                alert(response.data.message)
+            })
+        }
     }
 }

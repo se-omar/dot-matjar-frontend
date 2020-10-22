@@ -188,7 +188,7 @@ export default {
             rating,
             review,
         }) {
-            await axios.post('http://localhost:3000/api/addSupplierReview', {
+            await axios.post(context.rootState.nodeHost + '/api/addSupplierReview', {
                 supplier_id,
                 user_id,
                 rating,
@@ -200,7 +200,7 @@ export default {
         },
 
         async getSupplier(context, id) {
-            await axios.put('http://localhost:3000/api/getSupplier', { user_id: id })
+            await axios.put(context.rootState.nodeHost + '/api/getSupplier', { user_id: id })
                 .then(supplier => {
                     context.commit('getSupplier', supplier.data.data)
                     context.commit('changeSiteColor', supplier.data.data)
@@ -208,7 +208,7 @@ export default {
         },
 
         async getSupplierPageData(context, id) {
-            await axios.put('http://localhost:3000/api/getSupplierPageData', { supplier_id: id })
+            await axios.put(context.rootState.nodeHost + '/api/getSupplierPageData', { supplier_id: id })
                 .then(info => {
                     console.log('supplier page datat', info.data.data)
                     context.commit('getSupplierPageData', info.data.data)
@@ -220,7 +220,7 @@ export default {
 
         async getSupplierProducts(context, id) {
             console.log('the id is', id);
-            await axios.put("http://localhost:3000/api/supplierProducts", {
+            await axios.put(context.rootState.nodeHost + "/api/supplierProducts", {
                 user_id: id
             }).then(response => {
                 console.log('Products is here', response)
@@ -232,7 +232,7 @@ export default {
             supplier_id, user_id
         }) {
             await axios
-                .post("http://localhost:3000/api/getSupplierReview", {
+                .post(context.rootState.nodeHost + "/api/getSupplierReview", {
                     supplier_id: supplier_id,
                     user_id: user_id,
                 }).then(response => {
@@ -241,7 +241,7 @@ export default {
         },
 
         async getSupplierRatingsArray(context, supplier_id) {
-            await axios.post('http://localhost:3000/api/getSupplierRatingsArray', {
+            await axios.post(context.rootState.nodeHost + '/api/getSupplierRatingsArray', {
                 supplier_id
             }).then(response => {
                 context.commit('getSupplierRatingsArray', response.data.rows)
@@ -249,7 +249,7 @@ export default {
         },
 
         updateSupplierPage(context, formdata) {
-            axios.post('http://localhost:3000/api/updateSupplierPage', formdata)
+            axios.post(context.rootState.nodeHost + '/api/updateSupplierPage', formdata)
                 .then(response => {
                     console.log(response.data.message, response.data.data)
                     context.commit('updateSupplierPage', response.data.data)
@@ -260,7 +260,7 @@ export default {
 
 
         supplierPageColor(context, color) {
-            axios.put('http://localhost:3000/api/supplierPageColor', {
+            axios.put(context.rootState.nodeHost + '/api/supplierPageColor', {
                 page_color: color,
                 user_id: context.state.supplier.user_id
             })
@@ -273,14 +273,14 @@ export default {
         },
 
         calculateSupplierRating(context, supplier_id) {
-            axios.post('http://localhost:3000/api/calculateSupplierRating', {
+            axios.post(context.rootState.nodeHost + '/api/calculateSupplierRating', {
                 supplier_id
             }).then(response => {
                 console.log(response.message)
             })
         },
         getPendingSuppliers(context) {
-            axios.put('http://localhost:3000/api/getPendingSuppliers')
+            axios.put(context.rootState.nodeHost + '/api/getPendingSuppliers')
                 .then(suppliers => {
                     console.log(suppliers.data.message)
                     console.log(suppliers.data.data)
@@ -288,14 +288,14 @@ export default {
                 })
         },
         acceptSupplierRequest(context, user_id) {
-            axios.put('http://localhost:3000/api/acceptSupplierRequest', { user_id: user_id })
+            axios.put(context.rootState.nodeHost + '/api/acceptSupplierRequest', { user_id: user_id })
                 .then(message => {
                     alert(message.data.message)
                 })
         },
         filterSupplierProducts(context, { productsSearch, user_id }) {
 
-            axios.put('http://localhost:3000/api/filterSupplierProducts', { productsSearch, user_id })
+            axios.put(context.rootState.nodeHost + '/api/filterSupplierProducts', { productsSearch, user_id })
                 .then(products => {
                     console.log(products.data.data)
                     console.log(products.data.message)
@@ -304,13 +304,13 @@ export default {
         },
         filterProductsWithCategory(context, { categoryName, user_id, siteLanguage }) {
             console.log('testing', categoryName, user_id)
-            axios.put('http://localhost:3000/api/filterSupplierProducts', { categoryName, user_id, siteLanguage })
+            axios.put(context.rootState.nodeHost + '/api/filterSupplierProducts', { categoryName, user_id, siteLanguage })
                 .then(products => {
                     context.commit('filterProductsWithCategory', products.data.data)
                 })
         },
         filterProductsWithItem(context, { user_id, itemName, siteLanguage }) {
-            axios.put('http://localhost:3000/api/filterSupplierProducts', { user_id, itemName, siteLanguage })
+            axios.put(context.rootState.nodeHost + '/api/filterSupplierProducts', { user_id, itemName, siteLanguage })
                 .then(products => {
                     console.log('testing products items', products.data.data)
                     context.commit('filterProductsWithItem', products.data.data)
@@ -319,7 +319,7 @@ export default {
 
         async uploadCarouselImages(context, form) {
             console.log('form', form)
-            await axios.post('http://localhost:3000/api/uploadCarouselImages', form, {
+            await axios.post(context.rootState.nodeHost + '/api/uploadCarouselImages', form, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -332,7 +332,7 @@ export default {
 
 
         async uploadBannerImages(context, form) {
-            await axios.post('http://localhost:3000/api/uploadBannerImages', form, {
+            await axios.post(context.rootState.nodeHost + '/api/uploadBannerImages', form, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -344,7 +344,7 @@ export default {
 
 
         async removeCarouselImage(context, { id, imgName }) {
-            await axios.post('http://localhost:3000/api/removeCarouselImage', {
+            await axios.post(context.rootState.nodeHost + '/api/removeCarouselImage', {
                 id, imgName
             }).then(response => {
                 console.log('remove img response', response)
@@ -355,7 +355,7 @@ export default {
 
 
         async removeBannerImage(context, { id, imgName }) {
-            await axios.post('http://localhost:3000/api/removeBannerImage', {
+            await axios.post(context.rootState.nodeHost + '/api/removeBannerImage', {
                 id, imgName
             }).then(response => {
                 console.log('remove img response', response)
@@ -363,14 +363,14 @@ export default {
         },
 
         addCategoryAndItemsToSupplier(context, { supplierItems, user_id, siteLanguage }) {
-            axios.post('http://localhost:3000/api/addCategoryAndItemsToSupplier', { supplierItems: supplierItems, user_id: user_id, siteLanguage: siteLanguage })
+            axios.post(context.rootState.nodeHost + '/api/addCategoryAndItemsToSupplier', { supplierItems: supplierItems, user_id: user_id, siteLanguage: siteLanguage })
                 .then(message => {
                     console.log(message.data.message)
                 })
         },
         // async getSupplierItems(context, user_id) {
         //     console.log('action entered')
-        //     await axios.put('http://localhost:3000/api/getSupplierItems', user_id)
+        //     await axios.put(context.rootState.nodeHost+'/api/getSupplierItems', user_id)
         //         .then(items => {
 
         //             context.commit('getSupplierItems', items.data.data)
@@ -378,7 +378,7 @@ export default {
         // },
         async getSupplierCategoriesAndItems(context, user_id) {
             console.log('proplem user_id', user_id)
-            await axios.put('http://localhost:3000/api/getSupplierCategoriesAndItems', { user_id: user_id })
+            await axios.put(context.rootState.nodeHost + '/api/getSupplierCategoriesAndItems', { user_id: user_id })
                 .then(data => {
                     console.log(data.data.message);
                     context.commit('getSupplierCategoriesAndItems', { data: data.data.data })

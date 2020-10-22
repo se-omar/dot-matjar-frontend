@@ -30,7 +30,7 @@ export default {
     actions: {
         async getTopSellingProduct(context, id) {
             await axios
-                .post("http://localhost:3000/api/topSellingProduct", {
+                .post(context.rootState.nodeHost + "/api/topSellingProduct", {
                     user_id: id
                 })
                 .then(response => {
@@ -41,7 +41,7 @@ export default {
 
         async getLeastSellingProduct(context, id) {
             await axios
-                .post("http://localhost:3000/api/leastSellingProduct", {
+                .post(context.rootState.nodeHost + "/api/leastSellingProduct", {
                     user_id: id
                 })
                 .then(response => {
@@ -51,7 +51,7 @@ export default {
         },
 
         async getMyProducts(context, id) {
-            await axios.post("http://localhost:3000/api/myProducts", {
+            await axios.post(context.rootState.nodeHost + "/api/myProducts", {
                 user_id: id
             }).then(response => {
                 console.log(response)
@@ -60,7 +60,7 @@ export default {
         },
 
         async getMonthlySales(context, id) {
-            await axios.post('http://localhost:3000/api/monthlySales', {
+            await axios.post(context.rootState.nodeHost + '/api/monthlySales', {
                 user_id: id
             }).then(response => {
                 context.commit('getMonthlySales', response.data)

@@ -19,7 +19,7 @@ export default {
 
     actions: {
         async login(context, { email, password }) {
-            await axios.post("http://localhost:3000/api/login",
+            await axios.post(context.rootState.nodeHost + "/api/login",
                 { email, password, })
                 .then((response) => {
                     if (response.data.message === 'please sign up first' || response.data.message === 'Please activate your account' || response.data.message === 'authentication failed') {
@@ -43,7 +43,7 @@ export default {
             governorate,
             region
         }) {
-            axios.post('http://localhost:3000/api/signup', {
+            axios.post(context.rootState.nodeHost + '/api/signup', {
                 email,
                 password,
                 full_arabic_name,
@@ -73,7 +73,7 @@ export default {
             region,
             store_name
         }) {
-            axios.post('http://localhost:3000/api/businessOwnerRegistration',
+            axios.post(context.rootState.nodeHost + '/api/businessOwnerRegistration',
                 {
                     email,
                     password,
@@ -89,8 +89,8 @@ export default {
                     context.commit('businessOwnerRegistration', res.data.mesasge)
                 })
         },
-        activateUserAccount() {
-            axios.put('http://localhost:3000/api/activateUserAccount')
+        activateUserAccount(context) {
+            axios.put(context.rootState.nodeHost + '/api/activateUserAccount')
                 .then(res => {
                     alert(res.data)
 

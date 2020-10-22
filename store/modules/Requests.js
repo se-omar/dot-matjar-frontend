@@ -41,7 +41,7 @@ export default {
 
     actions: {
         getRecievedRequests(context) {
-            axios.post("http://localhost:3000/api/recievedRequests", {
+            axios.post(context.rootState.nodeHost + "/api/recievedRequests", {
                 user_id: context.rootState.Home.currentUser.user_id
             })
                 .then(response => {
@@ -50,7 +50,7 @@ export default {
         },
 
         getSentRequests(context) {
-            axios.post("http://localhost:3000/api/sentRequests", {
+            axios.post(context.rootState.nodeHost + "/api/sentRequests", {
                 user_id: context.rootState.Home.currentUser.user_id
             })
                 .then(response => {
@@ -69,7 +69,7 @@ export default {
                 return
 
             }
-            axios.post('http://localhost:3000/api/sendRequest', {
+            axios.post(context.rootState.nodeHost + '/api/sendRequest', {
                 by_user_id: context.rootState.Home.currentUser.user_id,
                 to_user_id: context.rootState.ProductDetails.currentProduct.user_id,
                 request_details: requestDetails,
@@ -83,7 +83,7 @@ export default {
         },
 
         sendRequestResponse(context, responseDetails) {
-            axios.post('http://localhost:3000/api/sendRequestResponse', {
+            axios.post(context.rootState.nodeHost + '/api/sendRequestResponse', {
                 requests_id: context.state.currentRequest.requests_id,
                 request_response: responseDetails
             }).then(response => {
