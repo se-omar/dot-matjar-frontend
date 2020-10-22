@@ -30,7 +30,8 @@
     "priceFrom": "price from",
     "priceTo": "price to",
     "siteColors": "Site <br/> Colors",
-    "country": "Country"
+    "country": "Country",
+    "pendingSuppliers": "Pending<br/> Suppliers"
   },
   "homePage": {
     "loadMore": "load more",
@@ -156,7 +157,9 @@
     "region": "region",
     "storeName": "store name",
     "acceptRequest": "accept <br/> request",
-    "decline": "decline"
+    "decline": "decline",
+    "dialogAcceptDescription": "Sure you want to accept the request ?",
+    "dialogDeclineDescription": "Sure you want to reject the request  , this account will become a user"
   },
   "registerLogin": {
     "email": "email",

@@ -30,7 +30,8 @@
         "priceFrom": "السعر من",
         "priceTo": "السعر الي",
         "siteColors": "الوان <br/>الموقع",
-        "country": "بلد"
+        "country": "بلد",
+        "pendingSuppliers": "الموردين <br/>المعلقين"
     },
     "homePage": {
         "loadMore": "المزيد",
