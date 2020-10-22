@@ -6,7 +6,7 @@
       </v-row>
       <br />
       <v-row justify="center">
-        <p style="font-size: 30px">{{ $t("resetPassword.enterEmail") }}</p>
+        <p>{{ $t("resetPassword.enterEmail") }}</p>
       </v-row>
       <v-row justify="center">
         <v-col cols="7">
@@ -14,7 +14,8 @@
             :rules="emailRules"
             required
             v-model="email"
-            :label="$t('resetPassword.email')"
+            :placeholder="$t('resetPassword.email')"
+            class="arabic"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -27,10 +28,9 @@
             dense
             block
           >
-            <span
-              :style="`color:${siteColor.button_text_color};fontsize:18px`"
-              >{{ $t("resetPassword.send") }}</span
-            >
+            <span :style="`color:${siteColor.button_text_color}`">{{
+              $t("resetPassword.send")
+            }}</span>
           </v-btn>
         </v-col>
       </v-row>
@@ -121,5 +121,30 @@ export default {
   bottom: 0;
   width: 100%;
   /* height: 2.5rem;            */
+}
+@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+.smallerText {
+  font-size: 20px;
+}
+h2 {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+h3 {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
 }
 </style>

@@ -3,6 +3,7 @@
     <v-row justify="center" class="ml-8">
       <v-col lg="4" md="5" sm="10" cols="10" class="mt-4">
         <carousel
+          dir="ltr"
           style="max-height: 75%"
           :autoplay="true"
           :per-page="1"
@@ -576,3 +577,30 @@ export default {
   },
 };
 </script>
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+.smallerText {
+  font-size: 20px;
+}
+h2 {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+h3 {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+</style>

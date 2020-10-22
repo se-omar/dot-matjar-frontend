@@ -383,6 +383,14 @@ export default {
                     console.log(data.data.message);
                     context.commit('getSupplierCategoriesAndItems', { data: data.data.data })
                 })
+        },
+        //stpedd hereeeeeeeeee
+        rejectSupplierRequest(context, user_id) {
+            console.log(user_id)
+            axios.put('rejectSupplierRequest', user_id)
+                .then(message => {
+                    alert(message.data.message)
+                })
         }
 
     }

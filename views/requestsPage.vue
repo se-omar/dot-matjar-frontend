@@ -18,9 +18,7 @@
                   toggleRequestType();
                 "
               >
-                <span style="font-size: 25px">
-                  {{ $t("requestsPage.issuedRequests") }}</span
-                >
+                <span> {{ $t("requestsPage.issuedRequests") }}</span>
               </v-list-item>
               <br />
               <v-list-item
@@ -29,9 +27,7 @@
                   toggleRequestType();
                 "
               >
-                <span style="font-size: 25px">
-                  {{ $t("requestsPage.incomingRequests") }}</span
-                >
+                <span> {{ $t("requestsPage.incomingRequests") }}</span>
               </v-list-item>
             </v-list-item-group>
           </v-list>
@@ -150,6 +146,31 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+.smallerText {
+  font-size: 20px;
+}
+h2 {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+h3 {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
 .scrollable {
   height: 90vh;
   overflow-y: auto;

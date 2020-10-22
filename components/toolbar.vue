@@ -543,15 +543,32 @@
                 "
                 ><span
                   v-html="$t('toolbar.categoryRequests')"
-                  :style="`color: ${siteColor.button_text_color}`"
-                  class="smallerText"
+                  :style="`color: ${siteColor.button_text_color}; font-size:15px`"
                 >
                 </span
               ></v-btn>
               <!-- <v-divider class="mr-4"></v-divider> -->
             </v-col>
           </v-row>
-
+          <v-row justify="center" v-if="currentUser.user_type == 'admin'">
+            <v-col cols="12" sm="10" lg="5">
+              <v-btn
+                class="btn1"
+                :color="siteColor.button_color"
+                large
+                rounded
+                @click="$router.push(`/${$i18n.locale}/pendingSuppliers`)"
+              >
+                <span
+                  :style="`color: ${siteColor.button_text_color}`"
+                  class="mos smallerText"
+                  v-html="$t('toolbar.pendingSuppliers')"
+                >
+                </span>
+              </v-btn>
+              <!-- <v-divider class="mr-4"></v-divider> -->
+            </v-col>
+          </v-row>
           <v-row>
             <v-col cols="12">
               <v-card-text>

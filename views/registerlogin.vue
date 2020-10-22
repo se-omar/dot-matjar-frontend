@@ -3,19 +3,15 @@
     <v-app>
       <v-container class="mt-16" v-if="!currentUser" style="width: 60%">
         <div>
-          <v-tabs v-model="tab" show-arrows icons-and-text dark grow>
+          <v-tabs v-model="tab" show-arrows icons-and-text grow>
             <v-tabs-slider></v-tabs-slider>
-            <v-tab
-              :color="siteColor.toolbar_color"
-              v-for="i in tabs"
-              :key="i.name"
-            >
+            <v-tab v-for="i in tabs" :key="i.name">
               <v-icon large>{{ i.icon }}</v-icon>
               <div
                 :style="`color:${siteColor.toolbar_text_color}`"
                 class="caption py-1"
               >
-                {{ i.name }}
+                <span> {{ i.name }}</span>
               </div>
             </v-tab>
             <v-tab-item>
@@ -27,8 +23,9 @@
                         <v-text-field
                           v-model="loginEmail"
                           :rules="loginEmailRules"
-                          :label="$t('registerLogin.email')"
+                          :placeholder="$t('registerLogin.email')"
                           required
+                          class="arabic"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12">
@@ -38,9 +35,10 @@
                           :rules="[rules.required, rules.min]"
                           :type="show1 ? 'text' : 'password'"
                           name="input-10-1"
-                          :label="$t('registerLogin.password')"
+                          :placeholder="$t('registerLogin.password')"
                           :hint="$t('registerLogin.minCharacters')"
                           counter
+                          class="arabic"
                           @click:append="show1 = !show1"
                         ></v-text-field>
                       </v-col>
@@ -526,7 +524,34 @@ export default {
 };
 </script>
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+.smallerText {
+  font-size: 20px;
+}
+h2 {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+h3 {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
 #app {
   background-color: white;
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
 }
 </style>
