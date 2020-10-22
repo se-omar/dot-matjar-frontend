@@ -49,11 +49,6 @@ var routes = [
     },
     children: [
       {
-        path: 'cart',
-        name: "cart",
-        component: () => import('../views/cart'),
-      },
-      {
         path: '/',
         name: "home",
         component: () => import('../views/Home'),
