@@ -44,7 +44,7 @@
               :color="siteColor.button_color"
             >
               <span :style="`color:${siteColor.button_text_color}`">
-                <i class="fa fa-plus fa-2x"></i
+                <i class="fa fa-plus fa-2x mt-1"></i
               ></span>
             </v-btn>
           </v-row>
@@ -117,7 +117,16 @@ export default {
       return this.$store.state.Home.currentUser;
     },
     siteColor() {
-      return this.$store.state.Home.siteColor;
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor[0];
+      } else {
+        return {
+          button_text_color: "black",
+          button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
+        };
+      }
     },
   },
 
@@ -126,4 +135,61 @@ export default {
   },
 };
 </script>
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+.smallerText {
+  font-size: 20px;
+}
+
+.img {
+  border-radius: 50%;
+}
+.size {
+  font-size: 20px;
+  font-weight: bold;
+}
+.x {
+  margin-right: 20%;
+  font-weight: bold;
+}
+.username {
+  font-weight: bold;
+  font-size: 25px;
+  text-align: center;
+  color: black;
+}
+
+.mos {
+  color: beige;
+}
+#profilePhoto {
+  opacity: 0;
+  z-index: inherit;
+}
+#picture {
+  margin-right: 15%;
+  border-radius: 50%;
+  text-align: center;
+}
+#fileUpload {
+  text-align: center;
+}
+.font {
+  font-size: 14px;
+}
+</style>
+
 

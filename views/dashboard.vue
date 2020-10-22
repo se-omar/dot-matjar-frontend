@@ -12,7 +12,7 @@
     </div>
 
     <v-row justify="center">
-      <p style="font-size: 28px">{{ $t("dashboard.allProducts") }}</p>
+      <p>{{ $t("dashboard.allProducts") }}</p>
     </v-row>
 
     <v-row justify="center" v-if="myProducts.length != 0">
@@ -34,7 +34,7 @@
     </v-row>
 
     <v-row class="mt-16" justify="center" v-else>
-      <p style="font-size: 25px">{{ $t("dashboard.noAvailableProducts") }}</p>
+      <p>{{ $t("dashboard.noAvailableProducts") }}</p>
     </v-row>
 
     <v-divider class="mt- mb-10"></v-divider>
@@ -47,6 +47,7 @@
           outlined
           :items="years"
           :label="$t('dashboard.selectYear')"
+          class="arabic"
         ></v-select>
       </v-col>
     </v-row>
@@ -72,9 +73,7 @@
           </v-hover>
           <v-row justify="center">
             <v-label for="barChart">
-              <span style="font-size: 22px">{{
-                $t("dashboard.monthlySalesBar")
-              }}</span>
+              <span>{{ $t("dashboard.monthlySalesBar") }}</span>
             </v-label>
           </v-row>
         </div>
@@ -100,9 +99,7 @@
           </v-hover>
           <v-row justify="center">
             <v-label for="lineChart">
-              <span style="font-size: 22px">{{
-                $t("dashboard.monthlySalesLine")
-              }}</span>
+              <span>{{ $t("dashboard.monthlySalesLine") }}</span>
             </v-label>
           </v-row>
         </div>
@@ -129,9 +126,7 @@
           </v-hover>
           <v-row justify="center">
             <v-label for="pieChart">
-              <span style="font-size: 22px">{{
-                $t("dashboard.categoryChart")
-              }}</span>
+              <span>{{ $t("dashboard.categoryChart") }}</span>
             </v-label>
           </v-row>
         </div>
@@ -162,7 +157,7 @@
           </v-hover>
           <v-row justify="center">
             <v-label for="lineChart">
-              <span style="font-size: 22px"
+              <span
                 >{{ $t("dashboard.monthlyRevenue") }}:
                 {{
                   revenueChartSeries[0].data[
@@ -185,7 +180,7 @@
               :class="`elevation-${hover ? 5 : 3}`"
               class="grey lighten-5 mb-11"
             >
-              <span class="grey--text text--darken-1" style="font-size: 20px"
+              <span class="grey--text text--darken-1"
                 >{{ $t("dashboard.totalRevenue") }}:
                 {{ currentUser.total_revenue }} EGP</span
               >
@@ -219,7 +214,7 @@
               :class="`elevation-${hover ? 5 : 3}`"
               class="grey lighten-5 mb-11"
             >
-              <span class="grey--text text--darken-1" style="font-size: 20px"
+              <span class="grey--text text--darken-1"
                 >{{ $t("dashboard.amountLeft") }}:
                 {{
                   currentUser.total_revenue - currentUser.revenue_recieved || 0
@@ -243,9 +238,7 @@
         />
         <v-row justify="center">
           <v-label for="mostSelling">
-            <span style="font-size: 22px">{{
-              $t("dashboard.mostSellingProduct")
-            }}</span>
+            <span>{{ $t("dashboard.mostSellingProduct") }}</span>
           </v-label>
         </v-row>
       </v-col>
@@ -257,9 +250,7 @@
         />
         <v-row justify="center">
           <v-label for="leastSelling">
-            <span style="font-size: 22px">{{
-              $t("dashboard.leastSellingProduct")
-            }}</span>
+            <span>{{ $t("dashboard.leastSellingProduct") }}</span>
           </v-label>
         </v-row>
       </v-col>
@@ -525,3 +516,26 @@ export default {
   },
 };
 </script>
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+.smallerText {
+  font-size: 20px;
+}
+div {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+</style>

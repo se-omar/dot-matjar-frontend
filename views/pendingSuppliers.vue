@@ -2,9 +2,9 @@
   <v-app>
     <v-container>
       <v-card>
-        <v-toolbar shaped>
+        <v-toolbar :color="siteColor.toolbar_color" shaped>
           <v-row justify="center">
-            <p style="font-size: 35px">
+            <p :style="`color:${siteColor.toolbar_text_color};font-size: 35px`">
               {{ $t("pendingSuppliers.pendingSupplier") }}
             </p>
           </v-row>
@@ -128,24 +128,30 @@
           <v-dialog v-model="dialogAccept" persistent max-width="290">
             <v-card>
               <v-card-title class="headline">
-                {{ $t("updateSupplierPage.dialogApprovalQuestion") }}
+                <span>
+                  {{ $t("updateSupplierPage.dialogApprovalQuestion") }}</span
+                >
               </v-card-title>
               <v-card-text>
-                {{
-                  $t("pendingSuppliers.dialogAcceptDescription")
-                }}</v-card-text
+                <span>
+                  {{ $t("pendingSuppliers.dialogAcceptDescription") }}</span
+                ></v-card-text
               >
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="red" text @click="dialogAccept = false">
-                  {{ $t("updateSupplierPage.dialogDisApprovalButton") }}
+                  <span>
+                    {{ $t("updateSupplierPage.dialogDisApprovalButton") }}</span
+                  >
                 </v-btn>
                 <v-btn
                   @click="acceptSupplierRequest(supplier.user_id)"
                   text
                   :color="siteColor.button_color"
                 >
-                  {{ $t("updateSupplierPage.dialogApprovalButton") }}
+                  <span>
+                    {{ $t("updateSupplierPage.dialogApprovalButton") }}
+                  </span>
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -153,24 +159,30 @@
           <v-dialog v-model="dialogDecline" persistent max-width="290">
             <v-card>
               <v-card-title class="headline">
-                {{ $t("updateSupplierPage.dialogApprovalQuestion") }}
+                <span>
+                  {{ $t("updateSupplierPage.dialogApprovalQuestion") }}
+                </span>
               </v-card-title>
               <v-card-text>
-                {{
-                  $t("pendingSuppliers.dialogDeclineDescription")
-                }}</v-card-text
+                <span>
+                  {{ $t("pendingSuppliers.dialogDeclineDescription") }}</span
+                ></v-card-text
               >
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="red" text @click="dialogDecline = false">
-                  {{ $t("updateSupplierPage.dialogDisApprovalButton") }}
+                  <span>
+                    {{ $t("updateSupplierPage.dialogDisApprovalButton") }}</span
+                  >
                 </v-btn>
                 <v-btn
                   @click="rejectSupplierRequest(supplier.user_id)"
                   text
                   :color="siteColor.button_color"
                 >
-                  {{ $t("updateSupplierPage.dialogApprovalButton") }}
+                  <span>
+                    {{ $t("updateSupplierPage.dialogApprovalButton") }}</span
+                  >
                 </v-btn>
               </v-card-actions>
             </v-card>

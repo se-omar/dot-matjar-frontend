@@ -39,7 +39,7 @@
       <v-row justify="start">
         <v-col v-if="!$route.params.supplier_id" cols="12" lg="6" sm="7" md="6">
           <v-text-field
-            class="mt-8"
+            class="mt-8 arabic"
             outlined
             rounded
             :placeholder="$t('toolbar.search')"
@@ -275,11 +275,9 @@
                   :color="siteColor.button_color"
                   rounded
                   x-large
-                  ><span
-                    class="arabic"
-                    :style="`color: ${siteColor.button_text_color}`"
-                    >{{ $t("toolbar.search") }}</span
-                  ></v-btn
+                  ><span :style="`color: ${siteColor.button_text_color}`">{{
+                    $t("toolbar.search")
+                  }}</span></v-btn
                 >
               </v-col>
               <v-col v-else cols="4" sm="2" md="2" lg="2">
@@ -893,6 +891,8 @@ export default {
         return {
           button_text_color: "black",
           button_color: "white",
+          toolbar_color:'white',
+          toolbar_text_color:'black'
         };
       }
     },
@@ -924,7 +924,7 @@ export default {
     products() {
       return this.$store.state.Home.products;
     },
-     siteLanguage() {
+    siteLanguage() {
       return this.$store.state.Home.siteLanguage;
     },
   },

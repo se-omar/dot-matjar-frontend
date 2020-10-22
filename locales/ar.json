@@ -134,8 +134,13 @@
         "facebook": "فيسبوك",
         "website": "الموقع الالكتروني",
         "address": "العنوان",
-        "save": "حفظ",
-        "cancel": "العاء"
+        "save": "تحديث",
+        "cancel": "الغاء",
+        "linkedin": "لينكيد ان",
+        "userType": "نوع العميل",
+        "removeUserAccount": "إزالة حساب المستخدم",
+        "dialogQuestion": "هل أنت واثق ؟",
+        "dialogDescription": "سيتم حذف حساب المستخدم هذا نهائيا ..!"
     },
     "editPassword": {
         "changePassword": "تغيير كلمة السر",
@@ -157,7 +162,9 @@
         "region": "المنطقة",
         "storeName": "اسم المتجر",
         "acceptRequest": "قبول <br/> الطلب",
-        "decline": "رفض"
+        "decline": "رفض",
+        "dialogAcceptDescription": "هل أنت متأكد أنك تريد قبول الطلب؟",
+        "dialogDeclineDescription": "!! تأكد من أنك تريد رفض الطلب ، سيتم حذف هذا الحساب "
     },
     "registerLogin": {
         "email": "البريد الالكتروني",
@@ -433,5 +440,10 @@
     },
     "userOrders": {
         "showProducts": "عرض<br/> المنتجات"
+    },
+    "allUsers": {
+        "searchUserByName": "بحث المستخدم بلاسم",
+        "search": "بحث",
+        "loadmore": " تحميل المزيد"
     }
 }

@@ -112,6 +112,11 @@ export default {
       if (this.$route.name == "adminPage") {
         localStorage.setItem("clickedSupplier", JSON.stringify(supplier));
         this.$router.push(`/${this.$i18n.locale}/suppliersDashboard`);
+      }
+      if (this.$route.name == "allUsers") {
+        this.$router.push(
+          `/${this.$i18n.locale}/updateUserData/` + supplier.user_id
+        );
       } else {
         this.$store.commit("supplierPage", supplier);
         this.$router.push(

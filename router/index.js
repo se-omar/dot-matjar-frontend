@@ -206,6 +206,16 @@ var routes = [
         component: () => import('../views/supplierDetails'),
       },
       {
+        path: 'updateUserData/:user_id',
+        name: 'updateUserData',
+        component: () => import('../views/updateUserData'),
+      },
+      {
+        path: 'allUsers',
+        name: 'allUsers',
+        component: () => import('../views/allUsers'),
+      },
+      {
         path: '*',
         component: () => import('../views/notFound'),
       },

@@ -23,7 +23,9 @@ export default {
         siteLanguage: localStorage.getItem('language'),
         availableCountries: '',
         worldCountries: [],
-        choosenCountries: []
+        choosenCountries: [],
+        allUsers: [],
+        user: []
     },
 
     mutations: {
@@ -211,6 +213,15 @@ export default {
             state.choosenCountries = countries.map(e => {
                 return e.country_name
             })
+        },
+        getAllUsers(state, users) {
+
+            state.allUsers.push(...users)
+            console.log(state.allUsers)
+        },
+        getUser(state, user) {
+
+            state.user = user
         }
 
     },
@@ -284,7 +295,7 @@ export default {
                 axios.post('http://localhost:3000/api/getSuppliers', {
                     user_id: context.state.suppliers.length > 0 ? context.state.suppliers[context.state.suppliers.length - 1].user_id : null
                 }).then(response => {
-                    //console.log(response.data.users)
+                    console.log('suppliersssssss', response.data.users)
                     context.commit('getSuppliers', response.data.users)
                 })
             }
@@ -614,7 +625,83 @@ export default {
         removeCountry(context, country) {
             axios.put('http://localhost:3000/api/removeCountry', { country: country })
                 .then(res => { alert(res.data.message) })
+        },
+        getAllUsers(context) {
+            var id = context.state.allUsers.length > 0 ? context.state.allUsers[context.state.allUsers.length - 1].user_id : null
+            console.log('loadmore', id)
+            axios.put("http://localhost:3000/api/getAllUsers", { user_id: context.state.allUsers.length > 0 ? context.state.allUsers[context.state.allUsers.length - 1].user_id : null })
+                .then(users => {
+                    console.log(users.data.data)
+                    context.commit('getAllUsers', users.data.data)
+                })
+        },
+        getUser(context, user_id) {
+            axios.put("http://localhost:3000/api/getUser", { user_id })
+                .then(user => {
+
+                    console.log('user iss', user.data.data)
+                    context.commit('getUser', user.data.data)
+                })
+
+        },
+        updateUserInfo(context, {
+            national_number,
+            gender,
+            full_arabic_name,
+            full_english_name,
+            birthdate,
+            qualifications,
+            job,
+            governorate,
+
+            region,
+            center,
+            phone_number,
+            mobile_number,
+            fax,
+            facebook_account,
+            linkedin,
+            website,
+            address,
+            email,
+            user_id,
+            user_type
+        }) {
+            axios.put('http://localhost:3000/api/updateUserInfoFromAdmin', {
+                national_number,
+                gender,
+                full_arabic_name,
+                full_english_name,
+                birthdate,
+                qualifications,
+                job,
+                governorate,
+
+                region,
+                center,
+                phone_number,
+                mobile_number,
+                fax,
+                facebook_account,
+                linkedin,
+                website,
+                address,
+                email,
+                user_id,
+                user_type
+            })
+                .then(message => {
+                    alert(message.data.message)
+                })
+        },
+        deleteUser(context, user_id) {
+            console.log(user_id)
+            axios.put('http://localhost:3000/api/deleteUser', { user_id: user_id })
+                .then(message => {
+                    alert(message.data.message)
+                })
         }
+
 
 
     },

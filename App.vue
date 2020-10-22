@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="app">
     <ToolBar class="mb-6"></ToolBar>
     <cartTable></cartTable>
     <router-view class="grey lighten-4 mt-10" />

@@ -11,7 +11,8 @@
                 required
                 outlined
                 :rules="Rules"
-                :label="$t('editProduct.productName')"
+                class="arabic"
+                :placeholder="$t('editProduct.productName')"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -23,17 +24,19 @@
                 v-model="currentProduct.product_code"
                 dense
                 outlined
-                :label="$t('editProduct.code')"
+                class="arabic"
+                :placeholder="$t('editProduct.code')"
               ></v-text-field>
             </v-col>
 
             <v-col cols="6">
               <v-text-field
+                class="arabic"
                 dense
                 v-model="currentProduct.HS_code"
                 :rules="Rules"
                 outlined
-                :label="$t('editProduct.hsCode')"
+                :placeholder="$t('editProduct.hsCode')"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -45,7 +48,8 @@
                 dense
                 v-model="currentProduct.unit_price"
                 outlined
-                :label="$t('editProduct.price')"
+                class="arabic"
+                :placeholder="$t('editProduct.price')"
               ></v-text-field>
             </v-col>
 
@@ -64,7 +68,8 @@
                 v-model="currentProduct.min_units_per_order"
                 :rules="Rules"
                 outlined
-                :label="$t('editProduct.minOrders')"
+                :placeholder="$t('editProduct.minOrders')"
+                class="arabic"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -75,7 +80,8 @@
                 v-model="currentProduct.color"
                 dense
                 outlined
-                :label="$t('editProduct.color')"
+                :placeholder="$t('editProduct.color')"
+                class="arabic"
               ></v-text-field>
             </v-col>
 
@@ -84,7 +90,8 @@
                 currentProduct.discount_amount
                 dense
                 outlined
-                :label="$t('editProduct.sale')"
+                :placeholder="$t('editProduct.sale')"
+                class="arabic"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -96,7 +103,8 @@
                 :rules="Rules"
                 dense
                 outlined
-                :label="$t('editProduct.description')"
+                :placeholder="$t('editProduct.description')"
+                class="arabic"
               ></v-textarea>
             </v-col>
           </v-row>
@@ -153,9 +161,7 @@
                 block
                 class="red white--text"
               >
-                <span style="font-size: 18px">{{
-                  $t("editProduct.cancel")
-                }}</span>
+                <span>{{ $t("editProduct.cancel") }}</span>
               </v-btn>
             </v-col>
           </v-row>
@@ -263,5 +269,23 @@ export default {
   },
 };
 </script>
-
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+.smallerText {
+  font-size: 20px;
+}
+</style>
 

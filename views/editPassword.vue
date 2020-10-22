@@ -8,7 +8,7 @@
       <v-row justify="center">
         <v-col cols="6">
           <v-text-field
-            :label="$t('editPassword.currentPassword')"
+            :placeholder="$t('editPassword.currentPassword')"
             v-model="password"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min, rules.valid]"
@@ -17,6 +17,7 @@
             :hint="$t('editPassword.minCharacters')"
             counter
             @click:append="show1 = !show1"
+            class="arabic"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -24,7 +25,7 @@
       <v-row justify="center">
         <v-col cols="6">
           <v-text-field
-            :label="$t('editPassword.newPassword')"
+            :placeholder="$t('editPassword.newPassword')"
             v-model="newPassword"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, rules.min, rules.valid]"
@@ -33,6 +34,7 @@
             :hint="$t('editPassword.minCharacters')"
             counter
             @click:append="show1 = !show1"
+            class="arabic"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -40,7 +42,7 @@
       <v-row justify="center">
         <v-col cols="6">
           <v-text-field
-            :label="$t('editPassword.confirmPassword')"
+            :placeholder="$t('editPassword.confirmPassword')"
             v-model="repeatPassword"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[rules.required, passwordMatch]"
@@ -48,6 +50,7 @@
             name="input-10-1"
             counter
             @click:append="show1 = !show1"
+            class="arabic"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -152,3 +155,22 @@ export default {
   },
 };
 </script>
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+.smallerText {
+  font-size: 20px;
+}
+</style>

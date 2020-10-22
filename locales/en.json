@@ -135,8 +135,13 @@
     "facebook": "facebook",
     "website": "website",
     "address": "address",
-    "save": "save",
-    "cancel": "cancel"
+    "save": "Update",
+    "cancel": "cancel",
+    "linkedin": "Linkedin",
+    "userType": "User Type",
+    "removeUserAccount": "Remove User Account",
+    "dialogQuestion": "Are you Sure ?",
+    "dialogDescription": "This user account will be deleted Permanently..!"
   },
   "editPassword": {
     "changePassword": "change password",
@@ -160,7 +165,7 @@
     "acceptRequest": "accept <br/> request",
     "decline": "decline",
     "dialogAcceptDescription": "Sure you want to accept the request ?",
-    "dialogDeclineDescription": "Sure you want to reject the request  , this account will become a user"
+    "dialogDeclineDescription": "Sure you want to reject the request  ,This account will be Removed!!"
   },
   "registerLogin": {
     "email": "email",
@@ -437,5 +442,10 @@
   },
   "userOrders": {
     "showProducts": "Show<br/> Products"
+  },
+  "allUsers": {
+    "searchUserByName": "Search User By Name",
+    "search": "Search",
+    "loadmore": "Load More"
   }
 }

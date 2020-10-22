@@ -2,6 +2,18 @@
   <div id="app">
     <v-form>
       <v-container>
+        <v-row justify="center">
+          <v-col cols="6">
+            <v-select
+              :placeholder="$t('completedata.userType')"
+              rounded
+              outlined
+              :items="userTypes"
+              v-model="userType"
+            >
+            </v-select>
+          </v-col>
+        </v-row>
         <v-row>
           <v-col cols="12" sm="6">
             <v-col cols="12">
@@ -102,7 +114,7 @@
           </v-col>
           <v-col cols="12" sm="6">
             <v-text-field
-              v-model="phoneNumber"
+              v-model="mobileNumber"
               :placeholder="$t('completedata.mobileNumber')"
               outlined
               class="arabic"
@@ -110,10 +122,9 @@
           </v-col>
           <v-col cols="12" sm="6">
             <v-text-field
-              v-model="mobileNumber"
+              v-model="phoneNumber"
               :placeholder="$t('completedata.telephoneNumber')"
               outlined
-              :rules="[rules.numbers]"
               class="arabic"
             ></v-text-field>
           </v-col>
@@ -131,7 +142,6 @@
               :placeholder="$t('completedata.email')"
               filled
               outlined
-              disabled
               class="arabic"
             ></v-text-field>
           </v-col>
@@ -182,7 +192,7 @@
               x-large
               block
               :color="siteColor.button_color"
-              @click="completedata"
+              @click="updateUserInfo"
               ><span :style="`color:${siteColor.button_text_color}`">{{
                 $t("completedata.save")
               }}</span></v-btn
@@ -198,17 +208,48 @@
             >
           </v-col>
         </v-row>
+        <v-row justify="center">
+          <v-btn class="red white--text" @click="dialog = true">
+            <span>{{ $t("completedata.removeUserAccount") }}</span>
+          </v-btn>
+        </v-row>
+        <v-dialog v-model="dialog" max-width="400">
+          <v-card>
+            <v-card-title class="headline">{{
+              $t("completedata.dialogQuestion")
+            }}</v-card-title>
+
+            <v-card-text>{{
+              $t("completedata.dialogDescription")
+            }}</v-card-text>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+
+              <v-btn color="red" text @click="dialog = false"
+                ><span>{{
+                  $t("updateSupplierPage.dialogDisApprovalButton")
+                }}</span></v-btn
+              >
+
+              <v-btn text color="green" @click="deleteUser"
+                ><span>{{
+                  $t("updateSupplierPage.dialogApprovalButton")
+                }}</span></v-btn
+              >
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-container>
     </v-form>
   </div>
 </template>
 <script>
 export default {
-  name: "completedata",
   components: {},
   methods: {
-    completedata() {
-      this.$store.dispatch("completedata", {
+    updateUserInfo() {
+      this.$store.dispatch("updateUserInfo", {
         national_number: this.nationalNumber,
         gender: this.gender,
         full_arabic_name: this.fullArabicName,
@@ -217,7 +258,8 @@ export default {
         qualifications: this.qualifications,
         job: this.job,
         governorate: this.governorate,
-        village: this.village,
+
+        region: this.region,
         center: this.center,
         phone_number: this.phoneNumber,
         mobile_number: this.mobileNumber,
@@ -227,34 +269,48 @@ export default {
         website: this.website,
         address: this.address,
         email: this.email,
+        user_id: this.$route.params.user_id,
+        user_type: this.userType,
       });
+      this.dialog = false;
+      this.$router.push(`/${this.$i18n.locale}/allUsers`);
     },
     getCountryRegions() {
       console.log(this.governorate);
       this.$store.dispatch("getRegions", this.governorate);
     },
+    deleteUser() {
+      console.log(this.$route.params.user_id);
+      this.$store.dispatch("deleteUser", this.$route.params.user_id);
+      this.dialog = false;
+      this.$router.push(`/${this.$i18n.locale}/allUsers`);
+    },
   },
   async created() {
-    await this.$store.dispatch("refreshCurrentUser");
-    this.$store.dispatch("getGovernorate");
-    this.nationalNumber = this.currentUser.national_number;
-    this.fullArabicName = this.currentUser.full_arabic_name;
-    this.email = this.currentUser.email;
-    this.gender = this.currentUser.gender;
-    this.fullEnglishName = this.currentUser.fullEnglishName;
-    this.birthDate = this.currentUser.birthDate;
-    this.qualifications = this.currentUser.qualifications;
-    this.job = this.currentUser.job;
-    this.governorate = this.currentUser.governorate;
-    this.region = this.currentUser.region;
-    this.phoneNumber = this.currentUser.phoneNumber;
-    this.mobileNumber = this.currentUser.mobileNumber;
-    this.fax = this.currentUser.fax;
-    this.facebookAccount = this.currentUser.facebookAccount;
-    this.linkedin = this.currentUser.linkedin;
-    this.website = this.currentUser.website;
-    this.address = this.currentUser.address;
-    console.log("current user ", this.currentUser);
+    await this.$store.dispatch("getUser", this.$route.params.user_id);
+    await this.$store.dispatch("getGovernorate");
+    setTimeout(() => {
+      this.nationalNumber = this.currentUser.national_number;
+      this.fullArabicName = this.currentUser.full_arabic_name;
+      this.email = this.currentUser.email;
+      this.gender = this.currentUser.gender;
+      this.fullEnglishName = this.currentUser.fullEnglishName;
+      this.birthDate = this.currentUser.birthdate;
+      this.qualifications = this.currentUser.qualifications;
+      this.job = this.currentUser.job;
+      this.governorate = this.currentUser.governorate;
+      this.region = this.currentUser.region;
+      this.phoneNumber = this.currentUser.phone_number;
+      this.mobileNumber = this.currentUser.mobile_number;
+      this.fax = this.currentUser.fax;
+      this.facebookAccount = this.currentUser.facebook_account;
+      this.linkedin = this.currentUser.linkedin;
+      this.website = this.currentUser.website;
+      this.address = this.currentUser.address;
+      this.userType = this.currentUser.user_type;
+    }, 500);
+
+    console.log("current user in update user data ", this.currentUser);
   },
   data: () => ({
     rules: {
@@ -317,10 +373,13 @@ export default {
       "المنيا",
       "الوادي الجديد",
     ],
+    userTypes: ["admin", "business", "user"],
+    userType: "",
+    dialog: false,
   }),
   computed: {
     currentUser() {
-      return this.$store.state.Home.currentUser;
+      return this.$store.state.Home.user;
     },
     governorates() {
       return this.$store.state.Home.governorates;

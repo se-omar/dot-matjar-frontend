@@ -2,7 +2,7 @@
   <v-app class="grey lighten-4">
     <v-row justify="center">
       <v-col cols="12" lg="4" class="mt-8">
-        <h1>{{ $t("orderedProducts.productsPlaced") }}</h1>
+        <p>{{ $t("orderedProducts.productsPlaced") }}</p>
       </v-col>
       <!-- <product :filteredProduct="filteredProduct"></product> -->
 
@@ -11,15 +11,14 @@
           <v-row>
             <v-col cols="12" lg="6">
               <v-toolbar shaped dark dense :color="siteColor.toolbar_color">
-                <v-spacer></v-spacer>
-                <v-toolbar-title>
-                  <p class="text-h4 mt-4">
-                    <span :style="`color:${siteColor.toolbar_text_color}`">{{
-                      $t("orderedProducts.users")
-                    }}</span>
-                  </p>
-                </v-toolbar-title>
-                <v-spacer></v-spacer>
+                <v-row justify="center">
+                  <span
+                    :style="`color:${siteColor.toolbar_text_color}`"
+                    class="mt-4"
+                  >
+                    {{ $t("orderedProducts.users") }}
+                  </span>
+                </v-row>
               </v-toolbar>
               <v-data-table
                 @click:row="showProducts"
@@ -333,9 +332,38 @@ export default {
         return {
           button_text_color: "black",
           button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
         };
       }
     },
   },
 };
 </script>
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+.smallerText {
+  font-size: 20px;
+}
+h2 {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+h3 {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+</style>

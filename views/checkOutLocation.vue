@@ -4,7 +4,7 @@
       <v-form v-model="valid">
         <v-container>
           <v-row justify="center" class="mt-16">
-            <h1>{{ $t("checkoutLocation.productsDelivered") }}</h1>
+            <p>{{ $t("checkoutLocation.productsDelivered") }}</p>
           </v-row>
           <v-row>
             <v-col lg="6" sm="6">
@@ -16,6 +16,7 @@
                 outlined
                 v-model="governorate"
                 @change="getCountryRegions()"
+                class="arabic"
               ></v-select>
             </v-col>
             <v-col lg="6" sm="6">
@@ -26,14 +27,16 @@
                 dense
                 outlined
                 v-model="region"
+                class="arabic"
               ></v-select>
             </v-col>
             <v-col cols="12" lg="12">
               <v-textarea
                 outlined
                 color="teal"
-                :label="$t('checkoutLocation.address')"
+                :placeholder="$t('checkoutLocation.address')"
                 v-model="address"
+                class="arabic"
               ></v-textarea>
             </v-col>
           </v-row>
@@ -66,7 +69,7 @@
                     text
                     v-bind="attrs"
                     @click="snackbar = false"
-                    >{{ $t("checkoutLocation.close") }}</v-btn
+                    ><span>{{ $t("checkoutLocation.close") }}</span></v-btn
                   >
                 </template>
               </v-snackbar>
@@ -204,3 +207,26 @@ export default {
   },
 };
 </script>
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+.smallerText {
+  font-size: 20px;
+}
+div {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+</style>
