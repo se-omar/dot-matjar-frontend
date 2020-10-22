@@ -170,7 +170,12 @@
       </v-col>
       <!-- category -->
 
-      <v-col lg="8" md="4" sm="6" cols="6">
+      <v-col
+        :lg="supplierPageInfo.show_right_banner ? 8 : 10"
+        sm="6"
+        :md="supplierPageInfo.show_right_banner ? 8 : 10"
+        cols="6"
+      >
         <v-row justify="center">
           <v-btn :color="siteColor.button_color" @click="getAllProducts">
             <span :style="`color:${siteColor.button_text_color}`">{{
@@ -180,11 +185,14 @@
         </v-row>
         <v-row>
           <v-col
-            lg="3"
+            :class="supplierPageInfo.show_right_banner ? '' : productsClass"
+            :lg="supplierPageInfo.show_right_banner ? 3 : 2"
+            :md="supplierPageInfo.show_right_banner ? 4 : 3"
             v-for="supplierProduct in supplierProducts"
             :key="supplierProduct.product_id"
           >
             <product
+              :minWidth="supplierPageInfo.show_right_banner ? '104%' : '120%'"
               :addToCartButton="false"
               :filteredProduct="supplierProduct"
             ></product>
@@ -197,7 +205,6 @@
           supplierPageInfo.show_right_banner &&
           supplierPageInfo.right_banner_image
         "
-        style="max-width: 12%"
       >
         <v-card height="95%">
           <v-img :src="nodeHost + supplierPageInfo.right_banner_image"></v-img>
@@ -233,6 +240,7 @@ export default {
     ],
     supplierProductsSearch: "",
     categoryItems: [],
+    productsClass: "mr-4 ml-4",
   }),
   computed: {
     currentUser() {

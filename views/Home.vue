@@ -440,7 +440,7 @@
             <product
               class="ml-n2 mr-n2"
               :currentUser="currentUser"
-              :show_right_banner="homePageInfo.show_right_banner"
+              :minWidth="homePageInfo.show_right_banner ? '100%' : '110%'"
               :filteredProduct="filteredProduct"
             ></product>
           </v-col>

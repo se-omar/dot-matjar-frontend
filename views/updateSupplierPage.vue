@@ -974,22 +974,26 @@ export default {
       var carouselformdata = new FormData();
       var bannerformdata = new FormData();
 
-      var carouselImages = [
-        this.carouselImage1,
-        this.carouselImage2,
-        this.carouselImage3,
-        this.carouselImage4,
-      ];
+      // var carouselImages = [
+      //   this.carouselImage1,
+      //   this.carouselImage2,
+      //   this.carouselImage3,
+      //   this.carouselImage4,
+      // ];
       bannerformdata.set("supplier_id", this.supplier.user_id);
       if (this.leftImage) bannerformdata.append("file", this.leftImage, "left");
       if (this.rightImage)
         bannerformdata.append("file", this.rightImage, "right");
 
       carouselformdata.set("supplier_id", this.supplier.user_id);
-      carouselImages.forEach((element) => {
-        console.log(element);
-        carouselformdata.append("file", element ? element : "empty");
-      });
+      carouselformdata.set("file", this.carouselImage1, "carousel_image_1");
+      carouselformdata.set("file", this.carouselImage2, "carousel_image_2");
+      carouselformdata.set("file", this.carouselImage3, "carousel_image_3");
+      carouselformdata.set("file", this.carouselImage4, "carousel_image_4");
+      // carouselImages.forEach((element) => {
+      //   console.log(JSON.stringify(element));
+      //   carouselformdata.append("file", element ? element : "empty");
+      // });
 
       formdata.append("file", this.logo);
       formdata.set("siteName", this.siteName);
@@ -1024,6 +1028,7 @@ export default {
       // );
     },
     setCarouselImage1(image) {
+      console.log(JSON.stringify(image));
       this.carouselImage1 = image;
       this.carouselViewImg1 = URL.createObjectURL(image);
       console.log(this.testImg);
@@ -1261,7 +1266,7 @@ export default {
     },
   },
   async created() {
-    this.isLoading = true;
+    // this.isLoading = true;
     await this.$store.dispatch("refreshCurrentUser");
     await this.$store.dispatch("getSupplier", this.currentUser.user_id);
     await this.$store.dispatch("getSupplierPageData", this.currentUser.user_id);

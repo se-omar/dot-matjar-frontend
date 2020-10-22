@@ -924,6 +924,9 @@ export default {
     products() {
       return this.$store.state.Home.products;
     },
+     siteLanguage() {
+      return this.$store.state.Home.siteLanguage;
+    },
   },
 
   methods: {

@@ -17,14 +17,16 @@
 
     <v-row justify="center" v-if="myProducts.length != 0">
       <v-col
+        class="mr-4 ml-4"
         lg="2"
         md="4"
         sm="6"
         cols="6"
-        v-for="myProduct in myProducts.slice(0, 5)"
+        v-for="myProduct in myProducts"
         :key="myProduct.id"
       >
         <product
+          minWidth="115%"
           :addToCartButton="false"
           :filteredProduct="myProduct"
         ></product>
@@ -247,7 +249,6 @@
           </v-label>
         </v-row>
       </v-col>
-
       <v-col lg="4">
         <dashboard-selling-product
           class="mb-5"

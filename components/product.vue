@@ -1,10 +1,6 @@
 <template>
   <div>
-    <v-card
-      class="grey lighten-5"
-      :elevation="7"
-      :min-width="show_right_banner == 1 ? '100%' : '110%'"
-    >
+    <v-card class="grey lighten-5" :elevation="7" :min-width="minWidth">
       <v-img height="250" :src="filteredProduct.main_picture"></v-img>
 
       <v-row class="mt-n5">
@@ -120,9 +116,10 @@ export default {
       type: Object,
       default: () => {},
     },
-    show_right_banner: {
-      type: Number,
-      default: () => {},
+
+    minWidth: {
+      type: String,
+      default: () => "100%",
     },
   },
 

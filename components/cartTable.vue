@@ -223,32 +223,7 @@ export default {
       dialog: false,
 
       counter: 0,
-      products: [
-        {
-          id: 1,
 
-          name: "car1",
-          price: 1,
-          quantaty: 1,
-          cart: false,
-        },
-        {
-          id: 2,
-
-          name: "car2",
-          price: 2,
-          quantaty: 1,
-          cart: false,
-        },
-        {
-          id: 3,
-
-          name: "car3",
-          price: 3,
-          quantaty: 1,
-          cart: false,
-        },
-      ],
       cart: [],
       headers: [
         { text: "Remove", value: "remove" },
