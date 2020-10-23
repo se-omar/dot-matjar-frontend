@@ -37,7 +37,14 @@
       </v-row>
       <!-- <v-spacer></v-spacer> -->
       <v-row justify="start">
-        <v-col v-if="!$route.params.supplier_id" cols="12" lg="6" sm="7" md="6">
+        <v-col
+          v-if="!$route.params.supplier_id"
+          cols="12"
+          lg="6"
+          sm="7"
+          md="6"
+          xs="7"
+        >
           <v-text-field
             class="mt-8 arabic"
             outlined
@@ -891,8 +898,8 @@ export default {
         return {
           button_text_color: "black",
           button_color: "white",
-          toolbar_color:'white',
-          toolbar_text_color:'black'
+          toolbar_color: "white",
+          toolbar_text_color: "black",
         };
       }
     },

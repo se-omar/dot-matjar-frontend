@@ -208,7 +208,12 @@ var routes = [
       {
         path: 'allUsers',
         name: 'allUsers',
+
         component: () => import('../views/allUsers'),
+
+      },
+
+      {
         path: 'addUser',
         name: 'addUser',
         component: () => import('../views/addUser'),
