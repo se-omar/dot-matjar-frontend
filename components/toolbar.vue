@@ -9,7 +9,7 @@
     </div> -->
     <v-app-bar fixed :color="siteColor.toolbar_color" shaped>
       <v-row justify="start">
-        <v-col cols="12">
+        <v-col cols="12" lg="12">
           <span v-if="!supplierPageInfo.logo">
             <a @click="$router.push('/').catch(() => {})">
               <v-img
