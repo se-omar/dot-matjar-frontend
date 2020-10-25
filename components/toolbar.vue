@@ -76,11 +76,11 @@
         </span> -->
         <v-col cols="12" md="3" lg="3" sm="5">
           <v-btn
-            class="mt-10 mr-1 blue white--text"
+            class="mt-10 ml-n3 blue white--text"
             rounded
             @click="advancedSearch = true"
             ><span
-              class="smallerText"
+              style="font-size: 16px"
               v-if="siteLanguage == 'en'"
               v-html="$t('toolbar.advancedSearch')"
             ></span>
