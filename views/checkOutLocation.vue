@@ -128,16 +128,19 @@ export default {
     },
     siteColor() {
       if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor[0];
+        return this.$store.state.Home.siteColor;
       } else {
         return {
           button_text_color: "black",
           button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
         };
       }
     },
   },
   async created() {
+    await this.$store.dispatch("getSiteColor");
     await this.$store.dispatch("refreshCurrentUser");
     this.$store.dispatch("getGovernorate");
     this.address = this.currentUser.address;

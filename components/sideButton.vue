@@ -67,7 +67,12 @@ id="input"
           </span>
         </span>
 
-        <input type="color" v-model="colorPicker" id="input" @change="changeColor" />
+        <input
+          type="color"
+          v-model="colorPicker"
+          id="input"
+          @change="changeColor"
+        />
         <br />
       </label>
     </v-row>
@@ -96,7 +101,16 @@ export default {
       return this.$store.state.Home.currentUser;
     },
     siteColor() {
-      return this.$store.state.Home.siteColor;
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor;
+      } else {
+        return {
+          button_text_color: "black",
+          button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
+        };
+      }
     },
   },
 };

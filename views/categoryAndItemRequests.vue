@@ -151,7 +151,8 @@ export default {
     dialog: false,
     snackBar: false,
   }),
-  created() {
+  async created() {
+    await this.$store.dispatch("getSiteColor");
     this.$store.dispatch("getCategoryAndItemRequests");
     if (this.categoryAndItemRequests) {
       console.log("comeed", this.categoryAndItemRequests);
@@ -206,11 +207,13 @@ export default {
     },
     siteColor() {
       if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor[0];
+        return this.$store.state.Home.siteColor;
       } else {
         return {
           button_text_color: "black",
           button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
         };
       }
     },

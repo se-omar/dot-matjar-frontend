@@ -127,6 +127,7 @@ export default {
   },
 
   async created() {
+    await this.$store.dispatch("getSiteColor");
     await this.$store.dispatch("refreshCurrentUser");
     this.$store.dispatch("getRecievedRequests");
     this.$store.dispatch("getSentRequests");

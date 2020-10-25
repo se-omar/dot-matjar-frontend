@@ -201,7 +201,8 @@ export default {
     dialogDecline: false,
     supplier: [],
   }),
-  created() {
+  async created() {
+    await this.$store.dispatch("getSiteColor");
     this.$store.dispatch("getPendingSuppliers");
     if (this.pendingSuppliers) {
       console.log(this.pendingSuppliers);
@@ -213,7 +214,7 @@ export default {
     },
     siteColor() {
       if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor[0];
+        return this.$store.state.Home.siteColor;
       } else {
         return {
           button_text_color: "black",

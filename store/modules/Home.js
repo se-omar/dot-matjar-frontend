@@ -4,7 +4,7 @@ import axios from 'axios'
 
 export default {
     state: {
-        siteColor: localStorage.getItem('siteColor') ? JSON.parse(localStorage.getItem('siteColor')) : [],
+        siteColor: {},
         currentUser: '',
         filteredProducts: [],
         regions: [],
@@ -20,7 +20,7 @@ export default {
         homePageInfo: {},
         radioGroup: '1',
         currencies: JSON.parse(localStorage.getItem('rates')),
-        siteLanguage: localStorage.getItem('language'),
+        siteLanguage: localStorage.getItem('language') ? localStorage.getItem('language') : 'en',
         availableCountries: '',
         worldCountries: [],
         choosenCountries: [],
@@ -33,9 +33,13 @@ export default {
 
 
         getSiteColor(state, siteColors) {
+            console.log('site colors is', siteColors)
+
             localStorage.removeItem('siteColor')
-            localStorage.setItem('siteColor', JSON.stringify(siteColors))
+            var obj = siteColors;
+            localStorage.setItem('siteColor', JSON.stringify(obj))
             state.siteColor = JSON.parse(localStorage.getItem('siteColor'))
+
         },
 
         refreshCurrentUser(state, user) {
@@ -92,7 +96,7 @@ export default {
         },
 
         categoriesDB(state, data) {
-
+            console.log('siteLanguage', state.siteLanguage)
             if (state.siteLanguage == 'en') {
                 state.category = data.map(e => {
                     return e.category_name
@@ -242,10 +246,14 @@ export default {
         },
 
         async refreshCurrentUser(context) {
+
             await axios.post(context.rootState.nodeHost + '/api/refreshCurrentUser', {
-                token: context.rootState.RegisterLogin.loginToken
+                token: localStorage.getItem('loginToken')
+
             }).then(response => {
-                context.commit('refreshCurrentUser', response.data.user)
+                console.log('response from server user', response)
+                if (response.data.user)
+                    context.commit('refreshCurrentUser', response.data.user)
             })
         },
 

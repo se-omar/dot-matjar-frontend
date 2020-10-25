@@ -40,7 +40,8 @@ Vue.use(VueRouter)
 var routes = [
   {
     path: '/',
-    redirect: `/${i18n.locale}`
+    redirect: `${i18n.locale}`
+
   },
   {
     path: '/:lang',
@@ -209,6 +210,8 @@ var routes = [
         path: 'allUsers',
         name: 'allUsers',
         component: () => import('../views/allUsers'),
+      },
+      {
         path: 'addUser',
         name: 'addUser',
         component: () => import('../views/addUser'),

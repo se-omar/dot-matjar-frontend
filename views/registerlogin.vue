@@ -357,7 +357,7 @@ export default {
     },
     siteColor() {
       if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor[0];
+        return this.$store.state.Home.siteColor;
       } else {
         return {
           button_text_color: "black",
@@ -375,7 +375,8 @@ export default {
         "Password must match";
     },
   },
-  created() {
+  async created() {
+    await this.$store.dispatch("getSiteColor");
     this.$store.dispatch("getGovernorate");
     console.log(this.siteColor);
   },

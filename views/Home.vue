@@ -530,13 +530,16 @@ export default {
     };
   },
   async created() {
+    console.log("dotenvvvvv", this.nodeHost);
+    console.log("site color vefore value", this.currentUser);
+    await this.$store.dispatch("getSiteColor");
     await this.$store.dispatch("getCurrencies");
     await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getCategoryItems");
     // this.isLoading = true;
     this.$store.dispatch("removeSupplierPageData");
     await this.$store.dispatch("getSiteColor");
-
+    console.log("site color is from", localStorage.getItem("siteColor"));
     await this.$store.dispatch("getHomePageData");
     if (this.loginToken) {
       console.log("x");
@@ -550,6 +553,7 @@ export default {
       productName: this.toolbarSearch,
       categoryName: this.categoryName,
     });
+    console.log("filtered products", this.filteredProducts);
     await this.$store.dispatch("getSuppliers", {
       supplierFilterFlag: this.supplierFilterFlag,
       supplierName: this.supplierName,
@@ -591,11 +595,13 @@ export default {
     },
     siteColor() {
       if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor[0];
+        return this.$store.state.Home.siteColor;
       } else {
         return {
           button_text_color: "black",
           button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
         };
       }
     },

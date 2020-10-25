@@ -386,11 +386,13 @@ export default {
     },
     siteColor() {
       if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor[0];
+        return this.$store.state.Home.siteColor;
       } else {
         return {
           button_text_color: "black",
           button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
         };
       }
     },
@@ -523,6 +525,7 @@ export default {
     },
   },
   async created() {
+    await this.$store.dispatch("getSiteColor");
     await this.$store.dispatch("refreshCurrentUser");
     await this.$store.dispatch("getCategoryItems");
     await this.$store.dispatch("categoriesDB");

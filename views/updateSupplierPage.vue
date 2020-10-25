@@ -1266,6 +1266,7 @@ export default {
     },
   },
   async created() {
+    await this.$store.dispatch("getSiteColor");
     // this.isLoading = true;
     await this.$store.dispatch("refreshCurrentUser");
     await this.$store.dispatch("getSupplier", this.currentUser.user_id);

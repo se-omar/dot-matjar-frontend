@@ -91,6 +91,29 @@
             ></span>
           </v-btn>
         </v-col>
+
+        <!-- <v-select
+          id="langSwitch"
+          @change="changeLang"
+          class="mt-2"
+          background-color="white"
+          solo-inverted
+          :items="$i18n.availableLocales"
+          v-model="$i18n.locale"
+        >
+        </v-select>
+
+        <v-select
+          id="currSwitch"
+          @change="changeCurrency"
+          class="mt-2"
+          solo-inverted
+          background-color="white"
+          :items="currencies"
+          v-model="currentCurrency"
+        >
+        </v-select> -->
+
         <v-dialog
           style="overflow: hidden"
           v-model="advancedSearch"
@@ -725,7 +748,8 @@
         <span class="smallerText">{{ $t("toolbar.logout") }}</span></v-btn
       >
 
-      <!-- <v-select
+      <v-select
+        v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         @change="changeLang"
         class="mt-7"
         style="max-width: 85px"
@@ -736,6 +760,7 @@
       </v-select>
 
       <v-select
+        v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         @change="changeCurrency"
         class="mt-7"
         style="max-width: 85px"
@@ -743,7 +768,7 @@
         :items="currencies"
         v-model="currentCurrency"
       >
-      </v-select> -->
+      </v-select>
       <!--============================
 
       />-->
@@ -760,41 +785,38 @@
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list nav dense>
         <v-list-item-group active-class="deep-purple--text text--accent-4">
-          <v-list-item>
+          <v-list-item @click="$router.push('/').catch((err) => {})">
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
-            <v-list-item-title @click="$router.push('/').catch((err) => {})">
-              <span> {{ $t("toolbar.homePage") }}</span>
-            </v-list-item-title>
-          </v-list-item>
 
-          <v-list-item v-if="currentUser">
-            <v-list-item-icon>
-              <v-icon>mdi-lock-reset</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title
-              @click="
-                $router.push(`/${$i18n.locale}/editPassword`).catch((err) => {})
-              "
-            >
-              <span> {{ $t("toolbar.changeYourPassword") }}</span>
-            </v-list-item-title>
+            <span style="font-size: 20px"> {{ $t("toolbar.homePage") }}</span>
           </v-list-item>
 
           <v-list-item
+            @click="
+              $router.push(`/${$i18n.locale}/editPassword`).catch((err) => {})
+            "
+            v-if="currentUser"
+          >
+            <v-list-item-icon>
+              <v-icon>mdi-lock-reset</v-icon>
+            </v-list-item-icon>
+            <span style="font-size: 20px">
+              {{ $t("toolbar.changeYourPassword") }}</span
+            >
+          </v-list-item>
+
+          <v-list-item
+            @click="
+              $router.push(`/${$i18n.locale}/requestsPage`).catch((err) => {})
+            "
             v-if="currentUser && currentUser.user_type == 'business'"
           >
             <v-list-item-icon>
               <v-icon>mdi-email</v-icon>
             </v-list-item-icon>
-            <v-list-item-title
-              @click="
-                $router.push(`/${$i18n.locale}/requestsPage`).catch((err) => {})
-              "
-            >
-              <span> {{ $t("toolbar.requests") }}</span>
-            </v-list-item-title>
+            <span> {{ $t("toolbar.requests") }}</span>
           </v-list-item>
 
           <v-list-item
@@ -821,34 +843,146 @@
                 $router.push(`/${$i18n.locale}/dashboard`).catch((err) => {})
               "
             >
-              <span style="font-size: 17px">
+              <span style="font-size: 20px">
                 {{ $t("toolbar.dashboard") }}</span
               >
             </v-list-item-title>
+          </v-list-item>
+
+          <v-list-item
+            v-if="currentUser == 'business'"
+            @click="$router.push(`/${$i18n.locale}/myProducts`)"
+          >
+            <v-list-item-icon>
+              <v-icon>mdi-account-plus</v-icon>
+            </v-list-item-icon>
+            <span style="font-size: 17px">
+              {{ $t("toolbar.myProductsNobr") }}</span
+            >
+          </v-list-item>
+
+          <v-list-item
+            v-if="currentUser == 'admin'"
+            @click="$router.push(`/${$i18n.locale}/siteColors`)"
+          >
+            <v-list-item-icon>
+              <v-icon>mdi-account-plus</v-icon>
+            </v-list-item-icon>
+            <span
+              v-html="$t('toolbar.siteColorsNobr')"
+              :style="`color: ${siteColor.button_text_color}; font-size: 20px`"
+            >
+            </span>
+          </v-list-item>
+
+          <v-list-item
+            v-if="currentUser == 'business'"
+            @click="$router.push(`/${$i18n.locale}/orderedProducts`)"
+          >
+            <v-list-item-icon>
+              <v-icon>mdi-account-plus</v-icon>
+            </v-list-item-icon>
+
+            <span
+              :style="`color: ${siteColor.button_text_color}; font-size: 20px`"
+              v-html="$t('toolbar.orderManageNobr')"
+            >
+            </span>
+          </v-list-item>
+
+          <v-list-item
+            v-if="currentUser.user_type == 'admin'"
+            @click="$router.push(`/${$i18n.locale}/categoryAndItemRequests`)"
+          >
+            <v-list-item-icon>
+              <v-icon>mdi-account-plus</v-icon>
+            </v-list-item-icon>
+            <span
+              v-html="$t('toolbar.categoryRequestsNobr')"
+              :style="`color: ${siteColor.button_text_color}; font-size:20px`"
+            >
+            </span>
+          </v-list-item>
+
+          <v-list-item
+            v-if="currentUser.user_type == 'admin'"
+            @click="$router.push(`/${$i18n.locale}/pendingSuppliers`)"
+          >
+            <v-list-item-icon>
+              <v-icon>mdi-account-plus</v-icon>
+            </v-list-item-icon>
+            <span
+              :style="`color: ${siteColor.button_text_color}; font-size: 20px`"
+              v-html="$t('toolbar.pendingSuppliersNobr')"
+            >
+            </span>
+          </v-list-item>
+
+          <v-list-item
+            v-if="currentUser.user_type == 'business'"
+            @click="
+              $router.push(`/${$i18n.locale}/requestsPage`).catch((err) => {})
+            "
+          >
+            <v-list-item-icon>
+              <v-icon>mdi-account-plus</v-icon>
+            </v-list-item-icon>
+            <span style="font-size: 20px"> {{ $t("toolbar.requests") }}</span>
+          </v-list-item>
+
+          <v-list-item
+            v-if="currentUser.user_type == 'user'"
+            @click="
+              $router.push(`/${$i18n.locale}/userOrders`).catch((err) => {})
+            "
+          >
+            <v-list-item-icon>
+              <v-icon>mdi-account-plus</v-icon>
+            </v-list-item-icon>
+            <span style="font-size: 20px"> {{ $t("toolbar.myOrders") }}</span>
           </v-list-item>
 
           <v-list-item v-if="!currentUser">
             <v-list-item-icon>
               <v-icon>mdi-account-plus</v-icon>
             </v-list-item-icon>
-            <v-list-item-title
+
+            <span
               @click="
                 $router.push(`/${$i18n.locale}/reglogin`).catch((err) => {})
               "
+              style="font-size: 20px"
             >
-              <span style="font-size: 17px">
-                {{ $t("toolbar.loginSignup") }}</span
-              >
-            </v-list-item-title>
+              {{ $t("toolbar.loginSignup") }}</span
+            >
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item v-if="currentUser" @click="logout">
             <v-list-item-icon>
               <v-icon>mdi-information</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>
-              <span style="font-size: 17px"> {{ $t("toolbar.aboutUs") }}</span>
-            </v-list-item-title>
+
+            <span style="font-size: 20px"> {{ $t("toolbar.logout") }}</span>
+          </v-list-item>
+
+          <v-list-item>
+            <v-select
+              @change="changeLang"
+              solo-inverted
+              :items="$i18n.availableLocales"
+              v-model="$i18n.locale"
+            >
+            </v-select>
+          </v-list-item>
+
+          <v-list-item>
+            <v-select
+              @change="changeCurrency"
+              solo-inverted
+              :items="currencies"
+              v-model="currentCurrency"
+            >
+            </v-select>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -886,13 +1020,13 @@ export default {
     },
     siteColor() {
       if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor[0];
+        return this.$store.state.Home.siteColor;
       } else {
         return {
           button_text_color: "black",
           button_color: "white",
-          toolbar_color:'white',
-          toolbar_text_color:'black'
+          toolbar_color: "white",
+          toolbar_text_color: "black",
         };
       }
     },
@@ -1067,6 +1201,41 @@ export default {
       console.log(this.radioGroup);
     },
 
+    async changeCurrency(currency) {
+      //this.$store.commit("emptyProductsArray");
+      //location.reload();
+      localStorage.setItem("currentCurrency", currency);
+      if (this.$route.name == "home") {
+        this.$store.commit("emptyProductsArray");
+        await this.$store.dispatch("getProducts", {
+          productFilterFlagss: this.productFilterFlag,
+          productName: this.toolbarSearch,
+          categoryName: this.categoryName,
+        });
+        console.log(currency);
+      } else if (this.$route.name == "supplierPage") {
+        this.$store.commit("emptySupplierProducts");
+        await this.$store.dispatch(
+          "getSupplierProducts",
+          this.$route.params.supplier_id
+        );
+      }
+    },
+
+    async changeLang(value) {
+      this.$router.push({
+        params: { lang: value },
+      });
+      this.$vuetify.rtl = value == "ar" ? true : false;
+      this.$store.commit("siteLanguage", value);
+      location.reload();
+      this.$store.dispatch("categoriesDB");
+      await this.$store.dispatch(
+        "getSupplierCategoriesAndItems",
+        this.$route.params.supplier_id
+      );
+    },
+
     // async changeCurrency(currency) {
     //   //this.$store.commit("emptyProductsArray");
     //   //location.reload();
@@ -1104,6 +1273,8 @@ export default {
     supplierProductsSearch: "",
     filterSuppliersByName: "",
     country: "",
+    currentCurrency: localStorage.getItem("currentCurrency"),
+    currencies: ["egp", "usd"],
   }),
 };
 </script>

@@ -263,6 +263,7 @@
 // import dashboardSellingProduct from "../components/dashboardSellingProduct";
 export default {
   async mounted() {
+    await this.$store.dispatch("getSiteColor");
     //this.isLoading = true;
 
     await this.$store.dispatch("refreshCurrentUser");

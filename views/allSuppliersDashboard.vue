@@ -272,6 +272,7 @@
 // import dashboardSellingProduct from "../components/dashboardSellingProduct";
 export default {
   async mounted() {
+    await this.$store.dispatch("getSiteColor");
     //this.isloading = true;
     this.$store.dispatch("getMyProducts", this.supplier.user_id);
     console.log("the supplier", this.supplier);
@@ -420,11 +421,13 @@ export default {
 
     siteColor() {
       if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor[0];
+        return this.$store.state.Home.siteColor;
       } else {
         return {
           button_text_color: "black",
           button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
         };
       }
     },

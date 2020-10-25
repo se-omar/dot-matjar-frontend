@@ -168,6 +168,7 @@
 <script>
 export default {
   async created() {
+    await this.$store.dispatch("getSiteColor");
     await this.$store.dispatch("getGovernorate");
   },
   data: () => {

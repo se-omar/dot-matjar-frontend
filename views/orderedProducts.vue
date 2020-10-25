@@ -301,6 +301,7 @@ export default {
     // uppdating page
   },
   async created() {
+    await this.$store.dispatch("getSiteColor");
     await this.$store.dispatch("refreshCurrentUser");
     console.log(this.currentUser.user_id);
     this.$store.dispatch("ordersMade", this.currentUser.user_id);
@@ -327,7 +328,7 @@ export default {
     },
     siteColor() {
       if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor[0];
+        return this.$store.state.Home.siteColor;
       } else {
         return {
           button_text_color: "black",
