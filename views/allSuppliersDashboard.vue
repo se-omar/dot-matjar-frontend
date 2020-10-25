@@ -276,7 +276,9 @@ export default {
     //this.isloading = true;
     this.$store.dispatch("getMyProducts", this.supplier.user_id);
     console.log("the supplier", this.supplier);
-    await this.$store.dispatch("refreshCurrentUser");
+    if (localStorage.getItem("loginToken")) {
+      await this.$store.dispatch("refreshCurrentUser");
+    }
     this.$store.commit("supplierPage", this.supplier);
     // await this.$store.dispatch("getMyProducts", this.supplier.user_id);
     await this.$store.dispatch("getTopSellingProduct", this.supplier.user_id);

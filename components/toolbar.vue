@@ -1008,7 +1008,9 @@ export default {
   components: {},
   async created() {
     localStorage.setItem("currentCurrency", "egp");
-    await this.$store.dispatch("refreshCurrentUser");
+    if (localStorage.getItem("loginToken")) {
+      await this.$store.dispatch("refreshCurrentUser");
+    }
     await this.$store.dispatch("getAvailableCountries");
     console.log("color from toolbar", this.siteColor);
     if (this.availableCountries) {

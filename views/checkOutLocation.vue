@@ -141,7 +141,9 @@ export default {
   },
   async created() {
     await this.$store.dispatch("getSiteColor");
-    await this.$store.dispatch("refreshCurrentUser");
+    if (localStorage.getItem("loginToken")) {
+      await this.$store.dispatch("refreshCurrentUser");
+    }
     this.$store.dispatch("getGovernorate");
     this.address = this.currentUser.address;
     console.log(this.currentUser.governorate);

@@ -1268,7 +1268,9 @@ export default {
   async created() {
     await this.$store.dispatch("getSiteColor");
     // this.isLoading = true;
-    await this.$store.dispatch("refreshCurrentUser");
+    if (localStorage.getItem("loginToken")) {
+      await this.$store.dispatch("refreshCurrentUser");
+    }
     await this.$store.dispatch("getSupplier", this.currentUser.user_id);
     await this.$store.dispatch("getSupplierPageData", this.currentUser.user_id);
     console.log("paraaamsss");

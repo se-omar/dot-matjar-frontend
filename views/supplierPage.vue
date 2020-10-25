@@ -431,7 +431,9 @@ export default {
     await this.$store.dispatch("getSiteColor");
     //this.isLoading = true;
     await this.$store.dispatch("getCurrencies");
-    await this.$store.dispatch("refreshCurrentUser");
+    if (localStorage.getItem("loginToken")) {
+      await this.$store.dispatch("refreshCurrentUser");
+    }
     await this.$store.dispatch("getSupplier", this.$route.params.supplier_id);
     console.log("user paramasss", this.$route.params.supplier_id);
     console.log("current user", this.currentUser);

@@ -541,7 +541,7 @@ export default {
     await this.$store.dispatch("getSiteColor");
     console.log("site color is from", localStorage.getItem("siteColor"));
     await this.$store.dispatch("getHomePageData");
-    if (this.loginToken) {
+    if (localStorage.getItem("loginToken")) {
       console.log("x");
       await this.$store.dispatch("refreshCurrentUser");
     }

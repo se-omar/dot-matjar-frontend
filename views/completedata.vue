@@ -236,7 +236,9 @@ export default {
   },
   async created() {
     await this.$store.dispatch("getSiteColor");
-    await this.$store.dispatch("refreshCurrentUser");
+    if (localStorage.getItem("loginToken")) {
+      await this.$store.dispatch("refreshCurrentUser");
+    }
     this.$store.dispatch("getGovernorate");
     this.nationalNumber = this.currentUser.national_number;
     this.fullArabicName = this.currentUser.full_arabic_name;

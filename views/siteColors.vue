@@ -311,7 +311,9 @@ export default {
     },
   },
   async created() {
-    await this.$store.dispatch("refreshCurrentUser");
+    if (localStorage.getItem("loginToken")) {
+      await this.$store.dispatch("refreshCurrentUser");
+    }
     await this.$store.dispatch("getSiteColor");
     setTimeout(() => {
       this.toolBarColor = this.siteColor.toolbar_color;

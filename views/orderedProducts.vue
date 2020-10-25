@@ -302,7 +302,9 @@ export default {
   },
   async created() {
     await this.$store.dispatch("getSiteColor");
-    await this.$store.dispatch("refreshCurrentUser");
+    if (localStorage.getItem("loginToken")) {
+      await this.$store.dispatch("refreshCurrentUser");
+    }
     console.log(this.currentUser.user_id);
     this.$store.dispatch("ordersMade", this.currentUser.user_id);
     console.log("user made orders", this.usersMadeOrders);

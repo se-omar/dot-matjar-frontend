@@ -85,7 +85,9 @@ export default {
   name: "update-forgotten-password",
   async created() {
     await this.$store.dispatch("getSiteColor");
-    this.$store.dispatch("refreshCurrentUser");
+    if (localStorage.getItem("loginToken")) {
+      await this.$store.dispatch("refreshCurrentUser");
+    }
   },
 
   components: {},

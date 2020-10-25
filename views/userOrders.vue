@@ -94,7 +94,9 @@ export default {
   components: {},
   async created() {
     await this.$store.dispatch("getSiteColor");
-    await this.$store.dispatch("refreshCurrentUser");
+    if (localStorage.getItem("loginToken")) {
+      await this.$store.dispatch("refreshCurrentUser");
+    }
     await this.$store.dispatch("getOrders");
   },
   computed: {

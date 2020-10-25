@@ -388,7 +388,9 @@
 export default {
   async created() {
     await this.$store.dispatch("getSiteColor");
-    await this.$store.dispatch("refreshCurrentUser");
+    if (localStorage.getItem("loginToken")) {
+      await this.$store.dispatch("refreshCurrentUser");
+    }
     console.log(this.currentProduct);
     await this.$store.dispatch("getSiteColor");
     await this.$store.dispatch("getProductReview", {
