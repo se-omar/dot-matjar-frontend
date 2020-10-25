@@ -246,15 +246,20 @@ export default {
         },
 
         async refreshCurrentUser(context) {
+            const config = {
+                headers: { Authorization: `Bearer ${localStorage.getItem('loginToken')}` }
+            };
 
-            await axios.post(context.rootState.nodeHost + '/api/refreshCurrentUser', {
-                token: localStorage.getItem('loginToken')
+            const bodyParameters = {
+                key: "value"
+            };
 
-            }).then(response => {
-                console.log('response from server user', response)
-                if (response.data.user)
-                    context.commit('refreshCurrentUser', response.data.user)
-            })
+            await axios.post(context.rootState.nodeHost + '/api/refreshCurrentUser',
+                bodyParameters, config).then(response => {
+                    console.log('response from server user', response)
+                    if (response.data.user)
+                        context.commit('refreshCurrentUser', response.data.user)
+                })
         },
 
         getGovernorate(context) {

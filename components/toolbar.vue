@@ -850,7 +850,7 @@
           </v-list-item>
 
           <v-list-item
-            v-if="currentUser == 'business'"
+            v-if="currentUser && currentUser == 'business'"
             @click="$router.push(`/${$i18n.locale}/myProducts`)"
           >
             <v-list-item-icon>
@@ -862,7 +862,7 @@
           </v-list-item>
 
           <v-list-item
-            v-if="currentUser == 'admin'"
+            v-if="currentUser && currentUser == 'admin'"
             @click="$router.push(`/${$i18n.locale}/siteColors`)"
           >
             <v-list-item-icon>
@@ -876,7 +876,7 @@
           </v-list-item>
 
           <v-list-item
-            v-if="currentUser == 'business'"
+            v-if="currentUser && currentUser == 'business'"
             @click="$router.push(`/${$i18n.locale}/orderedProducts`)"
           >
             <v-list-item-icon>
@@ -891,7 +891,7 @@
           </v-list-item>
 
           <v-list-item
-            v-if="currentUser.user_type == 'admin'"
+            v-if="currentUser && currentUser.user_type == 'admin'"
             @click="$router.push(`/${$i18n.locale}/categoryAndItemRequests`)"
           >
             <v-list-item-icon>
@@ -905,7 +905,7 @@
           </v-list-item>
 
           <v-list-item
-            v-if="currentUser.user_type == 'admin'"
+            v-if="currentUser && currentUser.user_type == 'admin'"
             @click="$router.push(`/${$i18n.locale}/pendingSuppliers`)"
           >
             <v-list-item-icon>
@@ -919,7 +919,7 @@
           </v-list-item>
 
           <v-list-item
-            v-if="currentUser.user_type == 'business'"
+            v-if="currentUser && currentUser.user_type == 'business'"
             @click="
               $router.push(`/${$i18n.locale}/requestsPage`).catch((err) => {})
             "
@@ -931,7 +931,7 @@
           </v-list-item>
 
           <v-list-item
-            v-if="currentUser.user_type == 'user'"
+            v-if="currentUser && currentUser.user_type == 'user'"
             @click="
               $router.push(`/${$i18n.locale}/userOrders`).catch((err) => {})
             "
@@ -940,6 +940,20 @@
               <v-icon>mdi-account-plus</v-icon>
             </v-list-item-icon>
             <span style="font-size: 20px"> {{ $t("toolbar.myOrders") }}</span>
+          </v-list-item>
+
+          <v-list-item
+            v-if="currentUser && currentUser.user_type == 'admin'"
+            @click="
+              $router.push(`/${$i18n.locale}/adminPage`).catch((err) => {})
+            "
+          >
+            <v-list-item-icon>
+              <v-icon>mdi-account-plus</v-icon>
+            </v-list-item-icon>
+            <span style="font-size: 20px">
+              {{ $t("toolbar.adminDashboard") }}</span
+            >
           </v-list-item>
 
           <v-list-item v-if="!currentUser">
