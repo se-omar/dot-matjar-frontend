@@ -236,21 +236,7 @@ export default {
   components: {},
   data: () => ({
     dialog: false,
-    usersTableHeaders: [
-      { text: this.$t("orderedProducts.username"), value: "full_arabic_name" },
-      { text: this.$t("orderedProducts.userMobile"), value: "mobile_number" },
-      { text: this.$t("orderedProducts.orderNumber"), value: "order_number" },
-      { text: this.$t("orderedProducts.orderDate"), value: "order_date" },
 
-      { text: this.$t("orderedProducts.showProducts"), value: "showProducts" },
-    ],
-    productsTableHeaders: [
-      { text: this.$t("orderedProducts.productName"), value: "product_name" },
-      { text: this.$t("orderedProducts.productId"), value: "product_id" },
-      { text: this.$t("orderedProducts.productCode"), value: "product_code" },
-      { text: this.$t("orderedProducts.productQuantity"), value: "quantity" },
-      { text: this.$t("orderedProducts.status"), value: "status" },
-    ],
     state: "",
     country: "",
     address1: "",
@@ -339,6 +325,31 @@ export default {
           toolbar_text_color: "black",
         };
       }
+    },
+    usersTableHeaders() {
+      return [
+        {
+          text: this.$t("orderedProducts.username"),
+          value: "full_arabic_name",
+        },
+        { text: this.$t("orderedProducts.userMobile"), value: "mobile_number" },
+        { text: this.$t("orderedProducts.orderNumber"), value: "order_number" },
+        { text: this.$t("orderedProducts.orderDate"), value: "order_date" },
+
+        {
+          text: this.$t("orderedProducts.showProducts"),
+          value: "showProducts",
+        },
+      ];
+    },
+    productsTableHeaders() {
+      return [
+        { text: this.$t("orderedProducts.productName"), value: "product_name" },
+        { text: this.$t("orderedProducts.productId"), value: "product_id" },
+        { text: this.$t("orderedProducts.productCode"), value: "product_code" },
+        { text: this.$t("orderedProducts.productQuantity"), value: "quantity" },
+        { text: this.$t("orderedProducts.status"), value: "status" },
+      ];
     },
   },
 };

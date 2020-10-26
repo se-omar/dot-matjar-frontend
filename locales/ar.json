@@ -1,7 +1,7 @@
 {
     "message": "hello i18n !!",
     "toolbar": {
-        "advancedSearch": "البحث <br/>المتقدم",
+        "advancedSearch": "البحث المتقدم",
         "profile": "الصفحةالشخصية",
         "aboutUs": "عن الموقع",
         "register": "التسجيل",
