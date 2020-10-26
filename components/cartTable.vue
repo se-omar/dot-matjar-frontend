@@ -109,7 +109,7 @@ export default {
   name: "cartTable",
   methods: {
     showProduct() {
-      console.log(this.pressedProduct);
+      //console.log(this.pressedProduct);
     },
     add(product) {
       this.products[product.id - 1].cart = true;
@@ -130,7 +130,7 @@ export default {
       for (var x = 0; x < this.items.length; x++) {
         if (this.items[x].product_id == id) {
           this.items.splice(x, 1);
-          console.log(this.items);
+          //console.log(this.items);
 
           await this.$store.dispatch("removeProductFromCart", id);
         }
@@ -159,8 +159,9 @@ export default {
       return this.cart.length + 1;
     },
 
+    // eslint-disable-next-line no-unused-vars
     rowclicked(event) {
-      console.log("event is :", event);
+      //console.log("event is :", event);
     },
     async table() {
       var self = this;

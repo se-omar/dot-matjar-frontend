@@ -40,7 +40,7 @@ Vue.use(VueRouter)
 var routes = [
   {
     path: '/',
-    redirect: `${i18n.locale}`
+    redirect: localStorage.getItem('language') ? localStorage.getItem('language') : `${i18n.locale}`
 
   },
   {

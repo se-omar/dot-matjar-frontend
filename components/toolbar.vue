@@ -716,7 +716,7 @@
         :style="`color:${siteColor.toolbar_text_color}`"
         v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         text
-        @click="$router.push(`/${$i18n.locale}/myProducts`)"
+        @click="goToAbout"
       >
         <span class="smallerText"> {{ $t("toolbar.aboutUs") }}</span>
       </v-btn>
@@ -1007,6 +1007,7 @@
 export default {
   components: {},
   async created() {
+    console.log("current language locale", this.$i18n.locale);
     localStorage.setItem("currentCurrency", "egp");
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
@@ -1242,6 +1243,9 @@ export default {
       this.$router.push({
         params: { lang: value },
       });
+
+      if (value == "ar" || value == "en") this.$i18n.locale = value;
+
       this.$vuetify.rtl = value == "ar" ? true : false;
       this.$store.commit("siteLanguage", value);
       location.reload();
@@ -1252,6 +1256,9 @@ export default {
       );
     },
 
+    goToAbout() {
+      window.location = "http://www.dotmatjar.com/about";
+    },
     // async changeCurrency(currency) {
     //   //this.$store.commit("emptyProductsArray");
     //   //location.reload();

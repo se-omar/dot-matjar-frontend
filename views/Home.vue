@@ -531,7 +531,6 @@ export default {
   },
   async created() {
     console.log("dotenvvvvv", this.nodeHost);
-    console.log("site color vefore value", this.currentUser);
     await this.$store.dispatch("getSiteColor");
     await this.$store.dispatch("getCurrencies");
     await this.$store.dispatch("categoriesDB");

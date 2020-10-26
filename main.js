@@ -50,7 +50,7 @@ Vue.prototype.$axios = axios;
 router.beforeEach((to, from, next) => {
   let language = to.params.lang;
   if (!language) {
-    language = 'en'
+    language = localStorage.getItem('language') ? localStorage.getItem('language') : 'en'
   }
 
   i18n.locale = language

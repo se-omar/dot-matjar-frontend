@@ -153,7 +153,7 @@
         </v-row>
         <v-divider></v-divider>
 
-        <v-row v-if="supplierPageInfo.show_carousel" justify="center">
+        <!-- <v-row v-if="supplierPageInfo.show_carousel" justify="center">
           <v-col :lg="supplierPageInfo ? supplierPageInfo.carousel_width : 10">
             <carousel
               :autoplay="true"
@@ -196,7 +196,7 @@
               </slide>
             </carousel>
           </v-col>
-        </v-row>
+        </v-row> -->
 
         <v-tabs v-model="tab" show-arrows icons-and-text dark grow>
           <v-tabs-slider></v-tabs-slider>
