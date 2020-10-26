@@ -256,7 +256,12 @@ export default {
       if (this.$store.state.Home.siteColor) {
         return this.$store.state.Home.siteColor;
       } else {
-        return "red darken-4";
+        return {
+          button_text_color: "black",
+          button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
+        };
       }
     },
   },

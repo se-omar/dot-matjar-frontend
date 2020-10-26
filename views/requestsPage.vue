@@ -127,7 +127,10 @@ export default {
   },
 
   async created() {
-    await this.$store.dispatch("refreshCurrentUser");
+    await this.$store.dispatch("getSiteColor");
+    if (localStorage.getItem("loginToken")) {
+      await this.$store.dispatch("refreshCurrentUser");
+    }
     this.$store.dispatch("getRecievedRequests");
     this.$store.dispatch("getSentRequests");
     console.log(this.recievedRequests);

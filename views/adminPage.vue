@@ -21,7 +21,9 @@
       </v-col>
 
       <v-col lg="2">
-        <v-btn large block>{{ $t("adminPage.allUsers") }}</v-btn>
+        <v-btn @click="$router.push(`/${$i18n.locale}/allUsers`)" large block>{{
+          $t("adminPage.allUsers")
+        }}</v-btn>
       </v-col>
     </v-row>
     <v-row justify="center">
@@ -812,8 +814,11 @@
 // import SiteColor from "../components/siteColor";
 export default {
   async created() {
+    await this.$store.dispatch("getSiteColor");
     //this.isLoading = true;
-    await this.$store.dispatch("refreshCurrentUser");
+    if (localStorage.getItem("loginToken")) {
+      await this.$store.dispatch("refreshCurrentUser");
+    }
     await this.$store.dispatch("getAllSuppliersWithSales");
     await this.$store.dispatch("getGovernorate");
     await this.$store.dispatch("getSiteColor");
@@ -1007,11 +1012,13 @@ export default {
 
     siteColor() {
       if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor[0];
+        return this.$store.state.Home.siteColor;
       } else {
         return {
           button_text_color: "black",
           button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
         };
       }
     },

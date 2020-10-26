@@ -1,7 +1,7 @@
 {
   "message": "hello i18n !!",
   "toolbar": {
-    "advancedSearch": "advanced <br/> search",
+    "advancedSearch": "advanced search",
     "profile": "profile",
     "aboutUs": "about us",
     "register": "register",
@@ -13,13 +13,16 @@
     "changePassword": "change password",
     "loginSignup": "login and signup",
     "changeProfilePhoto": "Change Profile Photo",
-    "changeYourPassword": "Change Your Password",
+    "changeYourPassword": "Change Password",
     "updateOrCompleteInfo": "Update Or Complete Info",
     "categoryRequests": "category <br/> and item <br/> requests",
+    "categoryRequestsNobr": "category requests",
     "myProducts": "my<br/>products",
+    "myProductsNobr": "my products",
     "myPage": "my page",
     "uploadPhoto": "upload your photo here",
     "orderManage": "order <br/> manage",
+    "orderManageNobr": "manage orders",
     "search": "Search",
     "searchSuppliers": "Search For Suppliers",
     "searchProducts": "Search For Products",
@@ -30,8 +33,10 @@
     "priceFrom": "price from",
     "priceTo": "price to",
     "siteColors": "Site <br/> Colors",
+    "siteColorsNobr": "site colors",
     "country": "Country",
-    "pendingSuppliers": "Pending<br/> Suppliers"
+    "pendingSuppliers": "Pending<br/> Suppliers",
+    "pendingSuppliersNobr": "Pending Suppliers"
   },
   "homePage": {
     "loadMore": "load more",

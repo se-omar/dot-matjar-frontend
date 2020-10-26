@@ -272,10 +272,13 @@
 // import dashboardSellingProduct from "../components/dashboardSellingProduct";
 export default {
   async mounted() {
+    await this.$store.dispatch("getSiteColor");
     //this.isloading = true;
     this.$store.dispatch("getMyProducts", this.supplier.user_id);
     console.log("the supplier", this.supplier);
-    await this.$store.dispatch("refreshCurrentUser");
+    if (localStorage.getItem("loginToken")) {
+      await this.$store.dispatch("refreshCurrentUser");
+    }
     this.$store.commit("supplierPage", this.supplier);
     // await this.$store.dispatch("getMyProducts", this.supplier.user_id);
     await this.$store.dispatch("getTopSellingProduct", this.supplier.user_id);
@@ -420,11 +423,13 @@ export default {
 
     siteColor() {
       if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor[0];
+        return this.$store.state.Home.siteColor;
       } else {
         return {
           button_text_color: "black",
           button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
         };
       }
     },
