@@ -310,26 +310,25 @@
       :justify="homePageInfo.show_right_banner == 1 ? 'space-between' : 'start'"
       class="mt-n7"
     >
-      <v-col lg="2" sm="3" md="2">
-        <v-card height="95%" style="overflow: hidden" max-width>
+      <v-col lg="2" sm="4" md="2" cols="4">
+        <v-card class="ml-4" height="95%" style="overflow: hidden" max-width>
           <!-- <v-row justify="center"
             ><v-card-title>Categories</v-card-title>
           </v-row> -->
 
           <v-row>
-            <v-col cols="6" sm="12" lg="12">
+            <v-col cols="12" sm="12" lg="12">
               <v-menu
                 v-for="category in category"
                 :key="category"
-                :close-on-content-click="false"
                 open-on-hover
                 offset-x
                 :left="rtlMenuCondition"
                 transition="scale-transition"
               >
                 <template v-slot:activator="{ on, attrs }">
-                  <v-row class="mx-3" justify="start">
-                    <v-col cols="12" lg="12" sm="12">
+                  <v-row justify="start">
+                    <v-col cols="12" lg="10" sm="12">
                       <v-btn
                         width="110%"
                         @mouseover="mouseOver(category)"
@@ -338,33 +337,70 @@
                         text
                         @click="filterProductsWithCategory(category)"
                       >
-                        <v-row justify="start">
-                          <i :class="`fas fa-${category} fa-lg mr-2 mt-2`"></i>
-
-                          <span> {{ category }}</span>
-                        </v-row>
-                        <v-btn
-                          @click="filterProductsWithCategory(category)"
-                          icon
-                          style="overflow: hidden; color: black"
+                        <span
+                          v-if="
+                            $vuetify.breakpoint.sm || $vuetify.breakpoint.xs
+                          "
                         >
-                          <i
-                            v-if="siteLanguage == 'en'"
-                            class="fa fa-chevron-right"
-                          ></i>
-                          <i v-else class="fa fa-chevron-left"></i>
-                        </v-btn>
+                          <v-row justify="start">
+                            <v-col>
+                              <span
+                                class="mt-1 smallerText"
+                                style="font-size: 14px"
+                              >
+                                {{ category }}</span
+                              >
+
+                              <v-btn
+                                @click="filterProductsWithCategory(category)"
+                                icon
+                                style="overflow: hidden; color: black"
+                              >
+                                <i
+                                  v-if="siteLanguage == 'en'"
+                                  class="fa fa-chevron-right"
+                                ></i>
+                                <i v-else class="fa fa-chevron-left"></i>
+                              </v-btn>
+                            </v-col>
+                          </v-row>
+                        </span>
+                        <span v-else>
+                          <v-row justify="start">
+                            <v-col lg="5">
+                              <i
+                                :class="`fas fa-${category} fa-sm  mr-2 mt-2`"
+                              ></i>
+
+                              <span class="mt-1 smallerText">
+                                {{ category }}</span
+                              >
+                            </v-col>
+                            <v-row justify="end">
+                              <v-col lg="2">
+                                <v-btn
+                                  @click="filterProductsWithCategory(category)"
+                                  icon
+                                  style="overflow: hidden; color: black"
+                                  text
+                                >
+                                  <i
+                                    v-if="siteLanguage == 'en'"
+                                    class="fa fa-chevron-right"
+                                  ></i>
+                                  <i v-else class="fa fa-chevron-left"></i>
+                                </v-btn>
+                              </v-col>
+                            </v-row>
+                          </v-row>
+                        </span>
                       </v-btn>
                     </v-col>
                     <!-- <v-col lg="3" sm="4"> </v-col> -->
                   </v-row>
                 </template>
                 <v-card>
-                  <v-list
-                    class="ml-2"
-                    v-for="item in categoryItems"
-                    :key="item"
-                  >
+                  <v-list v-for="item in categoryItems" :key="item">
                     <v-btn
                       class="black--text"
                       @click="filterProductsWithItem(item)"
@@ -387,7 +423,8 @@
       <!-- <v-col lg="8" sm="5" md="7"> -->
       <v-col
         :lg="homePageInfo.show_right_banner ? 8 : 10"
-        sm="6"
+        sm="5"
+        cols="5"
         :md="homePageInfo.show_right_banner ? 8 : 10"
       >
         <v-radio-group mandatory :value="radioGroup">
@@ -414,7 +451,7 @@
           </v-row>
         </v-radio-group>
         <v-row justify="center">
-          <v-btn :color="siteColor.button_color" @click="All">
+          <v-btn small :color="siteColor.button_color" @click="All">
             <span :style="`color: ${siteColor.button_text_color}`">{{
               $t("homePage.allProducts")
             }}</span></v-btn
@@ -433,7 +470,7 @@
             :md="homePageInfo.show_right_banner ? 4 : 3"
             xmd="4"
             sm="10  "
-            cols="5"
+            cols="12"
             v-for="(filteredProduct, index) in filteredProducts"
             :key="index"
           >
@@ -845,15 +882,15 @@ export default {
 }
 .arabic {
   font-family: "Markazi Text", serif;
-  font-size: 20px;
+  font-size: 17px;
 }
 span {
   font-family: "Markazi Text", serif;
-  font-size: 20px;
+  font-size: 17px;
 }
 p {
   font-family: "Markazi Text", serif;
-  font-size: 20px;
+  font-size: 19px;
 }
 .smallerText {
   font-size: 15px;

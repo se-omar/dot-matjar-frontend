@@ -232,6 +232,6 @@ p {
 }
 div {
   font-family: "Markazi Text", serif;
-  font-size: 25px;
+  font-size: 17px;
 }
 </style>

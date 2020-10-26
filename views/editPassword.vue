@@ -181,4 +181,8 @@ p {
 .smallerText {
   font-size: 20px;
 }
+div {
+  font-family: "Markazi Text", serif;
+  font-size: 17px;
+}
 </style>

@@ -40,7 +40,7 @@
         <v-col
           v-if="!$route.params.supplier_id"
           cols="9"
-          lg="6"
+          lg="8"
           sm="6"
           md="6"
           xs="5"
@@ -60,7 +60,7 @@
             ></v-text-field>
           </template>
         </v-col>
-        <v-col v-else cols="9" lg="6" sm="5" md="6" xs="5">
+        <v-col v-else cols="9" lg="8" sm="5" md="6" xs="5">
           <v-text-field
             class="mt-8 arabic"
             outlined
@@ -1295,7 +1295,7 @@ p {
   font-size: 20px;
 }
 .smallerText {
-  font-size: 15px;
+  font-size: 17px;
 }
 
 .img {
