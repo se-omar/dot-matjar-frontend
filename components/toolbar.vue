@@ -766,6 +766,7 @@
         v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         @change="changeLang"
         class="mt-7"
+        dense
         style="max-width: 85px"
         solo-inverted
         :items="$i18n.availableLocales"
@@ -777,6 +778,7 @@
         v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         @change="changeCurrency"
         class="mt-7"
+        dense
         style="max-width: 85px"
         solo-inverted
         :items="currencies"

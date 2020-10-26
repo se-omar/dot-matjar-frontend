@@ -59,19 +59,22 @@
       </v-col>
     </v-row>
     <v-row justify="center" class="mt-16">
-      <v-col cols="2">
+      <v-col lg="2" md="3" sm="5" cols="5">
         <v-btn
           v-if="$route.params.supplier_id == currentUser.user_id"
           @click="updatePage"
           :color="siteColor.button_color"
           rounded
         >
-          <span :style="`color:${siteColor.button_text_color}`">
+          <span
+            class="smallerText"
+            :style="`color:${siteColor.button_text_color}`"
+          >
             {{ $t("supplierPage.updatePage") }}</span
           ></v-btn
         >
       </v-col>
-      <v-col cols="2">
+      <v-col lg="2" md="3" sm="5" cols="5">
         <v-btn
           :color="siteColor.button_color"
           @click="
@@ -79,7 +82,10 @@
           "
           rounded
         >
-          <span :style="`color:${siteColor.button_text_color}`">
+          <span
+            class="smallerText"
+            :style="`color:${siteColor.button_text_color}`"
+          >
             {{ $t("supplierPage.supplierDetails") }}</span
           >
         </v-btn>
@@ -99,7 +105,7 @@
         </v-card>
       </v-col> -->
       <!-- category -->
-      <v-col lg="2" sm="3" md="2">
+      <v-col lg="2" sm="3" md="2" cols="3">
         <v-card height="95%" style="overflow: hidden" max-width>
           <!-- <v-row justify="center"
             ><v-card-title>Categories</v-card-title>
@@ -175,9 +181,9 @@
 
       <v-col
         :lg="supplierPageInfo && supplierPageInfo.show_right_banner ? 8 : 10"
-        sm="6"
+        sm="7"
         :md="supplierPageInfo && supplierPageInfo.show_right_banner ? 8 : 10"
-        cols="6"
+        cols="7"
       >
         <v-row justify="center">
           <v-btn :color="siteColor.button_color" @click="getAllProducts">
@@ -200,7 +206,9 @@
           >
             <product
               :minWidth="
-                supplierPageInfo && supplierPageInfo.show_right_banner
+                supplierPageInfo &&
+                supplierPageInfo.show_right_banner &&
+                supplierPageInfo.right_banner_image
                   ? '104%'
                   : '120%'
               "
@@ -511,6 +519,6 @@ p {
   font-size: 25px;
 }
 .smallerText {
-  font-size: 20px;
+  font-size: 17px;
 }
 </style>

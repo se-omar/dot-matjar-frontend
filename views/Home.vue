@@ -310,7 +310,7 @@
       :justify="homePageInfo.show_right_banner == 1 ? 'space-between' : 'start'"
       class="mt-n7"
     >
-      <v-col lg="2" sm="3" md="2">
+      <v-col lg="2" sm="3" md="2" cols="3">
         <v-card height="95%" style="overflow: hidden" max-width>
           <!-- <v-row justify="center"
             ><v-card-title>Categories</v-card-title>
@@ -338,22 +338,48 @@
                         text
                         @click="filterProductsWithCategory(category)"
                       >
-                        <v-row justify="start">
-                          <i :class="`fas fa-${category} fa-lg mr-2 mt-2`"></i>
-
-                          <span> {{ category }}</span>
-                        </v-row>
-                        <v-btn
-                          @click="filterProductsWithCategory(category)"
-                          icon
-                          style="overflow: hidden; color: black"
+                        <span
+                          v-if="
+                            $vuetify.breakpoint.sm || $vuetify.breakpoint.xs
+                          "
                         >
-                          <i
-                            v-if="siteLanguage == 'en'"
-                            class="fa fa-chevron-right"
-                          ></i>
-                          <i v-else class="fa fa-chevron-left"></i>
-                        </v-btn>
+                          <v-row justify="start">
+                            <span style="font-size: 15px"> {{ category }}</span>
+
+                            <v-btn
+                              @click="filterProductsWithCategory(category)"
+                              icon
+                              style="overflow: hidden; color: black"
+                            >
+                              <i
+                                v-if="siteLanguage == 'en'"
+                                class="fa fa-chevron-right"
+                              ></i>
+                              <i v-else class="fa fa-chevron-left"></i>
+                            </v-btn>
+                          </v-row>
+                        </span>
+                        <span v-else>
+                          <v-row justify="start">
+                            <i
+                              :class="`fas fa-${category} fa-sm mr-2 mt-2`"
+                            ></i>
+
+                            <span class="text-left"> {{ category }}</span>
+
+                            <v-btn
+                              @click="filterProductsWithCategory(category)"
+                              icon
+                              style="overflow: hidden; color: black"
+                            >
+                              <i
+                                v-if="siteLanguage == 'en'"
+                                class="fa fa-chevron-right"
+                              ></i>
+                              <i v-else class="fa fa-chevron-left"></i>
+                            </v-btn>
+                          </v-row>
+                        </span>
                       </v-btn>
                     </v-col>
                     <!-- <v-col lg="3" sm="4"> </v-col> -->
@@ -388,10 +414,11 @@
       <v-col
         :lg="homePageInfo.show_right_banner ? 8 : 10"
         sm="6"
+        cols="7"
         :md="homePageInfo.show_right_banner ? 8 : 10"
       >
         <v-radio-group mandatory :value="radioGroup">
-          <v-row class="mb-n5" justify="center">
+          <v-row class="mb-n5 mr-5" justify="center">
             <v-col lg="4">
               <v-radio @change="changeRadioGroup" value="1"
                 ><template v-slot:label>
@@ -432,8 +459,8 @@
             :lg="homePageInfo.show_right_banner ? 3 : 2"
             :md="homePageInfo.show_right_banner ? 4 : 3"
             xmd="4"
-            sm="10  "
-            cols="5"
+            sm="11"
+            cols="10"
             v-for="(filteredProduct, index) in filteredProducts"
             :key="index"
           >
@@ -448,8 +475,8 @@
 
         <v-row v-if="radioGroup === '2'">
           <v-col
-            v-for="(supplier, index) in suppliers"
-            :key="index"
+            v-for="supplier in suppliers"
+            :key="supplier.user_id"
             :class="homePageInfo.show_right_banner ? '' : productsClass"
             :lg="homePageInfo.show_right_banner ? 3 : 2"
             :md="homePageInfo.show_right_banner ? 4 : 3"
@@ -464,22 +491,11 @@
         </v-row>
         <v-row justify="center">
           <v-btn
-            v-if="radioGroup == '1'"
             large
             :color="siteColor.button_color"
             :style="`color: ${siteColor.button_text_color}`"
             class="mb-15 white--text"
             @click="filterProducts('loadmore')"
-          >
-            {{ $t("homePage.loadMore") }}</v-btn
-          >
-          <v-btn
-            v-else
-            large
-            :color="siteColor.button_color"
-            :style="`color: ${siteColor.button_text_color}`"
-            class="mb-15 white--text"
-            @click="loadMoreSuppliers()"
           >
             {{ $t("homePage.loadMore") }}</v-btn
           >
@@ -647,7 +663,7 @@ export default {
   },
   methods: {
     async filterProducts(buttonPressed) {
-      this.isLoading = true;
+      // this.isLoading = true;
       // debugger
       this.productFilterFlag = true;
       console.log(this.toolbarSearch, this.categoryName);
@@ -811,14 +827,6 @@ export default {
       console.log("test");
       console.log(this.radioGroup);
     },
-    async loadMoreSuppliers() {
-      await this.$store.dispatch("getSuppliers", {
-        supplierFilterFlag: this.supplierFilterFlag,
-        supplierName: this.supplierName,
-        governorate: this.governorate,
-        region: this.region,
-      });
-    },
   },
   components: {
     product: () => import("../components/product"),
@@ -845,15 +853,15 @@ export default {
 }
 .arabic {
   font-family: "Markazi Text", serif;
-  font-size: 20px;
+  font-size: 17px;
 }
 span {
   font-family: "Markazi Text", serif;
-  font-size: 20px;
+  font-size: 17px;
 }
 p {
   font-family: "Markazi Text", serif;
-  font-size: 20px;
+  font-size: 25px;
 }
 .smallerText {
   font-size: 15px;

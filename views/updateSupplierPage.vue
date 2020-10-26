@@ -981,15 +981,14 @@ export default {
       //   this.carouselImage4,
       // ];
       bannerformdata.set("supplier_id", this.supplier.user_id);
-      if (this.leftImage) bannerformdata.append("file", this.leftImage, "left");
-      if (this.rightImage)
-        bannerformdata.append("file", this.rightImage, "right");
+      if (this.leftImage) bannerformdata.append("file", this.leftImage);
+      if (this.rightImage) bannerformdata.append("file", this.rightImage);
 
       carouselformdata.set("supplier_id", this.supplier.user_id);
-      carouselformdata.set("file", this.carouselImage1, "carousel_image_1");
-      carouselformdata.set("file", this.carouselImage2, "carousel_image_2");
-      carouselformdata.set("file", this.carouselImage3, "carousel_image_3");
-      carouselformdata.set("file", this.carouselImage4, "carousel_image_4");
+      carouselformdata.set("file", this.carouselImage1);
+      carouselformdata.set("file", this.carouselImage2);
+      carouselformdata.set("file", this.carouselImage3);
+      carouselformdata.set("file", this.carouselImage4);
       // carouselImages.forEach((element) => {
       //   console.log(JSON.stringify(element));
       //   carouselformdata.append("file", element ? element : "empty");
