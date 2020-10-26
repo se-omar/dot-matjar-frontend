@@ -9,7 +9,7 @@
     </div> -->
     <v-app-bar fixed :color="siteColor.toolbar_color" shaped>
       <v-row justify="start">
-        <v-col cols="12">
+        <v-col cols="12" lg="12">
           <span v-if="!supplierPageInfo.logo">
             <a @click="$router.push('/').catch(() => {})">
               <v-img
@@ -37,7 +37,14 @@
       </v-row>
       <!-- <v-spacer></v-spacer> -->
       <v-row justify="start">
-        <v-col v-if="!$route.params.supplier_id" cols="12" lg="6" sm="7" md="6">
+        <v-col
+          v-if="!$route.params.supplier_id"
+          cols="12"
+          lg="6"
+          sm="7"
+          md="6"
+          xs="7"
+        >
           <v-text-field
             class="mt-8 arabic"
             outlined
