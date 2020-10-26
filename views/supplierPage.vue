@@ -186,7 +186,7 @@
         cols="7"
       >
         <v-row justify="center">
-          <v-btn :color="siteColor.button_color" @click="getAllProducts">
+          <v-btn small :color="siteColor.button_color" @click="getAllProducts">
             <span :style="`color:${siteColor.button_text_color}`">{{
               $t("homePage.allProducts")
             }}</span></v-btn
@@ -199,7 +199,7 @@
                 ? ''
                 : productsClass
             "
-            :lg="supplierPageInfo && supplierPageInfo.show_right_banner ? 3 : 2"
+            :lg="supplierPageInfo && supplierPageInfo.show_right_banner ? 3 : 3"
             :md="supplierPageInfo && supplierPageInfo.show_right_banner ? 4 : 3"
             v-for="supplierProduct in supplierProducts"
             :key="supplierProduct.product_id"

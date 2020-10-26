@@ -147,7 +147,7 @@
                 :value="radioGroup"
               >
                 <v-row class="mb-n5" justify="center">
-                  <v-col cols="3" lg="4" sm="5" md="5">
+                  <v-col cols="5" lg="4" sm="5" md="5">
                     <v-radio @change="changeRadioGroup()" value="1">
                       <template v-slot:label>
                         <p v-if="siteLanguage == 'ar'" class="mt-4 arabic">
@@ -160,7 +160,7 @@
                     </v-radio>
                   </v-col>
 
-                  <v-col cols="3" lg="4" sm="5" md="5">
+                  <v-col cols="5" lg="6" sm="6" md="6">
                     <v-radio
                       @change="changeRadioGroup()"
                       :label="$t('toolbar.searchSuppliers')"
@@ -170,7 +170,7 @@
                         <p v-if="siteLanguage == 'ar'" class="mt-4 arabic">
                           {{ $t("toolbar.searchSuppliers") }}
                         </p>
-                        <p v-else class="mt-4">
+                        <p v-else class="mt-4 arabic">
                           {{ $t("toolbar.searchSuppliers") }}
                         </p>
                       </template>
@@ -180,8 +180,8 @@
               </v-radio-group>
             </v-row>
             <v-row justify="center">
-              <v-col cols="4"></v-col>
-              <v-col cols="4">
+              <v-col lg="4" cols="1" sm="3" md="3"></v-col>
+              <v-col cols="10" lg="4" sm="6" md="6">
                 <v-text-field
                   class="mt-8 arabic"
                   outlined
@@ -193,9 +193,9 @@
                   v-if="radioGroup === '1'"
                 ></v-text-field>
               </v-col>
-              <v-col cols="4"></v-col>
-              <v-col cols="4"></v-col>
-              <v-col cols="4">
+              <v-col lg="4" cols="1" sm="3" md="3"></v-col>
+              <v-col lg="4" cols="1" sm="3" md="3"></v-col>
+              <v-col lg="4" cols="10" sm="6" md="6">
                 <v-select
                   rounded
                   :items="availableCountries"
@@ -206,9 +206,9 @@
                   class="arabic"
                 ></v-select>
               </v-col>
-              <v-col cols="4"></v-col>
-              <v-col cols="2"></v-col>
-              <v-col cols="4" md="3">
+              <v-col cols="1" lg="4" sm="3" md="3"></v-col>
+
+              <v-col lg="5" cols="6" md="6" sm="6">
                 <v-select
                   rounded
                   v-if="radioGroup === '1'"
@@ -223,7 +223,7 @@
                 ></v-select>
               </v-col>
 
-              <v-col cols="4" md="3">
+              <v-col cols="6" lg="6" md="6" sm="6">
                 <v-select
                   rounded
                   v-if="radioGroup === '1'"
@@ -236,8 +236,8 @@
                   class="arabic"
                 ></v-select>
               </v-col>
-              <v-col cols="2"></v-col>
-              <v-col cols="2" lg="3" sm="4" md="4">
+
+              <v-col cols="6" lg="5" sm="6" md="6">
                 <v-select
                   rounded
                   v-if="radioGroup === '2'"
@@ -251,8 +251,20 @@
                   class="arabic"
                 ></v-select>
               </v-col>
-
-              <v-col cols="2" lg="3" sm="4" md="4">
+              <v-col lg="5" cols="6" sm="6" md="6">
+                <v-select
+                  rounded
+                  v-if="radioGroup === '2'"
+                  :items="regions"
+                  :disabled="radioGroup === '1'"
+                  :placeholder="$t('toolbar.region')"
+                  dense
+                  outlined
+                  v-model="region"
+                  class="arabic"
+                ></v-select>
+              </v-col>
+              <v-col cols="10" lg="3" sm="4" md="4">
                 <v-text-field
                   rounded
                   v-if="radioGroup === '2'"
@@ -265,24 +277,10 @@
                   class="arabic"
                 ></v-text-field>
               </v-col>
-              <v-col lg="3" cols="2" sm="4" md="4">
-                <v-select
-                  rounded
-                  v-if="radioGroup === '2'"
-                  :items="regions"
-                  :disabled="radioGroup === '1'"
-                  :placeholder="$t('toolbar.region')"
-                  dense
-                  outlined
-                  v-model="region"
-                  class="arabic"
-                ></v-select>
-              </v-col>
             </v-row>
 
             <v-row class="mt-n3" justify="center">
-              <v-col sm="3" lg="3" md="3"></v-col>
-              <v-col cols="6" sm="3" md="3" lg="3">
+              <v-col cols="6" sm="6" md="6" lg="5">
                 <v-text-field
                   :disabled="radioGroup === '2'"
                   dense
@@ -295,7 +293,7 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col cols="6" sm="3" md="3" lg="3">
+              <v-col cols="6" sm="6" md="6" lg="5">
                 <v-text-field
                   :disabled="radioGroup === '2'"
                   dense
@@ -307,31 +305,31 @@
                   class="arabic"
                 ></v-text-field>
               </v-col>
-              <v-col sm="3" lg="3" md="3"></v-col>
-              <v-col lg="5" sm="3" md="3"></v-col>
-              <v-col v-if="radioGroup === '2'" cols="4" sm="2" md="2" lg="2">
+              <v-col lg="4"></v-col>
+              <v-col v-if="radioGroup === '2'" cols="6" sm="6" md="6" lg="6">
                 <v-btn
                   @click="filterSuppliers()"
                   :color="siteColor.button_color"
                   rounded
-                  x-large
+                  small
                   ><span :style="`color: ${siteColor.button_text_color}`">{{
                     $t("toolbar.search")
                   }}</span></v-btn
                 >
               </v-col>
-              <v-col v-else cols="4" sm="2" md="2" lg="2">
+              <v-col v-else cols="4" sm="2" md="2" lg="6">
                 <v-btn
                   class="arabic"
                   @click="filterProducts('search')"
                   :color="siteColor.button_color"
                   rounded
-                  x-large
+                  small
                   ><span :style="`color: ${siteColor.button_text_color}`">{{
                     $t("toolbar.search")
                   }}</span></v-btn
                 >
               </v-col>
+              <v-col lg="4"></v-col>
 
               <!-- <v-col cols="4" sm="2" md="2" lg="2">
             <v-btn
