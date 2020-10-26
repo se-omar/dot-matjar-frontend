@@ -723,7 +723,7 @@
         :style="`color:${siteColor.toolbar_text_color}`"
         v-if="$vuetify.breakpoint.lg"
         text
-        @click="$router.push(`/${$i18n.locale}/myProducts`)"
+        @click="goToAbout"
       >
         <span class="smallerText"> {{ $t("toolbar.aboutUs") }}</span>
       </v-btn>
@@ -794,9 +794,8 @@
         <v-list-item-group active-class="deep-purple--text text--accent-4">
           <v-list-item @click="$router.push('/').catch((err) => {})">
             <v-list-item-icon>
-              <v-icon>mdi-home</v-icon>
+              <v-icon>fas fa-home</v-icon>
             </v-list-item-icon>
-
             <span style="font-size: 20px"> {{ $t("toolbar.homePage") }}</span>
           </v-list-item>
 
@@ -807,7 +806,7 @@
             v-if="currentUser"
           >
             <v-list-item-icon>
-              <v-icon>mdi-lock-reset</v-icon>
+              <v-icon>fas fa-user-lock</v-icon>
             </v-list-item-icon>
             <span style="font-size: 20px">
               {{ $t("toolbar.changeYourPassword") }}</span
@@ -821,59 +820,42 @@
             v-if="currentUser && currentUser.user_type == 'business'"
           >
             <v-list-item-icon>
-              <v-icon>mdi-email</v-icon>
+              <v-icon>fas fa-envelope</v-icon>
             </v-list-item-icon>
-            <span> {{ $t("toolbar.requests") }}</span>
+            <span style="font-size: 20px"> {{ $t("toolbar.requests") }}</span>
+          </v-list-item>
+
+          <v-list-item
+            @click="
+              $router.push(`/${$i18n.locale}/dashboard`).catch((err) => {})
+            "
+            v-if="currentUser && currentUser.user_type == 'business'"
+          >
+            <v-list-item-icon>
+              <v-icon>fas fa-chart-pie</v-icon>
+            </v-list-item-icon>
+
+            <span style="font-size: 20px"> {{ $t("toolbar.dashboard") }}</span>
           </v-list-item>
 
           <v-list-item
             v-if="currentUser && currentUser.user_type == 'business'"
-          >
-            <v-list-item-icon>
-              <v-icon>mdi-cart-plus</v-icon>
-            </v-list-item-icon>
-            <!-- <v-list-item-title
-              @click="$router.push('/myProducts').catch((err) => {})"
-            >
-              <span style="font-size: 17px">my products</span>
-            </v-list-item-title> -->
-          </v-list-item>
-
-          <v-list-item
-            v-if="currentUser && currentUser.user_type == 'business'"
-          >
-            <v-list-item-icon>
-              <v-icon>mdi-cart-plus</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title
-              @click="
-                $router.push(`/${$i18n.locale}/dashboard`).catch((err) => {})
-              "
-            >
-              <span style="font-size: 20px">
-                {{ $t("toolbar.dashboard") }}</span
-              >
-            </v-list-item-title>
-          </v-list-item>
-
-          <v-list-item
-            v-if="currentUser && currentUser == 'business'"
             @click="$router.push(`/${$i18n.locale}/myProducts`)"
           >
             <v-list-item-icon>
-              <v-icon>mdi-account-plus</v-icon>
+              <v-icon>fas fa-store</v-icon>
             </v-list-item-icon>
-            <span style="font-size: 17px">
+            <span style="font-size: 20px">
               {{ $t("toolbar.myProductsNobr") }}</span
             >
           </v-list-item>
 
           <v-list-item
-            v-if="currentUser && currentUser == 'admin'"
+            v-if="currentUser && currentUser.user_type == 'admin'"
             @click="$router.push(`/${$i18n.locale}/siteColors`)"
           >
             <v-list-item-icon>
-              <v-icon>mdi-account-plus</v-icon>
+              <v-icon>fas fa-palette</v-icon>
             </v-list-item-icon>
             <span
               v-html="$t('toolbar.siteColorsNobr')"
@@ -883,15 +865,15 @@
           </v-list-item>
 
           <v-list-item
-            v-if="currentUser && currentUser == 'business'"
+            v-if="currentUser && currentUser.user_type == 'business'"
             @click="$router.push(`/${$i18n.locale}/orderedProducts`)"
           >
             <v-list-item-icon>
-              <v-icon>mdi-account-plus</v-icon>
+              <v-icon>fas fa-truck</v-icon>
             </v-list-item-icon>
 
             <span
-              :style="`color: ${siteColor.button_text_color}; font-size: 20px`"
+              style="font-size: 20px"
               v-html="$t('toolbar.orderManageNobr')"
             >
             </span>
@@ -902,11 +884,11 @@
             @click="$router.push(`/${$i18n.locale}/categoryAndItemRequests`)"
           >
             <v-list-item-icon>
-              <v-icon>mdi-account-plus</v-icon>
+              <v-icon>fas fa-envelope</v-icon>
             </v-list-item-icon>
             <span
               v-html="$t('toolbar.categoryRequestsNobr')"
-              :style="`color: ${siteColor.button_text_color}; font-size:20px`"
+              style="font-size: 20px"
             >
             </span>
           </v-list-item>
@@ -916,25 +898,13 @@
             @click="$router.push(`/${$i18n.locale}/pendingSuppliers`)"
           >
             <v-list-item-icon>
-              <v-icon>mdi-account-plus</v-icon>
+              <v-icon>fas fa-users</v-icon>
             </v-list-item-icon>
             <span
-              :style="`color: ${siteColor.button_text_color}; font-size: 20px`"
+              style="font-size: 20px"
               v-html="$t('toolbar.pendingSuppliersNobr')"
             >
             </span>
-          </v-list-item>
-
-          <v-list-item
-            v-if="currentUser && currentUser.user_type == 'business'"
-            @click="
-              $router.push(`/${$i18n.locale}/requestsPage`).catch((err) => {})
-            "
-          >
-            <v-list-item-icon>
-              <v-icon>mdi-account-plus</v-icon>
-            </v-list-item-icon>
-            <span style="font-size: 20px"> {{ $t("toolbar.requests") }}</span>
           </v-list-item>
 
           <v-list-item
@@ -944,7 +914,7 @@
             "
           >
             <v-list-item-icon>
-              <v-icon>mdi-account-plus</v-icon>
+              <v-icon>fas fa-cart-arrow-down</v-icon>
             </v-list-item-icon>
             <span style="font-size: 20px"> {{ $t("toolbar.myOrders") }}</span>
           </v-list-item>
@@ -956,16 +926,16 @@
             "
           >
             <v-list-item-icon>
-              <v-icon>mdi-account-plus</v-icon>
+              <v-icon>fas fa-tools</v-icon>
             </v-list-item-icon>
             <span style="font-size: 20px">
               {{ $t("toolbar.adminDashboard") }}</span
             >
           </v-list-item>
 
-          <v-list-item v-if="!currentUser">
+          <v-list-item>
             <v-list-item-icon>
-              <v-icon>mdi-account-plus</v-icon>
+              <v-icon>fas fa-sign-in-alt</v-icon>
             </v-list-item-icon>
 
             <span
@@ -980,7 +950,7 @@
 
           <v-list-item v-if="currentUser" @click="logout">
             <v-list-item-icon>
-              <v-icon>mdi-information</v-icon>
+              <v-icon>fas fa-sign-out-alt</v-icon>
             </v-list-item-icon>
 
             <span style="font-size: 20px"> {{ $t("toolbar.logout") }}</span>
@@ -1014,6 +984,7 @@
 export default {
   components: {},
   async created() {
+    console.log("current language locale", this.$i18n.locale);
     localStorage.setItem("currentCurrency", "egp");
 
     if (localStorage.getItem("loginToken")) {
@@ -1249,6 +1220,9 @@ export default {
       this.$router.push({
         params: { lang: value },
       });
+
+      if (value == "ar" || value == "en") this.$i18n.locale = value;
+
       this.$vuetify.rtl = value == "ar" ? true : false;
       this.$store.commit("siteLanguage", value);
       location.reload();
@@ -1259,6 +1233,9 @@ export default {
       );
     },
 
+    goToAbout() {
+      window.location = "http://www.dotmatjar.com/about";
+    },
     // async changeCurrency(currency) {
     //   //this.$store.commit("emptyProductsArray");
     //   //location.reload();
