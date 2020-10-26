@@ -1,6 +1,11 @@
 <template>
   <div>
-    <v-card class="grey lighten-5" :elevation="7" :min-width="minWidth">
+    <v-card
+      @click="setCurrentRow"
+      class="grey lighten-5"
+      :elevation="7"
+      :min-width="minWidth"
+    >
       <v-img height="250" :src="filteredProduct.main_picture"></v-img>
 
       <v-row class="mt-n5">
@@ -9,7 +14,7 @@
             add3Dots(filteredProduct.product_name, 45)
           }}</v-card-title>
           <v-card-text>
-            <v-row style="height: 25%">
+            <v-row :class="overflowText">
               <v-col lg="12" md="12" sm="12" cols="12">
                 <span
                   :style="`color: black ; font-weight: 800; font-size:23px`"
@@ -34,10 +39,9 @@
               </v-col>
             </v-row>
           </v-card-text>
-          <v-card-text>{{ filteredProduct.product_id }}</v-card-text>
 
-          <v-row justify="center">
-            <v-col cols="11" lg="10" sm="11" md="11">
+          <v-row justify="center" :class="overflowText">
+            <!-- <v-col cols="11" lg="10" sm="11" md="11">
               <v-btn
                 rounded
                 class="font"
@@ -46,7 +50,7 @@
                 text
                 >{{ $t("product.details") }}
               </v-btn>
-            </v-col>
+            </v-col> -->
             <v-col
               cols="11"
               lg="10"
@@ -56,7 +60,7 @@
             >
               <v-btn
                 block
-                @click="add(filteredProduct)"
+                @click.stop="add(filteredProduct)"
                 variant="primary"
                 :color="siteColor.button_color"
                 class="white--text"
@@ -168,6 +172,14 @@ export default {
           toolbar_text_color: "black",
         };
       }
+    },
+    overflowText() {
+      if (
+        this.filteredProduct.product_name &&
+        this.filteredProduct.product_name.length > 23
+      )
+        return "mt-n4";
+      else return "";
     },
   },
 };
