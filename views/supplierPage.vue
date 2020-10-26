@@ -105,14 +105,14 @@
         </v-card>
       </v-col> -->
       <!-- category -->
-      <v-col lg="2" sm="3" md="2" cols="3">
+      <v-col lg="2" sm="3" md="2" cols="4">
         <v-card height="95%" style="overflow: hidden" max-width>
           <!-- <v-row justify="center"
             ><v-card-title>Categories</v-card-title>
           </v-row> -->
 
           <v-row>
-            <v-col cols="6" sm="12" lg="10">
+            <v-col cols="6" sm="12" lg="12">
               <v-menu
                 v-for="category in supplierCategories"
                 :key="category"
@@ -130,61 +130,24 @@
                         v-bind="attrs"
                         v-on="on"
                         text
+                        style="overflow: hidden"
                         @click="filterProductsWithCategory(category)"
                       >
-                        <span v-if="$vuetify.breakpoint.xs">
-                          <v-row justify="center">
-                            <v-col>
-                              <span
-                                class="mt-1 smallerText"
-                                style="font-size: 15px"
-                              >
-                                {{ category }}</span
-                              >
-
-                              <v-btn
-                                @click="filterProductsWithCategory(category)"
-                                icon
-                                style="color: black"
-                              >
-                                <i
-                                  v-if="siteLanguage == 'en'"
-                                  class="fa fa-chevron-right"
-                                ></i>
-                                <i v-else class="fa fa-chevron-left"></i>
-                              </v-btn>
-                            </v-col>
-                          </v-row>
-                        </span>
-                        <span v-else>
-                          <v-row justify="start">
-                            <v-col lg="5">
-                              <i
-                                :class="`fas fa-${category} fa-sm  mr-2 mt-2`"
-                              ></i>
-
-                              <span class="mt-1 smallerText">
-                                {{ category }}</span
-                              >
-                            </v-col>
-                            <v-row justify="end">
-                              <v-col lg="2">
-                                <v-btn
-                                  @click="filterProductsWithCategory(category)"
-                                  icon
-                                  style="overflow: hidden; color: black"
-                                  text
-                                >
-                                  <i
-                                    v-if="siteLanguage == 'en'"
-                                    class="fa fa-chevron-right"
-                                  ></i>
-                                  <i v-else class="fa fa-chevron-left"></i>
-                                </v-btn>
-                              </v-col>
-                            </v-row>
-                          </v-row>
-                        </span>
+                        <v-row justify="start">
+                          <i :class="`fas fa-${category} fa-lg mr-2 mt-2`"></i>
+                          <span style="color: black"> {{ category }}</span>
+                        </v-row>
+                        <v-btn
+                          @click="filterProductsWithCategory(category)"
+                          icon
+                          style="overflow: hidden; color: black"
+                        >
+                          <i
+                            v-if="siteLanguage == 'en'"
+                            class="fa fa-chevron-right"
+                          ></i>
+                          <i v-else class="fa fa-chevron-left"></i>
+                        </v-btn>
                       </v-btn>
                     </v-col>
                     <!-- <v-col lg="3" sm="4"> </v-col> -->
@@ -223,7 +186,7 @@
         cols="7"
       >
         <v-row justify="center">
-          <v-btn small :color="siteColor.button_color" @click="getAllProducts">
+          <v-btn :color="siteColor.button_color" @click="getAllProducts">
             <span :style="`color:${siteColor.button_text_color}`">{{
               $t("homePage.allProducts")
             }}</span></v-btn
@@ -236,9 +199,8 @@
                 ? ''
                 : productsClass
             "
-            :lg="supplierPageInfo && supplierPageInfo.show_right_banner ? 3 : 3"
+            :lg="supplierPageInfo && supplierPageInfo.show_right_banner ? 3 : 2"
             :md="supplierPageInfo && supplierPageInfo.show_right_banner ? 4 : 3"
-            cols="9"
             v-for="supplierProduct in supplierProducts"
             :key="supplierProduct.product_id"
           >

@@ -47,10 +47,10 @@
       <v-row class="mr-16" justify="start">
         <v-col
           v-if="!$route.params.supplier_id"
-          cols="9"
+          cols="7"
           lg="8"
           sm="6"
-          md="6"
+          md="8"
           xs="5"
         >
           <template>
