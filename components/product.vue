@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-card
+      min-height="456"
       @click="setCurrentRow"
       class="grey lighten-5"
       :elevation="7"

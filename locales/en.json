@@ -471,5 +471,8 @@
     "profilePic": "profile picture",
     "addUser": "Add user",
     "cancel": "cancel"
+  },
+  "myProducts": {
+    "products": "'s products"
   }
 }

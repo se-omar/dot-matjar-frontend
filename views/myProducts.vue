@@ -1,24 +1,6 @@
 <template>
   <v-app class="grey lighten-4">
-    <v-row>
-      <v-col>
-        <v-card height="120">
-          <v-card-title>
-            <span>ad here</span>
-          </v-card-title>
-        </v-card>
-      </v-col>
-    </v-row>
-
-    <v-row class="ml-2">
-      <v-col lg="2" style="max-width: 12%">
-        <v-card height="95%">
-          <v-card-title>
-            <span>ad here</span>
-          </v-card-title>
-        </v-card>
-      </v-col>
-
+    <v-row justify="center">
       <v-col lg="9">
         <v-container
           v-if="
@@ -28,7 +10,7 @@
         >
           <v-row justify="center">
             <p class="display-1">
-              {{ currentUser.full_arabic_name }}'s products
+              {{ currentUser.full_arabic_name }} {{ $t("myProducts.products") }}
             </p>
           </v-row>
           <v-row>
@@ -87,14 +69,6 @@
           </v-row>
         </v-container>
         <v-divider class="mx-15"></v-divider>
-      </v-col>
-
-      <v-col lg="2" style="max-width: 12%">
-        <v-card height="95%">
-          <v-card-title>
-            <span>ad here</span>
-          </v-card-title>
-        </v-card>
       </v-col>
     </v-row>
   </v-app>

@@ -11,7 +11,10 @@
       v-if="this.$route.params.supplier_id == currentUser.user_id"
     ></sideButton> -->
 
-    <v-row v-if="supplierPageInfo.show_carousel" justify="center">
+    <v-row
+      v-if="supplierPageInfo && supplierPageInfo.show_carousel"
+      justify="center"
+    >
       <v-col :lg="supplierPageInfo ? supplierPageInfo.carousel_width : 10">
         <carousel
           :autoplay="true"
@@ -20,7 +23,7 @@
           :loop="true"
           :navigationEnabled="true"
         >
-          <slide v-if="supplierPageInfo.carousel_image_1">
+          <slide v-if="supplierPageInfo && supplierPageInfo.carousel_image_1">
             <v-img
               :height="
                 supplierPageInfo ? supplierPageInfo.carousel_height : 400
@@ -28,7 +31,7 @@
               :src="nodeHost + supplierPageInfo.carousel_image_1"
             ></v-img>
           </slide>
-          <slide v-if="supplierPageInfo.carousel_image_2">
+          <slide v-if="supplierPageInfo && supplierPageInfo.carousel_image_2">
             <v-img
               :height="
                 supplierPageInfo ? supplierPageInfo.carousel_height : 400
@@ -36,7 +39,7 @@
               :src="nodeHost + supplierPageInfo.carousel_image_2"
             ></v-img>
           </slide>
-          <slide v-if="supplierPageInfo.carousel_image_3">
+          <slide v-if="supplierPageInfo && supplierPageInfo.carousel_image_3">
             <v-img
               :height="
                 supplierPageInfo ? supplierPageInfo.carousel_height : 400
@@ -44,7 +47,7 @@
               :src="nodeHost + supplierPageInfo.carousel_image_3"
             ></v-img>
           </slide>
-          <slide v-if="supplierPageInfo.carousel_image_4">
+          <slide v-if="supplierPageInfo && supplierPageInfo.carousel_image_4">
             <v-img
               :height="
                 supplierPageInfo ? supplierPageInfo.carousel_height : 400
@@ -171,9 +174,9 @@
       <!-- category -->
 
       <v-col
-        :lg="supplierPageInfo.show_right_banner ? 8 : 10"
+        :lg="supplierPageInfo && supplierPageInfo.show_right_banner ? 8 : 10"
         sm="6"
-        :md="supplierPageInfo.show_right_banner ? 8 : 10"
+        :md="supplierPageInfo && supplierPageInfo.show_right_banner ? 8 : 10"
         cols="6"
       >
         <v-row justify="center">
@@ -185,14 +188,22 @@
         </v-row>
         <v-row>
           <v-col
-            :class="supplierPageInfo.show_right_banner ? '' : productsClass"
-            :lg="supplierPageInfo.show_right_banner ? 3 : 2"
-            :md="supplierPageInfo.show_right_banner ? 4 : 3"
+            :class="
+              supplierPageInfo && supplierPageInfo.show_right_banner
+                ? ''
+                : productsClass
+            "
+            :lg="supplierPageInfo && supplierPageInfo.show_right_banner ? 3 : 2"
+            :md="supplierPageInfo && supplierPageInfo.show_right_banner ? 4 : 3"
             v-for="supplierProduct in supplierProducts"
             :key="supplierProduct.product_id"
           >
             <product
-              :minWidth="supplierPageInfo.show_right_banner ? '104%' : '120%'"
+              :minWidth="
+                supplierPageInfo && supplierPageInfo.show_right_banner
+                  ? '104%'
+                  : '120%'
+              "
               :addToCartButton="false"
               :filteredProduct="supplierProduct"
             ></product>
@@ -202,6 +213,7 @@
       <v-col
         lg="2"
         v-if="
+          supplierPageInfo &&
           supplierPageInfo.show_right_banner &&
           supplierPageInfo.right_banner_image
         "

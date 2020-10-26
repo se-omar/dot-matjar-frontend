@@ -391,9 +391,9 @@
         "orderNumber": "رقم الطلب",
         "orderDate": "تاريخ الطلب",
         "productName": "اسم المنتج",
-        "productsId": "رقم المنتج",
-        "productsCode": "كود المنتج",
-        "productsQuantity": "الكمية المتاحة",
+        "productId": "رقم المنتج",
+        "productCode": "كود المنتج",
+        "productQuantity": "الكمية المتاحة",
         "status": "الحالة"
     },
     "productDetails": {
@@ -445,5 +445,8 @@
         "searchUserByName": "بحث المستخدم بلاسم",
         "search": "بحث",
         "loadmore": " تحميل المزيد"
+    },
+    "myProducts": {
+        "products": "منتجات"
     }
 }
