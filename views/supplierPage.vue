@@ -91,7 +91,7 @@
         </v-btn>
       </v-col>
     </v-row>
-    <v-row class="ml-2">
+    <v-row>
       <!-- <v-col
         v-if="
           supplierPageInfo.show_left_banner &&
@@ -105,7 +105,7 @@
         </v-card>
       </v-col> -->
       <!-- category -->
-      <v-col lg="2" sm="3" md="2" cols="3">
+      <v-col lg="2" sm="3" md="2" cols="4">
         <v-card height="95%" style="overflow: hidden" max-width>
           <!-- <v-row justify="center"
             ><v-card-title>Categories</v-card-title>
@@ -510,15 +510,20 @@ export default {
 #image {
   border-radius: 50%;
 }
+
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 17px;
+}
 span {
   font-family: "Markazi Text", serif;
-  font-size: 25px;
+  font-size: 17px;
 }
 p {
   font-family: "Markazi Text", serif;
-  font-size: 25px;
+  font-size: 19px;
 }
 .smallerText {
-  font-size: 17px;
+  font-size: 15px;
 }
 </style>

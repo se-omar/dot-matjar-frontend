@@ -1401,21 +1401,21 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
 .arabic {
   font-family: "Markazi Text", serif;
-  font-size: 18px;
+  font-size: 17px;
 }
 span {
   font-family: "Markazi Text", serif;
-  font-size: 15px;
+  font-size: 17px;
 }
 p {
   font-family: "Markazi Text", serif;
-  font-size: 15px;
+  font-size: 19px;
 }
 .smallerText {
   font-size: 15px;
 }
 div {
   font-family: "Markazi Text", serif;
-  font-size: 15px;
+  font-size: 17px;
 }
 </style>

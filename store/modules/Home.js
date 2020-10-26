@@ -709,7 +709,7 @@ export default {
                 })
         },
         deleteUser(context, user_id) {
-            // console.log(user_id)
+            console.log(user_id)
             axios.put(context.rootState.nodeHost + '/api/deleteUser', { user_id: user_id })
                 .then(message => {
                     alert(message.data.message)
