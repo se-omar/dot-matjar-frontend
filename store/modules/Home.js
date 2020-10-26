@@ -242,6 +242,7 @@ export default {
                     //console.log(response.data.data)
                     //console.log(response.data.message)
                     context.commit('getSiteColor', response.data.data)
+                    console.log('site color from DB', response.data.data)
                 })
         },
 
@@ -253,7 +254,7 @@ export default {
             const bodyParameters = {
                 key: "value"
             };
-
+            console.log(context.rootState.nodeHost);
             await axios.post(context.rootState.nodeHost + '/api/refreshCurrentUser',
                 bodyParameters, config).then(response => {
                     console.log('response from server user', response)
@@ -642,14 +643,14 @@ export default {
         getAllUsers(context) {
             var id = context.state.allUsers.length > 0 ? context.state.allUsers[context.state.allUsers.length - 1].user_id : null
             console.log('loadmore', id)
-            axios.put("http://localhost:3000/api/getAllUsers", { user_id: context.state.allUsers.length > 0 ? context.state.allUsers[context.state.allUsers.length - 1].user_id : null })
+            axios.put(context.rootState.nodeHost + "/api/getAllUsers", { user_id: context.state.allUsers.length > 0 ? context.state.allUsers[context.state.allUsers.length - 1].user_id : null })
                 .then(users => {
                     console.log(users.data.data)
                     context.commit('getAllUsers', users.data.data)
                 })
         },
         getUser(context, user_id) {
-            axios.put("http://localhost:3000/api/getUser", { user_id })
+            axios.put(context.rootState.nodeHost + "/api/getUser", { user_id })
                 .then(user => {
 
                     console.log('user iss', user.data.data)
@@ -680,7 +681,7 @@ export default {
             user_id,
             user_type
         }) {
-            axios.put('http://localhost:3000/api/updateUserInfoFromAdmin', {
+            axios.put(context.rootState.nodeHost + '/api/updateUserInfoFromAdmin', {
                 national_number,
                 gender,
                 full_arabic_name,
@@ -709,7 +710,7 @@ export default {
         },
         deleteUser(context, user_id) {
             console.log(user_id)
-            axios.put('http://localhost:3000/api/deleteUser', { user_id: user_id })
+            axios.put(context.rootState.nodeHost + '/api/deleteUser', { user_id: user_id })
                 .then(message => {
                     alert(message.data.message)
                 })

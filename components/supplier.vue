@@ -14,8 +14,9 @@
           margin-left: auto;
           margin-right: auto;
         "
-        :src="supplier.profile_photo"
+        :src="supplier.profile_photo ? supplier.profile_photo : ''"
       ></v-img>
+
       <v-row justify="center">
         <v-card-title>{{ supplier.full_arabic_name }}</v-card-title>
       </v-row>
