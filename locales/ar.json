@@ -439,7 +439,17 @@
         "noAccess": "ليس لديك صلاحية لاظهار هذه الصفحة"
     },
     "userOrders": {
-        "showProducts": "عرض<br/> المنتجات"
+        "showProducts": "عرض المنتجات",
+        "orderId": "ID الطلب",
+        "orderNumber": "رقم الطلب",
+        "orderDate": "تاريخ الطلب",
+        "shippingDate": "تاريخ الوصول",
+        "orderPrice": "سعر الطلب",
+        "productName": "اسم المنتج",
+        "price": "السعر",
+        "productCode": "كود المنتج",
+        "status": "الحالة",
+        "quantity": "الكمية"
     },
     "allUsers": {
         "searchUserByName": "بحث المستخدم بلاسم",
