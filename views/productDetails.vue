@@ -134,7 +134,7 @@
               x-large
             >
               <span :style="`color:${siteColor.button_text_color}`">
-                {{ $t("productDetails.editProduct") }}:</span
+                {{ $t("productDetails.editProduct") }}</span
               >
             </v-btn>
 
@@ -146,7 +146,7 @@
               @click="supplierClicked(currentProduct.user)"
             >
               <span :style="`color:${siteColor.button_text_color}`">
-                {{ $t("productDetails.visitSupplier") }}:</span
+                {{ $t("productDetails.visitSupplier") }}</span
               >
             </v-btn>
           </v-col>
@@ -162,7 +162,7 @@
               x-large
             >
               <span :style="`color:${siteColor.button_text_color}`">
-                {{ $t("productDetails.removeProduct") }}:</span
+                {{ $t("productDetails.removeProduct") }}</span
               >
             </v-btn>
 
@@ -178,14 +178,14 @@
               class="white--text"
               :color="siteColor.button_color"
               ><span :style="`color:${siteColor.button_text_color}`">
-                {{ $t("productDetails.addToCart") }}:</span
+                {{ $t("productDetails.addToCart") }}</span
               ></v-btn
             >
           </v-col>
 
           <v-col lg="9">
             <p class="text-h5 mb-n2 text-center">
-              {{ $t("productDetails.productRating") }}:
+              {{ $t("productDetails.productRating") }}
             </p>
             <v-rating
               readonly
@@ -204,19 +204,19 @@
           <v-col cols="9">
             <v-divider class="mb-8"></v-divider>
             <p class="text-h5 mb-n2 text-center" v-if="!userOrderedProductFlag">
-              {{ $t("productDetails.canRateIfBuy") }}:
+              {{ $t("productDetails.canRateIfBuy") }}
             </p>
             <p
               v-if="productRating === 0 && userOrderedProductFlag"
               class="text-h5 mb-n2 text-center"
             >
-              {{ $t("productDetails.rateProduct") }}:
+              {{ $t("productDetails.rateProduct") }}
             </p>
             <p
               v-if="productRating !== 0 && userOrderedProductFlag"
               class="text-h5 mb-n2 text-center"
             >
-              {{ $t("productDetails.yourRating") }}:
+              {{ $t("productDetails.yourRating") }}
             </p>
             <v-rating
               v-if="userOrderedProductFlag"
@@ -241,7 +241,7 @@
               block
               :color="siteColor.button_color"
               ><span :style="`color:${siteColor.button_text_color}`">
-                {{ $t("productDetails.submit") }}:</span
+                {{ $t("productDetails.submit") }}</span
               ></v-btn
             >
           </v-col>

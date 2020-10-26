@@ -18,7 +18,9 @@
       <v-row justify="center">
         <v-card-text
           :style="`color:${siteColor.footer_text_color}`"
-          v-if="!supplierPageInfo.footer"
+          v-if="
+            (supplierPageInfo && !supplierPageInfo.footer) || !supplierPageInfo
+          "
           class="pt-1 mx-1"
           >{{ $t("footer.footerText") }}</v-card-text
         >
@@ -129,9 +131,6 @@ export default {
     siteLanguage() {
       return this.$store.state.Home.siteLanguage;
     },
-  },
-  created() {
-    console.log(this.supplierPageInfo.facebook, "facebook");
   },
 };
 </script>

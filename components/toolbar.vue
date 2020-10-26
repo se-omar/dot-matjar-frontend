@@ -10,7 +10,11 @@
     <v-app-bar fixed :color="siteColor.toolbar_color" shaped>
       <v-row justify="start">
         <v-col cols="12" lg="12">
-          <span v-if="!supplierPageInfo.logo">
+          <span
+            v-if="
+              (supplierPageInfo && !supplierPageInfo.logo) || !supplierPageInfo
+            "
+          >
             <a @click="$router.push('/').catch(() => {})">
               <v-img
                 src="../assets/images/dotmatjar_logo.png"
@@ -25,7 +29,11 @@
             <v-btn text rounded @click="goSupplierPage">
               <v-img
                 class="mx-2"
-                :src="nodeHost + supplierPageInfo.logo"
+                :src="
+                  supplierPageInfo && supplierPageInfo.logo
+                    ? nodeHost + supplierPageInfo.logo
+                    : '../assets/images/dotmatjar_logo.png'
+                "
                 max-height="60"
                 max-width="100"
                 contain

@@ -9,8 +9,9 @@
     </div>
 
     <v-row class="ml-2 mt-16">
-      <v-col
+      <!-- <v-col
         v-if="
+        supplierPageInfo &&
           supplierPageInfo.show_left_banner &&
           supplierPageInfo.left_banner_image
         "
@@ -20,9 +21,9 @@
         <v-card height="95%">
           <v-img :src="nodeHost + supplierPageInfo.left_banner_image"></v-img>
         </v-card>
-      </v-col>
+      </v-col> -->
 
-      <v-col v-else lg="2" style="max-width: 12%"> </v-col>
+      <v-col lg="2" style="max-width: 12%"> </v-col>
 
       <v-col lg="9">
         <v-row justify="center">
@@ -103,7 +104,7 @@
                         :color="siteColor.toolbar_text_color"
                         size="100"
                       >
-                        <span class="white--text headline text-h3"
+                        <span class="headline text-h3"
                           >{{ supplier.rating }}.0</span
                         >
                       </v-avatar>
@@ -422,6 +423,7 @@
       <v-col
         lg="2"
         v-if="
+          supplierPageInfo &&
           supplierPageInfo.show_right_banner &&
           supplierPageInfo.right_banner_image
         "

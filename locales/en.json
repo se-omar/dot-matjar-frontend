@@ -382,7 +382,7 @@
   "orderedProducts": {
     "productsPlaced": "products placed in orders",
     "users": "users",
-    "showProducts": "showProducts",
+    "showProducts": "show products",
     "products": "products",
     "productStatus": "product status",
     "update": "update",
@@ -448,7 +448,17 @@
     "noAccess": "you dont have access to this page"
   },
   "userOrders": {
-    "showProducts": "Show<br/> Products"
+    "showProducts": "Show Products",
+    "orderId": "order ID",
+    "orderNumber": "order number",
+    "orderDate": "order date",
+    "shippingDate": "shipping date",
+    "orderPrice": "order price",
+    "productName": "product name",
+    "price": "price",
+    "productCode": "product code",
+    "status": "status",
+    "quantity": "quantity"
   },
   "allUsers": {
     "searchUserByName": "Search User By Name",
@@ -471,5 +481,8 @@
     "profilePic": "profile picture",
     "addUser": "Add user",
     "cancel": "cancel"
+  },
+  "myProducts": {
+    "products": "'s products"
   }
 }

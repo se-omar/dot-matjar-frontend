@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-row>
+    <!-- <v-row>
       <v-col>
         <v-card height="120">
           <v-card-title>
@@ -8,18 +8,18 @@
           </v-card-title>
         </v-card>
       </v-col>
-    </v-row>
+    </v-row> -->
 
     <v-row justify="start">
-      <v-col cols="1" lg="1" sm="1">
+      <!-- <v-col cols="1" lg="1" sm="1">
         <v-card height="95%">
           <v-card-title>
             <span>ad here</span>
           </v-card-title>
         </v-card>
-      </v-col>
+      </v-col> -->
 
-      <v-col sm="5" lg="5" cols="5 mt-4">
+      <v-col sm="5" lg="6" cols="5 mt-4">
         <v-card>
           <v-data-table
             @click:row="tableClicked"
@@ -48,7 +48,7 @@
           </v-data-table>
         </v-card>
       </v-col>
-      <v-col sm="5" lg="5" cols="5 mt-4">
+      <v-col sm="5" lg="6" cols="5 mt-4">
         <v-card>
           <v-data-table
             bordered
@@ -78,13 +78,13 @@
         </v-card>
       </v-col>
 
-      <v-col cols="1" lg="1" sm="1">
+      <!-- <v-col cols="2" lg="2" sm="2">
         <v-card height="95%">
           <v-card-title>
             <span>ad here</span>
           </v-card-title>
         </v-card>
-      </v-col>
+      </v-col> -->
     </v-row>
   </v-app>
 </template>
@@ -135,6 +135,27 @@ export default {
         };
       }
     },
+
+    headers() {
+      return [
+        { text: this.$t("userOrders.orderId"), value: "order_id" },
+        { text: this.$t("userOrders.orderNumber"), value: "order_number" },
+        { text: this.$t("userOrders.orderDate"), value: "order_date" },
+        { text: this.$t("userOrders.shippingDate"), value: "shipping_date" },
+        { text: this.$t("userOrders.orderPrice"), value: "total_price" },
+        { text: this.$t("userOrders.showProducts"), value: "showProducts" },
+      ];
+    },
+
+    productHeaders() {
+      return [
+        { text: this.$t("userOrders.productName"), value: "product_name" },
+        { text: this.$t("userOrders.price"), value: "unit_price" },
+        { text: this.$t("userOrders.productCode"), value: "product_code" },
+        { text: this.$t("userOrders.status"), value: "status" },
+        { text: this.$t("userOrders.quantity"), value: "quantity" },
+      ];
+    },
   },
 
   methods: {
@@ -176,24 +197,9 @@ export default {
     },
   },
   data: () => ({
-    headers: [
-      { text: "order ID", value: "order_id" },
-      { text: "Order number", value: "order_number" },
-      { text: "Order DATE", value: "order_date" },
-      { text: "shipping DATE", value: "shipping_date" },
-      { text: "Order price", value: "total_price" },
-      { text: "Show products", value: "showProducts" },
-    ],
     order: [],
     item: 1,
 
-    productHeaders: [
-      { text: "Product name", value: "product_name" },
-      { text: "Price", value: "unit_price" },
-      { text: "Product code", value: "product_code" },
-      { text: "Status", value: "status" },
-      { text: "Quantity", value: "quantity" },
-    ],
     orderProducts: [],
   }),
 };
@@ -214,7 +220,7 @@ p {
   font-size: 25px;
 }
 .smallerText {
-  font-size: 18px;
+  font-size: 14px;
 }
 h5 {
   font-family: "Markazi Text", serif;
