@@ -8,7 +8,11 @@
     width="100%"
     @click.native="setCurrentRequest"
   >
-    <v-card-title style="font-size: 25px" class="mr-1">
+    <v-card-title
+      v-if="request && request.product"
+      style="font-size: 25px"
+      class="mr-1"
+    >
       {{ request.product.product_name }}
     </v-card-title>
 
@@ -32,7 +36,9 @@
         <v-card-text>
           <span style="font-size: 20px"
             >{{ $t("requestCard.senderName") }}
-            {{ request.sendingUser.full_arabic_name }}</span
+            <span v-if="request && request.sendingUser">{{
+              request.sendingUser.full_arabic_name
+            }}</span></span
           >
         </v-card-text>
       </v-col>
@@ -41,7 +47,9 @@
         <v-card-text>
           <span style="font-size: 20px"
             >{{ $t("requestCard.receiverName")
-            }}{{ request.recievingUser.full_arabic_name }}</span
+            }}<span v-if="request && request.recievingUser">{{
+              request.recievingUser.full_arabic_name
+            }}</span></span
           >
         </v-card-text>
       </v-col>

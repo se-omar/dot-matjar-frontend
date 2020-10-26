@@ -6,9 +6,11 @@
 
     <v-row justify="space-between">
       <v-col cols="9">
-        <v-card-title style="font-size: 25px">{{
-          currentRequest.product.product_name
-        }}</v-card-title>
+        <v-card-title
+          v-if="currentRequest && currentRequest.product"
+          style="font-size: 25px"
+          >{{ currentRequest.product.product_name }}</v-card-title
+        >
       </v-col>
       <v-col class="mt-n5" lg="3" md="3" sm="12" cols="12">
         <span style="font-size: 17px">
@@ -43,14 +45,18 @@
         <v-card-text v-if="requestType === 'recieved'">
           <span style="font-size: 19px"
             >{{ $t("requestDetails.senderName") }}
-            {{ currentRequest.sendingUser.full_arabic_name }}</span
+            <span v-if="currentRequest && currentRequest.sendingUser">{{
+              currentRequest.sendingUser.full_arabic_name
+            }}</span></span
           >
         </v-card-text>
 
         <v-card-text v-else-if="requestType === 'sent'">
           <span style="font-size: 19px"
-            >{{ $t("requestDetails.ReceiverName") }}
-            {{ currentRequest.recievingUser.full_arabic_name }}</span
+            >{{ $t("requestDetails.receiverName") }}
+            <span v-if="currentRequest && currentRequest.recievingUser">{{
+              currentRequest.recievingUser.full_arabic_name
+            }}</span></span
           >
         </v-card-text>
       </v-col>
@@ -61,14 +67,18 @@
         <v-card-text v-if="requestType === 'recieved'">
           <span style="font-size: 19px"
             >{{ $t("requestDetails.email") }}
-            {{ currentRequest.sendingUser.email }}</span
+            <span v-if="currentRequest && currentRequest.sendingUser">{{
+              currentRequest.sendingUser.email
+            }}</span></span
           >
         </v-card-text>
 
         <v-card-text v-else-if="requestType === 'sent'">
           <span style="font-size: 19px"
             >{{ $t("requestDetails.email") }}
-            {{ currentRequest.recievingUser.email }}</span
+            <span v-if="currentRequest && currentRequest.recievingUser">{{
+              currentRequest.recievingUser.email
+            }}</span></span
           >
         </v-card-text>
       </v-col>
@@ -79,14 +89,18 @@
         <v-card-text v-if="requestType === 'recieved'">
           <span style="font-size: 19px"
             >{{ $t("requestDetails.mobileNumber") }}
-            {{ currentRequest.sendingUser.mobile_number }}</span
+            <span v-if="currentRequest && currentRequest.sendingUser">{{
+              currentRequest.sendingUser.mobile_number
+            }}</span></span
           >
         </v-card-text>
 
         <v-card-text v-else-if="requestType === 'sent'">
           <span style="font-size: 19px"
             >{{ $t("requestDetails.mobileNumber") }}
-            {{ currentRequest.recievingUser.mobile_number }}</span
+            <span v-if="currentRequest && currentRequest.recievingUser">{{
+              currentRequest.recievingUser.mobile_number
+            }}</span></span
           >
         </v-card-text>
       </v-col>
@@ -108,7 +122,9 @@
       <v-col>
         <v-card-text>
           <span style="font-size: 16px">
-            {{ currentRequest.request_details }}
+            <span v-if="currentRequest">{{
+              currentRequest.request_details
+            }}</span>
           </span>
         </v-card-text>
       </v-col>
@@ -128,7 +144,9 @@
       <v-col>
         <v-card-text>
           <span style="font-size: 16px">
-            {{ currentRequest.request_response }}
+            <span v-if="currentRequest">{{
+              currentRequest.request_response
+            }}</span>
           </span>
         </v-card-text>
       </v-col>
