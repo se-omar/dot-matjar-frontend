@@ -18,46 +18,36 @@
       ></v-img>
 
       <v-row justify="center">
-        <v-card-title>{{ supplier.full_arabic_name }}</v-card-title>
+        <v-card-title class="arabic">{{
+          supplier.full_arabic_name
+        }}</v-card-title>
       </v-row>
 
-      <v-card-text class="mt-n5" style="font-size: 16px">
+      <v-card-text class="mt-n5 smallerText">
         <v-icon class="mt-n1 mr-1">mdi-map-marker</v-icon>
         {{ supplier.governorate }}, {{ supplier.region }}
       </v-card-text>
 
-      <v-card-text class="mt-n5" style="font-size: 16px"
+      <v-card-text class="mt-n5 smallerText" style="font-size: 16px"
         >{{ $t("supplier.totalSales") }} {{ supplier.total_sales }}</v-card-text
       >
 
-      <v-card-text
-        v-if="supplier.monthSales"
-        style="font-size: 16px"
-        class="mt-n5"
+      <v-card-text v-if="supplier.monthSales" class="mt-n5 smallerText"
         >{{ selectedMonth }} {{ $t("supplier.sales") }}
         {{ supplier.monthSales }}</v-card-text
       >
 
-      <v-card-text
-        v-if="supplier.yearSales"
-        style="font-size: 16px"
-        class="mt-n5"
+      <v-card-text v-if="supplier.yearSales" class="mt-n5 smallerText"
         >{{ selectedYear }} {{ $t("supplier.sales") }}:
         {{ supplier.yearSales }}</v-card-text
       >
 
-      <v-card-text
-        v-if="supplier.monthRevenue"
-        style="font-size: 16px"
-        class="mt-n5"
+      <v-card-text v-if="supplier.monthRevenue" class="mt-n5 smallerText"
         >{{ selectedMonth }} {{ $t("supplier.revenue") }}
         {{ supplier.monthRevenue }}</v-card-text
       >
 
-      <v-card-text
-        v-if="supplier.yearRevenue"
-        style="font-size: 16px"
-        class="mt-n5"
+      <v-card-text v-if="supplier.yearRevenue" class="mt-n5 smallerText"
         >{{ selectedYear }} {{ $t("supplier.revenue") }}:
         {{ supplier.yearRevenue }}</v-card-text
       >
@@ -136,3 +126,26 @@ export default {
   },
 };
 </script>
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 18px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 17px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 25px;
+}
+.smallerText {
+  font-size: 15px;
+}
+div {
+  font-family: "Markazi Text", serif;
+  font-size: 17px;
+}
+</style>

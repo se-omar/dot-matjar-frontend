@@ -10,7 +10,7 @@
             :style="`color:${siteColor.footer_text_color}`"
             icon
           >
-            <v-icon @click="iconPressed(icon)" size="24px">{{ icon }}</v-icon>
+            <v-icon size="20px" @click="iconPressed(icon)">{{ icon }}</v-icon>
           </v-btn>
         </v-row>
       </v-card-text>
@@ -21,16 +21,22 @@
           v-if="
             (supplierPageInfo && !supplierPageInfo.footer) || !supplierPageInfo
           "
-          class="pt-1 mx-1"
+          class="pt-1 mx-1 arabic"
           >{{ $t("footer.footerText") }}</v-card-text
         >
-        <v-card-text :style="`color:${siteColor.footer_text_color}`" v-else>{{
-          supplierPageInfo.footer
-        }}</v-card-text>
+        <v-card-text
+          class="arabic"
+          :style="`color:${siteColor.footer_text_color}`"
+          v-else
+          >{{ supplierPageInfo.footer }}</v-card-text
+        >
       </v-row>
       <v-divider></v-divider>
 
-      <v-card-text class="pt-2" :style="`color:${siteColor.footer_text_color}`">
+      <v-card-text
+        class="pt-2 arabic"
+        :style="`color:${siteColor.footer_text_color}`"
+      >
         &copy; Copywrites 2020 to Dot-Matjar
         <v-img
           src="../assets/images/dotmatjar_logo.png"
@@ -135,4 +141,21 @@ export default {
 };
 </script>
 <style  scoped>
+@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 15px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 15px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 17px;
+}
+.smallerText {
+  font-size: 15px;
+}
 </style>

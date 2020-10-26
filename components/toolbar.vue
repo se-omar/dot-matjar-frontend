@@ -473,7 +473,7 @@
             <label class="file-label">
               <span class="file-cta">
                 <span class="file-icon">
-                  <i class="fa fa-camera fa-2x" style="color: blue"></i>
+                  <i class="fa fa-camera fa-lg" style="color: blue"></i>
                   <br />
                 </span>
                 <span class="file-label biggerText">
@@ -493,24 +493,26 @@
             </label>
           </div>
 
-          <v-card-text>
+          <v-card-title>
             <v-row justify="center">
-              <span class="username">{{ currentUser.full_arabic_name }}</span>
+              <span style="font-size: 20px">{{
+                currentUser.full_arabic_name
+              }}</span>
             </v-row>
-          </v-card-text>
+          </v-card-title>
 
           <v-row v-if="currentUser.user_type == 'business'" justify="center">
-            <v-col cols="12" sm="10" lg="5">
+            <v-col cols="10" sm="10" lg="5">
               <v-btn
                 class="btn1"
                 :color="siteColor.button_color"
-                large
+                small
                 rounded
                 @click="supplierPage"
               >
                 <span
                   :style="`color:${siteColor.button_text_color}; `"
-                  class="mos smallerText"
+                  class="smallerText"
                 >
                   {{ $t("toolbar.myPage") }}</span
                 >
@@ -519,17 +521,16 @@
             </v-col>
           </v-row>
           <v-row justify="center" v-if="currentUser.user_type == 'business'">
-            <v-col cols="12" sm="11" lg="5">
+            <v-col cols="10" sm="11" lg="5">
               <v-btn
                 class="btn1"
                 :color="siteColor.button_color"
-                large
+                small
                 rounded
                 @click="$router.push(`/${$i18n.locale}/myProducts`)"
               >
                 <span
-                  :style="`color: ${siteColor.button_text_color}`"
-                  class="mos smallerText"
+                  :style="`color: ${siteColor.button_text_color};font-size:15px`"
                   v-html="$t('toolbar.myProducts')"
                 >
                 </span>
@@ -538,7 +539,7 @@
             </v-col>
           </v-row>
           <v-row justify="center" v-if="currentUser.user_type == 'admin'">
-            <v-col cols="12" sm="10" lg="5">
+            <v-col cols="10" sm="10" lg="5">
               <v-btn
                 @click="$router.push(`/${$i18n.locale}/siteColors`)"
                 large
@@ -557,17 +558,16 @@
           </v-row>
 
           <v-row justify="center" v-if="currentUser.user_type == 'business'">
-            <v-col cols="12" sm="10" lg="5">
+            <v-col cols="10" sm="10" lg="5">
               <v-btn
-                class="btn1"
                 :color="siteColor.button_color"
-                large
+                small
                 rounded
                 @click="$router.push(`/${$i18n.locale}/orderedProducts`)"
               >
                 <span
                   :style="`color: ${siteColor.button_text_color}`"
-                  class="mos smallerText"
+                  class="smallerText"
                   v-html="$t('toolbar.orderManage')"
                 >
                 </span>
@@ -577,7 +577,7 @@
           </v-row>
 
           <v-row justify="center" v-if="currentUser.user_type == 'admin'">
-            <v-col cols="12x" sm="11" lg="6">
+            <v-col cols="12" sm="11" lg="6">
               <v-btn
                 :color="siteColor.button_color"
                 large
@@ -595,7 +595,7 @@
             </v-col>
           </v-row>
           <v-row justify="center" v-if="currentUser.user_type == 'admin'">
-            <v-col cols="12" sm="10" lg="5">
+            <v-col cols="10" sm="10" lg="5">
               <v-btn
                 class="btn1"
                 :color="siteColor.button_color"
@@ -621,7 +621,7 @@
                   @click="$router.push(`/${$i18n.locale}/editPassword`)"
                 >
                   <i
-                    class="fa fa-cog"
+                    class="fa fa-cog fa-sm"
                     aria-hidden="true"
                     style="color: black"
                   ></i>
@@ -636,7 +636,7 @@
                   class="size"
                 >
                   <i
-                    class="fa fa-edit"
+                    class="fa fa-edit fa-sm"
                     aria-hidden="true"
                     style="color: black"
                   ></i>
@@ -648,7 +648,7 @@
                 <br />
                 <a class="size" @click="logout">
                   <i
-                    class="fa fa-power-off"
+                    class="fa fa-power-off fa-sm"
                     aria-hidden="true"
                     style="color: black"
                   ></i>
@@ -1023,15 +1023,18 @@ export default {
       return this.$store.state.nodeHost;
     },
     siteColor() {
-      return this.$store.state.Home.siteColor;
-      // } else {
-      //   return {
-      //     button_text_color: "black",
-      //     button_color: "white",
-      //     toolbar_color: "white",
-      //     toolbar_text_color: "black",
-      //   };
+      if (this.$store.state.Home.siteColor) {
+        return this.$store.state.Home.siteColor;
+      } else {
+        return {
+          button_text_color: "black",
+          button_color: "white",
+          toolbar_color: "white",
+          toolbar_text_color: "black",
+        };
+      }
     },
+
     supplierPageInfo() {
       return this.$store.state.SupplierPage.supplierPageInfo;
     },
@@ -1292,18 +1295,18 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
 .arabic {
   font-family: "Markazi Text", serif;
-  font-size: 18px;
+  font-size: 17px;
 }
 span {
   font-family: "Markazi Text", serif;
-  font-size: 20px;
+  font-size: 17px;
 }
 p {
   font-family: "Markazi Text", serif;
-  font-size: 20px;
+  font-size: 17px;
 }
 .smallerText {
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .img {

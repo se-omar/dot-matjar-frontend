@@ -11,19 +11,18 @@
 
       <v-row class="mt-n5">
         <v-col cols="12">
-          <v-card-title style="font-size: 19.5px; overflow: hidden">{{
+          <v-card-title style="overflow: hidden" class="arabic">{{
             add3Dots(filteredProduct.product_name, 45)
           }}</v-card-title>
           <v-card-text>
             <v-row :class="overflowText">
               <v-col lg="12" md="12" sm="12" cols="12">
-                <span
-                  :style="`color: black ; font-weight: 800; font-size:23px`"
-                  >{{ filteredProduct.unit_price }}</span
-                >
+                <span :style="`color: black;font-size:23px `">{{
+                  filteredProduct.unit_price
+                }}</span>
                 <span
                   class="ml-1"
-                  :style="`color: black; font-weight: 800; font-size:17px`"
+                  :style="`color: black; font-weight: bold; `"
                   >{{ currentCurrency }}</span
                 >
               </v-col>
@@ -187,6 +186,23 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
+.arabic {
+  font-family: "Markazi Text", serif;
+  font-size: 17px;
+}
+span {
+  font-family: "Markazi Text", serif;
+  font-size: 17px;
+}
+p {
+  font-family: "Markazi Text", serif;
+  font-size: 17px;
+}
+.smallerText {
+  font-size: 15px;
+}
 .overflow {
   display: block;
   /* white-space: nowrap; */

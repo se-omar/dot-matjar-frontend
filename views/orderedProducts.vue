@@ -1,9 +1,6 @@
 <template>
   <v-app class="grey lighten-4">
     <v-row justify="center">
-      <v-col cols="12" lg="4" class="mt-8">
-        <p>{{ $t("orderedProducts.productsPlaced") }}</p>
-      </v-col>
       <!-- <product :filteredProduct="filteredProduct"></product> -->
 
       <v-col cols="12" lg="10">
@@ -12,12 +9,12 @@
             <v-col cols="12" lg="6">
               <v-toolbar shaped dark dense :color="siteColor.toolbar_color">
                 <v-row justify="center">
-                  <span
+                  <p
                     :style="`color:${siteColor.toolbar_text_color}`"
                     class="mt-4"
                   >
                     {{ $t("orderedProducts.users") }}
-                  </span>
+                  </p>
                 </v-row>
               </v-toolbar>
               <v-data-table
@@ -47,7 +44,7 @@
                 <v-spacer></v-spacer>
                 <v-toolbar-title>
                   <p
-                    class="text-h4 mt-4"
+                    class="mt-4"
                     :style="`color:${siteColor.toolbar_text_color}`"
                   >
                     {{ $t("orderedProducts.products") }}
@@ -370,25 +367,25 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
 .arabic {
   font-family: "Markazi Text", serif;
-  font-size: 25px;
+  font-size: 17px;
 }
 span {
   font-family: "Markazi Text", serif;
-  font-size: 25px;
+  font-size: 17px;
 }
 p {
   font-family: "Markazi Text", serif;
   font-size: 25px;
 }
 .smallerText {
-  font-size: 20px;
+  font-size: 15px;
 }
 h2 {
   font-family: "Markazi Text", serif;
-  font-size: 25px;
+  font-size: 17px;
 }
 h3 {
   font-family: "Markazi Text", serif;
-  font-size: 25px;
+  font-size: 17px;
 }
 </style>

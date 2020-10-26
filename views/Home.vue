@@ -327,7 +327,7 @@
                 transition="scale-transition"
               >
                 <template v-slot:activator="{ on, attrs }">
-                  <v-row justify="start">
+                  <v-row class="mx-3" justify="start">
                     <v-col cols="12" lg="10" sm="12">
                       <v-btn
                         width="110%"
@@ -337,11 +337,7 @@
                         text
                         @click="filterProductsWithCategory(category)"
                       >
-                        <span
-                          v-if="
-                            $vuetify.breakpoint.sm || $vuetify.breakpoint.xs
-                          "
-                        >
+                        <span v-if="$vuetify.breakpoint.xs">
                           <v-row justify="start">
                             <v-col>
                               <span
@@ -490,8 +486,8 @@
             :class="homePageInfo.show_right_banner ? '' : productsClass"
             :lg="homePageInfo.show_right_banner ? 3 : 2"
             :md="homePageInfo.show_right_banner ? 4 : 3"
-            sm="6"
-            cols="6"
+            sm="11"
+            cols="11"
           >
             <supplier
               :show_right_banner="homePageInfo.show_right_banner"
@@ -502,13 +498,13 @@
         <v-row justify="center">
           <v-btn
             v-if="radioGroup == '1'"
-            large
+            small
             :color="siteColor.button_color"
             :style="`color: ${siteColor.button_text_color}`"
             class="mb-15 white--text"
             @click="filterProducts('loadmore')"
           >
-            {{ $t("homePage.loadMore") }}</v-btn
+            <span> {{ $t("homePage.loadMore") }}</span></v-btn
           >
           <v-btn
             v-else
