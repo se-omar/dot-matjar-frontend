@@ -799,7 +799,12 @@
       ></v-app-bar-nav-icon>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" absolute temporary>
+    <v-navigation-drawer
+      style="position: fixed"
+      v-model="drawer"
+      absolute
+      temporary
+    >
       <v-list nav dense>
         <v-list-item-group active-class="deep-purple--text text--accent-4">
           <v-list-item @click="$router.push('/').catch((err) => {})">
@@ -969,6 +974,7 @@
           <v-list-item>
             <v-select
               @change="changeLang"
+              dense
               solo-inverted
               :items="$i18n.availableLocales"
               v-model="$i18n.locale"
@@ -980,6 +986,7 @@
             <v-select
               @change="changeCurrency"
               solo-inverted
+              dense
               :items="currencies"
               v-model="currentCurrency"
             >
