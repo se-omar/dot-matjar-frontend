@@ -418,9 +418,14 @@
 
       <!-- <v-col lg="8" sm="5" md="7"> -->
       <v-col
+        :class="
+          this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs
+            ? 'mr-15'
+            : ''
+        "
         :lg="homePageInfo.show_right_banner ? 8 : 10"
-        sm="5"
-        cols="5"
+        sm="6"
+        cols="6"
         :md="homePageInfo.show_right_banner ? 8 : 10"
       >
         <v-radio-group mandatory :value="radioGroup">
@@ -481,8 +486,8 @@
 
         <v-row v-if="radioGroup === '2'">
           <v-col
-            v-for="(supplier, index) in suppliers"
-            :key="index"
+            v-for="supplier in suppliers"
+            :key="supplier.user_id"
             :class="homePageInfo.show_right_banner ? '' : productsClass"
             :lg="homePageInfo.show_right_banner ? 3 : 2"
             :md="homePageInfo.show_right_banner ? 4 : 3"
@@ -505,16 +510,6 @@
             @click="filterProducts('loadmore')"
           >
             <span> {{ $t("homePage.loadMore") }}</span></v-btn
-          >
-          <v-btn
-            v-else
-            large
-            :color="siteColor.button_color"
-            :style="`color: ${siteColor.button_text_color}`"
-            class="mb-15 white--text"
-            @click="loadMoreSuppliers()"
-          >
-            {{ $t("homePage.loadMore") }}</v-btn
           >
         </v-row>
       </v-col>
@@ -680,7 +675,7 @@ export default {
   },
   methods: {
     async filterProducts(buttonPressed) {
-      this.isLoading = true;
+      // this.isLoading = true;
       // debugger
       this.productFilterFlag = true;
       console.log(this.toolbarSearch, this.categoryName);
@@ -843,14 +838,6 @@ export default {
 
       console.log("test");
       console.log(this.radioGroup);
-    },
-    async loadMoreSuppliers() {
-      await this.$store.dispatch("getSuppliers", {
-        supplierFilterFlag: this.supplierFilterFlag,
-        supplierName: this.supplierName,
-        governorate: this.governorate,
-        region: this.region,
-      });
     },
   },
   components: {
