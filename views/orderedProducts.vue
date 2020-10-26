@@ -34,7 +34,7 @@
               >
                 <template v-slot:item.showProducts>
                   <v-btn :color="siteColor.button_color" small
-                    ><span :style="`color:${siteColor.button_text.color}`">{{
+                    ><span :style="`color:${siteColor.button_text_color}`">{{
                       $t("orderedProducts.showProducts")
                     }}</span></v-btn
                   >
@@ -43,10 +43,13 @@
             </v-col>
             <v-divider></v-divider>
             <v-col cols="12" lg="6">
-              <v-toolbar shaped dark dense :color="siteColor">
+              <v-toolbar shaped dark dense :color="siteColor.toolbar_color">
                 <v-spacer></v-spacer>
                 <v-toolbar-title>
-                  <p class="text-h4 white--text mt-4">
+                  <p
+                    class="text-h4 mt-4"
+                    :style="`color:${siteColor.toolbar_text_color}`"
+                  >
                     {{ $t("orderedProducts.products") }}
                   </p>
                 </v-toolbar-title>
@@ -80,7 +83,12 @@
 
                   <v-dialog v-model="statusDialog" max-width="500px">
                     <v-card tile>
-                      <v-toolbar flat dark :color="siteColor" max-height="80">
+                      <v-toolbar
+                        flat
+                        dark
+                        :color="siteColor.toolbar_color"
+                        max-height="80"
+                      >
                         <v-row class="mr-6" justify="end">
                           <v-toolbar-title>{{
                             clickedProductInfo.product_name
@@ -108,7 +116,7 @@
                                 :color="siteColor.button_color"
                                 class="white--text"
                                 ><span
-                                  :style="`color:${siteColor.button_text.color}`"
+                                  :style="`color:${siteColor.button_text_color}`"
                                   >{{ $t("orderedProducts.update") }}</span
                                 ></v-btn
                               >
@@ -154,7 +162,7 @@
                   v-bind="attrs"
                   v-on="on"
                   @click="dialog = true"
-                  ><span :style="`color:${siteColor.button_text.color}`">{{
+                  ><span :style="`color:${siteColor.button_text_color}`">{{
                     $t("orderedProducts.showAddress")
                   }}</span></v-btn
                 >
@@ -170,25 +178,28 @@
                     <v-row>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          :label="$t('orderedProducts.country')"
+                          :placeholder="$t('orderedProducts.country')"
                           disabled
                           v-model="country"
+                          class="arabic"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
                           disabled
-                          :label="$t('orderedProducts.city')"
+                          :placeholder="$t('orderedProducts.city')"
                           v-model="city"
+                          class="arabic"
                           hint="example of helper text only on focus"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
                           disabled
-                          :label="$t('orderedProducts.state')"
+                          :placeholder="$t('orderedProducts.state')"
                           hint="example of persistent helper text"
                           v-model="state"
+                          class="arabic"
                         ></v-text-field>
                       </v-col>
 
@@ -196,9 +207,9 @@
                         <v-text-field
                           disabled
                           v-model="address1"
-                          :label="$t('orderedProducts.address1')"
+                          :placeholder="$t('orderedProducts.address1')"
                           textarea
-                          class="mx-4"
+                          class="mx-4 arabic"
                           outlined
                         ></v-text-field>
                       </v-col>
@@ -206,9 +217,9 @@
                         <v-text-field
                           disabled
                           v-model="address2"
-                          :label="$t('orderedProducts.address2')"
+                          :placeholder="$t('orderedProducts.address2')"
                           textarea
-                          class="mx-4"
+                          class="mx-4 arabic"
                           outlined
                         ></v-text-field>
                       </v-col>

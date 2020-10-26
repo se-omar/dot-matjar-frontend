@@ -242,6 +242,7 @@ export default {
                     //console.log(response.data.data)
                     //console.log(response.data.message)
                     context.commit('getSiteColor', response.data.data)
+                    console.log('site color from DB', response.data.data)
                 })
         },
 
@@ -253,7 +254,7 @@ export default {
             const bodyParameters = {
                 key: "value"
             };
-
+            console.log(context.rootState.nodeHost);
             await axios.post(context.rootState.nodeHost + '/api/refreshCurrentUser',
                 bodyParameters, config).then(response => {
                     // console.log('response from server user', response)
@@ -641,7 +642,7 @@ export default {
         },
         getAllUsers(context) {
             var id = context.state.allUsers.length > 0 ? context.state.allUsers[context.state.allUsers.length - 1].user_id : null
-            // console.log('loadmore', id)
+            console.log('loadmore', id)
             axios.put(context.rootState.nodeHost + "/api/getAllUsers", { user_id: context.state.allUsers.length > 0 ? context.state.allUsers[context.state.allUsers.length - 1].user_id : null })
                 .then(users => {
                     // console.log(users.data.data)
@@ -708,7 +709,11 @@ export default {
                 })
         },
         deleteUser(context, user_id) {
+<<<<<<< HEAD
+            console.log(user_id)
+=======
             // console.log(user_id)
+>>>>>>> 9fcb0f57c6995a6a52e41876e86eb5d38c359743
             axios.put(context.rootState.nodeHost + '/api/deleteUser', { user_id: user_id })
                 .then(message => {
                     alert(message.data.message)

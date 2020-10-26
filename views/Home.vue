@@ -448,8 +448,8 @@
 
         <v-row v-if="radioGroup === '2'">
           <v-col
-            v-for="supplier in suppliers"
-            :key="supplier.user_id"
+            v-for="(supplier, index) in suppliers"
+            :key="index"
             :class="homePageInfo.show_right_banner ? '' : productsClass"
             :lg="homePageInfo.show_right_banner ? 3 : 2"
             :md="homePageInfo.show_right_banner ? 4 : 3"
@@ -464,11 +464,22 @@
         </v-row>
         <v-row justify="center">
           <v-btn
+            v-if="radioGroup == '1'"
             large
             :color="siteColor.button_color"
             :style="`color: ${siteColor.button_text_color}`"
             class="mb-15 white--text"
             @click="filterProducts('loadmore')"
+          >
+            {{ $t("homePage.loadMore") }}</v-btn
+          >
+          <v-btn
+            v-else
+            large
+            :color="siteColor.button_color"
+            :style="`color: ${siteColor.button_text_color}`"
+            class="mb-15 white--text"
+            @click="loadMoreSuppliers()"
           >
             {{ $t("homePage.loadMore") }}</v-btn
           >
@@ -636,7 +647,7 @@ export default {
   },
   methods: {
     async filterProducts(buttonPressed) {
-      // this.isLoading = true;
+      this.isLoading = true;
       // debugger
       this.productFilterFlag = true;
       console.log(this.toolbarSearch, this.categoryName);
@@ -800,6 +811,14 @@ export default {
       console.log("test");
       console.log(this.radioGroup);
     },
+    async loadMoreSuppliers() {
+      await this.$store.dispatch("getSuppliers", {
+        supplierFilterFlag: this.supplierFilterFlag,
+        supplierName: this.supplierName,
+        governorate: this.governorate,
+        region: this.region,
+      });
+    },
   },
   components: {
     product: () => import("../components/product"),
@@ -826,18 +845,18 @@ export default {
 }
 .arabic {
   font-family: "Markazi Text", serif;
-  font-size: 25px;
+  font-size: 20px;
 }
 span {
   font-family: "Markazi Text", serif;
-  font-size: 25px;
+  font-size: 20px;
 }
 p {
   font-family: "Markazi Text", serif;
-  font-size: 25px;
+  font-size: 20px;
 }
 .smallerText {
-  font-size: 20px;
+  font-size: 15px;
 }
 </style>
 

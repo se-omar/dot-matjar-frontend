@@ -18,8 +18,8 @@
             <a @click="$router.push('/').catch(() => {})">
               <v-img
                 src="../assets/images/dotmatjar_logo.png"
-                max-height="150"
-                max-width="160"
+                max-height="110"
+                max-width="120"
                 contain
               ></v-img>
             </a>
@@ -44,27 +44,31 @@
         </v-col>
       </v-row>
       <!-- <v-spacer></v-spacer> -->
-      <v-row justify="start">
+      <v-row class="mr-16" justify="start">
         <v-col
           v-if="!$route.params.supplier_id"
-          cols="12"
+          cols="9"
           lg="6"
-          sm="7"
+          sm="6"
           md="6"
-          xs="7"
+          xs="5"
         >
-          <v-text-field
-            class="mt-8 arabic"
-            outlined
-            rounded
-            :placeholder="$t('toolbar.search')"
-            append-icon="fa fa-search"
-            @keyup="emptySearchBox"
-            v-model="toolbarSearch"
-            @keypress="filterProducts"
-          ></v-text-field>
+          <template>
+            <v-text-field
+              class="mt-8 arabic"
+              outlined
+              rounded
+              height="10px"
+              solo
+              :placeholder="$t('toolbar.search')"
+              append-icon="fa fa-search"
+              @keyup="emptySearchBox"
+              v-model="toolbarSearch"
+              @keypress="filterProducts"
+            ></v-text-field>
+          </template>
         </v-col>
-        <v-col v-else cols="12" lg="7" sm="7" md="6">
+        <v-col v-else cols="9" lg="6" sm="5" md="6" xs="5">
           <v-text-field
             class="mt-8 arabic"
             outlined
@@ -89,13 +93,14 @@
             ></v-text-field>
           </v-col>
         </span> -->
-        <v-col cols="12" md="3" lg="3" sm="5">
+        <v-col class="mt-2" cols="3" md="3" lg="3" sm="3">
           <v-btn
             class="mt-10 ml-n3 blue white--text"
             rounded
             @click="advancedSearch = true"
+            small
             ><span
-              style="font-size: 16px"
+              style="font-size: 12px"
               v-if="siteLanguage == 'en'"
               v-html="$t('toolbar.advancedSearch')"
             ></span>
@@ -132,7 +137,7 @@
         <v-dialog
           style="overflow: hidden"
           v-model="advancedSearch"
-          max-width="80%"
+          max-width="60%"
         >
           <v-card style="overflow: hidden">
             <v-row justify="center">
@@ -193,9 +198,7 @@
               <v-col cols="4">
                 <v-select
                   rounded
-                  v-if="radioGroup === '1'"
                   :items="availableCountries"
-                  :disabled="radioGroup === '2'"
                   :placeholder="$t('toolbar.country')"
                   dense
                   outlined
@@ -308,7 +311,6 @@
               <v-col lg="5" sm="3" md="3"></v-col>
               <v-col v-if="radioGroup === '2'" cols="4" sm="2" md="2" lg="2">
                 <v-btn
-                  class="white--text"
                   @click="filterSuppliers()"
                   :color="siteColor.button_color"
                   rounded
@@ -320,7 +322,7 @@
               </v-col>
               <v-col v-else cols="4" sm="2" md="2" lg="2">
                 <v-btn
-                  class="white--text arabic"
+                  class="arabic"
                   @click="filterProducts('search')"
                   :color="siteColor.button_color"
                   rounded
@@ -375,17 +377,23 @@
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-            v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs"
+            v-if="
+              $vuetify.breakpoint.sm ||
+              $vuetify.breakpoint.xs ||
+              $vuetify.breakpoint.md
+            "
             rounded
-            style="overflow: hidden"
             class="font"
-            :style="`color:${siteColor.toolbar_text_color}`"
+            :style="`color:${siteColor.toolbar_text_color};ml-4`"
             v-bind="attrs"
             v-on="on"
             icon
             small
           >
-            <i class="fa fa-user fa-lg mt-n1 mr-1" style="color: black"></i>
+            <i
+              class="fa fa-user"
+              :style="`color:${siteColor.toolbar_text_color}`"
+            ></i>
             <!-- <span>{{ $t("toolbar.profile") }}</span> -->
           </v-btn>
           <v-btn
@@ -398,7 +406,7 @@
             v-bind="attrs"
             v-on="on"
           >
-            <i class="fa fa-user fa-lg mt-n1 mr-1" style="color: black"></i>
+            <i class="fa fa-user fa-sm mt-n1 mr-1"></i>
             <span class="smallerText">{{ $t("toolbar.profile") }}</span>
           </v-btn>
         </template>
@@ -658,9 +666,7 @@
       <v-btn
         class="font"
         :style="`color:${siteColor.toolbar_text_color}`"
-        v-if="
-          !currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs
-        "
+        v-if="!currentUser && $vuetify.breakpoint.lg"
         text
         @click="$router.push(`/${$i18n.locale}/reglogin`).catch((err) => {})"
       >
@@ -673,8 +679,7 @@
         v-if="
           currentUser &&
           currentUser.user_type == 'business' &&
-          !$vuetify.breakpoint.sm &&
-          !$vuetify.breakpoint.xs
+          $vuetify.breakpoint.lg
         "
         text
         @click="
@@ -700,11 +705,7 @@
       <v-btn
         class="font"
         :style="`color:${siteColor.toolbar_text_color}`"
-        v-if="
-          currentUser.user_type == 'user' &&
-          !$vuetify.breakpoint.sm &&
-          !$vuetify.breakpoint.xs
-        "
+        v-if="currentUser.user_type == 'user' && $vuetify.breakpoint.lg"
         text
         @click="$router.push(`/${$i18n.locale}/userOrders`).catch((err) => {})"
       >
@@ -717,8 +718,7 @@
         v-if="
           currentUser &&
           currentUser.user_type == 'business' &&
-          !$vuetify.breakpoint.sm &&
-          !$vuetify.breakpoint.xs
+          $vuetify.breakpoint.lg
         "
         text
         @click="$router.push(`/${$i18n.locale}/dashboard`).catch((err) => {})"
@@ -729,7 +729,7 @@
       <v-btn
         class="font"
         :style="`color:${siteColor.toolbar_text_color}`"
-        v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        v-if="$vuetify.breakpoint.lg"
         text
         @click="goToAbout"
       >
@@ -742,8 +742,7 @@
         v-if="
           currentUser &&
           currentUser.user_type == 'admin' &&
-          !$vuetify.breakpoint.sm &&
-          !$vuetify.breakpoint.xs
+          $vuetify.breakpoint.lg
         "
         text
         @click="$router.push(`/${$i18n.locale}/adminPage`).catch((err) => {})"
@@ -756,7 +755,7 @@
       <v-btn
         class="font"
         :style="`color:${siteColor.toolbar_text_color}`"
-        v-if="currentUser && !$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
+        v-if="currentUser && $vuetify.breakpoint.lg"
         text
         @click="logout"
       >
@@ -794,6 +793,7 @@
           $vuetify.breakpoint.xs ||
           $vuetify.breakpoint.md
         "
+        style="width: 15px; height: 5px"
       ></v-app-bar-nav-icon>
     </v-app-bar>
 
@@ -994,6 +994,7 @@ export default {
   async created() {
     console.log("current language locale", this.$i18n.locale);
     localStorage.setItem("currentCurrency", "egp");
+
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
     }
@@ -1003,6 +1004,7 @@ export default {
       console.log(this.availableCountries);
     }
     this.$store.dispatch("getWorldCountries");
+    console.log("site color in toolbar is :", this.siteColor);
   },
 
   props: {
@@ -1021,16 +1023,14 @@ export default {
       return this.$store.state.nodeHost;
     },
     siteColor() {
-      if (this.$store.state.Home.siteColor) {
-        return this.$store.state.Home.siteColor;
-      } else {
-        return {
-          button_text_color: "black",
-          button_color: "white",
-          toolbar_color: "white",
-          toolbar_text_color: "black",
-        };
-      }
+      return this.$store.state.Home.siteColor;
+      // } else {
+      //   return {
+      //     button_text_color: "black",
+      //     button_color: "white",
+      //     toolbar_color: "white",
+      //     toolbar_text_color: "black",
+      //   };
     },
     supplierPageInfo() {
       return this.$store.state.SupplierPage.supplierPageInfo;
@@ -1292,18 +1292,18 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
 .arabic {
   font-family: "Markazi Text", serif;
-  font-size: 25px;
+  font-size: 18px;
 }
 span {
   font-family: "Markazi Text", serif;
-  font-size: 25px;
+  font-size: 20px;
 }
 p {
   font-family: "Markazi Text", serif;
-  font-size: 25px;
+  font-size: 20px;
 }
 .smallerText {
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .img {

@@ -679,6 +679,7 @@
               class="mb-7 grey lighten-5"
             >
               <apexchart
+                dir="ltr"
                 class="mb-n2"
                 :height="
                   suppliersSortedBySales.length > 0
@@ -1037,6 +1038,9 @@ export default {
     choosenCountries() {
       return this.$store.state.Home.choosenCountries;
     },
+    siteLanguage() {
+      return this.$store.state.Home.siteLanguage;
+    },
   },
 
   methods: {
@@ -1224,13 +1228,24 @@ export default {
     gettingCategoryItems() {
       this.chooseItemToRemove = [];
       // console.log(this.category);
-      // console.log("categories items", this.categoriesItems);
+      console.log("categories items", this.categoriesItems);
       this.categoryItems = [];
       for (let i = 0; i < this.categoriesItems.length; i++) {
-        if (
-          this.categoriesItems[i].category_name == this.chooseCategoryToRemove
-        ) {
-          this.categoryItems.push(this.categoriesItems[i].category_items);
+        if (this.siteLanguage == "en") {
+          if (
+            this.categoriesItems[i].category_name == this.chooseCategoryToRemove
+          ) {
+            this.categoryItems.push(this.categoriesItems[i].category_items);
+          }
+        } else {
+          if (
+            this.categoriesItems[i].category_arabic_name ==
+            this.chooseCategoryToRemove
+          ) {
+            this.categoryItems.push(
+              this.categoriesItems[i].category_items_arabic_name
+            );
+          }
         }
       }
       // console.log(this.categoryItems);
@@ -1386,21 +1401,21 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
 .arabic {
   font-family: "Markazi Text", serif;
-  font-size: 25px;
+  font-size: 18px;
 }
 span {
   font-family: "Markazi Text", serif;
-  font-size: 25px;
+  font-size: 15px;
 }
 p {
   font-family: "Markazi Text", serif;
-  font-size: 25px;
+  font-size: 15px;
 }
 .smallerText {
-  font-size: 20px;
+  font-size: 15px;
 }
 div {
   font-family: "Markazi Text", serif;
-  font-size: 25px;
+  font-size: 15px;
 }
 </style>
