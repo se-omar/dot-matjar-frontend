@@ -1144,13 +1144,15 @@ export default {
       this.productFilterFlag = true;
       console.log(this.toolbarSearch, this.categoryName);
       var buttonPressed = "search";
-      // await this.$store.dispatch("filterProducts", {
-      //   product_name: this.toolbarSearch,
-      //   category_name: this.categoryName,
-      //   governorate: this.governorate,
-      //   region: this.region,
-      //   buttonPressed: "search",
-      // });
+      var obj = {};
+
+      if (this.categoryName) obj.categoryName = this.categoryName;
+      if (this.priceFrom) obj.priceFrom = this.priceFrom;
+      if (this.priceTo) obj.priceTo = this.priceTo;
+      if (this.governorate) obj.governorate = this.governorate;
+      if (this.region) obj.region = this.region;
+      if (this.toolbarSearch) obj.toolbarSearch = this.toolbarSearch;
+      if (this.country) obj.country = this.country;
 
       await this.$store.dispatch("filterProducts", {
         product_name: this.toolbarSearch,
