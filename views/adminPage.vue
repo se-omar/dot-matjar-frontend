@@ -182,7 +182,7 @@
               }}</span></v-btn
             >
 
-            <v-btn :color="siteColor" text @click="removeCategory"
+            <v-btn :color="siteColor.button_color" text @click="removeCategory"
               ><span :style="`color:${siteColor.button_text_color}`"
                 >Agree</span
               ></v-btn
@@ -467,7 +467,7 @@
           rounded
           :rules="[rules.min_max_width]"
           outlined
-          :color="siteColor"
+          :color="siteColor.toolbar_color"
         ></v-text-field>
       </v-col>
 
@@ -479,7 +479,7 @@
           :rules="[rules.min_max_height]"
           rounded
           outlined
-          :color="siteColor"
+          :color="siteColor.toolbar_color"
         ></v-text-field>
       </v-col>
     </v-row>
