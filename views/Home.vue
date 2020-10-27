@@ -519,7 +519,7 @@
             small
             :color="siteColor.button_color"
             class="mb-15"
-            @click="filterProducts('loadmore')"
+            @click="loadMore"
           >
             <span :style="`color: ${siteColor.button_text_color}`">
               {{ $t("homePage.loadMore") }}</span
@@ -711,7 +711,7 @@ export default {
     },
     productAdvancedSearches() {
       return this.$store.state.Home.productAdvancedSearches;
-    }
+    },
   },
   methods: {
     async filterProducts(buttonPressed) {
@@ -745,24 +745,24 @@ export default {
       this.isLoading = false;
     },
     async loadmoreProducts() {
-      var obj = {}
-if(this.productAdvancedSearches){
-   obj = this.productAdvancedSearches
-  obj.id = this.filteredProducts.length > 0
+      var obj = {};
+      if (this.productAdvancedSearches) {
+        obj = this.productAdvancedSearches;
+        obj.id =
+          this.filteredProducts.length > 0
             ? this.filteredProducts[this.filteredProducts.length - 1].product_id
             : 0;
-           
-}
-else{
-   obj = {
-      id: this.filteredProducts.length > 0
-            ? this.filteredProducts[this.filteredProducts.length - 1].product_id
-            : 0
-  }
-}
+      } else {
+        obj = {
+          id:
+            this.filteredProducts.length > 0
+              ? this.filteredProducts[this.filteredProducts.length - 1]
+                  .product_id
+              : 0,
+        };
+      }
 
- this.$store.dispatch("loadmoreProducts",obj);
-      
+      this.$store.dispatch("loadmoreProducts", obj);
     },
 
     async filterSuppliers() {

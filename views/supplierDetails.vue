@@ -406,7 +406,6 @@
                 ></v-textarea>
                 <v-btn
                   :disabled="supplierRating > 0"
-                  class="white--text"
                   @click="submitReview"
                   block
                   :color="siteColor.button_color"
