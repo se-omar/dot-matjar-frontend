@@ -28,7 +28,7 @@
       <v-col class lg="5" md="7" sm="12" cols="12">
         <v-row class="mb-4">
           <v-col lg="12">
-            <span style="font-size: 35px">{{
+            <span v-if="currentProduct" style="font-size: 35px">{{
               currentProduct.product_name
             }}</span>
           </v-col>
@@ -38,16 +38,20 @@
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
               {{ $t("productDetails.supplier") }}:
-              <span class="text--secondary">{{
-                currentProduct.user.full_arabic_name
-              }}</span>
+              <span
+                v-if="currentProduct && currentProduct.user"
+                class="text--secondary"
+                >{{ currentProduct.user.full_arabic_name }}</span
+              >
             </span>
           </v-col>
 
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
               {{ $t("productDetails.location") }}:
-              <span class="text--secondary"
+              <span
+                v-if="currentProduct && currentProduct.user"
+                class="text--secondary"
                 >{{ currentProduct.user.governorate }} ,
                 {{ currentProduct.user.region }}</span
               >
@@ -57,14 +61,20 @@
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
               {{ $t("productDetails.category") }}:
-              <span class="text--secondary">{{
-                currentProduct.product_category.category_name
-              }}</span>
+              <span
+                v-if="currentProduct && currentProduct.product_category"
+                class="text--secondary"
+                >{{ currentProduct.product_category.category_name }}</span
+              >
             </span>
           </v-col>
 
           <v-col lg="6" md="12" sm="12" cols="12">
-            <span class="font-weight-medium" style="font-size: 20px">
+            <span
+              v-if="currentProduct"
+              class="font-weight-medium"
+              style="font-size: 20px"
+            >
               {{ $t("productDetails.color") }}:
               <span class="text--secondary">{{ currentProduct.color }}</span>
             </span>
@@ -73,7 +83,7 @@
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
               {{ $t("productDetails.weight") }}:
-              <span class="text--secondary">{{
+              <span v-if="currentProduct" class="text--secondary">{{
                 currentProduct.unit_weight
               }}</span>
             </span>
@@ -82,7 +92,7 @@
           <v-col lg="6" md="12" sm="12" cols="12">
             <span class="font-weight-medium" style="font-size: 20px">
               {{ $t("productDetails.stockStatus") }}:
-              <span class="text--secondary">{{
+              <span v-if="currentProduct" class="text--secondary">{{
                 currentProduct.availability === "1"
                   ? "In Stock"
                   : "Out of Stock"
@@ -109,6 +119,7 @@
               {{ $t("productDetails.aboutProduct") }}:
             </p>
             <span
+              v-if="currentProduct"
               class="font-weight-medium text--secondary"
               style="font-size: 20px"
               >{{ currentProduct.describtion }}</span
@@ -120,7 +131,9 @@
       <v-col lg="3" md="6" sm="12">
         <v-row justify="center" class="ml-n10">
           <v-col class="ml-3 text-sm-center" cols="10">
-            <span class="text-h3">{{ currentProduct.unit_price }} EGP</span>
+            <span v-if="currentProduct" class="text-h3"
+              >{{ currentProduct.unit_price }} EGP</span
+            >
           </v-col>
 
           <v-col cols="9">
@@ -260,8 +273,12 @@
         <v-card elevation="1" height="250">
           <v-row justify="center">
             <v-col lg="6" class="text-center ml-n10 mt-5">
-              <v-avatar fab :color="siteColor.button_color" size="100">
-                <span class="white--text headline text-h3"
+              <v-avatar
+                fab
+                :color="siteColor ? siteColor.button_color : 'black'"
+                size="100"
+              >
+                <span v-if="currentProduct" class="white--text headline text-h3"
                   >{{ currentProduct.rating }}.0</span
                 >
               </v-avatar>
@@ -275,7 +292,7 @@
                 :color="siteColor.button_color"
               ></v-rating>
 
-              <p class="text-center text-subtitle">
+              <p v-if="currentProduct" class="text-center text-subtitle">
                 (based on {{ currentProduct.rate_counter }} Ratings)
               </p>
             </v-col>
