@@ -32,7 +32,7 @@
         >
       </v-col>
     </v-row> -->
-    <v-row>
+    <!-- <v-row>
       <v-col>
         <span></span>
       </v-col>
@@ -46,7 +46,7 @@
       <v-col>
         <span></span>
       </v-col>
-    </v-row>
+    </v-row> -->
     <!-- search woth supplier and proucts -->
     <!-- <v-col>
       <v-btn @click="advancedSearch = true">Expand Search Options</v-btn>
@@ -238,8 +238,8 @@
         </v-row>
       </v-card>
     </v-dialog>
-    <v-row justify="center">
-      <!-- <v-col cols="3" class="ml-4">
+    <!-- <v-row justify="center">
+      <v-col cols="3" class="ml-4">
         <v-card class="ml-2" max-width="250">
           <v-row justify="center"
             ><v-card-title>Categories</v-card-title>
@@ -247,10 +247,10 @@
           <v-divider class="mx-16"></v-divider>
           
         </v-card>
-      </v-col> -->
+      </v-col>
       <v-col cols="11"></v-col>
-      <!-- // Current  -->
-      <!-- <v-col cols="4" sm="2" md="2" lg="2">
+      // Current 
+      <v-col cols="4" sm="2" md="2" lg="2">
         <v-btn
           :disabled="radioGroup === '1'"
           class="white--text"
@@ -260,9 +260,9 @@
           max-width="80"
           >Search</v-btn
         >
-      </v-col> -->
+      </v-col>
       <v-col sm="3" lg="3" md="3"></v-col>
-    </v-row>
+    </v-row> -->
 
     <v-row v-if="homePageInfo.show_carousel" justify="center">
       <v-col :lg="homePageInfo ? homePageInfo.carousel_width : 10">
@@ -463,7 +463,7 @@
           justify-lg="start"
           justify-md="center"
           justify-sm="start"
-          v-if="radioGroup === '1'"
+          v-if="radioGroup === '1' && filteredProducts.length > 0"
         >
           <v-col
             :class="homePageInfo.show_right_banner ? '' : productsClass"
@@ -484,6 +484,10 @@
           </v-col>
         </v-row>
 
+        <v-row v-else justify="center">
+          <p class="display-1">no products found</p>
+        </v-row>
+
         <v-row v-if="radioGroup === '2'">
           <v-col
             v-for="(supplier, index) in suppliers"
@@ -500,7 +504,13 @@
             ></supplier>
           </v-col>
         </v-row>
-        <v-row v-if="filteredProducts.length > 0" justify="center">
+        <v-row
+          v-if="
+            (filteredProducts.length > 0 && radioGroup == '1') ||
+            (suppliers.length > 0 && radioGroup == '2')
+          "
+          justify="center"
+        >
           <v-btn
             v-if="radioGroup == '2'"
             small
@@ -523,6 +533,17 @@
               {{ $t("homePage.loadMore") }}</span
             ></v-btn
           >
+
+          <!-- <v-btn
+            v-else-if="radioGroup == '2'"
+            small
+            :color="siteColor.button_color"
+            :style="`color: ${siteColor.button_text_color}`"
+            class="mb-15 white--text"
+            @click="loadMore"
+          >
+            <span> {{ $t("homePage.loadMore") }}</span></v-btn
+          > -->
         </v-row>
       </v-col>
 

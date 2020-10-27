@@ -1,5 +1,5 @@
 <template>
-  <v-app class="mt-16" v-if="currentUser.user_type">
+  <v-app v-if="currentUser.user_type">
     <div class="vld-parent">
       <div v-if="currentUser.user_type == 'admin'"></div>
       <loading
@@ -9,7 +9,7 @@
       ></loading>
     </div>
     <!-- ADDING Categories -->
-    <v-row justify="center">
+    <v-row class="mt-16" justify="center">
       <v-col lg="2">
         <v-btn
           class="primary"
@@ -195,8 +195,9 @@
         rounded
         :color="siteColor.button_color"
         @click="removeItem"
-        ><span :style="`color:${siteColor.button_text_color}`">Disagree</span
-        >>{{ $t("adminPage.removeItem") }}</v-btn
+        ><span :style="`color:${siteColor.button_text_color}`">{{
+          $t("adminPage.removeItem")
+        }}</span></v-btn
       >
     </v-row>
 
@@ -848,11 +849,12 @@ export default {
     //   "all suppliers with sales from admin page",
     //   this.allSuppliersWithSales
     // );
+
     await this.getTopMonthlySuppliers();
     this.isLoading = false;
     // console.log("suppliers sorted by sales", this.suppliersSortedBySales);
-    this.$store.dispatch("categoriesDB");
-    this.$store.dispatch("getCategoryItems");
+    await this.$store.dispatch("categoriesDB");
+    await this.$store.dispatch("getCategoryItems");
   },
 
   data: () => {
@@ -1024,7 +1026,11 @@ export default {
       }
     },
     productCategory() {
-      return this.$store.state.Home.category;
+      var array = [];
+      this.$store.state.Home.category.forEach((e) => {
+        array.push(e.name);
+      });
+      return array;
     },
     categoriesItems() {
       return this.$store.state.Home.categoriesItems;
@@ -1277,12 +1283,6 @@ export default {
       var carouselformdata = new FormData();
       var bannerformdata = new FormData();
       console.log("right banne checkbox", this.rightBannerCheckbox);
-      var carouselImages = [
-        this.carouselImage1,
-        this.carouselImage2,
-        this.carouselImage3,
-        this.carouselImage4,
-      ];
 
       bannerformdata.set("user_id", this.currentUser.user_id);
       // if (this.leftImage) bannerformdata.append("file", this.leftImage, "left");
@@ -1291,9 +1291,25 @@ export default {
         bannerformdata.append("file", this.rightImage, "right");
 
       carouselformdata.set("user_id", this.currentUser.user_id);
-      carouselImages.forEach((element) => {
-        carouselformdata.append("file", element ? element : "empty");
-      });
+      var indexAsString = "";
+      if (this.carouselImage1) {
+        indexAsString += 0;
+        carouselformdata.append("file", this.carouselImage1);
+      }
+      if (this.carouselImage2) {
+        indexAsString += 1;
+        carouselformdata.append("file", this.carouselImage2);
+      }
+
+      if (this.carouselImage3) {
+        indexAsString += 2;
+        carouselformdata.append("file", this.carouselImage3);
+      }
+      if (this.carouselImage4) {
+        indexAsString += 3;
+        carouselformdata.append("file", this.carouselImage4);
+      }
+      carouselformdata.set("index", indexAsString);
 
       await this.$store.dispatch("updateHomePage", {
         show_carousel: this.convertBoolToInt(this.carouselCheckbox),

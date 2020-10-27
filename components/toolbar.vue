@@ -279,7 +279,7 @@
             <v-row class="mt-n3" justify="center">
               <v-col cols="6" sm="6" md="6" lg="5">
                 <v-text-field
-                  :disabled="radioGroup === '2'"
+                  v-if="radioGroup == '1'"
                   dense
                   rounded
                   outlined
@@ -292,7 +292,7 @@
 
               <v-col cols="6" sm="6" md="6" lg="5">
                 <v-text-field
-                  :disabled="radioGroup === '2'"
+                  v-if="radioGroup == '1'"
                   dense
                   outlined
                   rounded
@@ -592,7 +592,6 @@
           <v-row justify="center" v-if="currentUser.user_type == 'admin'">
             <v-col cols="10" sm="10" lg="5">
               <v-btn
-                class="btn1"
                 :color="siteColor.button_color"
                 small
                 rounded
@@ -600,7 +599,7 @@
               >
                 <span
                   :style="`color: ${siteColor.button_text_color}`"
-                  class="mos smallerText"
+                  class="smallerText"
                   v-html="$t('toolbar.pendingSuppliers')"
                 >
                 </span>

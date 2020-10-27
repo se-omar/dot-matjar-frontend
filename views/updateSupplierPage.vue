@@ -985,14 +985,25 @@ export default {
       if (this.rightImage) bannerformdata.append("file", this.rightImage);
 
       carouselformdata.set("supplier_id", this.supplier.user_id);
-      carouselformdata.set("file", this.carouselImage1);
-      carouselformdata.set("file", this.carouselImage2);
-      carouselformdata.set("file", this.carouselImage3);
-      carouselformdata.set("file", this.carouselImage4);
-      // carouselImages.forEach((element) => {
-      //   console.log(JSON.stringify(element));
-      //   carouselformdata.append("file", element ? element : "empty");
-      // });
+      var indexAsString = "";
+      if (this.carouselImage1) {
+        indexAsString += 0;
+        carouselformdata.append("file", this.carouselImage1);
+      }
+      if (this.carouselImage2) {
+        indexAsString += 1;
+        carouselformdata.append("file", this.carouselImage2);
+      }
+
+      if (this.carouselImage3) {
+        indexAsString += 2;
+        carouselformdata.append("file", this.carouselImage3);
+      }
+      if (this.carouselImage4) {
+        indexAsString += 3;
+        carouselformdata.append("file", this.carouselImage4);
+      }
+      carouselformdata.set("index", indexAsString);
 
       formdata.append("file", this.logo);
       formdata.set("siteName", this.siteName);

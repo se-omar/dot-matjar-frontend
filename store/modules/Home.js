@@ -114,6 +114,7 @@ export default {
         },
 
         filterProducts(state, { products, pressed }) {
+
             var currencies = JSON.parse(localStorage.getItem('rates'))
             var currentCurrency = localStorage.getItem('currentCurrency')
             products.forEach(element => {
@@ -352,14 +353,6 @@ export default {
             product_id
         }) {
 
-            // console.log(product_name,
-            //     category_name,
-            //     governorate,
-            //     region,
-            //     categoryItem,
-            //     priceFrom,
-            //     priceTo,
-            //     buttonPressed, context.state.siteLanguage, product_id)
             axios.put(context.rootState.nodeHost + '/api/filterProducts', {
                 product_name,
                 category_name,
@@ -372,10 +365,7 @@ export default {
                 loadmoreName: context.state.loadmore.name
             })
                 .then(response => {
-                    //console.log('message:', response.data.message)
 
-                    //debugger
-                    // console.log('filtered products', response.data.data)
                     context.commit('filterProducts', { products: response.data.data, pressed: buttonPressed });
                 })
         },
