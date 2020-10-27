@@ -23,36 +23,47 @@
         }}</v-card-title>
       </v-row>
 
-      <v-card-text class="mt-n5 smallerText">
+      <v-card-text v-if="supplier" class="mt-n5 smallerText">
         <v-icon class="mt-n1 mr-1">mdi-map-marker</v-icon>
         {{ supplier.governorate }}, {{ supplier.region }}
       </v-card-text>
 
-      <v-card-text class="mt-n5 smallerText" style="font-size: 16px"
+      <v-card-text
+        v-if="supplier"
+        class="mt-n5 smallerText"
+        style="font-size: 16px"
         >{{ $t("supplier.totalSales") }} {{ supplier.total_sales }}</v-card-text
       >
 
-      <v-card-text v-if="supplier.monthSales" class="mt-n5 smallerText"
+      <v-card-text
+        v-if="supplier && supplier.monthSales"
+        class="mt-n5 smallerText"
         >{{ selectedMonth }} {{ $t("supplier.sales") }}
         {{ supplier.monthSales }}</v-card-text
       >
 
-      <v-card-text v-if="supplier.yearSales" class="mt-n5 smallerText"
+      <v-card-text
+        v-if="supplier && supplier.yearSales"
+        class="mt-n5 smallerText"
         >{{ selectedYear }} {{ $t("supplier.sales") }}:
         {{ supplier.yearSales }}</v-card-text
       >
 
-      <v-card-text v-if="supplier.monthRevenue" class="mt-n5 smallerText"
+      <v-card-text
+        v-if="supplier && supplier.monthRevenue"
+        class="mt-n5 smallerText"
         >{{ selectedMonth }} {{ $t("supplier.revenue") }}
         {{ supplier.monthRevenue }}</v-card-text
       >
 
-      <v-card-text v-if="supplier.yearRevenue" class="mt-n5 smallerText"
+      <v-card-text
+        v-if="supplier && supplier.yearRevenue"
+        class="mt-n5 smallerText"
         >{{ selectedYear }} {{ $t("supplier.revenue") }}:
         {{ supplier.yearRevenue }}</v-card-text
       >
 
-      <v-card-text>
+      <v-card-text v-if="supplier">
         <v-rating
           v-model="supplier.rating"
           color="amber"
@@ -99,7 +110,6 @@ export default {
     // },
 
     supplierClicked(supplier) {
-      console.log("current supplier id", supplier.user_id);
       if (this.$route.name == "adminPage") {
         localStorage.setItem("clickedSupplier", JSON.stringify(supplier));
         this.$router.push(`/${this.$i18n.locale}/suppliersDashboard`);
