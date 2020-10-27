@@ -306,12 +306,7 @@
       class="mt-n7"
     >
       <v-col lg="2" sm="4" md="2" cols="4">
-        <v-card
-          class="ml-4 mt-16"
-          height="95%"
-          style="overflow: hidden"
-          max-width
-        >
+        <v-card class="ml-4" height="95%" style="overflow: hidden" max-width>
           <!-- <v-row justify="center"
             ><v-card-title>Categories</v-card-title>
           </v-row> -->
@@ -560,7 +555,7 @@
         md="2"
         cols="2"
       >
-        <v-card class="mt-16" height="95%">
+        <v-card height="95%">
           <v-img :src="nodeHost + homePageInfo.right_banner_image"></v-img>
         </v-card>
       </v-col>
