@@ -1146,13 +1146,13 @@ export default {
       var buttonPressed = "search";
       var obj = {};
 
-      if (this.categoryName) obj.categoryName = this.categoryName;
       if (this.priceFrom) obj.priceFrom = this.priceFrom;
       if (this.priceTo) obj.priceTo = this.priceTo;
       if (this.governorate) obj.governorate = this.governorate;
       if (this.region) obj.region = this.region;
       if (this.toolbarSearch) obj.toolbarSearch = this.toolbarSearch;
-      if (this.country) obj.country = this.country;
+      // if (this.country) obj.country = this.country;
+      this.$store.commit("setProductAdvancedSearches", obj);
 
       await this.$store.dispatch("filterProducts", {
         product_name: this.toolbarSearch,

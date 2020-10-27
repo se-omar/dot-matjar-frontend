@@ -26,7 +26,8 @@ export default {
         choosenCountries: [],
         allUsers: [],
         user: [],
-        loadmore: { name: 'all', type: 'all' }
+        loadmore: { name: 'all', type: 'all' },
+        productAdvancedSearches: ''
     },
 
     mutations: {
@@ -233,6 +234,10 @@ export default {
 
             state.loadmore = { name: name, type: type }
             console.log('state loadore', state.loadmore)
+        },
+
+        setProductAdvancedSearches(state, obj) {
+            state.productAdvancedSearches = obj
         }
 
     },
@@ -714,13 +719,18 @@ export default {
                     alert(message.data.message)
                 })
         },
-        loadmoreProducts(context, { id }) {
-            console.log(id, context.state.loadmore.type, context.state.loadmore.name)
+        loadmoreProducts(context, obj) {
+            console.log(obj.id, context.state.loadmore.type, context.state.loadmore.name)
             axios.put(context.rootState.nodeHost + '/api/loadmoreProducts', {
                 loadmoreType: context.state.loadmore.type,
                 loadmoreName: context.state.loadmore.name,
-                product_id: id,
-                siteLanguage: context.state.siteLanguage
+                product_id: obj.id,
+                siteLanguage: context.state.siteLanguage,
+                productName: obj.toolbarSearch,
+                priceFrom: obj.priceFrom,
+                priceTo: obj.priceTo,
+                governorate: obj.governorate,
+                region: obj.region,
 
             }).then(products => {
                 console.log('load more products', products.data.data)

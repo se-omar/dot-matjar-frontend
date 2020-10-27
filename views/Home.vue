@@ -304,7 +304,7 @@
       <v-col lg="9">
         <v-radio-group mandatory :value="radioGroup">
           <v-row class="mb-n5" justify="center">
-            <v-col lg="3">
+            <v-col lg="3" md="3" sm="5" cols="6">
               <v-radio @change="changeRadioGroup" value="1"
                 ><template v-slot:label>
                   <p class="mt-4">
@@ -314,7 +314,7 @@
               </v-radio>
             </v-col>
 
-            <v-col lg="3">
+            <v-col lg="3" md="3" sm="5" cols="6">
               <v-radio @change="changeRadioGroup" value="2">
                 <template v-slot:label>
                   <p class="mt-4">
@@ -324,7 +324,7 @@
               </v-radio>
             </v-col>
 
-            <v-col lg="2" class="mt-2">
+            <v-col lg="2" sm="5" md="2" cols="2" class="mt-2">
               <v-btn small :color="siteColor.button_color" @click="All">
                 <span :style="`color: ${siteColor.button_text_color}`">{{
                   $t("homePage.allProducts")
@@ -709,6 +709,9 @@ export default {
     availableCountries() {
       return this.$store.state.Home.availableCountries;
     },
+    productAdvancedSearches() {
+      return this.$store.state.Home.productAdvancedSearches;
+    }
   },
   methods: {
     async filterProducts(buttonPressed) {
@@ -742,12 +745,24 @@ export default {
       this.isLoading = false;
     },
     async loadmoreProducts() {
-      this.$store.dispatch("loadmoreProducts", {
-        id:
-          this.filteredProducts.length > 0
+      var obj = {}
+if(this.productAdvancedSearches){
+   obj = this.productAdvancedSearches
+  obj.id = this.filteredProducts.length > 0
             ? this.filteredProducts[this.filteredProducts.length - 1].product_id
-            : 0,
-      });
+            : 0;
+           
+}
+else{
+   obj = {
+      id: this.filteredProducts.length > 0
+            ? this.filteredProducts[this.filteredProducts.length - 1].product_id
+            : 0
+  }
+}
+
+ this.$store.dispatch("loadmoreProducts",obj);
+      
     },
 
     async filterSuppliers() {

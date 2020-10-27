@@ -192,7 +192,14 @@
             }}</span></v-btn
           >
         </v-row>
-        <v-row justify="space-between">
+        <v-row
+          class="ml-n5"
+          :justify="
+            supplierPageInfo && supplierPageInfo.show_right_banner
+              ? 'space-between'
+              : 'start'
+          "
+        >
           <v-col
             :class="
               supplierPageInfo && supplierPageInfo.show_right_banner
@@ -205,13 +212,12 @@
             :key="index"
           >
             <product
-              class="mx-3"
               :minWidth="
                 supplierPageInfo &&
                 supplierPageInfo.show_right_banner &&
                 supplierPageInfo.right_banner_image
                   ? '104%'
-                  : '120%'
+                  : '123%'
               "
               :addToCartButton="false"
               :filteredProduct="supplierProduct"
