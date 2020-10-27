@@ -306,7 +306,12 @@
       class="mt-n7"
     >
       <v-col lg="2" sm="4" md="2" cols="4">
-        <v-card class="ml-4" height="95%" style="overflow: hidden" max-width>
+        <v-card
+          class="ml-4 mt-16"
+          height="95%"
+          style="overflow: hidden"
+          max-width
+        >
           <!-- <v-row justify="center"
             ><v-card-title>Categories</v-card-title>
           </v-row> -->
@@ -484,7 +489,7 @@
           </v-col>
         </v-row>
 
-        <v-row v-else justify="center">
+        <v-row v-else-if="radioGroup == '1'" justify="center">
           <p class="display-1">no products found</p>
         </v-row>
 
@@ -555,7 +560,7 @@
         md="2"
         cols="2"
       >
-        <v-card height="95%">
+        <v-card class="mt-16" height="95%">
           <v-img :src="nodeHost + homePageInfo.right_banner_image"></v-img>
         </v-card>
       </v-col>
@@ -602,12 +607,13 @@ export default {
     };
   },
   async created() {
+    this.isLoading = true;
     console.log("dotenvvvvv", this.nodeHost);
     await this.$store.dispatch("getSiteColor");
     await this.$store.dispatch("getCurrencies");
     await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getCategoryItems");
-    // this.isLoading = true;
+
     this.$store.dispatch("removeSupplierPageData");
     await this.$store.dispatch("getSiteColor");
     console.log("site color is from", localStorage.getItem("siteColor"));
@@ -631,7 +637,7 @@ export default {
       governorate: this.governorate,
       region: this.region,
     });
-    this.isLoading = false;
+
     console.log("Category itemssssss in in in ", this.categoriesItems);
     return new Promise((resolve) => {
       setTimeout(() => {
