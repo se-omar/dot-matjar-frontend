@@ -540,7 +540,7 @@
             <v-col cols="10" sm="10" lg="5">
               <v-btn
                 @click="$router.push(`/${$i18n.locale}/siteColors`)"
-                large
+                small
                 rounded
                 :color="siteColor.button_color"
               >
@@ -578,7 +578,7 @@
             <v-col cols="12" sm="11" lg="6">
               <v-btn
                 :color="siteColor.button_color"
-                large
+                small
                 rounded
                 @click="
                   $router.push(`/${$i18n.locale}/categoryAndItemRequests`)
@@ -595,15 +595,13 @@
           <v-row justify="center" v-if="currentUser.user_type == 'admin'">
             <v-col cols="10" sm="10" lg="5">
               <v-btn
-                class="btn1"
                 :color="siteColor.button_color"
-                large
                 rounded
                 @click="$router.push(`/${$i18n.locale}/pendingSuppliers`)"
               >
                 <span
                   :style="`color: ${siteColor.button_text_color}`"
-                  class="mos smallerText"
+                  class="smallerText"
                   v-html="$t('toolbar.pendingSuppliers')"
                 >
                 </span>

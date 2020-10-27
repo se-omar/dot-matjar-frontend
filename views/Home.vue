@@ -463,7 +463,7 @@
           justify-lg="start"
           justify-md="center"
           justify-sm="start"
-          v-if="radioGroup === '1'"
+          v-if="radioGroup === '1' && filteredProducts.length > 0"
         >
           <v-col
             :class="homePageInfo.show_right_banner ? '' : productsClass"
@@ -484,6 +484,10 @@
           </v-col>
         </v-row>
 
+        <v-row v-else justify="center">
+          <p class="display-1">no products found</p>
+        </v-row>
+
         <v-row v-if="radioGroup === '2'">
           <v-col
             v-for="supplier in suppliers"
@@ -500,9 +504,14 @@
             ></supplier>
           </v-col>
         </v-row>
-        <v-row justify="center">
+        <v-row
+          v-if="
+            (filteredProducts.length > 0 && radioGroup == '1') ||
+            (suppliers.length > 0 && radioGroup == '2')
+          "
+          justify="center"
+        >
           <v-btn
-            v-if="radioGroup == '1'"
             small
             :color="siteColor.button_color"
             :style="`color: ${siteColor.button_text_color}`"

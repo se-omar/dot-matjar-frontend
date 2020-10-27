@@ -1277,12 +1277,6 @@ export default {
       var carouselformdata = new FormData();
       var bannerformdata = new FormData();
       console.log("right banne checkbox", this.rightBannerCheckbox);
-      var carouselImages = [
-        this.carouselImage1,
-        this.carouselImage2,
-        this.carouselImage3,
-        this.carouselImage4,
-      ];
 
       bannerformdata.set("user_id", this.currentUser.user_id);
       // if (this.leftImage) bannerformdata.append("file", this.leftImage, "left");
@@ -1291,9 +1285,25 @@ export default {
         bannerformdata.append("file", this.rightImage, "right");
 
       carouselformdata.set("user_id", this.currentUser.user_id);
-      carouselImages.forEach((element) => {
-        carouselformdata.append("file", element ? element : "empty");
-      });
+      var indexAsString = "";
+      if (this.carouselImage1) {
+        indexAsString += 0;
+        carouselformdata.append("file", this.carouselImage1);
+      }
+      if (this.carouselImage2) {
+        indexAsString += 1;
+        carouselformdata.append("file", this.carouselImage2);
+      }
+
+      if (this.carouselImage3) {
+        indexAsString += 2;
+        carouselformdata.append("file", this.carouselImage3);
+      }
+      if (this.carouselImage4) {
+        indexAsString += 3;
+        carouselformdata.append("file", this.carouselImage4);
+      }
+      carouselformdata.set("index", indexAsString);
 
       await this.$store.dispatch("updateHomePage", {
         show_carousel: this.convertBoolToInt(this.carouselCheckbox),
