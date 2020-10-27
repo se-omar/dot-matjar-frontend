@@ -44,7 +44,7 @@
         </v-col>
       </v-row>
       <!-- <v-spacer></v-spacer> -->
-      <v-row class="mr-16" justify="start">
+      <v-row justify="start">
         <v-col
           v-if="!$route.params.supplier_id"
           cols="7"
@@ -53,22 +53,19 @@
           md="8"
           xs="5"
         >
-          <template>
-            <v-text-field
-              class="mt-8 arabic"
-              outlined
-              rounded
-              height="10px"
-              solo
-              :placeholder="$t('toolbar.search')"
-              append-icon="fa fa-search"
-              @keyup="emptySearchBox"
-              v-model="toolbarSearch"
-              @keypress="filterProducts"
-            ></v-text-field>
-          </template>
+          <v-text-field
+            class="mt-8 arabic"
+            outlined
+            rounded
+            solo
+            :placeholder="$t('toolbar.search')"
+            append-icon="fa fa-search"
+            @keyup="emptySearchBox"
+            v-model="toolbarSearch"
+            @keypress="filterProducts"
+          ></v-text-field>
         </v-col>
-        <v-col v-else cols="9" lg="8" sm="5" md="6" xs="5">
+        <v-col v-else cols="7" lg="8" sm="5" md="6" xs="5">
           <v-text-field
             class="mt-8 arabic"
             outlined
@@ -540,7 +537,7 @@
             <v-col cols="10" sm="10" lg="5">
               <v-btn
                 @click="$router.push(`/${$i18n.locale}/siteColors`)"
-                large
+                small
                 rounded
                 :color="siteColor.button_color"
               >
@@ -575,10 +572,10 @@
           </v-row>
 
           <v-row justify="center" v-if="currentUser.user_type == 'admin'">
-            <v-col cols="12" sm="11" lg="6">
+            <v-col cols="10" sm="10" lg="5">
               <v-btn
                 :color="siteColor.button_color"
-                large
+                small
                 rounded
                 @click="
                   $router.push(`/${$i18n.locale}/categoryAndItemRequests`)
@@ -597,7 +594,7 @@
               <v-btn
                 class="btn1"
                 :color="siteColor.button_color"
-                large
+                small
                 rounded
                 @click="$router.push(`/${$i18n.locale}/pendingSuppliers`)"
               >

@@ -266,7 +266,6 @@
 
     <v-row v-if="homePageInfo.show_carousel" justify="center">
       <v-col :lg="homePageInfo ? homePageInfo.carousel_width : 10">
-        <!-- change -->
         <carousel
           :autoplay="true"
           :per-page="1"
@@ -300,10 +299,6 @@
           </slide>
         </carousel>
       </v-col>
-
-      <!-- <v-col cols="1" class="mr-n10" v-if="currentUser.user_type == 'admin'">
-        <SiteColor disabled></SiteColor>
-      </v-col> -->
     </v-row>
 
     <v-row
@@ -319,23 +314,23 @@
           <v-row>
             <v-col cols="12" sm="12" lg="12">
               <v-menu
-                v-for="category in category"
-                :key="category"
+                v-for="(category, index) in category"
+                :key="index"
                 open-on-hover
                 offset-x
                 :left="rtlMenuCondition"
                 transition="scale-transition"
               >
                 <template v-slot:activator="{ on, attrs }">
-                  <v-row class="mx-3" justify="start">
+                  <v-row class="mx-2" justify="start">
                     <v-col cols="12" lg="10" sm="12">
                       <v-btn
                         width="110%"
-                        @mouseover="mouseOver(category)"
+                        @mouseover="mouseOver(category.name)"
                         v-bind="attrs"
                         v-on="on"
                         text
-                        @click="filterProductsWithCategory(category)"
+                        @click="filterProductsWithCategory(category.name)"
                       >
                         <span v-if="$vuetify.breakpoint.xs">
                           <v-row justify="start">
@@ -344,11 +339,13 @@
                                 class="mt-1 smallerText"
                                 style="font-size: 14px"
                               >
-                                {{ category }}</span
+                                {{ category.name }}</span
                               >
 
                               <v-btn
-                                @click="filterProductsWithCategory(category)"
+                                @click="
+                                  filterProductsWithCategory(category.name)
+                                "
                                 icon
                                 style="overflow: hidden; color: black"
                               >
@@ -365,17 +362,19 @@
                           <v-row justify="start">
                             <v-col lg="5">
                               <i
-                                :class="`fas fa-${category} fa-sm  mr-2 mt-2`"
+                                :class="`fas fa-${category.icon} fa-sm  mr-2 mt-2`"
                               ></i>
 
                               <span class="mt-1 smallerText">
-                                {{ category }}</span
+                                {{ category.name }}</span
                               >
                             </v-col>
                             <v-row justify="end">
                               <v-col lg="2">
                                 <v-btn
-                                  @click="filterProductsWithCategory(category)"
+                                  @click="
+                                    filterProductsWithCategory(category.name)
+                                  "
                                   icon
                                   style="overflow: hidden; color: black"
                                   text
@@ -451,6 +450,7 @@
             </v-col>
           </v-row>
         </v-radio-group>
+
         <v-row justify="center">
           <v-btn small :color="siteColor.button_color" @click="All">
             <span :style="`color: ${siteColor.button_text_color}`">{{
@@ -486,8 +486,8 @@
 
         <v-row v-if="radioGroup === '2'">
           <v-col
-            v-for="supplier in suppliers"
-            :key="supplier.user_id"
+            v-for="(supplier, index) in suppliers"
+            :key="index"
             :class="homePageInfo.show_right_banner ? '' : productsClass"
             :lg="homePageInfo.show_right_banner ? 3 : 2"
             :md="homePageInfo.show_right_banner ? 4 : 3"
@@ -500,16 +500,28 @@
             ></supplier>
           </v-col>
         </v-row>
-        <v-row justify="center">
+        <v-row v-if="filteredProducts.length > 0" justify="center">
           <v-btn
-            v-if="radioGroup == '1'"
+            v-if="radioGroup == '2'"
             small
             :color="siteColor.button_color"
-            :style="`color: ${siteColor.button_text_color}`"
-            class="mb-15 white--text"
+            class="mb-15"
             @click="filterProducts('loadmore')"
           >
-            <span> {{ $t("homePage.loadMore") }}</span></v-btn
+            <span :style="`color: ${siteColor.button_text_color}`">
+              {{ $t("homePage.loadMore") }}</span
+            ></v-btn
+          >
+          <v-btn
+            v-else
+            small
+            :color="siteColor.button_color"
+            class="mb-15"
+            @click="loadmoreProducts()"
+          >
+            <span :style="`color: ${siteColor.button_text_color}`">
+              {{ $t("homePage.loadMore") }}</span
+            ></v-btn
           >
         </v-row>
       </v-col>
@@ -704,6 +716,14 @@ export default {
 
       this.isLoading = false;
     },
+    async loadmoreProducts() {
+      this.$store.dispatch("loadmoreProducts", {
+        id:
+          this.filteredProducts.length > 0
+            ? this.filteredProducts[this.filteredProducts.length - 1].product_id
+            : 0,
+      });
+    },
 
     async filterSuppliers() {
       this.isLoading = true;
@@ -762,6 +782,7 @@ export default {
       this.$store.dispatch("getRegions", this.governorate);
     },
     async All() {
+      await this.$store.commit("loadMoreType", { name: "all", type: "all" });
       this.supplierFilterFlag = false;
       this.$store.commit("emptySearch");
       this.$store.commit("emptySupplierName");
@@ -811,18 +832,25 @@ export default {
       console.log("category itemsis", this.categoryItems);
       console.log("categories item", this.categoriesItems);
     },
-    filterProductsWithItem(item) {
+    async filterProductsWithItem(item) {
       console.log(item);
-      this.$store.dispatch("filterProducts", {
+      await this.$store.dispatch("filterProducts", {
         categoryItem: item,
         buttonPressed: "search",
+        product_id: 0,
       });
+      this.$store.commit("loadMoreType", { name: item, type: "item" });
     },
-    filterProductsWithCategory(category) {
-      console.log(category);
-      this.$store.dispatch("filterProducts", {
+    async filterProductsWithCategory(category) {
+      await this.$store.dispatch("filterProducts", {
         category_name: category,
         buttonPressed: "search",
+        product_id: 0,
+      });
+      console.log(category);
+      this.$store.commit("loadMoreType", {
+        name: category,
+        type: "category",
       });
     },
     testModule() {

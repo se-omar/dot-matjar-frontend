@@ -25,7 +25,8 @@ export default {
         worldCountries: [],
         choosenCountries: [],
         allUsers: [],
-        user: []
+        user: [],
+        loadmore: { name: 'all', type: 'all' }
     },
 
     mutations: {
@@ -99,12 +100,12 @@ export default {
             // console.log('siteLanguage', state.siteLanguage)
             if (state.siteLanguage == 'en') {
                 state.category = data.map(e => {
-                    return e.category_name
+                    return { name: e.category_name, icon: e.category_name }
                 })
             }
             else {
                 state.category = data.map(e => {
-                    return e.category_arabic_name
+                    return { name: e.category_arabic_name, icon: e.category_name }
                 })
 
             }
@@ -189,7 +190,7 @@ export default {
         },
         updateSupplierPageColors(state, supplierPageColors) {
             //console.log('supplier page colors', supplierPageColors)
-            var pageDataArray = [supplierPageColors]
+            var pageDataArray = supplierPageColors
 
             localStorage.setItem('siteColor', JSON.stringify(pageDataArray));
             state.siteColor = JSON.parse(localStorage.getItem('siteColor')) ? JSON.parse(localStorage.getItem('siteColor')) : []
@@ -226,6 +227,11 @@ export default {
         getUser(state, user) {
 
             state.user = user
+        },
+        loadMoreType(state, { name, type }) {
+
+            state.loadmore = { name: name, type: type }
+            console.log('state loadore', state.loadmore)
         }
 
     },
@@ -342,9 +348,10 @@ export default {
             categoryItem,
             priceFrom,
             priceTo,
-            buttonPressed
+            buttonPressed,
+            product_id
         }) {
-            var product_id = context.state.products[0].product_id
+
             // console.log(product_name,
             //     category_name,
             //     governorate,
@@ -360,7 +367,9 @@ export default {
                 region,
                 categoryItem, priceFrom, priceTo,
                 siteLanguage: context.state.siteLanguage,
-                product_id: product_id
+                product_id: product_id,
+                loadmoreType: context.state.loadmore.type,
+                loadmoreName: context.state.loadmore.name
             })
                 .then(response => {
                     //console.log('message:', response.data.message)
@@ -714,6 +723,19 @@ export default {
                 .then(message => {
                     alert(message.data.message)
                 })
+        },
+        loadmoreProducts(context, { id }) {
+            console.log(id, context.state.loadmore.type, context.state.loadmore.name)
+            axios.put(context.rootState.nodeHost + '/api/loadmoreProducts', {
+                loadmoreType: context.state.loadmore.type,
+                loadmoreName: context.state.loadmore.name,
+                product_id: id,
+                siteLanguage: context.state.siteLanguage
+
+            }).then(products => {
+                console.log('load more products', products.data.data)
+                context.commit('filterProducts', { products: products.data.data, pressed: '' })
+            })
         }
 
 

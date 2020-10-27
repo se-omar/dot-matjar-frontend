@@ -19,7 +19,7 @@
             ></v-color-picker>
           </v-col>
           <v-col cols="3" lg="3">
-            <v-btn x-large :color="buttonsColor"> </v-btn>
+            <v-btn large :color="buttonsColor"> </v-btn>
           </v-col>
         </v-row>
       </v-card>
@@ -42,7 +42,7 @@
             ></v-color-picker>
           </v-col>
           <v-col cols="3" lg="3">
-            <v-btn :color="buttonsColor" x-large>
+            <v-btn :color="buttonsColor" large>
               <h4 :style="`color: ${buttonsTextColor}`">
                 {{ $t("siteColors.textColor") }}
               </h4>

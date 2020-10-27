@@ -192,7 +192,7 @@
             }}</span></v-btn
           >
         </v-row>
-        <v-row>
+        <v-row justify="space-between">
           <v-col
             :class="
               supplierPageInfo && supplierPageInfo.show_right_banner
@@ -201,10 +201,11 @@
             "
             :lg="supplierPageInfo && supplierPageInfo.show_right_banner ? 3 : 2"
             :md="supplierPageInfo && supplierPageInfo.show_right_banner ? 4 : 3"
-            v-for="supplierProduct in supplierProducts"
-            :key="supplierProduct.product_id"
+            v-for="(supplierProduct, index) in supplierProducts"
+            :key="index"
           >
             <product
+              class="mx-3"
               :minWidth="
                 supplierPageInfo &&
                 supplierPageInfo.show_right_banner &&
@@ -448,8 +449,8 @@ export default {
     },
   },
   async created() {
-    await this.$store.dispatch("getSiteColor");
-    //this.isLoading = true;
+    // await this.$store.dispatch("getSiteColor");
+    this.isLoading = true;
     await this.$store.dispatch("getCurrencies");
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
@@ -468,7 +469,7 @@ export default {
       "getSupplierProducts",
       this.$route.params.supplier_id
     );
-    console.log("supplier products from supplier apge", this.supplierProducts);
+    console.log("supplier products from supplier page", this.supplierProducts);
     await this.$store.dispatch(
       "getSupplierCategoriesAndItems",
       this.$route.params.supplier_id
