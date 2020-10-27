@@ -81,7 +81,7 @@
           </v-col>
           <!-- test  -->
 
-          <v-col cols="6" lg="6" sm="8">
+          <v-col cols="10" lg="6" sm="8">
             <v-row justify="center">
               <v-col lg="12">
                 <v-toolbar shaped :color="siteColor.toolbar_color">
@@ -136,7 +136,7 @@
                     (based on {{ supplier.rate_counter }} Ratings)
                   </p>
                 </v-col>
-                <v-col cols="6" lg="6" sm="12">
+                <v-col cols="12" lg="6" sm="12">
                   <v-rating
                     readonly
                     class="ml-n1"
@@ -313,7 +313,7 @@
                       </p>
                     </v-col>
 
-                    <v-col lg="5">
+                    <v-col lg="5" cols="12">
                       <v-rating
                         readonly
                         class="ml-n1 mt-n2"
