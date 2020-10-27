@@ -300,6 +300,41 @@
         </carousel>
       </v-col>
     </v-row>
+    <v-row justify="end">
+      <v-col lg="9">
+        <v-radio-group mandatory :value="radioGroup">
+          <v-row class="mb-n5" justify="center">
+            <v-col lg="3">
+              <v-radio @change="changeRadioGroup" value="1"
+                ><template v-slot:label>
+                  <p class="mt-4">
+                    {{ $t("toolbar.searchProducts") }}
+                  </p>
+                </template>
+              </v-radio>
+            </v-col>
+
+            <v-col lg="3">
+              <v-radio @change="changeRadioGroup" value="2">
+                <template v-slot:label>
+                  <p class="mt-4">
+                    {{ $t("toolbar.searchSuppliers") }}
+                  </p>
+                </template>
+              </v-radio>
+            </v-col>
+
+            <v-col lg="2" class="mt-2">
+              <v-btn small :color="siteColor.button_color" @click="All">
+                <span :style="`color: ${siteColor.button_text_color}`">{{
+                  $t("homePage.allProducts")
+                }}</span></v-btn
+              >
+            </v-col>
+          </v-row>
+        </v-radio-group>
+      </v-col>
+    </v-row>
 
     <v-row
       :justify="homePageInfo.show_right_banner == 1 ? 'space-between' : 'start'"
@@ -427,38 +462,6 @@
         cols="6"
         :md="homePageInfo.show_right_banner ? 8 : 10"
       >
-        <v-radio-group mandatory :value="radioGroup">
-          <v-row class="mb-n5" justify="center">
-            <v-col lg="4">
-              <v-radio @change="changeRadioGroup" value="1"
-                ><template v-slot:label>
-                  <p class="mt-4">
-                    {{ $t("toolbar.searchProducts") }}
-                  </p>
-                </template>
-              </v-radio>
-            </v-col>
-
-            <v-col lg="4">
-              <v-radio @change="changeRadioGroup" value="2">
-                <template v-slot:label>
-                  <p class="mt-4">
-                    {{ $t("toolbar.searchSuppliers") }}
-                  </p>
-                </template>
-              </v-radio>
-            </v-col>
-          </v-row>
-        </v-radio-group>
-
-        <v-row justify="center">
-          <v-btn small :color="siteColor.button_color" @click="All">
-            <span :style="`color: ${siteColor.button_text_color}`">{{
-              $t("homePage.allProducts")
-            }}</span></v-btn
-          >
-        </v-row>
-
         <v-row
           justify-lg="start"
           justify-md="center"
