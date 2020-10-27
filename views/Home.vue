@@ -32,7 +32,7 @@
         >
       </v-col>
     </v-row> -->
-    <v-row>
+    <!-- <v-row>
       <v-col>
         <span></span>
       </v-col>
@@ -46,7 +46,7 @@
       <v-col>
         <span></span>
       </v-col>
-    </v-row>
+    </v-row> -->
     <!-- search woth supplier and proucts -->
     <!-- <v-col>
       <v-btn @click="advancedSearch = true">Expand Search Options</v-btn>
@@ -238,8 +238,8 @@
         </v-row>
       </v-card>
     </v-dialog>
-    <v-row justify="center">
-      <!-- <v-col cols="3" class="ml-4">
+    <!-- <v-row justify="center">
+      <v-col cols="3" class="ml-4">
         <v-card class="ml-2" max-width="250">
           <v-row justify="center"
             ><v-card-title>Categories</v-card-title>
@@ -247,10 +247,10 @@
           <v-divider class="mx-16"></v-divider>
           
         </v-card>
-      </v-col> -->
+      </v-col>
       <v-col cols="11"></v-col>
-      <!-- // Current  -->
-      <!-- <v-col cols="4" sm="2" md="2" lg="2">
+      // Current 
+      <v-col cols="4" sm="2" md="2" lg="2">
         <v-btn
           :disabled="radioGroup === '1'"
           class="white--text"
@@ -260,9 +260,9 @@
           max-width="80"
           >Search</v-btn
         >
-      </v-col> -->
+      </v-col>
       <v-col sm="3" lg="3" md="3"></v-col>
-    </v-row>
+    </v-row> -->
 
     <v-row v-if="homePageInfo.show_carousel" justify="center">
       <v-col :lg="homePageInfo ? homePageInfo.carousel_width : 10">
@@ -319,8 +319,8 @@
           <v-row>
             <v-col cols="12" sm="12" lg="12">
               <v-menu
-                v-for="category in category"
-                :key="category"
+                v-for="(category, index) in category"
+                :key="index"
                 open-on-hover
                 offset-x
                 :left="rtlMenuCondition"
@@ -512,11 +512,23 @@
           justify="center"
         >
           <v-btn
+            v-if="radioGroup == '1'"
             small
             :color="siteColor.button_color"
             :style="`color: ${siteColor.button_text_color}`"
             class="mb-15 white--text"
             @click="filterProducts('loadmore')"
+          >
+            <span> {{ $t("homePage.loadMore") }}</span></v-btn
+          >
+
+          <v-btn
+            v-else-if="radioGroup == '2'"
+            small
+            :color="siteColor.button_color"
+            :style="`color: ${siteColor.button_text_color}`"
+            class="mb-15 white--text"
+            @click="loadMore"
           >
             <span> {{ $t("homePage.loadMore") }}</span></v-btn
           >
@@ -832,6 +844,7 @@ export default {
       this.$store.dispatch("filterProducts", {
         category_name: category,
         buttonPressed: "search",
+        product_id: this.products[0].product_id,
       });
     },
     testModule() {
