@@ -1259,7 +1259,11 @@ export default {
       return this.$store.state.nodeHost;
     },
     category() {
-      return this.$store.state.Home.category;
+      var obj = [];
+      this.$store.state.Home.category.forEach((element) => {
+        obj.push(element.name);
+      });
+      return obj;
     },
     categoriesItems() {
       return this.$store.state.Home.categoriesItems;
