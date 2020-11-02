@@ -230,7 +230,6 @@ export default {
       });
     },
     getCountryRegions() {
-      console.log(this.governorate);
       this.$store.dispatch("getRegions", this.governorate);
     },
   },
@@ -257,7 +256,6 @@ export default {
     this.linkedin = this.currentUser.linkedin;
     this.website = this.currentUser.website;
     this.address = this.currentUser.address;
-    console.log("current user ", this.currentUser);
   },
   data: () => ({
     rules: {
@@ -347,25 +345,7 @@ export default {
 };
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-.smallerText {
-  font-size: 20px;
-}
 div {
-  font-family: "Markazi Text", serif;
   font-size: 17px;
 }
 </style>

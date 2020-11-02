@@ -824,7 +824,7 @@ export default {
     await this.$store.dispatch("getAllSuppliersWithSales");
     await this.$store.dispatch("getGovernorate");
     await this.$store.dispatch("getSiteColor");
-    // console.log(this.currentMonth);
+    //
     await this.$store.dispatch("getSuppliers", {
       supplierFilterFlag: this.supplierFilterFlag,
       supplierName: this.supplierName,
@@ -834,7 +834,7 @@ export default {
     await this.$store.dispatch("getWorldCountries");
     await this.$store.dispatch("getHomePageData");
     await this.$store.dispatch("getChoosenWorldCountries");
-    console.log("world countries", this.worldCountries);
+
     if (this.homePageInfo.show_carousel === 1) this.carouselCheckbox = true;
 
     // if (this.homePageInfo.show_left_banner === 1)
@@ -843,16 +843,16 @@ export default {
     if (this.homePageInfo.show_right_banner === 1)
       this.rightBannerCheckbox = true;
 
-    // console.log("all suppliers", this.suppliers);
+    //
 
-    // console.log(
+    //
     //   "all suppliers with sales from admin page",
     //   this.allSuppliersWithSales
     // );
 
     await this.getTopMonthlySuppliers();
     this.isLoading = false;
-    // console.log("suppliers sorted by sales", this.suppliersSortedBySales);
+    //
     await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getCategoryItems");
   },
@@ -1063,11 +1063,11 @@ export default {
 
     // supplierClicked(supplier) {
     //   localStorage.setItem("clickedSupplier", JSON.stringify(supplier));
-    //   console.log("supplier is", supplier);
-    //   console.log("supplier id is", supplier.user_id);
+    //
+    //
     //   //this.$store.commit("supplierPage", supplier);
     //   this.$router.push(`/${this.$i18n.locale}/suppliersDashboard`);
-    //   // console.log(this.supplier);
+    //   //
     // },
 
     groupBy(xs, f) {
@@ -1113,11 +1113,11 @@ export default {
                 // debugger;
                 var currentSupplier;
                 var currentYearOrders = yearlySortedOrders[self.selectedYear];
-                // console.log("current year orders", currentYearOrders);
+                //
 
                 if (self.selectedMonth === "all") {
                   currentSupplier = currentYearOrders[0].products[0].user;
-                  // console.log("current supplier from all", currentSupplier);
+                  //
                   for (var h = 0; h < currentYearOrders.length; h++) {
                     currentYearOrders[h].products.forEach((element) => {
                       totalYearSales += element.buy_counter;
@@ -1129,7 +1129,7 @@ export default {
                   if (totalYearSales > 0) {
                     currentSupplier.yearSales = totalYearSales;
                     currentSupplier.yearRevenue = totalYearRevenue;
-                    // console.log(totalYearRevenue);
+                    //
                     self.topYearSuppliers.push(currentSupplier);
                   }
                 } else {
@@ -1157,10 +1157,10 @@ export default {
                   if (totalMonthSales > 0) {
                     currentSupplier.monthSales = totalMonthSales;
                     currentSupplier.monthRevenue = totalMonthRevenue;
-                    // console.log(totalMonthRevenue);
-                    // console.log("entered herer");
+                    //
+                    //
                     self.topMonthSuppliers.push(currentSupplier);
-                    // console.log("top month suppliers", self.topMonthSuppliers);
+                    //
                   }
                 }
               }
@@ -1176,12 +1176,12 @@ export default {
         return b.yearSales - a.yearSales;
       });
 
-      // console.log("top month suppliers", self.topMonthSuppliers);
+      //
       this.isLoading = false;
     },
 
     changeYear() {
-      // console.log(this.selectedYear);
+      //
     },
 
     filterSuppliers() {
@@ -1200,7 +1200,7 @@ export default {
     },
 
     getCountryRegions() {
-      // console.log(this.governorate);
+      //
       this.$store.dispatch("getRegions", this.governorate);
     },
 
@@ -1215,7 +1215,7 @@ export default {
       return Array.from({ length: back }, (v, i) => year - back + i + 1);
     },
     addNewCategory() {
-      // console.log(this.newCategoryName);
+      //
       this.$store.dispatch("addNewCategory", {
         categoryName: this.newCategoryName,
         categoryArabicName: this.newCategoryArabicName,
@@ -1223,7 +1223,6 @@ export default {
       this.$router.go();
     },
     async addCategoryItem() {
-      console.log("item arabic name", this.itemArabicName);
       await this.$store.dispatch("addCategoryItems", {
         categoryName: this.categoryName,
         categoryItem: this.categoryItem,
@@ -1233,8 +1232,8 @@ export default {
     },
     gettingCategoryItems() {
       this.chooseItemToRemove = [];
-      // console.log(this.category);
-      console.log("categories items", this.categoriesItems);
+      //
+
       this.categoryItems = [];
       for (let i = 0; i < this.categoriesItems.length; i++) {
         if (this.siteLanguage == "en") {
@@ -1254,11 +1253,11 @@ export default {
           }
         }
       }
-      // console.log(this.categoryItems);
-      // console.log("categories items is", this.categoriesItems);
+      //
+      //
     },
     removeItem() {
-      // console.log(this.chooseCategoryToRemove, this.chooseItemToRemove);
+      //
 
       this.$store.dispatch("removeCategoryAndItems", {
         categoryName: this.chooseCategoryToRemove,
@@ -1282,11 +1281,10 @@ export default {
     async sendData() {
       var carouselformdata = new FormData();
       var bannerformdata = new FormData();
-      console.log("right banne checkbox", this.rightBannerCheckbox);
 
       bannerformdata.set("user_id", this.currentUser.user_id);
       // if (this.leftImage) bannerformdata.append("file", this.leftImage, "left");
-      console.log("right image", this.rightImage);
+
       if (this.rightImage)
         bannerformdata.append("file", this.rightImage, "right");
 
@@ -1325,33 +1323,33 @@ export default {
     setCarouselImage1(image) {
       this.carouselImage1 = image;
       this.carouselViewImg1 = URL.createObjectURL(image);
-      // console.log(this.testImg);
-      // console.log(image);
+      //
+      //
     },
     setCarouselImage2(image) {
       this.carouselImage2 = image;
       this.carouselViewImg2 = URL.createObjectURL(image);
-      // console.log(image);
+      //
     },
     setCarouselImage3(image) {
       this.carouselImage3 = image;
       this.carouselViewImg3 = URL.createObjectURL(image);
-      // console.log(image);
+      //
     },
     setCarouselImage4(image) {
       this.carouselImage4 = image;
       this.carouselViewImg4 = URL.createObjectURL(image);
-      // console.log(image);
+      //
     },
     // setLeftImage(image) {
     //   this.leftImage = image;
     //   this.leftBannerViewImg = URL.createObjectURL(image);
-    // console.log(image);
+    //
     // },
     setRightImage(image) {
       this.rightImage = image;
       this.rightBannerViewImg = URL.createObjectURL(image);
-      // console.log(image);
+      //
     },
 
     removeCarouselImage(imgNum) {
@@ -1393,11 +1391,9 @@ export default {
       }
     },
     addCountry() {
-      console.log("country is", this.country);
       this.$store.dispatch("addCountry", { country: this.country });
     },
     RemoveCountry(country) {
-      console.log(country);
       this.$store.dispatch("removeCountry", country);
       location.reload();
     },
@@ -1413,25 +1409,7 @@ export default {
 
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 19px;
-}
-.smallerText {
-  font-size: 15px;
-}
 div {
-  font-family: "Markazi Text", serif;
   font-size: 17px;
 }
 </style>

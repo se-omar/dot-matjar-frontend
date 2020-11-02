@@ -68,9 +68,7 @@
 
 <script>
 export default {
-  created() {
-    console.log(this.request);
-  },
+  created() {},
 
   props: {
     request: {

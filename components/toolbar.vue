@@ -7,7 +7,7 @@
         :is-full-page="true"
       ></loading>
     </div> -->
-    <v-app-bar fixed :color="siteColor.toolbar_color" shaped>
+    <v-app-bar shaped app :color="siteColor.toolbar_color">
       <v-row justify="start">
         <v-col cols="12" lg="12">
           <span
@@ -792,7 +792,9 @@
         style="width: 15px; height: 5px"
       ></v-app-bar-nav-icon>
     </v-app-bar>
-
+    <v-main>
+      <v-layout> </v-layout>
+    </v-main>
     <v-navigation-drawer
       style="position: fixed"
       v-model="drawer"
@@ -995,19 +997,16 @@
 export default {
   components: {},
   async created() {
-    console.log("current language locale", this.$i18n.locale);
     localStorage.setItem("currentCurrency", "egp");
 
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
     }
     await this.$store.dispatch("getAvailableCountries");
-    console.log("color from toolbar", this.siteColor);
-    if (this.availableCountries) {
-      console.log(this.availableCountries);
-    }
+
+    // if (this.availableCountries) {
+    // }
     this.$store.dispatch("getWorldCountries");
-    console.log("site color in toolbar is :", this.siteColor);
   },
 
   props: {
@@ -1097,10 +1096,10 @@ export default {
     changePhoto() {
       this.profilephoto = this.$refs.profileUpload.files[0];
       var form = new FormData();
-      console.log("profile function starts");
+
       form.append("profile", this.profilephoto);
       form.set("email", this.$store.state.Home.currentUser.email);
-      console.log(this.$store.state.Home.currentUser.email);
+
       this.$store.dispatch("profilePhoto", form);
     },
     supplierPage() {
@@ -1126,7 +1125,6 @@ export default {
     //   });
     // },
     getCountryRegions() {
-      console.log(this.governorate);
       this.$store.dispatch("getRegions", this.governorate);
     },
     emptySupplierName() {
@@ -1142,7 +1140,7 @@ export default {
     async filterProducts() {
       this.isLoading = true;
       this.productFilterFlag = true;
-      console.log(this.toolbarSearch, this.categoryName);
+
       var buttonPressed = "search";
       var obj = {};
 
@@ -1179,13 +1177,10 @@ export default {
       this.isLoading = false;
     },
     filterSupplierProducts() {
-      console.log(this.supplierProductsSearch);
-      console.log(this.$route.params.supplier_id);
       this.$store.dispatch("filterSupplierProducts", {
         productsSearch: this.supplierProductsSearch,
         user_id: this.$route.params.supplier_id,
       });
-      console.log(this.$route.params.supplier_id);
     },
     async emptySupplierSearchBox() {
       await this.$store.dispatch(
@@ -1206,9 +1201,6 @@ export default {
       } else {
         this.$store.commit("changeRadioGroup", "1");
       }
-
-      console.log("test");
-      console.log(this.radioGroup);
     },
 
     async changeCurrency(currency) {
@@ -1222,7 +1214,6 @@ export default {
           productName: this.toolbarSearch,
           categoryName: this.categoryName,
         });
-        console.log(currency);
       } else if (this.$route.name == "supplierPage") {
         this.$store.commit("emptySupplierProducts");
         await this.$store.dispatch(
@@ -1263,7 +1254,7 @@ export default {
     //       productName: this.toolbarSearch,
     //       categoryName: this.categoryName,
     //     });
-    //     console.log(currency);
+    //
     //   } else if (this.$route.name == "supplierPage") {
     //     this.$store.commit("emptySupplierProducts");
     //     await this.$store.dispatch(
@@ -1296,24 +1287,6 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-.smallerText {
-  font-size: 15px;
-}
-
 .img {
   border-radius: 50%;
 }

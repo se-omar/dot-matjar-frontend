@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <div v-if="currentUser.user_type == 'admin'"></div>
     <div class="vld-parent">
       <loading
         :active.sync="isLoading"
@@ -8,261 +7,6 @@
         :is-full-page="true"
       ></loading>
     </div>
-    <!-- testin g sub mrnu  -->
-    <!-- <v-row justify="center">
-      <v-col cols="6">
-        <v-text-field
-          append-icon="fa fa-search"
-          :color="siteColor"
-          outlined
-          rounded
-          placeholder="What are you looking for ?"
-          @keyup="emptySearchBox"
-          v-model="toolbarSearch"
-        ></v-text-field>
-      </v-col>
-      <v-col cols="1" sm="6" lg="1">
-        <v-btn
-          class="white--text mt-3"
-          @click="filterProducts"
-          :color="siteColor"
-          rounded
-          max-width="80"
-          >Search</v-btn
-        >
-      </v-col>
-    </v-row> -->
-    <!-- <v-row>
-      <v-col>
-        <span></span>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col>
-        <span></span>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col>
-        <span></span>
-      </v-col>
-    </v-row> -->
-    <!-- search woth supplier and proucts -->
-    <!-- <v-col>
-      <v-btn @click="advancedSearch = true">Expand Search Options</v-btn>
-    </v-col> -->
-    <v-dialog style="overflow: hidden" v-model="advancedSearch" max-width="80%">
-      <v-card style="overflow: hidden">
-        <v-row justify="center">
-          <v-radio-group
-            style="margin-right: 50px"
-            mandatory
-            :value="radioGroup"
-          >
-            <v-row class="mb-n5" justify="center">
-              <v-col @click="changeRadioGroup()" cols="3" lg="4" sm="5" md="5">
-                <v-radio
-                  style="font-family: 'lalezar', cursive; font-size: 25px"
-                  :label="$t('toolbar.searchProducts')"
-                  value="1"
-                ></v-radio>
-              </v-col>
-
-              <v-col cols="3" lg="4" sm="5" md="5">
-                <v-radio
-                  :label="$t('toolbar.searchSuppliers')"
-                  value="2"
-                ></v-radio>
-              </v-col>
-            </v-row>
-          </v-radio-group>
-        </v-row>
-        <v-row justify="center">
-          <v-col cols="3" sm="1" lg="2"></v-col>
-          <v-col cols="3" lg="4" sm="5" md="3">
-            <v-select
-              rounded
-              v-if="radioGroup === '1'"
-              :items="egyptGovernorates"
-              :disabled="radioGroup === '2'"
-              placeholder="Governorate"
-              dense
-              outlined
-              v-model="governorate"
-              @change="getCountryRegions()"
-            ></v-select>
-          </v-col>
-
-          <v-col cols="3" lg="4" sm="5" md="3">
-            <v-select
-              rounded
-              v-if="radioGroup === '1'"
-              :items="regions"
-              :disabled="radioGroup === '2'"
-              placeholder="Region"
-              dense
-              outlined
-              v-model="region"
-            ></v-select>
-          </v-col>
-          <v-col lg="2" sm="1" cols="3"></v-col>
-          <v-col cols="2" lg="3" sm="4" md="4">
-            <v-select
-              rounded
-              v-if="radioGroup === '2'"
-              :items="egyptGovernorates"
-              :disabled="radioGroup === '1'"
-              placeholder="Governorate"
-              dense
-              outlined
-              v-model="governorate"
-              @change="getCountryRegions()"
-            ></v-select>
-          </v-col>
-
-          <v-col cols="2" lg="3" sm="4" md="4">
-            <v-text-field
-              rounded
-              v-if="radioGroup === '2'"
-              :disabled="radioGroup === '1'"
-              @keyup="emptySupplierName"
-              dense
-              outlined
-              v-model="supplierName"
-              placeholder="Search Suppliers by Name"
-            ></v-text-field>
-          </v-col>
-          <v-col lg="3" cols="2" sm="4" md="4">
-            <v-select
-              rounded
-              v-if="radioGroup === '2'"
-              :items="regions"
-              :disabled="radioGroup === '1'"
-              placeholder="Region"
-              dense
-              outlined
-              v-model="region"
-            ></v-select>
-          </v-col>
-        </v-row>
-        <v-row class="mt-n3" justify="center">
-          <v-col sm="3" lg="3" md="3"></v-col>
-          <v-col cols="6" sm="3" md="3" lg="3">
-            <v-text-field
-              v-model="priceFrom"
-              :disabled="radioGroup === '2'"
-              dense
-              rounded
-              outlined
-              type="number"
-              label="Price From"
-            ></v-text-field>
-          </v-col>
-
-          <v-col cols="6" sm="3" md="3" lg="3">
-            <v-text-field
-              v-model="priceTo"
-              :disabled="radioGroup === '2'"
-              dense
-              outlined
-              rounded
-              type="number"
-              label="Price TO"
-            ></v-text-field>
-          </v-col>
-          <v-col sm="3" lg="3" md="3"></v-col>
-          <v-col lg="3" sm="3" md="3"></v-col>
-          <v-col cols="4" sm="2" md="2" lg="2">
-            <v-btn
-              :disabled="radioGroup === '2'"
-              class="white--text"
-              @click="filterProducts('search')"
-              :color="siteColor"
-              rounded
-              max-width="80"
-              >Search</v-btn
-            >
-          </v-col>
-
-          <v-col cols="6" sm="3" md="3" lg="3">
-            <v-text-field
-              :disabled="radioGroup === '2'"
-              dense
-              outlined
-              rounded
-              type="number"
-              label="Price TO"
-            ></v-text-field>
-          </v-col>
-          <v-col sm="3" lg="3" md="3"></v-col>
-          <v-col lg="5" sm="3" md="3"></v-col>
-          <v-col cols="4" sm="2" md="2" lg="2">
-            <v-btn
-              class="white--text"
-              @click="filterProducts"
-              :color="siteColor.button_color"
-              rounded
-              x-large
-              ><span :style="`color: ${siteColor.button_text_color}`"
-                >Search</span
-              ></v-btn
-            >
-          </v-col>
-          <!-- <v-col cols="4" sm="2" md="2" lg="2">
-            <v-btn
-              class="white--text"
-              @click="All"
-              :color="siteColor.button_color"
-              rounded
-              ><span :style="`color: ${siteColor.button_text_color}`"
-                >All</span
-              ></v-btn
-            >
-          </v-col> -->
-
-          <v-col cols="4" sm="2" md="2" lg="5">
-            <!-- <v-btn
-              :disabled="radioGroup === '1'"
-              class="white--text"
-              @click="filterSuppliers"
-              :color="siteColor.button_color"
-              :style="`color: ${siteColor.button_text_color}`"
-              rounded
-              max-width="80"
-              ><span :style="`color: ${siteColor.button_text_color}`"
-                >Search</span
-              ></v-btn
-            > -->
-          </v-col>
-          <v-col sm="3" lg="3" md="3"></v-col>
-        </v-row>
-      </v-card>
-    </v-dialog>
-    <!-- <v-row justify="center">
-      <v-col cols="3" class="ml-4">
-        <v-card class="ml-2" max-width="250">
-          <v-row justify="center"
-            ><v-card-title>Categories</v-card-title>
-          </v-row>
-          <v-divider class="mx-16"></v-divider>
-          
-        </v-card>
-      </v-col>
-      <v-col cols="11"></v-col>
-      // Current 
-      <v-col cols="4" sm="2" md="2" lg="2">
-        <v-btn
-          :disabled="radioGroup === '1'"
-          class="white--text"
-          @click="filterSuppliers"
-          :color="siteColor"
-          rounded
-          max-width="80"
-          >Search</v-btn
-        >
-      </v-col>
-      <v-col sm="3" lg="3" md="3"></v-col>
-    </v-row> -->
 
     <v-row v-if="homePageInfo.show_carousel" justify="center">
       <v-col :lg="homePageInfo ? homePageInfo.carousel_width : 10">
@@ -300,52 +44,36 @@
         </carousel>
       </v-col>
     </v-row>
-    <v-row justify="end">
-      <v-col lg="9">
-        <v-radio-group mandatory :value="radioGroup">
-          <v-row class="mb-n5" justify="center">
-            <v-col lg="3" md="3" sm="5" cols="6">
-              <v-radio @change="changeRadioGroup" value="1"
-                ><template v-slot:label>
-                  <p class="mt-4">
-                    {{ $t("toolbar.searchProducts") }}
-                  </p>
-                </template>
-              </v-radio>
-            </v-col>
 
-            <v-col lg="3" md="3" sm="5" cols="6">
-              <v-radio @change="changeRadioGroup" value="2">
-                <template v-slot:label>
-                  <p class="mt-4">
-                    {{ $t("toolbar.searchSuppliers") }}
-                  </p>
-                </template>
-              </v-radio>
-            </v-col>
+    <v-row justify="center" class="mt-6">
+      <v-radio-group row mandatory :value="radioGroup">
+        <v-radio @change="changeRadioGroup" value="1">
+          <template v-slot:label>
+            <span>{{ $t("toolbar.searchProducts") }}</span>
+          </template>
+        </v-radio>
 
-            <v-col lg="2" sm="5" md="2" cols="2" class="mt-2">
-              <v-btn small :color="siteColor.button_color" @click="All">
-                <span :style="`color: ${siteColor.button_text_color}`">{{
-                  $t("homePage.allProducts")
-                }}</span></v-btn
-              >
-            </v-col>
-          </v-row>
-        </v-radio-group>
-      </v-col>
+        <v-radio @change="changeRadioGroup" value="2">
+          <template v-slot:label>
+            <span>{{ $t("toolbar.searchSuppliers") }}</span>
+          </template>
+        </v-radio>
+      </v-radio-group>
+
+      <v-btn small class="mt-4" :color="siteColor.button_color" @click="All">
+        <span
+          class="text-caption"
+          :style="`color: ${siteColor.button_text_color}`"
+          >{{ $t("homePage.allProducts") }}</span
+        ></v-btn
+      >
     </v-row>
 
     <v-row
       :justify="homePageInfo.show_right_banner == 1 ? 'space-between' : 'start'"
-      class="mt-n7"
     >
       <v-col lg="2" sm="4" md="2" cols="4">
         <v-card class="ml-4" height="95%" style="overflow: hidden" max-width>
-          <!-- <v-row justify="center"
-            ><v-card-title>Categories</v-card-title>
-          </v-row> -->
-
           <v-row>
             <v-col cols="12" sm="12" lg="12">
               <v-menu
@@ -606,7 +334,7 @@ export default {
   },
   async created() {
     this.isLoading = true;
-    console.log("dotenvvvvv", this.nodeHost);
+
     await this.$store.dispatch("getSiteColor");
     await this.$store.dispatch("getCurrencies");
     await this.$store.dispatch("categoriesDB");
@@ -614,10 +342,9 @@ export default {
 
     this.$store.dispatch("removeSupplierPageData");
     await this.$store.dispatch("getSiteColor");
-    console.log("site color is from", localStorage.getItem("siteColor"));
+
     await this.$store.dispatch("getHomePageData");
     if (localStorage.getItem("loginToken")) {
-      console.log("x");
       await this.$store.dispatch("refreshCurrentUser");
     }
     this.$store.commit("emptyProductsArray");
@@ -628,7 +355,7 @@ export default {
       productName: this.toolbarSearch,
       categoryName: this.categoryName,
     });
-    console.log("filtered products", this.filteredProducts);
+
     await this.$store.dispatch("getSuppliers", {
       supplierFilterFlag: this.supplierFilterFlag,
       supplierName: this.supplierName,
@@ -636,7 +363,6 @@ export default {
       region: this.region,
     });
 
-    console.log("Category itemssssss in in in ", this.categoriesItems);
     return new Promise((resolve) => {
       setTimeout(() => {
         this.isLoading = false;
@@ -718,7 +444,6 @@ export default {
       // this.isLoading = true;
       // debugger
       this.productFilterFlag = true;
-      console.log(this.toolbarSearch, this.categoryName);
 
       await this.$store.dispatch("filterProducts", {
         product_name: this.toolbarSearch,
@@ -799,12 +524,9 @@ export default {
         this.$store.commit("emptySearch");
       }
     },
-    categoriesDB() {
-      console.log(this.categoryName);
-    },
+    categoriesDB() {},
 
     async loadMore() {
-      console.log("clicked");
       this.isLoading = true;
       var self = this;
       self.$store.dispatch("getSuppliers", {
@@ -818,7 +540,6 @@ export default {
     },
 
     getCountryRegions() {
-      console.log(this.governorate);
       this.$store.dispatch("getRegions", this.governorate);
     },
     async All() {
@@ -834,21 +555,16 @@ export default {
       });
     },
     gettingCategoryItems() {
-      console.log("categoriestems", this.categoriesItems);
-      console.log(this.categoryName);
-      console.log(this.categoryItems);
       this.categoryItems = [];
       for (let i = 0; i < this.categoriesItems.length; i++) {
         if (this.categoriesItems[i].category_name == this.categoryName) {
           this.categoryItems.push(this.categoriesItems[i].category_items);
         }
       }
-      console.log(this.categoryItems);
     },
     mouseOver(name) {
       this.categoryItems = [];
-      console.log(name);
-      console.log(this.siteLanguage);
+
       if (this.siteLanguage == "en") {
         for (let i = 0; i < this.categoriesItems.length; i++) {
           if (this.categoriesItems[i].category_name == name) {
@@ -858,22 +574,16 @@ export default {
       } else {
         for (let i = 0; i < this.categoriesItems.length; i++) {
           if (this.categoriesItems[i].category_arabic_name == name) {
-            console.log(
-              "test",
-              this.categoriesItems[i].category_arabic_name,
-              name
-            );
+            "test", this.categoriesItems[i].category_arabic_name, name;
+
             this.categoryItems.push(
               this.categoriesItems[i].category_items_arabic_name
             );
           }
         }
       }
-      console.log("category itemsis", this.categoryItems);
-      console.log("categories item", this.categoriesItems);
     },
     async filterProductsWithItem(item) {
-      console.log(item);
       await this.$store.dispatch("filterProducts", {
         categoryItem: item,
         buttonPressed: "search",
@@ -887,7 +597,7 @@ export default {
         buttonPressed: "search",
         product_id: 0,
       });
-      console.log(category);
+
       this.$store.commit("loadMoreType", {
         name: category,
         type: "category",
@@ -895,7 +605,6 @@ export default {
     },
     testModule() {
       this.$store.dispatch("testAct", "assdfsaf");
-      console.log(this.$store.state.test.testVar);
     },
     changeRadioGroup() {
       if (this.radioGroup == "1") {
@@ -903,9 +612,6 @@ export default {
       } else {
         this.$store.commit("changeRadioGroup", "1");
       }
-
-      console.log("test");
-      console.log(this.radioGroup);
     },
   },
   components: {
@@ -916,35 +622,5 @@ export default {
   },
 };
 </script>
-<style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@100&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@500&display=swap");
-.container {
-  max-width: 960px;
-}
-.v-btn__content {
-  background-color: red;
-}
-.padding-0 {
-  padding-right: 0;
-  padding-left: 0;
-}
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 19px;
-}
-.smallerText {
-  font-size: 15px;
-}
-</style>
+
 

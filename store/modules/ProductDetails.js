@@ -14,7 +14,7 @@ export default {
 
     mutations: {
         getProductReview(state, row) {
-            console.log('product row from commit', row)
+
             state.productRating = row.rating;
             state.productReview = row.review;
         },
@@ -38,7 +38,7 @@ export default {
         setCurrentProduct(state, payload) {
             localStorage.setItem('currentProduct', JSON.stringify(payload));
             state.currentProduct = JSON.parse(localStorage.getItem('currentProduct'))
-            console.log(state.currentProduct)
+
         },
 
         toggleDialog(state) {
@@ -113,8 +113,9 @@ export default {
         calculateProductRating(context, product_id) {
             axios.post(context.rootState.nodeHost + '/api/calculateProductRating', {
                 product_id
+                // eslint-disable-next-line no-unused-vars
             }).then(response => {
-                console.log(response.data.message)
+
             })
         },
 

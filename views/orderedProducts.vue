@@ -261,12 +261,10 @@ export default {
   }),
   methods: {
     async showProducts(event) {
-      console.log("pressed order is ", this.pressedOrder);
       this.userMadeOrder = event;
-      console.log("user made order", event);
+
       await this.$store.commit("showOrderProducts", event.order_number);
       // await this.$store.commit('showAddressDetails',event.order_number)
-      console.log("order addrress", this.$store.state.OrderAddressDetails);
 
       this.country = this.pressedOrder.country;
       this.state = this.pressedOrder.state;
@@ -275,16 +273,13 @@ export default {
       this.city = this.pressedOrder.city;
     },
     productClicked(event) {
-      console.log(event);
       this.clickedProductInfo = event;
       this.productStatusUpdate = event.products_orders.status;
-      console.log(event.pending_status);
     },
     productStatus() {
       this.statusDialog = true;
     },
     updateStatus() {
-      console.log(this.productStatusUpdate);
       this.snackbar = true;
       this.$store.dispatch("updateProductStatus", {
         status: this.productStatusUpdate,
@@ -299,9 +294,8 @@ export default {
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
     }
-    console.log(this.currentUser.user_id);
+
     this.$store.dispatch("ordersMade", this.currentUser.user_id);
-    console.log("user made orders", this.usersMadeOrders);
   },
   computed: {
     currentUser() {
@@ -363,29 +357,10 @@ export default {
 };
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-.smallerText {
-  font-size: 15px;
-}
 h2 {
-  font-family: "Markazi Text", serif;
   font-size: 17px;
 }
 h3 {
-  font-family: "Markazi Text", serif;
   font-size: 17px;
 }
 </style>

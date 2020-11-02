@@ -146,13 +146,12 @@ export default {
     }
     this.$store.dispatch("getGovernorate");
     this.address = this.currentUser.address;
-    console.log(this.currentUser.governorate);
+
     this.governorate = this.currentUser.governorate;
     await this.$store.dispatch("getRegions", this.governorate);
     this.region = this.currentUser.region;
 
-    var d = new Date();
-    console.log("d is", d);
+    //    var d = new Date();
   },
   methods: {
     getSession() {
@@ -161,7 +160,7 @@ export default {
       this.items.forEach((element) => {
         self.quantityArray.push(element.quantity);
       });
-      console.log(self.quantityArray);
+
       // loadStripe(
       //   "pk_test_51H97oICdSDXTIUwz70svxkIu08QM3jR0rB6E2njyq3fC7tLOODIipB8ppdjdPt32pteM8zHqsSF2mAo9Oyfw9Mvf00L3omXjql"
       // ).then((stripe) => {
@@ -172,7 +171,7 @@ export default {
       //       quantityArray: self.quantityArray,
       //     })
       //     .then((response) => {
-      //       console.log(self.quantityArray);
+      //
       //       sessionId = response.data.session_id;
       //       this.$store.commit("setPaymentToken", response.data.token);
       //       this.$store.commit("putTotalPriceInStore", self.total);
@@ -184,18 +183,17 @@ export default {
       //           sessionId: sessionId,
       //         })
       //         .then(function (result) {
-      //           console.log(result);
+      //
       //         });
       //     });
       // });
     },
     getCountryRegions() {
-      console.log(this.governorate);
       this.$store.dispatch("getRegions", this.governorate);
     },
     async createOrder() {
       alert("order placed successfully");
-      console.log("data che k", this.governorate, this.region, this.address);
+
       await this.$store.dispatch("cleanCart");
       await this.$store.dispatch("createOrder", {
         governorate: this.governorate,
@@ -203,7 +201,6 @@ export default {
         address: this.address,
       });
 
-      console.log(this.$store.state.totalPrice);
       this.snackbar = true;
       setTimeout(() => {
         this.$router.push("/");
@@ -213,25 +210,7 @@ export default {
 };
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-.smallerText {
-  font-size: 20px;
-}
 div {
-  font-family: "Markazi Text", serif;
   font-size: 17px;
 }
 </style>

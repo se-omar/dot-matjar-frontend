@@ -183,7 +183,8 @@
               v-if="
                 addToCartButton &&
                 currentUser &&
-                currentUser.user_id !== currentProduct.user_id
+                currentUser.user_id !== currentProduct.user_id &&
+                currentUser.user_type == 'user'
               "
               @click="add()"
               block
@@ -408,7 +409,7 @@ export default {
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
     }
-    console.log(this.currentProduct);
+
     await this.$store.dispatch("getSiteColor");
     await this.$store.dispatch("getProductReview", {
       product_id: this.currentProduct.product_id,
@@ -530,7 +531,6 @@ export default {
     viewPopup() {
       if (this.currentUser) this.$store.dispatch("toggleDialog");
       else alert("You must Register First");
-      console.log(this.currentProduct);
     },
 
     productToggleResponse() {
@@ -544,14 +544,13 @@ export default {
     },
 
     removeProduct() {
-      console.log(this.currentProduct.product_id);
       var api =
         this.nodeHost + "/api/removeProduct/" + this.currentProduct.product_id;
       this.$axios
         .delete(api)
+        // eslint-disable-next-line no-unused-vars
         .then((response) => {
           alert("Product Deleted");
-          console.log(response);
         })
         .then(() => {
           this.$router.push(`/${this.$i18n.locale}/myProducts`);
@@ -566,7 +565,6 @@ export default {
     },
 
     supplierClicked(supplier) {
-      console.log("current supplier id", supplier.user_id);
       this.$store.commit("supplierPage", supplier);
       this.$router.push(
         `/${this.$i18n.locale}/supplierPage/` + supplier.user_id
@@ -574,8 +572,6 @@ export default {
     },
 
     async submitReview() {
-      console.log(this.rating);
-      console.log(this.review);
       await this.$store.dispatch("addProductReview", {
         product_id: this.currentProduct.product_id,
         user_id: this.currentUser.user_id,
@@ -600,29 +596,10 @@ export default {
 };
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-.smallerText {
-  font-size: 20px;
-}
 h2 {
-  font-family: "Markazi Text", serif;
   font-size: 25px;
 }
 h3 {
-  font-family: "Markazi Text", serif;
   font-size: 25px;
 }
 </style>

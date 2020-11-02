@@ -378,7 +378,6 @@ export default {
   async created() {
     await this.$store.dispatch("getSiteColor");
     this.$store.dispatch("getGovernorate");
-    console.log(this.siteColor);
   },
   methods: {
     validateSignup() {
@@ -411,7 +410,6 @@ export default {
       });
 
       await this.$store.dispatch("refreshCurrentUser");
-      console.log(this.currentUser);
     },
 
     reset() {
@@ -424,7 +422,6 @@ export default {
       document.getElementById("btn").disapled();
     },
     getCountryRegions() {
-      console.log(this.governorate);
       this.$store.dispatch("getRegions", this.governorate);
     },
     getUserData() {
@@ -437,7 +434,6 @@ export default {
           this.presonalId = userInformation.id;
           this.facbookEmail = userInformation.email;
           this.name = userInformation.name;
-          console.log("user info", userInformation);
         }
       );
     },
@@ -525,34 +521,14 @@ export default {
 };
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-.smallerText {
-  font-size: 20px;
-}
 h2 {
-  font-family: "Markazi Text", serif;
   font-size: 25px;
 }
 h3 {
-  font-family: "Markazi Text", serif;
   font-size: 25px;
 }
 #app {
   background-color: white;
-  font-family: "Markazi Text", serif;
   font-size: 25px;
 }
 </style>

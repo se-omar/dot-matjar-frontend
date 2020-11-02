@@ -27,14 +27,11 @@ export default {
   }),
   methods: {
     changeColor() {
-      console.log(this.colorPicker);
       this.$emit("update:color", this.colorPicker);
       this.$store.dispatch("changingSiteColor", this.colorPicker);
       this.$router.go("/");
     },
-    changeColorPicker() {
-      console.log(this.colorPicker);
-    },
+    changeColorPicker() {},
   },
   computed: {
     color() {

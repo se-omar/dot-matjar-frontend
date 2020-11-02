@@ -174,11 +174,8 @@ export default {
   methods: {
     toggleResponse() {
       this.$store.commit("toggleResponse");
-      console.log(this.requestType);
     },
   },
-  mounted() {
-    console.log(this.currentRequest);
-  },
+  mounted() {},
 };
 </script>

@@ -54,7 +54,7 @@ export default {
                 user_id: context.rootState.Home.currentUser.user_id
             })
                 .then(response => {
-                    console.log(response.data);
+
                     context.commit('getSentRequests', response.data);
                 });
         },
@@ -76,8 +76,9 @@ export default {
                 request_date: new Date(),
                 product_id: context.rootState.ProductDetails.currentProduct.product_id,
                 //to: context.state.currentProduct.bussiness.user.email
+                // eslint-disable-next-line no-unused-vars
             }).then(response => {
-                console.log(response)
+
                 alert('تم ارسال الطلب بنجاح')
             })
         },
@@ -89,7 +90,7 @@ export default {
             }).then(response => {
                 if (response.data === 'response added successfully')
                     alert('تم ارسال الرد بنجاح')
-                console.log(response)
+
             })
         },
     }

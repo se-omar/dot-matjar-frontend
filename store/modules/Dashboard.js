@@ -34,7 +34,7 @@ export default {
                     user_id: id
                 })
                 .then(response => {
-                    console.log(response);
+
                     context.commit('getTopSellingProduct', response.data.maxProduct);
                 });
         },
@@ -45,7 +45,7 @@ export default {
                     user_id: id
                 })
                 .then(response => {
-                    console.log(response);
+
                     context.commit('getLeastSellingProduct', response.data.minProduct);
                 });
         },
@@ -54,7 +54,7 @@ export default {
             await axios.post(context.rootState.nodeHost + "/api/myProducts", {
                 user_id: id
             }).then(response => {
-                console.log(response)
+
                 context.commit('getMyProducts', response.data)
             })
         },

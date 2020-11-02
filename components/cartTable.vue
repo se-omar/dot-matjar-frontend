@@ -109,7 +109,7 @@ export default {
   name: "cartTable",
   methods: {
     showProduct() {
-      //console.log(this.pressedProduct);
+      //
     },
     add(product) {
       this.products[product.id - 1].cart = true;
@@ -130,7 +130,7 @@ export default {
       for (var x = 0; x < this.items.length; x++) {
         if (this.items[x].product_id == id) {
           this.items.splice(x, 1);
-          //console.log(this.items);
+          //
 
           await this.$store.dispatch("removeProductFromCart", id);
         }
@@ -161,18 +161,17 @@ export default {
 
     // eslint-disable-next-line no-unused-vars
     rowclicked(event) {
-      //console.log("event is :", event);
+      //
     },
     async table() {
       var self = this;
       await this.$store.dispatch("localStorage");
 
-      console.log(self.intable);
       self.items = [];
       self.items.push(...self.intable);
       // for (var i = 0; i < self.intable.length; i++) {
       //   self.items.push(self.intable[i]);
-      //   console.log("store i :", self.intable[i]);
+      //
       // }
     },
 
@@ -185,7 +184,7 @@ export default {
       // this.items.forEach((element) => {
       //   self.quantityArray.push(element.quantity);
       // });
-      // console.log(self.quantityArray);
+      //
       // loadStripe(
       //   "pk_test_51H97oICdSDXTIUwz70svxkIu08QM3jR0rB6E2njyq3fC7tLOODIipB8ppdjdPt32pteM8zHqsSF2mAo9Oyfw9Mvf00L3omXjql"
       // ).then((stripe) => {
@@ -196,7 +195,7 @@ export default {
       //       quantityArray: self.quantityArray,
       //     })
       //     .then((response) => {
-      //       console.log(self.quantityArray);
+      //
       //       sessionId = response.data.session_id;
       //       this.$store.commit("setPaymentToken", response.data.token);
       //       this.$store.commit("putTotalPriceInStore", self.total);
@@ -208,7 +207,7 @@ export default {
       //           sessionId: sessionId,
       //         })
       //         .then(function (result) {
-      //           console.log(result);
+      //
       //         });
       //     });
       // });
@@ -240,9 +239,7 @@ export default {
     total() {
       var t = 0;
       for (var i = 0; i < this.items.length; i++) {
-        console.log(this.items[i].unit_price);
         t += this.items[i].unit_price * this.items[i].quantity;
-        console.log(this.items[0].quantity);
       }
       return t;
     },

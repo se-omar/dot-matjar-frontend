@@ -67,7 +67,6 @@ export default {
     this.$store.dispatch("getProducts", {
       productFilterFlag: false,
     });
-    console.log("Product is :", this.filteredProducts);
   },
 
   props: {
@@ -91,7 +90,6 @@ export default {
       // this.$store.commit("cart",product)
       // this.$store.dispatch("cart",product.product_id)
       this.cart = this.$store.state.cart;
-      console.log(product.in_cart);
     },
   },
   computed: {

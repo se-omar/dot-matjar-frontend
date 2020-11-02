@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios'
 // import router from '../router'
 
@@ -66,9 +67,9 @@ export default {
         },
 
         getOrders(state, order) {
-            console.log('orer si', order)
+
             state.orders = order
-            console.log('state order', state.order)
+
         },
 
         getOrderProducts(state, response) {
@@ -78,7 +79,7 @@ export default {
                 return e.product
             })
             state.orderProducts = products
-            console.log('commit products', state.orderProducts)
+
         },
 
         putQuantityInStore(state, quantity) {
@@ -99,8 +100,8 @@ export default {
                 totalPrice: context.rootState.Cart.totalPrice,
             })
                 .then(res => {
-                    console.log(res.data.data)
-                    console.log('order crreatedd', res.data.message)
+
+
                 })
         },
 
@@ -147,37 +148,37 @@ export default {
             })
                 .then(response => {
                     alert(response.data.message)
-                    console.log(response.data.data)
+
                 })
                 .catch(err => {
-                    console.log(err)
+
                 })
         },
 
         updateProductStatus(context, { status, orderId, productId }) {
-            console.log('testing befor sending to database', status, orderId, productId)
+
             axios.put(context.rootState.nodeHost + '/api/updateProductStatus', { status: status, orderId: orderId, productId: productId })
                 .then(response => {
-                    console.log(response.data.message)
+
                 })
         },
 
         ordersMade(context, id) {
             axios.put(context.rootState.nodeHost + '/api/supplierProductsInOrder', { user_id: id })
                 .then(orders => {
-                    console.log('ordersss', orders.data.data)
+
 
                     context.commit('ordersMade', orders.data.data)
                 })
         },
 
         async getOrders(context) {
-            console.log('user id iss', context.rootState.Home.currentUser.user_id)
+
             await axios.put(context.rootState.nodeHost + '/api/getUserOrders', {
                 user_id: context.rootState.Home.currentUser.user_id
             })
                 .then(orders => {
-                    console.log('database responde', orders.data.data)
+
                     context.commit('getOrders', orders.data.data)
                 })
         },
@@ -187,7 +188,7 @@ export default {
                 order_id: id
             })
                 .then(response => {
-                    console.log('get products from data base', response.data)
+
                     context.commit('getOrderProducts', response.data)
                 })
         },

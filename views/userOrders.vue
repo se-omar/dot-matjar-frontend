@@ -180,18 +180,15 @@ export default {
             },
           ];
         }
-        console.log("this , orderrr", this.order);
       }
 
       this.orderProducts = this.productsInOrder;
-      console.log(this.productsInOrder);
     },
     async showProducts(order) {
-      console.log("id iss", order);
       await this.$store.dispatch("getOrderProducts", order);
     },
+    // eslint-disable-next-line no-unused-vars
     tableClicked(event) {
-      console.log("event is", event);
       // this.$store.dispatch("getOrderProducts", event.order_id);
       // this.orderProducts = this.productsInOrder;
     },
@@ -205,25 +202,7 @@ export default {
 };
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-.smallerText {
-  font-size: 14px;
-}
 h5 {
-  font-family: "Markazi Text", serif;
   font-size: 25px;
 }
 </style>

@@ -223,23 +223,19 @@ export default {
   methods: {
     setImage1: function (output) {
       this.image = output;
-      console.log(output);
     },
     setImage2: function (output) {
       this.image2 = output;
-      console.log(output);
     },
     setImage3: function (output) {
       this.image3 = output;
     },
 
     updateProduct(files) {
-      console.log(this.productName);
       var self = this;
-      console.log(this.currentUser);
 
       files = [this.image, this.image2, this.image3];
-      console.log(files);
+
       var form = new FormData();
       form.set("product_id", self.currentProduct.product_id);
       form.set("product_name", self.currentProduct.product_name);
@@ -266,9 +262,8 @@ export default {
             "Content-Type": "multipart/form-data",
           },
         })
-        .then((response) => {
-          console.log("Response is:", response);
-        })
+        // eslint-disable-next-line no-unused-vars
+        .then((response) => {})
         .then(() => {
           alert("Product changed");
           this.$router.push(`/${this.$i18n.locale}/myProducts`);
@@ -278,25 +273,7 @@ export default {
 };
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-.smallerText {
-  font-size: 20px;
-}
 div {
-  font-family: "Markazi Text", serif;
   font-size: 17px;
 }
 </style>

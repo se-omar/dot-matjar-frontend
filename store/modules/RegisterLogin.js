@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios'
 import router from '../../router'
 
@@ -30,7 +31,7 @@ export default {
 
                 })
                 .catch((error) => {
-                    console.log(error);
+
                 });
         },
 
@@ -55,12 +56,10 @@ export default {
                 .then(response => {
                     if (response.data.message) {
                         alert(response.data.message)
-                    } else {
-                        console.log("Error in database")
                     }
                 })
                 .catch(error => {
-                    console.log(error)
+
                 })
         },
         businessOwnerRegistration(context, {
@@ -84,7 +83,7 @@ export default {
                     region,
                     store_name
                 }).then(res => {
-                    console.log(res.data.message)
+
                     alert(res.data.message)
                     context.commit('businessOwnerRegistration', res.data.mesasge)
                 })

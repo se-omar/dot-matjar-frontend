@@ -135,7 +135,6 @@ export default {
       this.$store.dispatch("table", product);
       // this.$store.commit("cart",product)
       // this.$store.dispatch("cart",product.product_id)
-      console.log(product.in_cart);
     },
 
     add3Dots(string, limit) {
@@ -186,20 +185,6 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
 .smallerText {
   font-size: 15px;
 }
