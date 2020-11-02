@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="pr-8">
     <div class="vld-parent">
       <loading
         :active.sync="isLoading"

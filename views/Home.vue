@@ -1,5 +1,5 @@
-<template>
-  <v-app>
+<template >
+  <v-app class="pr-6">
     <div class="vld-parent">
       <loading
         :active.sync="isLoading"
@@ -70,10 +70,12 @@
     </v-row>
 
     <v-row
-      :justify="homePageInfo.show_right_banner == 1 ? 'space-between' : 'start'"
+      :justify="
+        homePageInfo.show_right_banner == 1 ? 'space-between' : 'center'
+      "
     >
-      <v-col lg="2" sm="4" md="2" cols="4">
-        <v-card class="ml-4" height="95%" style="overflow: hidden" max-width>
+      <v-col v-if="radioGroup == '1'" lg="2" sm="4" md="2" cols="4">
+        <v-card height="95%" style="overflow: hidden" max-width>
           <v-row>
             <v-col cols="12" sm="12" lg="12">
               <v-menu
@@ -180,15 +182,10 @@
 
       <!-- <v-col lg="8" sm="5" md="7"> -->
       <v-col
-        :class="
-          this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs
-            ? 'mr-15'
-            : ''
-        "
-        :lg="homePageInfo.show_right_banner ? 8 : 10"
-        sm="6"
-        cols="6"
-        :md="homePageInfo.show_right_banner ? 8 : 10"
+        :lg="radioAndBannerFlag"
+        :md="radioAndBannerFlag"
+        :sm="radioGroup == '1' ? '7' : '12'"
+        :cols="radioGroup == '1' ? '7' : '12'"
       >
         <v-row
           justify-lg="start"
@@ -201,15 +198,15 @@
             :lg="homePageInfo.show_right_banner ? 3 : 2"
             :md="homePageInfo.show_right_banner ? 4 : 3"
             xmd="4"
-            sm="10  "
-            cols="12"
+            sm="10"
+            cols="10"
             v-for="(filteredProduct, index) in filteredProducts"
             :key="index"
           >
             <product
               class="ml-n2 mr-n2"
               :currentUser="currentUser"
-              :minWidth="homePageInfo.show_right_banner ? '100%' : '114%'"
+              :minWidth="minProductWidthFlag"
               :filteredProduct="filteredProduct"
             ></product>
           </v-col>
@@ -219,15 +216,15 @@
           <p class="display-1">no products found</p>
         </v-row>
 
-        <v-row v-if="radioGroup === '2'">
+        <v-row justify="center" v-if="radioGroup === '2'">
           <v-col
             v-for="(supplier, index) in suppliers"
             :key="index"
-            :class="homePageInfo.show_right_banner ? '' : productsClass"
-            :lg="homePageInfo.show_right_banner ? 3 : 2"
+            :class="homePageInfo.show_right_banner ? 'ms-2' : productsClass"
+            lg="2"
             :md="homePageInfo.show_right_banner ? 4 : 3"
-            sm="11"
-            cols="11"
+            sm="5"
+            cols="5"
           >
             <supplier
               :show_right_banner="homePageInfo.show_right_banner"
@@ -264,23 +261,16 @@
               {{ $t("homePage.loadMore") }}</span
             ></v-btn
           >
-
-          <!-- <v-btn
-            v-else-if="radioGroup == '2'"
-            small
-            :color="siteColor.button_color"
-            :style="`color: ${siteColor.button_text_color}`"
-            class="mb-15 white--text"
-            @click="loadMore"
-          >
-            <span> {{ $t("homePage.loadMore") }}</span></v-btn
-          > -->
         </v-row>
       </v-col>
 
       <v-col
         :class="{ 'ml-n15': $vuetify.breakpoint.smAndDown }"
-        v-if="homePageInfo.show_right_banner && homePageInfo.right_banner_image"
+        v-if="
+          homePageInfo.show_right_banner &&
+          homePageInfo.right_banner_image &&
+          $vuetify.breakpoint.mdAndUp
+        "
         lg="2"
         sm="2"
         md="2"
@@ -437,6 +427,25 @@ export default {
     },
     productAdvancedSearches() {
       return this.$store.state.Home.productAdvancedSearches;
+    },
+    radioAndBannerFlag() {
+      if (this.homePageInfo.show_right_banner && this.radioGroup == "1") {
+        return "8";
+      } else if (
+        (this.homePageInfo.show_right_banner && this.radioGroup == "2") ||
+        (!this.homePageInfo.show_right_banner && this.radioGroup == "1")
+      ) {
+        return "10";
+      } else return "10";
+    },
+    minProductWidthFlag() {
+      if (
+        (this.homePageInfo.show_right_banner &&
+          this.$vuetify.breakpoint.smAndDown) ||
+        !this.homePageInfo.show_right_banner
+      )
+        return "114%";
+      else return "100%";
     },
   },
   methods: {

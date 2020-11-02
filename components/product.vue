@@ -1,13 +1,16 @@
 <template>
   <div>
     <v-card
-      min-height="456"
+      :min-height="$vuetify.breakpoint.smAndDown ? '300' : '456'"
       @click="setCurrentRow"
       class="grey lighten-5"
       :elevation="7"
       :min-width="minWidth"
     >
-      <v-img height="250" :src="filteredProduct.main_picture"></v-img>
+      <v-img
+        :height="$vuetify.breakpoint.smAndDown ? '170' : '250'"
+        :src="filteredProduct.main_picture"
+      ></v-img>
 
       <v-row class="mt-n5">
         <v-col cols="12">

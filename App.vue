@@ -41,9 +41,7 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.container {
-  max-width: 960px;
-}
+
 .padding-0 {
   padding-right: 0;
   padding-left: 0;
@@ -52,7 +50,7 @@ export default {
   font-family: "Markazi Text", serif;
 }
 .arabic {
-  font-size: 18px;
+  font-size: 50px;
 }
 span {
   font-size: 17px;
