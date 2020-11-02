@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    <h1>welcome to ditmatjar</h1>
+  </div>
 </template>
 
 <script>
@@ -13,7 +15,11 @@ export default {
   async created() {
     await this.$store.dispatch("getSiteColor");
     console.log(this.$route.params.cryptoo);
-    this.$store.dispatch("activateUserAccount", this.$route.params.cryptoo);
+    await this.$store.dispatch(
+      "activateUserAccount",
+      this.$route.params.cryptoo
+    );
+    this.$router.push(`/${this.$i18n.locale}/reglogin`);
   },
 };
 </script>

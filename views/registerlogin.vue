@@ -77,7 +77,11 @@
             <v-tab-item>
               <v-card class="px-4">
                 <v-card-text>
-                  <v-form ref="registerForm" v-model="valid" lazy-validation>
+                  <v-form
+                    ref="registerForm"
+                    v-model="signUpValidation"
+                    lazy-validation
+                  >
                     <v-row>
                       <v-col cols="6" sm="12">
                         <v-text-field
@@ -169,7 +173,7 @@
                         <v-btn
                           x-large
                           block
-                          :disabled="!valid || !checkbox"
+                          :disabled="!signUpValidation || !checkbox"
                           id="btn"
                           :color="siteColor.button_color"
                           @click="validateSignup"
@@ -181,7 +185,7 @@
                         <v-btn
                           x-large
                           block
-                          :disabled="!valid || !checkbox"
+                          :disabled="!signUpValidation || !checkbox"
                           class="red darken-4 white--text"
                           @click="$router.push('/')"
                           >{{ $t("registerLogin.cancel") }}</v-btn
@@ -374,6 +378,9 @@ export default {
         this.businessOwnerPassword === this.businessOwnerVerifyPass ||
         "Password must match";
     },
+    siteLanguage() {
+      return this.$store.state.Home.siteLanguage;
+    },
   },
   async created() {
     await this.$store.dispatch("getSiteColor");
@@ -391,6 +398,7 @@ export default {
         mobile_number: this.mobileNumber,
         governorate: this.governorate,
         region: this.region,
+        siteLanguage: this.siteLanguage,
       });
     },
     async businessOwnerRegistration() {
@@ -499,10 +507,8 @@ export default {
         required: (value) => !!value || "Required.",
         min: (v) => (v && v.length >= 7) || "Min 7 characters",
         valid: (v) =>
-          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
-            v
-          ) ||
-          "password must have at least one letter, one number and one special character",
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{7,}$/.test(v) ||
+          "password must have at least one letter, one number and one Upper case Letter",
         national: (v) => /\d+/.test(v) || "ID must be numbers only",
         must: (v) => (v && v.length == 14) || "ID must be 14 NUMBERS",
         mobilenumber: (v) => /\d+/.test(v) || "Enter numbers",
@@ -510,12 +516,10 @@ export default {
       checkbox: false,
       governorate: "",
       region: "",
-      // name: "",
-      // FB: undefined,
-      // facebookEmail: "",
-      // isConnected: false,
+
       BusinessOwnerDialog: false,
-      businessOwnerValidation: true,
+      businessOwnerValidation: false,
+      signUpValidation: false,
     };
   },
 
