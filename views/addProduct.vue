@@ -454,11 +454,9 @@ export default {
   methods: {
     setImage1: function (output) {
       this.image = output;
-      console.log(output);
     },
     setImage2: function (output) {
       this.image2 = output;
-      console.log(output);
     },
     setImage3: function (output) {
       this.image3 = output;
@@ -466,9 +464,9 @@ export default {
 
     addProduct(files) {
       var self = this;
-      console.log(this.currentUser);
+
       files = [this.image, this.image2, this.image3];
-      console.log(files);
+
       var form = new FormData();
       form.set("product_name", self.productName);
       form.set("quantity", self.quantity);
@@ -494,8 +492,8 @@ export default {
             "Content-Type": "multipart/form-data",
           },
         })
+        // eslint-disable-next-line no-unused-vars
         .then((response) => {
-          console.log(response);
           alert("Product added successfully");
           this.$router.push(`/${this.$i18n.locale}/myProducts`).catch(() => {});
         });
@@ -509,8 +507,6 @@ export default {
           this.categoryItems.push(this.categoriesItems[i].category_items);
         }
       }
-      console.log("categiry items is", this.categoryItems);
-      console.log("categories items is", this.categoriesItems);
     },
     requestNewCategoryAndItem() {
       this.$store.dispatch("requestNewCategoryAndItem", {
@@ -532,7 +528,7 @@ export default {
     await this.$store.dispatch("getCategoryItems");
     await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getSupplierCategoriesRequests");
-    console.log("currency names ", this.currencyNames);
+
     return new Promise((resolve) => {
       setTimeout(() => {
         this.$store.dispatch("categoriesDB");
@@ -566,25 +562,8 @@ a {
   margin-top: 4rem;
   margin-bottom: 4rem;
 }
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 19px;
-}
-.smallerText {
-  font-size: 15px;
-}
+
 div {
-  font-family: "Markazi Text", serif;
   font-size: 17px;
 }
 </style>

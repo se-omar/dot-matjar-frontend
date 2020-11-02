@@ -85,13 +85,10 @@ export default {
   }),
   methods: {
     changeColor() {
-      console.log(this.colorPicker);
       this.$emit("update:color", this.colorPicker);
       this.$store.dispatch("supplierPageColor", this.colorPicker);
     },
-    changeColorPicker() {
-      console.log(this.colorPicker);
-    },
+    changeColorPicker() {},
   },
   computed: {
     color() {

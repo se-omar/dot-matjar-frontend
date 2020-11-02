@@ -24,20 +24,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 19px;
-}
-.smallerText {
-  font-size: 15px;
-}
-</style>

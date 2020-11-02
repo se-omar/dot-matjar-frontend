@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 <template>
   <v-app>
     <div v-if="paymentToken === $route.params.hash">
@@ -33,19 +34,15 @@ export default {
     await this.$store.dispatch("refreshCurrentUser");
     if (this.paymentToken === this.$route.params.hash) {
       var self = this;
-      console.log("connected");
-      console.log(this.paymentToken);
-      console.log(this.$route.params.hash);
+
       localStorage.removeItem("paymentToken");
-      console.log(self.productsQuantityArray);
 
       this.$axios
         .put(this.nodeHost + "/api/cleanCart", {
           user_id: self.currentUser.user_id,
         })
-        .then((response) => {
-          console.log("clean cart response", response);
-        });
+        // eslint-disable-next-line no-unused-vars
+        .then((response) => {});
 
       // this.$axios
       //   .post("http://localhost:3000/api/placeOrder", {
@@ -55,10 +52,8 @@ export default {
       //     quantity: self.productsQuantityArray,
       //   })
       //   .then((response) => {
-      //     console.log(response);
+      //
       //   });
-    } else {
-      console.log("order is already placed");
     }
   },
 
@@ -103,29 +98,10 @@ export default {
 };
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-.smallerText {
-  font-size: 20px;
-}
 h2 {
-  font-family: "Markazi Text", serif;
   font-size: 25px;
 }
 h3 {
-  font-family: "Markazi Text", serif;
   font-size: 25px;
 }
 </style>

@@ -275,7 +275,7 @@ export default {
     await this.$store.dispatch("getSiteColor");
     //this.isloading = true;
     this.$store.dispatch("getMyProducts", this.supplier.user_id);
-    console.log("the supplier", this.supplier);
+
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
     }
@@ -283,8 +283,7 @@ export default {
     // await this.$store.dispatch("getMyProducts", this.supplier.user_id);
     await this.$store.dispatch("getTopSellingProduct", this.supplier.user_id);
     await this.$store.dispatch("getLeastSellingProduct", this.supplier.user_id);
-    console.log("most selling is", this.topProduct);
-    console.log("least selling is", this.leastProduct);
+
     await this.$store.dispatch("getMonthlySales", this.supplier.user_id);
 
     if (this.yearlySortedOrders[this.selectedYear]) {
@@ -297,8 +296,7 @@ export default {
     await this.calculateMonthlySales();
     await this.calculateCategoryPercentage();
     this.isloading = false;
-    //console.log(this.pieOptions.labels);
-    console.log(this.monthlySalesArray);
+    //
   },
 
   computed: {
@@ -459,16 +457,15 @@ export default {
     },
 
     calculateCategoryPercentage() {
-      console.log("calculateCategoryPercentage");
       var categorySales, i, j;
       var categorySalesArray = [];
       var totalCategorySales = 0;
       var categoryName = [];
 
       for (i in this.categoryArray) {
-        // console.log("category array is", this.categoryArray);
+        //
         categorySales = 0;
-        //console.log("in category function", this.categoryArray[i][1]);
+        //
         for (j = 0; j < this.categoryArray[i].length; j++) {
           categorySales += this.categoryArray[i][j].buy_counter;
           totalCategorySales += this.categoryArray[i][j].buy_counter;
@@ -480,47 +477,45 @@ export default {
               this.categoryArray[i][j].product_category.category_name
             );
           }
-          //console.log("category of i of j", this.categoryArray[i][j]);
+          //
         }
 
         categorySalesArray.push(categorySales);
-        // console.log("category sales array", categorySalesArray);
-        // console.log("total category sales", totalCategorySales);
-        // console.log("category names", this.categoryNames);
+        //
+        //
+        //
       }
 
       for (i = 0; i < categorySalesArray.length; i++) {
         this.categoryPercentageArray.push(
           (categorySalesArray[i] / totalCategorySales) * 100
         );
-        // console.log(this.categoryPercentageArray);
+        //
       }
       this.isloading = false;
     },
 
     calculateMonthlySales() {
-      console.log("entered function");
-
       var i, j, totalMonthSales, totalMonthRevenue;
 
       for (i in this.monthlySortedOrders) {
-        // console.log("entered first loop");
+        //
         totalMonthSales = 0;
         totalMonthRevenue = 0;
 
         for (j = 0; j < this.monthlySortedOrders[i].length; j++) {
-          // console.log("entered second loop");
+          //
 
           this.monthlySortedOrders[i][j].products.forEach((element) => {
             totalMonthSales += element.buy_counter;
             totalMonthRevenue += element.unit_price * element.buy_counter;
             this.totalRevenue += element.unit_price * element.buy_counter;
-            // console.log(this.totalRevenue);
+            //
           });
         }
         this.monthlySalesArray.splice(i - 1, 1, totalMonthSales);
         this.monthlyRevenueArray.splice(i - 1, 1, totalMonthRevenue);
-        //console.log("monthly sales array", this.monthlySalesArray);
+        //
       }
       // localStorage.setItem(
       //   "monthlySalesArray",
@@ -530,21 +525,15 @@ export default {
     },
 
     changeYear() {
-      console.log(this.yearlySortedOrders);
-      console.log(this.selectedYear);
-      console.log("my products", this.myProducts);
-      console.log("my yearly products 1", this.myYearlyProducts);
-      console.log("category array 1", this.categoryArray);
       this.monthlySalesArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       this.monthlyRevenueArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       this.myYearlyProducts = [];
       this.categoryPercentageArray = [];
-      console.log("my yearly products 2", this.myYearlyProducts);
 
       this.yearlySortedOrders[this.selectedYear].forEach((element) => {
         this.myYearlyProducts.push(...element.products);
       });
-      console.log("my yearly products 3", this.myYearlyProducts);
+
       this.calculateMonthlySales();
       this.calculateCategoryPercentage();
     },
@@ -559,25 +548,7 @@ export default {
 };
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-.smallerText {
-  font-size: 20px;
-}
 div {
-  font-family: "Markazi Text", serif;
   font-size: 25px;
 }
 </style>

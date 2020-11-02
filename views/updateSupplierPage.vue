@@ -937,13 +937,9 @@ export default {
   methods: {
     fileUploaded() {
       this.logo = this.$refs.logo.files[0];
-      console.log(this.$refs.logo.files[0]);
     },
 
-    testCheckbox() {
-      console.log(this.carouselCheckbox);
-      console.log(this.convertBoolToInt(this.carouselCheckbox));
-    },
+    testCheckbox() {},
 
     convertBoolToInt(bool) {
       if (bool == true) return 1;
@@ -1038,36 +1034,28 @@ export default {
       // );
     },
     setCarouselImage1(image) {
-      console.log(JSON.stringify(image));
       this.carouselImage1 = image;
       this.carouselViewImg1 = URL.createObjectURL(image);
-      console.log(this.testImg);
-      console.log(image);
     },
     setCarouselImage2(image) {
       this.carouselImage2 = image;
       this.carouselViewImg2 = URL.createObjectURL(image);
-      console.log(image);
     },
     setCarouselImage3(image) {
       this.carouselImage3 = image;
       this.carouselViewImg3 = URL.createObjectURL(image);
-      console.log(image);
     },
     setCarouselImage4(image) {
       this.carouselImage4 = image;
       this.carouselViewImg4 = URL.createObjectURL(image);
-      console.log(image);
     },
     setLeftImage(image) {
       this.leftImage = image;
       this.leftBannerViewImg = URL.createObjectURL(image);
-      console.log(image);
     },
     setRightImage(image) {
       this.rightImage = image;
       this.rightBannerViewImg = URL.createObjectURL(image);
-      console.log(image);
     },
 
     removeCarouselImage(imgNum) {
@@ -1127,8 +1115,7 @@ export default {
     },
     getCategoryItems(category) {
       this.categoryItems = [];
-      console.log(category);
-      console.log(this.categoriesItems);
+
       if (this.siteLanguage == "en") {
         for (var i = 0; i < this.categoriesItems.length; i++) {
           if (this.categoriesItems[i].category_name == category) {
@@ -1146,9 +1133,6 @@ export default {
       }
     },
     treeView() {
-      console.log(this.tree.name);
-      console.log("category", this.category);
-      console.log("items", this.categoriesItems);
       for (let i = 0; i < this.category.length; i++) {
         var counter = 1;
         var children = [];
@@ -1171,18 +1155,15 @@ export default {
         //   }
         //   counter++;
         // });
-        console.log("map function", children);
+
         this.categoryItemstest.push({
           id: i + 1,
           name: this.category[i],
           children: children,
         });
       }
-      console.log("treee array test result", this.categoryItemstest);
-      console.log("items", this.items);
     },
     addItem(item) {
-      console.log(item);
       var check = false;
       if (this.supplierItemsFromDB.length > 0) {
         for (let i = 0; i < this.supplierItemsFromDB.length; i++) {
@@ -1203,14 +1184,12 @@ export default {
       for (let i = 0; i < this.supplierItemsFromDB.length; i++) {
         if (this.supplierItemsFromDB[i] == item) {
           this.supplierItemsFromDB.splice(i, 1);
-          console.log(this.supplierItemsFromDB);
         }
       }
     },
     addCategoryAndItemsToSupplier() {
       this.dialog = false;
-      console.log(this.currentUser);
-      console.log(this.supplierItemsFromDB);
+
       this.$store.dispatch("addCategoryAndItemsToSupplier", {
         supplierItems: this.supplierItemsFromDB,
         user_id: this.currentUser.user_id,
@@ -1287,7 +1266,7 @@ export default {
     }
     await this.$store.dispatch("getSupplier", this.currentUser.user_id);
     await this.$store.dispatch("getSupplierPageData", this.currentUser.user_id);
-    console.log("paraaamsss");
+
     await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getCategoryItems");
     // await this.$store.dispatch("getSupplierItems", {
@@ -1297,7 +1276,7 @@ export default {
       "getSupplierCategoriesAndItems",
       this.currentUser.user_id
     );
-    console.log("siteColor", this.siteColor);
+
     await setTimeout(() => {
       this.toolBarColor = this.siteColor.toolbar_color;
       this.footerColor = this.siteColor.footer_color;
@@ -1306,8 +1285,6 @@ export default {
       this.footerTextColor = this.siteColor.footer_text_color;
       this.toolBarTextColor = this.siteColor.toolbar_text_color;
     }, 500);
-
-    console.log("supplier page info", this.supplierPageInfo);
 
     if (this.supplierPageInfo.show_carousel === 1) this.carouselCheckbox = true;
 
@@ -1324,40 +1301,22 @@ export default {
     }
 
     // this.supplierItems = this.supplierItemsFromDB;
-    console.log("array in table", this.supplierItems);
+
     this.isLoading = false;
   },
 };
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
 input {
   opacity: 0;
   z-index: inherit;
 }
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-.smallerText {
-  font-size: 20px;
-}
+
 h1 {
-  font-family: "Markazi Text", serif;
   font-size: 25px;
 }
 h2 {
-  font-family: "Markazi Text", serif;
   font-size: 25px;
 }
 </style>

@@ -1,3 +1,4 @@
+
 <template>
   <v-app>
     <v-container mt-16>
@@ -64,7 +65,6 @@ export default {
           email: this.email,
         })
         .then((response) => {
-          console.log(response.data);
           if (response.data != "authentication succesfull") {
             alert(response.data);
           } else {
@@ -72,16 +72,14 @@ export default {
               .post(this.nodeHost + "/api/sendResetPassword", {
                 email: this.email,
               })
+              // eslint-disable-next-line no-unused-vars
               .then((response) => {
-                console.log(response.data);
-                console.log("ALL ROUTES", self.$router.options.routes);
                 self.$router.push(`/${self.$i18n.locale}/resetPasswordSent`);
               });
           }
         })
-        .catch((error) => {
-          console.log("error", error);
-        });
+        // eslint-disable-next-line no-unused-vars
+        .catch((error) => {});
     },
   },
   computed: {
@@ -122,29 +120,11 @@ export default {
   width: 100%;
   /* height: 2.5rem;            */
 }
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-.smallerText {
-  font-size: 20px;
-}
+
 h2 {
-  font-family: "Markazi Text", serif;
   font-size: 25px;
 }
 h3 {
-  font-family: "Markazi Text", serif;
   font-size: 25px;
 }
 </style>

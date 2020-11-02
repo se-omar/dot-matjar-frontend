@@ -562,25 +562,18 @@ export default {
       );
     },
     filterSupplierProducts() {
-      console.log(this.supplierProductsSearch);
-      console.log(this.$route.params.supplier_id);
       this.$store.dispatch("filterSupplierProducts", {
         productsSearch: this.supplierProductsSearch,
         user_id: this.$route.params.supplier_id,
       });
     },
     filterProductsWithCategory(category) {
-      console.log(this.category);
-      console.log(this.categoriesItems);
-      console.log(category);
-
       this.$store.dispatch("filterProductsWithCategory", {
         categoryName: category,
         user_id: this.$route.params.supplier_id,
       });
     },
     filterProductsWithItem(item) {
-      console.log(item);
       this.$store.dispatch("filterProductsWithItem", {
         user_id: this.$route.params.supplier_id,
         itemName: item,
@@ -588,7 +581,7 @@ export default {
     },
     mouseOver(category) {
       this.categoryItems = [];
-      console.log(category);
+
       for (var i = 0; i < this.categoriesItems.length; i++) {
         if (this.categoriesItems[i].category_name == category) {
           this.categoryItems.push(this.categoriesItems[i].category_items);
@@ -605,7 +598,6 @@ export default {
       await this.$store.dispatch("refreshCurrentUser");
     }
     await this.$store.dispatch("getSupplier", this.$route.params.supplier_id);
-    console.log("current user", this.currentUser);
 
     await this.$store.dispatch(
       "getSupplierPageData",
@@ -615,8 +607,6 @@ export default {
       "getSupplierProducts",
       this.$route.params.supplier_id
     );
-
-    console.log(this.carouselImagesArray);
 
     await this.$store.dispatch("getSupplierReview", {
       supplier_id: this.supplier.user_id,
@@ -639,32 +629,14 @@ export default {
         this.barRatingArray[j - 1] = this.groupedRatings[j].length * 20;
       }
     }
-    console.log(this.barRatingArray);
+
     await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getCategoryItems");
     this.isLoading = false;
-    console.log("supplier info", this.supplier);
   },
 };
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-.smallerText {
-  font-size: 20px;
-}
 #image {
   border-radius: 50%;
 }

@@ -35,7 +35,7 @@ export default {
 
 
         getSiteColor(state, siteColors) {
-            //console.log('site colors is', siteColors)
+            //
 
             localStorage.removeItem('siteColor')
             var obj = siteColors;
@@ -45,7 +45,7 @@ export default {
         },
 
         refreshCurrentUser(state, user) {
-            //console.log('new user is ', user)
+            //
             state.currentUser = user;
         },
 
@@ -54,12 +54,12 @@ export default {
         },
 
         getRegions(state, regions) {
-            //console.log('sate entered')
+            //
             state.regions = []
             for (var i = 0; i < regions.length; i++) {
                 state.regions.push(regions[i].city)
             }
-            //console.log(state.regions)
+            //
         },
 
         getGovernorate(state, res) {
@@ -80,11 +80,11 @@ export default {
                             element.unit_price = Math.trunc(element.unit_price * egp)
                         }
                         else {
-                            //console.log('error in currency conversion')
+                            //
                         }
                     }
                     else {
-                        //console.log('currencies from api are empty')
+                        //
                     }
                 }
             });
@@ -98,7 +98,7 @@ export default {
         },
 
         categoriesDB(state, data) {
-            // console.log('siteLanguage', state.siteLanguage)
+            // 
             if (state.siteLanguage == 'en') {
                 state.category = data.map(e => {
                     return { name: e.category_name, icon: e.category_name }
@@ -129,11 +129,11 @@ export default {
                             element.unit_price = Math.trunc(element.unit_price * egp)
                         }
                         else {
-                            //console.log('error in currency conversion')
+                            //
                         }
                     }
                     else {
-                        // console.log('currencies from api are empty')
+                        // 
                     }
                 }
             });
@@ -157,13 +157,13 @@ export default {
         },
 
         changeSiteColor(state, supplier) {
-            //console.log('entered change site color')
+            //
             localStorage.setItem('siteColor', supplier.page_color)
             state.siteColor = localStorage.getItem('siteColor');
         },
 
         supplierPageColor(state, color) {
-            //console.log('color of supp', color)
+            //
             localStorage.removeItem('siteColor')
             localStorage.setItem('siteColor', color)
             state.siteColor = localStorage.getItem('siteColor')
@@ -171,7 +171,7 @@ export default {
 
         getCategoryItems(state, items) {
             state.categoriesItems = items
-            //console.log('get categories ittems', items)
+            //
         },
         getCategoryAndItemRequests(state, requests) {
             state.categoryAndItemRequests = requests
@@ -191,7 +191,7 @@ export default {
             state.homePageInfo = info
         },
         updateSupplierPageColors(state, supplierPageColors) {
-            //console.log('supplier page colors', supplierPageColors)
+            //
             var pageDataArray = supplierPageColors
 
             localStorage.setItem('siteColor', JSON.stringify(pageDataArray));
@@ -224,7 +224,7 @@ export default {
         getAllUsers(state, users) {
 
             state.allUsers.push(...users)
-            //console.log(state.allUsers)
+            //
         },
         getUser(state, user) {
 
@@ -233,7 +233,7 @@ export default {
         loadMoreType(state, { name, type }) {
 
             state.loadmore = { name: name, type: type }
-            console.log('state loadore', state.loadmore)
+
         },
 
         setProductAdvancedSearches(state, obj) {
@@ -251,10 +251,10 @@ export default {
         getSiteColor(context) {
             axios.put(context.rootState.nodeHost + '/api/getSiteColor')
                 .then(response => {
-                    //console.log(response.data.data)
-                    //console.log(response.data.message)
+                    //
+                    //
                     context.commit('getSiteColor', response.data.data)
-                    console.log('site color from DB', response.data.data)
+
                 })
         },
 
@@ -266,10 +266,10 @@ export default {
             const bodyParameters = {
                 key: "value"
             };
-            console.log(context.rootState.nodeHost);
+
             await axios.post(context.rootState.nodeHost + '/api/refreshCurrentUser',
                 bodyParameters, config).then(response => {
-                    // console.log('response from server user', response)
+                    // 
                     if (response.data.user)
                         context.commit('refreshCurrentUser', response.data.user)
                 })
@@ -278,7 +278,7 @@ export default {
         getGovernorate(context) {
             axios.put(context.rootState.nodeHost + '/api/getGovernorate')
                 .then(res => {
-                    //console.log(res.data.data)
+                    //
                     context.commit('getGovernorate', res.data.data)
                 })
         },
@@ -296,7 +296,7 @@ export default {
                 }).then(response => {
 
                     context.commit('getProducts', response.data.products);
-                    //console.log('productss iss', response.data)
+                    //
                 })
             }
             else {
@@ -306,7 +306,7 @@ export default {
                     category_name: categoryName
                 }).then(response => {
                     context.commit('getProducts', response.data.products);
-                    //console.log('productss iss', response.data)
+                    //
                 })
             }
         },
@@ -321,7 +321,7 @@ export default {
                 axios.post(context.rootState.nodeHost + '/api/getSuppliers', {
                     user_id: context.state.suppliers.length > 0 ? context.state.suppliers[context.state.suppliers.length - 1].user_id : null
                 }).then(response => {
-                    // console.log('suppliersssssss', response.data.users)
+                    // 
                     context.commit('getSuppliers', response.data.users)
                 })
             }
@@ -332,7 +332,7 @@ export default {
                     governorate,
                     region
                 }).then(response => {
-                    //console.log(response.data.users)
+                    //
                     context.commit('getSuppliers', response.data.users)
                 })
             }
@@ -341,7 +341,7 @@ export default {
         categoriesDB(context) {
             axios.put(context.rootState.nodeHost + '/api/selectCategory')
                 .then((res) => {
-                    // console.log('category from db', res.data.data)
+                    // 
                     context.commit('categoriesDB', res.data.data)
                 })
         },
@@ -380,8 +380,8 @@ export default {
             governorate,
             region
         }) {
-            //console.log('governorate', governorate)
-            //console.log('region', region)
+            //
+            //
 
             axios.put(context.rootState.nodeHost + '/api/filterSuppliers', {
                 user_id: context.state.suppliers.length > 0 ? context.state.suppliers[context.state.suppliers.length - 1].user_id : null,
@@ -389,16 +389,16 @@ export default {
                 governorate: governorate,
                 region: region
             }).then(response => {
-                //console.log(response)
+                //
                 context.commit('filterSuppliers', response.data.users)
             })
         },
 
         getRegions(context, governorate) {
-            //console.log(governorate)
+            //
             axios.put(context.rootState.nodeHost + '/api/getRegions', { governorate: governorate })
                 .then(regions => {
-                    //console.log('regionss', regions.data.data)
+                    //
                     context.commit('getRegions', regions.data.data)
                 })
         },
@@ -406,7 +406,7 @@ export default {
         addNewCategory(context, { categoryName, categoryArabicName }) {
             axios.post(context.rootState.nodeHost + '/api/addNewCategory', { categoryName, categoryArabicName })
                 .then(message => {
-                    //console.log(message.data.message)
+                    //
                     alert(message.data.message)
 
                 })
@@ -414,15 +414,15 @@ export default {
         addCategoryItems(context, { categoryName, categoryItem, itemArabicName }) {
             axios.post(context.rootState.nodeHost + '/api/addCategoryItems', { categoryName: categoryName, categoryItem: categoryItem, itemArabicName: itemArabicName })
                 .then(message => {
-                    //console.log(message.data.message)
+                    //
                     alert(message.data.message)
                 })
         },
         getCategoryItems(context) {
             axios.put(context.rootState.nodeHost + '/api/getCategoryItems')
                 .then(response => {
-                    //console.log(response.data.message)
-                    //console.log('get category items', response.data.data)
+                    //
+                    //
                     context.commit('getCategoryItems', response.data.data)
                 })
 
@@ -431,7 +431,7 @@ export default {
         removeCategoryAndItems(context, { categoryName, categoryItem }) {
             axios.put(context.rootState.nodeHost + '/api/removeCategoryAndItems', { categoryName: categoryName, categoryItem: categoryItem })
                 .then(message => {
-                    //console.log(message.data.message)
+                    //
                     alert(message.data.message)
                 })
         },
@@ -452,8 +452,8 @@ export default {
                 categoryArabicName,
                 user_id: context.state.currentUser.user_id
             }).then(res => {
-                //console.log(res.data.message)
-                //console.log(res.data.data)
+                //
+                //
             })
         },
         getCategoryAndItemRequests(context) {
@@ -487,11 +487,11 @@ export default {
                 })
         },
         getSupplierCategoriesRequests(context) {
-            //console.log('user idd issssss', context.state.currentUser.user_id)
+            //
             axios.put(context.rootState.nodeHost + '/api/getSupplierCategoriesRequests', { user_id: context.state.currentUser.user_id })
                 .then(requests => {
-                    //console.log(requests.data.message);
-                    //console.log('Requueests get', requests.data.data)
+                    //
+                    //
                     context.commit('getSupplierCategoriesRequests', requests.data.data)
                 }
 
@@ -514,7 +514,7 @@ export default {
                 toolBarTextColor
             })
                 .then(message => {
-                    //console.log(message.data.message);
+                    //
                 })
         },
 
@@ -522,7 +522,7 @@ export default {
             show_right_banner,
             carousel_width,
             carousel_height, }) {
-            //console.log('show right banner from action', show_right_banner);
+            //
 
             await axios.post(context.rootState.nodeHost + '/api/updateHomePage', {
                 show_carousel,
@@ -532,7 +532,7 @@ export default {
             })
                 .then(response => {
 
-                    //console.log(response.data.message, response.data.data)
+                    //
                     context.commit('updateHomePage', response.data.data)
 
                 })
@@ -545,7 +545,7 @@ export default {
                 },
             })
                 .then(response => {
-                    //console.log(response)
+                    //
                 })
         },
 
@@ -557,7 +557,7 @@ export default {
             })
                 .then(response => {
 
-                    //console.log('row resposne', response)
+                    //
                 })
         },
 
@@ -565,7 +565,7 @@ export default {
             await axios.post(context.rootState.nodeHost + '/api/removeHomeCarouselImage', {
                 imgName
             }).then(response => {
-                //console.log('remove img response', response)
+                //
             })
         },
 
@@ -573,7 +573,7 @@ export default {
             await axios.post(context.rootState.nodeHost + '/api/removeHomeBannerImage', {
                 imgName
             }).then(response => {
-                //console.log('remove img response', response)
+                //
             })
         },
 
@@ -601,14 +601,14 @@ export default {
                 user_id: context.state.currentUser.user_id
             })
                 .then(message => {
-                    //console.log(message.data.message);
+                    //
                 })
         },
 
         async getCurrencies(context) {
             await axios
                 .get('https://api.exchangerate.host/latest?base=USD').then(response => {
-                    console.log('currencies from action ', response.data.rates)
+
                     context.commit('getCurrencies', response.data.rates)
                 })
         },
@@ -616,14 +616,14 @@ export default {
         async getAvailableCountries(context) {
             await axios.put(context.rootState.nodeHost + '/api/getAvailableCountries')
                 .then(countries => {
-                    // console.log('available countries', countries.data.data)
+                    // 
                     context.commit('getAvailableCountries', countries.data.data)
                 })
         },
         async getWorldCountries(context) {
             axios.put(context.rootState.nodeHost + '/api/getWorldCountries')
                 .then(data => {
-                    // console.log('world countries', data.data.data)
+                    // 
                     context.commit('getWorldCountries', data.data.data)
                 })
         },
@@ -636,7 +636,7 @@ export default {
         getChoosenWorldCountries(context) {
             axios.put(context.rootState.nodeHost + '/api/getChoosenWorldCountries')
                 .then(countries => {
-                    //console.log('choosen world counties', countries.data.data)
+                    //
                     context.commit('getChoosenWorldCountries', countries.data.data)
                 })
         },
@@ -646,10 +646,10 @@ export default {
         },
         getAllUsers(context) {
             var id = context.state.allUsers.length > 0 ? context.state.allUsers[context.state.allUsers.length - 1].user_id : null
-            console.log('loadmore', id)
+
             axios.put(context.rootState.nodeHost + "/api/getAllUsers", { user_id: context.state.allUsers.length > 0 ? context.state.allUsers[context.state.allUsers.length - 1].user_id : null })
                 .then(users => {
-                    // console.log(users.data.data)
+                    // 
                     context.commit('getAllUsers', users.data.data)
                 })
         },
@@ -657,7 +657,7 @@ export default {
             axios.put(context.rootState.nodeHost + "/api/getUser", { user_id })
                 .then(user => {
 
-                    // console.log('user iss', user.data.data)
+                    // 
                     context.commit('getUser', user.data.data)
                 })
 
@@ -713,14 +713,14 @@ export default {
                 })
         },
         deleteUser(context, user_id) {
-            console.log(user_id)
+
             axios.put(context.rootState.nodeHost + '/api/deleteUser', { user_id: user_id })
                 .then(message => {
                     alert(message.data.message)
                 })
         },
         loadmoreProducts(context, obj) {
-            console.log(obj.id, context.state.loadmore.type, context.state.loadmore.name)
+
             axios.put(context.rootState.nodeHost + '/api/loadmoreProducts', {
                 loadmoreType: context.state.loadmore.type,
                 loadmoreName: context.state.loadmore.name,
@@ -733,7 +733,7 @@ export default {
                 region: obj.region,
 
             }).then(products => {
-                console.log('load more products', products.data.data)
+
                 context.commit('filterProducts', { products: products.data.data, pressed: '' })
             })
         }

@@ -5,9 +5,9 @@ import '@fortawesome/fontawesome-svg-core'
 //import '@fortawesome/react-fontawesome'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import colors from 'vuetify/lib/util/colors'
-import i18n from '../i18n'
+//import i18n from '../i18n'
 Vue.use(Vuetify);
-console.log('i18n is', i18n)
+
 
 export default new Vuetify({
     icons: {

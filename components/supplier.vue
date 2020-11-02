@@ -1,24 +1,19 @@
 <template>
-  <v-main>
+  <div>
     <v-card
       @click="supplierClicked(supplier)"
-      :min-width="show_right_banner == 1 ? '100%' : '120%'"
+      :min-width="show_right_banner == 1 ? '110%' : '120%'"
       class="grey lighten-5"
     >
       <v-img
-        height="180"
-        width="180"
-        style="
-          border-radius: 50%;
-          display: block;
-          margin-left: auto;
-          margin-right: auto;
-        "
-        :src="supplier.profile_photo ? supplier.profile_photo : ''"
+        :height="$vuetify.breakpoint.smAndDown ? '100' : '140'"
+        :width="$vuetify.breakpoint.smAndDown ? '100' : '140'"
+        style="border-radius: 50%; margin-left: auto; margin-right: auto"
+        :src="supplier && supplier.profile_photo ? supplier.profile_photo : ''"
       ></v-img>
 
       <v-row justify="center">
-        <v-card-title class="arabic">{{
+        <v-card-title v-if="supplier" class="arabic">{{
           supplier.full_arabic_name
         }}</v-card-title>
       </v-row>
@@ -74,7 +69,7 @@
         ></v-rating>
       </v-card-text>
     </v-card>
-  </v-main>
+  </div>
 </template>
 
 <script>
@@ -137,25 +132,4 @@ export default {
 };
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 18px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-.smallerText {
-  font-size: 15px;
-}
-div {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
 </style>

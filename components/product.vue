@@ -1,13 +1,16 @@
 <template>
   <div>
     <v-card
-      min-height="456"
+      :min-height="$vuetify.breakpoint.smAndDown ? '300' : '456'"
       @click="setCurrentRow"
       class="grey lighten-5"
       :elevation="7"
       :min-width="minWidth"
     >
-      <v-img height="250" :src="filteredProduct.main_picture"></v-img>
+      <v-img
+        :height="$vuetify.breakpoint.smAndDown ? '170' : '250'"
+        :src="filteredProduct.main_picture"
+      ></v-img>
 
       <v-row class="mt-n5">
         <v-col cols="12">
@@ -135,7 +138,6 @@ export default {
       this.$store.dispatch("table", product);
       // this.$store.commit("cart",product)
       // this.$store.dispatch("cart",product.product_id)
-      console.log(product.in_cart);
     },
 
     add3Dots(string, limit) {
@@ -186,20 +188,6 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
 .smallerText {
   font-size: 15px;
 }

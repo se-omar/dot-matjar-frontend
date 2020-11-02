@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios'
 // import router from '../router'
 
@@ -10,12 +11,12 @@ export default {
 
     mutations: {
         removeProductFromCart(state, id) {
-            console.log(state.table)
+
             for (var i = 0; i < state.table.length; i++) {
                 if (state.table[i].product_id == id) {
                     state.table.splice(i, 1)
                     localStorage.setItem('cartItems', JSON.stringify(state.table))
-                    console.log('splice is:', state.table)
+
                 }
             }
         },
@@ -52,7 +53,7 @@ export default {
                 product_id: id
             })
                 .then(response => {
-                    console.log(response.data)
+
                     context.commit('removeProductFromCart', id)
                 })
         },
@@ -68,14 +69,14 @@ export default {
 
         async cleanCart(context) {
 
-            console.log('entered clean cart')
+
             context.commit('cleanCart')
             await axios.put(context.rootState.nodeHost + '/api/cleanCart', {
                 user_id: context.rootState.Home.currentUser.user_id
             })
                 .then(response => {
 
-                    console.log('clean cart message', response.data.message)
+
                 })
         },
 
@@ -85,7 +86,7 @@ export default {
                 product_id: product.product_id
             })
                 .then(response => {
-                    console.log(response.data.message)
+
                 })
         },
 
@@ -96,7 +97,7 @@ export default {
 
             })
                 .then(response => {
-                    console.log(response.data)
+
                 })
         },
 

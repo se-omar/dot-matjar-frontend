@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios'
 // import router from '../router'
 
@@ -27,7 +28,7 @@ export default {
         getSupplierPageData(state, info) {
             state.supplierPageInfo = info
             state.testVar = 5;
-            console.log('supplier info from mutation', state.supplierPageInfo)
+
 
         },
 
@@ -45,7 +46,7 @@ export default {
             state.supplierProducts = []
             var currencies = JSON.parse(localStorage.getItem('rates'))
             var currentCurrency = localStorage.getItem('currentCurrency')
-            console.log('currencies from home ', currencies)
+
             supplierProducts.forEach(element => {
                 if (element.currency !== currentCurrency) {
                     if (currencies.EGP) {
@@ -56,16 +57,12 @@ export default {
                         else if (element.currency == 'usd') {
                             element.unit_price = Math.trunc(element.unit_price * egp)
                         }
-                        else {
-                            console.log('error in currency conversion')
-                        }
+
                     }
-                    else {
-                        console.log('currencies from api are empty')
-                    }
+
                 }
             });
-            console.log('supplier products are ', supplierProducts)
+
             state.supplierProducts.push(...supplierProducts)
             state.supplierProductsSave.push(...supplierProducts)
         },
@@ -114,13 +111,13 @@ export default {
         //     state.supplierItems = items.map(e => {
         //         return e.item_name
         //     })
-        //     console.log('muttated supplier items', state.supplierItems)
+        //     
 
         // },
         getSupplierCategoriesAndItems(state, { data }) {
             state.supplierCategories = []
             var siteLanguage = localStorage.getItem('language')
-            console.log(siteLanguage)
+
             if (siteLanguage == 'en') {
                 state.supplierItems = data.map(e => {
                     return e.category_item.category_items
@@ -136,7 +133,7 @@ export default {
             for (var i = 0; i < data.length; i++) {
                 var check = false;
                 if (siteLanguage == 'en') {
-                    console.log("if statment with en")
+
                     if (state.supplierCategories.length > 0) {
                         for (var j = 0; j < state.supplierCategories.length; j++) {
 
@@ -156,7 +153,7 @@ export default {
 
                 }
                 else {
-                    console.log('if stament with ar')
+
                     if (state.supplierCategories.length > 0) {
                         for (var x = 0; x < state.supplierCategories.length; x++) {
 
@@ -177,7 +174,7 @@ export default {
 
 
             }
-            console.log('supplier categories', state.supplierCategories)
+
         }
     },
 
@@ -194,7 +191,7 @@ export default {
                 rating,
                 review,
             }).then(response => {
-                console.log('add supplier review response', response.data)
+
                 alert(response.data.message)
             })
         },
@@ -210,7 +207,7 @@ export default {
         async getSupplierPageData(context, id) {
             await axios.put(context.rootState.nodeHost + '/api/getSupplierPageData', { supplier_id: id })
                 .then(info => {
-                    console.log('supplier page datat', info.data.data)
+
                     context.commit('getSupplierPageData', info.data.data)
                     context.commit('updateSupplierPageColors', info.data.data)
                 })
@@ -219,11 +216,11 @@ export default {
 
 
         async getSupplierProducts(context, id) {
-            console.log('the id is', id);
+
             await axios.put(context.rootState.nodeHost + "/api/supplierProducts", {
                 user_id: id
             }).then(response => {
-                console.log('Products is here', response)
+
                 context.commit('getSupplierProducts', response.data.data)
             })
         },
@@ -251,7 +248,7 @@ export default {
         updateSupplierPage(context, formdata) {
             axios.post(context.rootState.nodeHost + '/api/updateSupplierPage', formdata)
                 .then(response => {
-                    console.log(response.data.message, response.data.data)
+
                     context.commit('updateSupplierPage', response.data.data)
 
                 })
@@ -266,8 +263,8 @@ export default {
             })
 
                 .then(response => {
-                    console.log(response.data.message)
-                    console.log(response.data.data)
+
+
                     context.commit('supplierPageColor', response.data.data)
                 })
         },
@@ -276,14 +273,14 @@ export default {
             axios.post(context.rootState.nodeHost + '/api/calculateSupplierRating', {
                 supplier_id
             }).then(response => {
-                console.log(response.message)
+
             })
         },
         getPendingSuppliers(context) {
             axios.put(context.rootState.nodeHost + '/api/getPendingSuppliers')
                 .then(suppliers => {
-                    console.log(suppliers.data.message)
-                    console.log(suppliers.data.data)
+
+
                     context.commit('getPendingSuppliers', suppliers.data.data)
                 })
         },
@@ -297,13 +294,13 @@ export default {
 
             axios.put(context.rootState.nodeHost + '/api/filterSupplierProducts', { productsSearch, user_id })
                 .then(products => {
-                    console.log(products.data.data)
-                    console.log(products.data.message)
+
+
                     context.commit('filterSupplierProducts', products.data.data)
                 })
         },
         filterProductsWithCategory(context, { categoryName, user_id, siteLanguage }) {
-            console.log('testing', categoryName, user_id)
+
             axios.put(context.rootState.nodeHost + '/api/filterSupplierProducts', { categoryName, user_id, siteLanguage })
                 .then(products => {
                     context.commit('filterProductsWithCategory', products.data.data)
@@ -312,20 +309,20 @@ export default {
         filterProductsWithItem(context, { user_id, itemName, siteLanguage }) {
             axios.put(context.rootState.nodeHost + '/api/filterSupplierProducts', { user_id, itemName, siteLanguage })
                 .then(products => {
-                    console.log('testing products items', products.data.data)
+
                     context.commit('filterProductsWithItem', products.data.data)
                 })
         },
 
         async uploadCarouselImages(context, form) {
-            console.log('form', form)
+
             await axios.post(context.rootState.nodeHost + '/api/uploadCarouselImages', form, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             })
                 .then(response => {
-                    console.log('row resposne', response)
+
                 })
         },
 
@@ -338,7 +335,7 @@ export default {
                 },
             })
                 .then(response => {
-                    console.log('row resposne', response)
+
                 })
         },
 
@@ -347,7 +344,7 @@ export default {
             await axios.post(context.rootState.nodeHost + '/api/removeCarouselImage', {
                 id, imgName
             }).then(response => {
-                console.log('remove img response', response)
+
             })
         },
 
@@ -358,18 +355,18 @@ export default {
             await axios.post(context.rootState.nodeHost + '/api/removeBannerImage', {
                 id, imgName
             }).then(response => {
-                console.log('remove img response', response)
+
             })
         },
 
         addCategoryAndItemsToSupplier(context, { supplierItems, user_id, siteLanguage }) {
             axios.post(context.rootState.nodeHost + '/api/addCategoryAndItemsToSupplier', { supplierItems: supplierItems, user_id: user_id, siteLanguage: siteLanguage })
                 .then(message => {
-                    console.log(message.data.message)
+
                 })
         },
         // async getSupplierItems(context, user_id) {
-        //     console.log('action entered')
+        //     
         //     await axios.put(context.rootState.nodeHost+'/api/getSupplierItems', user_id)
         //         .then(items => {
 
@@ -377,16 +374,16 @@ export default {
         //         })
         // },
         async getSupplierCategoriesAndItems(context, user_id) {
-            console.log('proplem user_id', user_id)
+
             await axios.put(context.rootState.nodeHost + '/api/getSupplierCategoriesAndItems', { user_id: user_id })
                 .then(data => {
-                    console.log(data.data.message);
+
                     context.commit('getSupplierCategoriesAndItems', { data: data.data.data })
                 })
         },
         //stpedd hereeeeeeeeee
         rejectSupplierRequest(context, user_id) {
-            console.log(user_id)
+
             axios.put('rejectSupplierRequest', user_id)
                 .then(message => {
                     alert(message.data.message)

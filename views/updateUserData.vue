@@ -276,11 +276,9 @@ export default {
       this.$router.push(`/${this.$i18n.locale}/allUsers`);
     },
     getCountryRegions() {
-      console.log(this.governorate);
       this.$store.dispatch("getRegions", this.governorate);
     },
     deleteUser() {
-      console.log(this.$route.params.user_id);
       this.$store.dispatch("deleteUser", this.$route.params.user_id);
       this.dialog = false;
       this.$router.push(`/${this.$i18n.locale}/allUsers`);
@@ -310,8 +308,6 @@ export default {
       this.address = this.currentUser.address;
       this.userType = this.currentUser.user_type;
     }, 500);
-
-    console.log("current user in update user data ", this.currentUser);
   },
   data: () => ({
     rules: {
@@ -404,25 +400,7 @@ export default {
 };
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 25px;
-}
-.smallerText {
-  font-size: 20px;
-}
 div {
-  font-family: "Markazi Text", serif;
   font-size: 25px;
 }
 </style>

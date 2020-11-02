@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios"
@@ -98,12 +99,12 @@ export default new Vuex.Store({
 
     // removeProductFromCart(state, id) {
 
-    //   console.log(state.table)
+    //   
     //   for (var i = 0; i < state.table.length; i++) {
     //     if (state.table[i].product_id == id) {
     //       state.table.splice(i, 1)
     //       localStorage.setItem('cartItems', JSON.stringify(state.table))
-    //       console.log('splice is:', state.table)
+    //       
     //     }
     //   }
     // },
@@ -123,11 +124,11 @@ export default new Vuex.Store({
     //   localStorage.setItem('cartItems', JSON.stringify(state.table))
     // },
     // categoriesDB(state, data) {
-    //   console.log(data)
+    //   
     //   state.category = data.map(e => {
     //     return e.category_name
     //   })
-    //   console.log(state.category)
+    //   
 
     // },
 
@@ -152,9 +153,9 @@ export default new Vuex.Store({
     //   state.productsQuantityArray = JSON.parse(localStorage.getItem('quantity'))
     // },
     // getOrders(state, order) {
-    //   console.log('orer si', order)
+    //   
     //   state.orders = order
-    //   console.log('state order', state.order)
+    //   
     // },
     // getOrderProducts(state, response) {
     //   var products = response.map(e => {
@@ -163,7 +164,7 @@ export default new Vuex.Store({
     //     return e.product
     //   })
     //   state.orderProducts = products
-    //   console.log('commit products', state.orderProducts)
+    //   
     // },
     // getTopSellingProduct(state, topProduct) {
     //   state.topProduct = topProduct;
@@ -177,7 +178,7 @@ export default new Vuex.Store({
     //   state.notSortedDashboardOrders = orders
     // },
     // supplierPageColor(state, color) {
-    //   console.log('color of supp', color)
+    //   
     //   localStorage.setItem('siteColor', color)
     //   state.siteColor = localStorage.getItem('siteColor')
     // },
@@ -199,7 +200,7 @@ export default new Vuex.Store({
     // },
 
     // refreshCurrentUser(state, user) {
-    //   console.log('new user is ', user)
+    //   
     //   state.currentUser = user;
     // },
 
@@ -208,8 +209,8 @@ export default new Vuex.Store({
     //   localStorage.setItem('supplier', JSON.stringify(supplier))
     //   state.supplier = JSON.parse(localStorage.getItem('supplier'))
 
-    //   console.log(state.supplier)
-    //   console.log('supplier worked')
+    //   
+    //   
     // },
 
     // getSupplier(state, supplier) {
@@ -222,12 +223,12 @@ export default new Vuex.Store({
     //   state.siteColor = localStorage.getItem('siteColor')
     // },
     // getRegions(state, regions) {
-    //   console.log('sate entered')
+    //   
     //   state.regions = []
     //   for (var i = 0; i < regions.length; i++) {
     //     state.regions.push(regions[i].city)
     //   }
-    //   console.log(state.regions)
+    //   
     // },
     // getGovernorate(state, res) {
     //   state.governorates = res
@@ -275,7 +276,7 @@ export default new Vuex.Store({
     //   for (var i = 0; i < state.ordersMade.length; i++) {
     //     if (state.ordersMade[i].order_number == orderNumber) {
 
-    //       console.log(state.ordersMade[i].products)
+    //       
     //       state.showOrderProducts = state.ordersMade[i].products
     //       state.pressedOrder = state.ordersMade[i]
     //     }
@@ -329,13 +330,13 @@ export default new Vuex.Store({
         }
       })
         .then(response => {
-          console.log(response)
+
           context.dispatch('doLogin', {
             email: localStorage.getItem('currentEmail'),
             password: localStorage.getItem('currentPassword')
           })
         }).catch(err => {
-          console.log('ERROR', err)
+
         })
     },
 
@@ -352,7 +353,7 @@ export default new Vuex.Store({
     //       product_id: context.state.filteredProducts.length > 0 ? context.state.filteredProducts[context.state.filteredProducts.length - 1].product_id : null
     //     }).then(response => {
     //       context.commit('getProducts', response.data.products);
-    //       console.log('productss iss', response.data)
+    //       
     //     })
     //   }
     //   else {
@@ -362,7 +363,7 @@ export default new Vuex.Store({
     //       category_name: categoryName
     //     }).then(response => {
     //       context.commit('getProducts', response.data.products);
-    //       console.log('productss iss', response.data)
+    //       
     //     })
     //   }
     // },
@@ -374,7 +375,7 @@ export default new Vuex.Store({
     //   region,
     //   categoryItem
     // }) {
-    //   console.log(product_name)
+    //   
     //   axios.put('http://localhost:3000/api/filterProducts', {
     //     product_name,
     //     category_name,
@@ -383,8 +384,8 @@ export default new Vuex.Store({
     //     categoryItem
     //   })
     //     .then(response => {
-    //       console.log('message:', response.data.message)
-    //       console.log('products:', response.data.data)
+    //       
+    //       
 
     //       context.commit('filterProducts', response.data.data);
 
@@ -436,10 +437,10 @@ export default new Vuex.Store({
     //   })
     //     .then(response => {
     //       alert(response.data.message)
-    //       console.log(response.data.data)
+    //       
     //     })
     //     .catch(err => {
-    //       console.log(err)
+    //       
     //     })
     // },
 
@@ -468,11 +469,11 @@ export default new Vuex.Store({
     //       if (response.data.message) {
     //         alert(response.data.message)
     //       } else {
-    //         console.log("Error in database")
+    //         
     //       }
     //     })
     //     .catch(error => {
-    //       console.log(error)
+    //       
     //     })
     // },
 
@@ -489,7 +490,7 @@ export default new Vuex.Store({
 
     //     })
     //     .catch((error) => {
-    //       console.log(error);
+    //       
     //     });
     // },
 
@@ -497,7 +498,7 @@ export default new Vuex.Store({
     activation(context) {
       axios.put(context.state.nodeHost + '/api/activate')
         .then((data) => {
-          console.log(data);
+
           context.commit('activation')
         })
     },
@@ -509,40 +510,40 @@ export default new Vuex.Store({
     changingSiteColor(context, pickerColor) {
       axios.put(context.state.nodeHost + '/api/changeSiteColor', { user_id: context.state.Home.currentUser.user_id, site_color: pickerColor })
         .then(response => {
-          console.log(response.data.message)
+
           context.commit('changingSiteColor', pickerColor)
         })
     },
     // getSiteColor(context) {
     //   axios.put('http://localhost:3000/api/getSiteColor')
     //     .then(response => {
-    //       console.log(response.data.data)
-    //       console.log(response.data.message)
+    //       
+    //       
     //       context.commit('getSiteColor', response.data.data)
     //     })
     // },
     // updateSupplierPage(context, formdata) {
     //   axios.post('http://localhost:3000/api/updateSupplierPage', formdata)
     //     .then(response => {
-    //       console.log(response.data.message, response.data.data)
+    //       
     //       context.commit('updateSupplierPage', response.data.data)
 
     //     })
     // },
     // getSupplierPageData(context, id) {
 
-    //   console.log('the id os supp', context.state.supplier.user_id)
+    //   
     //   axios.put('http://localhost:3000/api/getSupplierPageData', { supplier_id: id })
     //     .then(info => {
-    //       console.log('info from database', info.data.data)
-    //       console.log('info message from databas', info.data.message)
+    //       
+    //       
     //       context.commit('getSupplierPageData', info.data.data)
     //     })
 
 
     // },
     // createOrder(context, { governorate, region, address }) {
-    //   console.log('data check', context.state.table)
+    //   
     //   axios.post('http://localhost:3000/api/createOrder', {
     //     user_id: context.state.currentUser.user_id
     //     , governorate: governorate,
@@ -553,15 +554,15 @@ export default new Vuex.Store({
 
     //   })
     //     .then(res => {
-    //       console.log(res.data.data)
-    //       console.log('order crreatedd', res.data.message)
+    //       
+    //       
     //     })
     // },
     // updateProductStatus(context, { status, orderId, productId }) {
-    //   console.log('testing befor sending to database', status, orderId, productId)
+    //   
     //   axios.put('http://localhost:3000/api/updateProductStatus', { status: status, orderId: orderId, productId: productId })
     //     .then(response => {
-    //       console.log(response.data.message)
+    //       
     //     })
     // },
 
@@ -594,13 +595,13 @@ export default new Vuex.Store({
     //   axios.post('http://localhost:3000/api/calculateProductRating', {
     //     product_id
     //   }).then(response => {
-    //     console.log(response.data.message)
+    //     
     //   })
     // },
     // addNewCategory(context, categoryName) {
     //   axios.post('http://localhost:3000/api/addNewCategory', { categoryName: categoryName })
     //     .then(message => {
-    //       console.log(message.data.message)
+    //       
     //       alert(message.data.message)
 
     //     })
@@ -608,15 +609,15 @@ export default new Vuex.Store({
     // addCategoryItems(context, { categoryName, categoryItem }) {
     //   axios.post('http://localhost:3000/api/addCategoryItems', { categoryName: categoryName, categoryItem: categoryItem })
     //     .then(message => {
-    //       console.log(message.data.message)
+    //       
     //       alert(message.data.message)
     //     })
     // },
     // getCategoryItems(context) {
     //   axios.put('http://localhost:3000/api/getCategoryItems')
     //     .then(response => {
-    //       console.log(response.data.message)
-    //       console.log(response.data.data)
+    //       
+    //       
     //       context.commit('getCategoryItems', response.data.data)
     //     })
 
@@ -625,7 +626,7 @@ export default new Vuex.Store({
     // removeCategoryAndItems(context, { categoryName, categoryItem }) {
     //   axios.put('http://localhost:3000/api/removeCategoryAndItems', { categoryName: categoryName, categoryItem: categoryItem })
     //     .then(message => {
-    //       console.log(message.data.message)
+    //       
     //       alert(message.data.message)
     //     })
     // },
@@ -634,7 +635,7 @@ export default new Vuex.Store({
     //   axios.post('http://localhost:3000/api/calculateSupplierRating', {
     //     supplier_id
     //   }).then(response => {
-    //     console.log(response.message)
+    //     
     //   })
     // },
 
@@ -683,7 +684,7 @@ export default new Vuex.Store({
     //     rating,
     //     review,
     //   }).then(response => {
-    //     console.log('add supplier review response', response.data)
+    //     
     //     alert(response.data.message)
     //   })
     // },

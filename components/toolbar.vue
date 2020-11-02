@@ -7,328 +7,278 @@
         :is-full-page="true"
       ></loading>
     </div> -->
-    <v-app-bar fixed :color="siteColor.toolbar_color" shaped>
-      <v-row justify="start">
-        <v-col cols="12" lg="12">
-          <span
-            v-if="
-              (supplierPageInfo && !supplierPageInfo.logo) || !supplierPageInfo
-            "
-          >
-            <a @click="$router.push('/').catch(() => {})">
-              <v-img
-                src="../assets/images/dotmatjar_logo.png"
-                max-height="110"
-                max-width="120"
-                contain
-              ></v-img>
-            </a>
-          </span>
+    <v-app-bar elevate-on-scroll shaped app :color="siteColor.toolbar_color">
+      <a
+        @click="$router.push('/').catch(() => {})"
+        v-if="(supplierPageInfo && !supplierPageInfo.logo) || !supplierPageInfo"
+      >
+        <v-img
+          src="../assets/images/dotmatjar_logo.png"
+          max-height="110"
+          max-width="120"
+          contain
+        ></v-img>
+      </a>
 
-          <span v-else class="ml-4">
-            <v-btn text rounded @click="goSupplierPage">
-              <v-img
-                class="mx-2"
-                :src="
-                  supplierPageInfo && supplierPageInfo.logo
-                    ? nodeHost + supplierPageInfo.logo
-                    : '../assets/images/dotmatjar_logo.png'
-                "
-                max-height="60"
-                max-width="100"
-                contain
-              ></v-img>
-              <span class="mt-3">{{ supplierPageInfo.site_name }}</span>
-            </v-btn>
-          </span>
-        </v-col>
-      </v-row>
+      <a v-else class="ml-4" @click="goSupplierPage">
+        <v-img
+          class="mx-2"
+          :src="
+            supplierPageInfo && supplierPageInfo.logo
+              ? nodeHost + supplierPageInfo.logo
+              : '../assets/images/dotmatjar_logo.png'
+          "
+          max-height="110"
+          max-width="120"
+          contain
+        ></v-img>
+        <span class="mt-3">{{ supplierPageInfo.site_name }}</span>
+      </a>
+
       <!-- <v-spacer></v-spacer> -->
-      <v-row justify="start">
-        <v-col
-          v-if="!$route.params.supplier_id"
-          cols="7"
-          lg="8"
-          sm="6"
-          md="8"
-          xs="5"
-        >
-          <v-text-field
-            class="mt-8 arabic"
-            outlined
-            rounded
-            solo
-            :placeholder="$t('toolbar.search')"
-            append-icon="fa fa-search"
-            @keyup="emptySearchBox"
-            v-model="toolbarSearch"
-            @keypress="filterProducts"
-          ></v-text-field>
-        </v-col>
-        <v-col v-else cols="7" lg="8" sm="5" md="6" xs="5">
-          <v-text-field
-            class="mt-8 arabic"
-            outlined
-            rounded
-            :placeholder="$t('toolbar.search')"
-            append-icon="fa fa-search"
-            @keyup="filterSupplierProducts($route.params.supplier_id)"
-            v-model="supplierProductsSearch"
-          ></v-text-field>
-        </v-col>
 
-        <!-- <span v-else>
-          <v-col cols="12" lg="6" sm="7" md="6">
-            <v-text-field
-              class="mt-8"
-              outlined
-              rounded
-              placeholder="SEARCH"
-              append-icon="fa fa-search"
-              @keyup="filterSuppliers()"
-              v-model="filterSuppliersByName"
-            ></v-text-field>
-          </v-col>
-        </span> -->
-        <v-col class="mt-2" cols="3" md="3" lg="3" sm="3">
-          <v-btn
-            class="mt-10 ml-n3 blue white--text"
-            rounded
-            @click="advancedSearch = true"
-            small
-            ><span
-              style="font-size: 12px"
-              v-if="siteLanguage == 'en'"
-              v-html="$t('toolbar.advancedSearch')"
-            ></span>
-            <span
-              class="smallerText"
-              v-else
-              v-html="$t('toolbar.advancedSearch')"
-            ></span>
-          </v-btn>
-        </v-col>
+      <v-text-field
+        v-if="!$route.params.supplier_id"
+        class="arabic mx-5"
+        dense
+        style="max-width: 250px; max-height: 41px"
+        outlined
+        rounded
+        :placeholder="$t('toolbar.search')"
+        append-icon="fa fa-search"
+        @keyup="emptySearchBox"
+        v-model="toolbarSearch"
+        @keypress="filterProducts"
+      ></v-text-field>
 
-        <!-- <v-select
-          id="langSwitch"
-          @change="changeLang"
-          class="mt-2"
-          background-color="white"
-          solo-inverted
-          :items="$i18n.availableLocales"
-          v-model="$i18n.locale"
-        >
-        </v-select>
+      <v-text-field
+        v-else
+        class="arabic mx-5"
+        dense
+        style="max-width: 250px; max-height: 41px"
+        outlined
+        rounded
+        :placeholder="$t('toolbar.search')"
+        append-icon="fa fa-search"
+        @keyup="filterSupplierProducts($route.params.supplier_id)"
+        v-model="supplierProductsSearch"
+      ></v-text-field>
 
-        <v-select
-          id="currSwitch"
-          @change="changeCurrency"
-          class="mt-2"
-          solo-inverted
-          background-color="white"
-          :items="currencies"
-          v-model="currentCurrency"
-        >
-        </v-select> -->
+      <v-btn
+        class="blue white--text"
+        rounded
+        @click="advancedSearch = true"
+        small
+        ><span
+          style="font-size: 12px"
+          v-if="siteLanguage == 'en'"
+          v-html="$t('toolbar.advancedSearch')"
+        ></span>
+        <span
+          class="smallerText"
+          v-else
+          v-html="$t('toolbar.advancedSearch')"
+        ></span>
+      </v-btn>
 
-        <v-dialog
-          style="overflow: hidden"
-          v-model="advancedSearch"
-          max-width="60%"
-        >
-          <v-card style="overflow: hidden">
-            <v-row justify="center">
-              <v-radio-group
-                style="margin-right: 50px"
-                mandatory
-                :value="radioGroup"
+      <v-dialog
+        style="overflow: hidden"
+        v-model="advancedSearch"
+        max-width="60%"
+      >
+        <v-card style="overflow: hidden">
+          <v-row justify="center">
+            <v-radio-group
+              style="margin-right: 50px"
+              mandatory
+              :value="radioGroup"
+            >
+              <v-row class="mb-n5" justify="center">
+                <v-col cols="5" lg="4" sm="5" md="5">
+                  <v-radio @change="changeRadioGroup()" value="1">
+                    <template v-slot:label>
+                      <p v-if="siteLanguage == 'ar'" class="mt-4 arabic">
+                        {{ $t("toolbar.searchProducts") }}
+                      </p>
+                      <p v-else class="mt-4">
+                        {{ $t("toolbar.searchProducts") }}
+                      </p>
+                    </template>
+                  </v-radio>
+                </v-col>
+
+                <v-col cols="5" lg="6" sm="6" md="6">
+                  <v-radio
+                    @change="changeRadioGroup()"
+                    :label="$t('toolbar.searchSuppliers')"
+                    value="2"
+                  >
+                    <template v-slot:label>
+                      <p v-if="siteLanguage == 'ar'" class="mt-4 arabic">
+                        {{ $t("toolbar.searchSuppliers") }}
+                      </p>
+                      <p v-else class="mt-4 arabic">
+                        {{ $t("toolbar.searchSuppliers") }}
+                      </p>
+                    </template>
+                  </v-radio>
+                </v-col>
+              </v-row>
+            </v-radio-group>
+          </v-row>
+          <v-row justify="center">
+            <v-col lg="4" cols="1" sm="3" md="3"></v-col>
+            <v-col cols="10" lg="4" sm="6" md="6">
+              <v-text-field
+                class="mt-8 arabic"
+                outlined
+                rounded
+                :placeholder="$t('toolbar.search')"
+                append-icon="fa fa-search"
+                @keyup="emptySearchBox"
+                v-model="toolbarSearch"
+                v-if="radioGroup === '1'"
+              ></v-text-field>
+            </v-col>
+            <v-col lg="4" cols="1" sm="3" md="3"></v-col>
+            <v-col lg="4" cols="1" sm="3" md="3"></v-col>
+            <v-col lg="4" cols="10" sm="6" md="6">
+              <v-select
+                rounded
+                :items="availableCountries"
+                :placeholder="$t('toolbar.country')"
+                dense
+                outlined
+                v-model="country"
+                class="arabic"
+              ></v-select>
+            </v-col>
+            <v-col cols="1" lg="4" sm="3" md="3"></v-col>
+
+            <v-col lg="5" cols="6" md="6" sm="6">
+              <v-select
+                rounded
+                v-if="radioGroup === '1'"
+                :items="egyptGovernorates"
+                :disabled="radioGroup === '2'"
+                :placeholder="$t('toolbar.governorate')"
+                dense
+                outlined
+                v-model="governorate"
+                @change="getCountryRegions()"
+                class="arabic"
+              ></v-select>
+            </v-col>
+
+            <v-col cols="6" lg="6" md="6" sm="6">
+              <v-select
+                rounded
+                v-if="radioGroup === '1'"
+                :items="regions"
+                :disabled="radioGroup === '2'"
+                :placeholder="$t('toolbar.region')"
+                dense
+                outlined
+                v-model="region"
+                class="arabic"
+              ></v-select>
+            </v-col>
+
+            <v-col cols="6" lg="5" sm="6" md="6">
+              <v-select
+                rounded
+                v-if="radioGroup === '2'"
+                :items="egyptGovernorates"
+                :disabled="radioGroup === '1'"
+                :placeholder="$t('toolbar.governorate')"
+                dense
+                outlined
+                v-model="governorate"
+                @change="getCountryRegions()"
+                class="arabic"
+              ></v-select>
+            </v-col>
+            <v-col lg="5" cols="6" sm="6" md="6">
+              <v-select
+                rounded
+                v-if="radioGroup === '2'"
+                :items="regions"
+                :disabled="radioGroup === '1'"
+                :placeholder="$t('toolbar.region')"
+                dense
+                outlined
+                v-model="region"
+                class="arabic"
+              ></v-select>
+            </v-col>
+            <v-col cols="10" lg="3" sm="4" md="4">
+              <v-text-field
+                rounded
+                v-if="radioGroup === '2'"
+                :disabled="radioGroup === '1'"
+                @keyup="emptySupplierName"
+                dense
+                outlined
+                v-model="filterSuppliersByName"
+                :placeholder="$t('toolbar.supplierNameSearch')"
+                class="arabic"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row class="mt-n3" justify="center">
+            <v-col cols="6" sm="6" md="6" lg="5">
+              <v-text-field
+                v-if="radioGroup == '1'"
+                dense
+                rounded
+                outlined
+                type="number"
+                :placeholder="$t('toolbar.priceFrom')"
+                v-model="priceFrom"
+                class="arabic"
+              ></v-text-field>
+            </v-col>
+
+            <v-col cols="6" sm="6" md="6" lg="5">
+              <v-text-field
+                v-if="radioGroup == '1'"
+                dense
+                outlined
+                rounded
+                v-model="priceTo"
+                type="number"
+                :placeholder="$t('toolbar.priceTo')"
+                class="arabic"
+              ></v-text-field>
+            </v-col>
+            <v-col lg="4"></v-col>
+            <v-col v-if="radioGroup === '2'" cols="6" sm="6" md="6" lg="6">
+              <v-btn
+                @click="filterSuppliers()"
+                :color="siteColor.button_color"
+                rounded
+                small
+                ><span :style="`color: ${siteColor.button_text_color}`">{{
+                  $t("toolbar.search")
+                }}</span></v-btn
               >
-                <v-row class="mb-n5" justify="center">
-                  <v-col cols="5" lg="4" sm="5" md="5">
-                    <v-radio @change="changeRadioGroup()" value="1">
-                      <template v-slot:label>
-                        <p v-if="siteLanguage == 'ar'" class="mt-4 arabic">
-                          {{ $t("toolbar.searchProducts") }}
-                        </p>
-                        <p v-else class="mt-4">
-                          {{ $t("toolbar.searchProducts") }}
-                        </p>
-                      </template>
-                    </v-radio>
-                  </v-col>
+            </v-col>
+            <v-col v-else cols="4" sm="2" md="2" lg="6">
+              <v-btn
+                class="arabic"
+                @click="filterProducts('search')"
+                :color="siteColor.button_color"
+                rounded
+                small
+                ><span :style="`color: ${siteColor.button_text_color}`">{{
+                  $t("toolbar.search")
+                }}</span></v-btn
+              >
+            </v-col>
+            <v-col lg="4"></v-col>
 
-                  <v-col cols="5" lg="6" sm="6" md="6">
-                    <v-radio
-                      @change="changeRadioGroup()"
-                      :label="$t('toolbar.searchSuppliers')"
-                      value="2"
-                    >
-                      <template v-slot:label>
-                        <p v-if="siteLanguage == 'ar'" class="mt-4 arabic">
-                          {{ $t("toolbar.searchSuppliers") }}
-                        </p>
-                        <p v-else class="mt-4 arabic">
-                          {{ $t("toolbar.searchSuppliers") }}
-                        </p>
-                      </template>
-                    </v-radio>
-                  </v-col>
-                </v-row>
-              </v-radio-group>
-            </v-row>
-            <v-row justify="center">
-              <v-col lg="4" cols="1" sm="3" md="3"></v-col>
-              <v-col cols="10" lg="4" sm="6" md="6">
-                <v-text-field
-                  class="mt-8 arabic"
-                  outlined
-                  rounded
-                  :placeholder="$t('toolbar.search')"
-                  append-icon="fa fa-search"
-                  @keyup="emptySearchBox"
-                  v-model="toolbarSearch"
-                  v-if="radioGroup === '1'"
-                ></v-text-field>
-              </v-col>
-              <v-col lg="4" cols="1" sm="3" md="3"></v-col>
-              <v-col lg="4" cols="1" sm="3" md="3"></v-col>
-              <v-col lg="4" cols="10" sm="6" md="6">
-                <v-select
-                  rounded
-                  :items="availableCountries"
-                  :placeholder="$t('toolbar.country')"
-                  dense
-                  outlined
-                  v-model="country"
-                  class="arabic"
-                ></v-select>
-              </v-col>
-              <v-col cols="1" lg="4" sm="3" md="3"></v-col>
-
-              <v-col lg="5" cols="6" md="6" sm="6">
-                <v-select
-                  rounded
-                  v-if="radioGroup === '1'"
-                  :items="egyptGovernorates"
-                  :disabled="radioGroup === '2'"
-                  :placeholder="$t('toolbar.governorate')"
-                  dense
-                  outlined
-                  v-model="governorate"
-                  @change="getCountryRegions()"
-                  class="arabic"
-                ></v-select>
-              </v-col>
-
-              <v-col cols="6" lg="6" md="6" sm="6">
-                <v-select
-                  rounded
-                  v-if="radioGroup === '1'"
-                  :items="regions"
-                  :disabled="radioGroup === '2'"
-                  :placeholder="$t('toolbar.region')"
-                  dense
-                  outlined
-                  v-model="region"
-                  class="arabic"
-                ></v-select>
-              </v-col>
-
-              <v-col cols="6" lg="5" sm="6" md="6">
-                <v-select
-                  rounded
-                  v-if="radioGroup === '2'"
-                  :items="egyptGovernorates"
-                  :disabled="radioGroup === '1'"
-                  :placeholder="$t('toolbar.governorate')"
-                  dense
-                  outlined
-                  v-model="governorate"
-                  @change="getCountryRegions()"
-                  class="arabic"
-                ></v-select>
-              </v-col>
-              <v-col lg="5" cols="6" sm="6" md="6">
-                <v-select
-                  rounded
-                  v-if="radioGroup === '2'"
-                  :items="regions"
-                  :disabled="radioGroup === '1'"
-                  :placeholder="$t('toolbar.region')"
-                  dense
-                  outlined
-                  v-model="region"
-                  class="arabic"
-                ></v-select>
-              </v-col>
-              <v-col cols="10" lg="3" sm="4" md="4">
-                <v-text-field
-                  rounded
-                  v-if="radioGroup === '2'"
-                  :disabled="radioGroup === '1'"
-                  @keyup="emptySupplierName"
-                  dense
-                  outlined
-                  v-model="filterSuppliersByName"
-                  :placeholder="$t('toolbar.supplierNameSearch')"
-                  class="arabic"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-
-            <v-row class="mt-n3" justify="center">
-              <v-col cols="6" sm="6" md="6" lg="5">
-                <v-text-field
-                  v-if="radioGroup == '1'"
-                  dense
-                  rounded
-                  outlined
-                  type="number"
-                  :placeholder="$t('toolbar.priceFrom')"
-                  v-model="priceFrom"
-                  class="arabic"
-                ></v-text-field>
-              </v-col>
-
-              <v-col cols="6" sm="6" md="6" lg="5">
-                <v-text-field
-                  v-if="radioGroup == '1'"
-                  dense
-                  outlined
-                  rounded
-                  v-model="priceTo"
-                  type="number"
-                  :placeholder="$t('toolbar.priceTo')"
-                  class="arabic"
-                ></v-text-field>
-              </v-col>
-              <v-col lg="4"></v-col>
-              <v-col v-if="radioGroup === '2'" cols="6" sm="6" md="6" lg="6">
-                <v-btn
-                  @click="filterSuppliers()"
-                  :color="siteColor.button_color"
-                  rounded
-                  small
-                  ><span :style="`color: ${siteColor.button_text_color}`">{{
-                    $t("toolbar.search")
-                  }}</span></v-btn
-                >
-              </v-col>
-              <v-col v-else cols="4" sm="2" md="2" lg="6">
-                <v-btn
-                  class="arabic"
-                  @click="filterProducts('search')"
-                  :color="siteColor.button_color"
-                  rounded
-                  small
-                  ><span :style="`color: ${siteColor.button_text_color}`">{{
-                    $t("toolbar.search")
-                  }}</span></v-btn
-                >
-              </v-col>
-              <v-col lg="4"></v-col>
-
-              <!-- <v-col cols="4" sm="2" md="2" lg="2">
+            <!-- <v-col cols="4" sm="2" md="2" lg="2">
             <v-btn
               class="white--text"
               @click="All"
@@ -340,8 +290,8 @@
             >
           </v-col> -->
 
-              <v-col cols="4" sm="2" md="2" lg="5">
-                <!-- <v-btn
+            <v-col cols="4" sm="2" md="2" lg="5">
+              <!-- <v-btn
               :disabled="radioGroup === '1'"
               class="white--text"
               @click="filterSuppliers"
@@ -353,12 +303,12 @@
                 >Search</span
               ></v-btn
             > -->
-              </v-col>
-              <v-col sm="3" lg="3" md="3"></v-col>
-            </v-row>
-          </v-card>
-        </v-dialog>
-      </v-row>
+            </v-col>
+            <v-col sm="3" lg="3" md="3"></v-col>
+          </v-row>
+        </v-card>
+      </v-dialog>
+      <v-spacer></v-spacer>
       <v-menu
         v-if="currentUser"
         transition="fab-transition"
@@ -378,8 +328,8 @@
               $vuetify.breakpoint.md
             "
             rounded
-            class="font"
-            :style="`color:${siteColor.toolbar_text_color};ml-4`"
+            class="font mx-3"
+            :style="`color:${siteColor.toolbar_text_color}`"
             v-bind="attrs"
             v-on="on"
             icon
@@ -759,7 +709,7 @@
       <v-select
         v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
         @change="changeLang"
-        class="mt-7"
+        class="mt-7 mx-3"
         dense
         style="max-width: 85px"
         solo-inverted
@@ -789,10 +739,11 @@
           $vuetify.breakpoint.xs ||
           $vuetify.breakpoint.md
         "
-        style="width: 15px; height: 5px"
       ></v-app-bar-nav-icon>
     </v-app-bar>
-
+    <v-main>
+      <v-layout> </v-layout>
+    </v-main>
     <v-navigation-drawer
       style="position: fixed"
       v-model="drawer"
@@ -995,19 +946,16 @@
 export default {
   components: {},
   async created() {
-    console.log("current language locale", this.$i18n.locale);
     localStorage.setItem("currentCurrency", "egp");
 
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
     }
     await this.$store.dispatch("getAvailableCountries");
-    console.log("color from toolbar", this.siteColor);
-    if (this.availableCountries) {
-      console.log(this.availableCountries);
-    }
+
+    // if (this.availableCountries) {
+    // }
     this.$store.dispatch("getWorldCountries");
-    console.log("site color in toolbar is :", this.siteColor);
   },
 
   props: {
@@ -1097,10 +1045,10 @@ export default {
     changePhoto() {
       this.profilephoto = this.$refs.profileUpload.files[0];
       var form = new FormData();
-      console.log("profile function starts");
+
       form.append("profile", this.profilephoto);
       form.set("email", this.$store.state.Home.currentUser.email);
-      console.log(this.$store.state.Home.currentUser.email);
+
       this.$store.dispatch("profilePhoto", form);
     },
     supplierPage() {
@@ -1126,7 +1074,6 @@ export default {
     //   });
     // },
     getCountryRegions() {
-      console.log(this.governorate);
       this.$store.dispatch("getRegions", this.governorate);
     },
     emptySupplierName() {
@@ -1142,7 +1089,7 @@ export default {
     async filterProducts() {
       this.isLoading = true;
       this.productFilterFlag = true;
-      console.log(this.toolbarSearch, this.categoryName);
+
       var buttonPressed = "search";
       var obj = {};
 
@@ -1179,13 +1126,10 @@ export default {
       this.isLoading = false;
     },
     filterSupplierProducts() {
-      console.log(this.supplierProductsSearch);
-      console.log(this.$route.params.supplier_id);
       this.$store.dispatch("filterSupplierProducts", {
         productsSearch: this.supplierProductsSearch,
         user_id: this.$route.params.supplier_id,
       });
-      console.log(this.$route.params.supplier_id);
     },
     async emptySupplierSearchBox() {
       await this.$store.dispatch(
@@ -1206,9 +1150,6 @@ export default {
       } else {
         this.$store.commit("changeRadioGroup", "1");
       }
-
-      console.log("test");
-      console.log(this.radioGroup);
     },
 
     async changeCurrency(currency) {
@@ -1222,7 +1163,6 @@ export default {
           productName: this.toolbarSearch,
           categoryName: this.categoryName,
         });
-        console.log(currency);
       } else if (this.$route.name == "supplierPage") {
         this.$store.commit("emptySupplierProducts");
         await this.$store.dispatch(
@@ -1263,7 +1203,7 @@ export default {
     //       productName: this.toolbarSearch,
     //       categoryName: this.categoryName,
     //     });
-    //     console.log(currency);
+    //
     //   } else if (this.$route.name == "supplierPage") {
     //     this.$store.commit("emptySupplierProducts");
     //     await this.$store.dispatch(
@@ -1296,24 +1236,6 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-.arabic {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-span {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-p {
-  font-family: "Markazi Text", serif;
-  font-size: 17px;
-}
-.smallerText {
-  font-size: 15px;
-}
-
 .img {
   border-radius: 50%;
 }
