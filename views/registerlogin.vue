@@ -428,6 +428,9 @@ export default {
       else if (this.$vuetify.breakpoint.sm) return "65%";
       else return "84%";
     },
+    siteLanguage() {
+      return this.$store.state.Home.siteLanguage;
+    },
   },
   async created() {
     await this.$store.dispatch("getSiteColor");
@@ -444,6 +447,7 @@ export default {
         mobile_number: this.mobileNumber,
         governorate: this.governorate,
         region: this.region,
+        siteLanguage: this.siteLanguage,
       });
     },
     async businessOwnerRegistration() {
@@ -549,10 +553,8 @@ export default {
         required: (value) => !!value || "Required.",
         min: (v) => (v && v.length >= 7) || "Min 7 characters",
         valid: (v) =>
-          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
-            v
-          ) ||
-          "password must have at least one letter, one number and one special character",
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{7,}$/.test(v) ||
+          "password must have at least one letter, one number and one Upper case Letter",
         national: (v) => /\d+/.test(v) || "ID must be numbers only",
         must: (v) => (v && v.length == 14) || "ID must be 14 NUMBERS",
         mobilenumber: (v) => /\d+/.test(v) || "Enter numbers",
@@ -560,12 +562,10 @@ export default {
       checkbox: false,
       governorate: "",
       region: "",
-      // name: "",
-      // FB: undefined,
-      // facebookEmail: "",
-      // isConnected: false,
+
       BusinessOwnerDialog: false,
-      businessOwnerValidation: true,
+      businessOwnerValidation: false,
+      signUpValidation: false,
     };
   },
 

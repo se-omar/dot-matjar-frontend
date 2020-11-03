@@ -21,7 +21,7 @@ export default {
     actions: {
         async login(context, { email, password }) {
             await axios.post(context.rootState.nodeHost + "/api/login",
-                { email, password, })
+                { email, password })
                 .then((response) => {
                     if (response.data.message === 'please sign up first' || response.data.message === 'Please activate your account' || response.data.message === 'authentication failed') {
                         return alert(response.data.message);
@@ -42,7 +42,8 @@ export default {
             mobile_number,
             national_number,
             governorate,
-            region
+            region,
+            siteLanguage
         }) {
             axios.post(context.rootState.nodeHost + '/api/signup', {
                 email,
@@ -51,7 +52,9 @@ export default {
                 mobile_number,
                 national_number,
                 governorate,
-                region
+                region,
+                siteLanguage
+
             })
                 .then(response => {
                     if (response.data.message) {
