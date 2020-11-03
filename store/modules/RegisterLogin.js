@@ -73,8 +73,10 @@ export default {
             mobile_number,
             governorate,
             region,
-            store_name
+            store_name,
+            siteLanguage
         }) {
+            console.log(siteLanguage)
             axios.post(context.rootState.nodeHost + '/api/businessOwnerRegistration',
                 {
                     email,
@@ -84,15 +86,16 @@ export default {
                     mobile_number,
                     governorate,
                     region,
-                    store_name
+                    store_name,
+                    siteLanguage
                 }).then(res => {
 
                     alert(res.data.message)
                     context.commit('businessOwnerRegistration', res.data.mesasge)
                 })
         },
-        activateUserAccount(context) {
-            axios.put(context.rootState.nodeHost + '/api/activateUserAccount')
+        async activateUserAccount(context, token) {
+            await axios.put(context.rootState.nodeHost + '/api/activateUserAccount', token)
                 .then(res => {
                     alert(res.data)
 

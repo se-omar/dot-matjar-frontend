@@ -26,6 +26,7 @@ export default {
 
 
         getSupplierPageData(state, info) {
+
             state.supplierPageInfo = info
             state.testVar = 5;
 
@@ -92,7 +93,11 @@ export default {
             state.supplierPageInfo = []
         },
         getPendingSuppliers(state, suppliers) {
-            state.pendingSuppliers = suppliers
+            var array = []
+            for (var i = suppliers.length - 1; i >= 0; i--) {
+                array.push(suppliers[i])
+            }
+            state.pendingSuppliers = array
         },
         filterSupplierProducts(state, products) {
             state.supplierProducts = products
@@ -128,7 +133,7 @@ export default {
                     return e.category_item.category_items_arabic_name
                 })
             }
-
+            console.log('supplierOtems', state.supplierItems)
             state.supplierCategoriesAndItems = data;
             for (var i = 0; i < data.length; i++) {
                 var check = false;
@@ -143,12 +148,12 @@ export default {
                         }
                     }
                     else if (state.supplierCategories.length == 0) {
-                        state.supplierCategories.push(data[i].product_category.category_name)
+                        state.supplierCategories.push({ name: data[i].product_category.category_name, icon: data[i].product_category.category_name })
                         check = true;
 
                     }
                     if (check == false) {
-                        state.supplierCategories.push(data[i].product_category.category_name)
+                        state.supplierCategories.push({ name: data[i].product_category.category_name, icon: data[i].product_category.category_name })
                     }
 
                 }
@@ -163,12 +168,12 @@ export default {
                         }
                     }
                     else if (state.supplierCategories.length == 0) {
-                        state.supplierCategories.push(data[i].product_category.category_arabic_name)
+                        state.supplierCategories.push({ name: data[i].product_category.category_arabic_name, icon: data[i].product_category.category_name })
                         check = true;
 
                     }
                     if (check == false) {
-                        state.supplierCategories.push(data[i].product_category.category_arabic_name)
+                        state.supplierCategories.push({ name: data[i].product_category.category_arabic_name, icon: data[i].product_category.category_name })
                     }
                 }
 
@@ -205,6 +210,7 @@ export default {
         },
 
         async getSupplierPageData(context, id) {
+            console.log('id in supplier page', id)
             await axios.put(context.rootState.nodeHost + '/api/getSupplierPageData', { supplier_id: id })
                 .then(info => {
 
@@ -384,7 +390,7 @@ export default {
         //stpedd hereeeeeeeeee
         rejectSupplierRequest(context, user_id) {
 
-            axios.put('rejectSupplierRequest', user_id)
+            axios.put(context.rootState.nodeHost + '/api/rejectSupplierRequest', user_id)
                 .then(message => {
                     alert(message.data.message)
                 })

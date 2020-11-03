@@ -133,6 +133,7 @@ export default {
     setCurrentRow() {
       this.$store.dispatch("setCurrentProduct", this.filteredProduct);
       this.$router.push(`/${this.$i18n.locale}/productDetails`);
+      console.log("filtered product in componetents", this.filteredProduct);
     },
     add(product) {
       this.$store.dispatch("table", product);

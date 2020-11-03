@@ -317,9 +317,12 @@
                     @click:append="show1 = !show1"
                   ></v-text-field>
                 </v-col>
-
+                <!-- <v-col cols="12">
+                  <v-checkbox v-model="businessOwnerCheckbox"> </v-checkbox>
+                  <span v-html="$t('registerLogin.termsAndCond')"></span>
+                </v-col> -->
                 <v-col cols="11">
-                  <v-checkbox v-model="checkbox">
+                  <v-checkbox v-model="businessOwnerCheckbox">
                     <template v-slot:label>
                       <div>
                         {{ $t("registerLogin.termsAndCond") }}
@@ -459,6 +462,7 @@ export default {
         governorate: this.governorate,
         region: this.region,
         store_name: this.storeName,
+        siteLanguage: this.siteLanguage,
       });
     },
     async login() {

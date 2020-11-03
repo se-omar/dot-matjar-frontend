@@ -21,7 +21,7 @@
                   max-width="70%"
                   max-height="90%"
                   id="image"
-                  :src="supplier.profile_photo"
+                  :src="supplier.profile_photo ? supplier.profile_photo : ''"
                   style="margin-left: auto; margin-right: auto"
                 ></v-img>
               </v-row>
@@ -225,6 +225,8 @@ export default {
   methods: {
     acceptSupplierRequest(id) {
       this.$store.dispatch("acceptSupplierRequest", { user_id: id });
+      this.dialogAccept = false;
+      location.reload();
     },
     pendingSupplierss() {},
     acceptClicked(supplier) {
@@ -236,7 +238,9 @@ export default {
       this.supplier = supplier;
     },
     rejectSupplierRequest() {
-      this.$store.dispatch("rejectSupplierRequest", this.supplier.user_id);
+      this.$store.dispatch("rejectSupplierRequest", {
+        user_id: this.supplier.user_id,
+      });
       this.dialogDecline = false;
     },
   },

@@ -192,10 +192,15 @@ export default {
         },
         updateSupplierPageColors(state, supplierPageColors) {
             //
-            var pageDataArray = supplierPageColors
+            var pageDataArray
+            if (supplierPageColors) {
+                pageDataArray = supplierPageColors
+            }
+            else { pageDataArray = [] }
 
             localStorage.setItem('siteColor', JSON.stringify(pageDataArray));
             state.siteColor = JSON.parse(localStorage.getItem('siteColor')) ? JSON.parse(localStorage.getItem('siteColor')) : []
+            console.log(pageDataArray, state.siteColor)
         },
         changeRadioGroup(state, radioValue) {
             state.radioGroup = radioValue;

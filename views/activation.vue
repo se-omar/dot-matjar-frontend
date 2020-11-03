@@ -15,10 +15,9 @@ export default {
   async created() {
     await this.$store.dispatch("getSiteColor");
     console.log(this.$route.params.cryptoo);
-    await this.$store.dispatch(
-      "activateUserAccount",
-      this.$route.params.cryptoo
-    );
+    await this.$store.dispatch("activateUserAccount", {
+      token: this.$route.params.cryptoo,
+    });
     this.$router.push(`/${this.$i18n.locale}/reglogin`);
   },
 };

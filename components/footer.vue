@@ -35,15 +35,17 @@
 
       <v-card-text
         class="pt-2 arabic"
-        :style="`color:${siteColor.footer_text_color}`"
+        :style="`color:${siteColor.footer_text_color};`"
       >
         &copy; Copywrites 2020 to Dot-Matjar
-        <v-img
-          src="../assets/images/dotmatjar_logo.png"
-          max-height="100"
-          max-width="50"
-          contain
-        ></v-img>
+        <div max-height="100" style="background-color: white; width: 5%">
+          <v-img
+            src="../assets/images/dotmatjar_logo.png"
+            max-height="100"
+            max-width="50"
+            contain
+          ></v-img>
+        </div>
       </v-card-text>
     </v-card>
   </v-footer>

@@ -7,7 +7,17 @@
         :is-full-page="true"
       ></loading>
     </div>
-
+    <v-snackbar timeout="60000" v-model="supplierApprovalMessage">
+      <v-row justify="center">
+        <p style="font-size: 20px">
+          Your account is waiting approval from the admin , you will be
+          notified.<br />
+        </p>
+      </v-row>
+      <v-row justify="center">
+        <p>ThankYou</p>
+      </v-row>
+    </v-snackbar>
     <v-row v-if="homePageInfo.show_carousel" justify="center">
       <v-col :lg="homePageInfo ? homePageInfo.carousel_width : 10">
         <carousel
@@ -320,6 +330,7 @@ export default {
       priceTo: "",
       advancedSearch: false,
       productsClass: "mr-4 ml-4",
+      supplierApprovalMessage: false,
     };
   },
   async created() {
@@ -352,7 +363,9 @@ export default {
       governorate: this.governorate,
       region: this.region,
     });
-
+    if (this.currentUser.user_type == "waiting_approval") {
+      this.supplierApprovalMessage = true;
+    }
     return new Promise((resolve) => {
       setTimeout(() => {
         this.isLoading = false;
