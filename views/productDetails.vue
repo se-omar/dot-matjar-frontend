@@ -4,7 +4,7 @@
       <v-col lg="4" md="5" sm="10" cols="10" class="mt-4">
         <carousel
           dir="ltr"
-          style="max-height: 75%"
+          style="max-height: 530px"
           :autoplay="true"
           :per-page="1"
           :centerMode="true"
@@ -47,14 +47,14 @@
       <v-col class lg="5" md="7" sm="12" cols="12">
         <v-row class="mb-4">
           <v-col lg="12">
-            <span v-if="currentProduct" style="font-size: 35px">{{
+            <span v-if="currentProduct" class="text-lg-h5 text-h6">{{
               currentProduct.product_name
             }}</span>
           </v-col>
         </v-row>
 
         <v-row>
-          <v-col lg="6" md="12" sm="12" cols="12">
+          <v-col lg="6" md="6" sm="6" cols="6">
             <span class="font-weight-medium" style="font-size: 20px">
               {{ $t("productDetails.supplier") }}:
               <span
@@ -65,7 +65,7 @@
             </span>
           </v-col>
 
-          <v-col lg="6" md="12" sm="12" cols="12">
+          <v-col lg="6" md="6" sm="6" cols="6">
             <span class="font-weight-medium" style="font-size: 20px">
               {{ $t("productDetails.location") }}:
               <span
@@ -77,7 +77,7 @@
             </span>
           </v-col>
 
-          <v-col lg="6" md="12" sm="12" cols="12">
+          <v-col lg="6" md="6" sm="6" cols="6">
             <span class="font-weight-medium" style="font-size: 20px">
               {{ $t("productDetails.category") }}:
               <span
@@ -88,7 +88,7 @@
             </span>
           </v-col>
 
-          <v-col lg="6" md="12" sm="12" cols="12">
+          <v-col lg="6" md="6" sm="6" cols="6">
             <span
               v-if="currentProduct"
               class="font-weight-medium"
@@ -99,7 +99,7 @@
             </span>
           </v-col>
 
-          <v-col lg="6" md="12" sm="12" cols="12">
+          <v-col lg="6" md="6" sm="6" cols="6">
             <span class="font-weight-medium" style="font-size: 20px">
               {{ $t("productDetails.weight") }}:
               <span v-if="currentProduct" class="text--secondary">{{
@@ -108,7 +108,7 @@
             </span>
           </v-col>
 
-          <v-col lg="6" md="12" sm="12" cols="12">
+          <v-col lg="6" md="6" sm="6" cols="6">
             <span class="font-weight-medium" style="font-size: 20px">
               {{ $t("productDetails.stockStatus") }}:
               <span v-if="currentProduct" class="text--secondary">{{
@@ -119,14 +119,14 @@
             </span>
           </v-col>
 
-          <v-col lg="6" md="12" sm="12" cols="12">
+          <v-col lg="6" md="6" sm="6" cols="6">
             <span class="font-weight-medium" style="font-size: 20px">
               {{ $t("productDetails.brand") }}:
               <span class="text--secondary">brand name</span>
             </span>
           </v-col>
 
-          <v-col lg="6" md="12" sm="12" cols="12">
+          <v-col lg="6" md="6" sm="6" cols="6">
             <span class="font-weight-medium" style="font-size: 20px">
               {{ $t("productDetails.condition") }}:
               <span class="text--secondary">New</span>
@@ -149,12 +149,13 @@
 
       <v-col lg="3" md="6" sm="12">
         <v-row justify="center" class="ml-n10">
-          <v-col class="ml-3 text-sm-center" cols="10">
-            <span v-if="currentProduct" class="text-h3"
+          <v-col class="text-center" cols="10">
+            <span
+              v-if="currentProduct"
+              class="text-lg-h3 text-sm-center text-h4"
               >{{ currentProduct.unit_price }} EGP</span
             >
           </v-col>
-
           <v-col cols="9">
             <v-btn
               v-if="
@@ -216,19 +217,24 @@
             >
           </v-col>
 
-          <v-col lg="9">
+          <v-col lg="9" md="9" cols="9">
             <p class="text-h5 mb-n2 text-center">
               {{ $t("productDetails.productRating") }}
             </p>
+          </v-col>
+
+          <v-col lg="9" md="9" cols="9">
             <v-rating
               readonly
-              class="ml-n1"
+              class="ml-lg-n7 text-center"
               v-model="currentProduct.rating"
               :hover="hover"
               :size="size"
               :color="siteColor.button_color"
             ></v-rating>
+          </v-col>
 
+          <v-col lg="9" md="9" cols="9">
             <p class="text-center text-subtitle">
               (based on {{ currentProduct.rate_counter }} Ratings)
             </p>
@@ -281,18 +287,22 @@
         </v-row>
       </v-col>
     </v-row>
+
     <v-divider></v-divider>
+
     <v-row justify="center">
       <v-col lg="8">
-        <p class="text-h4">{{ $t("productDetails.customerReviews") }}:</p>
+        <p class="text-lg-h4 text-h5">
+          {{ $t("productDetails.customerReviews") }}:
+        </p>
       </v-col>
     </v-row>
 
     <v-row justify="center">
-      <v-col lg="6">
-        <v-card elevation="1" height="250">
+      <v-col lg="6" md="7" cols="11">
+        <v-card flat height="250">
           <v-row justify="center">
-            <v-col lg="6" class="text-center ml-n10 mt-5">
+            <v-col lg="5" cols="5" class="text-center mt-5">
               <v-avatar
                 fab
                 :color="siteColor ? siteColor.button_color : 'black'"
@@ -305,7 +315,7 @@
 
               <v-rating
                 readonly
-                class="ml-n1"
+                class="ml-n2"
                 v-model="currentProduct.rating"
                 :hover="hover"
                 :size="size"
@@ -317,7 +327,7 @@
               </p>
             </v-col>
 
-            <v-col lg="5">
+            <v-col lg="5" md="5" cols="6">
               <div>
                 <v-progress-linear
                   class="mb-2"
@@ -350,13 +360,15 @@
     <v-row justify="center">
       <v-col
         lg="8"
+        md="9"
+        cols="11"
         v-for="review in reviewsWithText"
         :key="review.products_reviews_id"
       >
         <v-card class="pa-5" elevation="0">
           <v-row>
             <v-col lg="7">
-              <p class="text-h5 font-weight-medium">
+              <p class="text-lg-h5 text-h6 font-weight-medium">
                 {{ $t("productDetails.by") }}:
                 {{ review.user.full_arabic_name }}
               </p>
@@ -462,7 +474,6 @@ export default {
     return {
       hover: true,
       rating: 0,
-      size: 45,
       size2: 30,
       review: "",
       removePressed: false,
@@ -540,6 +551,11 @@ export default {
           toolbar_text_color: "black",
         };
       }
+    },
+    size() {
+      if (this.$vuetify.breakpoint.lg) return 40;
+      else if (this.$vuetify.breakpoint.md) return 35;
+      else return 23;
     },
   },
 
