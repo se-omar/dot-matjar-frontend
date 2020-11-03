@@ -38,7 +38,6 @@
                   dense
                   required
                   outlined
-                  :rules="[rules.required]"
                   :label="$t('addProduct.item')"
                 ></v-select>
               </v-col>
@@ -59,9 +58,9 @@
               <v-col cols="6">
                 <v-text-field
                   dense
-                  v-model="HScode"
+                  v-model="brand"
                   outlined
-                  :label="$t('addProduct.hsCode')"
+                  :label="$t('addProduct.brand')"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -105,11 +104,13 @@
               </v-col>
 
               <v-col cols="6">
-                <v-text-field
+                <v-select
+                  :items="['new', 'used']"
+                  v-model="condition"
                   dense
                   outlined
-                  :label="$t('addProduct.sale')"
-                ></v-text-field>
+                  :label="$t('addProduct.condition')"
+                ></v-select>
               </v-col>
             </v-row>
 
@@ -413,7 +414,8 @@ export default {
       hasImage3: false,
       image3: null,
       productName: "",
-      HScode: "",
+      brand: "",
+      condition: "",
       quantity: "",
       minUnits: "",
       unitPrice: "",
@@ -471,7 +473,8 @@ export default {
       form.set("product_name", self.productName);
       form.set("quantity", self.quantity);
       form.set("user_id", self.currentUser.user_id);
-      form.set("HS_code", self.HScode);
+      form.set("brand", self.brand);
+      form.set("condition", self.condition);
       form.set("min_units_per_order", self.minUnits);
       form.set("unit_price", self.unitPrice);
       form.set("size", self.size);

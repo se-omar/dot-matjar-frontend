@@ -11,108 +11,119 @@
             <v-row>
               <v-col lg="4" md="6" sm="12" cols="12">
                 <v-text-field
+                  rounded
+                  filled
                   v-model="fullName"
                   :rules="[rules.required]"
                   :label="$t('addUser.fullName')"
-                  outlined
                 ></v-text-field>
               </v-col>
 
               <v-col lg="4" md="6" sm="12" cols="12">
                 <v-text-field
+                  rounded
+                  filled
                   type="email"
                   v-model="email"
                   :rules="[rules.required]"
                   :label="$t('addUser.email')"
-                  outlined
                 ></v-text-field>
               </v-col>
 
               <v-col lg="4" md="6" sm="12" cols="12">
                 <v-text-field
+                  rounded
+                  filled
                   v-model="password"
                   type="password"
                   :rules="[rules.required]"
                   :label="$t('addUser.password')"
-                  outlined
                 ></v-text-field>
               </v-col>
 
               <v-col lg="4" md="6" sm="12" cols="12">
                 <v-text-field
+                  rounded
+                  filled
                   type="password"
                   :rules="[rules.required]"
                   :label="$t('addUser.confirmPassword')"
-                  outlined
                 ></v-text-field>
               </v-col>
 
               <v-col lg="4" md="6" sm="12" cols="12">
                 <v-text-field
+                  rounded
+                  filled
                   type="number"
                   v-model="mobileNumber"
                   :rules="[rules.required]"
                   :label="$t('addUser.mobileNumber')"
-                  outlined
                 ></v-text-field>
               </v-col>
 
               <v-col lg="4" md="6" sm="12" cols="12">
                 <v-text-field
+                  rounded
+                  filled
                   v-model="facebook"
                   :rules="[rules.required]"
                   :label="$t('addUser.facebook')"
-                  outlined
                 ></v-text-field>
               </v-col>
 
               <v-col lg="4" md="6" sm="12" cols="12">
                 <v-text-field
+                  rounded
+                  filled
                   v-model="storeName"
                   :rules="[rules.required]"
                   :label="$t('addUser.storeName')"
-                  outlined
                 ></v-text-field>
               </v-col>
 
               <v-col lg="4" md="6" sm="12" cols="12">
                 <v-select
+                  rounded
+                  filled
                   :rules="[rules.required]"
                   v-model="selectedGender"
                   :items="['male', 'female']"
                   :label="$t('addUser.gender')"
-                  outlined
                 ></v-select>
               </v-col>
 
               <v-col lg="4" md="6" sm="12" cols="12">
                 <v-select
+                  rounded
+                  filled
                   :items="governorates"
                   v-model="selectedGovernorate"
                   :rules="[rules.required]"
                   @change="getRegions"
                   :label="$t('addUser.governorate')"
-                  outlined
                 ></v-select>
               </v-col>
 
               <v-col lg="4" md="6" sm="12" cols="12">
                 <v-select
+                  rounded
+                  filled
                   :rules="[rules.required]"
                   v-model="selectedRegion"
                   :items="regions"
                   :label="$t('addUser.region')"
-                  outlined
                 ></v-select>
               </v-col>
 
               <v-col lg="4" md="6" sm="12" cols="12">
                 <v-select
+                  rounded
+                  filled
                   :rules="[rules.required]"
                   v-model="selectedUserType"
                   :label="$t('addUser.userType')"
                   :items="userTypes"
-                  outlined
                 ></v-select>
               </v-col>
             </v-row>
