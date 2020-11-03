@@ -586,19 +586,6 @@
         <span class="smallerText"> {{ $t("toolbar.requests") }}</span></v-btn
       >
 
-      <!-- <v-btn
-        class="font"
-        v-if="
-          (currentUser && currentUser.user_type == 'business') ||
-          (currentUser.user_type == 'admin' &&
-            !$vuetify.breakpoint.sm &&
-            !$vuetify.breakpoint.xs)
-        "
-        text
-        @click="$router.push('/myProducts').catch((err) => {})"
-        >My Products</v-btn
-      > -->
-
       <v-btn
         class="font"
         :style="`color:${siteColor.toolbar_text_color}`"
@@ -770,10 +757,7 @@
             <v-list-item-icon>
               <v-icon>fas fa-palette</v-icon>
             </v-list-item-icon>
-            <span
-              v-html="$t('toolbar.siteColorsNobr')"
-              :style="`color: ${siteColor.button_text_color}; font-size: 20px`"
-            >
+            <span v-html="$t('toolbar.siteColorsNobr')" style="font-size: 20px">
             </span>
           </v-list-item>
 

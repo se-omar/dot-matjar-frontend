@@ -69,7 +69,9 @@
     "addCategory": "add category",
     "myCategoryRequests": "My Category Requests",
     "categoryArabicName": "Category Arabic Name",
-    "itemArabicName": "Item Arabic Name"
+    "itemArabicName": "Item Arabic Name",
+    "brand": "brand",
+    "condition": "condition"
   },
   "adminPage": {
     "addNewCategory": "add a new category",

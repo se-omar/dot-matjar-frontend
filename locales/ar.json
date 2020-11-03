@@ -31,7 +31,10 @@
         "priceTo": "السعر الي",
         "siteColors": "الوان <br/>الموقع",
         "country": "بلد",
-        "pendingSuppliers": "الموردين <br/>المعلقين"
+        "pendingSuppliers": "الموردين <br/>المعلقين",
+        "siteColorsNobr": "الوان الموقع",
+        "categoryRequestsNobr": "طلبات الفئات",
+        "pendingSuppliersNobr": "التجار المعلقين"
     },
     "homePage": {
         "loadMore": "المزيد",
@@ -63,7 +66,9 @@
         "addCategory": "اضافة فئة",
         "myCategoryRequests": "طلبات الفئات ",
         "categoryArabicName": "فئة الاسم العربي",
-        "itemArabicName": "اسم العنصر بلعربي"
+        "itemArabicName": "اسم العنصر بلعربي",
+        "brand": "الماركة",
+        "condition": "الحالة"
     },
     "adminPage": {
         "addNewCategory": "اضافة فئة جديدة",

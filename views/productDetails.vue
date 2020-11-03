@@ -122,14 +122,18 @@
           <v-col lg="6" md="6" sm="6" cols="6">
             <span class="font-weight-medium" style="font-size: 20px">
               {{ $t("productDetails.brand") }}:
-              <span class="text--secondary">brand name</span>
+              <span v-if="currentProduct" class="text--secondary">{{
+                currentProduct.brand
+              }}</span>
             </span>
           </v-col>
 
           <v-col lg="6" md="6" sm="6" cols="6">
             <span class="font-weight-medium" style="font-size: 20px">
               {{ $t("productDetails.condition") }}:
-              <span class="text--secondary">New</span>
+              <span v-if="currentProduct" class="text--secondary">{{
+                currentProduct.condition
+              }}</span>
             </span>
           </v-col>
 
