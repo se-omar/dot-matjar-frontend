@@ -97,7 +97,7 @@
                 <v-col cols="5" lg="4" sm="5" md="5">
                   <v-radio @change="changeRadioGroup()" value="1">
                     <template v-slot:label>
-                      <p v-if="siteLanguage == 'ar'" class="mt-4 arabic">
+                      <p v-if="siteLanguage == 'ar'" class="mt-4">
                         {{ $t("toolbar.searchProducts") }}
                       </p>
                       <p v-else class="mt-4">
@@ -114,10 +114,10 @@
                     value="2"
                   >
                     <template v-slot:label>
-                      <p v-if="siteLanguage == 'ar'" class="mt-4 arabic">
+                      <p v-if="siteLanguage == 'ar'" class="mt-4">
                         {{ $t("toolbar.searchSuppliers") }}
                       </p>
-                      <p v-else class="mt-4 arabic">
+                      <p v-else class="mt-4">
                         {{ $t("toolbar.searchSuppliers") }}
                       </p>
                     </template>

@@ -92,7 +92,11 @@ export default {
             state.supplierPageInfo = []
         },
         getPendingSuppliers(state, suppliers) {
-            state.pendingSuppliers = suppliers
+            var array = []
+            for (var i = suppliers.length - 1; i >= 0; i--) {
+                array.push(suppliers[i])
+            }
+            state.pendingSuppliers = array
         },
         filterSupplierProducts(state, products) {
             state.supplierProducts = products
@@ -384,7 +388,7 @@ export default {
         //stpedd hereeeeeeeeee
         rejectSupplierRequest(context, user_id) {
 
-            axios.put('rejectSupplierRequest', user_id)
+            axios.put(context.rootState.nodeHost + '/api/rejectSupplierRequest', user_id)
                 .then(message => {
                     alert(message.data.message)
                 })

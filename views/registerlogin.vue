@@ -290,7 +290,8 @@
                       <v-spacer></v-spacer>
 
                       <v-col cols="12">
-                        <v-checkbox v-model="checkbox"> </v-checkbox>
+                        <v-checkbox v-model="businessOwnerCheckbox">
+                        </v-checkbox>
                         <span v-html="$t('registerLogin.termsAndCond')"></span>
                       </v-col>
 
@@ -409,6 +410,7 @@ export default {
         governorate: this.governorate,
         region: this.region,
         store_name: this.storeName,
+        siteLanguage: this.siteLanguage,
       });
     },
     async login() {
