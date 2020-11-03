@@ -382,7 +382,11 @@ export default {
       return this.$store.state.Home.categoriesItems;
     },
     category() {
-      return this.$store.state.Home.category;
+      var array = [];
+      this.$store.state.Home.category.forEach((e) => {
+        array.push(e.name);
+      });
+      return array;
     },
     siteColor() {
       if (this.$store.state.Home.siteColor) {
@@ -528,7 +532,7 @@ export default {
     await this.$store.dispatch("getCategoryItems");
     await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getSupplierCategoriesRequests");
-
+    console.log(this.category);
     return new Promise((resolve) => {
       setTimeout(() => {
         this.$store.dispatch("categoriesDB");

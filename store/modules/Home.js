@@ -110,7 +110,7 @@ export default {
                 })
 
             }
-
+            console.log('category in state', state.category)
 
         },
 

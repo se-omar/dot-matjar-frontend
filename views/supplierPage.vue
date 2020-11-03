@@ -490,7 +490,7 @@ export default {
   },
   async created() {
     // await this.$store.dispatch("getSiteColor");
-    // this.isLoading = true;
+    this.isLoading = true;
     await this.$store.dispatch("getCurrencies");
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
@@ -541,6 +541,7 @@ export default {
 
     await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getCategoryItems");
+    this.isLoading = false;
   },
 };
 </script>
