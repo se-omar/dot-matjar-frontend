@@ -84,54 +84,33 @@
       <v-dialog
         style="overflow: hidden"
         v-model="advancedSearch"
-        max-width="60%"
+        :max-width="$vuetify.breakpoint.lg ? '60%' : '87%'"
       >
-        <v-card style="overflow: hidden">
-          <v-row justify="center">
-            <v-radio-group
-              style="margin-right: 50px"
-              mandatory
-              :value="radioGroup"
-            >
-              <v-row class="mb-n5" justify="center">
-                <v-col cols="5" lg="4" sm="5" md="5">
-                  <v-radio @change="changeRadioGroup()" value="1">
-                    <template v-slot:label>
-                      <p v-if="siteLanguage == 'ar'" class="mt-4 arabic">
-                        {{ $t("toolbar.searchProducts") }}
-                      </p>
-                      <p v-else class="mt-4">
-                        {{ $t("toolbar.searchProducts") }}
-                      </p>
-                    </template>
-                  </v-radio>
-                </v-col>
+        <v-card>
+          <v-row class="mb-n8" justify="center">
+            <v-radio-group row mandatory :value="radioGroup">
+              <v-radio
+                :label="$t('toolbar.searchProducts')"
+                @change="changeRadioGroup()"
+                value="1"
+              >
+              </v-radio>
 
-                <v-col cols="5" lg="6" sm="6" md="6">
-                  <v-radio
-                    @change="changeRadioGroup()"
-                    :label="$t('toolbar.searchSuppliers')"
-                    value="2"
-                  >
-                    <template v-slot:label>
-                      <p v-if="siteLanguage == 'ar'" class="mt-4 arabic">
-                        {{ $t("toolbar.searchSuppliers") }}
-                      </p>
-                      <p v-else class="mt-4 arabic">
-                        {{ $t("toolbar.searchSuppliers") }}
-                      </p>
-                    </template>
-                  </v-radio>
-                </v-col>
-              </v-row>
+              <v-radio
+                @change="changeRadioGroup()"
+                :label="$t('toolbar.searchSuppliers')"
+                value="2"
+              >
+              </v-radio>
             </v-radio-group>
           </v-row>
+
           <v-row justify="center">
-            <v-col lg="4" cols="1" sm="3" md="3"></v-col>
-            <v-col cols="10" lg="4" sm="6" md="6">
+            <v-col class="mb-n5" cols="10" lg="10" sm="10" md="10">
               <v-text-field
                 class="mt-8 arabic"
-                outlined
+                filled
+                dense
                 rounded
                 :placeholder="$t('toolbar.search')"
                 append-icon="fa fa-search"
@@ -140,171 +119,145 @@
                 v-if="radioGroup === '1'"
               ></v-text-field>
             </v-col>
-            <v-col lg="4" cols="1" sm="3" md="3"></v-col>
-            <v-col lg="4" cols="1" sm="3" md="3"></v-col>
-            <v-col lg="4" cols="10" sm="6" md="6">
-              <v-select
-                rounded
-                :items="availableCountries"
-                :placeholder="$t('toolbar.country')"
-                dense
-                outlined
-                v-model="country"
-                class="arabic"
-              ></v-select>
-            </v-col>
-            <v-col cols="1" lg="4" sm="3" md="3"></v-col>
 
-            <v-col lg="5" cols="6" md="6" sm="6">
-              <v-select
-                rounded
-                v-if="radioGroup === '1'"
-                :items="egyptGovernorates"
-                :disabled="radioGroup === '2'"
-                :placeholder="$t('toolbar.governorate')"
-                dense
-                outlined
-                v-model="governorate"
-                @change="getCountryRegions()"
-                class="arabic"
-              ></v-select>
-            </v-col>
-
-            <v-col cols="6" lg="6" md="6" sm="6">
-              <v-select
-                rounded
-                v-if="radioGroup === '1'"
-                :items="regions"
-                :disabled="radioGroup === '2'"
-                :placeholder="$t('toolbar.region')"
-                dense
-                outlined
-                v-model="region"
-                class="arabic"
-              ></v-select>
-            </v-col>
-
-            <v-col cols="6" lg="5" sm="6" md="6">
-              <v-select
-                rounded
-                v-if="radioGroup === '2'"
-                :items="egyptGovernorates"
-                :disabled="radioGroup === '1'"
-                :placeholder="$t('toolbar.governorate')"
-                dense
-                outlined
-                v-model="governorate"
-                @change="getCountryRegions()"
-                class="arabic"
-              ></v-select>
-            </v-col>
-            <v-col lg="5" cols="6" sm="6" md="6">
-              <v-select
-                rounded
-                v-if="radioGroup === '2'"
-                :items="regions"
-                :disabled="radioGroup === '1'"
-                :placeholder="$t('toolbar.region')"
-                dense
-                outlined
-                v-model="region"
-                class="arabic"
-              ></v-select>
-            </v-col>
-            <v-col cols="10" lg="3" sm="4" md="4">
+            <v-col
+              class="mb-n5"
+              v-if="radioGroup === '2'"
+              cols="10"
+              lg="10"
+              sm="10"
+              md="10"
+            >
               <v-text-field
                 rounded
-                v-if="radioGroup === '2'"
                 :disabled="radioGroup === '1'"
                 @keyup="emptySupplierName"
                 dense
-                outlined
+                filled
+                append-icon="fa fa-search"
                 v-model="filterSuppliersByName"
                 :placeholder="$t('toolbar.supplierNameSearch')"
                 class="arabic"
               ></v-text-field>
             </v-col>
+
+            <v-col lg="3" cols="10" sm="10" md="3">
+              <v-select
+                rounded
+                :items="availableCountries"
+                :placeholder="$t('toolbar.country')"
+                dense
+                filled
+                v-model="country"
+                class="arabic mb-n5 mb-lg-n0"
+              ></v-select>
+            </v-col>
+
+            <v-col v-if="radioGroup === '1'" lg="3" cols="5" md="3" sm="5">
+              <v-select
+                rounded
+                :items="egyptGovernorates"
+                :disabled="radioGroup === '2'"
+                :placeholder="$t('toolbar.governorate')"
+                dense
+                filled
+                v-model="governorate"
+                @change="getCountryRegions()"
+                class="arabic"
+              ></v-select>
+            </v-col>
+
+            <v-col v-if="radioGroup === '1'" lg="3" cols="5" md="3" sm="5">
+              <v-select
+                rounded
+                :items="regions"
+                :disabled="radioGroup === '2'"
+                :placeholder="$t('toolbar.region')"
+                dense
+                filled
+                v-model="region"
+                class="arabic"
+              ></v-select>
+            </v-col>
+
+            <v-col v-if="radioGroup === '2'" lg="3" cols="5" md="3" sm="5">
+              <v-select
+                rounded
+                :items="egyptGovernorates"
+                :disabled="radioGroup === '1'"
+                :placeholder="$t('toolbar.governorate')"
+                dense
+                filled
+                v-model="governorate"
+                @change="getCountryRegions()"
+                class="arabic"
+              ></v-select>
+            </v-col>
+
+            <v-col v-if="radioGroup === '2'" lg="3" cols="5" md="3" sm="5">
+              <v-select
+                rounded
+                :items="regions"
+                :disabled="radioGroup === '1'"
+                :placeholder="$t('toolbar.region')"
+                dense
+                filled
+                v-model="region"
+                class="arabic"
+              ></v-select>
+            </v-col>
           </v-row>
 
           <v-row class="mt-n3" justify="center">
-            <v-col cols="6" sm="6" md="6" lg="5">
+            <v-col v-if="radioGroup == '1'" cols="5" sm="5" md="5" lg="5">
               <v-text-field
-                v-if="radioGroup == '1'"
                 dense
                 rounded
-                outlined
+                filled
                 type="number"
                 :placeholder="$t('toolbar.priceFrom')"
                 v-model="priceFrom"
-                class="arabic"
+                class="arabic mb-n5 mt-n2"
               ></v-text-field>
             </v-col>
 
-            <v-col cols="6" sm="6" md="6" lg="5">
+            <v-col v-if="radioGroup == '1'" cols="5" sm="5" md="5" lg="5">
               <v-text-field
-                v-if="radioGroup == '1'"
                 dense
-                outlined
+                filled
                 rounded
                 v-model="priceTo"
                 type="number"
                 :placeholder="$t('toolbar.priceTo')"
-                class="arabic"
+                class="arabic mb-n5 mt-n2"
               ></v-text-field>
             </v-col>
-            <v-col lg="4"></v-col>
-            <v-col v-if="radioGroup === '2'" cols="6" sm="6" md="6" lg="6">
+
+            <v-col v-if="radioGroup === '2'" cols="6" sm="6" md="4" lg="3">
               <v-btn
                 @click="filterSuppliers()"
                 :color="siteColor.button_color"
                 rounded
                 small
+                block
                 ><span :style="`color: ${siteColor.button_text_color}`">{{
                   $t("toolbar.search")
                 }}</span></v-btn
               >
             </v-col>
-            <v-col v-else cols="4" sm="2" md="2" lg="6">
+            <v-col v-else cols="7" sm="7" md="4" lg="3">
               <v-btn
                 class="arabic"
                 @click="filterProducts('search')"
                 :color="siteColor.button_color"
                 rounded
                 small
+                block
                 ><span :style="`color: ${siteColor.button_text_color}`">{{
                   $t("toolbar.search")
                 }}</span></v-btn
               >
             </v-col>
-            <v-col lg="4"></v-col>
-
-            <!-- <v-col cols="4" sm="2" md="2" lg="2">
-            <v-btn
-              class="white--text"
-              @click="All"
-              :color="siteColor.button_color"
-              rounded
-              ><span :style="`color: ${siteColor.button_text_color}`"
-                >All</span
-              ></v-btn
-            >
-          </v-col> -->
-
-            <v-col cols="4" sm="2" md="2" lg="5">
-              <!-- <v-btn
-              :disabled="radioGroup === '1'"
-              class="white--text"
-              @click="filterSuppliers"
-              :color="siteColor.button_color"
-              :style="`color: ${siteColor.button_text_color}`"
-              rounded
-              max-width="80"
-              ><span :style="`color: ${siteColor.button_text_color}`"
-                >Search</span
-              ></v-btn
-            > -->
-            </v-col>
-            <v-col sm="3" lg="3" md="3"></v-col>
           </v-row>
         </v-card>
       </v-dialog>
