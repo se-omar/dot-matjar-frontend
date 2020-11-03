@@ -65,6 +65,7 @@
       ></v-text-field>
 
       <v-btn
+        v-if="currentUser"
         class="blue white--text"
         rounded
         @click="advancedSearch = true"

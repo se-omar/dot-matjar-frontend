@@ -12,15 +12,34 @@
           :navigationEnabled="true"
         >
           <slide>
-            <v-img contain :src="currentProduct.main_picture"></v-img>
+            <v-img
+              contain
+              :src="
+                currentProduct.main_picture ? currentProduct.main_picture : ''
+              "
+            ></v-img>
           </slide>
 
           <slide>
-            <v-img contain :src="currentProduct.extra_picture1"></v-img>
+            <v-img
+              contain
+              :src="
+                currentProduct.extra_picture1
+                  ? currentProduct.extra_picture1
+                  : ''
+              "
+            ></v-img>
           </slide>
 
           <slide>
-            <v-img contain :src="currentProduct.extra_picture2"></v-img>
+            <v-img
+              contain
+              :src="
+                currentProduct.extra_picture2
+                  ? currentProduct.extra_picture2
+                  : ''
+              "
+            ></v-img>
           </slide>
         </carousel>
       </v-col>
@@ -411,6 +430,7 @@ export default {
     }
 
     await this.$store.dispatch("getSiteColor");
+
     await this.$store.dispatch("getProductReview", {
       product_id: this.currentProduct.product_id,
       user_id: this.currentUser.user_id,
@@ -565,6 +585,8 @@ export default {
     },
 
     supplierClicked(supplier) {
+      console.log("current product", this.currentProduct);
+      console.log("supplier", supplier);
       this.$store.commit("supplierPage", supplier);
       this.$router.push(
         `/${this.$i18n.locale}/supplierPage/` + supplier.user_id

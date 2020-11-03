@@ -114,8 +114,8 @@
           <v-row>
             <v-col cols="6" sm="12" lg="12">
               <v-menu
-                v-for="category in supplierCategories"
-                :key="category"
+                v-for="(category, index) in supplierCategories"
+                :key="index"
                 offset-x
                 :close-on-content-click="false"
                 open-on-hover
@@ -123,31 +123,72 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-row class="mx-3" justify="start">
-                    <v-col cols="12" lg="12" sm="12">
+                    <v-col cols="12" lg="10" sm="12">
                       <v-btn
                         width="110%"
-                        @mouseover="mouseOver(category)"
+                        @mouseover="mouseOver(category.name)"
                         v-bind="attrs"
                         v-on="on"
                         text
-                        style="overflow: hidden"
-                        @click="filterProductsWithCategory(category)"
+                        @click="filterProductsWithCategory(category.name)"
                       >
-                        <v-row justify="start">
-                          <i :class="`fas fa-${category} fa-lg mr-2 mt-2`"></i>
-                          <span style="color: black"> {{ category }}</span>
-                        </v-row>
-                        <v-btn
-                          @click="filterProductsWithCategory(category)"
-                          icon
-                          style="overflow: hidden; color: black"
-                        >
-                          <i
-                            v-if="siteLanguage == 'en'"
-                            class="fa fa-chevron-right"
-                          ></i>
-                          <i v-else class="fa fa-chevron-left"></i>
-                        </v-btn>
+                        <span v-if="$vuetify.breakpoint.xs">
+                          <v-row justify="start">
+                            <v-col>
+                              <span
+                                class="mt-1 smallerText"
+                                style="font-size: 14px"
+                              >
+                                {{ category.name }}</span
+                              >
+
+                              <v-btn
+                                @click="
+                                  filterProductsWithCategory(category.name)
+                                "
+                                icon
+                                style="overflow: hidden; color: black"
+                              >
+                                <i
+                                  v-if="siteLanguage == 'en'"
+                                  class="fa fa-chevron-right"
+                                ></i>
+                                <i v-else class="fa fa-chevron-left"></i>
+                              </v-btn>
+                            </v-col>
+                          </v-row>
+                        </span>
+                        <span v-else>
+                          <v-row justify="start">
+                            <v-col lg="5">
+                              <i
+                                :class="`fas fa-${category.icon} fa-sm  mr-2 mt-2`"
+                              ></i>
+
+                              <span class="mt-1 smallerText">
+                                {{ category.name }}</span
+                              >
+                            </v-col>
+                            <v-row justify="end">
+                              <v-col lg="2">
+                                <v-btn
+                                  @click="
+                                    filterProductsWithCategory(category.name)
+                                  "
+                                  icon
+                                  style="overflow: hidden; color: black"
+                                  text
+                                >
+                                  <i
+                                    v-if="siteLanguage == 'en'"
+                                    class="fa fa-chevron-right"
+                                  ></i>
+                                  <i v-else class="fa fa-chevron-left"></i>
+                                </v-btn>
+                              </v-col>
+                            </v-row>
+                          </v-row>
+                        </span>
                       </v-btn>
                     </v-col>
                     <!-- <v-col lg="3" sm="4"> </v-col> -->
@@ -435,6 +476,7 @@ export default {
           }
         }
       }
+      console.log(this.categoryItems);
     },
     returnAllProducts() {
       this.$store.commit("returnAllProducts");
@@ -448,7 +490,7 @@ export default {
   },
   async created() {
     // await this.$store.dispatch("getSiteColor");
-    this.isLoading = true;
+    // this.isLoading = true;
     await this.$store.dispatch("getCurrencies");
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
@@ -475,6 +517,10 @@ export default {
       supplier_id: this.supplier.user_id,
       user_id: this.currentUser.user_id,
     });
+    console.log(
+      "supplier categories and items",
+      this.supplierCategoriesAndItems
+    );
     await this.setValues();
 
     await this.$store.dispatch(
@@ -486,7 +532,7 @@ export default {
       this.currentSupplierRatings,
       (c) => c.rating
     );
-
+    console.log("colors iss", this.siteColor);
     for (var j = 1; j < this.barRatingArray.length + 1; j++) {
       if (this.groupedRatings[j]) {
         this.barRatingArray[j - 1] = this.groupedRatings[j].length * 20;
@@ -495,9 +541,6 @@ export default {
 
     await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getCategoryItems");
-    this.isLoading = false;
-
-    this.isLoading = false;
   },
 };
 </script>
