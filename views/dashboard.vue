@@ -19,9 +19,9 @@
       <v-col
         class="mr-4 ml-4"
         lg="2"
-        md="4"
-        sm="6"
-        cols="6"
+        md="2"
+        sm="3"
+        cols="5"
         v-for="myProduct in myProducts"
         :key="myProduct.id"
       >
@@ -64,7 +64,6 @@
               <apexchart
                 class="mb-n2 grey lighten-5"
                 id="barChart"
-                width="400"
                 type="bar"
                 :options="chartOptions"
                 :series="salesChartSeries"
@@ -90,7 +89,6 @@
               <apexchart
                 class="mb-n2"
                 id="lineChart"
-                width="400"
                 type="line"
                 :options="chartOptions"
                 :series="salesChartSeries"
@@ -116,7 +114,6 @@
               <apexchart
                 class="mt-n3"
                 id="pieChart"
-                width="400"
                 type="pie"
                 :options="pieOptions"
                 :lables="labels"
@@ -230,7 +227,7 @@
     <v-divider></v-divider>
 
     <v-row justify="center" style="width: 92%; margin: auto">
-      <v-col lg="4">
+      <v-col lg="3" cols="6" md="3" sm="6">
         <dashboard-selling-product
           class="mb-5"
           id="mostSelling"
@@ -242,7 +239,7 @@
           </v-label>
         </v-row>
       </v-col>
-      <v-col lg="4">
+      <v-col lg="3" cols="6" md="3" sm="6">
         <dashboard-selling-product
           class="mb-5"
           id="leastSelling"

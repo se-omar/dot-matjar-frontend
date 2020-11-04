@@ -251,6 +251,7 @@
             :md="supplierPageInfo && supplierPageInfo.show_right_banner ? 4 : 3"
             v-for="(supplierProduct, index) in supplierProducts"
             :key="index"
+            cols="10"
           >
             <product
               :minWidth="
@@ -258,7 +259,7 @@
                 supplierPageInfo.show_right_banner &&
                 supplierPageInfo.right_banner_image
                   ? '104%'
-                  : '123%'
+                  : '100%'
               "
               :addToCartButton="false"
               :filteredProduct="supplierProduct"

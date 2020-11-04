@@ -68,7 +68,8 @@
         "categoryArabicName": "فئة الاسم العربي",
         "itemArabicName": "اسم العنصر بلعربي",
         "brand": "الماركة",
-        "condition": "الحالة"
+        "condition": "الحالة",
+        "addCategorySnackBar": " سيتم إرسال طلبك الي المسؤول ، وسيتم إخبارك"
     },
     "adminPage": {
         "addNewCategory": "اضافة فئة جديدة",

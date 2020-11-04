@@ -3,7 +3,6 @@
     v-if="filteredProduct.message !== 'product not found'"
     class="grey lighten-4"
     :elevation="7"
-    max-width="430"
   >
     <v-img height="150" :src="nodeHost + filteredProduct.main_picture"></v-img>
 
@@ -34,7 +33,7 @@
             >
           </v-col>
 
-          <v-col class="mt-n2" cols="4">
+          <v-col class="mt-n2" cols="12">
             <v-btn @click="setCurrentRow" class="primary">{{
               $t("dashboardSellingProduct.details")
             }}</v-btn>

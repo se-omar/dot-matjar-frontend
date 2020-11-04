@@ -208,8 +208,8 @@
             :lg="homePageInfo.show_right_banner ? 3 : 2"
             :md="homePageInfo.show_right_banner ? 4 : 3"
             xmd="4"
-            sm="10"
-            cols="10"
+            sm="4"
+            cols="7"
             v-for="(filteredProduct, index) in filteredProducts"
             :key="index"
           >

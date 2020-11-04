@@ -19,10 +19,10 @@
 
           <v-row justify="center">
             <v-btn
-              large
               @click="
                 $router.push(`/${$i18n.locale}/addProduct`).catch((err) => {})
               "
+              rounded
               :color="siteColor.button_color"
             >
               <span :style="`color:${siteColor.button_text_color}`">
