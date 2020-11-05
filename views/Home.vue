@@ -18,6 +18,105 @@
         <p>ThankYou</p>
       </v-row>
     </v-snackbar>
+    <!-- test menu  -->
+    <!-- <v-row justify="center">
+      <v-list>
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-title style="font-weight: bold; font-size: 25px"
+            >Category</v-list-item-title
+          >
+        </v-list-item>
+
+        <v-list-group
+          v-for="(category, index) in category"
+          :key="index"
+          :value="true"
+          prepend-icon="mdi-account-circle"
+          @click="mouseOver(category.name)"
+        >
+          <template v-slot:activator>
+            <v-list-item-action style="font-weight: bold"
+              ><span style="font-weight: bold; font-size: 18px">{{
+                category.name
+              }}</span></v-list-item-action
+            >
+          </template>
+
+         
+          <v-list-item
+            style="padding-left: 100px"
+            v-for="(item, i) in categoryItems"
+            :key="i"
+            @click="dialog = true"
+          >
+            {{ item }}
+          </v-list-item>
+
+         
+        </v-list-group>
+      </v-list>
+    </v-row> -->
+    <v-row
+      v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs"
+      class="mt-4"
+      justify="center"
+    >
+      <v-btn @click="filterDialog = true" :color="siteColor.button_color" small>
+        <i
+          class="fa fa-filter"
+          :style="`color:${siteColor.button_text_color}`"
+        ></i>
+        <span :style="`color:${siteColor.button_text_color}`"
+          >Filter</span
+        ></v-btn
+      >
+      <v-dialog style="overflow: hidden" v-model="filterDialog" max-width="280">
+        <v-card style="overflow: hidden">
+          <v-row justify="center">
+            <v-list>
+              <v-list-item>
+                <v-list-item-icon>
+                  <v-icon>mdi-home</v-icon>
+                </v-list-item-icon>
+
+                <v-list-item-title style="font-weight: bold; font-size: 25px"
+                  >Category</v-list-item-title
+                >
+              </v-list-item>
+
+              <v-list-group
+                v-for="(category, index) in category"
+                :key="index"
+                :value="false"
+                prepend-icon="mdi-account-circle"
+                @click="mouseOver(category.name)"
+              >
+                <template v-slot:activator>
+                  <v-list-item-action style="font-weight: bold"
+                    ><span style="font-weight: bold; font-size: 18px">{{
+                      category.name
+                    }}</span></v-list-item-action
+                  >
+                </template>
+
+                <v-list-item
+                  style="padding-left: 100px"
+                  v-for="(item, i) in categoryItems"
+                  :key="i"
+                  @click="filterProductsWithItem(item)"
+                >
+                  {{ item }}
+                </v-list-item>
+              </v-list-group>
+            </v-list>
+          </v-row>
+        </v-card>
+      </v-dialog>
+    </v-row>
     <v-row v-if="homePageInfo.show_carousel" justify="center">
       <v-col :lg="homePageInfo ? homePageInfo.carousel_width : 10">
         <carousel
@@ -84,9 +183,15 @@
         homePageInfo.show_right_banner == 1 ? 'space-between' : 'center'
       "
     >
-      <v-col v-if="radioGroup == '1'" lg="2" sm="4" md="2" cols="4">
+      <v-col
+        v-if="$vuetify.breakpoint.lg || $vuetify.breakpoint.md"
+        lg="2"
+        sm="4"
+        md="2"
+        cols="4"
+      >
         <v-card height="95%" style="overflow: hidden" max-width>
-          <v-row>
+          <!-- <v-row>
             <v-col cols="12" sm="12" lg="12">
               <v-menu
                 v-for="(category, index) in category"
@@ -166,7 +271,7 @@
                         </span>
                       </v-btn>
                     </v-col>
-                    <!-- <v-col lg="3" sm="4"> </v-col> -->
+                  
                   </v-row>
                 </template>
                 <v-card>
@@ -186,6 +291,44 @@
                 </v-card>
               </v-menu>
             </v-col>
+          </v-row> -->
+          <v-row justify="center">
+            <v-list>
+              <v-list-item>
+                <v-list-item-icon>
+                  <v-icon>mdi-home</v-icon>
+                </v-list-item-icon>
+
+                <v-list-item-title style="font-weight: bold; font-size: 25px"
+                  >Category</v-list-item-title
+                >
+              </v-list-item>
+
+              <v-list-group
+                v-for="(category, index) in category"
+                :key="index"
+                :value="false"
+                prepend-icon="mdi-account-circle"
+                @click="mouseOver(category.name)"
+              >
+                <template v-slot:activator>
+                  <v-list-item-action style="font-weight: bold"
+                    ><span style="font-weight: bold; font-size: 18px">{{
+                      category.name
+                    }}</span></v-list-item-action
+                  >
+                </template>
+
+                <v-list-item
+                  style="padding-left: 100px"
+                  v-for="(item, i) in categoryItems"
+                  :key="i"
+                  @click="filterProductsWithItem(item)"
+                >
+                  {{ item }}
+                </v-list-item>
+              </v-list-group>
+            </v-list>
           </v-row>
         </v-card>
       </v-col>
@@ -194,22 +337,20 @@
       <v-col
         :lg="radioAndBannerFlag"
         :md="radioAndBannerFlag"
-        :sm="radioGroup == '1' ? '7' : '12'"
-        :cols="radioGroup == '1' ? '7' : '12'"
+        :sm="radioGroup == '1' ? '12' : '12'"
+        :cols="radioGroup == '1' ? '12' : '12'"
       >
         <v-row
-          justify-lg="start"
-          justify-md="center"
-          justify-sm="start"
+          justify="center"
           v-if="radioGroup === '1' && filteredProducts.length > 0"
         >
           <v-col
             :class="homePageInfo.show_right_banner ? '' : productsClass"
             :lg="homePageInfo.show_right_banner ? 3 : 2"
-            :md="homePageInfo.show_right_banner ? 4 : 3"
+            :md="homePageInfo.show_right_banner ? 4 : 2"
             xmd="4"
-            sm="4"
-            cols="7"
+            sm="2"
+            cols="4"
             v-for="(filteredProduct, index) in filteredProducts"
             :key="index"
           >
@@ -331,6 +472,7 @@ export default {
       advancedSearch: false,
       productsClass: "mr-4 ml-4",
       supplierApprovalMessage: false,
+      filterDialog: false,
     };
   },
   async created() {
@@ -366,6 +508,7 @@ export default {
     if (this.currentUser.user_type == "waiting_approval") {
       this.supplierApprovalMessage = true;
     }
+    console.log(this.category);
     return new Promise((resolve) => {
       setTimeout(() => {
         this.isLoading = false;
@@ -584,9 +727,9 @@ export default {
         }
       }
     },
-    mouseOver(name) {
+    async mouseOver(name) {
       this.categoryItems = [];
-
+      console.log(name);
       if (this.siteLanguage == "en") {
         for (let i = 0; i < this.categoriesItems.length; i++) {
           if (this.categoriesItems[i].category_name == name) {
@@ -604,6 +747,16 @@ export default {
           }
         }
       }
+      await this.$store.dispatch("filterProducts", {
+        category_name: name,
+        buttonPressed: "search",
+        product_id: 0,
+      });
+
+      this.$store.commit("loadMoreType", {
+        name: name,
+        type: "category",
+      });
     },
     async filterProductsWithItem(item) {
       await this.$store.dispatch("filterProducts", {
