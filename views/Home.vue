@@ -378,6 +378,7 @@
             cols="5"
           >
             <supplier
+              :minWidth="homePageInfo.show_right_banner ? '110%' : '120%'"
               :show_right_banner="homePageInfo.show_right_banner"
               :supplier="supplier"
             ></supplier>

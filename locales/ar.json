@@ -108,7 +108,11 @@
         "deleteCategoryCheck2": "يرجي العلم ان كل منتجات هذة الفئة لن يكون لها فئة مميزة في البحث",
         "disagree": "الرفض",
         "newCategoryArabicName": " اسم الفئة بلعربي",
-        "newCategoryItemArabicName": "اسم العنصر بلعربي"
+        "newCategoryItemArabicName": "اسم العنصر بلعربي",
+        "addOrRemoveCountry": "اضافة او مسح بلد",
+        "PickCountryToAdd": "اضافة بلد",
+        "countryToRemove": "مسح بلد",
+        "addCountry": "اضافة البلد"
     },
     "suppliersDashboard": {
         "dashboard": "لوحة تحكم",

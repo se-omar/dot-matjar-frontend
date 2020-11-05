@@ -35,12 +35,12 @@ export default {
 
                 if (userId) {
                     users.push({
-                        'full_arabic_name': orders[i].user.full_arabic_name,
-                        'mobile_number': orders[i].user.mobile_number,
-                        'order_number': orders[i].order_number,
-                        'order_date': orders[i].order_date,
-                        'status': orders[i].status,
-                        'order_id': orders[i].order_id
+                        'full_arabic_name': orders[i] && orders[i].user ? orders[i].user.full_arabic_name : '',
+                        'mobile_number': orders[i] && orders[i].user ? orders[i].user.mobile_number : '',
+                        'order_number': orders[i] ? orders[i].order_number : '',
+                        'order_date': orders[i] ? orders[i].order_date : '',
+                        'status': orders[i] ? orders[i].status : '',
+                        'order_id': orders[i] ? orders[i].order_i : ''
                     })
                 }
             }

@@ -1,7 +1,7 @@
 <template>
   <v-app class="grey lighten-4">
-    <v-container class="mx-8">
-      <v-card class="mx-8">
+    <v-container>
+      <v-card>
         <v-row justify="center" class="mx-4 mt-16">
           <v-col lg="7" md="7" sm="12" cols="12">
             <v-form v-model="valid">

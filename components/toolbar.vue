@@ -304,31 +304,14 @@
 
       <v-menu
         v-if="currentUser"
-        transition="fab-transition"
-        :close-on-content-click="false"
+        :close-on-content-click="true"
         :nudge-width="200"
         max-width="25%"
         max-height="90%"
-        offset-y
+        offset-x
         class="menu"
       >
         <template v-slot:activator="{ on, attrs }">
-          <!-- <v-btn
-            v-if="!$vuetify.breakpoint.lg"
-            rounded
-            class="font mx-3"
-            :style="`color:${siteColor.toolbar_text_color}`"
-            v-bind="attrs"
-            v-on="on"
-            icon
-            small
-          >
-            <i
-              class="fa fa-user"
-              :style="`color:${siteColor.toolbar_text_color}`"
-            ></i>
-       
-          </v-btn> -->
           <v-btn
             rounded
             style="overflow: hidden"
