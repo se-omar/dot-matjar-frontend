@@ -10,7 +10,7 @@
                   v-model="productName"
                   dense
                   required
-                  outlined
+                  filled
                   :rules="[rules.required]"
                   rounded
                   :label="$t('addProduct.productName')"
@@ -24,8 +24,9 @@
                   v-model="categoryName"
                   :items="category"
                   dense
+                  rounded
                   required
-                  outlined
+                  filled
                   :rules="[rules.required]"
                   :label="$t('addProduct.category')"
                   @change="gettingCategoryItems"
@@ -36,8 +37,9 @@
                   v-model="categoryItem"
                   :items="categoryItems"
                   dense
+                  rounded
                   required
-                  outlined
+                  filled
                   :label="$t('addProduct.item')"
                 ></v-select>
               </v-col>
@@ -49,8 +51,9 @@
                   v-model="quantity"
                   type="number"
                   dense
+                  rounded
                   :rules="[rules.required]"
-                  outlined
+                  filled
                   :label="$t('addProduct.quantity')"
                 ></v-text-field>
               </v-col>
@@ -59,7 +62,8 @@
                 <v-text-field
                   dense
                   v-model="brand"
-                  outlined
+                  filled
+                  rounded
                   :label="$t('addProduct.brand')"
                 ></v-text-field>
               </v-col>
@@ -70,14 +74,18 @@
                 <v-text-field
                   :rules="[rules.required && rules.numbersOnly]"
                   v-model="unitPrice"
-                  outlined
+                  filled
+                  rounded
+                  dense
                   :label="$t('addProduct.price')"
                 ></v-text-field>
               </v-col>
 
               <v-col lg="3">
                 <v-select
-                  solo-inverted
+                  
+                  rounded
+                  filled
                   :items="currencies"
                   v-model="productCurrency"
                 >
@@ -87,7 +95,9 @@
               <v-col cols="4">
                 <v-text-field
                   v-model="minUnits"
-                  outlined
+                  filled
+                  dense
+                  rounded
                   :label="$t('addProduct.minOrders')"
                 ></v-text-field>
               </v-col>
@@ -98,7 +108,8 @@
                 <v-text-field
                   v-model="color"
                   dense
-                  outlined
+                  rounded
+                  filled
                   :label="$t('addProduct.color')"
                 ></v-text-field>
               </v-col>
@@ -108,7 +119,8 @@
                   :items="['new', 'used']"
                   v-model="condition"
                   dense
-                  outlined
+                  rounded
+                  filled
                   :label="$t('addProduct.condition')"
                 ></v-select>
               </v-col>
@@ -119,8 +131,9 @@
                 <v-textarea
                   v-model="description"
                   dense
+                  rounded
                   :rules="[rules.required]"
-                  outlined
+                  filled
                   :label="$t('addProduct.description')"
                 ></v-textarea>
               </v-col>
@@ -172,7 +185,7 @@
                         v-model="newCategoryName"
                         :placeholder="$t('addProduct.categoryName')"
                         rounded
-                        outlined
+                        filled
                         :color="siteColor"
                       ></v-text-field>
                     </v-col>
@@ -182,7 +195,7 @@
                         v-model="newCategoryArabicName"
                         :placeholder="$t('addProduct.categoryArabicName')"
                         rounded
-                        outlined
+                        filled
                         :color="siteColor"
                       ></v-text-field>
                     </v-col>
@@ -194,7 +207,7 @@
                     <v-textarea
                       :label="$t('addProduct.description')"
                       rounded
-                      outlined
+                      filled
                       v-model="newCategoryDescription"
                     ></v-textarea>
                   </v-col>
@@ -222,7 +235,7 @@
                     <v-col cols="3">
                       <v-select
                         :rules="[rules.required]"
-                        outlined
+                        filled
                         rounded
                         :items="category"
                         v-model="categoryName"
@@ -236,7 +249,7 @@
                         :placeholder="$t('addProduct.requestItem')"
                         class="text-xl"
                         rounded
-                        outlined
+                        filled
                         :rules="[rules.required]"
                         :color="siteColor"
                       ></v-text-field>
@@ -249,7 +262,7 @@
                         :placeholder="$t('addProduct.itemArabicName')"
                         class="text-xl"
                         rounded
-                        outlined
+                        filled
                         :rules="[rules.required]"
                       ></v-text-field>
                     </v-col>
@@ -259,7 +272,7 @@
                       <v-textarea
                         :label="$t('addProduct.description')"
                         rounded
-                        outlined
+                        filled
                         v-model="newCategoryItemDescription"
                       ></v-textarea>
                     </v-col>
