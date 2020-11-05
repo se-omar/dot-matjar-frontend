@@ -71,7 +71,8 @@
     "categoryArabicName": "Category Arabic Name",
     "itemArabicName": "Item Arabic Name",
     "brand": "brand",
-    "condition": "condition"
+    "condition": "condition",
+    "addCategorySnackBar": " Your request will be submitted by the admin , you will be notified"
   },
   "adminPage": {
     "addNewCategory": "add a new category",

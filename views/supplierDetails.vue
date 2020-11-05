@@ -43,11 +43,23 @@
             <v-card>
               <v-card-actions aspect-ratio="1.7">
                 <v-img
+                  v-if="!$vuetify.breakpoint.xs"
                   id="image"
-                  :src="supplier.profile_photo"
+                  :src="supplier.profile_photo ? supplier.profile_photo : ''"
                   style="
                     width: 60%;
                     height: 80%;
+                    margin-left: auto;
+                    margin-right: auto;
+                  "
+                ></v-img>
+                <v-img
+                  v-else
+                  id="image"
+                  :src="supplier.profile_photo ? supplier.profile_photo : ''"
+                  style="
+                    width: 20%;
+                    height: 40%;
                     margin-left: auto;
                     margin-right: auto;
                   "
@@ -96,15 +108,11 @@
 
             <v-card elevation="1" height="400">
               <v-row justify="center">
-                <v-col cols="6" class="text-center ml-n10 mt-5">
+                <v-col cols="6" class="text-center mt-5">
                   <v-row>
                     <v-col cols="12">
-                      <v-avatar
-                        fab
-                        :color="siteColor.toolbar_text_color"
-                        size="100"
-                      >
-                        <span class="headline text-h3"
+                      <v-avatar color="blue" fab size="100">
+                        <span class="white--text headline text-h3"
                           >{{ supplier.rating }}.0</span
                         >
                       </v-avatar>
@@ -138,11 +146,21 @@
                 </v-col>
                 <v-col cols="12" lg="6" sm="12">
                   <v-rating
+                    v-if="!$vuetify.breakpoint.xs"
                     readonly
                     class="ml-n1"
                     v-model="supplier.rating"
                     :hover="hover"
                     :size="size"
+                    :color="siteColor.toolbar_text_color"
+                  ></v-rating>
+                  <v-rating
+                    v-else
+                    readonly
+                    class="ml-n1"
+                    v-model="supplier.rating"
+                    :hover="hover"
+                    :size="size2"
                     :color="siteColor.toolbar_text_color"
                   ></v-rating>
                 </v-col>

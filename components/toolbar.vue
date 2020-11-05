@@ -8,63 +8,98 @@
       ></loading>
     </div> -->
     <v-app-bar elevate-on-scroll shaped app :color="siteColor.toolbar_color">
-      <a
-        @click="$router.push('/').catch(() => {})"
-        v-if="(supplierPageInfo && !supplierPageInfo.logo) || !supplierPageInfo"
-      >
-        <v-img
-          src="../assets/images/dotmatjar_logo.png"
-          max-height="110"
-          max-width="120"
-          contain
-        ></v-img>
-      </a>
-
-      <a v-else class="ml-4" @click="goSupplierPage">
-        <v-img
-          class="mx-2"
-          :src="
-            supplierPageInfo && supplierPageInfo.logo
-              ? nodeHost + supplierPageInfo.logo
-              : '../assets/images/dotmatjar_logo.png'
+      <span class="pr-4" v-if="$vuetify.breakpoint.xs">
+        <a
+          @click="$router.push('/').catch(() => {})"
+          v-if="
+            (supplierPageInfo && !supplierPageInfo.logo) || !supplierPageInfo
           "
-          max-height="110"
-          max-width="120"
-          contain
-        ></v-img>
-        <span class="mt-3">{{ supplierPageInfo.site_name }}</span>
-      </a>
+        >
+          <v-img
+            src="../assets/images/dotmatjar_logo.png"
+            max-height="80"
+            max-width="90"
+            contain
+          ></v-img>
+        </a>
 
+        <a v-else class="ml-4" @click="goSupplierPage">
+          <v-img
+            class="mx-2"
+            :src="
+              supplierPageInfo && supplierPageInfo.logo
+                ? nodeHost + '/' + supplierPageInfo.logo
+                : '../assets/images/dotmatjar_logo.png'
+            "
+            max-height="80"
+            max-width="90"
+            contain
+          ></v-img>
+          <span class="mt-3">{{ supplierPageInfo.site_name }}</span>
+        </a>
+      </span>
+      <span v-else>
+        <a
+          @click="$router.push('/').catch(() => {})"
+          v-if="
+            (supplierPageInfo && !supplierPageInfo.logo) || !supplierPageInfo
+          "
+        >
+          <v-img
+            src="../assets/images/dotmatjar_logo.png"
+            max-height="110"
+            max-width="120"
+            contain
+          ></v-img>
+        </a>
+
+        <a v-else class="ml-4" @click="goSupplierPage">
+          <v-img
+            class="mx-2"
+            :src="
+              supplierPageInfo && supplierPageInfo.logo
+                ? nodeHost + '/' + supplierPageInfo.logo
+                : '../assets/images/dotmatjar_logo.png'
+            "
+            max-height="110"
+            max-width="120"
+            contain
+          ></v-img>
+          <span class="mt-3">{{ supplierPageInfo.site_name }}</span>
+        </a>
+      </span>
       <!-- <v-spacer></v-spacer> -->
+      <span v-if="!$vuetify.breakpoint.xs">
+        <v-text-field
+          v-if="!$route.params.supplier_id"
+          class="arabic mx-5"
+          dense
+          style="max-width: 250px; max-height: 41px"
+          outlined
+          rounded
+          :placeholder="$t('toolbar.search')"
+          append-icon="fa fa-search"
+          @keyup="emptySearchBox"
+          v-model="toolbarSearch"
+          @keypress="filterProducts"
+        ></v-text-field>
 
-      <v-text-field
-        v-if="!$route.params.supplier_id"
-        class="arabic mx-5"
-        dense
-        style="max-width: 250px; max-height: 41px"
-        outlined
-        rounded
-        :placeholder="$t('toolbar.search')"
-        append-icon="fa fa-search"
-        @keyup="emptySearchBox"
-        v-model="toolbarSearch"
-        @keypress="filterProducts"
-      ></v-text-field>
-
-      <v-text-field
-        v-else
-        class="arabic mx-5"
-        dense
-        style="max-width: 250px; max-height: 41px"
-        outlined
-        rounded
-        :placeholder="$t('toolbar.search')"
-        append-icon="fa fa-search"
-        @keyup="filterSupplierProducts($route.params.supplier_id)"
-        v-model="supplierProductsSearch"
-      ></v-text-field>
-
+        <v-text-field
+          v-else
+          class="arabic mx-5"
+          dense
+          style="max-width: 250px; max-height: 41px"
+          outlined
+          rounded
+          :placeholder="$t('toolbar.search')"
+          append-icon="fa fa-search"
+          @keyup="filterSupplierProducts($route.params.supplier_id)"
+          v-model="supplierProductsSearch"
+        ></v-text-field>
+      </span>
+      <v-spacer></v-spacer>
       <v-btn
+        v-if="!$vuetify.breakpoint.xs"
         class="blue white--text"
         rounded
         @click="advancedSearch = true"
@@ -80,7 +115,12 @@
           v-html="$t('toolbar.advancedSearch')"
         ></span>
       </v-btn>
-
+      <v-btn v-else rounded @click="advancedSearch = true" icon>
+        <i
+          :style="`color:${siteColor.toolbar_text_color}`"
+          class="fa fa-search fa-lg"
+        ></i>
+      </v-btn>
       <v-dialog
         style="overflow: hidden"
         v-model="advancedSearch"
@@ -261,7 +301,7 @@
           </v-row>
         </v-card>
       </v-dialog>
-      <v-spacer></v-spacer>
+
       <v-menu
         v-if="currentUser"
         transition="fab-transition"
@@ -271,15 +311,10 @@
         max-height="90%"
         offset-y
         class="menu"
-        style="overflow: hidden"
       >
         <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            v-if="
-              $vuetify.breakpoint.sm ||
-              $vuetify.breakpoint.xs ||
-              $vuetify.breakpoint.md
-            "
+          <!-- <v-btn
+            v-if="!$vuetify.breakpoint.lg"
             rounded
             class="font mx-3"
             :style="`color:${siteColor.toolbar_text_color}`"
@@ -292,10 +327,9 @@
               class="fa fa-user"
               :style="`color:${siteColor.toolbar_text_color}`"
             ></i>
-            <!-- <span>{{ $t("toolbar.profile") }}</span> -->
-          </v-btn>
+       
+          </v-btn> -->
           <v-btn
-            v-else
             rounded
             style="overflow: hidden"
             class="font"
@@ -303,9 +337,12 @@
             text
             v-bind="attrs"
             v-on="on"
+            small
           >
             <i class="fa fa-user fa-sm mt-n1 mr-1"></i>
-            <span class="smallerText">{{ $t("toolbar.profile") }}</span>
+            <span v-if="$vuetify.breakpoint.lg" class="smallerText">{{
+              $t("toolbar.profile")
+            }}</span>
           </v-btn>
         </template>
 
@@ -893,6 +930,7 @@ export default {
     // if (this.availableCountries) {
     // }
     this.$store.dispatch("getWorldCountries");
+    console.log("supplier page info", this.supplierPageInfo, this.nodeHost);
   },
 
   props: {
@@ -1024,6 +1062,7 @@ export default {
       }
     },
     async filterProducts() {
+      this.advancedSearch = false;
       this.isLoading = true;
       this.productFilterFlag = true;
 
@@ -1075,11 +1114,15 @@ export default {
       );
     },
     async filterSuppliers() {
+      this.advancedSearch = false;
+      this.isLoading = true;
       await this.$store.dispatch("filterSuppliers", {
         supplierName: this.filterSuppliersByName,
         governorate: this.governorate,
         region: this.region,
       });
+
+      this.isLoading = false;
     },
     changeRadioGroup() {
       if (this.radioGroup == "1") {

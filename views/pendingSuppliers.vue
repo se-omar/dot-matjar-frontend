@@ -101,23 +101,32 @@
                         </v-list-item-title>
 
                         <v-divider class="white"></v-divider>
-                        <v-list-item-action-text>
-                          <v-btn @click="acceptClicked(supplier)" class="green">
-                            <span
-                              v-html="$t('pendingSuppliers.acceptRequest')"
-                              style="color: white"
-                              class="smallerText"
-                            >
-                            </span>
-                          </v-btn>
-                          <v-btn
-                            @click="declineClicked(supplier)"
-                            class="ml-2 red white--text"
-                            ><span>{{
-                              $t("pendingSuppliers.decline")
-                            }}</span></v-btn
-                          >
-                        </v-list-item-action-text>
+                        <v-list-item-action class="ml-3">
+                          <v-row justify="center">
+                            <v-col cols="12" lg="6" sm="12" md="6">
+                              <v-btn
+                                @click="acceptClicked(supplier)"
+                                class="green ml-2"
+                              >
+                                <span
+                                  v-html="$t('pendingSuppliers.acceptRequest')"
+                                  style="color: white"
+                                  class="smallerText"
+                                >
+                                </span>
+                              </v-btn>
+                            </v-col>
+                            <v-col cols="12" lg="6" sm="12" md="6">
+                              <v-btn
+                                @click="declineClicked(supplier)"
+                                class="ml-2 red white--text"
+                                ><span>{{
+                                  $t("pendingSuppliers.decline")
+                                }}</span></v-btn
+                              >
+                            </v-col>
+                          </v-row>
+                        </v-list-item-action>
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>

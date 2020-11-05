@@ -66,7 +66,7 @@ export default {
       switch (item) {
         case "fab fa-facebook":
           if (!this.supplierPageInfo.facebook) {
-            location.href = "https://www.facebook.com/";
+            location.href = "https://www.facebook.com/zidnysolutions/";
             break;
           } else {
             location.href = this.supplierPageInfo.facebook;
@@ -74,7 +74,7 @@ export default {
           }
         case "fab fa-twitter":
           if (!this.supplierPageInfo.twitter) {
-            location.href = "https://www.facebook.com/";
+            location.href = "https://twitter.com/zidnysolutions";
             break;
           } else {
             location.href = this.supplierPageInfo.twitter;
@@ -90,7 +90,7 @@ export default {
           }
         case "fab fa-linkedin":
           if (!this.supplierPageInfo.linkedin) {
-            location.href = "https://www.facebook.com/";
+            location.href = "https://www.linkedin.com/company/zidnysolutions/";
             break;
           } else {
             location.href = this.supplierPageInfo.linkedin;

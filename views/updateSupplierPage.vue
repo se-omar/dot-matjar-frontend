@@ -8,296 +8,305 @@
           :is-full-page="true"
         ></loading>
       </div>
-      <v-row class="mt-6" justify="center">
-        <h1>{{ $t("updateSupplierPage.welcome") }}</h1>
-      </v-row>
-      <v-row class="mt-6" justify="center">
-        <h2>{{ $t("updateSupplierPage.pngFormat") }}</h2>
-      </v-row>
-      <!-- <v-row class="mb-8" justify="center"> -->
       <v-container>
-        <!-- =============== photo -->
-        <v-row justify="center">
-          <v-col lg="3"></v-col>
-          <v-col lg="5" class="mr-5">
-            <form enctype="multipart.form/data">
-              <label>
-                <v-card max-width="200">
-                  <span class="mt-4"
-                    >{{ $t("updateSupplierPage.uploadLogo") }}:</span
-                  >
-                  <v-row justify="center">
-                    <i class="fa fa-upload fa-lg"></i>
-                  </v-row>
-                  <input @change="fileUploaded" type="file" ref="logo" />
-                  <span v-if="logo">{{ logo.name }}</span>
-                </v-card>
-              </label>
-            </form>
-          </v-col>
-        </v-row>
-        <!-- =================== -->
-        <v-row justify="center">
-          <v-col cols="6" lg="4" sm="4" md="6">
-            <v-text-field
-              rounded
-              :placeholder="$t('updateSupplierPage.siteName')"
-              class="arabic"
-              v-model="siteName"
-              outlined
-            ></v-text-field>
-          </v-col>
-          <!-- ================ -->
+        <v-card class="mx-8">
+          <v-row class="mt-6" justify="center">
+            <h1>{{ $t("updateSupplierPage.welcome") }}</h1>
+          </v-row>
+          <v-row class="mt-6" justify="center">
+            <v-col cols="10">
+              <h2>{{ $t("updateSupplierPage.pngFormat") }}</h2>
+            </v-col>
+          </v-row>
+          <!-- <v-row class="mb-8" justify="center"> -->
+          <v-container>
+            <!-- =============== photo -->
+            <v-row justify="center">
+              <v-col lg="4" cols="6" sm="6" md="4">
+                <form enctype="multipart.form/data">
+                  <label>
+                    <v-card max-width="200">
+                      <span class="mt-4 ml-6"
+                        >{{ $t("updateSupplierPage.uploadLogo") }}:</span
+                      >
+                      <v-row justify="center">
+                        <i class="fa fa-upload fa-lg"></i>
+                      </v-row>
+                      <input @change="fileUploaded" type="file" ref="logo" />
+                      <span v-if="logo">{{ logo.name }}</span>
+                    </v-card>
+                  </label>
+                </form>
+              </v-col>
+            </v-row>
+            <!-- =================== -->
+            <v-row justify="center">
+              <v-col cols="6" lg="4" sm="4" md="6">
+                <v-text-field
+                  rounded
+                  :placeholder="$t('updateSupplierPage.siteName')"
+                  class="arabic"
+                  v-model="siteName"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <!-- ================ -->
 
-          <v-col cols="6" lg="4" sm="4" md="6">
-            <v-text-field
-              :placeholder="$t('updateSupplierPage.facebook')"
-              v-model="facebook"
-              rounded
-              outlined
-              class="arabic"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="6" lg="4" sm="4" md="6">
-            <v-text-field
-              :placeholder="$t('updateSupplierPage.twitter')"
-              v-model="twitter"
-              rounded
-              outlined
-              class="arabic"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="6" lg="4" sm="4" md="6">
-            <v-text-field
-              :placeholder="$t('updateSupplierPage.linkedin')"
-              v-model="linkedin"
-              rounded
-              outlined
-              class="arabic"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="6" lg="4" sm="4" md="6">
-            <v-text-field
-              :placeholder="$t('updateSupplierPage.instagram')"
-              v-model="instgram"
-              rounded
-              outlined
-              class="arabic"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="6" lg="4" sm="4" md="6">
-            <v-text-field
-              :placeholder="$t('updateSupplierPage.google')"
-              v-model="google"
-              rounded
-              outlined
-              class="arabic"
-            ></v-text-field>
-          </v-col>
+              <v-col cols="6" lg="4" sm="4" md="6">
+                <v-text-field
+                  :placeholder="$t('updateSupplierPage.facebook')"
+                  v-model="facebook"
+                  rounded
+                  outlined
+                  class="arabic"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="6" lg="4" sm="4" md="6">
+                <v-text-field
+                  :placeholder="$t('updateSupplierPage.twitter')"
+                  v-model="twitter"
+                  rounded
+                  outlined
+                  class="arabic"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="6" lg="4" sm="4" md="6">
+                <v-text-field
+                  :placeholder="$t('updateSupplierPage.linkedin')"
+                  v-model="linkedin"
+                  rounded
+                  outlined
+                  class="arabic"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="6" lg="4" sm="4" md="6">
+                <v-text-field
+                  :placeholder="$t('updateSupplierPage.instagram')"
+                  v-model="instgram"
+                  rounded
+                  outlined
+                  class="arabic"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="6" lg="4" sm="4" md="6">
+                <v-text-field
+                  :placeholder="$t('updateSupplierPage.google')"
+                  v-model="google"
+                  rounded
+                  outlined
+                  class="arabic"
+                ></v-text-field>
+              </v-col>
 
-          <v-col cols="6" lg="2" sm="4" md="6">
-            <v-switch
-              :label="$t('updateSupplierPage.showCarousel')"
-              @change="testCheckbox"
-              v-model="carouselCheckbox"
-            ></v-switch>
-          </v-col>
+              <v-col cols="6" lg="2" sm="4" md="6">
+                <v-switch
+                  :label="$t('updateSupplierPage.showCarousel')"
+                  @change="testCheckbox"
+                  v-model="carouselCheckbox"
+                ></v-switch>
+              </v-col>
 
-          <!-- <v-col cols="6" lg="2" sm="4" md="6">
+              <!-- <v-col cols="6" lg="2" sm="4" md="6">
             <v-switch
               :label="show left banner"
               v-model="leftBannerCheckbox"
             ></v-switch>
           </v-col> -->
 
-          <v-col cols="6" lg="2" sm="4" md="6">
-            <v-switch
-              :label="$t('updateSupplierPage.showRightBanner')"
-              v-model="rightBannerCheckbox"
-            ></v-switch>
-          </v-col>
-        </v-row>
+              <v-col cols="6" lg="2" sm="4" md="6">
+                <v-switch
+                  :label="$t('updateSupplierPage.showRightBanner')"
+                  v-model="rightBannerCheckbox"
+                ></v-switch>
+              </v-col>
+            </v-row>
 
-        <v-row justify="center">
-          <v-col lg="3" v-if="carouselCheckbox">
-            <v-form enctype="multipart/form-data">
-              <label class="arabic"
-                >{{ $t("updateSupplierPage.carouselImage") }} 1</label
-              >
-              <v-file-input
-                type="file"
-                accept="image/*"
-                @change="setCarouselImage1"
-              ></v-file-input>
-              <v-img
-                v-if="supplierPageInfo.carousel_image_1 || carouselViewImg1"
-                :src="
-                  carouselViewImg1
-                    ? carouselViewImg1
-                    : nodeHost + supplierPageInfo.carousel_image_1
-                "
-                width="300px"
-                height="250px"
-              ></v-img>
-              <v-row
-                v-if="supplierPageInfo.carousel_image_1 || carouselViewImg1"
-                class="mt-2"
-                justify="center"
-              >
-                <v-btn
-                  @click="removeCarouselImage(1)"
-                  small
-                  class="red white--text"
-                  fab
-                  >X</v-btn
-                >
-              </v-row>
-            </v-form>
-          </v-col>
+            <v-row justify="center">
+              <v-col lg="3" v-if="carouselCheckbox">
+                <v-form enctype="multipart/form-data">
+                  <label style="font-size: 25px"
+                    >{{ $t("updateSupplierPage.carouselImage") }} 1</label
+                  >
+                  <v-file-input
+                    type="file"
+                    accept="image/*"
+                    @change="setCarouselImage1"
+                  ></v-file-input>
+                  <v-img
+                    v-if="supplierPageInfo.carousel_image_1 || carouselViewImg1"
+                    :src="
+                      carouselViewImg1
+                        ? carouselViewImg1
+                        : nodeHost + supplierPageInfo.carousel_image_1
+                    "
+                    width="300px"
+                    height="250px"
+                  ></v-img>
+                  <v-row
+                    v-if="supplierPageInfo.carousel_image_1 || carouselViewImg1"
+                    class="mt-2"
+                    justify="center"
+                  >
+                    <v-btn
+                      @click="removeCarouselImage(1)"
+                      small
+                      class="red white--text"
+                      fab
+                      >X</v-btn
+                    >
+                  </v-row>
+                </v-form>
+              </v-col>
 
-          <v-col lg="3" v-if="carouselCheckbox">
-            <v-form>
-              <label class="arabic"
-                >{{ $t("updateSupplierPage.carouselImage") }} 2</label
-              >
-              <v-file-input
-                accept="image/*"
-                :disabled="
-                  !carouselImage1 && !supplierPageInfo.carousel_image_1
-                "
-                @change="setCarouselImage2"
-              ></v-file-input>
-              <v-img
-                v-if="supplierPageInfo.carousel_image_2 || carouselViewImg2"
-                :src="
-                  carouselViewImg2
-                    ? carouselViewImg2
-                    : nodeHost + supplierPageInfo.carousel_image_2
-                "
-                width="300px"
-                height="250px"
-              ></v-img>
-              <v-row
-                v-if="supplierPageInfo.carousel_image_2 || carouselViewImg2"
-                class="mt-2"
-                justify="center"
-              >
-                <v-btn
-                  v-if="supplierPageInfo.carousel_image_2 || carouselViewImg2"
-                  @click="removeCarouselImage(2)"
-                  small
-                  class="red white--text"
-                  fab
-                  >X</v-btn
-                >
-              </v-row>
-            </v-form>
-          </v-col>
+              <v-col lg="3" v-if="carouselCheckbox">
+                <v-form>
+                  <label style="font-size: 25px"
+                    >{{ $t("updateSupplierPage.carouselImage") }} 2</label
+                  >
+                  <v-file-input
+                    accept="image/*"
+                    :disabled="
+                      !carouselImage1 && !supplierPageInfo.carousel_image_1
+                    "
+                    @change="setCarouselImage2"
+                  ></v-file-input>
+                  <v-img
+                    v-if="supplierPageInfo.carousel_image_2 || carouselViewImg2"
+                    :src="
+                      carouselViewImg2
+                        ? carouselViewImg2
+                        : nodeHost + supplierPageInfo.carousel_image_2
+                    "
+                    width="300px"
+                    height="250px"
+                  ></v-img>
+                  <v-row
+                    v-if="supplierPageInfo.carousel_image_2 || carouselViewImg2"
+                    class="mt-2"
+                    justify="center"
+                  >
+                    <v-btn
+                      v-if="
+                        supplierPageInfo.carousel_image_2 || carouselViewImg2
+                      "
+                      @click="removeCarouselImage(2)"
+                      small
+                      class="red white--text"
+                      fab
+                      >X</v-btn
+                    >
+                  </v-row>
+                </v-form>
+              </v-col>
 
-          <v-col lg="3" v-if="carouselCheckbox">
-            <v-form>
-              <label class="arabic"
-                >{{ $t("updateSupplierPage.carouselImage") }} 3</label
-              >
-              <v-file-input
-                accept="image/*"
-                :disabled="
-                  !carouselImage2 && !supplierPageInfo.carousel_image_2
-                "
-                @change="setCarouselImage3"
-              ></v-file-input>
-              <v-img
-                v-if="supplierPageInfo.carousel_image_3 || carouselViewImg3"
-                :src="
-                  carouselViewImg3
-                    ? carouselViewImg3
-                    : nodeHost + supplierPageInfo.carousel_image_3
-                "
-                width="300px"
-                height="250px"
-              ></v-img>
-              <v-row
-                v-if="supplierPageInfo.carousel_image_3 || carouselViewImg3"
-                class="mt-2"
-                justify="center"
-              >
-                <v-btn
-                  v-if="supplierPageInfo.carousel_image_3 || carouselViewImg3"
-                  @click="removeCarouselImage(3)"
-                  small
-                  class="red white--text"
-                  fab
-                  >X</v-btn
-                >
-              </v-row>
-            </v-form>
-          </v-col>
+              <v-col lg="3" v-if="carouselCheckbox">
+                <v-form>
+                  <label style="font-size: 25px"
+                    >{{ $t("updateSupplierPage.carouselImage") }} 3</label
+                  >
+                  <v-file-input
+                    accept="image/*"
+                    :disabled="
+                      !carouselImage2 && !supplierPageInfo.carousel_image_2
+                    "
+                    @change="setCarouselImage3"
+                  ></v-file-input>
+                  <v-img
+                    v-if="supplierPageInfo.carousel_image_3 || carouselViewImg3"
+                    :src="
+                      carouselViewImg3
+                        ? carouselViewImg3
+                        : nodeHost + supplierPageInfo.carousel_image_3
+                    "
+                    width="300px"
+                    height="250px"
+                  ></v-img>
+                  <v-row
+                    v-if="supplierPageInfo.carousel_image_3 || carouselViewImg3"
+                    class="mt-2"
+                    justify="center"
+                  >
+                    <v-btn
+                      v-if="
+                        supplierPageInfo.carousel_image_3 || carouselViewImg3
+                      "
+                      @click="removeCarouselImage(3)"
+                      small
+                      class="red white--text"
+                      fab
+                      >X</v-btn
+                    >
+                  </v-row>
+                </v-form>
+              </v-col>
 
-          <v-col lg="3" v-if="carouselCheckbox">
-            <v-form>
-              <label class="arabic"
-                >{{ $t("updateSupplierPage.carouselImage") }} 4</label
-              >
-              <v-file-input
-                accept="image/*"
-                :disabled="
-                  !carouselImage3 && !supplierPageInfo.carousel_image_3
-                "
-                @change="setCarouselImage4"
-              ></v-file-input>
-              <v-img
-                v-if="supplierPageInfo.carousel_image_4 || carouselViewImg4"
-                :src="
-                  carouselViewImg4
-                    ? carouselViewImg4
-                    : nodeHost + supplierPageInfo.carousel_image_4
-                "
-                width="300px"
-                height="250px"
-              ></v-img>
-              <v-row
-                v-if="supplierPageInfo.carousel_image_4 || carouselViewImg4"
-                class="mt-2"
-                justify="center"
-              >
-                <v-btn
-                  v-if="supplierPageInfo.carousel_image_4 || carouselViewImg4"
-                  @click="removeCarouselImage(4)"
-                  small
-                  class="red white--text"
-                  fab
-                  >X</v-btn
-                >
-              </v-row>
-            </v-form>
-          </v-col>
-        </v-row>
+              <v-col lg="3" v-if="carouselCheckbox">
+                <v-form>
+                  <label style="font-size: 25px"
+                    >{{ $t("updateSupplierPage.carouselImage") }} 4</label
+                  >
+                  <v-file-input
+                    accept="image/*"
+                    :disabled="
+                      !carouselImage3 && !supplierPageInfo.carousel_image_3
+                    "
+                    @change="setCarouselImage4"
+                  ></v-file-input>
+                  <v-img
+                    v-if="supplierPageInfo.carousel_image_4 || carouselViewImg4"
+                    :src="
+                      carouselViewImg4
+                        ? carouselViewImg4
+                        : nodeHost + supplierPageInfo.carousel_image_4
+                    "
+                    width="300px"
+                    height="250px"
+                  ></v-img>
+                  <v-row
+                    v-if="supplierPageInfo.carousel_image_4 || carouselViewImg4"
+                    class="mt-2"
+                    justify="center"
+                  >
+                    <v-btn
+                      v-if="
+                        supplierPageInfo.carousel_image_4 || carouselViewImg4
+                      "
+                      @click="removeCarouselImage(4)"
+                      small
+                      class="red white--text"
+                      fab
+                      >X</v-btn
+                    >
+                  </v-row>
+                </v-form>
+              </v-col>
+            </v-row>
 
-        <v-row justify="center">
-          <v-col v-if="carouselCheckbox" cols="6" lg="4" sm="4" md="6">
-            <v-text-field
-              :label="$t('updateSupplierPage.carouselWidth')"
-              v-model="carouselWidth"
-              rounded
-              :rules="[rules.min_max_width]"
-              outlined
-            ></v-text-field>
-          </v-col>
+            <v-row justify="center">
+              <v-col v-if="carouselCheckbox" cols="6" lg="4" sm="4" md="6">
+                <v-text-field
+                  :label="$t('updateSupplierPage.carouselWidth')"
+                  v-model="carouselWidth"
+                  rounded
+                  :rules="[rules.min_max_width]"
+                  outlined
+                ></v-text-field>
+              </v-col>
 
-          <v-col v-if="carouselCheckbox" cols="6" lg="4" sm="4" md="6">
-            <v-text-field
-              type="number"
-              :label="$t('updateSupplierPage.carouselHeight')"
-              v-model="carouselHeight"
-              :rules="[rules.min_max_height]"
-              rounded
-              outlined
-            ></v-text-field>
-          </v-col>
-        </v-row>
+              <v-col v-if="carouselCheckbox" cols="6" lg="4" sm="4" md="6">
+                <v-text-field
+                  type="number"
+                  :label="$t('updateSupplierPage.carouselHeight')"
+                  v-model="carouselHeight"
+                  :rules="[rules.min_max_height]"
+                  rounded
+                  outlined
+                ></v-text-field>
+              </v-col>
+            </v-row>
 
-        <v-row justify="space-around">
-          <!-- <v-col lg="4" v-if="leftBannerCheckbox">
+            <v-row justify="space-around">
+              <!-- <v-col lg="4" v-if="leftBannerCheckbox">
             <v-form>
               <label>left banner image</label>
               <v-file-input
@@ -331,360 +340,374 @@
             </v-form>
           </v-col> -->
 
-          <v-col lg="4" v-if="rightBannerCheckbox">
-            <v-form>
-              <label class="arabic">
-                {{ $t("updateSupplierPage.rightBannerImage") }}</label
-              >
-              <v-file-input
-                accept="image/*"
-                @change="setRightImage"
-              ></v-file-input>
-              <v-img
-                :src="
-                  rightBannerViewImg
-                    ? rightBannerViewImg
-                    : nodeHost + supplierPageInfo.right_banner_image
-                "
-                width="300px"
-                height="250px"
-              ></v-img>
+              <v-col lg="4" v-if="rightBannerCheckbox">
+                <v-form>
+                  <label style="font-size: 25px">
+                    {{ $t("updateSupplierPage.rightBannerImage") }}</label
+                  >
+                  <v-file-input
+                    accept="image/*"
+                    @change="setRightImage"
+                  ></v-file-input>
+                  <v-img
+                    :src="
+                      rightBannerViewImg
+                        ? rightBannerViewImg
+                        : nodeHost + supplierPageInfo.right_banner_image
+                    "
+                    width="300px"
+                    height="250px"
+                  ></v-img>
 
-              <v-row
-                v-if="supplierPageInfo.right_banner_image || rightBannerViewImg"
-                class="mt-2"
-                justify="center"
-              >
-                <v-btn
-                  v-if="
-                    supplierPageInfo.right_banner_image || rightBannerViewImg
-                  "
-                  @click="removeCarouselImage(6)"
-                  small
-                  class="red white--text"
-                  fab
-                  >X</v-btn
+                  <v-row
+                    v-if="
+                      supplierPageInfo.right_banner_image || rightBannerViewImg
+                    "
+                    class="mt-2"
+                    justify="center"
+                  >
+                    <v-btn
+                      v-if="
+                        supplierPageInfo.right_banner_image ||
+                        rightBannerViewImg
+                      "
+                      @click="removeCarouselImage(6)"
+                      small
+                      class="red white--text"
+                      fab
+                      >X</v-btn
+                    >
+                  </v-row>
+                </v-form>
+              </v-col>
+            </v-row>
+            <v-row justify="center">
+              <v-col cols="10" lg="6" sm="10" md="6">
+                <v-textarea
+                  rounded
+                  :placeholder="$t('updateSupplierPage.footer')"
+                  v-model="footer"
+                  outlined
+                  class="arabic"
+                ></v-textarea>
+              </v-col>
+            </v-row>
+            <v-row justify="center">
+              <v-col cols="5" lg="3" sm="3" md="3">
+                <v-btn @click="sendData" x-large :color="siteColor.button_color"
+                  ><span :style="`color: ${buttonsTextColor}`">{{
+                    $t("updateSupplierPage.update")
+                  }}</span></v-btn
                 >
-              </v-row>
-            </v-form>
-          </v-col>
-        </v-row>
+              </v-col>
+            </v-row>
+            <!-- ======================== -->
 
-        <v-col cols="12" lg="12" sm="12" md="12">
-          <v-textarea
-            rounded
-            :placeholder="$t('updateSupplierPage.footer')"
-            v-model="footer"
-            outlined
-            class="arabic"
-          ></v-textarea>
-        </v-col>
-        <v-row justify="center">
-          <v-col cols="5" lg="3" sm="3" md="3">
-            <v-btn @click="sendData" x-large :color="siteColor.button_color"
-              ><span :style="`color: ${buttonsTextColor}`">{{
-                $t("updateSupplierPage.update")
-              }}</span></v-btn
+            <v-snackbar
+              v-model="snackbar"
+              :bottom="y === 'bottom'"
+              :color="siteColor.footer_color"
+              :left="x === 'left'"
+              :multi-line="mode === 'multi-line'"
+              :right="x === 'right'"
+              :timeout="timeout"
+              :top="y === 'top'"
+              :vertical="mode === 'vertical'"
             >
-          </v-col>
-        </v-row>
-        <!-- ======================== -->
+              <span> {{ $t("updateSupplierPage.pageUpdated") }}</span>
+              <template v-slot:action="{ attrs }">
+                <v-btn dark text v-bind="attrs" @click="snackbar = false">{{
+                  $t("updateSupplierPage.close")
+                }}</v-btn>
+              </template>
+            </v-snackbar>
+          </v-container>
 
-        <v-snackbar
-          v-model="snackbar"
-          :bottom="y === 'bottom'"
-          :color="siteColor.footer_color"
-          :left="x === 'left'"
-          :multi-line="mode === 'multi-line'"
-          :right="x === 'right'"
-          :timeout="timeout"
-          :top="y === 'top'"
-          :vertical="mode === 'vertical'"
-        >
-          <span> {{ $t("updateSupplierPage.pageUpdated") }}</span>
-          <template v-slot:action="{ attrs }">
-            <v-btn dark text v-bind="attrs" @click="snackbar = false">{{
-              $t("updateSupplierPage.close")
-            }}</v-btn>
-          </template>
-        </v-snackbar>
-      </v-container>
+          <!-- Site colorssssssssssssssssssssss -->
+          <v-container class="mt-16">
+            <v-toolbar shaped :color="toolBarColor">
+              <v-row justify="center">
+                <h2>{{ $t("updateSupplierPage.siteColors") }}</h2>
+              </v-row>
+            </v-toolbar>
+            <v-card>
+              <v-row justify="center">
+                <h2>{{ $t("updateSupplierPage.pickButColor") }}</h2>
+              </v-row>
 
-      <!-- Site colorssssssssssssssssssssss -->
-      <v-container class="mt-16">
-        <v-toolbar shaped :color="toolBarColor">
-          <v-row justify="center">
-            <h2>{{ $t("updateSupplierPage.siteColors") }}</h2>
-          </v-row>
-        </v-toolbar>
-        <v-card>
-          <v-row justify="center">
-            <h2>{{ $t("updateSupplierPage.pickButColor") }}</h2>
-          </v-row>
+              <v-row justify="center">
+                <v-col cols="10" sm="5" md="5" lg="3">
+                  <v-color-picker
+                    dot-size="25"
+                    mode="rgba"
+                    swatches-max-height="200"
+                    v-model="buttonsColor"
+                  ></v-color-picker>
+                </v-col>
+                <v-col cols="4" sm="3" md="3" lg="3">
+                  <v-btn x-large :color="this.buttonsColor"> </v-btn>
+                </v-col>
+              </v-row>
+            </v-card>
+            <v-card>
+              <v-row justify="center">
+                <h2>{{ $t("updateSupplierPage.pickButTextColor") }}</h2>
+              </v-row>
+              <v-row justify="center">
+                <v-col cols="10" sm="5" md="5" lg="3">
+                  <v-color-picker
+                    dot-size="25"
+                    mode="rgba"
+                    swatches-max-height="200"
+                    v-model="buttonsTextColor"
+                  ></v-color-picker>
+                </v-col>
+                <v-col cols="7" sm="3" md="3" lg="3">
+                  <v-btn :color="buttonsColor" x-large>
+                    <h4 :style="`color: ${this.buttonsTextColor}`">
+                      {{ $t("updateSupplierPage.textColor") }}
+                    </h4>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-card>
+            <v-card>
+              <v-row justify="center">
+                <h2>{{ $t("updateSupplierPage.pickToolbarColor") }}</h2>
+              </v-row>
+              <v-row justify="center">
+                <v-col cols="9" sm="5" md="5" lg="3">
+                  <v-color-picker
+                    dot-size="25"
+                    mode="rgba"
+                    swatches-max-height="200"
+                    v-model="toolBarColor"
+                  ></v-color-picker>
+                </v-col>
+                <v-col cols="10" sm="6" md="6" lg="6">
+                  <v-app-bar :color="toolBarColor" shaped rounded>
+                    <a>
+                      <v-img
+                        v-if="!$vuetify.breakpoint.xs"
+                        :src="
+                          supplierPageInfo || supplierPageInfo.logo
+                            ? nodeHost + '/' + supplierPageInfo.logo
+                            : '../assets/images/dotmatjar_logo.png'
+                        "
+                        max-height="110"
+                        max-width="130"
+                        contain
+                      ></v-img>
+                      <v-img
+                        v-else
+                        :src="
+                          supplierPageInfo || supplierPageInfo.logo
+                            ? nodeHost + '/' + supplierPageInfo.logo
+                            : '../assets/images/dotmatjar_logo.png'
+                        "
+                        max-height="60"
+                        max-width="70"
+                        contain
+                      ></v-img>
+                    </a>
 
-          <v-row justify="center">
-            <v-col cols="3" lg="3">
-              <v-color-picker
-                dot-size="25"
-                mode="rgba"
-                swatches-max-height="200"
-                v-model="buttonsColor"
-              ></v-color-picker>
-            </v-col>
-            <v-col cols="3" lg="3">
-              <v-btn x-large :color="this.buttonsColor"> </v-btn>
-            </v-col>
-          </v-row>
-        </v-card>
-        <v-card>
-          <v-row justify="center">
-            <h2>{{ $t("updateSupplierPage.pickButTextColor") }}</h2>
-          </v-row>
-          <v-row justify="center">
-            <v-col cols="3" lg="3">
-              <v-color-picker
-                dot-size="25"
-                mode="rgba"
-                swatches-max-height="200"
-                v-model="buttonsTextColor"
-              ></v-color-picker>
-            </v-col>
-            <v-col cols="3" lg="3">
-              <v-btn :color="buttonsColor" x-large>
-                <h4 :style="`color: ${this.buttonsTextColor}`">
-                  {{ $t("updateSupplierPage.textColor") }}
-                </h4>
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-card>
-        <v-card>
-          <v-row justify="center">
-            <h2>{{ $t("updateSupplierPage.pickToolbarColor") }}</h2>
-          </v-row>
-          <v-row justify="center">
-            <v-col cols="3" lg="3">
-              <v-color-picker
-                dot-size="25"
-                mode="rgba"
-                swatches-max-height="200"
-                v-model="toolBarColor"
-              ></v-color-picker>
-            </v-col>
-            <v-col cols="6" lg="6">
-              <v-app-bar :color="toolBarColor" shaped rounded>
-                <span v-if="!supplierPageInfo.logo">
-                  <a>
-                    <v-img
-                      src="../assets/images/dotmatjar_logo.png"
-                      max-height="110"
-                      max-width="130"
-                      contain
-                    ></v-img>
-                  </a>
-                </span>
-                <span v-else>
-                  <a>
-                    <v-img
-                      src="../assets/images/dotmatjar_logo.png"
-                      max-height="110"
-                      max-width="130"
-                      contain
-                    ></v-img>
-                  </a>
-                </span>
-                <v-spacer></v-spacer>
-                <v-row justify="center">
-                  <v-col cols="12" lg="12" sm="12" md="10">
-                    <v-text-field
-                      class="mt-8 arabic"
-                      outlined
-                      rounded
-                      :placeholder="$t('toolbar.search')"
-                      append-icon="fa fa-search"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-                <v-spacer></v-spacer>
-
-                <v-btn :style="`color:${toolBarTextColor}`" text> TEXT</v-btn>
-              </v-app-bar>
-            </v-col>
-          </v-row>
-        </v-card>
-        <v-card>
-          <v-row justify="center">
-            <h2>{{ $t("updateSupplierPage.pickToolbarTextColor") }}</h2>
-          </v-row>
-          <v-row justify="center">
-            <v-col cols="3" lg="3">
-              <v-color-picker
-                dot-size="25"
-                mode="rgba"
-                swatches-max-height="200"
-                v-model="toolBarTextColor"
-              ></v-color-picker>
-            </v-col>
-            <v-col cols="6" lg="6">
-              <v-app-bar :color="toolBarColor" shaped rounded>
-                <span v-if="!supplierPageInfo.logo">
-                  <a>
-                    <v-img
-                      src="../assets/images/dotmatjar_logo.png"
-                      max-height="110"
-                      max-width="130"
-                      contain
-                    ></v-img>
-                  </a>
-                </span>
-                <span v-else>
-                  <a>
-                    <v-img
-                      src="../assets/images/dotmatjar_logo.png"
-                      max-height="110"
-                      max-width="130"
-                      contain
-                    ></v-img>
-                  </a>
-                </span>
-                <v-spacer></v-spacer>
-                <v-row justify="center">
-                  <v-col cols="12" lg="12" sm="12" md="10">
-                    <v-text-field
-                      class="mt-8 arabic"
-                      outlined
-                      rounded
-                      :placeholder="$t('toolbar.search')"
-                      append-icon="fa fa-search"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-                <v-spacer></v-spacer>
-
-                <v-btn :style="`color:${toolBarTextColor}`" text> TEXT</v-btn>
-              </v-app-bar>
-            </v-col>
-          </v-row>
-        </v-card>
-        <v-card>
-          <v-row justify="center">
-            <h2>{{ $t("updateSupplierPage.pickFooterColor") }}</h2>
-          </v-row>
-          <v-row justify="center">
-            <v-col cols="3" lg="3">
-              <v-color-picker
-                dot-size="25"
-                mode="rgba"
-                swatches-max-height="200"
-                v-model="footerColor"
-              ></v-color-picker>
-            </v-col>
-            <v-col cols="6" lg="6">
-              <v-footer>
-                <v-card :color="footerColor">
-                  <v-card-text>
+                    <v-spacer></v-spacer>
                     <v-row justify="center">
-                      <v-btn
-                        v-for="icon in icons"
-                        :key="icon"
-                        class="mx-8"
-                        :style="`color:${footerTextColor}`"
-                        icon
-                      >
-                        <v-icon size="24px">{{ icon }}</v-icon>
-                      </v-btn>
+                      <v-col cols="12" lg="12" sm="12" md="10">
+                        <v-text-field
+                          class="mt-8 arabic"
+                          outlined
+                          rounded
+                          :placeholder="$t('toolbar.search')"
+                          append-icon="fa fa-search"
+                        ></v-text-field>
+                      </v-col>
                     </v-row>
-                  </v-card-text>
-                  <v-row justify="center">
-                    <v-card-text
-                      class="pt-1 mx-1"
-                      :style="`color:${footerTextColor}`"
-                      >Phasellus feugiat arcu sapien, et iaculis ipsum elementum
-                      sit amet. Mauris cursus commodo interdum. Praesent ut
-                      risus eget metus luctus accumsan id ultrices nunc. Sed at
-                      orci sed massa consectetur dignissim a sit amet dui. Duis
-                      commodo vitae velit et faucibus. Morbi vehicula lacinia
-                      malesuada. Nulla placerat augue vel ipsum ultrices, cursus
-                      iaculis dui sollicitudin. Vestibulum eu ipsum vel diam
-                      elementum tempor vel ut orci. Orci varius natoque
-                      penatibus et magnis dis parturient montes, nascetur
-                      ridiculus mus.</v-card-text
-                    >
-                  </v-row>
-                </v-card>
-              </v-footer>
-            </v-col>
-          </v-row>
-        </v-card>
-        <v-card>
-          <v-row justify="center">
-            <h2>{{ $t("updateSupplierPage.pickFooterTextColor") }}</h2>
-          </v-row>
-          <v-row justify="center">
-            <v-col cols="3" lg="3">
-              <v-color-picker
-                dot-size="25"
-                mode="rgba"
-                swatches-max-height="200"
-                v-model="footerTextColor"
-              ></v-color-picker>
-            </v-col>
-            <v-col cols="6" lg="6">
-              <v-footer>
-                <v-card :color="footerColor">
-                  <v-card-text>
-                    <v-row justify="center">
-                      <v-btn
-                        v-for="icon in icons"
-                        :key="icon"
-                        class="mx-8"
-                        :style="`color:${footerTextColor}`"
-                        icon
-                      >
-                        <v-icon size="24px">{{ icon }}</v-icon>
-                      </v-btn>
-                    </v-row>
-                  </v-card-text>
-                  <v-row justify="center">
-                    <v-card-text
-                      class="pt-1 mx-1"
-                      :style="`color:${footerTextColor}`"
-                      >Phasellus feugiat arcu sapien, et iaculis ipsum elementum
-                      sit amet. Mauris cursus commodo interdum. Praesent ut
-                      risus eget metus luctus accumsan id ultrices nunc. Sed at
-                      orci sed massa consectetur dignissim a sit amet dui. Duis
-                      commodo vitae velit et faucibus. Morbi vehicula lacinia
-                      malesuada. Nulla placerat augue vel ipsum ultrices, cursus
-                      iaculis dui sollicitudin. Vestibulum eu ipsum vel diam
-                      elementum tempor vel ut orci. Orci varius natoque
-                      penatibus et magnis dis parturient montes, nascetur
-                      ridiculus mus.</v-card-text
-                    >
-                  </v-row>
-                </v-card>
-              </v-footer>
-            </v-col>
-          </v-row>
-          <v-row justify="center">
-            <v-col cols="1">
-              <v-btn @click="updateSiteColors" :color="buttonsColor" x-large>
-                <h4 :style="`color: ${buttonsTextColor}`">
-                  {{ $t("updateSupplierPage.update") }}
-                </h4>
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-card>
-      </v-container>
+                    <v-spacer></v-spacer>
 
-      <v-container>
-        <v-toolbar shaped>
-          <v-row justify="center">
-            <h2>{{ $t("updateSupplierPage.chooseYourCategory") }}</h2>
-          </v-row>
-        </v-toolbar>
-        <v-card>
-          <!-- <v-responsive max-width="400" class="mx-auto mb-4">
+                    <span :style="`color:${toolBarTextColor}`"> TEXT</span>
+                  </v-app-bar>
+                </v-col>
+              </v-row>
+            </v-card>
+            <v-card>
+              <v-row justify="center">
+                <h2>{{ $t("updateSupplierPage.pickToolbarTextColor") }}</h2>
+              </v-row>
+              <v-row justify="center">
+                <v-col cols="9" sm="5" md="5" lg="3">
+                  <v-color-picker
+                    dot-size="25"
+                    mode="rgba"
+                    swatches-max-height="200"
+                    v-model="toolBarTextColor"
+                  ></v-color-picker>
+                </v-col>
+                <v-col cols="12" sm="6" md="6" lg="6">
+                  <v-app-bar :color="toolBarColor" shaped rounded>
+                    <a>
+                      <v-img
+                        v-if="!$vuetify.breakpoint.xs"
+                        :src="
+                          supplierPageInfo || supplierPageInfo.logo
+                            ? nodeHost + '/' + supplierPageInfo.logo
+                            : '../assets/images/dotmatjar_logo.png'
+                        "
+                        max-height="110"
+                        max-width="130"
+                        contain
+                      ></v-img>
+                      <v-img
+                        v-else
+                        :src="
+                          supplierPageInfo || supplierPageInfo.logo
+                            ? nodeHost + '/' + supplierPageInfo.logo
+                            : '../assets/images/dotmatjar_logo.png'
+                        "
+                        max-height="60"
+                        max-width="70"
+                        contain
+                      ></v-img>
+                    </a>
+
+                    <v-spacer></v-spacer>
+                    <v-row justify="center">
+                      <v-col cols="12" lg="12" sm="12" md="10">
+                        <v-text-field
+                          class="mt-8 arabic"
+                          outlined
+                          rounded
+                          :placeholder="$t('toolbar.search')"
+                          append-icon="fa fa-search"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-spacer></v-spacer>
+
+                    <span :style="`color:${toolBarTextColor}`"> TEXT</span>
+                  </v-app-bar>
+                </v-col>
+              </v-row>
+            </v-card>
+            <v-card>
+              <v-row justify="center">
+                <h2>{{ $t("updateSupplierPage.pickFooterColor") }}</h2>
+              </v-row>
+              <v-row justify="center">
+                <v-col cols="9" sm="5" md="5" lg="3">
+                  <v-color-picker
+                    dot-size="25"
+                    mode="rgba"
+                    swatches-max-height="200"
+                    v-model="footerColor"
+                  ></v-color-picker>
+                </v-col>
+                <v-col cols="12" sm="6" md="6" lg="6">
+                  <v-footer>
+                    <v-card :color="footerColor">
+                      <v-card-text>
+                        <v-row justify="center">
+                          <v-btn
+                            v-for="icon in icons"
+                            :key="icon"
+                            class="mx-8"
+                            :style="`color:${footerTextColor}`"
+                            icon
+                          >
+                            <v-icon size="24px">{{ icon }}</v-icon>
+                          </v-btn>
+                        </v-row>
+                      </v-card-text>
+                      <v-row justify="center">
+                        <v-card-text
+                          class="pt-1 mx-1"
+                          :style="`color:${footerTextColor}`"
+                          >Phasellus feugiat arcu sapien, et iaculis ipsum
+                          elementum sit amet. Mauris cursus commodo interdum.
+                          Praesent ut risus eget metus luctus accumsan id
+                          ultrices nunc. Sed at orci sed massa consectetur
+                          dignissim a sit amet dui. Duis commodo vitae velit et
+                          faucibus. Morbi vehicula lacinia malesuada. Nulla
+                          placerat augue vel ipsum ultrices, cursus iaculis dui
+                          sollicitudin. Vestibulum eu ipsum vel diam elementum
+                          tempor vel ut orci. Orci varius natoque penatibus et
+                          magnis dis parturient montes, nascetur ridiculus
+                          mus.</v-card-text
+                        >
+                      </v-row>
+                    </v-card>
+                  </v-footer>
+                </v-col>
+              </v-row>
+            </v-card>
+            <v-card>
+              <v-row justify="center">
+                <h2>{{ $t("updateSupplierPage.pickFooterTextColor") }}</h2>
+              </v-row>
+              <v-row justify="center">
+                <v-col cols="9" sm="5" md="5" lg="3">
+                  <v-color-picker
+                    dot-size="25"
+                    mode="rgba"
+                    swatches-max-height="200"
+                    v-model="footerTextColor"
+                  ></v-color-picker>
+                </v-col>
+                <v-col cols="12" sm="6" md="6" lg="6">
+                  <v-footer>
+                    <v-card :color="footerColor">
+                      <v-card-text>
+                        <v-row justify="center">
+                          <v-btn
+                            v-for="icon in icons"
+                            :key="icon"
+                            class="mx-8"
+                            :style="`color:${footerTextColor}`"
+                            icon
+                          >
+                            <v-icon size="24px">{{ icon }}</v-icon>
+                          </v-btn>
+                        </v-row>
+                      </v-card-text>
+                      <v-row justify="center">
+                        <v-card-text
+                          class="pt-1 mx-1"
+                          :style="`color:${footerTextColor}`"
+                          >Phasellus feugiat arcu sapien, et iaculis ipsum
+                          elementum sit amet. Mauris cursus commodo interdum.
+                          Praesent ut risus eget metus luctus accumsan id
+                          ultrices nunc. Sed at orci sed massa consectetur
+                          dignissim a sit amet dui. Duis commodo vitae velit et
+                          faucibus. Morbi vehicula lacinia malesuada. Nulla
+                          placerat augue vel ipsum ultrices, cursus iaculis dui
+                          sollicitudin. Vestibulum eu ipsum vel diam elementum
+                          tempor vel ut orci. Orci varius natoque penatibus et
+                          magnis dis parturient montes, nascetur ridiculus
+                          mus.</v-card-text
+                        >
+                      </v-row>
+                    </v-card>
+                  </v-footer>
+                </v-col>
+              </v-row>
+              <v-row justify="center">
+                <v-btn @click="updateSiteColors" :color="buttonsColor" x-large>
+                  <h4 :style="`color: ${buttonsTextColor}`">
+                    {{ $t("updateSupplierPage.update") }}
+                  </h4>
+                </v-btn>
+              </v-row>
+            </v-card>
+          </v-container>
+
+          <v-container>
+            <v-toolbar shaped>
+              <v-row justify="center">
+                <h2>{{ $t("updateSupplierPage.chooseYourCategory") }}</h2>
+              </v-row>
+            </v-toolbar>
+            <v-card>
+              <!-- <v-responsive max-width="400" class="mx-auto mb-4">
             <v-text-field
               v-model="benched"
               type="number"
@@ -693,176 +716,182 @@
               max="10"
             ></v-text-field>
           </v-responsive> -->
-          <v-row justify="center">
-            <v-col cols="6">
-              <v-card elevation="16" max-width="400" class="mx-auto">
-                <v-toolbar shaped>
-                  <v-row justify="center">
-                    <h2 style="text-align: center">
-                      {{ $t("updateSupplierPage.category") }}
-                    </h2>
-                  </v-row>
-                </v-toolbar>
-                <v-virtual-scroll
-                  :items="category"
-                  height="300"
-                  item-height="64"
-                >
-                  <template v-slot="{ item }">
-                    <v-list-item>
-                      <v-list-item-action>
-                        <v-btn
-                          @click="getCategoryItems(item)"
-                          fab
-                          small
-                          depressed
-                          color="primary"
-                        >
-                          <i :class="`fa fa-${item} fa-2x`"></i>
-                        </v-btn>
-                      </v-list-item-action>
-                      <v-list-item-content>
-                        <v-list-item-title :key="item">
-                          <v-btn
-                            @click="getCategoryItems(item)"
-                            text
-                            width="100%"
-                          >
-                            {{ item }}</v-btn
-                          >
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                  </template>
-                </v-virtual-scroll>
-              </v-card>
-            </v-col>
-            <v-col cols="6">
-              <v-card elevation="16" max-width="400" class="mx-auto">
-                <v-toolbar shaped>
-                  <v-row justify="center">
-                    <h2 style="text-align: center">
-                      {{ $t("updateSupplierPage.items") }}
-                    </h2>
-                  </v-row>
-                </v-toolbar>
-                <v-virtual-scroll
-                  :items="categoryItems"
-                  height="300"
-                  item-height="64"
-                >
-                  <template v-slot="{ item }">
-                    <v-list-item>
-                      <v-list-item-action>
-                        <v-btn fab small depressed color="primary">
-                          <i :class="`fa fa-${item} fa-2x`"></i>
-                        </v-btn>
-                      </v-list-item-action>
-                      <v-list-item-content>
-                        <v-list-item-title
-                          style="text-align: center"
-                          :key="item"
-                        >
-                          {{ item }}
-                        </v-list-item-title>
-                      </v-list-item-content>
-                      <v-list-item-action>
-                        <v-btn @click="addItem(item)" large icon>
-                          <i class="fa fa-plus fa-2x"></i
-                        ></v-btn>
-                      </v-list-item-action>
-                    </v-list-item>
-                  </template>
-                </v-virtual-scroll>
-              </v-card>
-            </v-col>
-          </v-row>
-          <v-row justify="center">
-            <v-col cols="6">
-              <v-card elevation="16" max-width="400" class="mx-auto">
-                <v-toolbar shaped>
-                  <v-row justify="center">
-                    <h2 style="text-align: center">
-                      {{ $t("updateSupplierPage.selectedItems") }}
-                    </h2>
-                  </v-row>
-                </v-toolbar>
+              <v-row justify="center">
+                <v-col cols="10" lg="6" sm="10" md="6">
+                  <v-card elevation="16" max-width="400" class="mx-auto">
+                    <v-toolbar shaped>
+                      <v-row justify="center">
+                        <h2 style="text-align: center">
+                          {{ $t("updateSupplierPage.category") }}
+                        </h2>
+                      </v-row>
+                    </v-toolbar>
+                    <v-virtual-scroll
+                      :items="category"
+                      height="300"
+                      item-height="64"
+                    >
+                      <template v-slot="{ item }">
+                        <v-list-item>
+                          <v-list-item-action>
+                            <v-btn
+                              @click="getCategoryItems(item)"
+                              fab
+                              small
+                              depressed
+                              color="primary"
+                            >
+                              <i :class="`fa fa-${item} fa-2x`"></i>
+                            </v-btn>
+                          </v-list-item-action>
+                          <v-list-item-content>
+                            <v-list-item-title :key="item">
+                              <v-btn
+                                @click="getCategoryItems(item)"
+                                text
+                                width="100%"
+                              >
+                                {{ item }}</v-btn
+                              >
+                            </v-list-item-title>
+                          </v-list-item-content>
+                        </v-list-item>
+                      </template>
+                    </v-virtual-scroll>
+                  </v-card>
+                </v-col>
+                <v-col cols="10" lg="6" sm="10" md="6">
+                  <v-card elevation="16" max-width="400" class="mx-auto">
+                    <v-toolbar shaped>
+                      <v-row justify="center">
+                        <h2 style="text-align: center">
+                          {{ $t("updateSupplierPage.items") }}
+                        </h2>
+                      </v-row>
+                    </v-toolbar>
+                    <v-virtual-scroll
+                      :items="categoryItems"
+                      height="300"
+                      item-height="64"
+                    >
+                      <template v-slot="{ item }">
+                        <v-list-item>
+                          <v-list-item-action>
+                            <v-btn fab small depressed color="primary">
+                              <i :class="`fa fa-${item} fa-2x`"></i>
+                            </v-btn>
+                          </v-list-item-action>
+                          <v-list-item-content>
+                            <v-list-item-title
+                              style="text-align: center"
+                              :key="item"
+                            >
+                              {{ item }}
+                            </v-list-item-title>
+                          </v-list-item-content>
+                          <v-list-item-action>
+                            <v-btn @click="addItem(item)" large icon>
+                              <i class="fa fa-plus fa-2x"></i
+                            ></v-btn>
+                          </v-list-item-action>
+                        </v-list-item>
+                      </template>
+                    </v-virtual-scroll>
+                  </v-card>
+                </v-col>
+              </v-row>
+              <v-row justify="center">
+                <v-col cols="10" lg="6" sm="10" md="6">
+                  <v-card elevation="16" max-width="400" class="mx-auto">
+                    <v-toolbar shaped>
+                      <v-row justify="center">
+                        <h2 style="text-align: center">
+                          {{ $t("updateSupplierPage.selectedItems") }}
+                        </h2>
+                      </v-row>
+                    </v-toolbar>
 
-                <v-virtual-scroll
-                  :items="supplierItemsFromDB"
-                  height="300"
-                  item-height="64"
+                    <v-virtual-scroll
+                      :items="supplierItemsFromDB"
+                      height="300"
+                      item-height="64"
+                    >
+                      <template v-slot="{ item }">
+                        <v-list-item>
+                          <v-list-item-action>
+                            <v-btn
+                              @click="getCategoryItems(item)"
+                              fab
+                              small
+                              depressed
+                              color="primary"
+                            >
+                              <i :class="`fa fa-${item} fa-2x`"></i>
+                            </v-btn>
+                          </v-list-item-action>
+                          <v-list-item-content>
+                            <v-list-item-title
+                              style="text-align: center"
+                              :key="item"
+                            >
+                              {{ item }}
+                            </v-list-item-title>
+                          </v-list-item-content>
+                          <v-list-item-action>
+                            <v-btn @click="RemoveItem(item)" large icon>
+                              <i
+                                class="fa fa-trash-alt fa-2x"
+                                style="color: red"
+                              ></i
+                            ></v-btn>
+                          </v-list-item-action>
+                        </v-list-item>
+                      </template>
+                    </v-virtual-scroll>
+                    <v-snackbar v-model="snackBarAlert" :timeout="timeout">
+                      <v-row justify="center">
+                        <h2>{{ snackBarMessage }}</h2>
+                      </v-row>
+                    </v-snackbar>
+                  </v-card>
+                </v-col>
+              </v-row>
+              <v-row class="mt-8 mb-8" justify="center">
+                <v-btn
+                  rounded
+                  large
+                  :color="buttonsColor"
+                  @click="addButtonEvent()"
+                  ><span :style="`color:${buttonsTextColor}`">Add</span></v-btn
                 >
-                  <template v-slot="{ item }">
-                    <v-list-item>
-                      <v-list-item-action>
-                        <v-btn
-                          @click="getCategoryItems(item)"
-                          fab
-                          small
-                          depressed
-                          color="primary"
-                        >
-                          <i :class="`fa fa-${item} fa-2x`"></i>
-                        </v-btn>
-                      </v-list-item-action>
-                      <v-list-item-content>
-                        <v-list-item-title
-                          style="text-align: center"
-                          :key="item"
-                        >
-                          {{ item }}
-                        </v-list-item-title>
-                      </v-list-item-content>
-                      <v-list-item-action>
-                        <v-btn @click="RemoveItem(item)" large icon>
-                          <i
-                            class="fa fa-trash-alt fa-2x"
-                            style="color: red"
-                          ></i
-                        ></v-btn>
-                      </v-list-item-action>
-                    </v-list-item>
-                  </template>
-                </v-virtual-scroll>
-                <v-snackbar v-model="snackBarAlert" :timeout="timeout">
-                  <v-row justify="center">
-                    <h2>{{ snackBarMessage }}</h2>
-                  </v-row>
-                </v-snackbar>
-              </v-card>
-            </v-col>
-          </v-row>
-          <v-row class="mt-8 mb-8" justify="center">
-            <v-btn rounded large :color="buttonsColor" @click="addButtonEvent()"
-              ><span :style="`color:${buttonsTextColor}`">Add</span></v-btn
-            >
-            <v-dialog v-model="dialog" persistent max-width="290">
-              <v-card>
-                <v-card-title class="headline">
-                  {{ $t("updateSupplierPage.dialogApprovalQuestion") }}
-                </v-card-title>
-                <v-card-text>
-                  {{
-                    $t("updateSupplierPage.dialogApprovalDescription")
-                  }}</v-card-text
-                >
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="red" text @click="dialog = false">
-                    {{ $t("updateSupplierPage.dialogDisApprovalButton") }}
-                  </v-btn>
-                  <v-btn
-                    @click="addCategoryAndItemsToSupplier()"
-                    text
-                    :color="buttonsColor"
-                  >
-                    {{ $t("updateSupplierPage.dialogApprovalButton") }}
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </v-row>
+                <v-dialog v-model="dialog" persistent max-width="290">
+                  <v-card>
+                    <v-card-title class="headline">
+                      {{ $t("updateSupplierPage.dialogApprovalQuestion") }}
+                    </v-card-title>
+                    <v-card-text>
+                      {{
+                        $t("updateSupplierPage.dialogApprovalDescription")
+                      }}</v-card-text
+                    >
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="red" text @click="dialog = false">
+                        {{ $t("updateSupplierPage.dialogDisApprovalButton") }}
+                      </v-btn>
+                      <v-btn
+                        @click="addCategoryAndItemsToSupplier()"
+                        text
+                        :color="buttonsColor"
+                      >
+                        {{ $t("updateSupplierPage.dialogApprovalButton") }}
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-row>
+            </v-card>
+          </v-container>
         </v-card>
       </v-container>
     </div>
