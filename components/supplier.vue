@@ -2,7 +2,7 @@
   <div>
     <v-card
       @click="supplierClicked(supplier)"
-      :min-width="show_right_banner == 1 ? '110%' : '120%'"
+      :min-width="minWidth"
       class="grey lighten-5"
     >
       <v-img
@@ -96,6 +96,10 @@ export default {
     show_right_banner: {
       type: Number,
       default: () => {},
+    },
+    minWidth: {
+      type: String,
+      default: () => "110%",
     },
   },
 

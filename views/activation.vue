@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>welcome to ditmatjar</h1>
+    <h1>welcome to dotmatjar</h1>
   </div>
 </template>
 

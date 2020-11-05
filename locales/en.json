@@ -113,7 +113,11 @@
     "newCategoryArabicName": "Category Arabic Name",
     "newCategoryItemArabicName": "Item Arabic Name",
     "addNewUser": "Add new user",
-    "allUsers": "All users"
+    "allUsers": "All users",
+    "addOrRemoveCountry": "add or remove country",
+    "pickCountryToAdd": "pick Country to Add",
+    "countryToRemove": "pick country to remove",
+    "addCountry": "add country"
   },
   "suppliersDashboard": {
     "dashboard": "dashboard",
