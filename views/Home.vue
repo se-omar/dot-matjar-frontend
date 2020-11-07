@@ -180,13 +180,13 @@
       <v-radio-group row mandatory :value="radioGroup">
         <v-radio @change="changeRadioGroup" value="1">
           <template v-slot:label>
-            <span>{{ $t("toolbar.searchProducts") }}</span>
+            <span>{{ $t("toolbar.browseProducts") }}</span>
           </template>
         </v-radio>
 
         <v-radio @change="changeRadioGroup" value="2">
           <template v-slot:label>
-            <span>{{ $t("toolbar.searchSuppliers") }}</span>
+            <span>{{ $t("toolbar.browseSuppliers") }}</span>
           </template>
         </v-radio>
       </v-radio-group>
