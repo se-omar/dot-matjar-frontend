@@ -73,7 +73,7 @@
     "brand": "brand",
     "condition": "condition",
     "addCategorySnackBar": " Your request will be submitted by the admin , you will be notified",
-    "chooseCategory": "Choose your category ..."
+    "chooseCategory": "Choose your item parent  ..."
   },
   "adminPage": {
     "addNewCategory": "add a new category",

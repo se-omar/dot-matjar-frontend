@@ -186,6 +186,47 @@
             >
           </v-col> -->
         </v-row>
+        <v-row justfiy="center">
+          <v-col cols="4" lg="2">
+            <p>
+              category parent is : <span>{{ categoryParent }}</span>
+            </p>
+          </v-col>
+          <v-col cols="4" lg="3">
+            <v-text-field
+              v-model="categoryItem"
+              rounded
+              filled
+              :label="$t('adminPage.addItem')"
+            >
+            </v-text-field>
+          </v-col>
+
+          <v-col lg="3" md="3" cols="4">
+            <v-text-field
+              v-model="itemArabicName"
+              :placeholder="$t('adminPage.newCategoryItemArabicName')"
+              class="text-xl"
+              rounded
+              filled
+              :rules="[rules.required]"
+            ></v-text-field>
+          </v-col>
+
+          <v-col lg="2" cols="2" sm="2" md="2">
+            <v-btn
+              block
+              small
+              :disabled="!valid"
+              rounded
+              :color="siteColor.button_color"
+              @click="addCategoryItem"
+              ><span :style="`color:${siteColor.button_text_color}`">{{
+                $t("adminPage.addItem")
+              }}</span></v-btn
+            >
+          </v-col>
+        </v-row>
       </v-form>
 
       <v-divider></v-divider>
@@ -978,6 +1019,8 @@ export default {
       addCountryForm: false,
       dialog: false,
       choosenCategory: "",
+      categoryParent: "",
+      subItems: "",
     };
   },
 
@@ -1282,7 +1325,7 @@ export default {
     },
     async addCategoryItem() {
       await this.$store.dispatch("addCategoryItems", {
-        categoryName: this.categoryName,
+        categoryName: this.categoryParent,
         categoryItem: this.categoryItem,
         itemArabicName: this.itemArabicName,
       });
@@ -1458,8 +1501,8 @@ export default {
     async categoryClicked(name) {
       var categoryId;
       this.categoryItems = [];
-      this.choosenCategory = name;
-      console.log(this.choosenCategory);
+      this.categoryParent = name;
+      console.log(this.categoryParent);
       console.log(name);
       if (this.siteLanguage == "en") {
         for (let i = 0; i < this.allCategories.length; i++) {
@@ -1495,8 +1538,8 @@ export default {
       this.subItems = [];
       var categoryId;
 
-      this.choosenCategory = name;
-      console.log(this.choosenCategory);
+      this.categoryParent = name;
+      console.log(this.categoryParent);
       await this.$store.dispatch("filterProducts", {
         categoryItem: name,
         buttonPressed: "search",
@@ -1531,8 +1574,8 @@ export default {
       }
     },
     filterProductsWithSubItem(name) {
-      this.choosenCategory = name;
-      console.log(this.choosenCategory);
+      this.categoryParent = name;
+      console.log(this.categoryParent);
     },
   },
 
