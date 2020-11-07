@@ -79,10 +79,6 @@
           <v-row justify="center">
             <v-list>
               <v-list-item>
-                <v-list-item-icon>
-                  <v-icon>mdi-home</v-icon>
-                </v-list-item-icon>
-
                 <v-list-item-title style="font-weight: bold; font-size: 25px"
                   >Category</v-list-item-title
                 >
@@ -92,25 +88,51 @@
                 v-for="(category, index) in category"
                 :key="index"
                 :value="false"
-                prepend-icon="mdi-account-circle"
                 @click="mouseOver(category.name)"
               >
                 <template v-slot:activator>
                   <v-list-item-action style="font-weight: bold"
-                    ><span style="font-weight: bold; font-size: 18px">{{
+                    ><span style="font-weight: bold; font-size: 20px">{{
                       category.name
                     }}</span></v-list-item-action
                   >
                 </template>
 
-                <v-list-item
-                  style="padding-left: 100px"
+                <v-list-group
                   v-for="(item, i) in categoryItems"
                   :key="i"
                   @click="filterProductsWithItem(item)"
+                  no-action
+                  sub-group
+                  :value="false"
                 >
-                  {{ item }}
-                </v-list-item>
+                  <template v-slot:activator>
+                    <v-list-item-action>
+                      <span style="font-weight: bold; font-size: 17px">
+                        {{ item }}</span
+                      ></v-list-item-action
+                    >
+                  </template>
+                  <v-list-group
+                    v-for="(subItem, index) in subItems"
+                    :key="index"
+                    no-action
+                    sub-group
+                    :value="false"
+                    @click="filterProductsWithSubItem(subItem)"
+                  >
+                    <template v-slot:activator>
+                      <v-list-item-action>
+                        <span style="font-weight: bold; font-size: 15px">{{
+                          subItem
+                        }}</span></v-list-item-action
+                      >
+                    </template>
+                  </v-list-group>
+                  <v-list-item>
+                    <v-list-item-title> </v-list-item-title>
+                  </v-list-item>
+                </v-list-group>
               </v-list-group>
             </v-list>
           </v-row>
@@ -184,7 +206,10 @@
       "
     >
       <v-col
-        v-if="$vuetify.breakpoint.lg || $vuetify.breakpoint.md"
+        v-if="
+          ($vuetify.breakpoint.lg && radioGroup == '1') ||
+          ($vuetify.breakpoint.md && radioGroup == '1')
+        "
         lg="2"
         sm="4"
         md="2"
@@ -350,12 +375,11 @@
             :md="homePageInfo.show_right_banner ? 4 : 2"
             xmd="4"
             sm="2"
-            cols="4"
+            cols="6"
             v-for="(filteredProduct, index) in filteredProducts"
             :key="index"
           >
             <product
-              class="ml-n2 mr-n2"
               :currentUser="currentUser"
               :minWidth="minProductWidthFlag"
               :filteredProduct="filteredProduct"
@@ -375,7 +399,7 @@
             lg="2"
             :md="homePageInfo.show_right_banner ? 4 : 3"
             sm="5"
-            cols="5"
+            cols="6"
           >
             <supplier
               :minWidth="homePageInfo.show_right_banner ? '110%' : '120%'"
@@ -437,10 +461,6 @@
 </template>
 
 <script>
-// import SiteColor from "../components/siteColor";
-// import { component } from 'vue/types/umd';
-//import usersModel from "../models/usersModel";
-
 export default {
   name: "Home",
   data() {
@@ -460,20 +480,15 @@ export default {
       isLoading: false,
       categoryItems: [],
       categoryItem: "",
-      // testCategories: [
-      //   { name: "Clothing", icon: "fa fa-user-tie fa-2x ml-2" },
-      //   { name: "Furniture", icon: "fa fa-couch fa-2x ml-2" },
-      //   { name: "Labtops", icon: "fa fa-laptop fa-2x ml-2" },
-      //   { name: "Mobile Phones", icon: "fa fa-mobile fa-2x ml-2" },
-      //   { name: "Cars", icon: "fa fa-car fa-2x ml-2" },
-      // ],
+
       menuButton: false,
       priceFrom: "",
       priceTo: "",
       advancedSearch: false,
-      productsClass: "mr-4 ml-4",
+      productsClass: "",
       supplierApprovalMessage: false,
       filterDialog: false,
+      subItems: [],
     };
   },
   async created() {
@@ -482,7 +497,7 @@ export default {
     await this.$store.dispatch("getSiteColor");
     await this.$store.dispatch("getCurrencies");
     await this.$store.dispatch("categoriesDB");
-    await this.$store.dispatch("getCategoryItems");
+    // await this.$store.dispatch("getCategoryItems");
 
     this.$store.dispatch("removeSupplierPageData");
     await this.$store.dispatch("getSiteColor");
@@ -509,7 +524,7 @@ export default {
     if (this.currentUser.user_type == "waiting_approval") {
       this.supplierApprovalMessage = true;
     }
-    console.log(this.category);
+    console.log("all categories", this.allCategories);
     return new Promise((resolve) => {
       setTimeout(() => {
         this.isLoading = false;
@@ -603,6 +618,9 @@ export default {
       )
         return "114%";
       else return "100%";
+    },
+    allCategories() {
+      return this.$store.state.Home.allCategories;
     },
   },
   methods: {
@@ -729,25 +747,38 @@ export default {
       }
     },
     async mouseOver(name) {
+      var categoryId;
       this.categoryItems = [];
-      console.log(name);
+
       if (this.siteLanguage == "en") {
-        for (let i = 0; i < this.categoriesItems.length; i++) {
-          if (this.categoriesItems[i].category_name == name) {
-            this.categoryItems.push(this.categoriesItems[i].category_items);
+        for (let i = 0; i < this.allCategories.length; i++) {
+          if (this.allCategories[i].category_name == name) {
+            console.log(this.allCategories[i].category_name, name);
+            categoryId = this.allCategories[i].category_id;
+            console.log("category id", categoryId);
+            for (let x = 0; x < this.allCategories.length; x++) {
+              if (this.allCategories[x].parent_id == categoryId) {
+                console.log("id found");
+                this.categoryItems.push(this.allCategories[x].category_name);
+              }
+            }
           }
         }
       } else {
-        for (let i = 0; i < this.categoriesItems.length; i++) {
-          if (this.categoriesItems[i].category_arabic_name == name) {
-            "test", this.categoriesItems[i].category_arabic_name, name;
-
-            this.categoryItems.push(
-              this.categoriesItems[i].category_items_arabic_name
-            );
+        for (let i = 0; i < this.allCategories.length; i++) {
+          if (this.allCategories[i].category_arabic_name == name) {
+            categoryId = this.allCategories[i].category_id;
+            for (let x = 0; x < this.allCategories.length; x++) {
+              if (this.allCategories.parent_id == categoryId) {
+                this.categoryItems.push(
+                  this.allCategories.category_arabic_name
+                );
+              }
+            }
           }
         }
       }
+      console.log(this.categoryItems);
       await this.$store.dispatch("filterProducts", {
         category_name: name,
         buttonPressed: "search",
@@ -759,13 +790,41 @@ export default {
         type: "category",
       });
     },
-    async filterProductsWithItem(item) {
+    async filterProductsWithItem(name) {
+      this.subItems = [];
+      var categoryId;
       await this.$store.dispatch("filterProducts", {
-        categoryItem: item,
+        categoryItem: name,
         buttonPressed: "search",
         product_id: 0,
       });
-      this.$store.commit("loadMoreType", { name: item, type: "item" });
+      this.$store.commit("loadMoreType", { name: name, type: "item" });
+      if (this.siteLanguage == "en") {
+        for (let i = 0; i < this.allCategories.length; i++) {
+          if (this.allCategories[i].category_name == name) {
+            console.log(this.allCategories[i].category_name, name);
+            categoryId = this.allCategories[i].category_id;
+            console.log("category id", categoryId);
+            for (let x = 0; x < this.allCategories.length; x++) {
+              if (this.allCategories[x].parent_id == categoryId) {
+                console.log("id found");
+                this.subItems.push(this.allCategories[x].category_name);
+              }
+            }
+          }
+        }
+      } else {
+        for (let i = 0; i < this.allCategories.length; i++) {
+          if (this.allCategories[i].category_arabic_name == name) {
+            categoryId = this.allCategories[i].category_id;
+            for (let x = 0; x < this.allCategories.length; x++) {
+              if (this.allCategories.parent_id == categoryId) {
+                this.subItems.push(this.allCategories.category_arabic_name);
+              }
+            }
+          }
+        }
+      }
     },
     async filterProductsWithCategory(category) {
       await this.$store.dispatch("filterProducts", {

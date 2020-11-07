@@ -27,7 +27,8 @@ export default {
         allUsers: [],
         user: [],
         loadmore: { name: 'all', type: 'all' },
-        productAdvancedSearches: ''
+        productAdvancedSearches: '',
+        allCategories: []
     },
 
     mutations: {
@@ -98,16 +99,24 @@ export default {
         },
 
         categoriesDB(state, data) {
-            // 
+            state.category = []
+            state.allCategories = data
+
             if (state.siteLanguage == 'en') {
-                state.category = data.map(e => {
-                    return { name: e.category_name, icon: e.category_name }
-                })
+
+                for (let i = 0; i < data.length; i++) {
+                    if (!data[i].parent_id) {
+                        state.category.push({ name: data[i].category_name, icon: data[i].category_name })
+                    }
+                }
             }
             else {
-                state.category = data.map(e => {
-                    return { name: e.category_arabic_name, icon: e.category_name }
-                })
+
+                for (let i = 0; i < data.length; i++) {
+                    if (!data[i].parent_id) {
+                        state.category.push({ name: data[i].category_name, icon: data[i].category_name })
+                    }
+                }
 
             }
             console.log('category in state', state.category)
@@ -423,16 +432,16 @@ export default {
                     alert(message.data.message)
                 })
         },
-        getCategoryItems(context) {
-            axios.put(context.rootState.nodeHost + '/api/getCategoryItems')
-                .then(response => {
-                    //
-                    //
-                    context.commit('getCategoryItems', response.data.data)
-                })
+        // getCategoryItems(context) {
+        //     axios.put(context.rootState.nodeHost + '/api/getCategoryItems')
+        //         .then(response => {
+        //             //
+        //             //
+        //             context.commit('getCategoryItems', response.data.data)
+        //         })
 
 
-        },
+        // },
         removeCategoryAndItems(context, { categoryName, categoryItem }) {
             axios.put(context.rootState.nodeHost + '/api/removeCategoryAndItems', { categoryName: categoryName, categoryItem: categoryItem })
                 .then(message => {

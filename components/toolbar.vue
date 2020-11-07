@@ -7,7 +7,13 @@
         :is-full-page="true"
       ></loading>
     </div> -->
-    <v-app-bar elevate-on-scroll shaped app :color="siteColor.toolbar_color">
+    <v-app-bar
+      elevate-on-scroll
+      fixed
+      shaped
+      app
+      :color="siteColor.toolbar_color"
+    >
       <span class="pr-4" v-if="$vuetify.breakpoint.xs">
         <a
           @click="$router.push('/').catch(() => {})"
@@ -303,7 +309,10 @@
       </v-dialog>
 
       <v-menu
-        v-if="currentUser"
+        v-if="
+          (currentUser, $vuetify.breakpoint.lg) ||
+          (currentUser, $vuetify.breakpoint.md)
+        "
         :close-on-content-click="true"
         :nudge-width="200"
         max-width="25%"
@@ -341,19 +350,6 @@
             id="picture"
             :src="nodeHost + currentUser.profile_photo"
           />
-
-          <!-- <v-card-text>
-            <span>
-            <input type="file" 
-            ref="profilePhoto"
-            @change="profilePhoto"
-            id="profilephoto"
-            class="file-input"
-            />
-            </span>
-                      <span class="file-label">Click to change your photo</span>
-
-          </v-card-text>-->
 
           <div
             v-if="!currentUser.profile_photo"
@@ -578,6 +574,251 @@
           </v-row>
         </v-card>
       </v-menu>
+      <v-dialog v-model="profileDialog" v-else>
+        <template v-slot:activator="{ on }">
+          <v-btn icon small @click="profileDialog = true" v-on="on">
+            <i
+              :style="`color:${siteColor.toolbar_text_color}`"
+              class="fa fa-user"
+            ></i>
+          </v-btn>
+        </template>
+        <v-card max-width="100%">
+          <v-img
+            v-if="currentUser.profile_photo"
+            style="
+              width: 60%;
+              height: 80%;
+              margin-left: auto;
+              margin-right: auto;
+            "
+            id="picture"
+            :src="nodeHost + currentUser.profile_photo"
+          />
+
+          <div
+            v-if="!currentUser.profile_photo"
+            id="fileUpload"
+            class="file is-boxed is-primary"
+          >
+            <label class="file-label">
+              <span class="file-cta">
+                <span class="file-icon">
+                  <i class="fa fa-camera fa-2x" style="color: blue"></i>
+                  <br />
+                </span>
+                <span class="file-label">
+                  {{ $t("toolbar.uploadPhoto") }}
+                  <br />
+                </span>
+              </span>
+
+              <input
+                type="file"
+                ref="profileUpload"
+                @change="changePhoto"
+                class="file-input"
+                id="profilePhoto"
+              />
+              <br />
+            </label>
+          </div>
+
+          <div
+            v-if="currentUser.profile_photo"
+            id="fileUpload"
+            class="file is-boxed is-primary"
+          >
+            <label class="file-label">
+              <span class="file-cta">
+                <span class="file-icon">
+                  <i class="fa fa-camera fa-lg" style="color: blue"></i>
+                  <br />
+                </span>
+                <span class="file-label biggerText">
+                  {{ $t("toolbar.changeProfilePhoto") }}
+                  <br />
+                </span>
+              </span>
+
+              <input
+                type="file"
+                ref="profileUpload"
+                @change="changePhoto"
+                class="file-input"
+                id="profilePhoto"
+              />
+              <br />
+            </label>
+          </div>
+
+          <v-card-title>
+            <v-row justify="center">
+              <span style="font-size: 20px">{{
+                currentUser.full_arabic_name
+              }}</span>
+            </v-row>
+          </v-card-title>
+
+          <v-row v-if="currentUser.user_type == 'business'" justify="center">
+            <v-col cols="10" sm="10" lg="5">
+              <v-btn
+                class="btn1"
+                :color="siteColor.button_color"
+                small
+                rounded
+                @click="supplierPage"
+              >
+                <span
+                  :style="`color:${siteColor.button_text_color}; `"
+                  class="smallerText"
+                >
+                  {{ $t("toolbar.myPage") }}</span
+                >
+              </v-btn>
+              <!-- <v-divider class="mr-4"></v-divider> -->
+            </v-col>
+          </v-row>
+          <v-row justify="center" v-if="currentUser.user_type == 'business'">
+            <v-col cols="10" sm="11" lg="5">
+              <v-btn
+                class="btn1"
+                :color="siteColor.button_color"
+                small
+                rounded
+                @click="$router.push(`/${$i18n.locale}/myProducts`)"
+              >
+                <span
+                  :style="`color: ${siteColor.button_text_color};font-size:15px`"
+                  v-html="$t('toolbar.myProducts')"
+                >
+                </span>
+              </v-btn>
+              <!-- <v-divider class="mr-4"></v-divider> -->
+            </v-col>
+          </v-row>
+          <v-row justify="center" v-if="currentUser.user_type == 'admin'">
+            <v-col cols="10" sm="10" lg="5">
+              <v-btn
+                @click="$router.push(`/${$i18n.locale}/siteColors`)"
+                small
+                rounded
+                :color="siteColor.button_color"
+              >
+                <span
+                  class="smallerText"
+                  v-html="$t('toolbar.siteColors')"
+                  :style="`color: ${siteColor.button_text_color}`"
+                >
+                </span>
+              </v-btn>
+              <!-- <v-divider class="mr-4"></v-divider> -->
+            </v-col>
+          </v-row>
+
+          <v-row justify="center" v-if="currentUser.user_type == 'business'">
+            <v-col cols="10" sm="10" lg="5">
+              <v-btn
+                :color="siteColor.button_color"
+                small
+                rounded
+                @click="$router.push(`/${$i18n.locale}/orderedProducts`)"
+              >
+                <span
+                  :style="`color: ${siteColor.button_text_color}`"
+                  class="smallerText"
+                  v-html="$t('toolbar.orderManage')"
+                >
+                </span>
+              </v-btn>
+              <!-- <v-divider class="mr-4"></v-divider> -->
+            </v-col>
+          </v-row>
+
+          <v-row justify="center" v-if="currentUser.user_type == 'admin'">
+            <v-col cols="10" sm="10" lg="5">
+              <v-btn
+                :color="siteColor.button_color"
+                small
+                rounded
+                @click="
+                  $router.push(`/${$i18n.locale}/categoryAndItemRequests`)
+                "
+                ><span
+                  v-html="$t('toolbar.categoryRequests')"
+                  :style="`color: ${siteColor.button_text_color}; font-size:15px`"
+                >
+                </span
+              ></v-btn>
+              <!-- <v-divider class="mr-4"></v-divider> -->
+            </v-col>
+          </v-row>
+          <v-row justify="center" v-if="currentUser.user_type == 'admin'">
+            <v-col cols="10" sm="10" lg="5">
+              <v-btn
+                :color="siteColor.button_color"
+                small
+                rounded
+                @click="$router.push(`/${$i18n.locale}/pendingSuppliers`)"
+              >
+                <span
+                  :style="`color: ${siteColor.button_text_color}`"
+                  class="smallerText"
+                  v-html="$t('toolbar.pendingSuppliers')"
+                >
+                </span>
+              </v-btn>
+              <!-- <v-divider class="mr-4"></v-divider> -->
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12">
+              <v-card-text>
+                <a
+                  class="size"
+                  @click="$router.push(`/${$i18n.locale}/editPassword`)"
+                >
+                  <i
+                    class="fa fa-cog fa-sm"
+                    aria-hidden="true"
+                    style="color: black"
+                  ></i>
+                  <span class="ml-2" :color="siteColor.toolbar_text_color">
+                    {{ $t("toolbar.changeYourPassword") }}</span
+                  >
+                </a>
+                <br />
+                <br />
+                <a
+                  @click="$router.push(`/${$i18n.locale}/completedata`)"
+                  class="size"
+                >
+                  <i
+                    class="fa fa-edit fa-sm"
+                    aria-hidden="true"
+                    style="color: black"
+                  ></i>
+                  <span class="ml-2" :color="siteColor.toolbar_text_color">{{
+                    $t("toolbar.updateOrCompleteInfo")
+                  }}</span>
+                </a>
+                <br />
+                <br />
+                <a class="size" @click="logout">
+                  <i
+                    class="fa fa-power-off fa-sm"
+                    aria-hidden="true"
+                    style="color: black"
+                  ></i>
+                  <span class="ml-2" :color="siteColor.toolbar_text_color">
+                    {{ $t("toolbar.logout") }}</span
+                  >
+                </a>
+              </v-card-text>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-dialog>
 
       <!-- ================= -->
       <v-btn
@@ -1177,6 +1418,7 @@ export default {
     // },
   },
   data: () => ({
+    profileDialog: false,
     profilephoto: [],
     drawer: false,
     isLoading: false,

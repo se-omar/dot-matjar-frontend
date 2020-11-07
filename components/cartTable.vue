@@ -1,21 +1,28 @@
 <template>
   <div>
-    <v-row justify="end" class="ml-2" v-if="currentUser.user_type == 'user'">
+    <v-row
+      justify="end"
+      v-if="currentUser.user_type == 'user'"
+      class="grey lighten-3"
+    >
       <v-col cols="12">
         <v-btn
           color="white"
-          x-large
           @click.stop="dialog = true"
           @click="table"
           v-if="currentUser"
           fixed
           fab
-          style="margin-top: 80px; margin-left: 85%"
+          :style="
+            $vuetify.breakpoint.lg || $vuetify.breakpoint.md
+              ? 'margin-top: 0px; margin-left: 85%'
+              : 'margin-top: 10px; margin-left: 70%'
+          "
         >
           <!-- <i class="fa fa-2x fa-shopping-cart" aria-hidden="true"></i> -->
           <v-img
-            max-height="60"
-            max-width="50"
+            max-height="50"
+            max-width="40"
             src="../assets/images/cart-logo.png"
           ></v-img>
         </v-btn>
@@ -69,7 +76,7 @@
               </v-row>
 
               <v-row justify="center">
-                <v-col lg="3" sm="3" cols="3">
+                <v-col lg="3" sm="3" cols="4">
                   <v-btn
                     v-if="intable.length > 0"
                     dark
@@ -80,7 +87,7 @@
                   >
                 </v-col>
 
-                <v-col lg="3" sm="3" cols="3">
+                <v-col lg="3" sm="3" cols="4">
                   <v-btn
                     dark
                     large
