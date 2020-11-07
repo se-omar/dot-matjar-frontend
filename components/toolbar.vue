@@ -130,8 +130,8 @@
 
       <v-menu
         v-if="
-          (currentUser, $vuetify.breakpoint.lg) ||
-          (currentUser, $vuetify.breakpoint.md)
+          (currentUser && $vuetify.breakpoint.lg) ||
+          (currentUser && $vuetify.breakpoint.md)
         "
         :close-on-content-click="true"
         :nudge-width="200"
@@ -394,7 +394,15 @@
           </v-row>
         </v-card>
       </v-menu>
-      <v-dialog v-model="profileDialog" v-else>
+      <v-dialog
+        max-width="70%"
+        style="overflow: hidden"
+        v-model="profileDialog"
+        v-else-if="
+          (currentUser && $vuetify.breakpoint.sm) ||
+          (currentUser && $vuetify.breakpoint.xs)
+        "
+      >
         <template v-slot:activator="{ on }">
           <v-btn icon small @click="profileDialog = true" v-on="on">
             <i
@@ -403,7 +411,8 @@
             ></i>
           </v-btn>
         </template>
-        <v-card max-width="100%">
+
+        <v-card>
           <v-img
             v-if="currentUser.profile_photo"
             style="

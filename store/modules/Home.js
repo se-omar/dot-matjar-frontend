@@ -114,7 +114,7 @@ export default {
 
                 for (let i = 0; i < data.length; i++) {
                     if (!data[i].parent_id) {
-                        state.category.push({ name: data[i].category_name, icon: data[i].category_name })
+                        state.category.push({ name: data[i].category_arabic_name, icon: data[i].category_name })
                     }
                 }
 
@@ -403,6 +403,7 @@ export default {
                 governorate: governorate,
                 region: region
             }).then(response => {
+                console.log('filter suppliers', response.data.users)
                 //
                 context.commit('filterSuppliers', response.data.users)
             })

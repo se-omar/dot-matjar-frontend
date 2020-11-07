@@ -12,7 +12,10 @@
           </v-text-field>
         </v-col>
         <v-col>
-          <v-btn rounded :color="siteColor.button_color"
+          <v-btn
+            @click="filterSuppliers"
+            rounded
+            :color="siteColor.button_color"
             ><span :style="`color:${siteColor.button_text_color}`">{{
               $t("allUsers.search")
             }}</span></v-btn
@@ -54,6 +57,7 @@ export default {
     loadmore() {
       this.$store.dispatch("getAllUsers");
     },
+    searchUserByName() {},
   },
   async created() {
     await this.$store.dispatch("getSiteColor");

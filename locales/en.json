@@ -45,7 +45,7 @@
   },
   "addProduct": {
     "productName": "product name",
-    "category": "category",
+    "category": "Category",
     "item": "item",
     "code": "code",
     "quantity": "quantity",
@@ -72,7 +72,8 @@
     "itemArabicName": "Item Arabic Name",
     "brand": "brand",
     "condition": "condition",
-    "addCategorySnackBar": " Your request will be submitted by the admin , you will be notified"
+    "addCategorySnackBar": " Your request will be submitted by the admin , you will be notified",
+    "chooseCategory": "Choose your category ..."
   },
   "adminPage": {
     "addNewCategory": "add a new category",

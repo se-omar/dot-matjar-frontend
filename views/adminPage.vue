@@ -78,7 +78,69 @@
 
       <v-form v-model="valid">
         <v-row justify="center">
-          <v-col class="mb-n7" lg="3" md="3" cols="10">
+          <v-col cols="12" lg="4" sm="12" md="4">
+            <v-card style="overflow: hidden">
+              <v-row justify="center">
+                <v-list>
+                  <v-list-item>
+                    <v-list-item-title
+                      style="font-weight: bold; font-size: 25px"
+                      >{{ $t("addProduct.chooseCategory") }}</v-list-item-title
+                    >
+                  </v-list-item>
+
+                  <v-list-group
+                    v-for="(category, index) in category"
+                    :key="index"
+                    :value="false"
+                    @click="categoryClicked(category.name)"
+                  >
+                    <template v-slot:activator>
+                      <v-list-item-action style="font-weight: bold"
+                        ><span style="font-weight: bold; font-size: 20px">{{
+                          category.name
+                        }}</span></v-list-item-action
+                      >
+                    </template>
+
+                    <v-list-group
+                      v-for="(item, i) in categoryItems"
+                      :key="i"
+                      @click="filterProductsWithItem(item)"
+                      no-action
+                      sub-group
+                      :value="false"
+                    >
+                      <template v-slot:activator>
+                        <v-list-item-action>
+                          <span style="font-weight: bold; font-size: 17px">
+                            {{ item }}</span
+                          ></v-list-item-action
+                        >
+                      </template>
+                      <v-list-group
+                        v-for="(subItem, index) in subItems"
+                        :key="index"
+                        no-action
+                        sub-group
+                        :value="false"
+                        @click="filterProductsWithSubItem(subItem)"
+                      >
+                        <template v-slot:activator>
+                          <v-list-item-action>
+                            <span style="font-weight: bold; font-size: 15px">{{
+                              subItem
+                            }}</span></v-list-item-action
+                          >
+                        </template>
+                      </v-list-group>
+                    </v-list-group>
+                  </v-list-group>
+                </v-list>
+              </v-row>
+            </v-card>
+          </v-col>
+          <!-- <v-col class="mb-n7" lg="3" md="3" cols="10">
             <v-select
               :rules="[rules.required]"
               filled
@@ -122,7 +184,7 @@
                 $t("adminPage.addItem")
               }}</span></v-btn
             >
-          </v-col>
+          </v-col> -->
         </v-row>
       </v-form>
 
@@ -541,8 +603,8 @@
       <v-row justify="center">
         <v-col
           class="ms-3"
-          v-for="sortedSupplier in suppliersSortedBySales.slice(0, 10)"
-          :key="sortedSupplier.user_id"
+          v-for="(sortedSupplier, index) in suppliersSortedBySales.slice(0, 10)"
+          :key="index"
           lg="2"
           md="2"
           cols="5"
@@ -843,7 +905,7 @@ export default {
     this.isLoading = false;
     //
     await this.$store.dispatch("categoriesDB");
-    await this.$store.dispatch("getCategoryItems");
+    // await this.$store.dispatch("getCategoryItems");
   },
 
   data: () => {
@@ -915,6 +977,7 @@ export default {
       country: "",
       addCountryForm: false,
       dialog: false,
+      choosenCategory: "",
     };
   },
 
@@ -1035,6 +1098,12 @@ export default {
     },
     siteLanguage() {
       return this.$store.state.Home.siteLanguage;
+    },
+    category() {
+      return this.$store.state.Home.category;
+    },
+    allCategories() {
+      return this.$store.state.Home.allCategories;
     },
   },
 
@@ -1385,6 +1454,85 @@ export default {
     RemoveCountry(country) {
       this.$store.dispatch("removeCountry", country);
       location.reload();
+    },
+    async categoryClicked(name) {
+      var categoryId;
+      this.categoryItems = [];
+      this.choosenCategory = name;
+      console.log(this.choosenCategory);
+      console.log(name);
+      if (this.siteLanguage == "en") {
+        for (let i = 0; i < this.allCategories.length; i++) {
+          if (this.allCategories[i].category_name == name) {
+            console.log(this.allCategories[i].category_name, name);
+            categoryId = this.allCategories[i].category_id;
+            console.log("category id", categoryId);
+            for (let x = 0; x < this.allCategories.length; x++) {
+              if (this.allCategories[x].parent_id == categoryId) {
+                console.log("id found");
+                this.categoryItems.push(this.allCategories[x].category_name);
+              }
+            }
+          }
+        }
+      } else {
+        for (let i = 0; i < this.allCategories.length; i++) {
+          if (this.allCategories[i].category_arabic_name == name) {
+            categoryId = this.allCategories[i].category_id;
+            for (let x = 0; x < this.allCategories.length; x++) {
+              if (this.allCategories[x].parent_id == categoryId) {
+                this.categoryItems.push(
+                  this.allCategories[x].category_arabic_name
+                );
+              }
+            }
+          }
+        }
+      }
+      console.log(this.categoryItems);
+    },
+    async filterProductsWithItem(name) {
+      this.subItems = [];
+      var categoryId;
+
+      this.choosenCategory = name;
+      console.log(this.choosenCategory);
+      await this.$store.dispatch("filterProducts", {
+        categoryItem: name,
+        buttonPressed: "search",
+        product_id: 0,
+      });
+      this.$store.commit("loadMoreType", { name: name, type: "item" });
+      if (this.siteLanguage == "en") {
+        for (let i = 0; i < this.allCategories.length; i++) {
+          if (this.allCategories[i].category_name == name) {
+            console.log(this.allCategories[i].category_name, name);
+            categoryId = this.allCategories[i].category_id;
+            console.log("category id", categoryId);
+            for (let x = 0; x < this.allCategories.length; x++) {
+              if (this.allCategories[x].parent_id == categoryId) {
+                console.log("id found");
+                this.subItems.push(this.allCategories[x].category_name);
+              }
+            }
+          }
+        }
+      } else {
+        for (let i = 0; i < this.allCategories.length; i++) {
+          if (this.allCategories[i].category_arabic_name == name) {
+            categoryId = this.allCategories[i].category_id;
+            for (let x = 0; x < this.allCategories.length; x++) {
+              if (this.allCategories[x].parent_id == categoryId) {
+                this.subItems.push(this.allCategories[x].category_arabic_name);
+              }
+            }
+          }
+        }
+      }
+    },
+    filterProductsWithSubItem(name) {
+      this.choosenCategory = name;
+      console.log(this.choosenCategory);
     },
   },
 

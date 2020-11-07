@@ -69,7 +69,7 @@
                   <v-btn
                     @click="$router.push(`/${$i18n.locale}/resetPassword`)"
                     text
-                    ><span :style="`color:${siteColor.button_text_color}`">{{
+                    ><span :style="`color:${siteColor.button_color}`">{{
                       $t("registerLogin.forgotPassword")
                     }}</span></v-btn
                   >

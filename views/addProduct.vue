@@ -19,33 +19,89 @@
                 </v-col>
               </v-row>
 
-              <v-row>
-                <v-col cols="6">
-                  <v-select
-                    v-model="categoryName"
-                    :items="category"
-                    dense
-                    required
-                    :rules="[rules.required]"
-                    :label="$t('addProduct.category')"
-                    @change="gettingCategoryItems"
-                    filled
-                    rounded
-                  ></v-select>
-                </v-col>
-                <v-col cols="6">
-                  <v-select
-                    v-model="categoryItem"
-                    :items="categoryItems"
-                    dense
-                    required
-                    :label="$t('addProduct.item')"
-                    filled
-                    rounded
-                  ></v-select>
+              <v-row justify="center">
+                <v-col cols="12" lg="8" sm="12" md="8">
+                  <v-card style="overflow: hidden">
+                    <v-row justify="center">
+                      <v-list>
+                        <v-list-item>
+                          <v-list-item-title
+                            style="font-weight: bold; font-size: 25px"
+                            >{{
+                              $t("addProduct.chooseCategory")
+                            }}</v-list-item-title
+                          >
+                        </v-list-item>
+
+                        <v-list-group
+                          v-for="(category, index) in category"
+                          :key="index"
+                          :value="false"
+                          @click="categoryClicked(category.name)"
+                        >
+                          <template v-slot:activator>
+                            <v-list-item-action style="font-weight: bold"
+                              ><span
+                                style="font-weight: bold; font-size: 20px"
+                                >{{ category.name }}</span
+                              ></v-list-item-action
+                            >
+                          </template>
+
+                          <v-list-group
+                            v-for="(item, i) in categoryItems"
+                            :key="i"
+                            @click="filterProductsWithItem(item)"
+                            no-action
+                            sub-group
+                            :value="false"
+                          >
+                            <template v-slot:activator>
+                              <v-list-item-action>
+                                <span
+                                  style="font-weight: bold; font-size: 17px"
+                                >
+                                  {{ item }}</span
+                                ></v-list-item-action
+                              >
+                            </template>
+                            <v-list-group
+                              v-for="(subItem, index) in subItems"
+                              :key="index"
+                              no-action
+                              sub-group
+                              :value="false"
+                              @click="filterProductsWithSubItem(subItem)"
+                            >
+                              <template v-slot:activator>
+                                <v-list-item-action>
+                                  <span
+                                    style="font-weight: bold; font-size: 15px"
+                                    >{{ subItem }}</span
+                                  ></v-list-item-action
+                                >
+                              </template>
+                            </v-list-group>
+                          </v-list-group>
+                        </v-list-group>
+                      </v-list>
+                    </v-row>
+                  </v-card>
                 </v-col>
               </v-row>
-
+              <v-row justify="center">
+                <v-col cols="12" lg="6" sm="6" md="6">
+                  <v-text-field
+                    :label="$t('addProduct.category')"
+                    v-model="choosenCategory"
+                    rounded
+                    disabled
+                    filled
+                    dense
+                  >
+                  </v-text-field>
+                </v-col>
+              </v-row>
               <v-row>
                 <v-col cols="6">
                   <v-text-field
@@ -371,10 +427,10 @@
             <v-row justify="center">
               <v-col cols="12" lg="4" sm="12" md="4">
                 <v-btn
-                  :disabled="!valid || !image"
                   @click="addProduct"
                   rounded
                   :color="siteColor.button_color"
+                  :disabled="!valid"
                 >
                   <span
                     :style="`color:${siteColor.button_text_color};font-size: 18px`"
@@ -416,13 +472,13 @@ export default {
     categoriesItems() {
       return this.$store.state.Home.categoriesItems;
     },
-    category() {
-      var array = [];
-      this.$store.state.Home.category.forEach((e) => {
-        array.push(e.name);
-      });
-      return array;
-    },
+    // category() {
+    //   var array = [];
+    //   this.$store.state.Home.category.forEach((e) => {
+    //     array.push(e.name);
+    //   });
+    //   return array;
+    // },
     siteColor() {
       if (this.$store.state.Home.siteColor) {
         return this.$store.state.Home.siteColor;
@@ -440,6 +496,15 @@ export default {
     },
     currencyNames() {
       return this.$store.state.ProductDetails.currencyNames;
+    },
+    category() {
+      return this.$store.state.Home.category;
+    },
+    allCategories() {
+      return this.$store.state.Home.allCategories;
+    },
+    siteLanguage() {
+      return this.$store.state.Home.siteLanguage;
     },
   },
 
@@ -490,6 +555,8 @@ export default {
       newCategoryArabicName: "",
       newItemArabicName: "",
       addCategorySnackBar: false,
+      subItems: [],
+      choosenCategory: "",
     };
   },
   methods: {
@@ -520,10 +587,10 @@ export default {
       form.set("describtion", self.description);
       form.set("color", self.color);
       form.set("discount_amount", self.discountAmount);
-      form.set("category_name", self.categoryName);
-      form.set("category_item", this.categoryItem);
+      form.set("category_name", self.choosenCategory);
+      form.set("category_item", self.categoryItem);
       form.set("currency", self.productCurrency);
-
+      form.set("siteLanguage", self.siteLanguage);
       files.forEach((element) => {
         form.append("file", element);
       });
@@ -541,15 +608,15 @@ export default {
         });
     },
 
-    gettingCategoryItems() {
-      this.$store.dispatch("getCategoryItems");
-      this.categoryItems = [];
-      for (let i = 0; i < this.categoriesItems.length; i++) {
-        if (this.categoriesItems[i].category_name == this.categoryName) {
-          this.categoryItems.push(this.categoriesItems[i].category_items);
-        }
-      }
-    },
+    // gettingCategoryItems() {
+    //   this.$store.dispatch("getCategoryItems");
+    //   this.categoryItems = [];
+    //   for (let i = 0; i < this.categoriesItems.length; i++) {
+    //     if (this.categoriesItems[i].category_name == this.categoryName) {
+    //       this.categoryItems.push(this.categoriesItems[i].category_items);
+    //     }
+    //   }
+    // },
     requestNewCategoryAndItem() {
       this.$store.dispatch("requestNewCategoryAndItem", {
         newCategoryName: this.newCategoryName,
@@ -562,15 +629,95 @@ export default {
       });
       this.addCategorySnackBar = true;
     },
+    async categoryClicked(name) {
+      var categoryId;
+      this.categoryItems = [];
+      this.choosenCategory = name;
+      console.log(this.choosenCategory);
+      console.log(name);
+      if (this.siteLanguage == "en") {
+        for (let i = 0; i < this.allCategories.length; i++) {
+          if (this.allCategories[i].category_name == name) {
+            console.log(this.allCategories[i].category_name, name);
+            categoryId = this.allCategories[i].category_id;
+            console.log("category id", categoryId);
+            for (let x = 0; x < this.allCategories.length; x++) {
+              if (this.allCategories[x].parent_id == categoryId) {
+                console.log("id found");
+                this.categoryItems.push(this.allCategories[x].category_name);
+              }
+            }
+          }
+        }
+      } else {
+        for (let i = 0; i < this.allCategories.length; i++) {
+          if (this.allCategories[i].category_arabic_name == name) {
+            categoryId = this.allCategories[i].category_id;
+            for (let x = 0; x < this.allCategories.length; x++) {
+              if (this.allCategories[x].parent_id == categoryId) {
+                this.categoryItems.push(
+                  this.allCategories[x].category_arabic_name
+                );
+              }
+            }
+          }
+        }
+      }
+      console.log(this.categoryItems);
+    },
+    async filterProductsWithItem(name) {
+      this.subItems = [];
+      var categoryId;
+
+      this.choosenCategory = name;
+      console.log(this.choosenCategory);
+      await this.$store.dispatch("filterProducts", {
+        categoryItem: name,
+        buttonPressed: "search",
+        product_id: 0,
+      });
+      this.$store.commit("loadMoreType", { name: name, type: "item" });
+      if (this.siteLanguage == "en") {
+        for (let i = 0; i < this.allCategories.length; i++) {
+          if (this.allCategories[i].category_name == name) {
+            console.log(this.allCategories[i].category_name, name);
+            categoryId = this.allCategories[i].category_id;
+            console.log("category id", categoryId);
+            for (let x = 0; x < this.allCategories.length; x++) {
+              if (this.allCategories[x].parent_id == categoryId) {
+                console.log("id found");
+                this.subItems.push(this.allCategories[x].category_name);
+              }
+            }
+          }
+        }
+      } else {
+        for (let i = 0; i < this.allCategories.length; i++) {
+          if (this.allCategories[i].category_arabic_name == name) {
+            categoryId = this.allCategories[i].category_id;
+            for (let x = 0; x < this.allCategories.length; x++) {
+              if (this.allCategories[x].parent_id == categoryId) {
+                this.subItems.push(this.allCategories[x].category_arabic_name);
+              }
+            }
+          }
+        }
+      }
+    },
+    filterProductsWithSubItem(name) {
+      this.choosenCategory = name;
+      console.log(this.choosenCategory);
+    },
   },
   async created() {
     await this.$store.dispatch("getSiteColor");
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
     }
-    await this.$store.dispatch("getCategoryItems");
+    // await this.$store.dispatch("getCategoryItems");
     await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getSupplierCategoriesRequests");
+
     console.log(this.category);
     return new Promise((resolve) => {
       setTimeout(() => {
