@@ -36,7 +36,9 @@
     "siteColorsNobr": "site colors",
     "country": "Country",
     "pendingSuppliers": "Pending<br/> Suppliers",
-    "pendingSuppliersNobr": "Pending Suppliers"
+    "pendingSuppliersNobr": "Pending Suppliers",
+    "searchProducts": "search for products",
+    "searchSuppliers": "search for suppliers"
   },
   "homePage": {
     "loadMore": "load more",

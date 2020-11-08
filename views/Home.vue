@@ -18,7 +18,7 @@
         <p>ThankYou</p>
       </v-row>
     </v-snackbar>
-
+    <div id="container"></div>
     <v-row
       v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs"
       class="mt-4"
@@ -228,12 +228,13 @@
           v-if="radioGroup === '1' && filteredProducts.length > 0"
         >
           <v-col
+            class="ms-2"
             :class="homePageInfo.show_right_banner ? '' : productsClass"
             :lg="homePageInfo.show_right_banner ? 3 : 2"
             :md="homePageInfo.show_right_banner ? 4 : 2"
             xmd="4"
-            sm="2"
-            cols="6"
+            sm="5"
+            cols="5"
             v-for="(filteredProduct, index) in filteredProducts"
             :key="index"
           >
@@ -319,6 +320,8 @@
 </template>
 
 <script>
+import CategorySubMenu from "../components/categorySubmenu";
+import Vue from "vue";
 export default {
   name: "Home",
   data() {
@@ -348,6 +351,9 @@ export default {
       filterDialog: false,
       subItems: [],
     };
+  },
+  mounted() {
+    console.log(CategorySubMenu);
   },
   async created() {
     this.isLoading = true;
@@ -606,6 +612,13 @@ export default {
     },
 
     async mouseOver(cat) {
+      const categoryCtor = Vue.extend(CategorySubMenu);
+      const categorySubmenuInstance = new categoryCtor({
+        propsData: {
+          category: this.category,
+        },
+      });
+      categorySubmenuInstance.$mount("#container");
       var categoryId;
       this.categoryItems = [];
 

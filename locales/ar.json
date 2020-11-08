@@ -34,7 +34,9 @@
         "pendingSuppliers": "الموردين <br/>المعلقين",
         "siteColorsNobr": "الوان الموقع",
         "categoryRequestsNobr": "طلبات الفئات",
-        "pendingSuppliersNobr": "التجار المعلقين"
+        "pendingSuppliersNobr": "التجار المعلقين",
+        "searchProducts": "البحث عن المنتجات",
+        "searchSuppliers": "البحث عن البائعين"
     },
     "homePage": {
         "loadMore": "المزيد",
