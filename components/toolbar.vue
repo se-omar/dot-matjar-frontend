@@ -1226,6 +1226,9 @@ export default {
     siteLanguage() {
       return this.$store.state.Home.siteLanguage;
     },
+    loadmore() {
+      return this.$store.state.Home.loadmore;
+    },
   },
 
   methods: {
@@ -1308,12 +1311,16 @@ export default {
       if (this.governorate) obj.governorate = this.governorate;
       if (this.region) obj.region = this.region;
       if (this.toolbarSearch) obj.toolbarSearch = this.toolbarSearch;
+      console.log("loadmore", this.loadmore);
       // if (this.country) obj.country = this.country;
       this.$store.commit("setProductAdvancedSearches", obj);
 
       await this.$store.dispatch("filterProducts", {
         product_name: this.toolbarSearch,
-        category_name: this.categoryName,
+        category_name:
+          this.loadmore && this.loadmore.category
+            ? this.loadmore.category.category_name
+            : "",
         governorate: this.governorate,
         region: this.region,
         priceFrom: this.priceFrom,

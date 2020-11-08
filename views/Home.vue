@@ -18,48 +18,7 @@
         <p>ThankYou</p>
       </v-row>
     </v-snackbar>
-    <!-- test menu  -->
-    <!-- <v-row justify="center">
-      <v-list>
-        <v-list-item>
-          <v-list-item-icon>
-            <v-icon>mdi-home</v-icon>
-          </v-list-item-icon>
 
-          <v-list-item-title style="font-weight: bold; font-size: 25px"
-            >Category</v-list-item-title
-          >
-        </v-list-item>
-
-        <v-list-group
-          v-for="(category, index) in category"
-          :key="index"
-          :value="true"
-          prepend-icon="mdi-account-circle"
-          @click="mouseOver(category.name)"
-        >
-          <template v-slot:activator>
-            <v-list-item-action style="font-weight: bold"
-              ><span style="font-weight: bold; font-size: 18px">{{
-                category.name
-              }}</span></v-list-item-action
-            >
-          </template>
-
-         
-          <v-list-item
-            style="padding-left: 100px"
-            v-for="(item, i) in categoryItems"
-            :key="i"
-            @click="dialog = true"
-          >
-            {{ item }}
-          </v-list-item>
-
-         
-        </v-list-group>
-      </v-list>
-    </v-row> -->
     <v-row
       v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs"
       class="mt-4"
@@ -88,7 +47,7 @@
                 v-for="(category, index) in category"
                 :key="index"
                 :value="false"
-                @click="mouseOver(category.name)"
+                @click="mouseOver(category)"
               >
                 <template v-slot:activator>
                   <v-list-item-action style="font-weight: bold"
@@ -216,107 +175,6 @@
         cols="4"
       >
         <v-card height="95%" style="overflow: hidden" max-width>
-          <!-- <v-row>
-            <v-col cols="12" sm="12" lg="12">
-              <v-menu
-                v-for="(category, index) in category"
-                :key="index"
-                open-on-hover
-                offset-x
-                :left="rtlMenuCondition"
-                transition="scale-transition"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-row class="mx-2" justify="start">
-                    <v-col cols="12" lg="10" sm="12">
-                      <v-btn
-                        width="110%"
-                        @mouseover="mouseOver(category.name)"
-                        v-bind="attrs"
-                        v-on="on"
-                        text
-                        @click="filterProductsWithCategory(category.name)"
-                      >
-                        <span v-if="$vuetify.breakpoint.xs">
-                          <v-row justify="start">
-                            <v-col>
-                              <span
-                                class="mt-1 smallerText"
-                                style="font-size: 14px"
-                              >
-                                {{ category.name }}</span
-                              >
-
-                              <v-btn
-                                @click="
-                                  filterProductsWithCategory(category.name)
-                                "
-                                icon
-                                style="overflow: hidden; color: black"
-                              >
-                                <i
-                                  v-if="siteLanguage == 'en'"
-                                  class="fa fa-chevron-right"
-                                ></i>
-                                <i v-else class="fa fa-chevron-left"></i>
-                              </v-btn>
-                            </v-col>
-                          </v-row>
-                        </span>
-                        <span v-else>
-                          <v-row justify="start">
-                            <v-col lg="5">
-                              <i
-                                :class="`fas fa-${category.icon} fa-sm  mr-2 mt-2`"
-                              ></i>
-
-                              <span class="mt-1 smallerText">
-                                {{ category.name }}</span
-                              >
-                            </v-col>
-                            <v-row justify="end">
-                              <v-col lg="2">
-                                <v-btn
-                                  @click="
-                                    filterProductsWithCategory(category.name)
-                                  "
-                                  icon
-                                  style="overflow: hidden; color: black"
-                                  text
-                                >
-                                  <i
-                                    v-if="siteLanguage == 'en'"
-                                    class="fa fa-chevron-right"
-                                  ></i>
-                                  <i v-else class="fa fa-chevron-left"></i>
-                                </v-btn>
-                              </v-col>
-                            </v-row>
-                          </v-row>
-                        </span>
-                      </v-btn>
-                    </v-col>
-                  
-                  </v-row>
-                </template>
-                <v-card>
-                  <v-list v-for="item in categoryItems" :key="item">
-                    <v-btn
-                      class="black--text"
-                      @click="filterProductsWithItem(item)"
-                      text
-                    >
-                      -
-                      <i :class="`fa fa-${item} fa-lg ml-2 mr-2`"></i>
-                      <span class="smallerText" style="color: black">
-                        {{ item }}</span
-                      >
-                    </v-btn>
-                  </v-list>
-                </v-card>
-              </v-menu>
-            </v-col>
-          </v-row> -->
           <v-row justify="center">
             <v-list>
               <v-list-item>
@@ -330,16 +188,16 @@
               </v-list-item>
 
               <v-list-group
-                v-for="(category, index) in category"
+                v-for="(cat, index) in category"
                 :key="index"
                 :value="false"
                 prepend-icon="mdi-account-circle"
-                @click="mouseOver(category.name)"
+                @click="mouseOver(cat)"
               >
                 <template v-slot:activator>
                   <v-list-item-action style="font-weight: bold"
                     ><span style="font-weight: bold; font-size: 18px">{{
-                      category.name
+                      cat.category_name
                     }}</span></v-list-item-action
                   >
                 </template>
@@ -350,7 +208,7 @@
                   :key="i"
                   @click="filterProductsWithItem(item)"
                 >
-                  {{ item }}
+                  {{ item.category_name }}
                 </v-list-item>
               </v-list-group>
             </v-list>
@@ -746,85 +604,110 @@ export default {
         }
       }
     },
-    async mouseOver(name) {
+
+    async mouseOver(cat) {
       var categoryId;
       this.categoryItems = [];
 
-      if (this.siteLanguage == "en") {
-        for (let i = 0; i < this.allCategories.length; i++) {
-          if (this.allCategories[i].category_name == name) {
-            console.log(this.allCategories[i].category_name, name);
-            categoryId = this.allCategories[i].category_id;
-            console.log("category id", categoryId);
-            for (let x = 0; x < this.allCategories.length; x++) {
-              if (this.allCategories[x].parent_id == categoryId) {
-                console.log("id found");
-                this.categoryItems.push(this.allCategories[x].category_name);
-              }
-            }
-          }
+      categoryId = cat.category_id;
+      this.allCategories.forEach((element) => {
+        if (element.parent_id == categoryId) {
+          this.categoryItems.push(element);
         }
-      } else {
-        for (let i = 0; i < this.allCategories.length; i++) {
-          if (this.allCategories[i].category_arabic_name == name) {
-            categoryId = this.allCategories[i].category_id;
-            for (let x = 0; x < this.allCategories.length; x++) {
-              if (this.allCategories.parent_id == categoryId) {
-                this.categoryItems.push(
-                  this.allCategories.category_arabic_name
-                );
-              }
-            }
-          }
-        }
-      }
-      console.log(this.categoryItems);
+      });
+
+      // if (this.siteLanguage == "en") {
+      //   for (let i = 0; i < this.allCategories.length; i++) {
+      //     if (this.allCategories[i].category_name == name) {
+      //       console.log(this.allCategories[i].category_name, name);
+      //       categoryId = this.allCategories[i].category_id;
+      //       console.log("category id", categoryId);
+      //       for (let x = 0; x < this.allCategories.length; x++) {
+      //         if (this.allCategories[x].parent_id == categoryId) {
+      //           console.log("id found");
+      //           this.categoryItems.push(this.allCategories[x].category_name);
+      //         }
+      //       }
+      //     }
+      //   }
+      // } else {
+      //   for (let i = 0; i < this.allCategories.length; i++) {
+      //     if (this.allCategories[i].category_arabic_name == name) {
+      //       categoryId = this.allCategories[i].category_id;
+      //       for (let x = 0; x < this.allCategories.length; x++) {
+      //         if (this.allCategories.parent_id == categoryId) {
+      //           this.categoryItems.push(
+      //             this.allCategories.category_arabic_name
+      //           );
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
       await this.$store.dispatch("filterProducts", {
-        category_name: name,
+        category_name: cat.category_name,
+        buttonPressed: "search",
+        product_id: 0,
+      });
+      //this.$store.commit("setCategoryId");
+      this.$store.commit("loadMoreType", {
+        category: cat,
+        type: "category",
+      });
+    },
+
+    async filterProductsWithItem(item) {
+      this.subItems = [];
+      var categoryId;
+      await this.$store.dispatch("filterProducts", {
+        categoryItem: item.category_name,
+        buttonPressed: "search",
+        product_id: 0,
+      });
+      this.$store.commit("loadMoreType", {
+        category: item,
+        type: "item",
+      });
+
+      await this.$store.dispatch("filterProducts", {
+        category_name: item.category_name,
         buttonPressed: "search",
         product_id: 0,
       });
 
-      this.$store.commit("loadMoreType", {
-        name: name,
-        type: "category",
-      });
-    },
-    async filterProductsWithItem(name) {
-      this.subItems = [];
-      var categoryId;
-      await this.$store.dispatch("filterProducts", {
-        categoryItem: name,
-        buttonPressed: "search",
-        product_id: 0,
-      });
-      this.$store.commit("loadMoreType", { name: name, type: "item" });
-      if (this.siteLanguage == "en") {
-        for (let i = 0; i < this.allCategories.length; i++) {
-          if (this.allCategories[i].category_name == name) {
-            console.log(this.allCategories[i].category_name, name);
-            categoryId = this.allCategories[i].category_id;
-            console.log("category id", categoryId);
-            for (let x = 0; x < this.allCategories.length; x++) {
-              if (this.allCategories[x].parent_id == categoryId) {
-                console.log("id found");
-                this.subItems.push(this.allCategories[x].category_name);
-              }
-            }
-          }
+      categoryId = item.category_id;
+      this.allCategories.forEach((element) => {
+        if (element.parent_id == categoryId) {
+          this.subItems.push(element);
         }
-      } else {
-        for (let i = 0; i < this.allCategories.length; i++) {
-          if (this.allCategories[i].category_arabic_name == name) {
-            categoryId = this.allCategories[i].category_id;
-            for (let x = 0; x < this.allCategories.length; x++) {
-              if (this.allCategories.parent_id == categoryId) {
-                this.subItems.push(this.allCategories.category_arabic_name);
-              }
-            }
-          }
-        }
-      }
+      });
+
+      // if (this.siteLanguage == "en") {
+      //   for (let i = 0; i < this.allCategories.length; i++) {
+      //     if (this.allCategories[i].category_name == name) {
+      //       console.log(this.allCategories[i].category_name, name);
+      //       categoryId = this.allCategories[i].category_id;
+      //       console.log("category id", categoryId);
+      //       for (let x = 0; x < this.allCategories.length; x++) {
+      //         if (this.allCategories[x].parent_id == categoryId) {
+      //           console.log("id found");
+      //           this.subItems.push(this.allCategories[x].category_name);
+      //         }
+      //       }
+      //     }
+      //   }
+      // } else {
+      //   for (let i = 0; i < this.allCategories.length; i++) {
+      //     if (this.allCategories[i].category_arabic_name == name) {
+      //       categoryId = this.allCategories[i].category_id;
+      //       for (let x = 0; x < this.allCategories.length; x++) {
+      //         if (this.allCategories.parent_id == categoryId) {
+      //           this.subItems.push(this.allCategories.category_arabic_name);
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
     },
     async filterProductsWithCategory(category) {
       await this.$store.dispatch("filterProducts", {

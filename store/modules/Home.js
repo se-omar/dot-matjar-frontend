@@ -98,27 +98,41 @@ export default {
             state.allSuppliers.push(...suppliers);
         },
 
+        // categoriesDB(state, data) {
+        //     state.category = []
+        //     state.allCategories = data
+
+        //     if (state.siteLanguage == 'en') {
+
+        //         for (let i = 0; i < data.length; i++) {
+        //             if (!data[i].parent_id) {
+        //                 state.category.push({ name: data[i].category_name, icon: data[i].category_name })
+        //             }
+        //         }
+        //     }
+        //     else {
+
+        //         for (let i = 0; i < data.length; i++) {
+        //             if (!data[i].parent_id) {
+        //                 state.category.push({ name: data[i].category_arabic_name, icon: data[i].category_name })
+        //             }
+        //         }
+
+        //     }
+        //     console.log('category in state', state.category)
+
+        // },
+
         categoriesDB(state, data) {
             state.category = []
             state.allCategories = data
 
-            if (state.siteLanguage == 'en') {
-
-                for (let i = 0; i < data.length; i++) {
-                    if (!data[i].parent_id) {
-                        state.category.push({ name: data[i].category_name, icon: data[i].category_name })
-                    }
+            for (let i = 0; i < data.length; i++) {
+                if (!data[i].parent_id) {
+                    state.category.push(data[i])
                 }
             }
-            else {
 
-                for (let i = 0; i < data.length; i++) {
-                    if (!data[i].parent_id) {
-                        state.category.push({ name: data[i].category_arabic_name, icon: data[i].category_name })
-                    }
-                }
-
-            }
             console.log('category in state', state.category)
 
         },
@@ -244,10 +258,9 @@ export default {
 
             state.user = user
         },
-        loadMoreType(state, { name, type }) {
-
-            state.loadmore = { name: name, type: type }
-
+        loadMoreType(state, { category, type }) {
+            state.loadmore = { category, type }
+            console.log('loadmore in store', state.loadmore)
         },
 
         setProductAdvancedSearches(state, obj) {
@@ -738,7 +751,7 @@ export default {
 
             axios.put(context.rootState.nodeHost + '/api/loadmoreProducts', {
                 loadmoreType: context.state.loadmore.type,
-                loadmoreName: context.state.loadmore.name,
+                loadmoreName: context.state.loadmore && context.state.loadmore.category ? context.state.loadmore.category.category_name : '',
                 product_id: obj.id,
                 siteLanguage: context.state.siteLanguage,
                 productName: obj.toolbarSearch,
