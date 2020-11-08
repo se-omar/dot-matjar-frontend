@@ -44,15 +44,15 @@
               </v-list-item>
 
               <v-list-group
-                v-for="(category, index) in category"
+                v-for="(cat, index) in category"
                 :key="index"
                 :value="false"
-                @click="mouseOver(category)"
+                @click="mouseOver(cat)"
               >
                 <template v-slot:activator>
                   <v-list-item-action style="font-weight: bold"
                     ><span style="font-weight: bold; font-size: 20px">{{
-                      category.name
+                      cat.category_name
                     }}</span></v-list-item-action
                   >
                 </template>
@@ -68,7 +68,7 @@
                   <template v-slot:activator>
                     <v-list-item-action>
                       <span style="font-weight: bold; font-size: 17px">
-                        {{ item }}</span
+                        {{ item.category_name }}</span
                       ></v-list-item-action
                     >
                   </template>
