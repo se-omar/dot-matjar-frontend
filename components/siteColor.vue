@@ -9,12 +9,7 @@
           </span>
         </span>
 
-        <input
-          type="color"
-          v-model="colorPicker"
-          id="input"
-          @change="changeColor"
-        />
+        <input type="color" v-model="colorPicker" id="input" @change="changeColor" />
         <br />
       </label>
     </v-row>
