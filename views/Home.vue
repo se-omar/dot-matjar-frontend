@@ -431,6 +431,22 @@ export default {
       // this.isLoading = true;
       // debugger
       this.productFilterFlag = true;
+      if (buttonPressed == "loadmore") {
+        if (this.productAdvancedSearches.product_name)
+          obj.product_name = this.productAdvancedSearches.product_name;
+
+        if (this.productAdvancedSearches.governorate)
+          obj.governorate = this.productAdvancedSearches.governorate;
+
+        if (this.productAdvancedSearches.region)
+          obj.region = this.productAdvancedSearches.region;
+
+        if (this.productAdvancedSearches.priceFrom)
+          obj.priceFrom = this.productAdvancedSearches.priceFrom;
+
+        if (this.productAdvancedSearches.priceTo)
+          obj.priceTo = this.productAdvancedSearches.priceTo;
+      }
 
       obj.category_id =
         this.loadmore && this.loadmore.category
