@@ -30,6 +30,10 @@
                 >
               </v-col>
 
+              <div>
+                <h2>{{ filteredProduct.category_id }}</h2>
+              </div>
+
               <v-col class="mt-n2" lg="12" md="12" sm="12" cols="12">
                 <v-rating
                   v-model="filteredProduct.rating"
@@ -44,16 +48,6 @@
           </v-card-text>
 
           <v-row justify="center" :class="overflowText">
-            <!-- <v-col cols="11" lg="10" sm="11" md="11">
-              <v-btn
-                rounded
-                class="font"
-                @click="setCurrentRow"
-                :color="siteColor.button_color"
-                text
-                >{{ $t("product.details") }}
-              </v-btn>
-            </v-col> -->
             <v-col
               cols="11"
               lg="10"

@@ -35,66 +35,6 @@
       >
       <v-dialog style="overflow: hidden" v-model="filterDialog" max-width="280">
         <v-card style="overflow: hidden">
-          <!-- <v-row justify="center">
-            <v-list>
-              <v-list-item>
-                <v-list-item-title style="font-weight: bold; font-size: 25px"
-                  >Category</v-list-item-title
-                >
-              </v-list-item>
-
-              <v-list-group
-                v-for="(cat, index) in category"
-                :key="index"
-                :value="false"
-                @click="mouseOver(cat)"
-              >
-                <template v-slot:activator>
-                  <v-list-item-action style="font-weight: bold"
-                    ><span style="font-weight: bold; font-size: 20px">{{
-                      cat.category_name
-                    }}</span></v-list-item-action
-                  >
-                </template>
-
-                <v-list-group
-                  v-for="(item, i) in categoryItems"
-                  :key="i"
-                  @click="filterProductsWithItem(item)"
-                  no-action
-                  sub-group
-                  :value="false"
-                >
-                  <template v-slot:activator>
-                    <v-list-item-action>
-                      <span style="font-weight: bold; font-size: 17px">
-                        {{ item.category_name }}</span
-                      ></v-list-item-action
-                    >
-                  </template>
-                  <v-list-group
-                    v-for="(subItem, index) in subItems"
-                    :key="index"
-                    no-action
-                    sub-group
-                    :value="false"
-                    @click="filterProductsWithSubItem(subItem)"
-                  >
-                    <template v-slot:activator>
-                      <v-list-item-action>
-                        <span style="font-weight: bold; font-size: 15px">{{
-                          subItem
-                        }}</span></v-list-item-action
-                      >
-                    </template>
-                  </v-list-group>
-                  <v-list-item>
-                    <v-list-item-title> </v-list-item-title>
-                  </v-list-item>
-                </v-list-group>
-              </v-list-group>
-            </v-list>
-          </v-row> -->
           <v-row justify="center">
             <v-treeview
               return-object
@@ -204,45 +144,8 @@
             >
             </v-treeview>
             <template slot-scope="{ item }">
-              <a @click="mouseOver(item)">{{ item.name }}</a>
+              <v-btn @click="mouseOver(item)">{{ item.name }}</v-btn>
             </template>
-
-            <!-- <v-list>
-              <v-list-item>
-                <v-list-item-icon>
-                  <v-icon>mdi-home</v-icon>
-                </v-list-item-icon>
-
-                <v-list-item-title style="font-weight: bold; font-size: 25px"
-                  >Category</v-list-item-title
-                >
-              </v-list-item>
-
-              <v-list-group
-                v-for="(cat, index) in category"
-                :key="index"
-                :value="false"
-                prepend-icon="mdi-account-circle"
-                @click="mouseOver(cat)"
-              >
-                <template v-slot:activator>
-                  <v-list-item-action style="font-weight: bold"
-                    ><span style="font-weight: bold; font-size: 18px">{{
-                      cat.category_name
-                    }}</span></v-list-item-action
-                  >
-                </template>
-
-                <v-list-item
-                  style="padding-left: 100px"
-                  v-for="(item, i) in categoryItems"
-                  :key="i"
-                  @click="filterProductsWithItem(item)"
-                >
-                  {{ item.category_name }}
-                </v-list-item>
-              </v-list-group>
-            </v-list> -->
           </v-row>
         </v-card>
       </v-col>
@@ -643,6 +546,24 @@ export default {
       }
     },
 
+    // async mouseOver(cat) {
+    //   console.log("category pressed", cat);
+    //   const categoryCtor = Vue.extend(CategorySubMenu);
+    //   const categorySubmenuInstance = new categoryCtor({
+    //     propsData: {
+    //       category: this.category,
+    //     },
+    //   });
+    //   categorySubmenuInstance.$mount("#container");
+    //   var categoryId;
+    //   this.categoryItems = [];
+
+    //   categoryId = cat.category_id;
+    //   this.allCategories.forEach((element) => {
+    //     if (element.parent_id == categoryId) {
+    //       this.categoryItems.push(element);
+    //     }
+    //   });
     async mouseOver(catAr) {
       if (catAr.length != 0) {
         var cat = catAr[0];

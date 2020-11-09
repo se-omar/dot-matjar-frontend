@@ -85,9 +85,8 @@
           rounded
           :placeholder="$t('toolbar.search')"
           append-icon="fa fa-search"
-          @keyup="emptySearchBox"
+          @keyup="filterProducts"
           v-model="toolbarSearch"
-          @keypress="filterProducts"
         ></v-text-field>
 
         <v-text-field
@@ -1305,7 +1304,7 @@ export default {
 
       var buttonPressed = "search";
       var obj = {};
-
+      console.log("toolbar search", this.toolbarSearch);
       if (this.priceFrom) obj.priceFrom = this.priceFrom;
       if (this.priceTo) obj.priceTo = this.priceTo;
       if (this.governorate) obj.governorate = this.governorate;
@@ -1317,9 +1316,9 @@ export default {
 
       await this.$store.dispatch("filterProducts", {
         product_name: this.toolbarSearch,
-        category_name:
+        category_id:
           this.loadmore && this.loadmore.category
-            ? this.loadmore.category.category_name
+            ? this.loadmore.category.id
             : "",
         governorate: this.governorate,
         region: this.region,
