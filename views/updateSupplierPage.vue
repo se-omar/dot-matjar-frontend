@@ -1136,21 +1136,28 @@ export default {
     getCategoryItems(category) {
       this.categoryItems = [];
       console.log(category);
-      if (this.siteLanguage == "en") {
-        for (var i = 0; i < this.categoriesItems.length; i++) {
-          if (this.categoriesItems[i].category_name == category) {
-            this.categoryItems.push(this.categoriesItems[i].category_items);
-          }
+      // if (this.siteLanguage == "en") {
+      //   for (var i = 0; i < this.categoriesItems.length; i++) {
+      //     if (this.categoriesItems[i].category_name == category) {
+      //       this.categoryItems.push(this.categoriesItems[i].category_items);
+      //     }
+      //   }
+      // } else {
+      //   for (var x = 0; x < this.categoriesItems.length; x++) {
+      //     if (this.categoriesItems[x].category_arabic_name == category) {
+      //       this.categoryItems.push(
+      //         this.categoriesItems[x].category_items_arabic_name
+      //       );
+      //     }
+      //   }
+      // }
+      this.categoriesTreeArray.forEach((e) => {
+        if (e.name == category) {
+          e.children.forEach((item) => {
+            this.categoryItems.push(item.name);
+          });
         }
-      } else {
-        for (var x = 0; x < this.categoriesItems.length; x++) {
-          if (this.categoriesItems[x].category_arabic_name == category) {
-            this.categoryItems.push(
-              this.categoriesItems[x].category_items_arabic_name
-            );
-          }
-        }
-      }
+      });
     },
     treeView() {
       for (let i = 0; i < this.category.length; i++) {
