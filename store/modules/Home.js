@@ -384,7 +384,7 @@ export default {
             buttonPressed,
             product_id
         }) {
-
+            console.log('name in search', category_name)
             axios.put(context.rootState.nodeHost + '/api/filterProducts', {
                 product_name,
                 category_name,
@@ -397,7 +397,7 @@ export default {
                 loadmoreName: context.state.loadmore.name
             })
                 .then(response => {
-
+                    console.log('reposne from database', response)
                     context.commit('filterProducts', { products: response.data.data, pressed: buttonPressed });
                 })
         },

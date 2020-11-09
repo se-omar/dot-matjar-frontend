@@ -197,7 +197,9 @@
                 <template v-slot:activator>
                   <v-list-item-action style="font-weight: bold"
                     ><span style="font-weight: bold; font-size: 18px">{{
-                      cat.category_name
+                      siteLanguage == "en"
+                        ? cat.category_name
+                        : cat.category_arabic_name
                     }}</span></v-list-item-action
                   >
                 </template>
@@ -208,7 +210,11 @@
                   :key="i"
                   @click="filterProductsWithItem(item)"
                 >
-                  {{ item.category_name }}
+                  {{
+                    siteLanguage == "en"
+                      ? item.category_name
+                      : item.category_arabic_name
+                  }}
                 </v-list-item>
               </v-list-group>
             </v-list>
@@ -612,6 +618,7 @@ export default {
     },
 
     async mouseOver(cat) {
+      console.log("category pressed", cat);
       const categoryCtor = Vue.extend(CategorySubMenu);
       const categorySubmenuInstance = new categoryCtor({
         propsData: {
