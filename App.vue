@@ -24,6 +24,8 @@ export default {
   name: "App",
   created() {
     this.$vuetify.rtl = this.$i18n.locale == "ar" ? true : false;
+    if (!localStorage.getItem("language"))
+      localStorage.setItem("language", this.$i18n.locale);
   },
   components: {
     ToolBar: () => import("./components/toolbar"),

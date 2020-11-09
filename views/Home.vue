@@ -1,4 +1,4 @@
-<template >
+<template>
   <v-app class="pr-6">
     <div class="vld-parent">
       <loading
@@ -18,7 +18,7 @@
         <p>ThankYou</p>
       </v-row>
     </v-snackbar>
-    <div id="container"></div>
+
     <v-row
       v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs"
       class="mt-4"
@@ -36,64 +36,16 @@
       <v-dialog style="overflow: hidden" v-model="filterDialog" max-width="280">
         <v-card style="overflow: hidden">
           <v-row justify="center">
-            <v-list>
-              <v-list-item>
-                <v-list-item-title style="font-weight: bold; font-size: 25px"
-                  >Category</v-list-item-title
-                >
-              </v-list-item>
-
-              <v-list-group
-                v-for="(cat, index) in category"
-                :key="index"
-                :value="false"
-                @click="mouseOver(cat)"
-              >
-                <template v-slot:activator>
-                  <v-list-item-action style="font-weight: bold"
-                    ><span style="font-weight: bold; font-size: 20px">{{
-                      cat.category_name
-                    }}</span></v-list-item-action
-                  >
-                </template>
-
-                <v-list-group
-                  v-for="(item, i) in categoryItems"
-                  :key="i"
-                  @click="filterProductsWithItem(item)"
-                  no-action
-                  sub-group
-                  :value="false"
-                >
-                  <template v-slot:activator>
-                    <v-list-item-action>
-                      <span style="font-weight: bold; font-size: 17px">
-                        {{ item.category_name }}</span
-                      ></v-list-item-action
-                    >
-                  </template>
-                  <v-list-group
-                    v-for="(subItem, index) in subItems"
-                    :key="index"
-                    no-action
-                    sub-group
-                    :value="false"
-                    @click="filterProductsWithSubItem(subItem)"
-                  >
-                    <template v-slot:activator>
-                      <v-list-item-action>
-                        <span style="font-weight: bold; font-size: 15px">{{
-                          subItem
-                        }}</span></v-list-item-action
-                      >
-                    </template>
-                  </v-list-group>
-                  <v-list-item>
-                    <v-list-item-title> </v-list-item-title>
-                  </v-list-item>
-                </v-list-group>
-              </v-list-group>
-            </v-list>
+            <v-treeview
+              return-object
+              item-key="id"
+              hoverable
+              activatable
+              selected-color="red"
+              @update:active="mouseOver"
+              :items="categoriesTreeArray"
+            >
+            </v-treeview>
           </v-row>
         </v-card>
       </v-dialog>
@@ -176,48 +128,20 @@
       >
         <v-card height="95%" style="overflow: hidden" max-width>
           <v-row justify="center">
-            <v-list>
-              <v-list-item>
-                <v-list-item-icon>
-                  <v-icon>mdi-home</v-icon>
-                </v-list-item-icon>
-
-                <v-list-item-title style="font-weight: bold; font-size: 25px"
-                  >Category</v-list-item-title
-                >
-              </v-list-item>
-
-              <v-list-group
-                v-for="(cat, index) in category"
-                :key="index"
-                :value="false"
-                prepend-icon="mdi-account-circle"
-                @click="mouseOver(cat)"
-              >
-                <template v-slot:activator>
-                  <v-list-item-action style="font-weight: bold"
-                    ><span style="font-weight: bold; font-size: 18px">{{
-                      siteLanguage == "en"
-                        ? cat.category_name
-                        : cat.category_arabic_name
-                    }}</span></v-list-item-action
-                  >
-                </template>
-
-                <v-list-item
-                  style="padding-left: 100px"
-                  v-for="(item, i) in categoryItems"
-                  :key="i"
-                  @click="filterProductsWithItem(item)"
-                >
-                  {{
-                    siteLanguage == "en"
-                      ? item.category_name
-                      : item.category_arabic_name
-                  }}
-                </v-list-item>
-              </v-list-group>
-            </v-list>
+            <v-treeview
+              return-object
+              item-key="id"
+              hoverable
+              activatable
+              selected-color="red"
+              @update:active="mouseOver"
+              color="warning"
+              :items="categoriesTreeArray"
+            >
+            </v-treeview>
+            <template slot-scope="{ item }">
+              <v-btn @click="mouseOver(item)">{{ item.name }}</v-btn>
+            </template>
           </v-row>
         </v-card>
       </v-col>
@@ -326,13 +250,12 @@
 </template>
 
 <script>
-import CategorySubMenu from "../components/categorySubmenu";
-import Vue from "vue";
 export default {
   name: "Home",
   data() {
     return {
       offset: true,
+      tree: [],
       toolbarSearch: "",
       categoryName: "",
       supplierName: "",
@@ -358,15 +281,14 @@ export default {
       subItems: [],
     };
   },
-  mounted() {
-    console.log(CategorySubMenu);
-  },
+
   async created() {
     this.isLoading = true;
 
     await this.$store.dispatch("getSiteColor");
     await this.$store.dispatch("getCurrencies");
     await this.$store.dispatch("categoriesDB");
+    await this.$store.dispatch("getCategoriesTree");
     // await this.$store.dispatch("getCategoryItems");
 
     this.$store.dispatch("removeSupplierPageData");
@@ -491,6 +413,9 @@ export default {
     },
     allCategories() {
       return this.$store.state.Home.allCategories;
+    },
+    categoriesTreeArray() {
+      return this.$store.state.Home.categoriesTreeArray;
     },
   },
   methods: {
@@ -617,63 +542,39 @@ export default {
       }
     },
 
-    async mouseOver(cat) {
-      console.log("category pressed", cat);
-      const categoryCtor = Vue.extend(CategorySubMenu);
-      const categorySubmenuInstance = new categoryCtor({
-        propsData: {
-          category: this.category,
-        },
-      });
-      categorySubmenuInstance.$mount("#container");
-      var categoryId;
-      this.categoryItems = [];
+    // async mouseOver(cat) {
+    //   console.log("category pressed", cat);
+    //   const categoryCtor = Vue.extend(CategorySubMenu);
+    //   const categorySubmenuInstance = new categoryCtor({
+    //     propsData: {
+    //       category: this.category,
+    //     },
+    //   });
+    //   categorySubmenuInstance.$mount("#container");
+    //   var categoryId;
+    //   this.categoryItems = [];
 
-      categoryId = cat.category_id;
-      this.allCategories.forEach((element) => {
-        if (element.parent_id == categoryId) {
-          this.categoryItems.push(element);
-        }
-      });
+    //   categoryId = cat.category_id;
+    //   this.allCategories.forEach((element) => {
+    //     if (element.parent_id == categoryId) {
+    //       this.categoryItems.push(element);
+    //     }
+    //   });
+    async mouseOver(catAr) {
+      if (catAr) {
+        var cat = catAr[0];
 
-      // if (this.siteLanguage == "en") {
-      //   for (let i = 0; i < this.allCategories.length; i++) {
-      //     if (this.allCategories[i].category_name == name) {
-      //       console.log(this.allCategories[i].category_name, name);
-      //       categoryId = this.allCategories[i].category_id;
-      //       console.log("category id", categoryId);
-      //       for (let x = 0; x < this.allCategories.length; x++) {
-      //         if (this.allCategories[x].parent_id == categoryId) {
-      //           console.log("id found");
-      //           this.categoryItems.push(this.allCategories[x].category_name);
-      //         }
-      //       }
-      //     }
-      //   }
-      // } else {
-      //   for (let i = 0; i < this.allCategories.length; i++) {
-      //     if (this.allCategories[i].category_arabic_name == name) {
-      //       categoryId = this.allCategories[i].category_id;
-      //       for (let x = 0; x < this.allCategories.length; x++) {
-      //         if (this.allCategories.parent_id == categoryId) {
-      //           this.categoryItems.push(
-      //             this.allCategories.category_arabic_name
-      //           );
-      //         }
-      //       }
-      //     }
-      //   }
-      // }
-      await this.$store.dispatch("filterProducts", {
-        category_name: cat.category_name,
-        buttonPressed: "search",
-        product_id: 0,
-      });
-      //this.$store.commit("setCategoryId");
-      this.$store.commit("loadMoreType", {
-        category: cat,
-        type: "category",
-      });
+        await this.$store.dispatch("filterProducts", {
+          category_id: cat.id,
+          buttonPressed: "search",
+          product_id: 0,
+        });
+        //this.$store.commit("setCategoryId");
+        this.$store.commit("loadMoreType", {
+          category: cat,
+          type: "category",
+        });
+      }
     },
 
     async filterProductsWithItem(item) {
@@ -701,33 +602,6 @@ export default {
           this.subItems.push(element);
         }
       });
-
-      // if (this.siteLanguage == "en") {
-      //   for (let i = 0; i < this.allCategories.length; i++) {
-      //     if (this.allCategories[i].category_name == name) {
-      //       console.log(this.allCategories[i].category_name, name);
-      //       categoryId = this.allCategories[i].category_id;
-      //       console.log("category id", categoryId);
-      //       for (let x = 0; x < this.allCategories.length; x++) {
-      //         if (this.allCategories[x].parent_id == categoryId) {
-      //           console.log("id found");
-      //           this.subItems.push(this.allCategories[x].category_name);
-      //         }
-      //       }
-      //     }
-      //   }
-      // } else {
-      //   for (let i = 0; i < this.allCategories.length; i++) {
-      //     if (this.allCategories[i].category_arabic_name == name) {
-      //       categoryId = this.allCategories[i].category_id;
-      //       for (let x = 0; x < this.allCategories.length; x++) {
-      //         if (this.allCategories.parent_id == categoryId) {
-      //           this.subItems.push(this.allCategories.category_arabic_name);
-      //         }
-      //       }
-      //     }
-      //   }
-      // }
     },
     async filterProductsWithCategory(category) {
       await this.$store.dispatch("filterProducts", {
@@ -760,5 +634,3 @@ export default {
   },
 };
 </script>
-
-
