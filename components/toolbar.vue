@@ -490,7 +490,7 @@
           </v-card-title>
 
           <v-row v-if="currentUser.user_type == 'business'" justify="center">
-            <v-col cols="10" sm="10" lg="5">
+            <v-col cols="7" sm="10" lg="5">
               <v-btn
                 class="btn1"
                 :color="siteColor.button_color"
@@ -509,7 +509,7 @@
             </v-col>
           </v-row>
           <v-row justify="center" v-if="currentUser.user_type == 'business'">
-            <v-col cols="10" sm="11" lg="5">
+            <v-col cols="7" sm="11" lg="5">
               <v-btn
                 class="btn1"
                 :color="siteColor.button_color"
@@ -527,7 +527,7 @@
             </v-col>
           </v-row>
           <v-row justify="center" v-if="currentUser.user_type == 'admin'">
-            <v-col cols="10" sm="10" lg="5">
+            <v-col cols="7" sm="10" lg="5">
               <v-btn
                 @click="$router.push(`/${$i18n.locale}/siteColors`)"
                 small
@@ -546,7 +546,7 @@
           </v-row>
 
           <v-row justify="center" v-if="currentUser.user_type == 'business'">
-            <v-col cols="10" sm="10" lg="5">
+            <v-col cols="7" sm="10" lg="5">
               <v-btn
                 :color="siteColor.button_color"
                 small
@@ -565,7 +565,7 @@
           </v-row>
 
           <v-row justify="center" v-if="currentUser.user_type == 'admin'">
-            <v-col cols="10" sm="10" lg="5">
+            <v-col cols="7" sm="10" lg="5">
               <v-btn
                 :color="siteColor.button_color"
                 small
@@ -583,7 +583,7 @@
             </v-col>
           </v-row>
           <v-row justify="center" v-if="currentUser.user_type == 'admin'">
-            <v-col cols="10" sm="10" lg="5">
+            <v-col cols="7" sm="10" lg="5">
               <v-btn
                 :color="siteColor.button_color"
                 small

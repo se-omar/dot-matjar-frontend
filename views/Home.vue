@@ -10,7 +10,8 @@
     <v-snackbar timeout="60000" v-model="supplierApprovalMessage">
       <v-row justify="center">
         <p style="font-size: 20px">
-          Your account is waiting approval from the admin , you will be notified.<br />
+          Your account is waiting approval from the admin , you will be
+          notified.<br />
         </p>
       </v-row>
       <v-row justify="center">
@@ -24,12 +25,17 @@
       justify="center"
     >
       <v-btn @click="filterDialog = true" :color="siteColor.button_color" small>
-        <i class="fa fa-filter" :style="`color:${siteColor.button_text_color}`"></i>
-        <span :style="`color:${siteColor.button_text_color}`">Filter</span></v-btn
+        <i
+          class="fa fa-filter"
+          :style="`color:${siteColor.button_text_color}`"
+        ></i>
+        <span :style="`color:${siteColor.button_text_color}`"
+          >Filter</span
+        ></v-btn
       >
       <v-dialog style="overflow: hidden" v-model="filterDialog" max-width="280">
         <v-card style="overflow: hidden">
-          <v-row justify="center">
+          <!-- <v-row justify="center">
             <v-list>
               <v-list-item>
                 <v-list-item-title style="font-weight: bold; font-size: 25px"
@@ -88,6 +94,22 @@
                 </v-list-group>
               </v-list-group>
             </v-list>
+          </v-row> -->
+          <v-row justify="center">
+            <v-treeview
+              return-object
+              item-key="id"
+              hoverable
+              activatable
+              selected-color="red"
+              @update:active="mouseOver"
+              color="warning"
+              :items="categoriesTreeArray"
+            >
+            </v-treeview>
+            <template slot-scope="{ item }">
+              <a @click="mouseOver(item)">{{ item.name }}</a>
+            </template>
           </v-row>
         </v-card>
       </v-dialog>
@@ -145,17 +167,23 @@
       </v-radio-group>
 
       <v-btn small class="mt-4" :color="siteColor.button_color" @click="All">
-        <span class="text-caption" :style="`color: ${siteColor.button_text_color}`">{{
-          $t("homePage.allProducts")
-        }}</span></v-btn
+        <span
+          class="text-caption"
+          :style="`color: ${siteColor.button_text_color}`"
+          >{{ $t("homePage.allProducts") }}</span
+        ></v-btn
       >
     </v-row>
 
-    <v-row :justify="homePageInfo.show_right_banner == 1 ? 'space-between' : 'center'">
+    <v-row
+      :justify="
+        homePageInfo.show_right_banner == 1 ? 'space-between' : 'center'
+      "
+    >
       <v-col
         v-if="
           ($vuetify.breakpoint.lg && radioGroup == '1') ||
-            ($vuetify.breakpoint.md && radioGroup == '1')
+          ($vuetify.breakpoint.md && radioGroup == '1')
         "
         lg="2"
         sm="4"
@@ -226,7 +254,10 @@
         :sm="radioGroup == '1' ? '12' : '12'"
         :cols="radioGroup == '1' ? '12' : '12'"
       >
-        <v-row justify="center" v-if="radioGroup === '1' && filteredProducts.length > 0">
+        <v-row
+          justify="center"
+          v-if="radioGroup === '1' && filteredProducts.length > 0"
+        >
           <v-col
             class="ms-2"
             :class="homePageInfo.show_right_banner ? '' : productsClass"
@@ -270,7 +301,7 @@
         <v-row
           v-if="
             (filteredProducts.length > 0 && radioGroup == '1') ||
-              (suppliers.length > 0 && radioGroup == '2')
+            (suppliers.length > 0 && radioGroup == '2')
           "
           justify="center"
         >
@@ -303,8 +334,8 @@
         :class="{ 'ml-n15': $vuetify.breakpoint.smAndDown }"
         v-if="
           homePageInfo.show_right_banner &&
-            homePageInfo.right_banner_image &&
-            $vuetify.breakpoint.mdAndUp
+          homePageInfo.right_banner_image &&
+          $vuetify.breakpoint.mdAndUp
         "
         lg="2"
         sm="2"
@@ -474,7 +505,8 @@ export default {
     },
     minProductWidthFlag() {
       if (
-        (this.homePageInfo.show_right_banner && this.$vuetify.breakpoint.smAndDown) ||
+        (this.homePageInfo.show_right_banner &&
+          this.$vuetify.breakpoint.smAndDown) ||
         !this.homePageInfo.show_right_banner
       )
         return "114%";
@@ -503,7 +535,8 @@ export default {
         product_id:
           buttonPressed == "search"
             ? this.products[0].product_id
-            : this.filteredProducts[this.filteredProducts.length - 1].product_id,
+            : this.filteredProducts[this.filteredProducts.length - 1]
+                .product_id,
         buttonPressed,
       });
       if (this.supplierName) {
@@ -528,7 +561,8 @@ export default {
         obj = {
           id:
             this.filteredProducts.length > 0
-              ? this.filteredProducts[this.filteredProducts.length - 1].product_id
+              ? this.filteredProducts[this.filteredProducts.length - 1]
+                  .product_id
               : 0,
         };
       }
@@ -610,10 +644,10 @@ export default {
     },
 
     async mouseOver(catAr) {
-      if (catAr) {
+      if (catAr.length != 0) {
         var cat = catAr[0];
-        console.log(cat);
-
+        console.log("cat ar", catAr);
+        console.log("cat of0", cat);
         await this.$store.dispatch("filterProducts", {
           category_id: cat.id,
           buttonPressed: "search",
