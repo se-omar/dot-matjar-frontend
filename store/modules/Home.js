@@ -303,39 +303,14 @@ export default {
                 })
         },
 
-        filterProducts(
-            context,
-            {
-                product_name,
-                category_id,
-                governorate,
-                region,
-                categoryItem,
-                priceFrom,
-                priceTo,
-                buttonPressed,
-                product_id,
-            }
-        ) {
+        filterProducts(context, obj) {
             axios
-                .put(context.rootState.nodeHost + "/api/filterProducts", {
-                    product_name,
-                    category_id,
-                    governorate,
-                    region,
-                    categoryItem,
-                    priceFrom,
-                    priceTo,
-                    siteLanguage: localStorage.getItem("language"),
-                    product_id: product_id,
-                    loadmoreType: context.state.loadmore.type,
-                    loadmoreName: context.state.loadmore.name,
-                })
+                .put(context.rootState.nodeHost + "/api/filterProducts", obj)
                 .then((response) => {
                     console.log('filter products', response.data.data)
                     context.commit("filterProducts", {
                         products: response.data.data,
-                        pressed: buttonPressed,
+                        pressed: obj.buttonPressed,
                     });
                 });
         },
@@ -379,7 +354,7 @@ export default {
             });
         },
 
-        getProducts(context, { productFilterFlag, productName, categoryName }) {
+        getProducts(context, { productFilterFlag, productName, categoryId }) {
             if (!productFilterFlag) {
                 axios
                     .post(context.rootState.nodeHost + "/api/products", {
@@ -404,7 +379,7 @@ export default {
                                 ].product_id
                                 : null,
                         product_name: productName,
-                        category_name: categoryName,
+                        category_id: categoryId,
                     })
                     .then((response) => {
                         context.commit("getProducts", response.data.products);

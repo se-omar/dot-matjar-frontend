@@ -160,10 +160,11 @@ export default {
 
   methods: {
     filterProducts() {
-      this.$store.dispatch("filterProducts", {
-        product_name: this.toolbarSearch,
-        category_name: this.categoryName,
-      });
+      var obj = {};
+      obj.product_name = this.toolbarSearch;
+      obj.category_name = this.categoryName;
+
+      this.$store.dispatch("filterProducts", obj);
     },
 
     rowClicked(order) {
