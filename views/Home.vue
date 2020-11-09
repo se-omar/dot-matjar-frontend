@@ -224,7 +224,7 @@
             small
             :color="siteColor.button_color"
             class="mb-15"
-            @click="loadmoreProducts()"
+            @click="filterProducts('loadmore')"
           >
             <span :style="`color: ${siteColor.button_text_color}`">
               {{ $t("homePage.loadMore") }}</span
@@ -421,27 +421,45 @@ export default {
     categoriesTreeArray() {
       return this.$store.state.Home.categoriesTreeArray;
     },
+    loadmore() {
+      return this.$store.state.Home.loadmore;
+    },
   },
   methods: {
     async filterProducts(buttonPressed) {
+      var obj = {};
       // this.isLoading = true;
       // debugger
       this.productFilterFlag = true;
+      if (buttonPressed == "loadmore") {
+        if (this.productAdvancedSearches.product_name)
+          obj.product_name = this.productAdvancedSearches.product_name;
 
-      await this.$store.dispatch("filterProducts", {
-        product_name: this.toolbarSearch,
-        category_name: this.categoryName,
-        governorate: this.governorate,
-        region: this.region,
-        priceFrom: this.priceFrom,
-        priceTo: this.priceTo,
-        product_id:
-          buttonPressed == "search"
-            ? this.products[0].product_id
-            : this.filteredProducts[this.filteredProducts.length - 1]
-                .product_id,
-        buttonPressed,
-      });
+        if (this.productAdvancedSearches.governorate)
+          obj.governorate = this.productAdvancedSearches.governorate;
+
+        if (this.productAdvancedSearches.region)
+          obj.region = this.productAdvancedSearches.region;
+
+        if (this.productAdvancedSearches.priceFrom)
+          obj.priceFrom = this.productAdvancedSearches.priceFrom;
+
+        if (this.productAdvancedSearches.priceTo)
+          obj.priceTo = this.productAdvancedSearches.priceTo;
+      }
+
+      obj.category_id =
+        this.loadmore && this.loadmore.category
+          ? this.loadmore.category.id
+          : "";
+
+      obj.product_id =
+        buttonPressed == "search"
+          ? this.products[0].product_id
+          : this.filteredProducts[this.filteredProducts.length - 1].product_id;
+
+      obj.buttonPressed = buttonPressed;
+      await this.$store.dispatch("filterProducts", obj);
       if (this.supplierName) {
         await this.$store.dispatch("filterSuppliers", {
           supplierName: this.supplierName,
@@ -567,13 +585,11 @@ export default {
     async mouseOver(catAr) {
       if (catAr.length != 0) {
         var cat = catAr[0];
-        console.log("cat ar", catAr);
-        console.log("cat of0", cat);
-        await this.$store.dispatch("filterProducts", {
-          category_id: cat.id,
-          buttonPressed: "search",
-          product_id: 0,
-        });
+        var obj = {};
+        obj.category_id = cat.id;
+        obj.buttonPressed = "search";
+        obj.product_id = 0;
+        await this.$store.dispatch("filterProducts", obj);
         //this.$store.commit("setCategoryId");
         this.$store.commit("loadMoreType", {
           category: cat,
@@ -582,44 +598,44 @@ export default {
       }
     },
 
-    async filterProductsWithItem(item) {
-      this.subItems = [];
-      var categoryId;
-      await this.$store.dispatch("filterProducts", {
-        categoryItem: item.category_name,
-        buttonPressed: "search",
-        product_id: 0,
-      });
-      this.$store.commit("loadMoreType", {
-        category: item,
-        type: "item",
-      });
+    // async filterProductsWithItem(item) {
+    //   this.subItems = [];
+    //   var categoryId;
+    //   await this.$store.dispatch("filterProducts", {
+    //     categoryItem: item.category_name,
+    //     buttonPressed: "search",
+    //     product_id: 0,
+    //   });
+    //   this.$store.commit("loadMoreType", {
+    //     category: item,
+    //     type: "item",
+    //   });
 
-      await this.$store.dispatch("filterProducts", {
-        category_name: item.category_name,
-        buttonPressed: "search",
-        product_id: 0,
-      });
+    //   await this.$store.dispatch("filterProducts", {
+    //     category_name: item.category_name,
+    //     buttonPressed: "search",
+    //     product_id: 0,
+    //   });
 
-      categoryId = item.category_id;
-      this.allCategories.forEach((element) => {
-        if (element.parent_id == categoryId) {
-          this.subItems.push(element);
-        }
-      });
-    },
-    async filterProductsWithCategory(category) {
-      await this.$store.dispatch("filterProducts", {
-        category_name: category,
-        buttonPressed: "search",
-        product_id: 0,
-      });
+    //   categoryId = item.category_id;
+    //   this.allCategories.forEach((element) => {
+    //     if (element.parent_id == categoryId) {
+    //       this.subItems.push(element);
+    //     }
+    //   });
+    // },
+    // async filterProductsWithCategory(category) {
+    //   await this.$store.dispatch("filterProducts", {
+    //     category_name: category,
+    //     buttonPressed: "search",
+    //     product_id: 0,
+    //   });
 
-      this.$store.commit("loadMoreType", {
-        name: category,
-        type: "category",
-      });
-    },
+    //   this.$store.commit("loadMoreType", {
+    //     name: category,
+    //     type: "category",
+    //   });
+    // },
     testModule() {
       this.$store.dispatch("testAct", "assdfsaf");
     },

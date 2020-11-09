@@ -1309,28 +1309,24 @@ export default {
       if (this.priceTo) obj.priceTo = this.priceTo;
       if (this.governorate) obj.governorate = this.governorate;
       if (this.region) obj.region = this.region;
-      if (this.toolbarSearch) obj.toolbarSearch = this.toolbarSearch;
+      if (this.toolbarSearch) obj.product_name = this.toolbarSearch;
+
+      obj.category_id =
+        this.loadmore && this.loadmore.category
+          ? this.loadmore.category.id
+          : "";
+
       console.log("loadmore", this.loadmore);
+      obj.product_id =
+        buttonPressed == "search"
+          ? this.products[0].product_id
+          : this.filteredProducts[this.filteredProducts.length - 1].product_id;
+      obj.siteLanguage = localStorage.getItem("language");
+      obj.buttonPressed = buttonPressed;
       // if (this.country) obj.country = this.country;
       this.$store.commit("setProductAdvancedSearches", obj);
 
-      await this.$store.dispatch("filterProducts", {
-        product_name: this.toolbarSearch,
-        category_id:
-          this.loadmore && this.loadmore.category
-            ? this.loadmore.category.id
-            : "",
-        governorate: this.governorate,
-        region: this.region,
-        priceFrom: this.priceFrom,
-        priceTo: this.priceTo,
-        product_id:
-          buttonPressed == "search"
-            ? this.products[0].product_id
-            : this.filteredProducts[this.filteredProducts.length - 1]
-                .product_id,
-        buttonPressed,
-      });
+      await this.$store.dispatch("filterProducts", obj);
       if (this.supplierName) {
         await this.$store.dispatch("filterSuppliers", {
           supplierName: this.supplierName,
