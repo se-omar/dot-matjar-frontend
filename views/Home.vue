@@ -43,9 +43,13 @@
               activatable
               selected-color="red"
               @update:active="mouseOver"
+              color="warning"
               :items="categoriesTreeArray"
             >
             </v-treeview>
+            <template slot-scope="{ item }">
+              <a @click="mouseOver(item)">{{ item.name }}</a>
+            </template>
           </v-row>
         </v-card>
       </v-dialog>
@@ -563,7 +567,7 @@ export default {
     //     }
     //   });
     async mouseOver(catAr) {
-      if (catAr) {
+      if (catAr.length != 0) {
         var cat = catAr[0];
         var obj = {};
         obj.category_id = cat.id;

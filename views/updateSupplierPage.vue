@@ -707,15 +707,6 @@
               </v-row>
             </v-toolbar>
             <v-card>
-              <!-- <v-responsive max-width="400" class="mx-auto mb-4">
-            <v-text-field
-              v-model="benched"
-              type="number"
-              label="Total Benched"
-              min="0"
-              max="10"
-            ></v-text-field>
-          </v-responsive> -->
               <v-row justify="center">
                 <v-col cols="10" lg="6" sm="10" md="6">
                   <v-card elevation="16" max-width="400" class="mx-auto">
@@ -727,7 +718,7 @@
                       </v-row>
                     </v-toolbar>
                     <v-virtual-scroll
-                      :items="category"
+                      :items="mainCategories"
                       height="300"
                       item-height="64"
                     >
@@ -1144,7 +1135,7 @@ export default {
     },
     getCategoryItems(category) {
       this.categoryItems = [];
-
+      console.log(category);
       if (this.siteLanguage == "en") {
         for (var i = 0; i < this.categoriesItems.length; i++) {
           if (this.categoriesItems[i].category_name == category) {
@@ -1286,8 +1277,19 @@ export default {
     siteLanguage() {
       return this.$store.state.Home.siteLanguage;
     },
+    categoriesTreeArray() {
+      return this.$store.state.Home.categoriesTreeArray;
+    },
+    mainCategories() {
+      var categories = [];
+      this.$store.state.Home.categoriesTreeArray.forEach((e) => {
+        categories.push(e.name);
+      });
+      return categories;
+    },
   },
   async created() {
+    await this.$store.dispatch("getCategoriesTree");
     await this.$store.dispatch("getSiteColor");
     // this.isLoading = true;
     if (localStorage.getItem("loginToken")) {
@@ -1330,7 +1332,7 @@ export default {
     }
 
     // this.supplierItems = this.supplierItemsFromDB;
-
+    console.log("category tree arrray", this.categoriesTreeArray);
     this.isLoading = false;
   },
 };
