@@ -11,10 +11,7 @@
       v-if="this.$route.params.supplier_id == currentUser.user_id"
     ></sideButton> -->
 
-    <v-row
-      v-if="supplierPageInfo && supplierPageInfo.show_carousel"
-      justify="center"
-    >
+    <v-row v-if="supplierPageInfo && supplierPageInfo.show_carousel" justify="center">
       <v-col :lg="supplierPageInfo ? supplierPageInfo.carousel_width : 10">
         <carousel
           :autoplay="true"
@@ -25,33 +22,25 @@
         >
           <slide v-if="supplierPageInfo && supplierPageInfo.carousel_image_1">
             <v-img
-              :height="
-                supplierPageInfo ? supplierPageInfo.carousel_height : 400
-              "
+              :height="supplierPageInfo ? supplierPageInfo.carousel_height : 400"
               :src="nodeHost + supplierPageInfo.carousel_image_1"
             ></v-img>
           </slide>
           <slide v-if="supplierPageInfo && supplierPageInfo.carousel_image_2">
             <v-img
-              :height="
-                supplierPageInfo ? supplierPageInfo.carousel_height : 400
-              "
+              :height="supplierPageInfo ? supplierPageInfo.carousel_height : 400"
               :src="nodeHost + supplierPageInfo.carousel_image_2"
             ></v-img>
           </slide>
           <slide v-if="supplierPageInfo && supplierPageInfo.carousel_image_3">
             <v-img
-              :height="
-                supplierPageInfo ? supplierPageInfo.carousel_height : 400
-              "
+              :height="supplierPageInfo ? supplierPageInfo.carousel_height : 400"
               :src="nodeHost + supplierPageInfo.carousel_image_3"
             ></v-img>
           </slide>
           <slide v-if="supplierPageInfo && supplierPageInfo.carousel_image_4">
             <v-img
-              :height="
-                supplierPageInfo ? supplierPageInfo.carousel_height : 400
-              "
+              :height="supplierPageInfo ? supplierPageInfo.carousel_height : 400"
               :src="nodeHost + supplierPageInfo.carousel_image_4"
             ></v-img>
           </slide>
@@ -66,10 +55,7 @@
           :color="siteColor.button_color"
           rounded
         >
-          <span
-            class="smallerText"
-            :style="`color:${siteColor.button_text_color}`"
-          >
+          <span class="smallerText" :style="`color:${siteColor.button_text_color}`">
             {{ $t("supplierPage.updatePage") }}</span
           ></v-btn
         >
@@ -77,143 +63,36 @@
       <v-col lg="2" md="3" sm="5" cols="5">
         <v-btn
           :color="siteColor.button_color"
-          @click="
-            $router.push(`/${$i18n.locale}/supplierDetails/` + supplier.user_id)
-          "
+          @click="$router.push(`/${$i18n.locale}/supplierDetails/` + supplier.user_id)"
           rounded
         >
-          <span
-            class="smallerText"
-            :style="`color:${siteColor.button_text_color}`"
-          >
+          <span class="smallerText" :style="`color:${siteColor.button_text_color}`">
             {{ $t("supplierPage.supplierDetails") }}</span
           >
         </v-btn>
       </v-col>
     </v-row>
     <v-row>
-      <!-- <v-col
-        v-if="
-          supplierPageInfo.show_left_banner &&
-          supplierPageInfo.left_banner_image
-        "
-        lg="2"
-        style="max-width: 12%"
-      >
-        <v-card height="95%">
-          <v-img src="https://picsum.photos/id/237/200/300"></v-img>
-        </v-card>
-      </v-col> -->
-      <!-- category -->
       <v-col lg="2" sm="3" md="2" cols="4">
         <v-card height="95%" style="overflow: hidden" max-width>
-          <!-- <v-row justify="center"
-            ><v-card-title>Categories</v-card-title>
-          </v-row> -->
+          <v-row justify="center"><v-card-title>Categories</v-card-title> </v-row>
 
           <v-row>
-            <v-col cols="6" sm="12" lg="12">
-              <v-menu
-                v-for="(category, index) in supplierCategories"
-                :key="index"
-                offset-x
-                :close-on-content-click="false"
-                open-on-hover
-                :left="leftMenu"
+            <v-col class="ml-2">
+              <v-treeview
+                return-object
+                item-key="id"
+                hoverable
+                activatable
+                selected-color="red"
+                @update:active="filterByCategory"
+                color="warning"
+                :items="supplierCategoriesTreeArray"
               >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-row class="mx-3" justify="start">
-                    <v-col cols="12" lg="10" sm="12">
-                      <v-btn
-                        width="110%"
-                        @mouseover="mouseOver(category.name)"
-                        v-bind="attrs"
-                        v-on="on"
-                        text
-                        @click="filterProductsWithCategory(category.name)"
-                      >
-                        <span v-if="$vuetify.breakpoint.xs">
-                          <v-row justify="start">
-                            <v-col>
-                              <span
-                                class="mt-1 smallerText"
-                                style="font-size: 14px"
-                              >
-                                {{ category.name }}</span
-                              >
-
-                              <v-btn
-                                @click="
-                                  filterProductsWithCategory(category.name)
-                                "
-                                icon
-                                style="overflow: hidden; color: black"
-                              >
-                                <i
-                                  v-if="siteLanguage == 'en'"
-                                  class="fa fa-chevron-right"
-                                ></i>
-                                <i v-else class="fa fa-chevron-left"></i>
-                              </v-btn>
-                            </v-col>
-                          </v-row>
-                        </span>
-                        <span v-else>
-                          <v-row justify="start">
-                            <v-col lg="5">
-                              <i
-                                :class="`fas fa-${category.icon} fa-sm  mr-2 mt-2`"
-                              ></i>
-
-                              <span class="mt-1 smallerText">
-                                {{ category.name }}</span
-                              >
-                            </v-col>
-                            <v-row justify="end">
-                              <v-col lg="2">
-                                <v-btn
-                                  @click="
-                                    filterProductsWithCategory(category.name)
-                                  "
-                                  icon
-                                  style="overflow: hidden; color: black"
-                                  text
-                                >
-                                  <i
-                                    v-if="siteLanguage == 'en'"
-                                    class="fa fa-chevron-right"
-                                  ></i>
-                                  <i v-else class="fa fa-chevron-left"></i>
-                                </v-btn>
-                              </v-col>
-                            </v-row>
-                          </v-row>
-                        </span>
-                      </v-btn>
-                    </v-col>
-                    <!-- <v-col lg="3" sm="4"> </v-col> -->
-                  </v-row>
-                </template>
-                <v-card>
-                  <v-list
-                    class="ml-2"
-                    v-for="item in categoryItems"
-                    :key="item"
-                  >
-                    <v-btn
-                      class="black--text"
-                      @click="filterProductsWithItem(item)"
-                      text
-                    >
-                      -
-                      <i :class="`fa fa-${item} fa-lg ml-2 mr-2`"></i>
-                      <span class="smallerText" style="color: black">
-                        {{ item }}</span
-                      >
-                    </v-btn>
-                  </v-list>
-                </v-card>
-              </v-menu>
+              </v-treeview>
+              <template slot-scope="{ item }">
+                <v-btn @click="filterByCategory(item)">{{ item.name }}</v-btn>
+              </template>
             </v-col>
           </v-row>
         </v-card>
@@ -243,9 +122,7 @@
         >
           <v-col
             :class="
-              supplierPageInfo && supplierPageInfo.show_right_banner
-                ? ''
-                : productsClass
+              supplierPageInfo && supplierPageInfo.show_right_banner ? '' : productsClass
             "
             :lg="supplierPageInfo && supplierPageInfo.show_right_banner ? 3 : 2"
             :md="supplierPageInfo && supplierPageInfo.show_right_banner ? 4 : 3"
@@ -271,8 +148,8 @@
         lg="2"
         v-if="
           supplierPageInfo &&
-          supplierPageInfo.show_right_banner &&
-          supplierPageInfo.right_banner_image
+            supplierPageInfo.show_right_banner &&
+            supplierPageInfo.right_banner_image
         "
       >
         <v-card height="95%">
@@ -302,11 +179,7 @@ export default {
     review: "",
     groupedRatings: [],
     tab: 0,
-    tabs: [
-      { name: "Products" },
-      { name: "Reviews" },
-      { name: "Rate Supplier" },
-    ],
+    tabs: [{ name: "Products" }, { name: "Reviews" }, { name: "Rate Supplier" }],
     supplierProductsSearch: "",
     categoryItems: [],
     productsClass: "mr-4 ml-4",
@@ -395,12 +268,14 @@ export default {
         return true;
       }
     },
+    supplierCategoriesTreeArray() {
+      return this.$store.state.SupplierPage.supplierCategoriesTreeArray;
+    },
   },
   methods: {
     updatePage() {
       this.$router.push(
-        `/${this.$i18n.locale}/updateSupplierPage/` +
-          this.$route.params.supplier_id
+        `/${this.$i18n.locale}/updateSupplierPage/` + this.$route.params.supplier_id
       );
     },
 
@@ -420,10 +295,7 @@ export default {
     },
 
     groupBy(xs, f) {
-      return xs.reduce(
-        (r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r),
-        {}
-      );
+      return xs.reduce((r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r), {});
     },
     filterSupplierProducts() {
       this.$store.dispatch("filterSupplierProducts", {
@@ -456,23 +328,19 @@ export default {
       if (this.siteLanguage == "en") {
         for (var i = 0; i < this.supplierCategoriesAndItems.length; i++) {
           if (
-            this.supplierCategoriesAndItems[i].product_category.category_name ==
-            category
+            this.supplierCategoriesAndItems[i].product_category.category_name == category
           ) {
-            this.categoryItems.push(
-              this.supplierCategoriesAndItems[i].item_name
-            );
+            this.categoryItems.push(this.supplierCategoriesAndItems[i].item_name);
           }
         }
       } else {
         for (var x = 0; x < this.supplierCategoriesAndItems.length; x++) {
           if (
-            this.supplierCategoriesAndItems[x].product_category
-              .category_arabic_name == category
+            this.supplierCategoriesAndItems[x].product_category.category_arabic_name ==
+            category
           ) {
             this.categoryItems.push(
-              this.supplierCategoriesAndItems[x].category_item
-                .category_items_arabic_name
+              this.supplierCategoriesAndItems[x].category_item.category_items_arabic_name
             );
           }
         }
@@ -483,56 +351,46 @@ export default {
       this.$store.commit("returnAllProducts");
     },
     async getAllProducts() {
-      await this.$store.dispatch(
-        "getSupplierProducts",
-        this.$route.params.supplier_id
-      );
+      await this.$store.dispatch("getSupplierProducts", this.$route.params.supplier_id);
+    },
+
+    filterByCategory(catAr) {
+      console.log(catAr);
     },
   },
   async created() {
     // await this.$store.dispatch("getSiteColor");
-    this.isLoading = true;
+    //this.isLoading = true;
     await this.$store.dispatch("getCurrencies");
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
     }
+    await this.$store.dispatch(
+      "getSupplierCategoriesTree",
+      this.$route.params.supplier_id
+    );
     await this.$store.dispatch("getSupplier", this.$route.params.supplier_id);
 
-    await this.$store.dispatch(
-      "getSupplierPageData",
-      this.$route.params.supplier_id
-    );
+    await this.$store.dispatch("getSupplierPageData", this.$route.params.supplier_id);
     //this.$store.commit("emptySupplierProducts");
 
-    await this.$store.dispatch(
-      "getSupplierProducts",
-      this.$route.params.supplier_id
-    );
+    await this.$store.dispatch("getSupplierProducts", this.$route.params.supplier_id);
 
-    await this.$store.dispatch(
-      "getSupplierCategoriesAndItems",
-      this.$route.params.supplier_id
-    );
+    // await this.$store.dispatch(
+    //   "getSupplierCategoriesAndItems",
+    //   this.$route.params.supplier_id
+    // );
 
     await this.$store.dispatch("getSupplierReview", {
       supplier_id: this.supplier.user_id,
       user_id: this.currentUser.user_id,
     });
-    console.log(
-      "supplier categories and items",
-      this.supplierCategoriesAndItems
-    );
+    console.log("supplier categories and items", this.supplierCategoriesAndItems);
     await this.setValues();
 
-    await this.$store.dispatch(
-      "getSupplierRatingsArray",
-      this.supplier.user_id
-    );
+    await this.$store.dispatch("getSupplierRatingsArray", this.supplier.user_id);
 
-    this.groupedRatings = this.groupBy(
-      this.currentSupplierRatings,
-      (c) => c.rating
-    );
+    this.groupedRatings = this.groupBy(this.currentSupplierRatings, (c) => c.rating);
     console.log("colors iss", this.siteColor);
     for (var j = 1; j < this.barRatingArray.length + 1; j++) {
       if (this.groupedRatings[j]) {
@@ -541,7 +399,7 @@ export default {
     }
 
     await this.$store.dispatch("categoriesDB");
-    await this.$store.dispatch("getCategoryItems");
+    // await this.$store.dispatch("getCategoryItems");
     this.isLoading = false;
   },
 };
