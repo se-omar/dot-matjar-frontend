@@ -19,89 +19,6 @@
                 </v-col>
               </v-row>
 
-              <v-row justify="center">
-                <v-col cols="12" lg="8" sm="12" md="8">
-                  <v-card style="overflow: hidden">
-                    <v-row justify="center">
-                      <v-list>
-                        <v-list-item>
-                          <v-list-item-title
-                            style="font-weight: bold; font-size: 25px"
-                            >{{
-                              $t("addProduct.chooseCategory")
-                            }}</v-list-item-title
-                          >
-                        </v-list-item>
-
-                        <v-list-group
-                          v-for="(category, index) in category"
-                          :key="index"
-                          :value="false"
-                          @click="categoryClicked(category.name)"
-                        >
-                          <template v-slot:activator>
-                            <v-list-item-action style="font-weight: bold"
-                              ><span
-                                style="font-weight: bold; font-size: 20px"
-                                >{{ category.name }}</span
-                              ></v-list-item-action
-                            >
-                          </template>
-
-                          <v-list-group
-                            v-for="(item, i) in categoryItems"
-                            :key="i"
-                            @click="filterProductsWithItem(item)"
-                            no-action
-                            sub-group
-                            :value="false"
-                          >
-                            <template v-slot:activator>
-                              <v-list-item-action>
-                                <span
-                                  style="font-weight: bold; font-size: 17px"
-                                >
-                                  {{ item }}</span
-                                ></v-list-item-action
-                              >
-                            </template>
-                            <v-list-group
-                              v-for="(subItem, index) in subItems"
-                              :key="index"
-                              no-action
-                              sub-group
-                              :value="false"
-                              @click="filterProductsWithSubItem(subItem)"
-                            >
-                              <template v-slot:activator>
-                                <v-list-item-action>
-                                  <span
-                                    style="font-weight: bold; font-size: 15px"
-                                    >{{ subItem }}</span
-                                  ></v-list-item-action
-                                >
-                              </template>
-                            </v-list-group>
-                          </v-list-group>
-                        </v-list-group>
-                      </v-list>
-                    </v-row>
-                  </v-card>
-                </v-col>
-              </v-row>
-              <v-row justify="center">
-                <v-col cols="12" lg="6" sm="6" md="6">
-                  <v-text-field
-                    :label="$t('addProduct.category')"
-                    v-model="choosenCategory"
-                    rounded
-                    disabled
-                    filled
-                    dense
-                  >
-                  </v-text-field>
-                </v-col>
-              </v-row>
               <v-row>
                 <v-col cols="6">
                   <v-text-field
@@ -192,6 +109,26 @@
                     rounded
                   ></v-textarea>
                 </v-col>
+              </v-row>
+
+              <v-row>
+                <v-col lg="12">
+                  <span class="text-h6">choose category</span>
+                </v-col>
+                <v-treeview
+                  return-object
+                  item-key="id"
+                  hoverable
+                  activatable
+                  selected-color="red"
+                  @update:active="setCategory"
+                  color="warning"
+                  :items="categoriesTreeArray"
+                >
+                </v-treeview>
+                <template slot-scope="{ item }">
+                  <a @click="setCategory(item)">{{ item.name }}</a>
+                </template>
               </v-row>
             </v-form>
 
@@ -506,6 +443,9 @@ export default {
     siteLanguage() {
       return this.$store.state.Home.siteLanguage;
     },
+    categoriesTreeArray() {
+      return this.$store.state.Home.categoriesTreeArray;
+    },
   },
 
   data() {
@@ -556,7 +496,7 @@ export default {
       newItemArabicName: "",
       addCategorySnackBar: false,
       subItems: [],
-      choosenCategory: "",
+      chosenCategory: "",
     };
   },
   methods: {
@@ -584,11 +524,13 @@ export default {
       form.set("min_units_per_order", self.minUnits);
       form.set("unit_price", self.unitPrice);
       form.set("size", self.size);
-      form.set("describtion", self.description);
+      form.set("description", self.description);
+      form.set(
+        "category_id",
+        self.chosenCategory ? self.chosenCategory.id : ""
+      );
       form.set("color", self.color);
       form.set("discount_amount", self.discountAmount);
-      form.set("category_name", self.choosenCategory);
-      form.set("category_item", self.categoryItem);
       form.set("currency", self.productCurrency);
       form.set("siteLanguage", self.siteLanguage);
       files.forEach((element) => {
@@ -608,15 +550,6 @@ export default {
         });
     },
 
-    // gettingCategoryItems() {
-    //   this.$store.dispatch("getCategoryItems");
-    //   this.categoryItems = [];
-    //   for (let i = 0; i < this.categoriesItems.length; i++) {
-    //     if (this.categoriesItems[i].category_name == this.categoryName) {
-    //       this.categoryItems.push(this.categoriesItems[i].category_items);
-    //     }
-    //   }
-    // },
     requestNewCategoryAndItem() {
       this.$store.dispatch("requestNewCategoryAndItem", {
         newCategoryName: this.newCategoryName,
@@ -708,12 +641,21 @@ export default {
       this.choosenCategory = name;
       console.log(this.choosenCategory);
     },
+    setCategory(catAr) {
+      if (catAr.length != 0) {
+        this.chosenCategory = catAr[0];
+      } else {
+        this.chosenCategory = "";
+      }
+      console.log(this.chosenCategory);
+    },
   },
   async created() {
     await this.$store.dispatch("getSiteColor");
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
     }
+    await this.$store.dispatch("getCategoriesTree");
     // await this.$store.dispatch("getCategoryItems");
     await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getSupplierCategoriesRequests");
