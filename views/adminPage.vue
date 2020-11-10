@@ -29,290 +29,81 @@
           >
         </v-col>
       </v-row>
+
       <v-row justify="center">
-        <h2>{{ $t("adminPage.addNewCategory") }}</h2>
+        <v-col lg="12">
+          <h2 class="text-center">{{ $t("adminPage.addNewCategory") }}</h2>
+        </v-col>
+
+        <v-col lg="12">
+          <h3 class="text-center">
+            your category will be a child to the category you choose
+          </h3>
+        </v-col>
       </v-row>
 
-      <v-form v-model="addCategoryValidation">
-        <v-row justify="center">
-          <v-col lg="3" md="3" cols="5">
-            <v-text-field
-              :rules="[rules.required]"
-              v-model="newCategoryName"
-              :placeholder="$t('adminPage.categoryName')"
-              rounded
-              filled
-            ></v-text-field>
-          </v-col>
-          <v-col lg="3" md="3" cols="5">
-            <v-text-field
-              :rules="[rules.required]"
-              v-model="newCategoryArabicName"
-              :placeholder="$t('adminPage.newCategoryArabicName')"
-              rounded
-              filled
-            ></v-text-field>
-          </v-col>
+      <v-row justify="center">
+        <v-col lg="3">
+          <v-row>
+            <v-col lg="10">
+              <v-text-field
+                dense
+                placeholder="category name"
+                rounded
+                :rules="[rules.required]"
+                filled
+                v-model="addCategoryName"
+              ></v-text-field>
+            </v-col>
 
-          <v-col class="mt-lg-3 mt-md-3 mt-n10" lg="2" md="3" cols="4">
-            <v-btn
-              :disabled="!addCategoryValidation"
-              rounded
-              block
-              :color="siteColor.button_color"
-              class="white--text"
-              @click="addNewCategory"
-              ><span :style="`color:${siteColor.button_text_color}`">{{
-                $t("adminPage.addCategory")
-              }}</span></v-btn
-            >
-          </v-col>
-        </v-row>
-      </v-form>
+            <v-col lg="10">
+              <v-text-field
+                dense
+                placeholder="category arabic name"
+                rounded
+                :rules="[rules.required]"
+                filled
+                v-model="addCategoryArName"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-col>
+
+        <v-col lg="3">
+          <v-treeview
+            return-object
+            item-key="id"
+            hoverable
+            activatable
+            selected-color="red"
+            @update:active="setCategory"
+            color="warning"
+            :items="categoriesTreeArray"
+          >
+          </v-treeview>
+          <template slot-scope="{ item }">
+            <a @click="setCategory(item)">{{ item.name }}</a>
+          </template>
+        </v-col>
+      </v-row>
+
+      <v-row justify="center">
+        <v-col lg="2">
+          <v-btn
+            @click="addCategory"
+            block
+            :color="siteColor.button_color"
+            class="text-center"
+            >add category</v-btn
+          >
+        </v-col>
+      </v-row>
 
       <v-divider class="mx-16"></v-divider>
-      <!-- Adding category items -->
-      <v-row justify="center">
-        <h3>{{ $t("adminPage.addCategoryItems") }}</h3>
-      </v-row>
 
-      <v-form v-model="valid">
-        <v-row justify="center">
-          <v-col cols="12" lg="4" sm="12" md="4">
-            <v-card style="overflow: hidden">
-              <v-row justify="center">
-                <v-list>
-                  <v-list-item>
-                    <v-list-item-title
-                      style="font-weight: bold; font-size: 25px"
-                      >{{ $t("addProduct.chooseCategory") }}</v-list-item-title
-                    >
-                  </v-list-item>
-
-                  <v-list-group
-                    v-for="(category, index) in category"
-                    :key="index"
-                    :value="false"
-                    @click="categoryClicked(category.name)"
-                  >
-                    <template v-slot:activator>
-                      <v-list-item-action style="font-weight: bold"
-                        ><span style="font-weight: bold; font-size: 20px">{{
-                          category.name
-                        }}</span></v-list-item-action
-                      >
-                    </template>
-
-                    <v-list-group
-                      v-for="(item, i) in categoryItems"
-                      :key="i"
-                      @click="filterProductsWithItem(item)"
-                      no-action
-                      sub-group
-                      :value="false"
-                    >
-                      <template v-slot:activator>
-                        <v-list-item-action>
-                          <span style="font-weight: bold; font-size: 17px">
-                            {{ item }}</span
-                          ></v-list-item-action
-                        >
-                      </template>
-                      <v-list-group
-                        v-for="(subItem, index) in subItems"
-                        :key="index"
-                        no-action
-                        sub-group
-                        :value="false"
-                        @click="filterProductsWithSubItem(subItem)"
-                      >
-                        <template v-slot:activator>
-                          <v-list-item-action>
-                            <span style="font-weight: bold; font-size: 15px">{{
-                              subItem
-                            }}</span></v-list-item-action
-                          >
-                        </template>
-                      </v-list-group>
-                    </v-list-group>
-                  </v-list-group>
-                </v-list>
-              </v-row>
-            </v-card>
-          </v-col>
-          <!-- <v-col class="mb-n7" lg="3" md="3" cols="10">
-            <v-select
-              :rules="[rules.required]"
-              filled
-              rounded
-              :items="productCategory"
-              v-model="categoryName"
-              :placeholder="$t('adminPage.categoryName')"
-            ></v-select>
-          </v-col>
-
-          <v-col lg="3" md="3" cols="5">
-            <v-text-field
-              v-model="categoryItem"
-              :placeholder="$t('adminPage.categoryItem')"
-              class="text-xl"
-              rounded
-              filled
-              :rules="[rules.required]"
-            ></v-text-field>
-          </v-col>
-
-          <v-col lg="3" md="3" cols="5">
-            <v-text-field
-              v-model="itemArabicName"
-              :placeholder="$t('adminPage.newCategoryItemArabicName')"
-              class="text-xl"
-              rounded
-              filled
-              :rules="[rules.required]"
-            ></v-text-field>
-          </v-col>
-
-          <v-col lg="1" md="1" class="mt-lg-3 mt-md-3 mt-n10" cols="3">
-            <v-btn
-              block
-              :disabled="!valid"
-              rounded
-              :color="siteColor.button_color"
-              @click="addCategoryItem"
-              ><span :style="`color:${siteColor.button_text_color}`">{{
-                $t("adminPage.addItem")
-              }}</span></v-btn
-            >
-          </v-col> -->
-        </v-row>
-        <v-row justfiy="center">
-          <v-col cols="4" lg="2">
-            <p>
-              category parent is : <span>{{ categoryParent }}</span>
-            </p>
-          </v-col>
-          <v-col cols="4" lg="3">
-            <v-text-field
-              v-model="categoryItem"
-              rounded
-              filled
-              :label="$t('adminPage.addItem')"
-            >
-            </v-text-field>
-          </v-col>
-
-          <v-col lg="3" md="3" cols="4">
-            <v-text-field
-              v-model="itemArabicName"
-              :placeholder="$t('adminPage.newCategoryItemArabicName')"
-              class="text-xl"
-              rounded
-              filled
-              :rules="[rules.required]"
-            ></v-text-field>
-          </v-col>
-
-          <v-col lg="2" cols="2" sm="2" md="2">
-            <v-btn
-              block
-              small
-              :disabled="!valid"
-              rounded
-              :color="siteColor.button_color"
-              @click="addCategoryItem"
-              ><span :style="`color:${siteColor.button_text_color}`">{{
-                $t("adminPage.addItem")
-              }}</span></v-btn
-            >
-          </v-col>
-        </v-row>
-      </v-form>
-
-      <v-divider></v-divider>
       <!-- Removing category items -->
       <v-row justify="center">
         <h2>{{ $t("adminPage.removeCategory") }}</h2>
-      </v-row>
-      <v-row justify="center">
-        <v-col lg="3" md="3" cols="5">
-          <v-select
-            @change="gettingCategoryItems"
-            :items="productCategory"
-            filled
-            rounded
-            :label="$t('adminPage.chooseCategoryRemoved')"
-            v-model="chooseCategoryToRemove"
-          ></v-select>
-        </v-col>
-        <v-col lg="3" md="3" cols="5">
-          <v-select
-            rounded
-            filled
-            :placeholder="$t('adminPage.chooseItemRemoved')"
-            v-model="chooseItemToRemove"
-            :items="categoryItems"
-          >
-            <!-- ========================================================================= -->
-          </v-select>
-        </v-col>
-      </v-row>
-
-      <v-row justify="center">
-        <v-btn
-          :disabled="!chooseCategoryToRemove"
-          rounded
-          :color="siteColor.button_color"
-          class="white--text"
-          @click="confirmingRemovingCategory = true"
-          ><span :style="`color:${siteColor.button_text_color}`">{{
-            $t("adminPage.removeCategory")
-          }}</span></v-btn
-        >
-        <!-- dialoge testing ============ -->
-        <v-dialog v-model="confirmingRemovingCategory" max-width="400">
-          <v-card>
-            <v-card-title class="headline">{{
-              $t("adminPage.deleteCategoryCheck")
-            }}</v-card-title>
-
-            <v-card-text>{{
-              $t("adminPage.deleteCategoryCheck2")
-            }}</v-card-text>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-
-              <v-btn
-                :color="siteColor.button_color"
-                text
-                @click="confirmingRemovingCategory = false"
-                ><span :style="`color:${siteColor.button_text_color}`">{{
-                  $t("adminPage.disagree")
-                }}</span></v-btn
-              >
-
-              <v-btn
-                :color="siteColor.button_color"
-                text
-                @click="removeCategory"
-                ><span :style="`color:${siteColor.button_text_color}`"
-                  >Agree</span
-                ></v-btn
-              >
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <v-btn
-          class="ml-3"
-          :disabled="chooseItemToRemove.length == 0"
-          rounded
-          :color="siteColor.button_color"
-          @click="removeItem"
-          ><span :style="`color:${siteColor.button_text_color}`">{{
-            $t("adminPage.removeItem")
-          }}</span></v-btn
-        >
       </v-row>
 
       <v-divider class="mt-7"></v-divider>
@@ -913,6 +704,7 @@ export default {
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
     }
+    await this.$store.dispatch("getCategoriesTree");
     await this.$store.dispatch("getAllSuppliersWithSales");
     await this.$store.dispatch("getGovernorate");
     await this.$store.dispatch("getSiteColor");
@@ -994,7 +786,6 @@ export default {
       chooseCategoryToRemove: "",
       categoryItems: [],
       chooseItemToRemove: [],
-      addCategoryValidation: true,
       confirmingRemovingCategory: false,
       carouselHeight: "",
       carouselWidth: "",
@@ -1018,9 +809,11 @@ export default {
       country: "",
       addCountryForm: false,
       dialog: false,
-      choosenCategory: "",
+      chosenCategory: "",
       categoryParent: "",
       subItems: "",
+      addCategoryName: "",
+      addCategoryArName: "",
     };
   },
 
@@ -1147,6 +940,9 @@ export default {
     },
     allCategories() {
       return this.$store.state.Home.allCategories;
+    },
+    categoriesTreeArray() {
+      return this.$store.state.Home.categoriesTreeArray;
     },
   },
 
@@ -1576,6 +1372,29 @@ export default {
     filterProductsWithSubItem(name) {
       this.categoryParent = name;
       console.log(this.categoryParent);
+    },
+
+    setCategory(catAr) {
+      if (catAr.length != 0) {
+        this.chosenCategory = catAr[0];
+      } else {
+        this.chosenCategory = "";
+      }
+      console.log(this.chosenCategory);
+    },
+
+    async addCategory() {
+      if (!this.addCategoryName || !this.addCategoryArName) {
+        alert("please fill category english and arabic name");
+      } else {
+        console.log(this.chosenCategory);
+        console.log(this.addCategoryName);
+        await this.$store.dispatch("adminPageAddCategory", {
+          parentCat: this.chosenCategory,
+          catName: this.addCategoryName,
+          catArName: this.addCategoryArName,
+        });
+      }
     },
   },
 

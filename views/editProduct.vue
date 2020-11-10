@@ -9,7 +9,8 @@
                 v-model="currentProduct.product_name"
                 dense
                 required
-                outlined
+                filled
+                rounded
                 :rules="Rules"
                 class="arabic"
                 :placeholder="$t('editProduct.productName')"
@@ -23,7 +24,8 @@
                 :rules="Rules"
                 v-model="currentProduct.product_code"
                 dense
-                outlined
+                filled
+                rounded
                 class="arabic"
                 :placeholder="$t('editProduct.code')"
               ></v-text-field>
@@ -35,7 +37,8 @@
                 dense
                 v-model="currentProduct.HS_code"
                 :rules="Rules"
-                outlined
+                filled
+                rounded
                 :placeholder="$t('editProduct.hsCode')"
               ></v-text-field>
             </v-col>
@@ -47,7 +50,8 @@
                 :rules="Rules"
                 dense
                 v-model="currentProduct.unit_price"
-                outlined
+                filled
+                rounded
                 class="arabic"
                 :placeholder="$t('editProduct.price')"
               ></v-text-field>
@@ -67,7 +71,8 @@
                 dense
                 v-model="currentProduct.min_units_per_order"
                 :rules="Rules"
-                outlined
+                filled
+                rounded
                 :placeholder="$t('editProduct.minOrders')"
                 class="arabic"
               ></v-text-field>
@@ -79,7 +84,8 @@
               <v-text-field
                 v-model="currentProduct.color"
                 dense
-                outlined
+                filled
+                rounded
                 :placeholder="$t('editProduct.color')"
                 class="arabic"
               ></v-text-field>
@@ -89,7 +95,8 @@
               <v-text-field
                 currentProduct.discount_amount
                 dense
-                outlined
+                filled
+                rounded
                 :placeholder="$t('editProduct.sale')"
                 class="arabic"
               ></v-text-field>
@@ -102,7 +109,8 @@
                 v-model="currentProduct.describtion"
                 :rules="Rules"
                 dense
-                outlined
+                filled
+                rounded
                 :placeholder="$t('editProduct.description')"
                 class="arabic"
               ></v-textarea>

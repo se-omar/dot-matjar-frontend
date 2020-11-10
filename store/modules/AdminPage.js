@@ -24,6 +24,17 @@ export default {
             await axios.post(context.rootState.nodeHost + '/api/addNewUser', form).then(response => {
                 alert(response.data.message)
             })
+        },
+
+        async adminPageAddCategory(context, { parentCat, catName, catArName }) {
+            await axios.post(context.rootState.nodeHost + '/api/adminPageAddCategory',
+                {
+                    parentCatId: parentCat ? parentCat.id : 64,
+                    category_name: catName,
+                    category_arabic_name: catArName
+                }).then(response => {
+                    console.log('addmin page add product', response)
+                })
         }
     }
 }
