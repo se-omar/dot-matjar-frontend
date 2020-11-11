@@ -273,7 +273,9 @@
   },
   "supplierPage": {
     "updatePage": "update my page",
-    "supplierDetails": "supplier details"
+    "supplierDetails": "supplier details",
+    "filter":"Filter",
+    "category":"Category"
   },
   "updateForgottenPassword": {
     "updatePasswordPage": "update password page",

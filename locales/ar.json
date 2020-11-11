@@ -36,7 +36,11 @@
         "categoryRequestsNobr": "طلبات الفئات",
         "pendingSuppliersNobr": "التجار المعلقين",
         "searchProducts": "البحث عن المنتجات",
-        "searchSuppliers": "البحث عن البائعين"
+        "searchSuppliers": "البحث عن البائعين",
+        "orderManageNobr": "ادارة الطلبات",
+        "myProductsNobr": "منتجاتي",
+        "orderManageNobr": "ادارة الطلبات"
+      
     },
     "homePage": {
         "loadMore": "المزيد",
@@ -266,7 +270,9 @@
     },
     "supplierPage": {
         "updatePage": "تحديث صفحتي",
-        "supplierDetails": "بيانات البائع"
+        "supplierDetails": "بيانات البائع",
+        "filter":"تصفية",
+        "category":"الفئة"
     },
     "updateForgottenPassword": {
         "updatePasswordPage": "صفحة تجديد كلمة السر",

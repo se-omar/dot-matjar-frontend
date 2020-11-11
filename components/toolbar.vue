@@ -98,7 +98,7 @@
           rounded
           :placeholder="$t('toolbar.search')"
           append-icon="fa fa-search"
-          @keyup="filterSupplierProducts($route.params.supplier_id)"
+          @keyup="filterSupplierProducts()"
           v-model="supplierProductsSearch"
         ></v-text-field>
       </span>
@@ -1340,7 +1340,9 @@ export default {
     filterSupplierProducts() {
       this.$store.dispatch("filterSupplierProducts", {
         productsSearch: this.supplierProductsSearch,
-        user_id: this.$route.params.supplier_id,
+        supplier_id: this.$route.params.supplier_id,
+        categoryArray: [],
+        searchType: "name",
       });
     },
     async emptySupplierSearchBox() {
