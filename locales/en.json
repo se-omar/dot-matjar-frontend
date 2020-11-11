@@ -120,7 +120,14 @@
     "addOrRemoveCountry": "add or remove country",
     "pickCountryToAdd": "pick Country to Add",
     "countryToRemove": "pick country to remove",
-    "addCountry": "add country"
+    "addCountry": "add country",
+    "catWillBeChild": "your category will be a child to the category you choose",
+    "catName": "category name",
+    "catArName": "category arabic name",
+    "sure": "are you sure?",
+    "happensIfDelete": "  by deleting a category, all its subcategories and products will be deleted as well. Are you sure?",
+    "accept": "accept",
+    "cancel": "cancel"
   },
   "suppliersDashboard": {
     "dashboard": "dashboard",
