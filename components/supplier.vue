@@ -3,6 +3,7 @@
     <v-card
       @click="supplierClicked(supplier)"
       :min-width="minWidth"
+      :max-width="maxWidth"
       class="grey lighten-5"
     >
       <v-img
@@ -98,6 +99,11 @@ export default {
       default: () => {},
     },
     minWidth: {
+      type: String,
+      default: () => "100%",
+    },
+
+    maxWidth: {
       type: String,
       default: () => "100%",
     },

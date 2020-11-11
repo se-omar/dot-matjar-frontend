@@ -201,8 +201,7 @@
             :class="homePageInfo.show_right_banner ? 'ms-2' : productsClass"
             lg="2"
             :md="homePageInfo.show_right_banner ? 4 : 3"
-            sm="5"
-            cols="6"
+            cols="5"
           >
             <supplier
               :minWidth="homePageInfo.show_right_banner ? '110%' : '120%'"
@@ -289,7 +288,7 @@ export default {
       priceFrom: "",
       priceTo: "",
       advancedSearch: false,
-      productsClass: "",
+      productsClass: "ms-4",
       supplierApprovalMessage: false,
       filterDialog: false,
       subItems: [],

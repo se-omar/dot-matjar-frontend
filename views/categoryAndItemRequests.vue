@@ -3,8 +3,12 @@
     <v-container style="margin-top: 100px">
       <v-card v-for="request in categoryAndItemRequests" :key="request.id">
         <v-row justify="center">
-          <v-col cols="12" sm="10" md="3" lg="3" class="mt-8">
-            <supplier :supplier="request.user"></supplier>
+          <v-col cols="10" md="3" lg="3" class="mt-8">
+            <supplier
+              minWidth="20%"
+              :maxWidth="$vuetify.breakpoint.mdAndUp ? '100%' : '60%'"
+              :supplier="request.user"
+            ></supplier>
           </v-col>
           <v-col lg="4" class="mt-8">
             <h4 style="font-size: 25px; color: orange">
