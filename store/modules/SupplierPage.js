@@ -17,6 +17,8 @@ export default {
     supplierCategories: [],
     supplierCategoriesAndItems: [],
     supplierCategoriesTreeArray: [],
+    pressedCategory:[]
+
   },
 
   mutations: {
@@ -90,8 +92,9 @@ export default {
       }
       state.pendingSuppliers = array;
     },
-    filterSupplierProducts(state, products) {
+    filterSupplierProducts(state, {products,categoryArray}) {
       state.supplierProducts = products;
+      state.pressedCategory = categoryArray
     },
     returnAllProducts(state) {
       state.supplierProducts = state.supplierProductsSave;
@@ -289,38 +292,38 @@ export default {
           alert(message.data.message);
         });
     },
-    filterSupplierProducts(context, { productsSearch, user_id }) {
-      axios
-        .put(context.rootState.nodeHost + "/api/filterSupplierProducts", {
-          productsSearch,
-          user_id,
-        })
-        .then((products) => {
-          context.commit("filterSupplierProducts", products.data.data);
-        });
-    },
-    filterProductsWithCategory(context, { categoryName, user_id, siteLanguage }) {
-      axios
-        .put(context.rootState.nodeHost + "/api/filterSupplierProducts", {
-          categoryName,
-          user_id,
-          siteLanguage,
-        })
-        .then((products) => {
-          context.commit("filterProductsWithCategory", products.data.data);
-        });
-    },
-    filterProductsWithItem(context, { user_id, itemName, siteLanguage }) {
-      axios
-        .put(context.rootState.nodeHost + "/api/filterSupplierProducts", {
-          user_id,
-          itemName,
-          siteLanguage,
-        })
-        .then((products) => {
-          context.commit("filterProductsWithItem", products.data.data);
-        });
-    },
+    // filterSupplierProducts(context, { productsSearch, user_id }) {
+    //   axios
+    //     .put(context.rootState.nodeHost + "/api/filterSupplierProducts", {
+    //       productsSearch,
+    //       user_id,
+    //     })
+    //     .then((products) => {
+    //       context.commit("filterSupplierProducts", products.data.data);
+    //     });
+    // },
+    // filterProductsWithCategory(context, { categoryName, user_id, siteLanguage }) {
+    //   axios
+    //     .put(context.rootState.nodeHost + "/api/filterSupplierProducts", {
+    //       categoryName,
+    //       user_id,
+    //       siteLanguage,
+    //     })
+    //     .then((products) => {
+    //       context.commit("filterProductsWithCategory", products.data.data);
+    //     });
+    // },
+    // filterProductsWithItem(context, { user_id, itemName, siteLanguage }) {
+    //   axios
+    //     .put(context.rootState.nodeHost + "/api/filterSupplierProducts", {
+    //       user_id,
+    //       itemName,
+    //       siteLanguage,
+    //     })
+    //     .then((products) => {
+    //       context.commit("filterProductsWithItem", products.data.data);
+    //     });
+    // },
 
     async uploadCarouselImages(context, form) {
       await axios
@@ -420,5 +423,14 @@ export default {
           context.commit("getSupplierCategoriesTree", response.data.categoriesTreeArray);
         });
     },
+    filterSupplierProducts(context , {categoryArray,supplier_id , productsSearch , searchType}){
+      console.log(categoryArray,supplier_id)
+      axios.put(context.rootState.nodeHost + '/api/filterSupplierProducts',{categoryArray , supplier_id,productsSearch , searchType})
+      .then(products=>{
+        console.log(products.data.message)
+        console.log('Products is:',products.data.data)
+        context.commit('filterSupplierProducts',{products:products.data.data , categoryArray})
+      })
+    }
   },
 };

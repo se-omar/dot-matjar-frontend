@@ -11,7 +11,10 @@
       v-if="this.$route.params.supplier_id == currentUser.user_id"
     ></sideButton> -->
 
-    <v-row v-if="supplierPageInfo && supplierPageInfo.show_carousel" justify="center">
+    <v-row
+      v-if="supplierPageInfo && supplierPageInfo.show_carousel"
+      justify="center"
+    >
       <v-col :lg="supplierPageInfo ? supplierPageInfo.carousel_width : 10">
         <carousel
           :autoplay="true"
@@ -22,30 +25,78 @@
         >
           <slide v-if="supplierPageInfo && supplierPageInfo.carousel_image_1">
             <v-img
-              :height="supplierPageInfo ? supplierPageInfo.carousel_height : 400"
+              :height="
+                supplierPageInfo ? supplierPageInfo.carousel_height : 400
+              "
               :src="nodeHost + supplierPageInfo.carousel_image_1"
             ></v-img>
           </slide>
           <slide v-if="supplierPageInfo && supplierPageInfo.carousel_image_2">
             <v-img
-              :height="supplierPageInfo ? supplierPageInfo.carousel_height : 400"
+              :height="
+                supplierPageInfo ? supplierPageInfo.carousel_height : 400
+              "
               :src="nodeHost + supplierPageInfo.carousel_image_2"
             ></v-img>
           </slide>
           <slide v-if="supplierPageInfo && supplierPageInfo.carousel_image_3">
             <v-img
-              :height="supplierPageInfo ? supplierPageInfo.carousel_height : 400"
+              :height="
+                supplierPageInfo ? supplierPageInfo.carousel_height : 400
+              "
               :src="nodeHost + supplierPageInfo.carousel_image_3"
             ></v-img>
           </slide>
           <slide v-if="supplierPageInfo && supplierPageInfo.carousel_image_4">
             <v-img
-              :height="supplierPageInfo ? supplierPageInfo.carousel_height : 400"
+              :height="
+                supplierPageInfo ? supplierPageInfo.carousel_height : 400
+              "
               :src="nodeHost + supplierPageInfo.carousel_image_4"
             ></v-img>
           </slide>
         </carousel>
       </v-col>
+    </v-row>
+    <v-row justify="center">
+      <v-btn
+        v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs"
+        small
+        :color="siteColor.button_color"
+        @click="filterDialog = true"
+        :style="`color:${siteColor.button_text_color}`"
+        ><i
+          class="fa fa-filter"
+          :style="`color:${siteColor.button_text_color}`"
+        ></i
+        >{{ $t("supplierPage.filter") }}</v-btn
+      >
+      <v-dialog v-model="filterDialog">
+        <v-card height="95%" style="overflow: hidden" max-width>
+          <v-row justify="center"
+            ><v-card-title>{{ $t("supplierPage.category") }}</v-card-title>
+          </v-row>
+
+          <v-row>
+            <v-col class="ml-2">
+              <v-treeview
+                return-object
+                item-key="id"
+                hoverable
+                activatable
+                selected-color="red"
+                @update:active="filterByCategory"
+                color="warning"
+                :items="supplierCategoriesTreeArray"
+              >
+              </v-treeview>
+              <template slot-scope="{ item }">
+                <v-btn @click="filterByCategory(item)">{{ item.name }}</v-btn>
+              </template>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-dialog>
     </v-row>
     <v-row justify="center" class="mt-16">
       <v-col lg="2" md="3" sm="5" cols="5">
@@ -55,7 +106,10 @@
           :color="siteColor.button_color"
           rounded
         >
-          <span class="smallerText" :style="`color:${siteColor.button_text_color}`">
+          <span
+            class="smallerText"
+            :style="`color:${siteColor.button_text_color}`"
+          >
             {{ $t("supplierPage.updatePage") }}</span
           ></v-btn
         >
@@ -63,19 +117,32 @@
       <v-col lg="2" md="3" sm="5" cols="5">
         <v-btn
           :color="siteColor.button_color"
-          @click="$router.push(`/${$i18n.locale}/supplierDetails/` + supplier.user_id)"
+          @click="
+            $router.push(`/${$i18n.locale}/supplierDetails/` + supplier.user_id)
+          "
           rounded
         >
-          <span class="smallerText" :style="`color:${siteColor.button_text_color}`">
+          <span
+            class="smallerText"
+            :style="`color:${siteColor.button_text_color}`"
+          >
             {{ $t("supplierPage.supplierDetails") }}</span
           >
         </v-btn>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col lg="2" sm="3" md="2" cols="4">
+    <v-row justify="center">
+      <v-col
+        lg="2"
+        sm="3"
+        md="2"
+        cols="4"
+        v-if="$vuetify.breakpoint.lg || $vuetify.breakpoint.md"
+      >
         <v-card height="95%" style="overflow: hidden" max-width>
-          <v-row justify="center"><v-card-title>Categories</v-card-title> </v-row>
+          <v-row justify="center"
+            ><v-card-title>Categories</v-card-title>
+          </v-row>
 
           <v-row>
             <v-col class="ml-2">
@@ -101,9 +168,9 @@
 
       <v-col
         :lg="supplierPageInfo && supplierPageInfo.show_right_banner ? 8 : 10"
-        sm="7"
+        sm="12"
         :md="supplierPageInfo && supplierPageInfo.show_right_banner ? 8 : 10"
-        cols="7"
+        cols="12"
       >
         <v-row justify="center">
           <v-btn :color="siteColor.button_color" @click="getAllProducts">
@@ -113,7 +180,6 @@
           >
         </v-row>
         <v-row
-          class="ml-n5"
           :justify="
             supplierPageInfo && supplierPageInfo.show_right_banner
               ? 'space-between'
@@ -122,13 +188,15 @@
         >
           <v-col
             :class="
-              supplierPageInfo && supplierPageInfo.show_right_banner ? '' : productsClass
+              supplierPageInfo && supplierPageInfo.show_right_banner
+                ? ''
+                : productsClass
             "
             :lg="supplierPageInfo && supplierPageInfo.show_right_banner ? 3 : 2"
             :md="supplierPageInfo && supplierPageInfo.show_right_banner ? 4 : 3"
             v-for="(supplierProduct, index) in supplierProducts"
             :key="index"
-            cols="10"
+            cols="6"
           >
             <product
               :minWidth="
@@ -148,8 +216,8 @@
         lg="2"
         v-if="
           supplierPageInfo &&
-            supplierPageInfo.show_right_banner &&
-            supplierPageInfo.right_banner_image
+          supplierPageInfo.show_right_banner &&
+          supplierPageInfo.right_banner_image
         "
       >
         <v-card height="95%">
@@ -179,10 +247,15 @@ export default {
     review: "",
     groupedRatings: [],
     tab: 0,
-    tabs: [{ name: "Products" }, { name: "Reviews" }, { name: "Rate Supplier" }],
+    tabs: [
+      { name: "Products" },
+      { name: "Reviews" },
+      { name: "Rate Supplier" },
+    ],
     supplierProductsSearch: "",
     categoryItems: [],
     productsClass: "mr-4 ml-4",
+    filterDialog: false,
   }),
   computed: {
     currentUser() {
@@ -275,7 +348,8 @@ export default {
   methods: {
     updatePage() {
       this.$router.push(
-        `/${this.$i18n.locale}/updateSupplierPage/` + this.$route.params.supplier_id
+        `/${this.$i18n.locale}/updateSupplierPage/` +
+          this.$route.params.supplier_id
       );
     },
 
@@ -295,7 +369,10 @@ export default {
     },
 
     groupBy(xs, f) {
-      return xs.reduce((r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r), {});
+      return xs.reduce(
+        (r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r),
+        {}
+      );
     },
     filterSupplierProducts() {
       this.$store.dispatch("filterSupplierProducts", {
@@ -303,59 +380,72 @@ export default {
         user_id: this.$route.params.supplier_id,
       });
     },
-    filterProductsWithCategory(category) {
-      this.$store.dispatch("filterProductsWithCategory", {
-        categoryName: category,
-        user_id: this.$route.params.supplier_id,
-        siteLanguage: this.siteLanguage,
-      });
-    },
-    filterProductsWithItem(item) {
-      this.$store.dispatch("filterProductsWithItem", {
-        user_id: this.$route.params.supplier_id,
-        itemName: item,
-        siteLanguage: this.siteLanguage,
-      });
-    },
-    mouseOver(category) {
-      this.categoryItems = [];
+    // filterProductsWithCategory(category) {
+    //   this.$store.dispatch("filterProductsWithCategory", {
+    //     categoryName: category,
+    //     user_id: this.$route.params.supplier_id,
+    //     siteLanguage: this.siteLanguage,
+    //   });
+    // },
+    // filterProductsWithItem(item) {
+    //   this.$store.dispatch("filterProductsWithItem", {
+    //     user_id: this.$route.params.supplier_id,
+    //     itemName: item,
+    //     siteLanguage: this.siteLanguage,
+    //   });
+    // },
+    // mouseOver(category) {
+    //   this.categoryItems = [];
 
-      // for (var i = 0; i < this.categoriesItems.length; i++) {
-      //   if (this.categoriesItems[i].category_name == category) {
-      //     this.categoryItems.push(this.categoriesItems[i].category_items);
-      //   }
-      // }
-      if (this.siteLanguage == "en") {
-        for (var i = 0; i < this.supplierCategoriesAndItems.length; i++) {
-          if (
-            this.supplierCategoriesAndItems[i].product_category.category_name == category
-          ) {
-            this.categoryItems.push(this.supplierCategoriesAndItems[i].item_name);
-          }
-        }
-      } else {
-        for (var x = 0; x < this.supplierCategoriesAndItems.length; x++) {
-          if (
-            this.supplierCategoriesAndItems[x].product_category.category_arabic_name ==
-            category
-          ) {
-            this.categoryItems.push(
-              this.supplierCategoriesAndItems[x].category_item.category_items_arabic_name
-            );
-          }
-        }
-      }
-      console.log(this.categoryItems);
-    },
+    //   // for (var i = 0; i < this.categoriesItems.length; i++) {
+    //   //   if (this.categoriesItems[i].category_name == category) {
+    //   //     this.categoryItems.push(this.categoriesItems[i].category_items);
+    //   //   }
+    //   // }
+    //   if (this.siteLanguage == "en") {
+    //     for (var i = 0; i < this.supplierCategoriesAndItems.length; i++) {
+    //       if (
+    //         this.supplierCategoriesAndItems[i].product_category.category_name ==
+    //         category
+    //       ) {
+    //         this.categoryItems.push(
+    //           this.supplierCategoriesAndItems[i].item_name
+    //         );
+    //       }
+    //     }
+    //   } else {
+    //     for (var x = 0; x < this.supplierCategoriesAndItems.length; x++) {
+    //       if (
+    //         this.supplierCategoriesAndItems[x].product_category
+    //           .category_arabic_name == category
+    //       ) {
+    //         this.categoryItems.push(
+    //           this.supplierCategoriesAndItems[x].category_item
+    //             .category_items_arabic_name
+    //         );
+    //       }
+    //     }
+    //   }
+    //   console.log(this.categoryItems);
+    // },
     returnAllProducts() {
       this.$store.commit("returnAllProducts");
     },
     async getAllProducts() {
-      await this.$store.dispatch("getSupplierProducts", this.$route.params.supplier_id);
+      await this.$store.dispatch(
+        "getSupplierProducts",
+        this.$route.params.supplier_id
+      );
     },
 
     filterByCategory(catAr) {
       console.log(catAr);
+      this.$store.dispatch("filterSupplierProducts", {
+        categoryArray: catAr,
+        supplier_id: this.$route.params.supplier_id,
+        searchType: "category",
+        productsSearch: "",
+      });
     },
   },
   async created() {
@@ -371,10 +461,16 @@ export default {
     );
     await this.$store.dispatch("getSupplier", this.$route.params.supplier_id);
 
-    await this.$store.dispatch("getSupplierPageData", this.$route.params.supplier_id);
+    await this.$store.dispatch(
+      "getSupplierPageData",
+      this.$route.params.supplier_id
+    );
     //this.$store.commit("emptySupplierProducts");
 
-    await this.$store.dispatch("getSupplierProducts", this.$route.params.supplier_id);
+    await this.$store.dispatch(
+      "getSupplierProducts",
+      this.$route.params.supplier_id
+    );
 
     // await this.$store.dispatch(
     //   "getSupplierCategoriesAndItems",
@@ -385,12 +481,21 @@ export default {
       supplier_id: this.supplier.user_id,
       user_id: this.currentUser.user_id,
     });
-    console.log("supplier categories and items", this.supplierCategoriesAndItems);
+    console.log(
+      "supplier categories and items",
+      this.supplierCategoriesAndItems
+    );
     await this.setValues();
 
-    await this.$store.dispatch("getSupplierRatingsArray", this.supplier.user_id);
+    await this.$store.dispatch(
+      "getSupplierRatingsArray",
+      this.supplier.user_id
+    );
 
-    this.groupedRatings = this.groupBy(this.currentSupplierRatings, (c) => c.rating);
+    this.groupedRatings = this.groupBy(
+      this.currentSupplierRatings,
+      (c) => c.rating
+    );
     console.log("colors iss", this.siteColor);
     for (var j = 1; j < this.barRatingArray.length + 1; j++) {
       if (this.groupedRatings[j]) {
