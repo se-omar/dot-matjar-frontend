@@ -38,9 +38,7 @@
         "searchProducts": "البحث عن المنتجات",
         "searchSuppliers": "البحث عن البائعين",
         "orderManageNobr": "ادارة الطلبات",
-        "myProductsNobr": "منتجاتي",
-     
-      
+        "myProductsNobr": "منتجاتي"
     },
     "homePage": {
         "loadMore": "المزيد",
@@ -280,8 +278,8 @@
     "supplierPage": {
         "updatePage": "تحديث صفحتي",
         "supplierDetails": "بيانات البائع",
-        "filter":"تصفية",
-        "category":"الفئة"
+        "filter": "تصفية",
+        "category": "الفئة"
     },
     "updateForgottenPassword": {
         "updatePasswordPage": "صفحة تجديد كلمة السر",
