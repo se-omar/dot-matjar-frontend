@@ -3,8 +3,7 @@
     <v-container style="margin-top: 100px">
       <v-card v-for="request in categoryAndItemRequests" :key="request.id">
         <v-row justify="center">
-          <v-col lg="2"></v-col>
-          <v-col lg="4" class="mt-8">
+          <v-col cols="12" sm="10" md="3" lg="3" class="mt-8">
             <supplier :supplier="request.user"></supplier>
           </v-col>
           <v-col lg="4" class="mt-8">
@@ -99,7 +98,6 @@
 
             <v-divider class="divider"></v-divider>
           </v-col>
-          <v-col lg="1"></v-col>
         </v-row>
         <v-row>
           <v-col lg="3"></v-col>
@@ -157,6 +155,7 @@ export default {
   },
   methods: {
     acceptRequest(request) {
+      console.log(request);
       this.$store.dispatch("categoryAndItemRequestStatus", {
         id: request.id,
         status: "Accepted",
@@ -167,6 +166,7 @@ export default {
         requestType: request.request_type,
         categoryArabicName: request.new_category_arabic_name,
         itemArabicName: request.new_item_arabic_name,
+        parent_id: request.parent_id,
       });
       this.snackBar = true;
       setTimeout(() => {

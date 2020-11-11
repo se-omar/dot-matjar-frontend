@@ -99,7 +99,7 @@ export default {
     },
     minWidth: {
       type: String,
-      default: () => "110%",
+      default: () => "100%",
     },
   },
 

@@ -62,7 +62,7 @@
     "categoryRequest": "Category Request",
     "requestNewCategory": "Request for new Category",
     "categoryName": "category name",
-    "requestItem": "request a category item",
+    "requestParent": "Request  a parent Category",
     "addItem": "add item",
     "mainPicture": "Main picture",
     "extraPicture": "extra picture",
@@ -75,7 +75,8 @@
     "brand": "brand",
     "condition": "condition",
     "addCategorySnackBar": " Your request will be submitted by the admin , you will be notified",
-    "chooseCategory": "Choose your item parent  ..."
+    "chooseCategory": "Choose your item parent  ...",
+    "chooseParent":"Choose Parent..."
   },
   "adminPage": {
     "addNewCategory": "add a new category",

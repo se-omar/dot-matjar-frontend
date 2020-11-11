@@ -539,29 +539,32 @@ export default {
         requestNewCategoryAndItem(
             context,
             {
-                newCategoryName,
                 newCategoryDescription,
-                newCategoryItem,
-                newCategoryItemDescription,
-                categoryName,
-                itemArabicName,
+                newParentCategoryArabic,
+                newParentCategory,
+              
+                newCategoryName,
+                newParentDescription,
                 categoryArabicName,
+                parentCategoryId,
+                requestType
             }
         ) {
             axios
                 .post(context.rootState.nodeHost + "/api/requestNewCategoryAndItem", {
-                    newCategoryName,
                     newCategoryDescription,
-                    newCategoryItem,
-                    newCategoryItemDescription,
-                    categoryName,
-                    itemArabicName,
+                    newParentCategoryArabic,
+                    newParentCategory,
+                  
+                   newCategoryName,
+                    newParentDescription,
                     categoryArabicName,
+                    parentCategoryId,
+                    requestType,
                     user_id: context.state.currentUser.user_id,
                 })
                 .then((res) => {
-                    //
-                    //
+                    alert(res.data.message)
                 });
         },
         getCategoryAndItemRequests(context) {
@@ -583,6 +586,7 @@ export default {
                 requestType,
                 categoryArabicName,
                 itemArabicName,
+                parent_id
             }
         ) {
             axios
@@ -596,6 +600,7 @@ export default {
                     requestType,
                     categoryArabicName,
                     itemArabicName,
+                    parent_id
                 })
                 .then((message) => {
                     context.commit("categoryAndItemRequestStatus", message.data.message);
