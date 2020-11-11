@@ -78,7 +78,7 @@ export default {
   async created() {
     await this.$store.dispatch(
       "calculateSupplierRating",
-      this.supplier.user_id
+      this.supplier ? this.supplier.user_id : ""
     );
   },
   props: {

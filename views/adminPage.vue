@@ -37,7 +37,7 @@
 
         <v-col lg="12">
           <h3 class="text-center">
-            your category will be a child to the category you choose
+            {{ $t("adminPage.catWillBeChild") }}
           </h3>
         </v-col>
       </v-row>
@@ -48,7 +48,7 @@
             <v-col lg="10">
               <v-text-field
                 dense
-                placeholder="category name"
+                :placeholder="$t('adminPage.catName')"
                 rounded
                 :rules="[rules.required]"
                 filled
@@ -59,7 +59,7 @@
             <v-col lg="10">
               <v-text-field
                 dense
-                placeholder="category arabic name"
+                :placeholder="$t('adminPage.catArName')"
                 rounded
                 :rules="[rules.required]"
                 filled
@@ -94,7 +94,8 @@
             block
             :color="siteColor.button_color"
             class="text-center"
-            >add category</v-btn
+          >
+            {{ $t("adminPage.addCategory") }}</v-btn
           >
         </v-col>
       </v-row>
@@ -105,6 +106,68 @@
       <v-row justify="center">
         <h2>{{ $t("adminPage.removeCategory") }}</h2>
       </v-row>
+
+      <v-row justify="center">
+        <v-col lg="3">
+          <v-treeview
+            return-object
+            item-key="id"
+            hoverable
+            activatable
+            selected-color="red"
+            @update:active="setRemoveCategory"
+            color="warning"
+            :items="categoriesTreeArray"
+          >
+          </v-treeview>
+          <template slot-scope="{ item }">
+            <a @click="setRemoveCategory(item)">{{ item.name }}</a>
+          </template>
+        </v-col>
+      </v-row>
+
+      <div>
+        <v-dialog v-model="removeCatDialog" width="500">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              :disabled="!chosenRemoveCategory"
+              :color="siteColor.button_color"
+              dark
+              v-bind="attrs"
+              v-on="on"
+            >
+              {{ $t("adminPage.removeCategory") }}
+            </v-btn>
+          </template>
+
+          <v-card>
+            <v-card-title class="headline grey lighten-2">
+              {{ $t("adminPage.sure") }}
+            </v-card-title>
+
+            <v-card-text>
+              {{ $t("adminPage.happensIfDelete") }}
+            </v-card-text>
+
+            <v-divider></v-divider>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                :disabled="!chosenRemoveCategory"
+                color="primary"
+                text
+                @click="removeCategory"
+              >
+                {{ $t("adminPage.accept") }}
+              </v-btn>
+              <v-btn color="primary" text @click="removeCatDialog = false">
+                {{ $t("adminPage.cancel") }}
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </div>
 
       <v-divider class="mt-7"></v-divider>
 
@@ -814,6 +877,8 @@ export default {
       subItems: "",
       addCategoryName: "",
       addCategoryArName: "",
+      removeCatDialog: false,
+      chosenRemoveCategory: "",
     };
   },
 
@@ -1153,23 +1218,26 @@ export default {
       //
       //
     },
-    removeItem() {
-      //
+    // removeItem() {
+    //   //
 
-      this.$store.dispatch("removeCategoryAndItems", {
-        categoryName: this.chooseCategoryToRemove,
-        categoryItem: this.chooseItemToRemove,
-      });
-      // this.$router.go();
+    //   this.$store.dispatch("removeCategoryAndItems", {
+    //     categoryName: this.chooseCategoryToRemove,
+    //     categoryItem: this.chooseItemToRemove,
+    //   });
+    //   // this.$router.go();
+    // },
+    async removeCategory() {
+      await this.$store.dispatch(
+        "removeCategory",
+        this.chosenRemoveCategory.id
+      );
+      this.removeCatDialog = false;
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
     },
-    removeCategory() {
-      this.confirmingRemovingCategory = false;
-      this.$store.dispatch("removeCategoryAndItems", {
-        categoryName: this.chooseCategoryToRemove,
-        categoryItem: [],
-      });
-      // this.$router.go();
-    },
+
     convertBoolToInt(bool) {
       if (bool == true) return 1;
       else return 0;
@@ -1395,6 +1463,15 @@ export default {
           catArName: this.addCategoryArName,
         });
       }
+    },
+
+    setRemoveCategory(catAr) {
+      if (catAr.length != 0) {
+        this.chosenRemoveCategory = catAr[0];
+      } else {
+        this.chosenRemoveCategory = "";
+      }
+      console.log(this.chosenRemoveCategory);
     },
   },
 

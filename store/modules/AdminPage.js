@@ -35,6 +35,13 @@ export default {
                 }).then(response => {
                     console.log('addmin page add product', response)
                 })
+        },
+
+        removeCategory(context, parentId) {
+            axios.post(context.rootState.nodeHost + '/api/removeCategory', { parentId })
+                .then(response => {
+                    alert(response.data)
+                })
         }
     }
 }

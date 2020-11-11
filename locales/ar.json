@@ -113,9 +113,18 @@
         "newCategoryArabicName": " اسم الفئة بلعربي",
         "newCategoryItemArabicName": "اسم العنصر بلعربي",
         "addOrRemoveCountry": "اضافة او مسح بلد",
-        "PickCountryToAdd": "اضافة بلد",
+        "pickCountryToAdd": "اضافة بلد",
         "countryToRemove": "مسح بلد",
-        "addCountry": "اضافة البلد"
+        "addCountry": "اضافة البلد",
+        "catWillBeChild": "ستصبح فئتك ابن للفئة التي تختارها",
+        "catName": "اسم الفئة",
+        "catArName": "اسم الفئة بالعربي",
+        "sure": "هل انت متأكد",
+        "happensIfDelete": " اذا قمت بمسح الفئة, كل منتجاتها و الفئات ابناؤها سيمسحون ايضا, هل انت متأكد؟",
+        "accept": "قبول",
+        "cancel": "الغاء",
+        "addNewUser": "اضافة مستخدم جديد",
+        "allUsers": "كل المستخدمين"
     },
     "suppliersDashboard": {
         "dashboard": "لوحة تحكم",
