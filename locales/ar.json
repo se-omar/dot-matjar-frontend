@@ -38,7 +38,7 @@
         "searchProducts": "البحث عن المنتجات",
         "searchSuppliers": "البحث عن البائعين",
         "orderManageNobr": "ادارة الطلبات",
-        "myProductsNobr": "منتجاتي",
+        "myProductsNobr": "منتجاتي"
      
       
     },
@@ -76,7 +76,8 @@
         "brand": "الماركة",
         "condition": "الحالة",
         "addCategorySnackBar": " سيتم إرسال طلبك الي المسؤول ، وسيتم إخبارك",
-        "chooseCategory": "اختر فئتك"
+        "chooseCategory": "اختر فئتك",
+        "chooseParent":"اختر الاب"
     },
     "adminPage": {
         "addNewCategory": "اضافة فئة جديدة",
@@ -391,7 +392,7 @@
         "categoryRequest": "طلب فئة",
         "requestNewCategory": "طلب فئة جديدة",
         "categoryName": "اسم الفئة",
-        "requestItem": "طلب بند من الفئة ",
+        "requestParent": "طلب الفئة الأصل ",
         "addItem": "اضافة البند",
         "mainPicture": "الصورة الرئيسية ",
         "extraPicture": "صورة اضافية",

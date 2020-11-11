@@ -141,7 +141,7 @@
       >
         <v-card height="95%" style="overflow: hidden" max-width>
           <v-row justify="center"
-            ><v-card-title>Categories</v-card-title>
+            ><v-card-title>{{ $t("addProduct.category") }}</v-card-title>
           </v-row>
 
           <v-row>
@@ -168,8 +168,8 @@
 
       <v-col
         :lg="supplierPageInfo && supplierPageInfo.show_right_banner ? 8 : 10"
-        sm="12"
-        :md="supplierPageInfo && supplierPageInfo.show_right_banner ? 8 : 10"
+        sm="8"
+        :md="supplierPageInfo && supplierPageInfo.show_right_banner ? 8 : 12"
         cols="12"
       >
         <v-row justify="center">
@@ -197,6 +197,7 @@
             v-for="(supplierProduct, index) in supplierProducts"
             :key="index"
             cols="6"
+            sm="6"
           >
             <product
               :minWidth="

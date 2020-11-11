@@ -36,6 +36,11 @@
       <v-dialog style="overflow: hidden" v-model="filterDialog" max-width="280">
         <v-card style="overflow: hidden">
           <v-row justify="center">
+            <span style="font-weight: bold; font-size: 25px">
+              {{ $t("addProduct.category") }}</span
+            >
+          </v-row>
+          <v-row justify="center">
             <v-treeview
               return-object
               item-key="id"
@@ -131,6 +136,11 @@
         cols="4"
       >
         <v-card height="95%" style="overflow: hidden" max-width>
+          <v-row justify="center">
+            <span style="font-weight: bold; font-size: 25px">{{
+              $t("addProduct.category")
+            }}</span>
+          </v-row>
           <v-row justify="center">
             <v-treeview
               return-object

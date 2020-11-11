@@ -169,10 +169,34 @@
                     <h2>{{ $t("addProduct.requestNewCategory") }}</h2>
                   </v-row>
 
+                  <v-row justify="center">
+                    <span style="font-weight: bold; font-size: 25px">{{
+                      $t("addProduct.chooseParent")
+                    }}</span>
+                  </v-row>
+                  <v-row justify="center">
+                    <v-treeview
+                      return-object
+                      item-key="id"
+                      hoverable
+                      activatable
+                      selected-color="red"
+                      @update:active="selectCategory"
+                      color="warning"
+                      :items="categoriesTreeArray"
+                    >
+                    </v-treeview>
+                    <template slot-scope="{ item }">
+                      <v-btn @click="selectCategory(item)">{{
+                        item.name
+                      }}</v-btn>
+                    </template>
+                  </v-row>
+
                   <v-form v-model="addCategoryValidation">
                     <v-row justify="center">
                       <v-col cols="7" lg="3" sm="4" md="3">
-                        <v-text-field
+                        <!-- <v-text-field
                           :rules="[rules.required]"
                           v-model="newCategoryName"
                           :placeholder="$t('addProduct.categoryName')"
@@ -180,12 +204,29 @@
                           outlined
                           filled
                           :color="siteColor.button_color"
+                        ></v-text-field> -->
+                        <p>
+                          Parent name :
+                          <span style="color: blue; font-size: 25px">{{
+                            parentCategory.name
+                          }}</span>
+                        </p>
+                      </v-col>
+                      <v-col cols="7" lg="3" sm="4" md="3">
+                        <v-text-field
+                          :rules="[rules.required]"
+                          v-model="newCategoryName"
+                          :placeholder="$t('addProduct.categoryName')"
+                          rounded
+                          filled
+                          outlined
+                          :color="siteColor.button_color"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="7" lg="3" sm="4" md="3">
                         <v-text-field
                           :rules="[rules.required]"
-                          v-model="newCategoryArabicName"
+                          v-model="categoryArabicName"
                           :placeholder="$t('addProduct.categoryArabicName')"
                           rounded
                           filled
@@ -213,7 +254,7 @@
                       rounded
                       :color="siteColor.button_color"
                       class="white--text"
-                      @click="requestNewCategoryAndItem"
+                      @click="requestNewCategoryAndItem('child')"
                       ><span :style="`color:${siteColor.button_text_color}`">{{
                         $t("addProduct.addCategory")
                       }}</span></v-btn
@@ -234,27 +275,15 @@
                   <v-divider class="mx-16 mt-6"></v-divider>
                   <!-- Adding category items -->
                   <v-row justify="center">
-                    <h2>{{ $t("addProduct.requestItem") }}</h2>
+                    <h2>{{ $t("addProduct.requestParent") }}</h2>
                   </v-row>
 
                   <v-form justify="center" v-model="addingItemsValidation">
                     <v-row justify="center">
                       <v-col cols="7" lg="3" sm="4" md="3">
-                        <v-select
-                          :rules="[rules.required]"
-                          outlined
-                          rounded
-                          :items="category"
-                          v-model="categoryName"
-                          :placeholder="$t('addProduct.categoryName')"
-                          filled
-                        ></v-select>
-                      </v-col>
-
-                      <v-col cols="7" lg="3" sm="4" md="3">
                         <v-text-field
-                          v-model="newCategoryItem"
-                          :placeholder="$t('addProduct.requestItem')"
+                          v-model="newParentCategory"
+                          :placeholder="$t('addProduct.requestParent')"
                           class="text-xl"
                           rounded
                           outlined
@@ -267,8 +296,8 @@
                     <v-row justify="center">
                       <v-col cols="7" lg="3" sm="4" md="3">
                         <v-text-field
-                          v-model="newItemArabicName"
-                          :placeholder="$t('addProduct.itemArabicName')"
+                          v-model="newParentCategoryArabic"
+                          :placeholder="$t('addProduct.categoryArabicName')"
                           class="text-xl"
                           rounded
                           outlined
@@ -283,7 +312,7 @@
                           :label="$t('addProduct.description')"
                           rounded
                           outlined
-                          v-model="newCategoryItemDescription"
+                          v-model="newParentDescription"
                           filled
                         ></v-textarea>
                       </v-col>
@@ -296,7 +325,7 @@
                       rounded
                       :color="siteColor.button_color"
                       class="white--text"
-                      @click="requestNewCategoryAndItem"
+                      @click="requestNewCategoryAndItem('parent')"
                       ><span :style="`color:${siteColor.button_text_color}`">{{
                         $t("addProduct.addItem")
                       }}</span></v-btn
@@ -497,6 +526,12 @@ export default {
       addCategorySnackBar: false,
       subItems: [],
       chosenCategory: "",
+      parentCategory: "",
+
+      categoryArabicName: "",
+      newParentCategoryArabic: "",
+      newParentCategory: "",
+      newParentDescription: "",
     };
   },
   methods: {
@@ -550,15 +585,16 @@ export default {
         });
     },
 
-    requestNewCategoryAndItem() {
+    requestNewCategoryAndItem(requestType) {
       this.$store.dispatch("requestNewCategoryAndItem", {
-        newCategoryName: this.newCategoryName,
         newCategoryDescription: this.newCategoryDescription,
-        newCategoryItem: this.newCategoryItem,
-        newCategoryItemDescription: this.newCategoryItemDescription,
-        categoryName: this.categoryName,
-        itemArabicName: this.newItemArabicName,
-        categoryArabicName: this.newCategoryArabicName,
+        newParentCategoryArabic: this.newParentCategoryArabic,
+        newParentCategory: this.newParentCategory,
+        newCategoryName: this.newCategoryName,
+        newParentDescription: this.newParentDescription,
+        categoryArabicName: this.categoryArabicName,
+        parentCategoryId: this.parentCategory.id,
+        requestType: requestType,
       });
       this.addCategorySnackBar = true;
     },
@@ -648,6 +684,10 @@ export default {
         this.chosenCategory = "";
       }
       console.log(this.chosenCategory);
+    },
+    selectCategory(item) {
+      console.log(item);
+      this.parentCategory = item[0];
     },
   },
   async created() {

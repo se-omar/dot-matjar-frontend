@@ -71,15 +71,19 @@
                     ></i>
                     <i
                       v-if="item.products_orders.status == 'Rejected'"
-                      class="fa fa-trash fa-lg"
+                      class="fa fa-trash fa-sm"
                     ></i>
                     <v-btn icon @click="productStatus">
-                      <i class="fa fa-edit fa-2x ml-4"></i>
+                      <i class="fa fa-edit fa-sm ml-4"></i>
                     </v-btn>
                   </h5>
 
-                  <v-dialog v-model="statusDialog" max-width="500px">
-                    <v-card tile>
+                  <v-dialog
+                    style="overflow: hidden"
+                    v-model="statusDialog"
+                    max-width="500px"
+                  >
+                    <v-card style="overflow: hidden" tile>
                       <v-toolbar
                         flat
                         dark
