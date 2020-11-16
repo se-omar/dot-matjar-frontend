@@ -1288,23 +1288,18 @@ export default {
     setCarouselImage1(image) {
       this.carouselImage1 = image;
       this.carouselViewImg1 = URL.createObjectURL(image);
-      //
-      //
     },
     setCarouselImage2(image) {
       this.carouselImage2 = image;
       this.carouselViewImg2 = URL.createObjectURL(image);
-      //
     },
     setCarouselImage3(image) {
       this.carouselImage3 = image;
       this.carouselViewImg3 = URL.createObjectURL(image);
-      //
     },
     setCarouselImage4(image) {
       this.carouselImage4 = image;
       this.carouselViewImg4 = URL.createObjectURL(image);
-      //
     },
     // setLeftImage(image) {
     //   this.leftImage = image;
