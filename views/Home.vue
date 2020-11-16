@@ -30,7 +30,7 @@
           :style="`color:${siteColor.button_text_color}`"
         ></i>
         <span :style="`color:${siteColor.button_text_color}`"
-          >Filter</span
+          >{{$t("toolbar.filter")}}</span
         ></v-btn
       >
       <v-dialog style="overflow: hidden" v-model="filterDialog" max-width="280">

@@ -38,7 +38,8 @@
     "pendingSuppliers": "Pending<br/> Suppliers",
     "pendingSuppliersNobr": "Pending Suppliers",
     "searchProducts": "search for products",
-    "searchSuppliers": "search for suppliers"
+    "searchSuppliers": "search for suppliers",
+    "filter":"Filter"
   },
   "homePage": {
     "loadMore": "load more",

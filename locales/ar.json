@@ -38,7 +38,8 @@
         "searchProducts": "البحث عن المنتجات",
         "searchSuppliers": "البحث عن البائعين",
         "orderManageNobr": "ادارة الطلبات",
-        "myProductsNobr": "منتجاتي"
+        "myProductsNobr": "منتجاتي",
+        "filter":"تصفية"
     },
     "homePage": {
         "loadMore": "المزيد",
