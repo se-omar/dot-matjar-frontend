@@ -30,7 +30,7 @@
           :style="`color:${siteColor.button_text_color}`"
         ></i>
         <span :style="`color:${siteColor.button_text_color}`"
-          >Filter</span
+          >{{$t("toolbar.filter")}}</span
         ></v-btn
       >
       <v-dialog style="overflow: hidden" v-model="filterDialog" max-width="280">
@@ -175,9 +175,9 @@
             class="ms-2"
             :class="homePageInfo.show_right_banner ? '' : productsClass"
             :lg="homePageInfo.show_right_banner ? 3 : 2"
-            :md="homePageInfo.show_right_banner ? 4 : 2"
-            xmd="4"
-            sm="5"
+            :md="homePageInfo.show_right_banner ? 3 : 2"
+            xmd="3"
+            sm="3"
             cols="5"
             v-for="(filteredProduct, index) in filteredProducts"
             :key="index"
