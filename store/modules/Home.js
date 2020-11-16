@@ -38,8 +38,6 @@ export default {
         // eslint-disable-next-line no-unused-vars
 
         getSiteColor(state, siteColors) {
-            //
-
             localStorage.removeItem("siteColor");
             var obj = siteColors;
             localStorage.setItem("siteColor", JSON.stringify(obj));
@@ -264,10 +262,6 @@ export default {
     },
 
     actions: {
-        removeSupplierPageData(context) {
-            context.commit("removeSupplierPageData");
-        },
-
         getSuppliers(context, {
             supplierFilterFlag,
             supplierName,
@@ -298,7 +292,6 @@ export default {
         categoriesDB(context) {
             axios.put(context.rootState.nodeHost + '/api/selectCategory')
                 .then((res) => {
-                    // 
                     context.commit('categoriesDB', res.data.data)
                 })
         },
@@ -316,8 +309,6 @@ export default {
         },
         getSiteColor(context) {
             axios.put(context.rootState.nodeHost + "/api/getSiteColor").then((response) => {
-                //
-                //
                 context.commit("getSiteColor", response.data.data);
             });
         },
@@ -349,7 +340,6 @@ export default {
 
         getGovernorate(context) {
             axios.put(context.rootState.nodeHost + "/api/getGovernorate").then((res) => {
-                //
                 context.commit("getGovernorate", res.data.data);
             });
         },
@@ -542,7 +532,7 @@ export default {
                 newCategoryDescription,
                 newParentCategoryArabic,
                 newParentCategory,
-              
+
                 newCategoryName,
                 newParentDescription,
                 categoryArabicName,
@@ -555,8 +545,8 @@ export default {
                     newCategoryDescription,
                     newParentCategoryArabic,
                     newParentCategory,
-                  
-                   newCategoryName,
+
+                    newCategoryName,
                     newParentDescription,
                     categoryArabicName,
                     parentCategoryId,

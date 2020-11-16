@@ -22,10 +22,17 @@
 // import cartTable from "./components/cartTable";
 export default {
   name: "App",
-  created() {
+  async created() {
+    if (localStorage.getItem("loginToken")) {
+      await this.$store.dispatch("refreshCurrentUser");
+    }
+
     this.$vuetify.rtl = this.$i18n.locale == "ar" ? true : false;
     if (!localStorage.getItem("language"))
       localStorage.setItem("language", this.$i18n.locale);
+
+    await this.$store.dispatch("getSiteColor");
+    await this.$store.dispatch("getCurrencies");
   },
   components: {
     ToolBar: () => import("./components/toolbar"),

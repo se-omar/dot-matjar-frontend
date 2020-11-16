@@ -47,13 +47,13 @@
               hoverable
               activatable
               selected-color="red"
-              @update:active="mouseOver"
+              @update:active="filterByCategory"
               color="warning"
               :items="categoriesTreeArray"
             >
             </v-treeview>
             <template slot-scope="{ item }">
-              <a @click="mouseOver(item)">{{ item.name }}</a>
+              <a @click="filterByCategory(item)">{{ item.name }}</a>
             </template>
           </v-row>
         </v-card>
@@ -148,13 +148,13 @@
               hoverable
               activatable
               selected-color="red"
-              @update:active="mouseOver"
+              @update:active="filterByCategory"
               color="warning"
               :items="categoriesTreeArray"
             >
             </v-treeview>
             <template slot-scope="{ item }">
-              <v-btn @click="mouseOver(item)">{{ item.name }}</v-btn>
+              <v-btn @click="filterByCategory(item)">{{ item.name }}</v-btn>
             </template>
           </v-row>
         </v-card>
@@ -222,7 +222,7 @@
             small
             :color="siteColor.button_color"
             class="mb-15"
-            @click="loadMore"
+            @click="loadmoreSuppliers"
           >
             <span :style="`color: ${siteColor.button_text_color}`">
               {{ $t("homePage.loadMore") }}</span
@@ -267,76 +267,41 @@ export default {
   name: "Home",
   data() {
     return {
-      offset: true,
-      tree: [],
-      toolbarSearch: "",
       categoryName: "",
-      supplierName: "",
-      supplierLocation: "",
-      items: [],
       productFilterFlag: false,
       supplierFilterFlag: false,
-      // category: [],
-      // radioGroup:1,
-      governorate: "",
-      region: "",
       isLoading: false,
-      categoryItems: [],
-      categoryItem: "",
-
-      menuButton: false,
-      priceFrom: "",
-      priceTo: "",
-      advancedSearch: false,
       productsClass: "ms-4",
       supplierApprovalMessage: false,
       filterDialog: false,
-      subItems: [],
     };
   },
 
   async created() {
     this.isLoading = true;
 
-    await this.$store.dispatch("getSiteColor");
-    await this.$store.dispatch("getCurrencies");
-    await this.$store.dispatch("categoriesDB");
+    // await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getCategoriesTree");
     // await this.$store.dispatch("getCategoryItems");
-
-    this.$store.dispatch("removeSupplierPageData");
-    await this.$store.dispatch("getSiteColor");
+    // await this.$store.dispatch("getSiteColor");
 
     await this.$store.dispatch("getHomePageData");
-    if (localStorage.getItem("loginToken")) {
-      await this.$store.dispatch("refreshCurrentUser");
-    }
+
     this.$store.commit("emptyProductsArray");
     await this.$store.dispatch("getGovernorate");
 
     await this.$store.dispatch("getProducts", {
       productFilterFlagss: this.productFilterFlag,
-      productName: this.toolbarSearch,
       categoryName: this.categoryName,
     });
 
     await this.$store.dispatch("getSuppliers", {
       supplierFilterFlag: this.supplierFilterFlag,
-      supplierName: this.supplierName,
-      governorate: this.governorate,
-      region: this.region,
     });
     if (this.currentUser.user_type == "waiting_approval") {
       this.supplierApprovalMessage = true;
     }
-    console.log("all categories", this.allCategories);
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        this.isLoading = false;
-        // this.$store.dispatch("categoriesDB");
-        resolve();
-      });
-    });
+    this.isLoading = false;
   },
 
   computed: {
@@ -349,18 +314,18 @@ export default {
     suppliers() {
       return this.$store.state.Home.suppliers;
     },
-    regions() {
-      return this.$store.state.Home.regions;
-    },
-    egyptGovernorates() {
-      return this.$store.state.Home.governorates;
-    },
+    // regions() {
+    //   return this.$store.state.Home.regions;
+    // },
+    // egyptGovernorates() {
+    //   return this.$store.state.Home.governorates;
+    // },
     currentUser() {
       return this.$store.state.Home.currentUser;
     },
-    loginToken() {
-      return this.$store.state.RegisterLogin.loginToken;
-    },
+    // loginToken() {
+    //   return this.$store.state.RegisterLogin.loginToken;
+    // },
     siteColor() {
       if (this.$store.state.Home.siteColor) {
         return this.$store.state.Home.siteColor;
@@ -373,27 +338,26 @@ export default {
         };
       }
     },
-    category() {
-      return this.$store.state.Home.category;
-    },
-    categoriesItems() {
-      return this.$store.state.Home.categoriesItems;
-    },
+    // category() {
+    //   return this.$store.state.Home.category;
+    // },
+    // categoriesItems() {
+    //   return this.$store.state.Home.categoriesItems;
+    // },
     homePageInfo() {
       return this.$store.state.Home.homePageInfo;
     },
     nodeHost() {
       return this.$store.state.nodeHost;
     },
-
     radioGroup() {
       return this.$store.state.Home.radioGroup;
     },
-    siteLanguage() {
-      return this.$store.state.Home.siteLanguage;
-    },
+    // siteLanguage() {
+    //   return this.$store.state.Home.siteLanguage;
+    // },
     rtlMenuCondition() {
-      if (this.siteLanguage == "en") {
+      if (localStorage.getItem("language") == "en") {
         return false;
       } else {
         return true;
@@ -424,9 +388,9 @@ export default {
         return "114%";
       else return "100%";
     },
-    allCategories() {
-      return this.$store.state.Home.allCategories;
-    },
+    // allCategories() {
+    //   return this.$store.state.Home.allCategories;
+    // },
     categoriesTreeArray() {
       return this.$store.state.Home.categoriesTreeArray;
     },
@@ -437,8 +401,6 @@ export default {
   methods: {
     async filterProducts(buttonPressed) {
       var obj = {};
-      // this.isLoading = true;
-      // debugger
       this.productFilterFlag = true;
       if (buttonPressed == "loadmore") {
         if (this.productAdvancedSearches.product_name)
@@ -469,59 +431,53 @@ export default {
 
       obj.buttonPressed = buttonPressed;
       await this.$store.dispatch("filterProducts", obj);
-      if (this.supplierName) {
-        await this.$store.dispatch("filterSuppliers", {
-          supplierName: this.supplierName,
-          governorate: this.governorate,
-          region: this.region,
-        });
-      }
+      // if (this.supplierName) {
+      //   await this.$store.dispatch("filterSuppliers", {
+      //     supplierName: this.supplierName,
+      //     governorate: this.governorate,
+      //     region: this.region,
+      //   });
+      // }
 
       this.isLoading = false;
     },
-    async loadmoreProducts() {
-      var obj = {};
-      if (this.productAdvancedSearches) {
-        obj = this.productAdvancedSearches;
-        obj.id =
-          this.filteredProducts.length > 0
-            ? this.filteredProducts[this.filteredProducts.length - 1].product_id
-            : 0;
-      } else {
-        obj = {
-          id:
-            this.filteredProducts.length > 0
-              ? this.filteredProducts[this.filteredProducts.length - 1]
-                  .product_id
-              : 0,
-        };
-      }
+    // async loadmoreProducts() {
+    //   var obj = {};
+    //   if (this.productAdvancedSearches) {
+    //     obj = this.productAdvancedSearches;
+    //     obj.id =
+    //       this.filteredProducts.length > 0
+    //         ? this.filteredProducts[this.filteredProducts.length - 1].product_id
+    //         : 0;
+    //   } else {
+    //     obj = {
+    //       id:
+    //         this.filteredProducts.length > 0
+    //           ? this.filteredProducts[this.filteredProducts.length - 1]
+    //               .product_id
+    //           : 0,
+    //     };
+    //   }
 
-      this.$store.dispatch("loadmoreProducts", obj);
-    },
+    //   this.$store.dispatch("loadmoreProducts", obj);
+    // },
 
-    async filterSuppliers() {
-      this.isLoading = true;
-      this.supplierFilterFlag = true;
-      await this.$store.dispatch("filterSuppliers", {
-        supplierName: this.supplierName,
-        governorate: this.governorate,
-        region: this.region,
-      });
-      this.isLoading = false;
-    },
+    // async filterSuppliers() {
+    //   this.isLoading = true;
+    //   this.supplierFilterFlag = true;
+    //   await this.$store.dispatch("filterSuppliers", {
+    //     supplierName: this.supplierName,
+    //     governorate: this.governorate,
+    //     region: this.region,
+    //   });
+    //   this.isLoading = false;
+    // },
 
-    emptySearchBox() {
-      if (!this.toolbarSearch) {
-        this.$store.commit("emptySearch");
-      }
-    },
-
-    emptySupplierName() {
-      if (!this.supplierName) {
-        this.$store.commit("emptySupplierName");
-      }
-    },
+    // emptySupplierName() {
+    //   if (!this.supplierName) {
+    //     this.$store.commit("emptySupplierName");
+    //   }
+    // },
 
     // emptySupplierLocation() {
     //   if (!this.supplierLocation) {
@@ -529,29 +485,24 @@ export default {
     //   }
     // },
 
-    emptySelectBox() {
-      if (this.categoryName == "All") {
-        this.$store.commit("emptySearch");
-      }
-    },
-    categoriesDB() {},
+    // emptySelectBox() {
+    //   if (this.categoryName == "All") {
+    //     this.$store.commit("emptySearch");
+    //   }
+    // },
 
-    async loadMore() {
+    async loadmoreSuppliers() {
       this.isLoading = true;
       var self = this;
       self.$store.dispatch("getSuppliers", {
         supplierFilterFlag: this.supplierFilterFlag,
-        supplierName: this.supplierName,
-        governorate: this.governorate,
-        region: this.region,
       });
-
       this.isLoading = false;
     },
 
-    getCountryRegions() {
-      this.$store.dispatch("getRegions", this.governorate);
-    },
+    // getCountryRegions() {
+    //   this.$store.dispatch("getRegions", this.governorate);
+    // },
     async All() {
       await this.$store.commit("loadMoreType", { name: "all", type: "all" });
       this.supplierFilterFlag = false;
@@ -559,19 +510,16 @@ export default {
       this.$store.commit("emptySupplierName");
       await this.$store.dispatch("getSuppliers", {
         supplierFilterFlag: this.supplierFilterFlag,
-        supplierName: this.supplierName,
-        governorate: this.governorate,
-        region: this.region,
       });
     },
-    gettingCategoryItems() {
-      this.categoryItems = [];
-      for (let i = 0; i < this.categoriesItems.length; i++) {
-        if (this.categoriesItems[i].category_name == this.categoryName) {
-          this.categoryItems.push(this.categoriesItems[i].category_items);
-        }
-      }
-    },
+    // gettingCategoryItems() {
+    //   this.categoryItems = [];
+    //   for (let i = 0; i < this.categoriesItems.length; i++) {
+    //     if (this.categoriesItems[i].category_name == this.categoryName) {
+    //       this.categoryItems.push(this.categoriesItems[i].category_items);
+    //     }
+    //   }
+    // },
 
     // async mouseOver(cat) {
     //   console.log("category pressed", cat);
@@ -591,7 +539,7 @@ export default {
     //       this.categoryItems.push(element);
     //     }
     //   });
-    async mouseOver(catAr) {
+    async filterByCategory(catAr) {
       if (catAr.length != 0) {
         var cat = catAr[0];
         var obj = {};
@@ -599,7 +547,6 @@ export default {
         obj.buttonPressed = "search";
         obj.product_id = 0;
         await this.$store.dispatch("filterProducts", obj);
-        //this.$store.commit("setCategoryId");
         this.$store.commit("loadMoreType", {
           category: cat,
           type: "category",
@@ -645,9 +592,7 @@ export default {
     //     type: "category",
     //   });
     // },
-    testModule() {
-      this.$store.dispatch("testAct", "assdfsaf");
-    },
+
     changeRadioGroup() {
       if (this.radioGroup == "1") {
         this.$store.commit("changeRadioGroup", "2");
@@ -659,8 +604,6 @@ export default {
   components: {
     product: () => import("../components/product"),
     supplier: () => import("../components/supplier"),
-
-    // SiteColor,
   },
 };
 </script>
