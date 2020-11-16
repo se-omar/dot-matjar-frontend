@@ -129,7 +129,7 @@ export default {
                 }
             }
 
-            console.log("category in state", state.category);
+            // console.log("category in state", state.category);
         },
 
         filterProducts(state, { products, pressed }) {
@@ -215,7 +215,7 @@ export default {
             state.siteColor = JSON.parse(localStorage.getItem("siteColor"))
                 ? JSON.parse(localStorage.getItem("siteColor"))
                 : [];
-            console.log(pageDataArray, state.siteColor);
+            // console.log(pageDataArray, state.siteColor);
         },
         changeRadioGroup(state, radioValue) {
             state.radioGroup = radioValue;
@@ -249,7 +249,7 @@ export default {
         },
         loadMoreType(state, { category, type }) {
             state.loadmore = { category, type };
-            console.log("loadmore in store", state.loadmore);
+            // console.log("loadmore in store", state.loadmore);
         },
 
         setProductAdvancedSearches(state, obj) {
@@ -300,7 +300,7 @@ export default {
             axios
                 .put(context.rootState.nodeHost + "/api/filterProducts", obj)
                 .then((response) => {
-                    console.log('filter products', response.data.data)
+                    // console.log('filter products', response.data.data)
                     context.commit("filterProducts", {
                         products: response.data.data,
                         pressed: obj.buttonPressed,
@@ -467,7 +467,7 @@ export default {
                     region: region,
                 })
                 .then((response) => {
-                    console.log("filter suppliers", response.data.users);
+                    // onsole.clog("filter suppliers", response.data.users);
                     //
                     context.commit("filterSuppliers", response.data.users);
                 });
@@ -886,7 +886,7 @@ export default {
                 })
                 .then((response) => {
                     context.commit("getCategoriesTree", response.data.categoriesTreeArray);
-                    console.log("get categories tree response", response.data);
+                    // console.log("get categories tree response", response.data);
                 });
         },
     },
