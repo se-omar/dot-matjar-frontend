@@ -3,7 +3,7 @@
     <v-app>
       <v-form v-model="valid">
         <v-container>
-          <v-row justify="center" class="mt-16">
+          <v-row justify="center">
             <p>{{ $t("checkoutLocation.productsDelivered") }}</p>
           </v-row>
           <v-row>
@@ -54,7 +54,7 @@
 
               <!-- =============== -->
 
-              <v-snackbar
+              <!-- <v-snackbar
                 v-model="snackbar"
                 :vertical="vertical"
                 :color="siteColor"
@@ -72,7 +72,7 @@
                     ><span>{{ $t("checkoutLocation.close") }}</span></v-btn
                   >
                 </template>
-              </v-snackbar>
+              </v-snackbar> -->
               <!-- ====================== -->
             </v-col>
             <v-col lg="2">
@@ -87,6 +87,17 @@
               >
             </v-col>
           </v-row>
+           <v-snackbar timeout="5000" v-model="snackbar">
+      <v-row justify="center">
+        <p v-if="orderMessage" style="font-size: 20px">
+        {{orderMessage}}
+        </p>
+        <p v-else style="font-size: 20px">
+      Something went wrong , try again.
+        </p>
+      </v-row>
+     
+    </v-snackbar>
         </v-container>
       </v-form>
     </v-app>
@@ -101,16 +112,19 @@ export default {
   data: () => ({
     region: "",
     governorate: "",
-    valid: true,
+    valid: false,
     address: "",
 
     governorates: [],
     quantityArray: [],
     rules: [(v) => !!v || "Required"],
     snackbar: false,
-    text: this.$t("checkoutLocation.orderPlaced"),
+   
     vertical: true,
-  }),
+
+
+
+}),
 
   computed: {
     currentUser() {
@@ -138,7 +152,10 @@ export default {
         };
       }
     },
-  },
+    orderMessage(){
+return this.$store.state.Orders.orderMessage
+}  
+},
   async created() {
     await this.$store.dispatch("getSiteColor");
     if (localStorage.getItem("loginToken")) {
@@ -192,7 +209,7 @@ export default {
       this.$store.dispatch("getRegions", this.governorate);
     },
     async createOrder() {
-      alert("order placed successfully");
+     
 
       await this.$store.dispatch("cleanCart");
       await this.$store.dispatch("createOrder", {
@@ -204,7 +221,7 @@ export default {
       this.snackbar = true;
       setTimeout(() => {
         this.$router.push("/");
-      }, 200);
+      }, 5000);
     },
   },
 };

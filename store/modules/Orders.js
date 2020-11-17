@@ -13,6 +13,7 @@ export default {
         orders: [],
         orderProducts: [],
         productsQuantityArray: JSON.parse(localStorage.getItem('quantity')),
+        orderMessage:''
     },
 
     mutations: {
@@ -86,6 +87,9 @@ export default {
             localStorage.setItem('quantity', JSON.stringify(quantity))
             state.productsQuantityArray = JSON.parse(localStorage.getItem('quantity'))
         },
+        createOrder(state,message){
+            state.orderMessage = message
+        }
     },
 
     actions: {
@@ -100,7 +104,7 @@ export default {
                 totalPrice: context.rootState.Cart.totalPrice,
             })
                 .then(res => {
-
+context.commit('createOrder' , res.data.message)
 
                 })
         },
