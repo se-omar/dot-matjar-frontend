@@ -94,30 +94,6 @@ export default {
             state.allSuppliers.push(...suppliers);
         },
 
-        // categoriesDB(state, data) {
-        //     state.category = []
-        //     state.allCategories = data
-
-        //     if (state.siteLanguage == 'en') {
-
-        //         for (let i = 0; i < data.length; i++) {
-        //             if (!data[i].parent_id) {
-        //                 state.category.push({ name: data[i].category_name, icon: data[i].category_name })
-        //             }
-        //         }
-        //     }
-        //     else {
-
-        //         for (let i = 0; i < data.length; i++) {
-        //             if (!data[i].parent_id) {
-        //                 state.category.push({ name: data[i].category_arabic_name, icon: data[i].category_name })
-        //             }
-        //         }
-
-        //     }
-        //     console.log('category in state', state.category)
-
-        // },
 
         categoriesDB(state, data) {
             state.category = [];

@@ -2,14 +2,14 @@
   <v-app>
     <v-main class="mx-15">
       <v-row justify="center">
-        <p class="text-h4">{{ $t("addUser.addNewUser") }}</p>
+        <p class="text-h5">{{ $t("addUser.addNewUser") }}</p>
       </v-row>
 
       <v-row justify="center">
         <v-col order-sm="2" lg="9">
           <v-form v-model="valid">
             <v-row>
-              <v-col lg="4" md="6" sm="12" cols="12">
+              <v-col lg="6" md="6" sm="12" cols="12">
                 <v-text-field
                   rounded
                   filled
@@ -19,7 +19,7 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col lg="4" md="6" sm="12" cols="12">
+              <v-col lg="6" md="6" sm="12" cols="12">
                 <v-text-field
                   rounded
                   filled
@@ -30,7 +30,7 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col lg="4" md="6" sm="12" cols="12">
+              <v-col lg="6" md="6" sm="12" cols="12">
                 <v-text-field
                   rounded
                   filled
@@ -41,7 +41,7 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col lg="4" md="6" sm="12" cols="12">
+              <v-col lg="6" md="6" sm="12" cols="12">
                 <v-text-field
                   rounded
                   filled
@@ -51,7 +51,7 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col lg="4" md="6" sm="12" cols="12">
+              <v-col lg="6" md="6" sm="12" cols="12">
                 <v-text-field
                   rounded
                   filled
@@ -62,7 +62,7 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col lg="4" md="6" sm="12" cols="12">
+              <v-col lg="6" md="6" sm="12" cols="12">
                 <v-text-field
                   rounded
                   filled
@@ -72,7 +72,7 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col lg="4" md="6" sm="12" cols="12">
+              <v-col lg="6" md="6" sm="12" cols="12">
                 <v-text-field
                   rounded
                   filled
@@ -82,7 +82,7 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col lg="4" md="6" sm="12" cols="12">
+              <v-col lg="6" md="6" sm="12" cols="12">
                 <v-select
                   rounded
                   filled
@@ -93,7 +93,7 @@
                 ></v-select>
               </v-col>
 
-              <v-col lg="4" md="6" sm="12" cols="12">
+              <v-col lg="6" md="6" sm="12" cols="12">
                 <v-select
                   rounded
                   filled
@@ -105,7 +105,7 @@
                 ></v-select>
               </v-col>
 
-              <v-col lg="4" md="6" sm="12" cols="12">
+              <v-col lg="6" md="6" sm="12" cols="12">
                 <v-select
                   rounded
                   filled
@@ -116,7 +116,7 @@
                 ></v-select>
               </v-col>
 
-              <v-col lg="4" md="6" sm="12" cols="12">
+              <v-col lg="6" md="6" sm="12" cols="12">
                 <v-select
                   rounded
                   filled
@@ -178,6 +178,7 @@
 
 <script>
 export default {
+  name: "add-user",
   async created() {
     await this.$store.dispatch("getSiteColor");
     await this.$store.dispatch("getGovernorate");
