@@ -39,7 +39,7 @@
         "searchSuppliers": "البحث عن البائعين",
         "orderManageNobr": "ادارة الطلبات",
         "myProductsNobr": "منتجاتي",
-        "filter":"تصفية"
+        "filter": "تصفية"
     },
     "homePage": {
         "loadMore": "المزيد",
@@ -128,7 +128,9 @@
         "accept": "قبول",
         "cancel": "الغاء",
         "addNewUser": "اضافة مستخدم جديد",
-        "allUsers": "كل المستخدمين"
+        "allUsers": "كل المستخدمين",
+        "adminDashboard": "لوحة تحكم المشرف",
+        "addUser": "اضافة مستخدم"
     },
     "suppliersDashboard": {
         "dashboard": "لوحة تحكم",
@@ -483,6 +485,23 @@
         "searchUserByName": "بحث المستخدم بلاسم",
         "search": "بحث",
         "loadmore": " تحميل المزيد"
+    },
+    "addUser": {
+        "addNewUser": "اضافة مستخدم جديد",
+        "fullName": "الاسم كامل",
+        "email": "البريد الالكتروني",
+        "password": "كلمة السر",
+        "confirmPassword": " تأكيد كلمة السر",
+        "mobileNumber": "رقم الموبايل",
+        "facebook": "فيسبوك",
+        "storeName": "اسم المتجر",
+        "gender": "النوع",
+        "governorate": "المحافظة",
+        "region": "المنطقة",
+        "userType": "نوع المستخدم",
+        "profilePic": "الصورة الشخصية",
+        "addUser": "اضافة المستخدم",
+        "cancel": "الغاء"
     },
     "myProducts": {
         "products": "منتجات"

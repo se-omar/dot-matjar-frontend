@@ -17,7 +17,7 @@
                 <v-list-item>
                   <v-list-item-content>
                     <v-list-item-title class="title">
-                      Admin Dashboard
+                      {{ $t("adminPage.adminDashboard") }}
                     </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
@@ -31,7 +31,9 @@
                   link
                 >
                   <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title>add user</v-list-item-title>
+                  <v-list-item-title>
+                    {{ $t("adminPage.addUser") }}</v-list-item-title
+                  >
                 </v-list-item>
 
                 <v-list-item
@@ -39,12 +41,16 @@
                   link
                 >
                   <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title>all users</v-list-item-title>
+                  <v-list-item-title>
+                    {{ $t("adminPage.allUsers") }}</v-list-item-title
+                  >
                 </v-list-item>
 
                 <v-list-item @click="currentSection = pageSections.addCat" link>
                   <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title>add category</v-list-item-title>
+                  <v-list-item-title>
+                    {{ $t("adminPage.addCategory") }}</v-list-item-title
+                  >
                 </v-list-item>
 
                 <v-list-item
@@ -52,7 +58,9 @@
                   link
                 >
                   <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title>remove category</v-list-item-title>
+                  <v-list-item-title>
+                    {{ $t("adminPage.removeCategory") }}</v-list-item-title
+                  >
                 </v-list-item>
 
                 <v-list-item
@@ -60,7 +68,9 @@
                   link
                 >
                   <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title>add/remove country</v-list-item-title>
+                  <v-list-item-title>
+                    {{ $t("adminPage.addOrRemoveCountry") }}</v-list-item-title
+                  >
                 </v-list-item>
 
                 <v-list-item
@@ -68,8 +78,8 @@
                   link
                 >
                   <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title
-                    >edit carousel and banner</v-list-item-title
+                  <v-list-item-title>
+                    {{ $t("adminPage.editCarousel") }}</v-list-item-title
                   >
                 </v-list-item>
 
@@ -78,7 +88,9 @@
                   link
                 >
                   <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title>top 10 suppliers</v-list-item-title>
+                  <v-list-item-title>
+                    {{ $t("adminPage.top10Suppliers") }}</v-list-item-title
+                  >
                 </v-list-item>
 
                 <v-list-item
@@ -86,8 +98,10 @@
                   link
                 >
                   <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title
-                    >top year selling suppliers</v-list-item-title
+                  <v-list-item-title>
+                    {{
+                      $t("adminPage.topYearMonthSuppliers")
+                    }}</v-list-item-title
                   >
                 </v-list-item>
 
@@ -96,7 +110,9 @@
                   link
                 >
                   <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title>suppliers ranking chart</v-list-item-title>
+                  <v-list-item-title>
+                    {{ $t("adminPage.suppliersChart") }}</v-list-item-title
+                  >
                 </v-list-item>
 
                 <v-list-item
@@ -104,14 +120,16 @@
                   link
                 >
                   <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title>all suppliers</v-list-item-title>
+                  <v-list-item-title>
+                    {{ $t("adminPage.allSuppliers") }}</v-list-item-title
+                  >
                 </v-list-item>
               </v-list>
             </v-navigation-drawer>
           </div>
         </v-col>
 
-        <v-col class="ml-n13" lg="9">
+        <v-col :class="$vuetify.rtl == true ? 'mr-n13' : 'ml-n13'" lg="9">
           <div v-if="currentSection == pageSections.addUser">
             <add-user></add-user>
           </div>
