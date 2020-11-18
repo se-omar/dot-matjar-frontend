@@ -4,6 +4,7 @@
       <v-row justify="center">
         <v-col cols="6">
           <v-text-field
+            dense
             :placeholder="$t('allUsers.searchUserByName')"
             outlined
             rounded
@@ -24,7 +25,7 @@
       </v-row>
       <v-row>
         <v-col
-          class="mb-15 ml-6 mr-6"
+          class="ml-3 mr-3"
           v-for="user in allUsers"
           :key="user.user_id"
           lg="2"
@@ -32,7 +33,7 @@
           sm="6"
           cols="6"
         >
-          <supplier :supplier="user"></supplier>
+          <supplier minWidth="115%" :supplier="user"></supplier>
         </v-col>
       </v-row>
     </v-container>
@@ -50,6 +51,7 @@
 
 <script>
 export default {
+  name: "all-users",
   data: () => ({
     searchUserByName: "",
   }),
@@ -57,7 +59,12 @@ export default {
     loadmore() {
       this.$store.dispatch("getAllUsers");
     },
-    searchUserByName() {},
+
+    filterSuppliers() {
+      this.$store.dispatch("filterSuppliers", {
+        supplierName: this.supplierName,
+      });
+    },
   },
   async created() {
     await this.$store.dispatch("getSiteColor");
