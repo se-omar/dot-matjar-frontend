@@ -279,17 +279,10 @@ export default {
 
   async created() {
     this.isLoading = true;
-
-    // await this.$store.dispatch("categoriesDB");
     await this.$store.dispatch("getCategoriesTree");
-    // await this.$store.dispatch("getCategoryItems");
-    // await this.$store.dispatch("getSiteColor");
-
     await this.$store.dispatch("getHomePageData");
-
     this.$store.commit("emptyProductsArray");
     await this.$store.dispatch("getGovernorate");
-
     await this.$store.dispatch("getProducts", {
       productFilterFlagss: this.productFilterFlag,
       categoryName: this.categoryName,
@@ -314,18 +307,11 @@ export default {
     suppliers() {
       return this.$store.state.Home.suppliers;
     },
-    // regions() {
-    //   return this.$store.state.Home.regions;
-    // },
-    // egyptGovernorates() {
-    //   return this.$store.state.Home.governorates;
-    // },
+
     currentUser() {
       return this.$store.state.Home.currentUser;
     },
-    // loginToken() {
-    //   return this.$store.state.RegisterLogin.loginToken;
-    // },
+
     siteColor() {
       if (this.$store.state.Home.siteColor) {
         return this.$store.state.Home.siteColor;
@@ -338,12 +324,7 @@ export default {
         };
       }
     },
-    // category() {
-    //   return this.$store.state.Home.category;
-    // },
-    // categoriesItems() {
-    //   return this.$store.state.Home.categoriesItems;
-    // },
+
     homePageInfo() {
       return this.$store.state.Home.homePageInfo;
     },
@@ -353,9 +334,7 @@ export default {
     radioGroup() {
       return this.$store.state.Home.radioGroup;
     },
-    // siteLanguage() {
-    //   return this.$store.state.Home.siteLanguage;
-    // },
+
     rtlMenuCondition() {
       if (localStorage.getItem("language") == "en") {
         return false;
@@ -388,9 +367,7 @@ export default {
         return "114%";
       else return "100%";
     },
-    // allCategories() {
-    //   return this.$store.state.Home.allCategories;
-    // },
+
     categoriesTreeArray() {
       return this.$store.state.Home.categoriesTreeArray;
     },
@@ -431,65 +408,9 @@ export default {
 
       obj.buttonPressed = buttonPressed;
       await this.$store.dispatch("filterProducts", obj);
-      // if (this.supplierName) {
-      //   await this.$store.dispatch("filterSuppliers", {
-      //     supplierName: this.supplierName,
-      //     governorate: this.governorate,
-      //     region: this.region,
-      //   });
-      // }
 
       this.isLoading = false;
     },
-    // async loadmoreProducts() {
-    //   var obj = {};
-    //   if (this.productAdvancedSearches) {
-    //     obj = this.productAdvancedSearches;
-    //     obj.id =
-    //       this.filteredProducts.length > 0
-    //         ? this.filteredProducts[this.filteredProducts.length - 1].product_id
-    //         : 0;
-    //   } else {
-    //     obj = {
-    //       id:
-    //         this.filteredProducts.length > 0
-    //           ? this.filteredProducts[this.filteredProducts.length - 1]
-    //               .product_id
-    //           : 0,
-    //     };
-    //   }
-
-    //   this.$store.dispatch("loadmoreProducts", obj);
-    // },
-
-    // async filterSuppliers() {
-    //   this.isLoading = true;
-    //   this.supplierFilterFlag = true;
-    //   await this.$store.dispatch("filterSuppliers", {
-    //     supplierName: this.supplierName,
-    //     governorate: this.governorate,
-    //     region: this.region,
-    //   });
-    //   this.isLoading = false;
-    // },
-
-    // emptySupplierName() {
-    //   if (!this.supplierName) {
-    //     this.$store.commit("emptySupplierName");
-    //   }
-    // },
-
-    // emptySupplierLocation() {
-    //   if (!this.supplierLocation) {
-    //     this.$store.commit("emptySupplierLocation");
-    //   }
-    // },
-
-    // emptySelectBox() {
-    //   if (this.categoryName == "All") {
-    //     this.$store.commit("emptySearch");
-    //   }
-    // },
 
     async loadmoreSuppliers() {
       this.isLoading = true;
@@ -500,9 +421,6 @@ export default {
       this.isLoading = false;
     },
 
-    // getCountryRegions() {
-    //   this.$store.dispatch("getRegions", this.governorate);
-    // },
     async All() {
       await this.$store.commit("loadMoreType", { name: "all", type: "all" });
       this.supplierFilterFlag = false;
@@ -512,33 +430,7 @@ export default {
         supplierFilterFlag: this.supplierFilterFlag,
       });
     },
-    // gettingCategoryItems() {
-    //   this.categoryItems = [];
-    //   for (let i = 0; i < this.categoriesItems.length; i++) {
-    //     if (this.categoriesItems[i].category_name == this.categoryName) {
-    //       this.categoryItems.push(this.categoriesItems[i].category_items);
-    //     }
-    //   }
-    // },
 
-    // async mouseOver(cat) {
-    //   console.log("category pressed", cat);
-    //   const categoryCtor = Vue.extend(CategorySubMenu);
-    //   const categorySubmenuInstance = new categoryCtor({
-    //     propsData: {
-    //       category: this.category,
-    //     },
-    //   });
-    //   categorySubmenuInstance.$mount("#container");
-    //   var categoryId;
-    //   this.categoryItems = [];
-
-    //   categoryId = cat.category_id;
-    //   this.allCategories.forEach((element) => {
-    //     if (element.parent_id == categoryId) {
-    //       this.categoryItems.push(element);
-    //     }
-    //   });
     async filterByCategory(catAr) {
       if (catAr.length != 0) {
         var cat = catAr[0];
@@ -553,45 +445,6 @@ export default {
         });
       }
     },
-
-    // async filterProductsWithItem(item) {
-    //   this.subItems = [];
-    //   var categoryId;
-    //   await this.$store.dispatch("filterProducts", {
-    //     categoryItem: item.category_name,
-    //     buttonPressed: "search",
-    //     product_id: 0,
-    //   });
-    //   this.$store.commit("loadMoreType", {
-    //     category: item,
-    //     type: "item",
-    //   });
-
-    //   await this.$store.dispatch("filterProducts", {
-    //     category_name: item.category_name,
-    //     buttonPressed: "search",
-    //     product_id: 0,
-    //   });
-
-    //   categoryId = item.category_id;
-    //   this.allCategories.forEach((element) => {
-    //     if (element.parent_id == categoryId) {
-    //       this.subItems.push(element);
-    //     }
-    //   });
-    // },
-    // async filterProductsWithCategory(category) {
-    //   await this.$store.dispatch("filterProducts", {
-    //     category_name: category,
-    //     buttonPressed: "search",
-    //     product_id: 0,
-    //   });
-
-    //   this.$store.commit("loadMoreType", {
-    //     name: category,
-    //     type: "category",
-    //   });
-    // },
 
     changeRadioGroup() {
       if (this.radioGroup == "1") {
