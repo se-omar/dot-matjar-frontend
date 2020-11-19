@@ -39,7 +39,7 @@
         "searchSuppliers": "البحث عن البائعين",
         "orderManageNobr": "ادارة الطلبات",
         "myProductsNobr": "منتجاتي",
-        "filter":"تصفية"
+        "filter": "تصفية"
     },
     "homePage": {
         "loadMore": "المزيد",
@@ -139,7 +139,9 @@
         "companyNumber": "رقم الشركه",
         "companyAddress1":"عنوان الشركه1 ",
         "companyAddress2":"عنوان الشركه2",
-        "companyAddress3":"عنوان الشركه3"
+        "companyAddress3":"عنوان الشركه3",
+        "adminDashboard": "لوحة تحكم المشرف",
+        "addUser": "اضافة مستخدم"
     },
     "suppliersDashboard": {
         "dashboard": "لوحة تحكم",
@@ -494,6 +496,23 @@
         "searchUserByName": "بحث المستخدم بلاسم",
         "search": "بحث",
         "loadmore": " تحميل المزيد"
+    },
+    "addUser": {
+        "addNewUser": "اضافة مستخدم جديد",
+        "fullName": "الاسم كامل",
+        "email": "البريد الالكتروني",
+        "password": "كلمة السر",
+        "confirmPassword": " تأكيد كلمة السر",
+        "mobileNumber": "رقم الموبايل",
+        "facebook": "فيسبوك",
+        "storeName": "اسم المتجر",
+        "gender": "النوع",
+        "governorate": "المحافظة",
+        "region": "المنطقة",
+        "userType": "نوع المستخدم",
+        "profilePic": "الصورة الشخصية",
+        "addUser": "اضافة المستخدم",
+        "cancel": "الغاء"
     },
     "myProducts": {
         "products": "منتجات"

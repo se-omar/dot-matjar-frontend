@@ -39,7 +39,7 @@
     "pendingSuppliersNobr": "Pending Suppliers",
     "searchProducts": "search for products",
     "searchSuppliers": "search for suppliers",
-    "filter":"Filter"
+    "filter": "Filter"
   },
   "homePage": {
     "loadMore": "load more",
@@ -77,7 +77,7 @@
     "condition": "condition",
     "addCategorySnackBar": " Your request will be submitted by the admin , you will be notified",
     "chooseCategory": "Choose your item parent  ...",
-    "chooseParent":"Choose Parent..."
+    "chooseParent": "Choose Parent..."
   },
   "adminPage": {
     "addNewCategory": "add a new category",
@@ -140,7 +140,9 @@
     "companyNumber": "Company Number",
     "companyAddress1":"Company Address1",
     "companyAddress2":"Company Address2",
-    "companyAddress3":"Company Address3"
+    "companyAddress3":"Company Address3",
+    "adminDashboard": "admin dashboard",
+    "addUser": "Add user"
   },
   "suppliersDashboard": {
     "dashboard": "dashboard",
@@ -294,8 +296,8 @@
   "supplierPage": {
     "updatePage": "update my page",
     "supplierDetails": "supplier details",
-    "filter":"Filter",
-    "category":"Category"
+    "filter": "Filter",
+    "category": "Category"
   },
   "updateForgottenPassword": {
     "updatePasswordPage": "update password page",
