@@ -10,7 +10,7 @@
       </div>
 
       <v-row>
-        <v-col lg="3">
+        <v-col lg="3" cols="12" sm="12" md="3">
           <div>
             <v-navigation-drawer permanent>
               <v-list>
@@ -106,12 +106,19 @@
                   <v-list-item-icon> </v-list-item-icon>
                   <v-list-item-title>all suppliers</v-list-item-title>
                 </v-list-item>
+                 <v-list-item
+                  @click="currentSection = pageSections.defaultComp"
+                  link
+                >
+                  <v-list-item-icon> </v-list-item-icon>
+                  <v-list-item-title>Choose Shipping Company</v-list-item-title>
+                </v-list-item>
               </v-list>
             </v-navigation-drawer>
           </div>
         </v-col>
 
-        <v-col class="ml-n13" lg="9">
+        <v-col lg="9" cols="12" sm="12" md="9">
           <div v-if="currentSection == pageSections.addUser">
             <add-user></add-user>
           </div>
@@ -157,6 +164,9 @@
           <div v-if="currentSection == pageSections.allSupp">
             <all-suppliers></all-suppliers>
           </div>
+          <div v-if="currentSection == pageSections.defaultComp">
+<defaultShippingCompany></defaultShippingCompany>
+          </div>
         </v-col>
       </v-row>
     </div>
@@ -196,6 +206,7 @@ export default {
         topSuppYear: 7,
         suppRanking: 8,
         allSupp: 9,
+        defaultComp:10 
       },
       currentSection: 0,
     };
@@ -218,6 +229,7 @@ export default {
     TopYearSuppliers: () => import("../components/adminTopYearSuppliers"),
     SuppRankingChart: () => import("../components/suppRankingChart"),
     AllSuppliers: () => import("../components/adminAllSuppliers"),
+    defaultShippingCompany : ()=> import("../components/adminDefaultShippingCompany")
   },
 };
 </script>
