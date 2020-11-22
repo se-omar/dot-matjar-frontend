@@ -80,10 +80,11 @@ export default {
                 })
         },
 
-        table(context, product) {
+        table(context, { product, color }) {
             axios.post(context.rootState.nodeHost + '/api/table', {
                 user_id: context.rootState.Home.currentUser.user_id,
-                product_id: product.product_id
+                product_id: product.product_id,
+                color
             })
                 .then(response => {
 

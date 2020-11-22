@@ -13,7 +13,7 @@ export default {
         orders: [],
         orderProducts: [],
         productsQuantityArray: JSON.parse(localStorage.getItem('quantity')),
-        orderMessage:''
+        orderMessage: ''
     },
 
     mutations: {
@@ -87,14 +87,14 @@ export default {
             localStorage.setItem('quantity', JSON.stringify(quantity))
             state.productsQuantityArray = JSON.parse(localStorage.getItem('quantity'))
         },
-        createOrder(state,message){
+        createOrder(state, message) {
             state.orderMessage = message
         }
     },
 
     actions: {
         createOrder(context, { governorate, region, address }) {
-
+            console.log('the table variable', context.rootState.Cart.table)
             axios.post(context.rootState.nodeHost + '/api/createOrder', {
                 user_id: context.rootState.Home.currentUser.user_id
                 , governorate: governorate,
@@ -104,7 +104,7 @@ export default {
                 totalPrice: context.rootState.Cart.totalPrice,
             })
                 .then(res => {
-context.commit('createOrder' , res.data.message)
+                    context.commit('createOrder', res.data.message)
 
                 })
         },

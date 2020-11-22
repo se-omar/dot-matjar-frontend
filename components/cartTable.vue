@@ -186,39 +186,8 @@ export default {
       this.dialog = false;
       this.$router.push(`/${this.$i18n.locale}/checkOutLocation`);
       this.$store.commit("putTotalPriceInStore", this.total);
-      // var self = this;
-      // self.quantityArray = [];
-      // this.items.forEach((element) => {
-      //   self.quantityArray.push(element.quantity);
-      // });
-      //
-      // loadStripe(
-      //   "pk_test_51H97oICdSDXTIUwz70svxkIu08QM3jR0rB6E2njyq3fC7tLOODIipB8ppdjdPt32pteM8zHqsSF2mAo9Oyfw9Mvf00L3omXjql"
-      // ).then((stripe) => {
-      //   var sessionId = "";
-      //   this.$axios
-      //     .post("http://localhost:3000/api/checkout", {
-      //       user_id: this.currentUser.user_id,
-      //       quantityArray: self.quantityArray,
-      //     })
-      //     .then((response) => {
-      //
-      //       sessionId = response.data.session_id;
-      //       this.$store.commit("setPaymentToken", response.data.token);
-      //       this.$store.commit("putTotalPriceInStore", self.total);
-      //       this.$store.commit("putQuantityInStore", self.quantityArray);
-      //     })
-      //     .then(() => {
-      //       stripe
-      //         .redirectToCheckout({
-      //           sessionId: sessionId,
-      //         })
-      //         .then(function (result) {
-      //
-      //         });
-      //     });
-      // });
     },
+
     cleanCart() {
       this.items = [];
       this.$store.dispatch("cleanCart");

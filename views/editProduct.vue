@@ -106,7 +106,7 @@
           <v-row>
             <v-col cols="12">
               <v-textarea
-                v-model="currentProduct.describtion"
+                v-model="currentProduct.description"
                 :rules="Rules"
                 dense
                 filled
@@ -114,6 +114,20 @@
                 :placeholder="$t('editProduct.description')"
                 class="arabic"
               ></v-textarea>
+            </v-col>
+
+            <v-col cols="12">
+              <label class="mr-5">choose product colors</label>
+              <v-swatches
+                show-fallback
+                fallback-input-type="color"
+                v-model="color"
+              ></v-swatches>
+            </v-col>
+
+            <v-col cols="12">
+              <label class="mr-5">chosen colors: </label>
+              <v-swatches inline :swatches="productColors"></v-swatches>
             </v-col>
           </v-row>
         </v-col>
@@ -183,12 +197,17 @@
 export default {
   async created() {
     await this.$store.dispatch("getSiteColor");
+    await this.$store.dispatch(
+      "getProductColors",
+      this.currentProduct.product_id
+    );
+    console.log(this.productColors);
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
     }
   },
 
-  components: {},
+  components: { VSwatches: () => import("vue-swatches") },
 
   computed: {
     nodeHost() {
@@ -214,6 +233,10 @@ export default {
         };
       }
     },
+
+    productColors() {
+      return this.$store.state.ProductDetails.productColors;
+    },
   },
 
   data() {
@@ -224,6 +247,7 @@ export default {
       image2: null,
       hasImage3: false,
       image3: null,
+      color: "",
       Rules: [(v) => !!v || "Required"],
       currencies: ["egp", "usd"],
     };
@@ -253,8 +277,8 @@ export default {
       form.set("min_units_per_order", self.currentProduct.min_units_per_order);
       form.set("unit_price", self.currentProduct.unit_price);
       form.set("size", self.currentProduct.size);
-      form.set("describtion", self.currentProduct.describtion);
-      form.set("color", self.currentProduct.color);
+      form.set("description", self.currentProduct.description);
+      form.set("colors", self.productColors);
       form.set("discount_amount", self.currentProduct.discount_amount);
       form.set("currency", self.currentProduct.currency);
 
@@ -276,6 +300,15 @@ export default {
           alert("Product changed");
           this.$router.push(`/${this.$i18n.locale}/myProducts`);
         });
+    },
+  },
+
+  watch: {
+    color: function () {
+      this.productColors.indexOf(this.color) == -1
+        ? this.productColors.push(this.color)
+        : alert("color exists");
+      console.log(this.productColors);
     },
   },
 };
