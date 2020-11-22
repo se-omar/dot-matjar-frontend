@@ -4,12 +4,20 @@ import axios from 'axios'
 export default {
     state: {
         allSuppliersWithSales: [],
+        allCompanies : [],
+        defaultCompany : []
     },
 
     mutations: {
         getAllSuppliersWithSales(state, suppliers) {
             state.allSuppliersWithSales = suppliers
         },
+    getAllCompanies(state,companies){
+        state.allCompanies = companies
+    },
+    getDefaultCompany(state,company){
+        state.defaultCompany = company
+    }
 
     },
 
@@ -42,6 +50,30 @@ export default {
                 .then(response => {
                     alert(response.data)
                 })
+        },
+       async  getAllCompanies(context){
+           await  axios.get(context.rootState.nodeHost + '/api/getAllShippingCompanies')
+            .then(companies =>{
+                console.log(companies.data.data)
+                context.commit('getAllCompanies',companies.data.data)
+            })
+        },
+        async getDefaultCompany(context){
+await axios.put(context.rootState.nodeHost + '/api/getDefaultCompany')
+.then(company =>{
+    context.commit('getDefaultCompany',company.data.data)
+    console.log('company found ' , company.data.data)
+})
+        },
+        updateShippingCompany(context , wh ){
+            axios.put('updateShippingCompany' , {
+              country : wh.country,
+                shipping_rate :wh.shipping_rate ,
+               governorate: wh.governorate ,
+               amount: wh.amount ,
+               collection_rate: wh.collection_rate,
+               shipping_companies_id : wh.shipping_companies_id
+            })
         }
     }
 }

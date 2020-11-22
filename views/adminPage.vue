@@ -10,7 +10,7 @@
       </div>
 
       <v-row>
-        <v-col lg="3">
+        <v-col lg="3" cols="12" sm="12" md="3">
           <div>
             <v-navigation-drawer permanent>
               <v-list>
@@ -124,12 +124,23 @@
                     {{ $t("adminPage.allSuppliers") }}</v-list-item-title
                   >
                 </v-list-item>
+                 <v-list-item
+                  @click="currentSection = pageSections.defaultComp"
+                  link
+                >
+                  <v-list-item-icon> </v-list-item-icon>
+                  <v-list-item-title>Choose Shipping Company</v-list-item-title>
+                </v-list-item>
               </v-list>
             </v-navigation-drawer>
           </div>
         </v-col>
 
+<<<<<<< HEAD
+        <v-col lg="9" cols="12" sm="12" md="9">
+=======
         <v-col :class="$vuetify.rtl == true ? 'mr-n13' : 'ml-n13'" lg="9">
+>>>>>>> ede233f7c1414713e905de6366b748d55a1d9427
           <div v-if="currentSection == pageSections.addUser">
             <add-user></add-user>
           </div>
@@ -175,6 +186,9 @@
           <div v-if="currentSection == pageSections.allSupp">
             <all-suppliers></all-suppliers>
           </div>
+          <div v-if="currentSection == pageSections.defaultComp">
+<defaultShippingCompany></defaultShippingCompany>
+          </div>
         </v-col>
       </v-row>
     </div>
@@ -214,6 +228,7 @@ export default {
         topSuppYear: 7,
         suppRanking: 8,
         allSupp: 9,
+        defaultComp:10 
       },
       currentSection: 0,
     };
@@ -236,6 +251,7 @@ export default {
     TopYearSuppliers: () => import("../components/adminTopYearSuppliers"),
     SuppRankingChart: () => import("../components/suppRankingChart"),
     AllSuppliers: () => import("../components/adminAllSuppliers"),
+    defaultShippingCompany : ()=> import("../components/adminDefaultShippingCompany")
   },
 };
 </script>
