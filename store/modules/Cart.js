@@ -4,26 +4,20 @@ import axios from 'axios'
 
 export default {
     state: {
-        table: JSON.parse(localStorage.getItem('cartItems')) ? JSON.parse(localStorage.getItem('cartItems')) : [],
+        cartItems: [],
         totalPrice: localStorage.getItem('totalPrice') ? localStorage.getItem('totalPrice') : '',
         cart: [],
     },
 
     mutations: {
-        removeProductFromCart(state, id) {
-
-            for (var i = 0; i < state.table.length; i++) {
-                if (state.table[i].product_id == id) {
-                    state.table.splice(i, 1)
-                    localStorage.setItem('cartItems', JSON.stringify(state.table))
-
-                }
-            }
+        removeProductFromCart(state, item) {
+            var itemIndex = state.cartItems.indexOf(item);
+            console.log(itemIndex);
+            state.cartItems.splice(itemIndex, 1);
         },
 
-        localStorage(state, products) {
-            localStorage.setItem('cartItems', JSON.stringify(products))
-            state.table = JSON.parse(localStorage.getItem('cartItems'))
+        getCartProducts(state, products) {
+            state.cartItems = products
         },
 
         putTotalPriceInStore(state, total) {
@@ -32,14 +26,14 @@ export default {
         },
 
         cleanCart(state) {
-            var cartLength = state.table.length;
-            state.table.splice(0, cartLength)
-            localStorage.setItem('cartItems', JSON.stringify(state.table))
+            var cartLength = state.cartItems.length;
+            state.cartItems.splice(0, cartLength)
+            localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
         },
 
         table(state, data) {
             localStorage.setItem('cartItems', JSON.stringify(data))
-            state.table = JSON.parse(localStorage.getItem('cartItems'))
+            state.cartItems = JSON.parse(localStorage.getItem('cartItems'))
         },
 
         cart(state, product) {
@@ -48,22 +42,22 @@ export default {
     },
 
     actions: {
-        async removeProductFromCart(context, id) {
-            await axios.put(context.rootState.nodeHost + '/api/remove', {
-                product_id: id
+        async removeProductFromCart(context, item) {
+            await axios.put(context.rootState.nodeHost + '/api/removeProductFromCart', {
+                cart_products_id: item.cart_products_id
             })
                 .then(response => {
-
-                    context.commit('removeProductFromCart', id)
+                    context.commit('removeProductFromCart', item)
                 })
         },
 
-        async localStorage(context) {
-            await axios.put(context.rootState.nodeHost + '/api/getProducts', {
+        async getCartProducts(context) {
+            await axios.put(context.rootState.nodeHost + '/api/getCartProducts', {
                 user_id: context.rootState.Home.currentUser.user_id
             })
                 .then((response) => {
-                    context.commit('localStorage', response.data.data)
+                    context.commit('getCartProducts', response.data.products)
+                    console.log('cart products ', response.data.products)
                 })
         },
 
@@ -80,8 +74,8 @@ export default {
                 })
         },
 
-        table(context, { product, color }) {
-            axios.post(context.rootState.nodeHost + '/api/table', {
+        addProductToCart(context, { product, color }) {
+            axios.post(context.rootState.nodeHost + '/api/addProductToCart', {
                 user_id: context.rootState.Home.currentUser.user_id,
                 product_id: product.product_id,
                 color

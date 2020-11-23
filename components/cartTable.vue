@@ -9,7 +9,7 @@
         <v-btn
           color="white"
           @click.stop="dialog = true"
-          @click="table"
+          @click="openCartTable"
           v-if="currentUser"
           fixed
           fab
@@ -34,13 +34,12 @@
           <v-dialog style="overflow: hidden" v-model="dialog" max-width="600px">
             <v-data-table
               hide-default-footer
-              @click:row="rowclicked"
               bordered
               hover
               :items="items"
               :headers="headers"
             >
-              <template v-slot:item.quantity="{ item }">
+              <template #[`item.quantity`]="{ item }">
                 <v-row>
                   <v-col cols="3">
                     <v-btn x-small @click="decrement(item.product_id)">-</v-btn>
@@ -53,14 +52,18 @@
                   </v-col>
                 </v-row>
               </template>
-              <template v-slot:item.remove="{ item }">
+              <template #[`item.remove`]="{ item }">
                 <v-btn
                   depressed
                   small
                   color="error"
-                  @click="removeCartItem(item.product_id)"
+                  @click="removeCartItem(item)"
                   >X</v-btn
                 >
+              </template>
+
+              <template #[`item.product_color`]="{ item }">
+                <v-swatches disabled v-model="item.product_color"></v-swatches>
               </template>
               <!-- =============== -->
 
@@ -71,14 +74,14 @@
               <v-row>
                 <v-col cols="4"></v-col>
                 <v-col cols="6">
-                  <h2>{{ $t("cartTable.total") }}{{ total }}.00$</h2>
+                  <h2>{{ $t("cartTable.total") }}{{ totalPrice }}.00$</h2>
                 </v-col>
               </v-row>
 
               <v-row justify="center">
                 <v-col lg="3" sm="3" cols="4">
                   <v-btn
-                    v-if="intable.length > 0"
+                    v-if="cartItems.length > 0"
                     dark
                     large
                     @click="getSession"
@@ -92,7 +95,7 @@
                     dark
                     large
                     @click="cleanCart"
-                    v-if="intable.length > 0"
+                    v-if="cartItems.length > 0"
                     depressed
                     small
                     color="error"
@@ -115,33 +118,25 @@
 export default {
   name: "cartTable",
   methods: {
-    showProduct() {
-      //
-    },
     add(product) {
       this.products[product.id - 1].cart = true;
       this.cart.push(product);
       this.counter++;
     },
-    clean() {
-      this.cart = [];
-      for (const key in this.product) {
-        this.products[key].cart = false;
-        this.products[key].quantaty = 1;
-      }
-      for (var i = 0; i < this.products.length; i++) {
-        this.products[i].cart = false;
-      }
-    },
-    async removeCartItem(id) {
-      for (var x = 0; x < this.items.length; x++) {
-        if (this.items[x].product_id == id) {
-          this.items.splice(x, 1);
-          //
-
-          await this.$store.dispatch("removeProductFromCart", id);
-        }
-      }
+    // clean() {
+    //   this.cart = [];
+    //   for (const key in this.product) {
+    //     this.products[key].cart = false;
+    //     this.products[key].quantaty = 1;
+    //   }
+    //   for (var i = 0; i < this.products.length; i++) {
+    //     this.products[i].cart = false;
+    //   }
+    // },
+    async removeCartItem(item) {
+      var itemIndex = this.items.indexOf(item);
+      this.items.splice(itemIndex, 1);
+      await this.$store.dispatch("removeProductFromCart", item);
     },
 
     increment(id) {
@@ -167,25 +162,19 @@ export default {
     },
 
     // eslint-disable-next-line no-unused-vars
-    rowclicked(event) {
-      //
-    },
-    async table() {
-      var self = this;
-      await this.$store.dispatch("localStorage");
 
+    async openCartTable() {
+      var self = this;
+      await this.$store.dispatch("getCartProducts");
+      console.log("cartItems var", self.cartItems);
       self.items = [];
-      self.items.push(...self.intable);
-      // for (var i = 0; i < self.intable.length; i++) {
-      //   self.items.push(self.intable[i]);
-      //
-      // }
+      self.items.push(...self.cartItems);
     },
 
     getSession() {
       this.dialog = false;
       this.$router.push(`/${this.$i18n.locale}/checkOutLocation`);
-      this.$store.commit("putTotalPriceInStore", this.total);
+      this.$store.commit("putTotalPriceInStore", this.totalPrice);
     },
 
     cleanCart() {
@@ -203,19 +192,19 @@ export default {
       cart: [],
       headers: [
         { text: "Remove", value: "remove" },
-        { text: "Price", value: "unit_price" },
-        { text: "Quantity", value: "quantity" },
-        { text: "Product name", value: "product_name" },
+        { text: "Price", value: "product.unit_price" },
+        { text: "Quantity", value: "product.quantity" },
+        { text: "Product name", value: "product.product_name" },
+        { text: "Color", value: "product_color" },
       ],
       items: [],
-      inTable: [],
     };
   },
   computed: {
-    total() {
+    totalPrice() {
       var t = 0;
       for (var i = 0; i < this.items.length; i++) {
-        t += this.items[i].unit_price * this.items[i].quantity;
+        t += this.items[i].product.unit_price * this.items[i].product.quantity;
       }
       return t;
     },
@@ -223,8 +212,8 @@ export default {
       return this.$store.state.Home.currentUser;
     },
 
-    intable() {
-      return this.$store.state.Cart.table;
+    cartItems() {
+      return this.$store.state.Cart.cartItems;
     },
     siteColor() {
       if (this.$store.state.Home.siteColor) {
@@ -238,6 +227,10 @@ export default {
         };
       }
     },
+  },
+
+  components: {
+    VSwatches: () => import("vue-swatches"),
   },
 };
 </script>
