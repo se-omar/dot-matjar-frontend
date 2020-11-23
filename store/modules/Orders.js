@@ -93,19 +93,15 @@ export default {
     },
 
     actions: {
-        createOrder(context, { governorate, region, address }) {
-            console.log('the table variable', context.rootState.Cart.table)
-            axios.post(context.rootState.nodeHost + '/api/createOrder', {
+        async createOrder(context, { governorate, region, address }) {
+            await axios.post(context.rootState.nodeHost + '/api/createOrder', {
                 user_id: context.rootState.Home.currentUser.user_id
                 , governorate: governorate,
                 region: region,
                 address: address,
-                cartItems: context.rootState.Cart.table,
-                totalPrice: context.rootState.Cart.totalPrice,
             })
                 .then(res => {
                     context.commit('createOrder', res.data.message)
-
                 })
         },
 

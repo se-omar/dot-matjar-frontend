@@ -42,13 +42,13 @@
               <template #[`item.quantity`]="{ item }">
                 <v-row>
                   <v-col cols="3">
-                    <v-btn x-small @click="decrement(item.product_id)">-</v-btn>
+                    <v-btn x-small @click="decrement(item)">-</v-btn>
                   </v-col>
                   <v-col cols="1">
                     <h4>{{ item.quantity }}</h4>
                   </v-col>
                   <v-col cols="1">
-                    <v-btn x-small @click="increment(item.product_id)">+</v-btn>
+                    <v-btn x-small @click="increment(item)">+</v-btn>
                   </v-col>
                 </v-row>
               </template>
@@ -139,23 +139,34 @@ export default {
       await this.$store.dispatch("removeProductFromCart", item);
     },
 
-    increment(id) {
-      for (var i = 0; i < this.items.length; i++) {
-        if (this.items[i].product_id == id) {
-          this.items[i].quantity++;
-        }
-      }
+    increment(item) {
+      console.log(item);
+      item.quantity += 1;
+      this.$store.dispatch("iterateCartProductQuantity", {
+        type: 1,
+        item,
+      });
+      // for (var i = 0; i < this.items.length; i++) {
+      //   if (this.items[i].product_id == id) {
+      //     this.items[i].quantity++;
+      //   }
+      // }
     },
-    decrement(id) {
-      for (var i = 0; i < this.items.length; i++) {
-        if (this.items[i].product_id == id) {
-          if (this.items[i].quantity < 1) {
-            this.items[i].quantity = 0;
-          } else {
-            this.items[i].quantity--;
-          }
-        }
-      }
+    decrement(item) {
+      if (item.quantity > 1) item.quantity--;
+      this.$store.dispatch("iterateCartProductQuantity", {
+        type: 2,
+        item,
+      });
+      // for (var i = 0; i < this.items.length; i++) {
+      //   if (this.items[i].product_id == id) {
+      //     if (this.items[i].quantity < 1) {
+      //       this.items[i].quantity = 0;
+      //     } else {
+      //       this.items[i].quantity--;
+      //     }
+      //   }
+      // }
     },
     numbers() {
       return this.cart.length + 1;
@@ -193,7 +204,7 @@ export default {
       headers: [
         { text: "Remove", value: "remove" },
         { text: "Price", value: "product.unit_price" },
-        { text: "Quantity", value: "product.quantity" },
+        { text: "Quantity", value: "quantity" },
         { text: "Product name", value: "product.product_name" },
         { text: "Color", value: "product_color" },
       ],

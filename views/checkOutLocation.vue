@@ -107,7 +107,19 @@
 // import { loadStripe } from "@stripe/stripe-js";
 
 export default {
-  components: {},
+  async created() {
+    await this.$store.dispatch("getSiteColor");
+    if (localStorage.getItem("loginToken")) {
+      await this.$store.dispatch("refreshCurrentUser");
+    }
+    this.$store.dispatch("getGovernorate");
+    this.address = this.currentUser.address;
+
+    this.governorate = this.currentUser.governorate;
+    await this.$store.dispatch("getRegions", this.governorate);
+    this.region = this.currentUser.region;
+  },
+
   data: () => ({
     region: "",
     governorate: "",
@@ -126,8 +138,8 @@ export default {
     currentUser() {
       return this.$store.state.Home.currentUser;
     },
-    items() {
-      return this.$store.state.table;
+    cartItems() {
+      return this.$store.state.Cart.cartItems;
     },
 
     regions() {
@@ -152,25 +164,12 @@ export default {
       return this.$store.state.Orders.orderMessage;
     },
   },
-  async created() {
-    await this.$store.dispatch("getSiteColor");
-    if (localStorage.getItem("loginToken")) {
-      await this.$store.dispatch("refreshCurrentUser");
-    }
-    this.$store.dispatch("getGovernorate");
-    this.address = this.currentUser.address;
 
-    this.governorate = this.currentUser.governorate;
-    await this.$store.dispatch("getRegions", this.governorate);
-    this.region = this.currentUser.region;
-
-    //    var d = new Date();
-  },
   methods: {
     getSession() {
       var self = this;
       self.quantityArray = [];
-      this.items.forEach((element) => {
+      this.cartItems.forEach((element) => {
         self.quantityArray.push(element.quantity);
       });
     },
@@ -179,17 +178,18 @@ export default {
       this.$store.dispatch("getRegions", this.governorate);
     },
     async createOrder() {
-      await this.$store.dispatch("cleanCart");
       await this.$store.dispatch("createOrder", {
         governorate: this.governorate,
         region: this.region,
         address: this.address,
       });
 
+      await this.$store.dispatch("cleanCart");
+
       this.snackbar = true;
       setTimeout(() => {
         this.$router.push("/");
-      }, 5000);
+      }, 1000);
     },
   },
 };
