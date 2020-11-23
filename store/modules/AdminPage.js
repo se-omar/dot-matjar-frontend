@@ -107,6 +107,21 @@ axios.put(context.rootState.nodeHost + '/api/deleteShippingCompany' ,{shipping_c
 .then(res=>{
     alert(res.data.message)
 })
+    },
+    addNewCompany(context,wh){
+        axios.post(context.rootState.nodeHost + '/api/addNewShippingCompany' , { 
+            country : wh.country,
+                shipping_rate :wh.shipping_rate ,
+               governorate: wh.governorate ,
+               amount: wh.amount ,
+               collection_rate: wh.collection_rate,
+               company_name : wh.company_name,
+               company_number : wh.company_number ,
+                company_address1 : wh.company_address1 ,
+                company_address2 : wh.company_address2 , 
+                company_address3 : wh.company_address3,
+              
+        })
     }
     }
 }

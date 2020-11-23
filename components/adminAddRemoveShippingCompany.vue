@@ -75,6 +75,9 @@
            </v-col>
               
        </v-row>
+       <v-row justify="center">
+           <v-btn small rounded :color="siteColor.button_color"   @click="addNewCompany"><span :style="`color:${siteColor.button_text_color}`">{{$t('adminPage.addCompany')}}</span></v-btn>
+       </v-row>
             </v-container>
             <v-container v-else>
 <v-card style="overflow:hidden" elevation="16" max-width="400" class="mx-auto">
@@ -125,7 +128,7 @@
         {{$t('completedata.dialogQuestion')}}
     </v-card-title>
     <v-row justify="center">
-           <v-btn @click="removeCompany()" small rounded :color="siteColor.button_color" ><span :style="`color:${siteColor.button_text_color};font-size:12px`">{{$t('adminPage.removeCompany')}}</span></v-btn>
+           <v-btn @click="removeCompany" small rounded :color="siteColor.button_color" ><span :style="`color:${siteColor.button_text_color};font-size:12px`">{{$t('adminPage.removeCompany')}}</span></v-btn>
     </v-row>
 </v-card>
        </v-dialog>
@@ -168,7 +171,21 @@ methods:{
     },
     removeCompany(){
         this.$store.dispatch('removeCompany',this.companyData.shipping_companies_id)
-    }
+    },
+addNewCompany(){
+    var wh = {}
+    wh.company_name = this.companyName
+    wh.company_number = this.companyNumber
+    wh.company_address1 = this.companyAddress1
+    wh.company_address2 = this.companyAddress2 
+    wh.company_address3 = this.companyAddress3
+    wh.shipping_rate = this.shippingRate
+    wh.governorate = this.governorate
+  
+    wh.collection_rate = this.collectionRate,
+    wh.amount= this.collectionAmount
+    this.$store.dispatch('addNewCompany' ,wh)
+}
 },
 computed:{
     virtualScrollerCompaniesArray(){

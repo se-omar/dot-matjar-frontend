@@ -146,7 +146,8 @@
     "chooseOrUpdateDefaultCompany" : "Choose/Update Companies",
     "addRemCompany":"Add/Remove Company",
     "addCompany": "Add Company" ,
-     "removeCompany" : "Remove Company"
+     "removeCompany" : "Remove Company",
+     "setCompany":"set as  default company ?"
      
   },
   "suppliersDashboard": {

@@ -50,6 +50,8 @@
    </v-card>
         </v-col>
            <v-col lg="4 " sm="7" cols="8" md="3">  
+             <v-row>
+               <v-col lg="12">
    <v-card >
     <v-row justify="center">
 <v-col cols="6" lg="8" md="12"> 
@@ -302,6 +304,35 @@
 </v-col>
                     </v-row>
    </v-card>
+               </v-col>
+               <v-col lg="12">
+                 <v-card>
+                  <v-row justify="center">
+                 <h2> {{defaultCompanyClicked.company_name}}</h2>
+                  </v-row> 
+                  <v-row justify="center">
+ <h3>{{$t('adminPage.setCompany')}}</h3>
+<v-btn @click="defaultCompanyPermission=true" text :color="siteColor.button_color">
+{{$t('productDetails.yes')}}
+</v-btn>
+<v-dialog width="300" v-model="defaultCompanyPermission">
+  <v-card style="overflow:hidden">
+    <v-card-title>
+      {{$t('completedata.dialogQuestion')}}
+    </v-card-title>
+    <v-row justify="end">
+<v-btn text :color="siteColor.button_color">
+  {{$t('supplierDetails.submit')}}
+</v-btn>
+    </v-row>
+
+  </v-card>
+  
+   </v-dialog>
+                  </v-row>
+                 </v-card>
+               </v-col>
+             </v-row>
         </v-col>
     </v-row>
 </v-main>
@@ -329,7 +360,8 @@ collectionDialog:false,
 editCollection:[],
 shippingRateDialog:false,
 collectionRowPressed:[],
-shippingRowPressed : []
+shippingRowPressed : [],
+defaultCompanyPermission:false
 
      }
  },

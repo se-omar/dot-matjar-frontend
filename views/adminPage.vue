@@ -124,7 +124,7 @@
                     {{ $t("adminPage.allSuppliers") }}</v-list-item-title
                   >
                 </v-list-item>
-                 <v-list-item
+                <v-list-item
                   @click="currentSection = pageSections.defaultComp"
                   link
                 >
@@ -190,7 +190,7 @@
             <all-suppliers></all-suppliers>
           </div>
           <div v-if="currentSection == pageSections.defaultComp">
-<defaultShippingCompany></defaultShippingCompany>
+            <defaultShippingCompany></defaultShippingCompany>
           </div>
            <div v-if="currentSection == pageSections.addRemCompany">
 <adminAddRemoveShippingCompany></adminAddRemoveShippingCompany>
