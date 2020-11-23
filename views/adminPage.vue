@@ -129,7 +129,14 @@
                   link
                 >
                   <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title>Choose Shipping Company</v-list-item-title>
+                  <v-list-item-title>{{$t('adminPage.chooseOrUpdateDefaultCompany')}}</v-list-item-title>
+                </v-list-item>
+                  <v-list-item
+                  @click="currentSection = pageSections.addRemCompany"
+                  link
+                >
+                  <v-list-item-icon> </v-list-item-icon>
+                  <v-list-item-title>{{$t('adminPage.addRemCompany')}}</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-navigation-drawer>
@@ -185,6 +192,9 @@
           <div v-if="currentSection == pageSections.defaultComp">
 <defaultShippingCompany></defaultShippingCompany>
           </div>
+           <div v-if="currentSection == pageSections.addRemCompany">
+<adminAddRemoveShippingCompany></adminAddRemoveShippingCompany>
+          </div>
         </v-col>
       </v-row>
     </div>
@@ -224,7 +234,8 @@ export default {
         topSuppYear: 7,
         suppRanking: 8,
         allSupp: 9,
-        defaultComp:10 
+        defaultComp:10 ,
+        addRemCompany :11
       },
       currentSection: 0,
     };
@@ -247,7 +258,8 @@ export default {
     TopYearSuppliers: () => import("../components/adminTopYearSuppliers"),
     SuppRankingChart: () => import("../components/suppRankingChart"),
     AllSuppliers: () => import("../components/adminAllSuppliers"),
-    defaultShippingCompany : ()=> import("../components/adminDefaultShippingCompany")
+    defaultShippingCompany : ()=> import("../components/adminDefaultShippingCompany"),
+    adminAddRemoveShippingCompany: () => import ("../components/adminAddRemoveShippingCompany") 
   },
 };
 </script>

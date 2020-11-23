@@ -66,14 +66,47 @@ await axios.put(context.rootState.nodeHost + '/api/getDefaultCompany')
 })
         },
         updateShippingCompany(context , wh ){
-            axios.put('updateShippingCompany' , {
-              country : wh.country,
-                shipping_rate :wh.shipping_rate ,
-               governorate: wh.governorate ,
-               amount: wh.amount ,
-               collection_rate: wh.collection_rate,
-               shipping_companies_id : wh.shipping_companies_id
+            // axios.put('updateShippingCompany' , {
+            //   country : wh.country,
+            //     shipping_rate :wh.shipping_rate ,
+            //    governorate: wh.governorate ,
+            //    amount: wh.amount ,
+            //    collection_rate: wh.collection_rate,
+            //    shipping_companies_id : wh.shipping_companies_id
+            // })
+            axios.put(context.rootState.nodeHost + '/api/updateShippingCompany' , {
+                company_name : wh.companyName,
+                company_number : wh.companyNumber ,
+                 company_address1 : wh.companyAddress1 ,
+                 company_address2 : wh.companyAddress2 , 
+                 company_address3 : wh.companyAddress3,
+                 shipping_companies_id : wh.shipping_companies_id
+             }).then(res=>{
+alert(res.data.message)
+             })
+        },
+       async  updateCollectionTable(context,{collection_rate , amount , collection_id}){
+            axios.put(context.rootState.nodeHost + '/api/updateShippingCompany' , {collection_rate , amount , collection_id})
+            .then(res=>{
+                alert(res.data.message)
             })
-        }
+        },
+        async updateShippingTable(context , wh){
+            axios.put(context.rootState.nodeHost + '/api/updateShippingCompany' , {
+                country : wh.country,
+                 shipping_rate :wh.shipping_rate ,
+            governorate: wh.governorate ,
+            rate_id : wh.rate_id
+        }).then(res=>{
+            alert(res.data.message)
+        })
+    },
+    async removeCompany(context , shipping_companies_id){
+        console.log(shipping_companies_id)
+axios.put(context.rootState.nodeHost + '/api/deleteShippingCompany' ,{shipping_companies_id:shipping_companies_id})
+.then(res=>{
+    alert(res.data.message)
+})
+    }
     }
 }

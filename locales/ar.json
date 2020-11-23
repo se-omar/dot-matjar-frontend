@@ -141,7 +141,13 @@
         "companyAddress2":"عنوان الشركه2",
         "companyAddress3":"عنوان الشركه3",
         "adminDashboard": "لوحة تحكم المشرف",
-        "addUser": "اضافة مستخدم"
+        "addUser": "اضافة مستخدم",
+        "chooseOrUpdateDefaultCompany" : "اختيار / تحديث الشركات",
+        "addRemCompany":"إضافة / إزالة الشركة",
+        "addCompany": "أضف شركة" ,
+        "removeCompany" : "إزالة الشركة"
+
+
     },
     "suppliersDashboard": {
         "dashboard": "لوحة تحكم",

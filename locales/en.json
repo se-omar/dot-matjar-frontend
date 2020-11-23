@@ -142,7 +142,12 @@
     "companyAddress2":"Company Address2",
     "companyAddress3":"Company Address3",
     "adminDashboard": "admin dashboard",
-    "addUser": "Add user"
+    "addUser": "Add user",
+    "chooseOrUpdateDefaultCompany" : "Choose/Update Companies",
+    "addRemCompany":"Add/Remove Company",
+    "addCompany": "Add Company" ,
+     "removeCompany" : "Remove Company"
+     
   },
   "suppliersDashboard": {
     "dashboard": "dashboard",
