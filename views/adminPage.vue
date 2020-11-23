@@ -136,11 +136,7 @@
           </div>
         </v-col>
 
-<<<<<<< HEAD
-        <v-col lg="9" cols="12" sm="12" md="9">
-=======
-        <v-col :class="$vuetify.rtl == true ? 'mr-n13' : 'ml-n13'" lg="9">
->>>>>>> ede233f7c1414713e905de6366b748d55a1d9427
+        <v-col :class="$vuetify.rtl == true ? 'mr-n13' : 'ml-n13'" lg="9" cols="12" sm="12" md="9">
           <div v-if="currentSection == pageSections.addUser">
             <add-user></add-user>
           </div>
