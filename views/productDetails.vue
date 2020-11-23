@@ -89,17 +89,6 @@
           </v-col>
 
           <v-col lg="6" md="6" sm="6" cols="6">
-            <span
-              v-if="currentProduct"
-              class="font-weight-medium"
-              style="font-size: 20px"
-            >
-              {{ $t("productDetails.color") }}:
-              <span class="text--secondary">{{ currentProduct.color }}</span>
-            </span>
-          </v-col>
-
-          <v-col lg="6" md="6" sm="6" cols="6">
             <span class="font-weight-medium" style="font-size: 20px">
               {{ $t("productDetails.weight") }}:
               <span v-if="currentProduct" class="text--secondary">{{
@@ -134,6 +123,17 @@
               <span v-if="currentProduct" class="text--secondary">{{
                 currentProduct.condition
               }}</span>
+            </span>
+          </v-col>
+
+          <v-col lg="12" md="6" sm="6" cols="6">
+            <span class="font-weight-medium" style="font-size: 20px">
+              available colors:
+              <v-swatches
+                v-model="chosenColor"
+                inline
+                :swatches="productColors"
+              ></v-swatches>
             </span>
           </v-col>
 
@@ -210,7 +210,7 @@
                 currentUser.user_id !== currentProduct.user_id &&
                 currentUser.user_type == 'user'
               "
-              @click="add()"
+              @click="add"
               block
               x-large
               class="white--text"
@@ -436,15 +436,16 @@
 </template>
 
 <script>
-//import businessInfoPopup from "../components/businessInfoPopup.vue";
-// import productRequestDialog from "../components/productRequestDialog";
 export default {
   async created() {
     await this.$store.dispatch("getSiteColor");
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
     }
-
+    await this.$store.dispatch(
+      "getProductColors",
+      this.currentProduct.product_id
+    );
     await this.$store.dispatch("getSiteColor");
 
     await this.$store.dispatch("getProductReview", {
@@ -482,9 +483,9 @@ export default {
       review: "",
       removePressed: false,
       addToCartButton: true,
-
       starNum: 5,
       groupedRatings: [],
+      chosenColor: "",
     };
   },
 
@@ -561,9 +562,14 @@ export default {
       else if (this.$vuetify.breakpoint.md) return 35;
       else return 23;
     },
+
+    productColors() {
+      return this.$store.state.ProductDetails.productColors;
+    },
   },
 
   components: {
+    VSwatches: () => import("vue-swatches"),
     // businessInfoPopup,
     // productRequestDialog
   },
@@ -601,7 +607,10 @@ export default {
       this.$router.push(`/${this.$i18n.locale}/editProduct`);
     },
     add() {
-      this.$store.dispatch("table", this.currentProduct);
+      this.$store.dispatch("table", {
+        product: this.currentProduct,
+        color: this.chosenColor,
+      });
     },
 
     supplierClicked(supplier) {

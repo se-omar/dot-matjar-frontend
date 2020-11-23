@@ -87,17 +87,16 @@
               >
             </v-col>
           </v-row>
-           <v-snackbar timeout="5000" v-model="snackbar">
-      <v-row justify="center">
-        <p v-if="orderMessage" style="font-size: 20px">
-        {{orderMessage}}
-        </p>
-        <p v-else style="font-size: 20px">
-      Something went wrong , try again.
-        </p>
-      </v-row>
-     
-    </v-snackbar>
+          <v-snackbar timeout="5000" v-model="snackbar">
+            <v-row justify="center">
+              <p v-if="orderMessage" style="font-size: 20px">
+                {{ orderMessage }}
+              </p>
+              <p v-else style="font-size: 20px">
+                Something went wrong , try again.
+              </p>
+            </v-row>
+          </v-snackbar>
         </v-container>
       </v-form>
     </v-app>
@@ -119,12 +118,9 @@ export default {
     quantityArray: [],
     rules: [(v) => !!v || "Required"],
     snackbar: false,
-   
+
     vertical: true,
-
-
-
-}),
+  }),
 
   computed: {
     currentUser() {
@@ -152,10 +148,10 @@ export default {
         };
       }
     },
-    orderMessage(){
-return this.$store.state.Orders.orderMessage
-}  
-},
+    orderMessage() {
+      return this.$store.state.Orders.orderMessage;
+    },
+  },
   async created() {
     await this.$store.dispatch("getSiteColor");
     if (localStorage.getItem("loginToken")) {
@@ -177,40 +173,12 @@ return this.$store.state.Orders.orderMessage
       this.items.forEach((element) => {
         self.quantityArray.push(element.quantity);
       });
-
-      // loadStripe(
-      //   "pk_test_51H97oICdSDXTIUwz70svxkIu08QM3jR0rB6E2njyq3fC7tLOODIipB8ppdjdPt32pteM8zHqsSF2mAo9Oyfw9Mvf00L3omXjql"
-      // ).then((stripe) => {
-      //   var sessionId = "";
-      //   this.$axios
-      //     .post("http://localhost:3000/api/checkout", {
-      //       user_id: this.currentUser.user_id,
-      //       quantityArray: self.quantityArray,
-      //     })
-      //     .then((response) => {
-      //
-      //       sessionId = response.data.session_id;
-      //       this.$store.commit("setPaymentToken", response.data.token);
-      //       this.$store.commit("putTotalPriceInStore", self.total);
-      //       this.$store.commit("putQuantityInStore", self.quantityArray);
-      //     })
-      //     .then(() => {
-      //       stripe
-      //         .redirectToCheckout({
-      //           sessionId: sessionId,
-      //         })
-      //         .then(function (result) {
-      //
-      //         });
-      //     });
-      // });
     },
+
     getCountryRegions() {
       this.$store.dispatch("getRegions", this.governorate);
     },
     async createOrder() {
-     
-
       await this.$store.dispatch("cleanCart");
       await this.$store.dispatch("createOrder", {
         governorate: this.governorate,
