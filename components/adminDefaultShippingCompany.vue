@@ -1,8 +1,15 @@
 <template>
 <v-app>
 <v-main>
+   <div class="vld-parent">
+        <loading
+          :active.sync="isLoading"
+          :can-cancel="false"
+          :is-full-page="true"
+        ></loading>
+      </div>
     <v-row justify="center">
-        <v-col lg="6" sm="10" cols="12" md="6">  
+        <v-col lg="6" sm="10" cols="8" md="6">  
    <v-card style="overflow:hidden" elevation="16" max-width="400" class="mx-auto">
                     <v-toolbar shaped>
                       <v-row justify="center">
@@ -49,18 +56,19 @@
        
    </v-card>
         </v-col>
-           <v-col lg="4 " sm="7" cols="8" md="3">  
-             <v-row>
-               <v-col lg="12">
+           <v-col lg="4 " sm="5" cols="8" md="3">  
+             <v-row justify="center">
+               <v-col lg="12" cols="8" md="12" sm="12">
    <v-card >
     <v-row justify="center">
-<v-col cols="6" lg="8" md="12"> 
-    <h2>{{$t('adminPage.defaultCompany')}}: <br/> {{defaultCompanyClicked.company_name}}</h2> 
+<v-col cols="12" lg="6" md="6" sm="6"> 
+    <span  v-if="defaultCompanyClicked.default">{{$t('adminPage.defaultCompany')}}:</span>  <br/> 
+    <h3>{{defaultCompanyClicked.company_name}}</h3>
 </v-col>
 
                     </v-row>
                     <v-row justify="center">
-<v-col lg="5">
+<v-col lg="5" cols="8" md="8" sm="8">
    
 
  <v-dialog
@@ -86,17 +94,9 @@
           >
             <i class="fa fa-times"></i>
           </v-btn>
-          <v-toolbar-title>Settings</v-toolbar-title>
+          <v-toolbar-title>{{$t('dashboardSellingProduct.details')}}</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn
-              dark
-              text
-              @click="dialog = false"
-            >
-              Save
-            </v-btn>
-          </v-toolbar-items>
+       
         </v-toolbar>
        <v-row justify="center">
               <v-col lg="5" sm="8" md="5" cols="12">
@@ -305,8 +305,8 @@
                     </v-row>
    </v-card>
                </v-col>
-               <v-col lg="12">
-                 <v-card>
+               <v-col lg="12" cols="12" md="12" sm="12">
+                 <v-card v-if="defaultCompanyClicked.shipping_companies_id != defaultCompany.shipping_companies_id">
                   <v-row justify="center">
                  <h2> {{defaultCompanyClicked.company_name}}</h2>
                   </v-row> 
@@ -321,7 +321,7 @@
       {{$t('completedata.dialogQuestion')}}
     </v-card-title>
     <v-row justify="end">
-<v-btn text :color="siteColor.button_color">
+<v-btn @click="makeDefaultCompany" text :color="siteColor.button_color">
   {{$t('supplierDetails.submit')}}
 </v-btn>
     </v-row>
@@ -361,7 +361,8 @@ editCollection:[],
 shippingRateDialog:false,
 collectionRowPressed:[],
 shippingRowPressed : [],
-defaultCompanyPermission:false
+defaultCompanyPermission:false,
+  isLoading: false,
 
      }
  },
@@ -424,11 +425,7 @@ this.companyAddress3=this.defaultCompanyClicked.company_address3
 updateShippingCompany(){
   console.log(this.defaultCompanyClicked.shipping_companies_id)
     var wh ={}
-    // wh.country = this.country 
-    // wh.shipping_rate = this.shippingRate
-    // wh.governorate = this.governorate
-    // wh.amount = this.collectionAmount 
-    // wh.collection_rate = this.collectionRate
+
     wh.companyName = this.companyName
     wh.companyNumber = this.companyNumber
     wh.companyAddress1 = this.companyAddress1
@@ -436,7 +433,7 @@ updateShippingCompany(){
     wh.companyAddress3 = this.companyAddress3
     wh.shipping_companies_id = this.defaultCompanyClicked.shipping_companies_id
     this.$store.dispatch('updateShippingCompany',wh)
-  
+
 },
 editCollectionRate(item){
   console.log(item)
@@ -468,6 +465,14 @@ updateShippingTable(){
     wh.governorate = this.governorate
     wh.rate_id = this.shippingRowPressed.rate_id
   this.$store.dispatch('updateShippingTable' , wh)
+},
+makeDefaultCompany(){
+  this.$store.dispatch('makeDefaultCompany' , this.defaultCompanyClicked.shipping_companies_id)
+this.isLoading = true
+setTimeout(()=>{
+  this.isLoading = false
+location.reload()
+},3000)
 }
     },
    async  created(){

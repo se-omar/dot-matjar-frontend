@@ -45,35 +45,89 @@
            </v-col>
           
        </v-row>
+       <v-divider></v-divider>
+       <v-form v-model="shippingValidation">
         <v-row justify="center">
            <v-col lg="3" sm="4" cols="6" md="3" >
-<v-text-field filled outlined rounded v-model="country" :label="$t('orderedProducts.country')"> 
+<v-text-field :rules="required" filled outlined rounded v-model="country" :label="$t('orderedProducts.country')"> 
 
 </v-text-field>
            </v-col>
             <v-col lg="3" sm="4" cols="6" md="3" >
-<v-text-field filled outlined rounded v-model="shippingRate" :label="$t('adminPage.shippingRate')"> 
+<v-text-field  :rules="required" filled outlined rounded v-model="shippingRate" :label="$t('adminPage.shippingRate')"> 
 
 </v-text-field>
            </v-col>
                <v-col lg="3" sm="4" cols="6" md="3" >
-<v-text-field filled outlined rounded v-model="governorate" :label="$t('adminPage.governorate')"> 
+<v-text-field  :rules="required" filled outlined rounded v-model="governorate" :label="$t('adminPage.governorate')"> 
 
 </v-text-field>
            </v-col>
        </v-row>
+       </v-form>
+       <v-row justify="center">
+         <v-col lg="1" cols="3" md="3" sm="3">
+<v-btn :disabled="!shippingValidation" rounded small :color="siteColor.button_color" @click="pushShippingData"><span :style="`color:${siteColor.button_text_color}`"  >Push</span></v-btn>
+         </v-col>
+         <v-col lg="6" cols="12" md="12" sm="12">
+           <v-simple-table dark> 
+<thead>
+  <tr>
+<th>{{$t('orderedProducts.country')}}</th>
+    <th>{{$t('addUser.governorate')}}</th>
+    <th>{{$t('adminPage.shippingRate')}}</th>
+  </tr>
+  </thead>  
+  <tbody>
+    <tr v-for="(object,index) in shippingDataTable" :key="index">
+      <td>{{object.country}}</td>
+       <td>{{object.governorate}}</td>
+        <td>{{object.shipping_rate}}</td>
+        <td><v-btn @click="removeShippingData(index)"  small icon> <i class="fa fa-times"></i></v-btn></td>
+    </tr>
+  </tbody>
+</v-simple-table>
+         </v-col>
+       </v-row>
+     <v-divider></v-divider>
+     <v-form v-model="collectionValidation">
        <v-row justify="center">
            <v-col lg="3" sm="4" cols="6" md="3" >
-<v-text-field filled outlined rounded v-model="collectionAmount" :label="$t('adminPage.collectionAmount')"> 
+<v-text-field :rules="required" filled outlined rounded v-model="collectionAmount" :label="$t('adminPage.collectionAmount')"> 
 
 </v-text-field>
            </v-col>
             <v-col lg="3" sm="4" cols="6" md="3" >
-<v-text-field filled outlined rounded v-model="collectionRate" :label="$t('adminPage.collectionRate')"> 
+<v-text-field :rules="required" filled outlined rounded v-model="collectionRate" :label="$t('adminPage.collectionRate')"> 
 
 </v-text-field>
            </v-col>
               
+       </v-row>
+     </v-form>
+        <v-row justify="center">
+         <v-col lg="1" cols="3" md="3" sm="3">
+<v-btn :disabled="!collectionValidation" rounded small :color="siteColor.button_color" @click="pushCollectionData"><span :style="`color:${siteColor.button_text_color}`"  >Push</span></v-btn>
+         </v-col>
+         <v-col lg="6" cols="12">
+           <v-simple-table dark> 
+<thead>
+  <tr>
+<th>{{$t('adminPage.collectionRate')}}</th>
+    <th>{{$t('adminPage.collectionAmount')}}</th>
+  
+  </tr>
+  </thead>  
+  <tbody>
+    <tr v-for="(object,index) in collectionDataTable" :key="index">
+      <td>{{object.collection_rate}}</td>
+       <td>{{object.amount}}</td>
+       
+        <td><v-btn @click="removeCollectionData(index)"  small icon> <i class="fa fa-times"></i></v-btn></td>
+    </tr>
+  </tbody>
+</v-simple-table>
+         </v-col>
        </v-row>
        <v-row justify="center">
            <v-btn small rounded :color="siteColor.button_color"   @click="addNewCompany"><span :style="`color:${siteColor.button_text_color}`">{{$t('adminPage.addCompany')}}</span></v-btn>
@@ -154,7 +208,14 @@ companyAddress1 :'',
 companyAddress2:'',
 companyAddress3:'',
 removeDialog: false ,
-companyData:[]
+companyData:[],
+shippingDataTable : [],
+required :[
+  v=> !!v || 'Required'
+],
+shippingValidation : false,
+collectionDataTable:[],
+collectionValidation:false
     }
 },
 methods:{
@@ -179,12 +240,29 @@ addNewCompany(){
     wh.company_address1 = this.companyAddress1
     wh.company_address2 = this.companyAddress2 
     wh.company_address3 = this.companyAddress3
-    wh.shipping_rate = this.shippingRate
-    wh.governorate = this.governorate
-  
-    wh.collection_rate = this.collectionRate,
-    wh.amount= this.collectionAmount
+   wh.shippingTable = this.shippingDataTable
+   wh.collectionTable = this.collectionDataTable
     this.$store.dispatch('addNewCompany' ,wh)
+},
+pushShippingData(){
+  var obj = {}
+  obj.country = this.country 
+  obj.governorate = this.governorate
+  obj.shipping_rate = this.shippingRate
+  this.shippingDataTable.push(obj)
+},
+removeShippingData(index){
+  this.shippingDataTable.splice(index,1)
+},
+pushCollectionData(){
+var obj = {}
+  obj.collection_rate = this.collectionRate 
+  obj.amount = this.collectionAmount
+
+  this.collectionDataTable.push(obj)
+},
+removeCollectionData (index){
+  this.collectionDataTable.splice(index , 1)
 }
 },
 computed:{

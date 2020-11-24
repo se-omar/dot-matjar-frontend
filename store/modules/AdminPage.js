@@ -110,18 +110,24 @@ axios.put(context.rootState.nodeHost + '/api/deleteShippingCompany' ,{shipping_c
     },
     addNewCompany(context,wh){
         axios.post(context.rootState.nodeHost + '/api/addNewShippingCompany' , { 
-            country : wh.country,
-                shipping_rate :wh.shipping_rate ,
-               governorate: wh.governorate ,
-               amount: wh.amount ,
-               collection_rate: wh.collection_rate,
+          
+               shippingTable:wh.shippingTable,
+               collectionTable : wh.collectionTable,
                company_name : wh.company_name,
                company_number : wh.company_number ,
                 company_address1 : wh.company_address1 ,
                 company_address2 : wh.company_address2 , 
                 company_address3 : wh.company_address3,
               
+        }).then(res=>{
+            alert(res.data.message)
         })
+    },
+    async makeDefaultCompany(context , id){
+      await  axios.put(context.rootState.nodeHost + '/api/updateDefaultShippingCompany',{shipping_companies_id :id})
+       .then(res=>{
+           alert(res.data.message)
+       })
     }
     }
 }

@@ -9,8 +9,8 @@
         ></loading>
       </div>
 
-      <v-row>
-        <v-col lg="3" cols="12" sm="12" md="3">
+      <v-row justify="center">
+        <v-col lg="3" cols="9" sm="12" md="3">
           <div>
             <v-navigation-drawer permanent>
               <v-list>
@@ -143,7 +143,7 @@
           </div>
         </v-col>
 
-        <v-col :class="$vuetify.rtl == true ? 'mr-n13' : 'ml-n13'" lg="9" cols="12" sm="12" md="9">
+        <v-col :class="$vuetify.rtl == true ? 'mr-n13' : ''" lg="9" cols="10" sm="12" md="9">
           <div v-if="currentSection == pageSections.addUser">
             <add-user></add-user>
           </div>
