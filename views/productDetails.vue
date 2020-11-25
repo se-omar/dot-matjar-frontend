@@ -15,7 +15,9 @@
             <v-img
               contain
               :src="
-                currentProduct.main_picture ? currentProduct.main_picture : ''
+                currentProduct.main_picture
+                  ? nodeHost + currentProduct.main_picture
+                  : ''
               "
             ></v-img>
           </slide>
@@ -25,7 +27,7 @@
               contain
               :src="
                 currentProduct.extra_picture1
-                  ? currentProduct.extra_picture1
+                  ? nodeHost + currentProduct.extra_picture1
                   : ''
               "
             ></v-img>
@@ -36,7 +38,7 @@
               contain
               :src="
                 currentProduct.extra_picture2
-                  ? currentProduct.extra_picture2
+                  ? nodeHost + currentProduct.extra_picture2
                   : ''
               "
             ></v-img>

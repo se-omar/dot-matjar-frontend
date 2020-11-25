@@ -9,7 +9,7 @@
     >
       <v-img
         :height="$vuetify.breakpoint.smAndDown ? '170' : '250'"
-        :src="filteredProduct.main_picture"
+        :src="nodeHost + filteredProduct.main_picture"
       ></v-img>
 
       <v-row class="mt-n5">
