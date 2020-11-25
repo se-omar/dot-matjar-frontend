@@ -20,7 +20,8 @@ export default {
         showOrderProducts(state, orderNumber) {
             for (var i = 0; i < state.ordersMade.length; i++) {
                 if (state.ordersMade[i].order_number == orderNumber) {
-                    state.showOrderProducts = state.ordersMade[i].products
+                    state.showOrderProducts = state.ordersMade[i].products_orders
+                    console.log(state.showOrderProducts)
                     state.pressedOrder = state.ordersMade[i]
                 }
             }
@@ -156,9 +157,10 @@ export default {
                 })
         },
 
-        updateProductStatus(context, { status, orderId, productId }) {
+        updateProductStatus(context, { status, orderId, productId, productColor }) {
 
-            axios.put(context.rootState.nodeHost + '/api/updateProductStatus', { status: status, orderId: orderId, productId: productId })
+            axios.put(context.rootState.nodeHost + '/api/updateProductStatus',
+                { status, orderId, productId, productColor })
                 .then(response => {
 
                 })
@@ -167,8 +169,6 @@ export default {
         ordersMade(context, id) {
             axios.put(context.rootState.nodeHost + '/api/supplierProductsInOrder', { user_id: id })
                 .then(orders => {
-
-
                     context.commit('ordersMade', orders.data.data)
                 })
         },

@@ -442,8 +442,9 @@
     "productName": "product name",
     "productId": "product ID",
     "productCode": "product code",
-    "productQuantity": "product quantity",
-    "status": "status"
+    "quantity": "quantity",
+    "status": "status",
+    "color": "color"
   },
   "productDetails": {
     "supplier": "supplier",
