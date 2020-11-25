@@ -77,6 +77,7 @@ export default {
             var products = response.map(e => {
                 e.product.pending_status = e.status
                 e.product.quantity = e.quantity
+                e.product.product_color = e.product_color
                 return e.product
             })
             state.orderProducts = products
