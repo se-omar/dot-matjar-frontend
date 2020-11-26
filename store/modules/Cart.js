@@ -95,20 +95,5 @@ export default {
 
                 })
         },
-
-        iterateCartProductQuantity(context, { type, item }) {
-            if (type == 1) {
-                axios.post(context.rootState.nodeHost + '/api/iterateCartProductQuantity', {
-                    cart_products_id: item.cart_products_id,
-                    type
-                })
-            } else {
-                axios.post(context.rootState.nodeHost + '/api/iterateCartProductQuantity', {
-                    cart_products_id: item.cart_products_id,
-                    type
-                })
-            }
-        }
-
     }
 }

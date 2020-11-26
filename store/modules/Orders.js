@@ -9,11 +9,12 @@ export default {
         ordersMade: JSON.parse(localStorage.getItem('ordersMade')) ? JSON.parse(localStorage.getItem('ordersMade')) : [],
         usersMadeOrders: [],
         userOrderAddress: [],
-        paymentToken: localStorage.getItem('paymentToken'),
+        //paymentToken: localStorage.getItem('paymentToken'),
         orders: [],
         orderProducts: [],
-        productsQuantityArray: JSON.parse(localStorage.getItem('quantity')),
-        orderMessage: ''
+        //productsQuantityArray: JSON.parse(localStorage.getItem('quantity')),
+        orderMessage: '',
+        orderProductsQuantities: []
     },
 
     mutations: {
@@ -91,16 +92,21 @@ export default {
         },
         createOrder(state, message) {
             state.orderMessage = message
+        },
+
+        setOrderProductsQuantity(state, quantities) {
+            state.orderProductsQuantities = quantities
         }
     },
 
     actions: {
-        async createOrder(context, { governorate, region, address }) {
+        async createOrder(context, { governorate, region, address, productsQuantities }) {
             await axios.post(context.rootState.nodeHost + '/api/createOrder', {
                 user_id: context.rootState.Home.currentUser.user_id
                 , governorate: governorate,
                 region: region,
                 address: address,
+                productsQuantities
             })
                 .then(res => {
                     context.commit('createOrder', res.data.message)
