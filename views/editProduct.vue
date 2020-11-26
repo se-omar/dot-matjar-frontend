@@ -118,16 +118,22 @@
 
             <v-col cols="12">
               <label class="mr-5">choose product colors</label>
-              <v-swatches
-                show-fallback
-                fallback-input-type="color"
-                v-model="color"
-              ></v-swatches>
+              <v-swatches swatches="text-advanced" v-model="color"></v-swatches>
             </v-col>
 
             <v-col cols="12">
               <label class="mr-5">chosen colors: </label>
-              <v-swatches inline :swatches="productColors"></v-swatches>
+              <span
+                class="ms-3"
+                v-for="(currentColor, index) in productColors"
+                :key="index"
+                @click="removeColor(currentColor)"
+              >
+                <v-swatches
+                  disabled
+                  v-model="productColors[index]"
+                ></v-swatches>
+              </span>
             </v-col>
           </v-row>
         </v-col>
@@ -300,6 +306,12 @@ export default {
           alert("Product changed");
           this.$router.push(`/${this.$i18n.locale}/myProducts`);
         });
+    },
+
+    removeColor(color) {
+      console.log("color clicked", color);
+      var index = this.productColors.indexOf(color);
+      this.productColors.splice(index, 1);
     },
   },
 

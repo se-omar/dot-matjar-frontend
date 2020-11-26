@@ -130,17 +130,17 @@
     "happensIfDelete": "  by deleting a category, all its subcategories and products will be deleted as well. Are you sure?",
     "accept": "accept",
     "cancel": "cancel",
-    "defaultCompany":"Default Company",
+    "defaultCompany": "Default Company",
     "companies": "companies",
-    "shippingRate":"Shipping Rate",
-    "collectionRate":"Collection Rate",
-    "collectionAmount":"Collection Amount",
-    "edit":"edit",
-    "companyName":"Company Name",
+    "shippingRate": "Shipping Rate",
+    "collectionRate": "Collection Rate",
+    "collectionAmount": "Collection Amount",
+    "edit": "edit",
+    "companyName": "Company Name",
     "companyNumber": "Company Number",
-    "companyAddress1":"Company Address1",
-    "companyAddress2":"Company Address2",
-    "companyAddress3":"Company Address3",
+    "companyAddress1": "Company Address1",
+    "companyAddress2": "Company Address2",
+    "companyAddress3": "Company Address3",
     "adminDashboard": "admin dashboard",
     "addUser": "Add user",
     "chooseOrUpdateDefaultCompany" : "Choose/Update Companies",
@@ -444,8 +444,9 @@
     "productName": "product name",
     "productId": "product ID",
     "productCode": "product code",
-    "productQuantity": "product quantity",
-    "status": "status"
+    "quantity": "quantity",
+    "status": "status",
+    "color": "color"
   },
   "productDetails": {
     "supplier": "supplier",
@@ -500,7 +501,8 @@
     "price": "price",
     "productCode": "product code",
     "status": "status",
-    "quantity": "quantity"
+    "quantity": "quantity",
+    "color": "color"
   },
   "allUsers": {
     "searchUserByName": "Search User By Name",

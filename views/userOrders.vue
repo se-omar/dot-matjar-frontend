@@ -58,7 +58,7 @@
             :items="productsInOrder"
           >
             <template [`item.status`]="{ item }">
-              <h5>
+              <h4>
                 {{ item.pending_status }}
                 <i
                   v-if="item.pending_status == 'Delivered'"
@@ -72,7 +72,11 @@
                   v-if="item.pending_status == 'Rejected'"
                   class="fa fa-ban"
                 ></i>
-              </h5>
+              </h4>
+            </template>
+
+            <template #[`item.product_color`]="{ item }">
+              <v-swatches disabled v-model="item.product_color"></v-swatches>
             </template>
           </v-data-table>
         </v-card>
@@ -91,7 +95,7 @@
 <script>
 export default {
   name: "userOrders",
-  components: {},
+  components: { VSwatches: () => import("vue-swatches") },
   async created() {
     await this.$store.dispatch("getSiteColor");
     if (localStorage.getItem("loginToken")) {
@@ -154,6 +158,7 @@ export default {
         { text: this.$t("userOrders.productCode"), value: "product_code" },
         { text: this.$t("userOrders.status"), value: "status" },
         { text: this.$t("userOrders.quantity"), value: "quantity" },
+        { text: this.$t("userOrders.color"), value: "product_color" },
       ];
     },
   },

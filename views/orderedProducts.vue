@@ -29,7 +29,7 @@
                   nextIcon: 'mdi-plus',
                 }"
               >
-                <template v-slot:item.showProducts>
+                <template #[`item.showProducts`]>
                   <v-btn :color="siteColor.button_color" small
                     ><span :style="`color:${siteColor.button_text_color}`">{{
                       $t("orderedProducts.showProducts")
@@ -58,25 +58,25 @@
                 hide-default-footer
                 @click:row="productClicked"
               >
-                <template v-slot:item.status="{ item }">
-                  <h5>
-                    {{ item.products_orders.status }}
+                <template #[`item.status`]="{ item }">
+                  <h4>
+                    {{ item.status }}
                     <i
-                      v-if="item.products_orders.status == 'Delivered'"
+                      v-if="item.status == 'Delivered'"
                       class="fa fa-check"
                     ></i>
                     <i
-                      v-if="item.products_orders.status == 'Pending'"
+                      v-if="item.status == 'Pending'"
                       class="fas fa-spinner fa-pulse"
                     ></i>
                     <i
-                      v-if="item.products_orders.status == 'Rejected'"
+                      v-if="item.status == 'Rejected'"
                       class="fa fa-trash fa-sm"
                     ></i>
                     <v-btn icon @click="productStatus">
                       <i class="fa fa-edit fa-sm ml-4"></i>
                     </v-btn>
-                  </h5>
+                  </h4>
 
                   <v-dialog
                     style="overflow: hidden"
@@ -84,21 +84,14 @@
                     max-width="500px"
                   >
                     <v-card style="overflow: hidden" tile>
-                      <v-toolbar
-                        flat
-                        dark
-                        :color="siteColor.toolbar_color"
-                        max-height="80"
-                      >
-                        <v-row class="mr-6" justify="end">
-                          <v-toolbar-title>{{
-                            clickedProductInfo.product_name
-                          }}</v-toolbar-title>
-                        </v-row>
-                        <v-spacer></v-spacer>
-                      </v-toolbar>
                       <v-row justify="center">
                         <v-col cols="8">
+                          <v-card-title>{{
+                            clickedProductInfo && clickedProductInfo.product
+                              ? clickedProductInfo.product.product_name
+                              : ""
+                          }}</v-card-title>
+
                           <v-card-text>
                             <v-list three-line subheader>
                               <v-subheader class="font-weight-black">{{
@@ -148,6 +141,17 @@
                   </v-dialog>
 
                   <!-- ================================== -->
+                </template>
+
+                <template #[`item.color`]="{ item }">
+                  <v-swatches
+                    disabled
+                    v-model="item.product_color"
+                  ></v-swatches>
+                </template>
+
+                <template #[`item.quantity`]="{ item }">
+                  {{ item.quantity }}
                 </template>
               </v-data-table>
             </v-col>
@@ -245,7 +249,7 @@
 
 <script>
 export default {
-  components: {},
+  components: { VSwatches: () => import("vue-swatches") },
   data: () => ({
     dialog: false,
 
@@ -266,7 +270,7 @@ export default {
   methods: {
     async showProducts(event) {
       this.userMadeOrder = event;
-
+      console.log(event);
       await this.$store.commit("showOrderProducts", event.order_number);
       // await this.$store.commit('showAddressDetails',event.order_number)
 
@@ -278,7 +282,7 @@ export default {
     },
     productClicked(event) {
       this.clickedProductInfo = event;
-      this.productStatusUpdate = event.products_orders.status;
+      this.productStatusUpdate = event.status;
     },
     productStatus() {
       this.statusDialog = true;
@@ -287,8 +291,9 @@ export default {
       this.snackbar = true;
       this.$store.dispatch("updateProductStatus", {
         status: this.productStatusUpdate,
-        orderId: this.userMadeOrder.order_id,
+        orderId: this.clickedProductInfo.order_id,
         productId: this.clickedProductInfo.product_id,
+        productColor: this.clickedProductInfo.product_color,
       });
     },
     // uppdating page
@@ -350,11 +355,20 @@ export default {
     },
     productsTableHeaders() {
       return [
-        { text: this.$t("orderedProducts.productName"), value: "product_name" },
-        { text: this.$t("orderedProducts.productId"), value: "product_id" },
-        { text: this.$t("orderedProducts.productCode"), value: "product_code" },
-        { text: this.$t("orderedProducts.productQuantity"), value: "quantity" },
+        {
+          text: this.$t("orderedProducts.productName"),
+          value: "product.product_name",
+        },
+        {
+          text: this.$t("orderedProducts.productCode"),
+          value: "product.product_code",
+        },
+        { text: this.$t("orderedProducts.quantity"), value: "quantity" },
         { text: this.$t("orderedProducts.status"), value: "status" },
+        {
+          text: this.$t("orderedProducts.color"),
+          value: "color",
+        },
       ];
     },
   },

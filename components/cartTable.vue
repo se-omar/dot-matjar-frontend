@@ -146,27 +146,15 @@ export default {
         type: 1,
         item,
       });
-      // for (var i = 0; i < this.items.length; i++) {
-      //   if (this.items[i].product_id == id) {
-      //     this.items[i].quantity++;
-      //   }
-      // }
     },
     decrement(item) {
-      if (item.quantity > 1) item.quantity--;
-      this.$store.dispatch("iterateCartProductQuantity", {
-        type: 2,
-        item,
-      });
-      // for (var i = 0; i < this.items.length; i++) {
-      //   if (this.items[i].product_id == id) {
-      //     if (this.items[i].quantity < 1) {
-      //       this.items[i].quantity = 0;
-      //     } else {
-      //       this.items[i].quantity--;
-      //     }
-      //   }
-      // }
+      if (item.quantity > 1) {
+        item.quantity--;
+        this.$store.dispatch("iterateCartProductQuantity", {
+          type: 2,
+          item,
+        });
+      }
     },
     numbers() {
       return this.cart.length + 1;

@@ -104,15 +104,24 @@
                 <v-col cols="12">
                   <label class="mr-5">choose product colors</label>
                   <v-swatches
-                    show-fallback
-                    fallback-input-type="color"
                     v-model="color"
+                    swatches="text-advanced"
                   ></v-swatches>
                 </v-col>
 
                 <v-col cols="12">
                   <label class="mr-5">chosen colors: </label>
-                  <v-swatches inline :swatches="chosenColors"></v-swatches>
+                  <span
+                    class="ms-3"
+                    v-for="(currentColor, index) in chosenColors"
+                    :key="index"
+                    @click="removeColor(currentColor)"
+                  >
+                    <v-swatches
+                      disabled
+                      v-model="chosenColors[index]"
+                    ></v-swatches>
+                  </span>
                 </v-col>
               </v-row>
 
@@ -694,6 +703,12 @@ export default {
     selectCategory(item) {
       console.log(item);
       this.parentCategory = item[0];
+    },
+
+    removeColor(color) {
+      console.log("color clicked", color);
+      var index = this.chosenColors.indexOf(color);
+      this.chosenColors.splice(index, 1);
     },
   },
 
