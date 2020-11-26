@@ -55,7 +55,7 @@
               md="11"
               v-if="currentUser && currentUser.user_type == 'user'"
             >
-              <v-btn
+              <!-- <v-btn
                 block
                 @click.stop="add(filteredProduct)"
                 variant="primary"
@@ -65,13 +65,7 @@
                 <span :style="`color:${siteColor.button_text_color}`">{{
                   $t("product.addToCart")
                 }}</span>
-              </v-btn>
-
-              <!-- <b-button
-           v-if="this.inCart.in_cart==1"
-          @click="add(product)"
-          variant="warning"
-              >product is added to cart</b-button>-->
+              </v-btn> -->
             </v-col>
           </v-row>
         </v-col>
@@ -129,11 +123,11 @@ export default {
       this.$router.push(`/${this.$i18n.locale}/productDetails`);
       console.log("filtered product in componetents", this.filteredProduct);
     },
-    add(product) {
-      this.$store.dispatch("table", product);
-      // this.$store.commit("cart",product)
-      // this.$store.dispatch("cart",product.product_id)
-    },
+    // add(product) {
+    //   this.$store.dispatch("table", { product });
+    // this.$store.commit("cart",product)
+    // this.$store.dispatch("cart",product.product_id)
+    // },
 
     add3Dots(string, limit) {
       var dots = "...";

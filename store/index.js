@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable prefer-destructuring */
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios"

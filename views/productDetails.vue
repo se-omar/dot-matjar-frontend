@@ -210,7 +210,7 @@
                 currentUser.user_id !== currentProduct.user_id &&
                 currentUser.user_type == 'user'
               "
-              @click="add"
+              @click="addProductToCart"
               block
               x-large
               class="white--text"
@@ -606,8 +606,8 @@ export default {
     goToEditProduct() {
       this.$router.push(`/${this.$i18n.locale}/editProduct`);
     },
-    add() {
-      this.$store.dispatch("table", {
+    addProductToCart() {
+      this.$store.dispatch("addProductToCart", {
         product: this.currentProduct,
         color: this.chosenColor,
       });
