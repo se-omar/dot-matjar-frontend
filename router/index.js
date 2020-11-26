@@ -206,6 +206,11 @@ var routes = [
         name: 'updateUserData',
         component: () => import('../views/updateUserData'),
       },
+      {
+        path: 'orderConfirmation',
+        name: 'orderConfirmation',
+        component: () => import('../views/orderConfirmation'),
+      },
 
       {
         path: '*',

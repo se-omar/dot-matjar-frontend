@@ -147,7 +147,8 @@
     "addRemCompany":"Add/Remove Company",
     "addCompany": "Add Company" ,
      "removeCompany" : "Remove Company",
-     "setCompany":"set as  default company ?"
+     "setCompany":"set as  default company ?",
+     "snackbar": "This the default company , Please set another company to default first"
      
   },
   "suppliersDashboard": {

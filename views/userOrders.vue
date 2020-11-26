@@ -29,7 +29,7 @@
             :headers="headers"
             :items="items"
           >
-            <template v-slot:item.showProducts="{ item }">
+            <template #[`item.showProducts`]="{ item }">
               <v-row>
                 <v-col cols="2" lg="4">
                   <v-btn
@@ -57,7 +57,7 @@
             :headers="productHeaders"
             :items="productsInOrder"
           >
-            <template v-slot:item.status="{ item }">
+            <template [`item.status`]="{ item }">
               <h5>
                 {{ item.pending_status }}
                 <i

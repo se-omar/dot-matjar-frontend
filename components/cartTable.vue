@@ -215,7 +215,7 @@ export default {
     totalPrice() {
       var t = 0;
       for (var i = 0; i < this.items.length; i++) {
-        t += this.items[i].product.unit_price * this.items[i].product.quantity;
+        t += this.items[i].product.unit_price * this.items[i].quantity;
       }
       return t;
     },
