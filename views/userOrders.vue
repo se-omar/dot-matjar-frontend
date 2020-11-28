@@ -90,12 +90,21 @@
         </v-card>
       </v-col> -->
     </v-row>
+    <v-row justify="center">
+      <v-btn @click="generateBillPDF" :color="siteColor.button_color">
+        <span :style="`color:${siteColor.button_text_color}`">{{
+          $t("userOrders.showBillInfo")
+        }}</span></v-btn
+      >
+    </v-row>
   </v-app>
 </template>
 <script>
 export default {
   name: "userOrders",
-  components: { VSwatches: () => import("vue-swatches") },
+  components: {
+    VSwatches: () => import("vue-swatches"),
+  },
   async created() {
     await this.$store.dispatch("getSiteColor");
     if (localStorage.getItem("loginToken")) {
@@ -147,6 +156,7 @@ export default {
         { text: this.$t("userOrders.orderDate"), value: "order_date" },
         { text: this.$t("userOrders.shippingDate"), value: "shipping_date" },
         { text: this.$t("userOrders.orderPrice"), value: "total_price" },
+        { text: this.$t("orderedProducts.status"), value: "status" },
         { text: this.$t("userOrders.showProducts"), value: "showProducts" },
       ];
     },
@@ -156,7 +166,6 @@ export default {
         { text: this.$t("userOrders.productName"), value: "product_name" },
         { text: this.$t("userOrders.price"), value: "unit_price" },
         { text: this.$t("userOrders.productCode"), value: "product_code" },
-        { text: this.$t("userOrders.status"), value: "status" },
         { text: this.$t("userOrders.quantity"), value: "quantity" },
         { text: this.$t("userOrders.color"), value: "product_color" },
       ];
@@ -164,6 +173,10 @@ export default {
   },
 
   methods: {
+    async generateBillPDF() {
+      await this.$store.dispatch("getOrder", { order_id: this.orderID });
+      this.$router.push(`/${this.$i18n.locale}/orderConfirmation`);
+    },
     filterProducts() {
       var obj = {};
       obj.product_name = this.toolbarSearch;
@@ -174,6 +187,7 @@ export default {
 
     rowClicked(order) {
       var orders = this.$store.state.orders;
+
       for (var i = 0; i < orders.length; i++) {
         if (order.order_id == orders[i].order_id) {
           this.order = [
@@ -183,6 +197,7 @@ export default {
               order_number: orders[i].order_number,
               shipping_date: orders[i].shipping_date,
               order_price: orders[i].total_price,
+              order_status: orders[i].status,
             },
           ];
         }
@@ -191,7 +206,11 @@ export default {
       this.orderProducts = this.productsInOrder;
     },
     async showProducts(order) {
+      await this.$store.dispatch("getOrder", { order_id: order });
+      console.log(order);
+      this.orderID = order;
       await this.$store.dispatch("getOrderProducts", order);
+      console.log("products in orderr", this.productsInOrder);
     },
     // eslint-disable-next-line no-unused-vars
     tableClicked(event) {
@@ -200,9 +219,10 @@ export default {
     },
   },
   data: () => ({
+    orderID: "",
     order: [],
     item: 1,
-
+    billDialog: false,
     orderProducts: [],
   }),
 };

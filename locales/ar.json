@@ -501,7 +501,11 @@
         "price": "السعر",
         "productCode": "كود المنتج",
         "status": "الحالة",
-        "quantity": "الكمية"
+        "quantity": "الكمية",
+        "showBillInfo":"اظهار الفاتوره",
+        "generatePDF":"توليد pdf"
+
+
     },
     "allUsers": {
         "searchUserByName": "بحث المستخدم بلاسم",

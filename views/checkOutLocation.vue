@@ -118,6 +118,8 @@ export default {
     this.governorate = this.currentUser.governorate;
     await this.$store.dispatch("getRegions", this.governorate);
     this.region = this.currentUser.region;
+    console.log("cart items", this.cartItems);
+    console.log(this.$store.state.Cart.cart, this.$store.state.Cart.totalPrice);
   },
 
   data: () => ({
@@ -187,9 +189,10 @@ export default {
       await this.$store.dispatch("cleanCart");
 
       this.snackbar = true;
+      this.$store.dispatch("getOrder", { order_id: null });
       setTimeout(() => {
-        this.$router.push("/");
-      }, 1000);
+        this.$router.push(`/${this.$i18n.locale}/orderConfirmation`);
+      }, 3000);
     },
   },
 };
