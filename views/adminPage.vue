@@ -9,8 +9,8 @@
         ></loading>
       </div>
 
-      <v-row>
-        <v-col lg="3" cols="12" sm="12" md="3">
+      <v-row justify="center">
+        <v-col lg="3" cols="9" sm="12" md="3">
           <div>
             <v-navigation-drawer permanent>
               <v-list>
@@ -93,14 +93,28 @@
                 </v-list-item>
                 <v-list-item @click="currentSection = pageSections.defaultComp" link>
                   <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title>Choose Shipping Company</v-list-item-title>
+                  <v-list-item-title>{{
+                    $t("adminPage.chooseOrUpdateDefaultCompany")
+                  }}</v-list-item-title>
+                </v-list-item>
+                <v-list-item @click="currentSection = pageSections.addRemCompany" link>
+                  <v-list-item-icon> </v-list-item-icon>
+                  <v-list-item-title>{{
+                    $t("adminPage.addRemCompany")
+                  }}</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-navigation-drawer>
           </div>
         </v-col>
 
-        <v-col :class="$vuetify.rtl == true ? 'mr-n13' : 'ml-n13'" lg="9">
+        <v-col
+          :class="$vuetify.rtl == true ? 'mr-n13' : ''"
+          lg="9"
+          cols="10"
+          sm="12"
+          md="9"
+        >
           <div v-if="currentSection == pageSections.addUser">
             <add-user></add-user>
           </div>
@@ -149,6 +163,9 @@
           <div v-if="currentSection == pageSections.defaultComp">
             <defaultShippingCompany></defaultShippingCompany>
           </div>
+          <div v-if="currentSection == pageSections.addRemCompany">
+            <adminAddRemoveShippingCompany></adminAddRemoveShippingCompany>
+          </div>
         </v-col>
       </v-row>
     </div>
@@ -189,6 +206,7 @@ export default {
         suppRanking: 8,
         allSupp: 9,
         defaultComp: 10,
+        addRemCompany: 11,
       },
       currentSection: 0,
     };
@@ -212,6 +230,8 @@ export default {
     SuppRankingChart: () => import("../components/suppRankingChart"),
     AllSuppliers: () => import("../components/adminAllSuppliers"),
     defaultShippingCompany: () => import("../components/adminDefaultShippingCompany"),
+    adminAddRemoveShippingCompany: () =>
+      import("../components/adminAddRemoveShippingCompany"),
   },
 };
 </script>

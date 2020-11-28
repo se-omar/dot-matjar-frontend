@@ -653,7 +653,7 @@
         v-model="advancedSearch"
         :max-width="$vuetify.breakpoint.lg ? '60%' : '87%'"
       >
-        <v-card>
+        <v-card style="overflow: hidden">
           <v-row class="mb-n8" justify="center">
             <v-radio-group row mandatory :value="radioGroup">
               <v-radio

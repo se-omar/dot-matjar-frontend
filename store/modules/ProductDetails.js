@@ -10,6 +10,7 @@ export default {
         currentProduct: JSON.parse(localStorage.getItem('currentProduct')),
         dialog: false,
         productRequestDialog: false,
+        productColors: []
     },
 
     mutations: {
@@ -49,7 +50,9 @@ export default {
             state.productRequestDialog = !state.productRequestDialog;
         },
 
-
+        getProductColors(state, colors) {
+            state.productColors = colors
+        }
     },
 
     actions: {
@@ -111,13 +114,17 @@ export default {
         },
 
         calculateProductRating(context, product_id) {
-            axios.post(context.rootState.nodeHost + '/api/calculateProductRating', {
-                product_id
-                // eslint-disable-next-line no-unused-vars
-            }).then(response => {
-
-            })
+            axios.post(context.rootState.nodeHost + '/api/calculateProductRating',
+                { product_id })
         },
+
+        async getProductColors(context, id) {
+            await axios.post(context.rootState.nodeHost + '/api/getProductColors',
+                { product_id: id }).then(response => {
+                    console.log(response.data.colors)
+                    context.commit('getProductColors', response.data.colors)
+                })
+        }
 
     }
 }

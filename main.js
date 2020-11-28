@@ -14,9 +14,11 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // import 'bootstrap/dist/css/bootstrap.css'
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
 //import VueApexCharts from 'vue-apexcharts'
-
+// import { jsPDF } from "jspdf";
+// import html2canvas from "html2canvas"
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
+import "vue-swatches/dist/vue-swatches.css"
 //import Moment from 'moment'
 import VueCarousel from 'vue-carousel';
 import i18n from './i18n'

@@ -77,18 +77,9 @@
 
               <v-row>
                 <v-col cols="6">
-                  <v-text-field
-                    v-model="color"
-                    dense
-                    :label="$t('addProduct.color')"
-                    filled
-                    rounded
-                  ></v-text-field>
-                </v-col>
-
-                <v-col cols="6">
                   <v-select
                     :items="['new', 'used']"
+                    :rules="[rules.required]"
                     v-model="condition"
                     dense
                     :label="$t('addProduct.condition')"
@@ -108,6 +99,29 @@
                     filled
                     rounded
                   ></v-textarea>
+                </v-col>
+
+                <v-col cols="12">
+                  <label class="mr-5">choose product colors</label>
+                  <v-swatches
+                    v-model="color"
+                    swatches="text-advanced"
+                  ></v-swatches>
+                </v-col>
+
+                <v-col cols="12">
+                  <label class="mr-5">chosen colors: </label>
+                  <span
+                    class="ms-3"
+                    v-for="(currentColor, index) in chosenColors"
+                    :key="index"
+                    @click="removeColor(currentColor)"
+                  >
+                    <v-swatches
+                      disabled
+                      v-model="chosenColors[index]"
+                    ></v-swatches>
+                  </span>
                 </v-col>
               </v-row>
 
@@ -396,7 +410,7 @@
                   @click="addProduct"
                   rounded
                   :color="siteColor.button_color"
-                  :disabled="!valid"
+                  :disabled="enableAddCondition"
                 >
                   <span
                     :style="`color:${siteColor.button_text_color};font-size: 18px`"
@@ -426,7 +440,9 @@
 
 <script>
 export default {
-  components: {},
+  components: {
+    VSwatches: () => import("vue-swatches"),
+  },
 
   computed: {
     nodeHost() {
@@ -438,13 +454,7 @@ export default {
     categoriesItems() {
       return this.$store.state.Home.categoriesItems;
     },
-    // category() {
-    //   var array = [];
-    //   this.$store.state.Home.category.forEach((e) => {
-    //     array.push(e.name);
-    //   });
-    //   return array;
-    // },
+
     siteColor() {
       if (this.$store.state.Home.siteColor) {
         return this.$store.state.Home.siteColor;
@@ -475,6 +485,10 @@ export default {
     categoriesTreeArray() {
       return this.$store.state.Home.categoriesTreeArray;
     },
+    enableAddCondition() {
+      if (!this.valid || this.chosenCategory == "") return true;
+      else return false;
+    },
   },
 
   data() {
@@ -492,6 +506,7 @@ export default {
       minUnits: "",
       unitPrice: "",
       color: "",
+      chosenColors: [],
       size: "",
       discountAmount: "",
       description: "",
@@ -564,7 +579,7 @@ export default {
         "category_id",
         self.chosenCategory ? self.chosenCategory.id : ""
       );
-      form.set("color", self.color);
+      form.set("colors", self.chosenColors);
       form.set("discount_amount", self.discountAmount);
       form.set("currency", self.productCurrency);
       form.set("siteLanguage", self.siteLanguage);
@@ -689,7 +704,23 @@ export default {
       console.log(item);
       this.parentCategory = item[0];
     },
+
+    removeColor(color) {
+      console.log("color clicked", color);
+      var index = this.chosenColors.indexOf(color);
+      this.chosenColors.splice(index, 1);
+    },
   },
+
+  watch: {
+    color: function () {
+      this.chosenColors.indexOf(this.color) == -1
+        ? this.chosenColors.push(this.color)
+        : alert("color exists");
+      console.log(this.chosenColors);
+    },
+  },
+
   async created() {
     await this.$store.dispatch("getSiteColor");
     if (localStorage.getItem("loginToken")) {
