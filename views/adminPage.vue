@@ -26,24 +26,14 @@
               <v-divider></v-divider>
 
               <v-list nav>
-                <v-list-item
-                  @click="currentSection = pageSections.addUser"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.addUser" link>
                   <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title>
-                    {{ $t("adminPage.addUser") }}</v-list-item-title
-                  >
+                  <v-list-item-title> {{ $t("adminPage.addUser") }}</v-list-item-title>
                 </v-list-item>
 
-                <v-list-item
-                  @click="currentSection = pageSections.allUsers"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.allUsers" link>
                   <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title>
-                    {{ $t("adminPage.allUsers") }}</v-list-item-title
-                  >
+                  <v-list-item-title> {{ $t("adminPage.allUsers") }}</v-list-item-title>
                 </v-list-item>
 
                 <v-list-item @click="currentSection = pageSections.addCat" link>
@@ -53,81 +43,55 @@
                   >
                 </v-list-item>
 
-                <v-list-item
-                  @click="currentSection = pageSections.removeCat"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.removeCat" link>
                   <v-list-item-icon> </v-list-item-icon>
                   <v-list-item-title>
                     {{ $t("adminPage.removeCategory") }}</v-list-item-title
                   >
                 </v-list-item>
 
-                <v-list-item
-                  @click="currentSection = pageSections.addRemCountry"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.addRemCountry" link>
                   <v-list-item-icon> </v-list-item-icon>
                   <v-list-item-title>
                     {{ $t("adminPage.addOrRemoveCountry") }}</v-list-item-title
                   >
                 </v-list-item>
 
-                <v-list-item
-                  @click="currentSection = pageSections.editCarousel"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.editCarousel" link>
                   <v-list-item-icon> </v-list-item-icon>
                   <v-list-item-title>
                     {{ $t("adminPage.editCarousel") }}</v-list-item-title
                   >
                 </v-list-item>
 
-                <v-list-item
-                  @click="currentSection = pageSections.topTenSupp"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.topTenSupp" link>
                   <v-list-item-icon> </v-list-item-icon>
                   <v-list-item-title>
                     {{ $t("adminPage.top10Suppliers") }}</v-list-item-title
                   >
                 </v-list-item>
 
-                <v-list-item
-                  @click="currentSection = pageSections.topSuppYear"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.topSuppYear" link>
                   <v-list-item-icon> </v-list-item-icon>
                   <v-list-item-title>
-                    {{
-                      $t("adminPage.topYearMonthSuppliers")
-                    }}</v-list-item-title
+                    {{ $t("adminPage.topYearMonthSuppliers") }}</v-list-item-title
                   >
                 </v-list-item>
 
-                <v-list-item
-                  @click="currentSection = pageSections.suppRanking"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.suppRanking" link>
                   <v-list-item-icon> </v-list-item-icon>
                   <v-list-item-title>
                     {{ $t("adminPage.suppliersChart") }}</v-list-item-title
                   >
                 </v-list-item>
 
-                <v-list-item
-                  @click="currentSection = pageSections.allSupp"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.allSupp" link>
                   <v-list-item-icon> </v-list-item-icon>
                   <v-list-item-title>
                     {{ $t("adminPage.allSuppliers") }}</v-list-item-title
                   >
                 </v-list-item>
-                 <v-list-item
-                  @click="currentSection = pageSections.defaultComp"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.defaultComp" link>
                   <v-list-item-icon> </v-list-item-icon>
                   <v-list-item-title>Choose Shipping Company</v-list-item-title>
                 </v-list-item>
@@ -136,11 +100,7 @@
           </div>
         </v-col>
 
-<<<<<<< HEAD
-        <v-col lg="9" cols="12" sm="12" md="9">
-=======
         <v-col :class="$vuetify.rtl == true ? 'mr-n13' : 'ml-n13'" lg="9">
->>>>>>> ede233f7c1414713e905de6366b748d55a1d9427
           <div v-if="currentSection == pageSections.addUser">
             <add-user></add-user>
           </div>
@@ -187,7 +147,7 @@
             <all-suppliers></all-suppliers>
           </div>
           <div v-if="currentSection == pageSections.defaultComp">
-<defaultShippingCompany></defaultShippingCompany>
+            <defaultShippingCompany></defaultShippingCompany>
           </div>
         </v-col>
       </v-row>
@@ -228,7 +188,7 @@ export default {
         topSuppYear: 7,
         suppRanking: 8,
         allSupp: 9,
-        defaultComp:10 
+        defaultComp: 10,
       },
       currentSection: 0,
     };
@@ -251,7 +211,7 @@ export default {
     TopYearSuppliers: () => import("../components/adminTopYearSuppliers"),
     SuppRankingChart: () => import("../components/suppRankingChart"),
     AllSuppliers: () => import("../components/adminAllSuppliers"),
-    defaultShippingCompany : ()=> import("../components/adminDefaultShippingCompany")
+    defaultShippingCompany: () => import("../components/adminDefaultShippingCompany"),
   },
 };
 </script>
