@@ -7,19 +7,11 @@
         :is-full-page="true"
       ></loading>
     </div> -->
-    <v-app-bar
-      elevate-on-scroll
-      fixed
-      shaped
-      app
-      :color="siteColor.toolbar_color"
-    >
+    <v-app-bar elevate-on-scroll fixed shaped app :color="siteColor.toolbar_color">
       <span class="pr-4" v-if="$vuetify.breakpoint.xs">
         <a
           @click="$router.push('/').catch(() => {})"
-          v-if="
-            (supplierPageInfo && !supplierPageInfo.logo) || !supplierPageInfo
-          "
+          v-if="(supplierPageInfo && !supplierPageInfo.logo) || !supplierPageInfo"
         >
           <v-img
             src="../assets/images/dotmatjar_logo.png"
@@ -47,9 +39,7 @@
       <span v-else>
         <a
           @click="$router.push('/').catch(() => {})"
-          v-if="
-            (supplierPageInfo && !supplierPageInfo.logo) || !supplierPageInfo
-          "
+          v-if="(supplierPageInfo && !supplierPageInfo.logo) || !supplierPageInfo"
         >
           <v-img
             src="../assets/images/dotmatjar_logo.png"
@@ -114,11 +104,7 @@
           v-if="siteLanguage == 'en'"
           v-html="$t('toolbar.advancedSearch')"
         ></span>
-        <span
-          class="smallerText"
-          v-else
-          v-html="$t('toolbar.advancedSearch')"
-        ></span>
+        <span class="smallerText" v-else v-html="$t('toolbar.advancedSearch')"></span>
       </v-btn>
       <v-btn v-else rounded @click="advancedSearch = true" icon>
         <i
@@ -130,7 +116,7 @@
       <v-menu
         v-if="
           (currentUser && $vuetify.breakpoint.lg) ||
-          (currentUser && $vuetify.breakpoint.md)
+            (currentUser && $vuetify.breakpoint.md)
         "
         :close-on-content-click="true"
         :nudge-width="200"
@@ -228,9 +214,7 @@
 
           <v-card-title>
             <v-row justify="center">
-              <span style="font-size: 20px">{{
-                currentUser.full_arabic_name
-              }}</span>
+              <span style="font-size: 20px">{{ currentUser.full_arabic_name }}</span>
             </v-row>
           </v-card-title>
 
@@ -315,9 +299,7 @@
                 :color="siteColor.button_color"
                 small
                 rounded
-                @click="
-                  $router.push(`/${$i18n.locale}/categoryAndItemRequests`)
-                "
+                @click="$router.push(`/${$i18n.locale}/categoryAndItemRequests`)"
                 ><span
                   v-html="$t('toolbar.categoryRequests')"
                   :style="`color: ${siteColor.button_text_color}; font-size:15px`"
@@ -348,30 +330,16 @@
           <v-row>
             <v-col cols="12">
               <v-card-text>
-                <a
-                  class="size"
-                  @click="$router.push(`/${$i18n.locale}/editPassword`)"
-                >
-                  <i
-                    class="fa fa-cog fa-sm"
-                    aria-hidden="true"
-                    style="color: black"
-                  ></i>
+                <a class="size" @click="$router.push(`/${$i18n.locale}/editPassword`)">
+                  <i class="fa fa-cog fa-sm" aria-hidden="true" style="color: black"></i>
                   <span class="ml-2" :color="siteColor.toolbar_text_color">
                     {{ $t("toolbar.changeYourPassword") }}</span
                   >
                 </a>
                 <br />
                 <br />
-                <a
-                  @click="$router.push(`/${$i18n.locale}/completedata`)"
-                  class="size"
-                >
-                  <i
-                    class="fa fa-edit fa-sm"
-                    aria-hidden="true"
-                    style="color: black"
-                  ></i>
+                <a @click="$router.push(`/${$i18n.locale}/completedata`)" class="size">
+                  <i class="fa fa-edit fa-sm" aria-hidden="true" style="color: black"></i>
                   <span class="ml-2" :color="siteColor.toolbar_text_color">{{
                     $t("toolbar.updateOrCompleteInfo")
                   }}</span>
@@ -399,15 +367,12 @@
         v-model="profileDialog"
         v-else-if="
           (currentUser && $vuetify.breakpoint.sm) ||
-          (currentUser && $vuetify.breakpoint.xs)
+            (currentUser && $vuetify.breakpoint.xs)
         "
       >
         <template v-slot:activator="{ on }">
           <v-btn icon small @click="profileDialog = true" v-on="on">
-            <i
-              :style="`color:${siteColor.toolbar_text_color}`"
-              class="fa fa-user"
-            ></i>
+            <i :style="`color:${siteColor.toolbar_text_color}`" class="fa fa-user"></i>
           </v-btn>
         </template>
 
@@ -482,9 +447,7 @@
 
           <v-card-title>
             <v-row justify="center">
-              <span style="font-size: 20px">{{
-                currentUser.full_arabic_name
-              }}</span>
+              <span style="font-size: 20px">{{ currentUser.full_arabic_name }}</span>
             </v-row>
           </v-card-title>
 
@@ -569,9 +532,7 @@
                 :color="siteColor.button_color"
                 small
                 rounded
-                @click="
-                  $router.push(`/${$i18n.locale}/categoryAndItemRequests`)
-                "
+                @click="$router.push(`/${$i18n.locale}/categoryAndItemRequests`)"
                 ><span
                   v-html="$t('toolbar.categoryRequests')"
                   :style="`color: ${siteColor.button_text_color}; font-size:15px`"
@@ -602,30 +563,16 @@
           <v-row>
             <v-col cols="12">
               <v-card-text>
-                <a
-                  class="size"
-                  @click="$router.push(`/${$i18n.locale}/editPassword`)"
-                >
-                  <i
-                    class="fa fa-cog fa-sm"
-                    aria-hidden="true"
-                    style="color: black"
-                  ></i>
+                <a class="size" @click="$router.push(`/${$i18n.locale}/editPassword`)">
+                  <i class="fa fa-cog fa-sm" aria-hidden="true" style="color: black"></i>
                   <span class="ml-2" :color="siteColor.toolbar_text_color">
                     {{ $t("toolbar.changeYourPassword") }}</span
                   >
                 </a>
                 <br />
                 <br />
-                <a
-                  @click="$router.push(`/${$i18n.locale}/completedata`)"
-                  class="size"
-                >
-                  <i
-                    class="fa fa-edit fa-sm"
-                    aria-hidden="true"
-                    style="color: black"
-                  ></i>
+                <a @click="$router.push(`/${$i18n.locale}/completedata`)" class="size">
+                  <i class="fa fa-edit fa-sm" aria-hidden="true" style="color: black"></i>
                   <span class="ml-2" :color="siteColor.toolbar_text_color">{{
                     $t("toolbar.updateOrCompleteInfo")
                   }}</span>
@@ -870,9 +817,7 @@
         class="font"
         :style="`color:${siteColor.toolbar_text_color}`"
         v-if="
-          currentUser &&
-          currentUser.user_type == 'business' &&
-          $vuetify.breakpoint.lg
+          currentUser && currentUser.user_type == 'business' && $vuetify.breakpoint.lg
         "
         text
         @click="$router.push(`/${$i18n.locale}/dashboard`).catch((err) => {})"
@@ -893,17 +838,11 @@
       <v-btn
         class="font"
         :style="`color:${siteColor.toolbar_text_color}`"
-        v-if="
-          currentUser &&
-          currentUser.user_type == 'admin' &&
-          $vuetify.breakpoint.lg
-        "
+        v-if="currentUser && currentUser.user_type == 'admin' && $vuetify.breakpoint.lg"
         text
         @click="$router.push(`/${$i18n.locale}/adminPage`).catch((err) => {})"
       >
-        <span class="smallerText">
-          {{ $t("toolbar.adminDashboard") }}</span
-        ></v-btn
+        <span class="smallerText"> {{ $t("toolbar.adminDashboard") }}</span></v-btn
       >
 
       <v-btn
@@ -944,22 +883,13 @@
       />-->
       <v-app-bar-nav-icon
         @click="drawer = true"
-        v-if="
-          $vuetify.breakpoint.sm ||
-          $vuetify.breakpoint.xs ||
-          $vuetify.breakpoint.md
-        "
+        v-if="$vuetify.breakpoint.sm || $vuetify.breakpoint.xs || $vuetify.breakpoint.md"
       ></v-app-bar-nav-icon>
     </v-app-bar>
     <v-main>
       <v-layout> </v-layout>
     </v-main>
-    <v-navigation-drawer
-      style="position: fixed"
-      v-model="drawer"
-      absolute
-      temporary
-    >
+    <v-navigation-drawer style="position: fixed" v-model="drawer" absolute temporary>
       <v-list nav dense>
         <v-list-item-group active-class="deep-purple--text text--accent-4">
           <v-list-item @click="$router.push('/').catch((err) => {})">
@@ -970,17 +900,13 @@
           </v-list-item>
 
           <v-list-item
-            @click="
-              $router.push(`/${$i18n.locale}/editPassword`).catch((err) => {})
-            "
+            @click="$router.push(`/${$i18n.locale}/editPassword`).catch((err) => {})"
             v-if="currentUser"
           >
             <v-list-item-icon>
               <v-icon>fas fa-user-lock</v-icon>
             </v-list-item-icon>
-            <span style="font-size: 20px">
-              {{ $t("toolbar.changeYourPassword") }}</span
-            >
+            <span style="font-size: 20px"> {{ $t("toolbar.changeYourPassword") }}</span>
           </v-list-item>
 
           <!-- <v-list-item
@@ -996,9 +922,7 @@
           </v-list-item> -->
 
           <v-list-item
-            @click="
-              $router.push(`/${$i18n.locale}/dashboard`).catch((err) => {})
-            "
+            @click="$router.push(`/${$i18n.locale}/dashboard`).catch((err) => {})"
             v-if="currentUser && currentUser.user_type == 'business'"
           >
             <v-list-item-icon>
@@ -1015,9 +939,7 @@
             <v-list-item-icon>
               <v-icon>fas fa-store</v-icon>
             </v-list-item-icon>
-            <span style="font-size: 20px">
-              {{ $t("toolbar.myProductsNobr") }}</span
-            >
+            <span style="font-size: 20px"> {{ $t("toolbar.myProductsNobr") }}</span>
           </v-list-item>
 
           <v-list-item
@@ -1027,8 +949,7 @@
             <v-list-item-icon>
               <v-icon>fas fa-palette</v-icon>
             </v-list-item-icon>
-            <span v-html="$t('toolbar.siteColorsNobr')" style="font-size: 20px">
-            </span>
+            <span v-html="$t('toolbar.siteColorsNobr')" style="font-size: 20px"> </span>
           </v-list-item>
 
           <v-list-item
@@ -1039,11 +960,7 @@
               <v-icon>fas fa-truck</v-icon>
             </v-list-item-icon>
 
-            <span
-              style="font-size: 20px"
-              v-html="$t('toolbar.orderManageNobr')"
-            >
-            </span>
+            <span style="font-size: 20px" v-html="$t('toolbar.orderManageNobr')"> </span>
           </v-list-item>
 
           <v-list-item
@@ -1053,10 +970,7 @@
             <v-list-item-icon>
               <v-icon>fas fa-envelope</v-icon>
             </v-list-item-icon>
-            <span
-              v-html="$t('toolbar.categoryRequestsNobr')"
-              style="font-size: 20px"
-            >
+            <span v-html="$t('toolbar.categoryRequestsNobr')" style="font-size: 20px">
             </span>
           </v-list-item>
 
@@ -1067,18 +981,13 @@
             <v-list-item-icon>
               <v-icon>fas fa-users</v-icon>
             </v-list-item-icon>
-            <span
-              style="font-size: 20px"
-              v-html="$t('toolbar.pendingSuppliersNobr')"
-            >
+            <span style="font-size: 20px" v-html="$t('toolbar.pendingSuppliersNobr')">
             </span>
           </v-list-item>
 
           <v-list-item
             v-if="currentUser && currentUser.user_type == 'user'"
-            @click="
-              $router.push(`/${$i18n.locale}/userOrders`).catch((err) => {})
-            "
+            @click="$router.push(`/${$i18n.locale}/userOrders`).catch((err) => {})"
           >
             <v-list-item-icon>
               <v-icon>fas fa-cart-arrow-down</v-icon>
@@ -1088,16 +997,12 @@
 
           <v-list-item
             v-if="currentUser && currentUser.user_type == 'admin'"
-            @click="
-              $router.push(`/${$i18n.locale}/adminPage`).catch((err) => {})
-            "
+            @click="$router.push(`/${$i18n.locale}/adminPage`).catch((err) => {})"
           >
             <v-list-item-icon>
               <v-icon>fas fa-tools</v-icon>
             </v-list-item-icon>
-            <span style="font-size: 20px">
-              {{ $t("toolbar.adminDashboard") }}</span
-            >
+            <span style="font-size: 20px"> {{ $t("toolbar.adminDashboard") }}</span>
           </v-list-item>
 
           <v-list-item>
@@ -1106,9 +1011,7 @@
             </v-list-item-icon>
 
             <span
-              @click="
-                $router.push(`/${$i18n.locale}/reglogin`).catch((err) => {})
-              "
+              @click="$router.push(`/${$i18n.locale}/reglogin`).catch((err) => {})"
               style="font-size: 20px"
             >
               {{ $t("toolbar.loginSignup") }}</span
@@ -1264,9 +1167,7 @@ export default {
     },
     supplierPage() {
       this.$store.commit("supplierPage", this.currentUser);
-      this.$router.push(
-        `/${this.$i18n.locale}/supplierPage/` + this.currentUser.user_id
-      );
+      this.$router.push(`/${this.$i18n.locale}/supplierPage/` + this.currentUser.user_id);
     },
     goSupplierPage() {
       this.$router
@@ -1312,9 +1213,7 @@ export default {
       if (this.toolbarSearch) obj.product_name = this.toolbarSearch;
 
       obj.category_id =
-        this.loadmore && this.loadmore.category
-          ? this.loadmore.category.id
-          : "";
+        this.loadmore && this.loadmore.category ? this.loadmore.category.id : "";
 
       console.log("loadmore", this.loadmore);
       obj.product_id =
@@ -1346,10 +1245,7 @@ export default {
       });
     },
     async emptySupplierSearchBox() {
-      await this.$store.dispatch(
-        "getSupplierProducts",
-        this.$route.params.supplier_id
-      );
+      await this.$store.dispatch("getSupplierProducts", this.$route.params.supplier_id);
     },
     async filterSuppliers() {
       this.advancedSearch = false;
@@ -1382,11 +1278,9 @@ export default {
           categoryName: this.categoryName,
         });
       } else if (this.$route.name == "supplierPage") {
-        this.$store.commit("emptySupplierProducts");
-        await this.$store.dispatch(
-          "getSupplierProducts",
-          this.$route.params.supplier_id
-        );
+        await this.$store.dispatch("getSupplierProducts", this.$route.params.supplier_id);
+      } else if (this.$route.name == "dashboard") {
+        await this.$store.dispatch("getMyProducts", this.currentUser.user_id);
       }
     },
 
