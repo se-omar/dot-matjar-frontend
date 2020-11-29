@@ -171,7 +171,6 @@ export default {
       }
       this.$store.commit("putTotalPriceInStore", this.totalPrice);
       this.$store.commit("setOrderProductsQuantity", quantityArray);
-     
 
       this.$router.push(`/${this.$i18n.locale}/checkOutLocation`);
     },

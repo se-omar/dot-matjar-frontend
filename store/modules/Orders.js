@@ -12,7 +12,7 @@ export default {
         //paymentToken: localStorage.getItem('paymentToken'),
         orders: [],
         orderProducts: [],
-        //productsQuantityArray: JSON.parse(localStorage.getItem('quantity')),
+        orderCountryShippingRate: '',
         orderMessage: '',
         orderProductsQuantities: [],
         productsQuantityArray: JSON.parse(localStorage.getItem('quantity')),
@@ -95,6 +95,9 @@ export default {
             localStorage.setItem('quantity', JSON.stringify(quantity))
             state.productsQuantityArray = JSON.parse(localStorage.getItem('quantity'))
         },
+        setOrderProductsQuantity(state, quantities) {
+            state.orderProductsQuantities = quantities
+        },
         createOrder(state, message) {
             state.orderMessage = message
         },
@@ -102,6 +105,10 @@ export default {
 
             state.billOrderData = order
             state.billOrderProducts = productsInOrder
+        },
+
+        getShippingRateForCountry(state, shippingRate) {
+            state.orderCountryShippingRate = shippingRate
         }
     },
 
@@ -212,6 +219,14 @@ export default {
                 .then(order => {
                     context.commit('getOrder', { order: order.data.order, productsInOrder: order.data.productsInOrder })
                 })
+        },
+
+        async getShippingRateForCountry(context, country) {
+            console.log(country)
+            await axios.post(context.rootState.nodeHost + "/api/getShippingRateForCountry",
+                { country }).then((response => {
+                    context.commit('getShippingRateForCountry', response.data.shippingRate)
+                }))
         }
     }
 }
