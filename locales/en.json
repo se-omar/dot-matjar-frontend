@@ -502,7 +502,10 @@
     "productCode": "product code",
     "status": "status",
     "quantity": "quantity",
-    "color": "color"
+    "color": "color",
+    "showBillInfo":"Show bill Info",
+    "generatePDF":"generate PDF"
+
   },
   "allUsers": {
     "searchUserByName": "Search User By Name",
