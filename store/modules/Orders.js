@@ -14,7 +14,10 @@ export default {
         orderProducts: [],
         //productsQuantityArray: JSON.parse(localStorage.getItem('quantity')),
         orderMessage: '',
-        orderProductsQuantities: []
+        orderProductsQuantities: [],
+        productsQuantityArray: JSON.parse(localStorage.getItem('quantity')),
+        billOrderData: [],
+        billOrderProducts: []
     },
 
     mutations: {
@@ -28,11 +31,13 @@ export default {
             }
         },
 
-        ordersMade(state, orders) {
+        ordersMade(state, revOrders) {
             // var products=orders.map(e=>{return e.products})
             var userId = true
             var users = []
             var address = []
+
+            var orders = revOrders.reverse();
             for (var i = 0; i < orders.length; i++) {
 
 
@@ -43,7 +48,7 @@ export default {
                         'order_number': orders[i] ? orders[i].order_number : '',
                         'order_date': orders[i] ? orders[i].order_date : '',
                         'status': orders[i] ? orders[i].status : '',
-                        'order_id': orders[i] ? orders[i].order_i : ''
+                        'order_id': orders[i] ? orders[i].order_id : ''
                     })
                 }
             }
@@ -93,20 +98,23 @@ export default {
         createOrder(state, message) {
             state.orderMessage = message
         },
+        getOrder(state, { order, productsInOrder }) {
 
-        setOrderProductsQuantity(state, quantities) {
-            state.orderProductsQuantities = quantities
+            state.billOrderData = order
+            state.billOrderProducts = productsInOrder
         }
     },
 
     actions: {
         async createOrder(context, { governorate, region, address, productsQuantities }) {
+            console.log('price', context.rootState.Cart.totalPrice)
             await axios.post(context.rootState.nodeHost + '/api/createOrder', {
                 user_id: context.rootState.Home.currentUser.user_id
                 , governorate: governorate,
                 region: region,
                 address: address,
-                productsQuantities
+                productsQuantities,
+                total_price: context.rootState.Cart.totalPrice
             })
                 .then(res => {
                     context.commit('createOrder', res.data.message)
@@ -195,10 +203,15 @@ export default {
                 order_id: id
             })
                 .then(response => {
-
                     context.commit('getOrderProducts', response.data)
                 })
         },
-
+        getOrder(context, { order_id }) {
+            console.log('order_iddddd', order_id)
+            axios.put(context.rootState.nodeHost + "/api/getOrder", { order_id, user_id: context.rootState.Home.currentUser.user_id })
+                .then(order => {
+                    context.commit('getOrder', { order: order.data.order, productsInOrder: order.data.productsInOrder })
+                })
+        }
     }
 }

@@ -240,6 +240,18 @@
               </v-card>
             </v-dialog>
           </v-row>
+          <v-row class="mt-4" justify="center">
+            <v-btn
+              @click="PushTOBillPage"
+              small
+              rounded
+              :color="siteColor.button_color"
+            >
+              <span :style="`color:${siteColor.button_text_color}`">
+                {{ $t("userOrders.showBillInfo") }}</span
+              >
+            </v-btn>
+          </v-row>
           <!-- ========================= -->
         </v-card>
       </v-col>
@@ -252,7 +264,7 @@ export default {
   components: { VSwatches: () => import("vue-swatches") },
   data: () => ({
     dialog: false,
-
+    orderId: "",
     state: "",
     country: "",
     address1: "",
@@ -270,10 +282,11 @@ export default {
   methods: {
     async showProducts(event) {
       this.userMadeOrder = event;
-      console.log(event);
+      console.log("event", event);
+      console.log("orders made", this.ordersMade);
       await this.$store.commit("showOrderProducts", event.order_number);
       // await this.$store.commit('showAddressDetails',event.order_number)
-
+      this.orderID = event.order_id;
       this.country = this.pressedOrder.country;
       this.state = this.pressedOrder.state;
       this.address1 = this.pressedOrder.address_line_1;
@@ -296,7 +309,11 @@ export default {
         productColor: this.clickedProductInfo.product_color,
       });
     },
-    // uppdating page
+    async PushTOBillPage() {
+      console.log(this.orderID);
+      await this.$store.dispatch("getOrder", { order_id: this.orderID });
+      this.$router.push(`/${this.$i18n.locale}/orderConfirmation`);
+    },
   },
   async created() {
     await this.$store.dispatch("getSiteColor");

@@ -17,8 +17,7 @@ export default {
     supplierCategories: [],
     supplierCategoriesAndItems: [],
     supplierCategoriesTreeArray: [],
-    pressedCategory:[]
-
+    pressedCategory: [],
   },
 
   mutations: {
@@ -35,9 +34,9 @@ export default {
       state.supplier = supplier;
     },
 
-    emptySupplierProducts(state) {
-      state.supplierProducts = [];
-    },
+    // emptySupplierProducts(state) {
+    //   state.supplierProducts = [];
+    // },
 
     getSupplierProducts(state, supplierProducts) {
       state.supplierProducts = [];
@@ -92,9 +91,9 @@ export default {
       }
       state.pendingSuppliers = array;
     },
-    filterSupplierProducts(state, {products,categoryArray}) {
+    filterSupplierProducts(state, { products, categoryArray }) {
       state.supplierProducts = products;
-      state.pressedCategory = categoryArray
+      state.pressedCategory = categoryArray;
     },
     returnAllProducts(state) {
       state.supplierProducts = state.supplierProductsSave;
@@ -423,14 +422,26 @@ export default {
           context.commit("getSupplierCategoriesTree", response.data.categoriesTreeArray);
         });
     },
-    filterSupplierProducts(context , {categoryArray,supplier_id , productsSearch , searchType}){
-      console.log(categoryArray,supplier_id)
-      axios.put(context.rootState.nodeHost + '/api/filterSupplierProducts',{categoryArray , supplier_id,productsSearch , searchType})
-      .then(products=>{
-        console.log(products.data.message)
-        console.log('Products is:',products.data.data)
-        context.commit('filterSupplierProducts',{products:products.data.data , categoryArray})
-      })
-    }
+    filterSupplierProducts(
+      context,
+      { categoryArray, supplier_id, productsSearch, searchType }
+    ) {
+      console.log(categoryArray, supplier_id);
+      axios
+        .put(context.rootState.nodeHost + "/api/filterSupplierProducts", {
+          categoryArray,
+          supplier_id,
+          productsSearch,
+          searchType,
+        })
+        .then((products) => {
+          console.log(products.data.message);
+          console.log("Products is:", products.data.data);
+          context.commit("filterSupplierProducts", {
+            products: products.data.data,
+            categoryArray,
+          });
+        });
+    },
   },
 };

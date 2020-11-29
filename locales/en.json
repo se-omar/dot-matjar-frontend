@@ -143,11 +143,13 @@
     "companyAddress3": "Company Address3",
     "adminDashboard": "admin dashboard",
     "addUser": "Add user",
-    "chooseOrUpdateDefaultCompany": "Choose/Update Companies",
-    "addRemCompany": "Add/Remove Company",
-    "addCompany": "Add Company",
-    "removeCompany": "Remove Company",
-    "setCompany": "set as  default company ?"
+    "chooseOrUpdateDefaultCompany" : "Choose/Update Companies",
+    "addRemCompany":"Add/Remove Company",
+    "addCompany": "Add Company" ,
+     "removeCompany" : "Remove Company",
+     "setCompany":"set as  default company ?",
+     "snackbar": "This the default company , Please set another company to default first"
+     
   },
   "suppliersDashboard": {
     "dashboard": "dashboard",
@@ -500,7 +502,10 @@
     "productCode": "product code",
     "status": "status",
     "quantity": "quantity",
-    "color": "color"
+    "color": "color",
+    "showBillInfo":"Show bill Info",
+    "generatePDF":"generate PDF"
+
   },
   "allUsers": {
     "searchUserByName": "Search User By Name",

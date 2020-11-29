@@ -26,24 +26,14 @@
               <v-divider></v-divider>
 
               <v-list nav>
-                <v-list-item
-                  @click="currentSection = pageSections.addUser"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.addUser" link>
                   <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title>
-                    {{ $t("adminPage.addUser") }}</v-list-item-title
-                  >
+                  <v-list-item-title> {{ $t("adminPage.addUser") }}</v-list-item-title>
                 </v-list-item>
 
-                <v-list-item
-                  @click="currentSection = pageSections.allUsers"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.allUsers" link>
                   <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title>
-                    {{ $t("adminPage.allUsers") }}</v-list-item-title
-                  >
+                  <v-list-item-title> {{ $t("adminPage.allUsers") }}</v-list-item-title>
                 </v-list-item>
 
                 <v-list-item @click="currentSection = pageSections.addCat" link>
@@ -53,97 +43,78 @@
                   >
                 </v-list-item>
 
-                <v-list-item
-                  @click="currentSection = pageSections.removeCat"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.removeCat" link>
                   <v-list-item-icon> </v-list-item-icon>
                   <v-list-item-title>
                     {{ $t("adminPage.removeCategory") }}</v-list-item-title
                   >
                 </v-list-item>
 
-                <v-list-item
-                  @click="currentSection = pageSections.addRemCountry"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.addRemCountry" link>
                   <v-list-item-icon> </v-list-item-icon>
                   <v-list-item-title>
                     {{ $t("adminPage.addOrRemoveCountry") }}</v-list-item-title
                   >
                 </v-list-item>
 
-                <v-list-item
-                  @click="currentSection = pageSections.editCarousel"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.editCarousel" link>
                   <v-list-item-icon> </v-list-item-icon>
                   <v-list-item-title>
                     {{ $t("adminPage.editCarousel") }}</v-list-item-title
                   >
                 </v-list-item>
 
-                <v-list-item
-                  @click="currentSection = pageSections.topTenSupp"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.topTenSupp" link>
                   <v-list-item-icon> </v-list-item-icon>
                   <v-list-item-title>
                     {{ $t("adminPage.top10Suppliers") }}</v-list-item-title
                   >
                 </v-list-item>
 
-                <v-list-item
-                  @click="currentSection = pageSections.topSuppYear"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.topSuppYear" link>
                   <v-list-item-icon> </v-list-item-icon>
                   <v-list-item-title>
-                    {{
-                      $t("adminPage.topYearMonthSuppliers")
-                    }}</v-list-item-title
+                    {{ $t("adminPage.topYearMonthSuppliers") }}</v-list-item-title
                   >
                 </v-list-item>
 
-                <v-list-item
-                  @click="currentSection = pageSections.suppRanking"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.suppRanking" link>
                   <v-list-item-icon> </v-list-item-icon>
                   <v-list-item-title>
                     {{ $t("adminPage.suppliersChart") }}</v-list-item-title
                   >
                 </v-list-item>
 
-                <v-list-item
-                  @click="currentSection = pageSections.allSupp"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.allSupp" link>
                   <v-list-item-icon> </v-list-item-icon>
                   <v-list-item-title>
                     {{ $t("adminPage.allSuppliers") }}</v-list-item-title
                   >
                 </v-list-item>
-                <v-list-item
-                  @click="currentSection = pageSections.defaultComp"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.defaultComp" link>
                   <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title>{{$t('adminPage.chooseOrUpdateDefaultCompany')}}</v-list-item-title>
+                  <v-list-item-title>{{
+                    $t("adminPage.chooseOrUpdateDefaultCompany")
+                  }}</v-list-item-title>
                 </v-list-item>
-                  <v-list-item
-                  @click="currentSection = pageSections.addRemCompany"
-                  link
-                >
+                <v-list-item @click="currentSection = pageSections.addRemCompany" link>
                   <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title>{{$t('adminPage.addRemCompany')}}</v-list-item-title>
+                  <v-list-item-title>{{
+                    $t("adminPage.addRemCompany")
+                  }}</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-navigation-drawer>
           </div>
         </v-col>
 
-        <v-col :class="$vuetify.rtl == true ? 'mr-n13' : ''" lg="9" cols="10" sm="12" md="9">
+        <v-col
+          :class="$vuetify.rtl == true ? 'mr-n13' : ''"
+          lg="9"
+          cols="10"
+          sm="12"
+          md="9"
+        >
           <div v-if="currentSection == pageSections.addUser">
             <add-user></add-user>
           </div>
@@ -192,8 +163,8 @@
           <div v-if="currentSection == pageSections.defaultComp">
             <defaultShippingCompany></defaultShippingCompany>
           </div>
-           <div v-if="currentSection == pageSections.addRemCompany">
-<adminAddRemoveShippingCompany></adminAddRemoveShippingCompany>
+          <div v-if="currentSection == pageSections.addRemCompany">
+            <adminAddRemoveShippingCompany></adminAddRemoveShippingCompany>
           </div>
         </v-col>
       </v-row>
@@ -234,8 +205,8 @@ export default {
         topSuppYear: 7,
         suppRanking: 8,
         allSupp: 9,
-        defaultComp:10 ,
-        addRemCompany :11
+        defaultComp: 10,
+        addRemCompany: 11,
       },
       currentSection: 0,
     };
@@ -258,8 +229,9 @@ export default {
     TopYearSuppliers: () => import("../components/adminTopYearSuppliers"),
     SuppRankingChart: () => import("../components/suppRankingChart"),
     AllSuppliers: () => import("../components/adminAllSuppliers"),
-    defaultShippingCompany : ()=> import("../components/adminDefaultShippingCompany"),
-    adminAddRemoveShippingCompany: () => import ("../components/adminAddRemoveShippingCompany") 
+    defaultShippingCompany: () => import("../components/adminDefaultShippingCompany"),
+    adminAddRemoveShippingCompany: () =>
+      import("../components/adminAddRemoveShippingCompany"),
   },
 };
 </script>
