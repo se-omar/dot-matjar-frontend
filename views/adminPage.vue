@@ -129,9 +129,10 @@
                   link
                 >
                   <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title>{{
-                    $t("adminPage.chooseOrUpdateDefaultCompany")
-                  }}</v-list-item-title>
+                  <v-list-item-title
+                    v-html="$t('adminPage.chooseOrUpdateDefaultCompany')"
+                  >
+                  </v-list-item-title>
                 </v-list-item>
                 <v-list-item
                   @click="currentSection = pageSections.addRemCompany"

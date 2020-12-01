@@ -33,7 +33,7 @@
                 <v-list-item>
                   <v-list-item-action>
                     <v-btn @click="true" fab small depressed color="primary">
-                      N
+                      <i class="fa fa-shipping-fast"></i>
                     </v-btn>
                   </v-list-item-action>
                   <v-list-item-content>
@@ -58,11 +58,20 @@
               <v-card>
                 <v-row justify="center">
                   <v-col cols="12" lg="6" md="6" sm="6">
-                    <span v-if="defaultCompanyClicked.default"
+                    <span
+                      v-if="
+                        defaultCompanyClicked && defaultCompanyClicked.default
+                      "
                       >{{ $t("adminPage.defaultCompany") }}:</span
                     >
                     <br />
-                    <h3>{{ defaultCompanyClicked.company_name }}</h3>
+                    <h3>
+                      {{
+                        defaultCompanyClicked
+                          ? defaultCompanyClicked.company_name
+                          : ""
+                      }}
+                    </h3>
                   </v-col>
                 </v-row>
                 <v-row justify="center">
@@ -99,7 +108,11 @@
                         </v-toolbar>
                         <v-row justify="center">
                           <v-col lg="5" sm="8" md="5" cols="12">
-                            <v-simple-table dark dense>
+                            <v-simple-table
+                              v-if="defaultCompanyClicked"
+                              dark
+                              dense
+                            >
                               <template v-slot:default>
                                 <thead>
                                   <tr>
@@ -146,7 +159,11 @@
                             </v-simple-table>
                           </v-col>
                           <v-col lg="5" sm="8" md="5" cols="12">
-                            <v-simple-table dark dense>
+                            <v-simple-table
+                              dark
+                              dense
+                              v-if="defaultCompanyClicked"
+                            >
                               <template v-slot:default>
                                 <thead>
                                   <tr>
@@ -160,8 +177,9 @@
                                 </thead>
                                 <tbody>
                                   <tr
-                                    v-for="(row,
-                                    index) in companyCollectionRate"
+                                    v-for="(
+                                      row, index
+                                    ) in companyCollectionRate"
                                     :key="index"
                                   >
                                     <td style="font-size: 17px">
@@ -432,8 +450,10 @@
             <v-col lg="12" cols="12" md="12" sm="12">
               <v-card
                 v-if="
+                  defaultCompanyClicked &&
+                  defaultCompanyClicked.shipping_companies_id &&
                   defaultCompanyClicked.shipping_companies_id !=
-                  defaultCompany.shipping_companies_id
+                    defaultCompany.shipping_companies_id
                 "
               >
                 <v-row justify="center">
@@ -526,7 +546,9 @@ export default {
       return array;
     },
     companyShippingRate() {
-      return this.defaultCompanyClicked.shipping_rates;
+      return this.defaultCompanyClicked
+        ? this.defaultCompanyClicked.shipping_rates
+        : [];
     },
     companyCollectionRate() {
       return this.defaultCompanyClicked.collection_rates;
@@ -610,17 +632,18 @@ export default {
     await this.$store.dispatch("getAllCompanies");
 
     this.defaultCompanyClicked = this.defaultCompany;
-
-    this.country = this.defaultCompanyClicked.shipping_rates.country;
-    this.governorate = this.defaultCompanyClicked.shipping_rates.governorate;
-    this.shippingRate = this.defaultCompanyClicked.shipping_rates.shipping_rate;
-    this.collectionRate = this.defaultCompanyClicked.collection_rates.collection_rate;
-    this.collectionAmount = this.defaultCompanyClicked.collection_rates.collection_rate;
-    this.companyName = this.defaultCompanyClicked.company_name;
-    this.companyNumber = this.defaultCompanyClicked.company_number;
-    this.companyAddress1 = this.defaultCompanyClicked.company_address1;
-    this.companyAddress2 = this.defaultCompanyClicked.company_address2;
-    this.companyAddress3 = this.defaultCompanyClicked.company_address3;
+    if (this.defaultCompanyClicked) {
+      this.country = this.defaultCompanyClicked.shipping_rates.country;
+      this.governorate = this.defaultCompanyClicked.shipping_rates.governorate;
+      this.shippingRate = this.defaultCompanyClicked.shipping_rates.shipping_rate;
+      this.collectionRate = this.defaultCompanyClicked.collection_rates.collection_rate;
+      this.collectionAmount = this.defaultCompanyClicked.collection_rates.collection_rate;
+      this.companyName = this.defaultCompanyClicked.company_name;
+      this.companyNumber = this.defaultCompanyClicked.company_number;
+      this.companyAddress1 = this.defaultCompanyClicked.company_address1;
+      this.companyAddress2 = this.defaultCompanyClicked.company_address2;
+      this.companyAddress3 = this.defaultCompanyClicked.company_address3;
+    }
 
     console.log(this.defaultCompanyClicked);
   },

@@ -143,13 +143,14 @@
     "companyAddress3": "Company Address3",
     "adminDashboard": "admin dashboard",
     "addUser": "Add user",
-    "chooseOrUpdateDefaultCompany" : "Choose/Update Companies",
+    "chooseOrUpdateDefaultCompany" : "Default shipping Company <br/> Update a shipping company",
     "addRemCompany":"Add/Remove Company",
     "addCompany": "Add Company" ,
      "removeCompany" : "Remove Company",
-     "setCompany":"set as  default company ?",
-     "snackbar": "This the default company , Please set another company to default first"
-     
+     "setCompany":"Set as  default company ?",
+     "snackbar": "This the default company , Please set another company to default first",
+     "snackbarShippingTableMessage":"This Region already have a shipping rate",
+     "snackbarCollectionTableMessage":"This collectoin amount already exists"
   },
   "suppliersDashboard": {
     "dashboard": "dashboard",
