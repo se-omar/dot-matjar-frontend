@@ -165,6 +165,9 @@ export default {
     orderMessage() {
       return this.$store.state.Orders.orderMessage;
     },
+    orderProductsQuantities() {
+      return this.$store.state.Orders.orderProductsQuantities;
+    },
   },
 
   methods: {
@@ -184,9 +187,8 @@ export default {
         governorate: this.governorate,
         region: this.region,
         address: this.address,
+        productsQuantities: this.orderProductsQuantities,
       });
-
-      await this.$store.dispatch("cleanCart");
 
       this.snackbar = true;
       this.$store.dispatch("getOrder", { order_id: null });

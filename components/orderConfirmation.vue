@@ -173,7 +173,7 @@
               <v-row>
                 <v-col lg="5">
                   <span class="font-weight-black mr-10" style="font-size: 20px"
-                    >SubTotal:</span
+                    >SubTotall:</span
                   >
                 </v-col>
                 <v-col lg="3">

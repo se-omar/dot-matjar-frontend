@@ -212,14 +212,28 @@
                     <span style="font-size: 20px">{{ tax }}</span>
                   </v-col>
                 </v-row>
-                <v-col lg="6" cols="12" md="9" sm="7">
+
+                <v-row>
+                  <v-col lg="4">
+                    <span class="font-weight-black" style="font-size: 20px"
+                      >shipping fees:</span
+                    >
+                  </v-col>
+                  <v-col lg="4">
+                    <span style="font-size: 20px">{{ shippingFees }}</span>
+                  </v-col>
+                </v-row>
+
+                <v-col lg="8" cols="12" md="9" sm="7">
                   <v-card class="grey lighten-3">
                     <span
                       class="font-weight-black mr-12 ml-1"
                       style="font-size: 20px"
                       >TOTAL:</span
                     >
-                    <span style="font-size: 20px">{{ tax + subTotal }}</span>
+                    <span style="font-size: 20px">{{
+                      tax + shippingFees + subTotal
+                    }}</span>
                   </v-card>
                 </v-col>
               </v-col>
@@ -251,14 +265,29 @@
                     <span style="font-size: 15px">{{ tax }}</span>
                   </v-col>
                 </v-row>
-                <v-col lg="6" cols="12" md="9" sm="7">
+
+                <v-row>
+                  <v-col lg="4">
+                    <span
+                      class="font-weight-black mr-10"
+                      style="font-size: 15px"
+                      >shipping fees:</span
+                    >
+                  </v-col>
+                  <v-col lg="4">
+                    <span style="font-size: 15px">{{ shippingFees }}</span>
+                  </v-col>
+                </v-row>
+                <v-col lg="8" cols="12" md="9" sm="7">
                   <v-card class="grey lighten-3">
                     <span
                       class="font-weight-black mr-12 ml-1"
                       style="font-size: 15px"
                       >TOTAL:</span
                     >
-                    <span style="font-size: 15px">{{ tax + subTotal }}</span>
+                    <span style="font-size: 15px">{{
+                      Math.round(((tax + shippingFees + subTotal) * 10) / 10)
+                    }}</span>
                   </v-card>
                 </v-col>
               </v-col>
@@ -317,6 +346,12 @@ export default {
   },
   async created() {
     // await this.$store.dispatch("getOrder", { order_id: null });
+    await this.$store.dispatch("getDefaultCompany");
+    await this.$store.dispatch(
+      "getShippingRateForCountry",
+      this.billOrderData.country
+    );
+    console.log("order company shipping rate", this.orderCountryShippingRate);
     setTimeout(() => {
       console.log(
         "order and products",
@@ -357,6 +392,21 @@ export default {
       var t = (this.subTotal * 14) / 100;
       return t;
     },
+
+    shippingFees() {
+      var collectionFees = this.subTotal * 0.03;
+      var fees = collectionFees + this.orderCountryShippingRate;
+      return Math.round(fees * 10) / 10;
+    },
+
+    defaultCompany() {
+      return this.$store.state.AdminPage.defaultCompany;
+    },
+
+    orderCountryShippingRate() {
+      return this.$store.state.Orders.orderCountryShippingRate;
+    },
+
     siteColor() {
       if (this.$store.state.Home.siteColor) {
         return this.$store.state.Home.siteColor;

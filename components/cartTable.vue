@@ -141,19 +141,11 @@ export default {
 
     increment(item) {
       console.log(item);
-      item.quantity += 1;
-      this.$store.dispatch("iterateCartProductQuantity", {
-        type: 1,
-        item,
-      });
+      item.quantity++;
     },
     decrement(item) {
       if (item.quantity > 1) {
         item.quantity--;
-        this.$store.dispatch("iterateCartProductQuantity", {
-          type: 2,
-          item,
-        });
       }
     },
     numbers() {
@@ -170,10 +162,17 @@ export default {
       self.items.push(...self.cartItems);
     },
 
-    getSession() {
+    async getSession() {
       this.dialog = false;
-      this.$router.push(`/${this.$i18n.locale}/checkOutLocation`);
+      console.log(this.items);
+      var quantityArray = [];
+      for (var i = 0; i < this.items.length; i++) {
+        quantityArray.push(this.items[i].quantity);
+      }
       this.$store.commit("putTotalPriceInStore", this.totalPrice);
+      this.$store.commit("setOrderProductsQuantity", quantityArray);
+
+      this.$router.push(`/${this.$i18n.locale}/checkOutLocation`);
     },
 
     cleanCart() {

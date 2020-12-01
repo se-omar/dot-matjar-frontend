@@ -9,13 +9,15 @@ export default {
         ordersMade: JSON.parse(localStorage.getItem('ordersMade')) ? JSON.parse(localStorage.getItem('ordersMade')) : [],
         usersMadeOrders: [],
         userOrderAddress: [],
-        paymentToken: localStorage.getItem('paymentToken'),
+        //paymentToken: localStorage.getItem('paymentToken'),
         orders: [],
         orderProducts: [],
-        productsQuantityArray: JSON.parse(localStorage.getItem('quantity')),
+        orderCountryShippingRate: '',
         orderMessage: '',
-        billOrderData:[],
-        billOrderProducts : []
+        orderProductsQuantities: [],
+        productsQuantityArray: JSON.parse(localStorage.getItem('quantity')),
+        billOrderData: [],
+        billOrderProducts: []
     },
 
     mutations: {
@@ -34,7 +36,7 @@ export default {
             var userId = true
             var users = []
             var address = []
-           
+
             var orders = revOrders.reverse();
             for (var i = 0; i < orders.length; i++) {
 
@@ -93,25 +95,33 @@ export default {
             localStorage.setItem('quantity', JSON.stringify(quantity))
             state.productsQuantityArray = JSON.parse(localStorage.getItem('quantity'))
         },
+        setOrderProductsQuantity(state, quantities) {
+            state.orderProductsQuantities = quantities
+        },
         createOrder(state, message) {
             state.orderMessage = message
         },
-        getOrder(state,{order,productsInOrder}){
-           
-            state.billOrderData = order 
+        getOrder(state, { order, productsInOrder }) {
+
+            state.billOrderData = order
             state.billOrderProducts = productsInOrder
+        },
+
+        getShippingRateForCountry(state, shippingRate) {
+            state.orderCountryShippingRate = shippingRate
         }
     },
 
     actions: {
-        async createOrder(context, { governorate, region, address }) {
-            console.log('price',context.rootState.Cart.totalPrice)
+        async createOrder(context, { governorate, region, address, productsQuantities }) {
+            console.log('price', context.rootState.Cart.totalPrice)
             await axios.post(context.rootState.nodeHost + '/api/createOrder', {
                 user_id: context.rootState.Home.currentUser.user_id
                 , governorate: governorate,
                 region: region,
                 address: address,
-                total_price : context.rootState.Cart.totalPrice
+                productsQuantities,
+                total_price: context.rootState.Cart.totalPrice
             })
                 .then(res => {
                     context.commit('createOrder', res.data.message)
@@ -203,12 +213,20 @@ export default {
                     context.commit('getOrderProducts', response.data)
                 })
         },
- getOrder(context,{order_id}){
-    console.log('order_iddddd' , order_id)
-     axios.put(context.rootState.nodeHost  + "/api/getOrder" , {order_id , user_id : context.rootState.Home.currentUser.user_id})
-    .then(order =>{
-        context.commit('getOrder' ,{ order:order.data.order , productsInOrder:order.data.productsInOrder})
-    })
-}
+        getOrder(context, { order_id }) {
+            console.log('order_iddddd', order_id)
+            axios.put(context.rootState.nodeHost + "/api/getOrder", { order_id, user_id: context.rootState.Home.currentUser.user_id })
+                .then(order => {
+                    context.commit('getOrder', { order: order.data.order, productsInOrder: order.data.productsInOrder })
+                })
+        },
+
+        async getShippingRateForCountry(context, country) {
+            console.log(country)
+            await axios.post(context.rootState.nodeHost + "/api/getShippingRateForCountry",
+                { country }).then((response => {
+                    context.commit('getShippingRateForCountry', response.data.shippingRate)
+                }))
+        }
     }
 }
