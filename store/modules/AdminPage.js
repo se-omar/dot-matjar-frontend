@@ -45,8 +45,8 @@ export default {
                 })
         },
 
-        removeCategory(context, parentId) {
-            axios.post(context.rootState.nodeHost + '/api/removeCategory', { parentId })
+        async removeCategory(context, parentId) {
+         await   axios.post(context.rootState.nodeHost + '/api/removeCategory', { parentId })
                 .then(response => {
                     alert(response.data)
                 })
@@ -65,7 +65,7 @@ await axios.put(context.rootState.nodeHost + '/api/getDefaultCompany')
     console.log('company found ' , company.data.data)
 })
         },
-        updateShippingCompany(context , wh ){
+      async  updateShippingCompany(context , wh ){
             // axios.put('updateShippingCompany' , {
             //   country : wh.country,
             //     shipping_rate :wh.shipping_rate ,
@@ -74,7 +74,7 @@ await axios.put(context.rootState.nodeHost + '/api/getDefaultCompany')
             //    collection_rate: wh.collection_rate,
             //    shipping_companies_id : wh.shipping_companies_id
             // })
-            axios.put(context.rootState.nodeHost + '/api/updateShippingCompany' , {
+           await axios.put(context.rootState.nodeHost + '/api/updateShippingCompany' , {
                 company_name : wh.companyName,
                 company_number : wh.companyNumber ,
                  company_address1 : wh.companyAddress1 ,
@@ -94,6 +94,7 @@ alert(res.data.message)
         async updateShippingTable(context , wh){
             axios.put(context.rootState.nodeHost + '/api/updateShippingCompany' , {
                 country : wh.country,
+                region:wh.region,
                  shipping_rate :wh.shipping_rate ,
             governorate: wh.governorate ,
             rate_id : wh.rate_id
@@ -108,8 +109,8 @@ axios.put(context.rootState.nodeHost + '/api/deleteShippingCompany' ,{shipping_c
     alert(res.data.message)
 })
     },
-    addNewCompany(context,wh){
-        axios.post(context.rootState.nodeHost + '/api/addNewShippingCompany' , { 
+    async addNewCompany(context,wh){
+      await   axios.post(context.rootState.nodeHost + '/api/addNewShippingCompany' , { 
           
                shippingTable:wh.shippingTable,
                collectionTable : wh.collectionTable,
@@ -128,6 +129,19 @@ axios.put(context.rootState.nodeHost + '/api/deleteShippingCompany' ,{shipping_c
        .then(res=>{
            alert(res.data.message)
        })
+    },
+    async addNewShippingRatesToCompany(context , {shippingTable,shipping_companies_id}){
+        console.log(shippingTable , shipping_companies_id)
+      await  axios.post(context.rootState.nodeHost +'/api/addOrRemoveShipingRate',{shippingTable,shipping_companies_id})
+        .then(message=>{
+        alert(message.data.message)
+        })
+    },
+    async addNewCollectionRatesToCompany(context,{collectionTable,shipping_companies_id}){
+       await axios.post(context.rootState.nodeHost+'/api/addOrRemoveCollectionRate',{collectionTable,shipping_companies_id})
+        .then(message=>{
+            alert(message.data.message)
+        })
     }
     }
 }

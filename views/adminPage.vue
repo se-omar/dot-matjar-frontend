@@ -26,80 +26,143 @@
               <v-divider></v-divider>
 
               <v-list nav>
-                <v-list-item @click="currentSection = pageSections.addUser" link>
-                  <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title> {{ $t("adminPage.addUser") }}</v-list-item-title>
+                <v-list-item
+                  @click="currentSection = pageSections.addUser"
+                  link
+                >
+                  <v-list-item-icon
+                    ><i class="fa fa-user-plus"></i
+                  ></v-list-item-icon>
+                  <v-list-item-title>
+                    {{ $t("adminPage.addUser") }}</v-list-item-title
+                  >
                 </v-list-item>
 
-                <v-list-item @click="currentSection = pageSections.allUsers" link>
-                  <v-list-item-icon> </v-list-item-icon>
-                  <v-list-item-title> {{ $t("adminPage.allUsers") }}</v-list-item-title>
+                <v-list-item
+                  @click="currentSection = pageSections.allUsers"
+                  link
+                >
+                  <v-list-item-icon
+                    ><i class="fa fa-users"></i>
+                  </v-list-item-icon>
+                  <v-list-item-title>
+                    {{ $t("adminPage.allUsers") }}</v-list-item-title
+                  >
                 </v-list-item>
 
                 <v-list-item @click="currentSection = pageSections.addCat" link>
-                  <v-list-item-icon> </v-list-item-icon>
+                  <v-list-item-icon
+                    ><i class="fa fa-calendar-plus"></i>
+                  </v-list-item-icon>
                   <v-list-item-title>
                     {{ $t("adminPage.addCategory") }}</v-list-item-title
                   >
                 </v-list-item>
 
-                <v-list-item @click="currentSection = pageSections.removeCat" link>
-                  <v-list-item-icon> </v-list-item-icon>
+                <v-list-item
+                  @click="currentSection = pageSections.removeCat"
+                  link
+                >
+                  <v-list-item-icon>
+                    <i class="fa fa-trash-alt"></i
+                  ></v-list-item-icon>
                   <v-list-item-title>
                     {{ $t("adminPage.removeCategory") }}</v-list-item-title
                   >
                 </v-list-item>
 
-                <v-list-item @click="currentSection = pageSections.addRemCountry" link>
-                  <v-list-item-icon> </v-list-item-icon>
+                <v-list-item
+                  @click="currentSection = pageSections.addRemCountry"
+                  link
+                >
+                  <v-list-item-icon
+                    ><i class="fa fa-globe-americas"></i>
+                  </v-list-item-icon>
                   <v-list-item-title>
                     {{ $t("adminPage.addOrRemoveCountry") }}</v-list-item-title
                   >
                 </v-list-item>
 
-                <v-list-item @click="currentSection = pageSections.editCarousel" link>
-                  <v-list-item-icon> </v-list-item-icon>
+                <v-list-item
+                  @click="currentSection = pageSections.editCarousel"
+                  link
+                >
+                  <v-list-item-icon>
+                    <i class="fa fa-edit"></i>
+                  </v-list-item-icon>
                   <v-list-item-title>
                     {{ $t("adminPage.editCarousel") }}</v-list-item-title
                   >
                 </v-list-item>
 
-                <v-list-item @click="currentSection = pageSections.topTenSupp" link>
-                  <v-list-item-icon> </v-list-item-icon>
+                <v-list-item
+                  @click="currentSection = pageSections.topTenSupp"
+                  link
+                >
+                  <v-list-item-icon
+                    ><i class="fa fa-level-up-alt"></i>
+                  </v-list-item-icon>
                   <v-list-item-title>
                     {{ $t("adminPage.top10Suppliers") }}</v-list-item-title
                   >
                 </v-list-item>
 
-                <v-list-item @click="currentSection = pageSections.topSuppYear" link>
-                  <v-list-item-icon> </v-list-item-icon>
+                <v-list-item
+                  @click="currentSection = pageSections.topSuppYear"
+                  link
+                >
+                  <v-list-item-icon>
+                    <i class="fa fa-level-up-alt"></i
+                  ></v-list-item-icon>
                   <v-list-item-title>
-                    {{ $t("adminPage.topYearMonthSuppliers") }}</v-list-item-title
+                    {{
+                      $t("adminPage.topYearMonthSuppliers")
+                    }}</v-list-item-title
                   >
                 </v-list-item>
 
-                <v-list-item @click="currentSection = pageSections.suppRanking" link>
-                  <v-list-item-icon> </v-list-item-icon>
+                <v-list-item
+                  @click="currentSection = pageSections.suppRanking"
+                  link
+                >
+                  <v-list-item-icon>
+                    <i class="fa fa-chart-bar"></i
+                  ></v-list-item-icon>
                   <v-list-item-title>
                     {{ $t("adminPage.suppliersChart") }}</v-list-item-title
                   >
                 </v-list-item>
 
-                <v-list-item @click="currentSection = pageSections.allSupp" link>
-                  <v-list-item-icon> </v-list-item-icon>
+                <v-list-item
+                  @click="currentSection = pageSections.allSupp"
+                  link
+                >
+                  <v-list-item-icon>
+                    <i class="fa fa-user-secret"></i
+                  ></v-list-item-icon>
                   <v-list-item-title>
                     {{ $t("adminPage.allSuppliers") }}</v-list-item-title
                   >
                 </v-list-item>
-                <v-list-item @click="currentSection = pageSections.defaultComp" link>
-                  <v-list-item-icon> </v-list-item-icon>
+                <v-list-item
+                  @click="currentSection = pageSections.defaultComp"
+                  link
+                >
+                  <v-list-item-icon
+                    ><i class="fa fa-building"></i>
+                  </v-list-item-icon>
                   <v-list-item-title
                     v-html="$t('adminPage.chooseOrUpdateDefaultCompany')"
                   >
                   </v-list-item-title>
                 </v-list-item>
-                <v-list-item @click="currentSection = pageSections.addRemCompany" link>
-                  <v-list-item-icon> </v-list-item-icon>
+                <v-list-item
+                  @click="currentSection = pageSections.addRemCompany"
+                  link
+                >
+                  <v-list-item-icon
+                    ><i class="fa fa-plus"> </i><i class="fa fa-minus ml-2"></i>
+                  </v-list-item-icon>
                   <v-list-item-title>{{
                     $t("adminPage.addRemCompany")
                   }}</v-list-item-title>
@@ -230,7 +293,8 @@ export default {
     TopYearSuppliers: () => import("../components/adminTopYearSuppliers"),
     SuppRankingChart: () => import("../components/suppRankingChart"),
     AllSuppliers: () => import("../components/adminAllSuppliers"),
-    defaultShippingCompany: () => import("../components/adminDefaultShippingCompany"),
+    defaultShippingCompany: () =>
+      import("../components/adminDefaultShippingCompany"),
     adminAddRemoveShippingCompany: () =>
       import("../components/adminAddRemoveShippingCompany"),
   },

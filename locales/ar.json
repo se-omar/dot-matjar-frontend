@@ -149,7 +149,11 @@
         "setCompany":"تعيين كشركة افتراضية؟",
         "snackbar":"هذه هي الشركة الاساسيه ، يرجى تعيين شركة أخرى على الافتراضي أولاً",
         "snackbarShippingTableMessage":"هذه المنطقة لديها بالفعل سعر شحن",
-        "snackbarCollectionTableMessage":"مبلغ التحصيل موجود بالفعل"
+        "snackbarCollectionTableMessage":"مبلغ التحصيل موجود بالفعل",
+        "noChoosedDefaultCompany":"لم يتم اختيار شركة افتراضية ، يرجى اختيار شركة",
+        "addCompanyShippingRate":"أضف إلى الجداول",
+        "push":"ضعها في الجدول"
+        
         
 
         

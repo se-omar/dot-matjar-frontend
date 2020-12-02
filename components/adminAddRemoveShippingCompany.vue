@@ -87,15 +87,6 @@
         <v-form v-model="shippingValidation">
           <v-row justify="center">
             <v-col lg="3" sm="4" cols="6" md="3">
-              <!-- <v-text-field
-                :rules="required"
-                filled
-                outlined
-                rounded
-                v-model="country"
-                :label="$t('orderedProducts.country')"
-              >
-              </v-text-field> -->
               <v-select
                 rounded
                 :items="availableCountries"
@@ -107,15 +98,6 @@
               ></v-select>
             </v-col>
             <v-col lg="3" sm="4" cols="6" md="3">
-              <!-- <v-text-field
-                :rules="required"
-                filled
-                outlined
-                rounded
-                v-model="governorate"
-                :label="$t('adminPage.governorate')"
-              >
-              </v-text-field> -->
               <v-select
                 rounded
                 :items="egyptGovernorates"
@@ -161,9 +143,9 @@
               small
               :color="siteColor.button_color"
               @click="pushShippingData"
-              ><span :style="`color:${siteColor.button_text_color}`"
-                >Push</span
-              ></v-btn
+              ><span :style="`color:${siteColor.button_text_color}`">{{
+                $t("adminPage.push")
+              }}</span></v-btn
             >
           </v-col>
           <v-col lg="6" cols="12" md="12" sm="12">
@@ -236,9 +218,9 @@
               small
               :color="siteColor.button_color"
               @click="pushCollectionData"
-              ><span :style="`color:${siteColor.button_text_color}`"
-                >Push</span
-              ></v-btn
+              ><span :style="`color:${siteColor.button_text_color}`">{{
+                $t("adminPage.push")
+              }}</span></v-btn
             >
           </v-col>
           <v-col lg="6" cols="12">
@@ -517,7 +499,7 @@ export default {
     },
   },
   async created() {
-    this.$store.dispatch("getWorldCountries");
+    await this.$store.dispatch("getWorldCountries");
     await this.$store.dispatch("getDefaultCompany");
     await this.$store.dispatch("getAllCompanies");
   },
