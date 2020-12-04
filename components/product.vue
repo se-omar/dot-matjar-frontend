@@ -14,9 +14,11 @@
 
       <v-row class="mt-n5">
         <v-col cols="12">
-          <v-card-title style="overflow: hidden" class="arabic">{{
-            add3Dots(filteredProduct.product_name, 45)
-          }}</v-card-title>
+          <v-card max-height="50" style="overflow: hidden">
+            <v-card-title style="overflow: hidden" class="smallerText">{{
+              add3Dots(filteredProduct.product_name, 45)
+            }}</v-card-title>
+          </v-card>
           <v-card-text>
             <v-row :class="overflowText">
               <v-col lg="12" md="12" sm="12" cols="12">
@@ -24,15 +26,15 @@
                   filteredProduct.unit_price
                 }}</span>
                 <span
-                  class="ml-1"
+                  class="ml-1 smallerText"
                   :style="`color: black; font-weight: bold; `"
                   >{{ currentCurrency }}</span
                 >
               </v-col>
 
-              <div>
+              <!-- <div>
                 <h2>{{ filteredProduct.category_id }}</h2>
-              </div>
+              </div> -->
 
               <v-col class="mt-n2" lg="12" md="12" sm="12" cols="12">
                 <v-rating

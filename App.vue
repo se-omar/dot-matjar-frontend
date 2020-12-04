@@ -53,12 +53,15 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
 
+@import url("https://fonts.googleapis.com/css2?family=Vesper+Libre:wght@500&display=swap");
+
 .padding-0 {
   padding-right: 0;
   padding-left: 0;
 }
 * {
-  font-family: "Markazi Text", serif;
+  /* font-family: "Markazi Text", serif; */
+  font-family: "Vesper Libre", serif;
 }
 .arabic {
   font-size: 50px;
@@ -70,6 +73,6 @@ p {
   font-size: 25px;
 }
 .smallerText {
-  font-size: 15px;
+  font-size: 12px;
 }
 </style>

@@ -153,7 +153,11 @@
      "snackbarCollectionTableMessage":"This collectoin amount already exists",
      "noChoosedDefaultCompany":"No default company choosed , please choose a company",
 "addCompanyShippingRate":"Add to tables..",
-"push":"Push to Table"
+"push":"Push to Table",
+"addShippingRate":"From here, You can add shipping rates to",
+"addCollectionRate":"From here, You can add collection rates to"
+
+
   },
   "suppliersDashboard": {
     "dashboard": "dashboard",

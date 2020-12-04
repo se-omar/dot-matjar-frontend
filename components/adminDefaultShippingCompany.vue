@@ -160,6 +160,17 @@
                                         ></i
                                       ></v-btn>
                                     </td>
+                                    <td>
+                                      <v-btn icon
+                                        ><i
+                                          class="fa fa-trash-alt fa-lg"
+                                          style="color: red"
+                                          @click="
+                                            putDataInShippingRateRemoveRow(row)
+                                          "
+                                        ></i
+                                      ></v-btn>
+                                    </td>
                                   </tr>
                                 </tbody>
                               </template>
@@ -207,6 +218,19 @@
                                         ></i
                                       ></v-btn>
                                     </td>
+                                    <td>
+                                      <v-btn icon
+                                        ><i
+                                          class="fa fa-trash-alt fa-lg"
+                                          style="color: red"
+                                          @click="
+                                            putDataInCollectionRateRemoveRow(
+                                              row
+                                            )
+                                          "
+                                        ></i
+                                      ></v-btn>
+                                    </td>
                                   </tr>
                                 </tbody>
                               </template>
@@ -228,6 +252,19 @@
                           >
                           <v-dialog v-model="addShippingRateDialog">
                             <v-card style="overflow: hidden">
+                              <v-toolbar
+                                dense
+                                :color="siteColor.toolbar_text_color"
+                              >
+                                <v-row justify="center">
+                                  <h2
+                                    :style="`color:${siteColor.toolbar_color}`"
+                                  >
+                                    {{ $t("adminPage.addShippingRate") }}
+                                    {{ defaultCompanyClicked.company_name }}
+                                  </h2>
+                                </v-row>
+                              </v-toolbar>
                               <v-form v-model="shippingValidation">
                                 <v-row justify="center">
                                   <v-col lg="4" sm="4" cols="6" md="4">
@@ -290,6 +327,7 @@
                                   ></v-btn
                                 >
                               </v-row>
+
                               <v-row justify="center">
                                 <v-col lg="6" cols="12" md="8" sm="9">
                                   <v-simple-table dark>
@@ -341,13 +379,30 @@
                                   small
                                   @click="addNewShippingRatesToCompany"
                                   :color="siteColor.button_color"
+                                  :disabled="shippingDataTable.length == 0"
                                   ><span
                                     :style="`color:${siteColor.button_text_color}`"
                                     >{{ $t("adminPage.update") }}</span
                                   ></v-btn
                                 >
                               </v-row>
-                              <v-divider></v-divider>
+                              <v-divider dark class="mx-16"></v-divider>
+
+                              <v-row>
+                                <v-toolbar
+                                  dense
+                                  :color="siteColor.toolbar_text_color"
+                                >
+                                  <v-row justify="center">
+                                    <h2
+                                      :style="`color:${siteColor.toolbar_color}`"
+                                    >
+                                      {{ $t("adminPage.addCollectionRate") }}
+                                      {{ defaultCompanyClicked.company_name }}
+                                    </h2>
+                                  </v-row>
+                                </v-toolbar>
+                              </v-row>
                               <v-form v-model="collectionValidation">
                                 <v-row justify="center">
                                   <v-col lg="3" sm="4" cols="6" md="3">
@@ -430,7 +485,7 @@
                                   rounded
                                   :color="siteColor.button_color"
                                   @click="addNewCollectionRatesToCompany"
-                                  :disabled="!collectionValidation"
+                                  :disabled="collectionDataTable.length == 0"
                                   ><span
                                     :style="`color:${siteColor.button_text_color}`"
                                     >{{ $t("adminPage.update") }}</span
@@ -772,6 +827,40 @@
       <v-snackbar timeout="5000" v-model="snackbarCollectionTable">
         <h2>{{ $t("adminPage.snackbarCollectionTableMessage") }}</h2>
       </v-snackbar>
+      <v-dialog max-width="290" v-model="removeShippingRateDialog">
+        <v-card style="overflow: hidden">
+          <v-row justify="center">
+            <span style="font-size: 25px">{{
+              $t("completedata.dialogQuestion")
+            }}</span>
+          </v-row>
+          <v-row justify="end">
+            <v-btn @click="removeShippingRate" text
+              ><span style="font-size: 25px">{{
+                $t("productDetails.yes")
+              }}</span></v-btn
+            >
+            <v-btn @click="removeShippingRateDialog = false" text
+              ><span>{{ $t("productDetails.no") }}</span></v-btn
+            >
+          </v-row>
+        </v-card>
+      </v-dialog>
+      <v-dialog max-width="290" v-model="removeCollectionRateDialog">
+        <v-card style="overflow: hidden">
+          <v-row justify="center">
+            <span>{{ $t("completedata.dialogQuestion") }}</span>
+          </v-row>
+          <v-row justify="end">
+            <v-btn @click="removeCollectionRate" text
+              ><span>{{ $t("productDetails.yes") }}</span></v-btn
+            >
+            <v-btn @click="removeCollectionRateDialog = false" text
+              ><span>{{ $t("productDetails.no") }}</span></v-btn
+            >
+          </v-row>
+        </v-card>
+      </v-dialog>
     </v-main>
   </v-app>
 </template>
@@ -816,6 +905,10 @@ export default {
       region: "",
       snackbarCollectionTable: false,
       snackbarShippingTable: false,
+      shippingRowChoosedToRemove: {},
+      collectionRowChoosedToRemove: {},
+      removeShippingRateDialog: false,
+      removeCollectionRateDialog: false,
     };
   },
   computed: {
@@ -1058,6 +1151,44 @@ export default {
         this.defaultCompanyClicked = this.defaultCompany;
         this.collectionDialog = false;
         this.dialog = false;
+      }, 3000);
+    },
+    putDataInShippingRateRemoveRow(row) {
+      this.shippingRowChoosedToRemove = row;
+      this.removeShippingRateDialog = true;
+    },
+    putDataInCollectionRateRemoveRow(row) {
+      this.collectionRowChoosedToRemove = row;
+      this.removeCollectionRateDialog = true;
+    },
+    removeShippingRate() {
+      this.isLoading = true;
+      console.log(this.shippingRowChoosedToRemove);
+      this.$store.dispatch("removeShippingRow", {
+        rate_id: this.shippingRowChoosedToRemove.rate_id,
+      });
+      setTimeout(async () => {
+        await this.$store.dispatch("getDefaultCompany");
+        await this.$store.dispatch("getAllCompanies");
+        this.removeShippingRateDialog = false;
+        this.defaultCompanyClicked = this.defaultCompany;
+        this.dialog = false;
+        this.isLoading = false;
+      }, 3000);
+    },
+    removeCollectionRate() {
+      this.isLoading = true;
+      console.log(this.collectionRowChoosedToRemove);
+      this.$store.dispatch("removeCollectionRow", {
+        collection_id: this.collectionRowChoosedToRemove.collection_id,
+      });
+      setTimeout(async () => {
+        await this.$store.dispatch("getDefaultCompany");
+        await this.$store.dispatch("getAllCompanies");
+        this.removeCollectionRateDialog = false;
+        this.defaultCompanyClicked = this.defaultCompany;
+        this.dialog = false;
+        this.isLoading = false;
       }, 3000);
     },
   },

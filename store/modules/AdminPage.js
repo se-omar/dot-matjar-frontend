@@ -132,13 +132,28 @@ axios.put(context.rootState.nodeHost + '/api/deleteShippingCompany' ,{shipping_c
     },
     async addNewShippingRatesToCompany(context , {shippingTable,shipping_companies_id}){
         console.log(shippingTable , shipping_companies_id)
-      await  axios.post(context.rootState.nodeHost +'/api/addOrRemoveShipingRate',{shippingTable,shipping_companies_id})
+      await  axios.post(context.rootState.nodeHost +'/api/addOrRemoveShippingRate',{shippingTable,shipping_companies_id})
         .then(message=>{
         alert(message.data.message)
         })
     },
     async addNewCollectionRatesToCompany(context,{collectionTable,shipping_companies_id}){
        await axios.post(context.rootState.nodeHost+'/api/addOrRemoveCollectionRate',{collectionTable,shipping_companies_id})
+        .then(message=>{
+            alert(message.data.message)
+        })
+    },
+    removeShippingRow(context,rate_id){
+        console.log(rate_id)
+        axios.post(context.rootState.nodeHost +'/api/addOrRemoveShippingRate',rate_id)
+        .then(message=>{
+            alert(message.data.message)
+        })
+
+    },
+    removeCollectionRow(context,collection_id){
+        console.log(collection_id)
+        axios.post(context.rootState.nodeHost+'/api/addOrRemoveCollectionRate',collection_id)
         .then(message=>{
             alert(message.data.message)
         })

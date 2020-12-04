@@ -29,9 +29,9 @@
           class="fa fa-filter"
           :style="`color:${siteColor.button_text_color}`"
         ></i>
-        <span :style="`color:${siteColor.button_text_color}`"
-          >{{$t("toolbar.filter")}}</span
-        ></v-btn
+        <span :style="`color:${siteColor.button_text_color}`">{{
+          $t("toolbar.filter")
+        }}</span></v-btn
       >
       <v-dialog style="overflow: hidden" v-model="filterDialog" max-width="280">
         <v-card style="overflow: hidden">
@@ -151,6 +151,7 @@
               @update:active="filterByCategory"
               color="warning"
               :items="categoriesTreeArray"
+              open-on-click
             >
             </v-treeview>
             <template slot-scope="{ item }">

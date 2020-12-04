@@ -152,7 +152,9 @@
         "snackbarCollectionTableMessage":"مبلغ التحصيل موجود بالفعل",
         "noChoosedDefaultCompany":"لم يتم اختيار شركة افتراضية ، يرجى اختيار شركة",
         "addCompanyShippingRate":"أضف إلى الجداول",
-        "push":"ضعها في الجدول"
+        "push":"ضعها في الجدول",
+        "addShippingRate":"من هنا ، يمكنك إضافة أسعار الشحن إلى",
+        "addCollectionRate":"من هنا ، يمكنك إضافة أسعار التحصيل إلى"
         
         
 
