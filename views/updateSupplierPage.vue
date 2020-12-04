@@ -165,9 +165,7 @@
                   >
                   <v-file-input
                     accept="image/*"
-                    :disabled="
-                      !carouselImage1 && !supplierPageInfo.carousel_image_1
-                    "
+                    :disabled="!carouselImage1 && !supplierPageInfo.carousel_image_1"
                     @change="setCarouselImage2"
                   ></v-file-input>
                   <v-img
@@ -186,9 +184,7 @@
                     justify="center"
                   >
                     <v-btn
-                      v-if="
-                        supplierPageInfo.carousel_image_2 || carouselViewImg2
-                      "
+                      v-if="supplierPageInfo.carousel_image_2 || carouselViewImg2"
                       @click="removeCarouselImage(2)"
                       small
                       class="red white--text"
@@ -206,9 +202,7 @@
                   >
                   <v-file-input
                     accept="image/*"
-                    :disabled="
-                      !carouselImage2 && !supplierPageInfo.carousel_image_2
-                    "
+                    :disabled="!carouselImage2 && !supplierPageInfo.carousel_image_2"
                     @change="setCarouselImage3"
                   ></v-file-input>
                   <v-img
@@ -227,9 +221,7 @@
                     justify="center"
                   >
                     <v-btn
-                      v-if="
-                        supplierPageInfo.carousel_image_3 || carouselViewImg3
-                      "
+                      v-if="supplierPageInfo.carousel_image_3 || carouselViewImg3"
                       @click="removeCarouselImage(3)"
                       small
                       class="red white--text"
@@ -247,9 +239,7 @@
                   >
                   <v-file-input
                     accept="image/*"
-                    :disabled="
-                      !carouselImage3 && !supplierPageInfo.carousel_image_3
-                    "
+                    :disabled="!carouselImage3 && !supplierPageInfo.carousel_image_3"
                     @change="setCarouselImage4"
                   ></v-file-input>
                   <v-img
@@ -268,9 +258,7 @@
                     justify="center"
                   >
                     <v-btn
-                      v-if="
-                        supplierPageInfo.carousel_image_4 || carouselViewImg4
-                      "
+                      v-if="supplierPageInfo.carousel_image_4 || carouselViewImg4"
                       @click="removeCarouselImage(4)"
                       small
                       class="red white--text"
@@ -345,10 +333,7 @@
                   <label style="font-size: 25px">
                     {{ $t("updateSupplierPage.rightBannerImage") }}</label
                   >
-                  <v-file-input
-                    accept="image/*"
-                    @change="setRightImage"
-                  ></v-file-input>
+                  <v-file-input accept="image/*" @change="setRightImage"></v-file-input>
                   <v-img
                     :src="
                       rightBannerViewImg
@@ -360,17 +345,12 @@
                   ></v-img>
 
                   <v-row
-                    v-if="
-                      supplierPageInfo.right_banner_image || rightBannerViewImg
-                    "
+                    v-if="supplierPageInfo.right_banner_image || rightBannerViewImg"
                     class="mt-2"
                     justify="center"
                   >
                     <v-btn
-                      v-if="
-                        supplierPageInfo.right_banner_image ||
-                        rightBannerViewImg
-                      "
+                      v-if="supplierPageInfo.right_banner_image || rightBannerViewImg"
                       @click="removeCarouselImage(6)"
                       small
                       class="red white--text"
@@ -619,20 +599,16 @@
                         </v-row>
                       </v-card-text>
                       <v-row justify="center">
-                        <v-card-text
-                          class="pt-1 mx-1"
-                          :style="`color:${footerTextColor}`"
-                          >Phasellus feugiat arcu sapien, et iaculis ipsum
-                          elementum sit amet. Mauris cursus commodo interdum.
-                          Praesent ut risus eget metus luctus accumsan id
-                          ultrices nunc. Sed at orci sed massa consectetur
-                          dignissim a sit amet dui. Duis commodo vitae velit et
-                          faucibus. Morbi vehicula lacinia malesuada. Nulla
-                          placerat augue vel ipsum ultrices, cursus iaculis dui
-                          sollicitudin. Vestibulum eu ipsum vel diam elementum
-                          tempor vel ut orci. Orci varius natoque penatibus et
-                          magnis dis parturient montes, nascetur ridiculus
-                          mus.</v-card-text
+                        <v-card-text class="pt-1 mx-1" :style="`color:${footerTextColor}`"
+                          >Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit
+                          amet. Mauris cursus commodo interdum. Praesent ut risus eget
+                          metus luctus accumsan id ultrices nunc. Sed at orci sed massa
+                          consectetur dignissim a sit amet dui. Duis commodo vitae velit
+                          et faucibus. Morbi vehicula lacinia malesuada. Nulla placerat
+                          augue vel ipsum ultrices, cursus iaculis dui sollicitudin.
+                          Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci
+                          varius natoque penatibus et magnis dis parturient montes,
+                          nascetur ridiculus mus.</v-card-text
                         >
                       </v-row>
                     </v-card>
@@ -670,20 +646,16 @@
                         </v-row>
                       </v-card-text>
                       <v-row justify="center">
-                        <v-card-text
-                          class="pt-1 mx-1"
-                          :style="`color:${footerTextColor}`"
-                          >Phasellus feugiat arcu sapien, et iaculis ipsum
-                          elementum sit amet. Mauris cursus commodo interdum.
-                          Praesent ut risus eget metus luctus accumsan id
-                          ultrices nunc. Sed at orci sed massa consectetur
-                          dignissim a sit amet dui. Duis commodo vitae velit et
-                          faucibus. Morbi vehicula lacinia malesuada. Nulla
-                          placerat augue vel ipsum ultrices, cursus iaculis dui
-                          sollicitudin. Vestibulum eu ipsum vel diam elementum
-                          tempor vel ut orci. Orci varius natoque penatibus et
-                          magnis dis parturient montes, nascetur ridiculus
-                          mus.</v-card-text
+                        <v-card-text class="pt-1 mx-1" :style="`color:${footerTextColor}`"
+                          >Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit
+                          amet. Mauris cursus commodo interdum. Praesent ut risus eget
+                          metus luctus accumsan id ultrices nunc. Sed at orci sed massa
+                          consectetur dignissim a sit amet dui. Duis commodo vitae velit
+                          et faucibus. Morbi vehicula lacinia malesuada. Nulla placerat
+                          augue vel ipsum ultrices, cursus iaculis dui sollicitudin.
+                          Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci
+                          varius natoque penatibus et magnis dis parturient montes,
+                          nascetur ridiculus mus.</v-card-text
                         >
                       </v-row>
                     </v-card>
@@ -737,11 +709,7 @@
                           </v-list-item-action>
                           <v-list-item-content>
                             <v-list-item-title :key="item">
-                              <v-btn
-                                @click="getCategoryItems(item)"
-                                text
-                                width="100%"
-                              >
+                              <v-btn @click="getCategoryItems(item)" text width="100%">
                                 {{ item }}</v-btn
                               >
                             </v-list-item-title>
@@ -773,10 +741,7 @@
                             </v-btn>
                           </v-list-item-action>
                           <v-list-item-content>
-                            <v-list-item-title
-                              style="text-align: center"
-                              :key="item.id"
-                            >
+                            <v-list-item-title style="text-align: center" :key="item.id">
                               {{ item.name }}
                             </v-list-item-title>
                           </v-list-item-content>
@@ -821,19 +786,13 @@
                             </v-btn>
                           </v-list-item-action>
                           <v-list-item-content>
-                            <v-list-item-title
-                              style="text-align: center"
-                              :key="item"
-                            >
+                            <v-list-item-title style="text-align: center" :key="item">
                               {{ item }}
                             </v-list-item-title>
                           </v-list-item-content>
                           <v-list-item-action>
                             <v-btn @click="RemoveItem(item)" large icon>
-                              <i
-                                class="fa fa-trash-alt fa-2x"
-                                style="color: red"
-                              ></i
+                              <i class="fa fa-trash-alt fa-2x" style="color: red"></i
                             ></v-btn>
                           </v-list-item-action>
                         </v-list-item>
@@ -848,11 +807,7 @@
                 </v-col>
               </v-row>
               <v-row class="mt-8 mb-8" justify="center">
-                <v-btn
-                  rounded
-                  large
-                  :color="buttonsColor"
-                  @click="addButtonEvent"
+                <v-btn rounded large :color="buttonsColor" @click="addButtonEvent"
                   ><span :style="`color:${buttonsTextColor}`">Add</span></v-btn
                 >
                 <v-dialog v-model="dialog" persistent max-width="290">
@@ -1031,18 +986,9 @@ export default {
       formdata.set("google", this.google);
       formdata.set("footer", this.footer);
       formdata.set("supplier_id", this.supplier.user_id);
-      formdata.set(
-        "showCarousel",
-        this.convertBoolToInt(this.carouselCheckbox)
-      );
-      formdata.set(
-        "showLeftBanner",
-        this.convertBoolToInt(this.leftBannerCheckbox)
-      );
-      formdata.set(
-        "showRightBanner",
-        this.convertBoolToInt(this.rightBannerCheckbox)
-      );
+      formdata.set("showCarousel", this.convertBoolToInt(this.carouselCheckbox));
+      formdata.set("showLeftBanner", this.convertBoolToInt(this.leftBannerCheckbox));
+      formdata.set("showRightBanner", this.convertBoolToInt(this.rightBannerCheckbox));
       formdata.set("carousel_height", this.carouselHeight);
       formdata.set("carousel_width", this.carouselWidth);
 
@@ -1335,10 +1281,10 @@ export default {
     // await this.$store.dispatch("getSupplierItems", {
     //   user_id: this.currentUser.user_id,
     // });
-    await this.$store.dispatch(
-      "getSupplierCategoriesAndItems",
-      this.currentUser.user_id
-    );
+    // await this.$store.dispatch(
+    //   "getSupplierCategoriesAndItems",
+    //   this.currentUser.user_id
+    // );
 
     await setTimeout(() => {
       this.toolBarColor = this.siteColor.toolbar_color;
@@ -1351,11 +1297,9 @@ export default {
 
     if (this.supplierPageInfo.show_carousel === 1) this.carouselCheckbox = true;
 
-    if (this.supplierPageInfo.show_left_banner === 1)
-      this.leftBannerCheckbox = true;
+    if (this.supplierPageInfo.show_left_banner === 1) this.leftBannerCheckbox = true;
 
-    if (this.supplierPageInfo.show_right_banner === 1)
-      this.rightBannerCheckbox = true;
+    if (this.supplierPageInfo.show_right_banner === 1) this.rightBannerCheckbox = true;
 
     if (this.currentUser) {
       if (this.$route.params.supplier_id != this.currentUser.user_id) {
