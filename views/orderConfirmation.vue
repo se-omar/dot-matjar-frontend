@@ -138,7 +138,7 @@
                       :key="index"
                     >
                       <td class="text-sm-body-1">
-                        {{ product.product.product_name }}
+                        {{ product ? product.product.product_name : "" }}
                       </td>
                       <td class="text-sm-body-1">{{ product.quantity }}</td>
 

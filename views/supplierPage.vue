@@ -88,10 +88,15 @@
                 @update:active="filterByCategory"
                 color="warning"
                 :items="supplierCategoriesTreeArray"
+                style="cursor: pointer"
               >
               </v-treeview>
               <template slot-scope="{ item }">
-                <v-btn @click="filterByCategory(item)">{{ item.name }}</v-btn>
+                <v-btn
+                  style="cursor: pointer"
+                  @click="filterByCategory(item)"
+                  >{{ item.name }}</v-btn
+                >
               </template>
             </v-col>
           </v-row>
@@ -155,10 +160,15 @@
                 @update:active="filterByCategory"
                 color="warning"
                 :items="supplierCategoriesTreeArray"
+                style="cursor: pointer"
               >
               </v-treeview>
               <template slot-scope="{ item }">
-                <v-btn @click="filterByCategory(item)">{{ item.name }}</v-btn>
+                <v-btn
+                  style="cursor: pointer"
+                  @click="filterByCategory(item)"
+                  >{{ item.name }}</v-btn
+                >
               </template>
             </v-col>
           </v-row>

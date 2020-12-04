@@ -6,6 +6,7 @@
       class="grey lighten-5"
       :elevation="7"
       :min-width="minWidth"
+      style="overflow: hidden"
     >
       <v-img
         :height="$vuetify.breakpoint.smAndDown ? '170' : '250'"
@@ -22,13 +23,34 @@
           <v-card-text>
             <v-row :class="overflowText">
               <v-col lg="12" md="12" sm="12" cols="12">
-                <span :style="`color: black;font-size:23px `">{{
+                <!-- <span :style="`color: black;font-size:23px `">{{
                   filteredProduct.unit_price
                 }}</span>
                 <span
                   class="ml-1 smallerText"
                   :style="`color: black; font-weight: bold; `"
                   >{{ currentCurrency }}</span
+                > -->
+                <span
+                  v-if="!filteredProduct.discount_amount"
+                  class="text-lg-h5 font-weight-bold text-sm-center"
+                  >{{ filteredProduct.unit_price }}
+                  {{ filteredProduct.currency }}</span
+                >
+                <span
+                  v-if="filteredProduct.discount_amount"
+                  class="text-lg-h6 text-sm-center text-body-1 text-decoration-line-through"
+                  >{{ filteredProduct.unit_price }}
+                  {{ filteredProduct.currency }}
+                </span>
+                <br />
+                <span
+                  v-if="filteredProduct.discount_amount"
+                  class="text-lg-h5 font-weight-bold text-sm-center"
+                  >{{
+                    filteredProduct.unit_price - filteredProduct.discount_amount
+                  }}
+                  {{ filteredProduct.currency }}</span
                 >
               </v-col>
 

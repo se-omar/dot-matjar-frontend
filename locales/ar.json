@@ -484,7 +484,16 @@
         "by": "من",
         "removeProductConfirm": "هل انت متأكد من ازالة هذا المنتج",
         "yes": "نعم",
-        "no": "لا"
+        "no": "لا",
+        "discountInfo":"معلومات الخصم",
+        "productHasNoDiscount":"هذا المنتج ليس لديه خصم",
+        "discountAmount":"مقدار الخصم",
+    "originalPrice":"السعر الأصلي",
+    "totalPrice":"السعر الكلي",
+    "addDiscount":"أضف الخصم",
+    "removeDiscount": " ازاله الخصم"
+
+        
     },
     "requestsPage": {
         "issuedRequests": "الطلبات المرسلة",

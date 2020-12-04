@@ -26,12 +26,14 @@
     >
       <v-btn @click="filterDialog = true" :color="siteColor.button_color" small>
         <i
-          class="fa fa-filter"
+          class="fa fa-filter smallerText"
           :style="`color:${siteColor.button_text_color}`"
         ></i>
-        <span :style="`color:${siteColor.button_text_color}`">{{
-          $t("toolbar.filter")
-        }}</span></v-btn
+        <span
+          class="smallerText"
+          :style="`color:${siteColor.button_text_color}`"
+          >{{ $t("toolbar.filter") }}</span
+        ></v-btn
       >
       <v-dialog style="overflow: hidden" v-model="filterDialog" max-width="280">
         <v-card style="overflow: hidden">
@@ -50,10 +52,13 @@
               @update:active="filterByCategory"
               color="warning"
               :items="categoriesTreeArray"
+              style="cursor: pointer"
             >
             </v-treeview>
             <template slot-scope="{ item }">
-              <a @click="filterByCategory(item)">{{ item.name }}</a>
+              <a style="cursor: pointer" @click="filterByCategory(item)">{{
+                item.name
+              }}</a>
             </template>
           </v-row>
         </v-card>
@@ -151,11 +156,13 @@
               @update:active="filterByCategory"
               color="warning"
               :items="categoriesTreeArray"
-              open-on-click
+              style="cursor: pointer"
             >
             </v-treeview>
             <template slot-scope="{ item }">
-              <v-btn @click="filterByCategory(item)">{{ item.name }}</v-btn>
+              <v-btn style="cursor: pointer" @click="filterByCategory(item)">{{
+                item.name
+              }}</v-btn>
             </template>
           </v-row>
         </v-card>
@@ -280,6 +287,8 @@ export default {
 
   async created() {
     this.isLoading = true;
+    await this.$store.dispatch("getSiteColor");
+
     await this.$store.dispatch("getCategoriesTree");
     await this.$store.dispatch("getHomePageData");
     this.$store.commit("emptyProductsArray");

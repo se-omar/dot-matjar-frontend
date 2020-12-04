@@ -155,11 +155,25 @@
 
       <v-col lg="3" md="6" sm="12">
         <v-row justify="center" class="ml-n10">
-          <v-col class="text-center" cols="10">
+          <v-col class="text-center" cols="12">
             <span
-              v-if="currentProduct"
+              v-if="currentProduct && !currentProduct.discount_amount"
               class="text-lg-h3 text-sm-center text-h4"
-              >{{ currentProduct.unit_price }} EGP</span
+              >{{ currentProduct.unit_price }}
+              {{ currentProduct.currency }}</span
+            >
+            <span
+              v-if="currentProduct && currentProduct.discount_amount"
+              class="text-lg-h5 text-sm-center text-h5 text-decoration-line-through"
+              >{{ currentProduct.unit_price }}
+              {{ currentProduct.currency }}
+            </span>
+            <br />
+            <span
+              v-if="currentProduct && currentProduct.discount_amount"
+              class="text-lg-h3 text-sm-center text-h3"
+              >{{ currentProduct.unit_price - currentProduct.discount_amount }}
+              {{ currentProduct.currency }}</span
             >
           </v-col>
           <v-col cols="9">
@@ -214,13 +228,25 @@
               "
               @click="addProductToCart"
               block
-              x-large
+              large
               class="white--text"
               :color="siteColor.button_color"
               ><span :style="`color:${siteColor.button_text_color}`">
                 {{ $t("productDetails.addToCart") }}</span
               ></v-btn
             >
+            <v-btn
+              @click="discountDialogActivation"
+              v-if="currentProduct.user_id == currentUser.user_id"
+              :color="siteColor.button_color"
+              block
+              large
+              class="mt-4"
+            >
+              <span :style="`color:${siteColor.button_text_color}`">{{
+                $t("productDetails.discountInfo")
+              }}</span>
+            </v-btn>
           </v-col>
 
           <v-col lg="9" md="9" cols="9">
@@ -434,6 +460,84 @@
         </v-row>
       </v-card>
     </v-dialog>
+    <v-dialog max-width="60%" v-model="discountDialog">
+      <v-card style="overflow: hidden">
+        <v-row justify="center" v-if="!currentProduct.discount_amount">
+          <v-card-title
+            ><span>
+              {{ $t("productDetails.productHasNoDiscount") }}
+            </span></v-card-title
+          >
+        </v-row>
+        <v-form v-model="discountValidation">
+          <v-row justify="center">
+            <v-col lg="6" md="6" cols="12" sm="10">
+              <v-text-field
+                outlined
+                :label="$t('productDetails.originalPrice')"
+                rounded
+                v-model="originalPrice"
+                filled
+                disabled
+                :rules="(required, numbersOnly)"
+              >
+              </v-text-field>
+            </v-col>
+            <v-col lg="6" md="6" cols="12" sm="10">
+              <v-text-field
+                outlined
+                :label="
+                  $t('productDetails.discountAmount') + ' ' + discountPresentage
+                "
+                rounded
+                filled
+                v-model="discountAmount"
+                :rules="(required, numbersOnly)"
+              >
+              </v-text-field>
+            </v-col>
+          </v-row>
+        </v-form>
+
+        <v-row justify="center"> {{ discountPresentage }} % </v-row>
+        <v-row justify="center">
+          <span style="font-weight: bold"
+            >{{ $t("productDetails.totalPrice") }}
+            <span style="color: blue">{{ totalPrice }}</span></span
+          >
+        </v-row>
+        <v-row class="mt-4 mb-4" justify="center">
+          <v-btn
+            @click="updateProductDiscount"
+            rounded
+            :color="siteColor.button_color"
+            :disabled="!discountValidation"
+          >
+            <span
+              class="smallerText"
+              :style="`color:${siteColor.button_text_color}`"
+            >
+              {{ $t("productDetails.AddDiscount") }}</span
+            >
+          </v-btn>
+        </v-row>
+        <v-row justify="center">
+          <v-btn
+            @click="removeProductDiscount"
+            rounded
+            color="red"
+            v-if="currentProduct.discount_amount"
+          >
+            <span class="smallerText" style="color: white">
+              {{ $t("productDetails.removeDiscount") }}</span
+            >
+          </v-btn>
+        </v-row>
+      </v-card>
+    </v-dialog>
+    <v-snackbar timeout="5000" v-model="snackbar">
+      {{ snackbarMessage }}
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -488,6 +592,13 @@ export default {
       starNum: 5,
       groupedRatings: [],
       chosenColor: "",
+      discountDialog: false,
+      originalPrice: "",
+      discountAmount: "",
+      snackbar: false,
+      discountValidation: false,
+      required: [(v) => !!v || "Required!!"],
+      numbersOnly: [(v) => /\d+/.test(v) || "Numbers only.."],
     };
   },
 
@@ -568,6 +679,23 @@ export default {
     productColors() {
       return this.$store.state.ProductDetails.productColors;
     },
+    totalPrice() {
+      return this.originalPrice - this.discountAmount > 0
+        ? this.originalPrice - this.discountAmount
+        : 0;
+    },
+    discountPresentage() {
+      var perc =
+        this.discountAmount > 0
+          ? (this.discountAmount * 100) / this.originalPrice
+          : 0;
+      return perc < 100 ? perc.toFixed(1) : 100;
+    },
+    snackbarMessage() {
+      return this.$store.state.ProductDetails.snackbarMessage
+        ? this.$store.state.ProductDetails.snackbarMessage
+        : " ";
+    },
   },
 
   components: {
@@ -644,6 +772,37 @@ export default {
         (r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r),
         {}
       );
+    },
+    discountDialogActivation() {
+      this.discountDialog = true;
+      this.originalPrice = this.currentProduct.unit_price;
+      this.discountAmount = this.currentProduct.discount_amount
+        ? this.currentProduct.discount_amount
+        : "";
+    },
+    async updateProductDiscount() {
+      await this.$store.dispatch("updateProductDiscount", {
+        discountAmount: this.discountAmount,
+        product_id: this.currentProduct.product_id,
+      });
+      this.snackbar = true;
+      setTimeout(() => {
+        this.$router.push(
+          `/${this.$i18n.locale}/supplierPage/${this.currentUser.user_id}`
+        );
+      }, 3000);
+    },
+    async removeProductDiscount() {
+      await this.$store.dispatch("removeProductDiscount", {
+        product_id: this.currentProduct.product_id,
+      });
+      this.snackbar = true;
+      var self = this;
+      setTimeout(() => {
+        self.$router.push(
+          `/${this.$i18n.locale}/supplierPage/${this.currentUser.user_id}`
+        );
+      }, 3000);
     },
   },
 };

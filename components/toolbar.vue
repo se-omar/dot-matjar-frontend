@@ -29,9 +29,8 @@
           ></v-img>
         </a>
 
-        <a v-else class="ml-4" @click="goSupplierPage">
+        <a v-else @click="goSupplierPage">
           <v-img
-            class="mx-2"
             :src="
               supplierPageInfo && supplierPageInfo.logo
                 ? nodeHost + '/' + supplierPageInfo.logo
@@ -235,114 +234,114 @@
           </v-card-title>
 
           <v-row v-if="currentUser.user_type == 'business'" justify="center">
-            <v-col cols="10" sm="10" lg="5">
-              <v-btn
+            <v-btn
+              class="smallerText"
+              :color="siteColor.button_color"
+              rounded
+              @click="supplierPage"
+            >
+              <span
+                :style="`color:${siteColor.button_text_color}; `"
                 class="smallerText"
-                :color="siteColor.button_color"
-                rounded
-                @click="supplierPage"
               >
-                <span
-                  :style="`color:${siteColor.button_text_color}; `"
-                  class="smallerText"
-                >
-                  {{ $t("toolbar.myPage") }}</span
-                >
-              </v-btn>
-              <!-- <v-divider class="mr-4"></v-divider> -->
-            </v-col>
+                {{ $t("toolbar.myPage") }}</span
+              >
+            </v-btn>
           </v-row>
+          <span v-if="currentUser.user_type == 'business'">
+            <v-divider dark class="mx-16 mt-2 mb-2"></v-divider>
+          </span>
           <v-row justify="center" v-if="currentUser.user_type == 'business'">
-            <v-col cols="10" sm="11" lg="5">
-              <v-btn
+            <v-btn
+              class="smallerText"
+              :color="siteColor.button_color"
+              rounded
+              @click="$router.push(`/${$i18n.locale}/myProducts`)"
+            >
+              <span
                 class="smallerText"
-                :color="siteColor.button_color"
-                rounded
-                @click="$router.push(`/${$i18n.locale}/myProducts`)"
+                :style="`color: ${siteColor.button_text_color}`"
+                v-html="$t('toolbar.myProducts')"
               >
-                <span
-                  :style="`color: ${siteColor.button_text_color};font-size:15px`"
-                  v-html="$t('toolbar.myProducts')"
-                >
-                </span>
-              </v-btn>
-              <!-- <v-divider class="mr-4"></v-divider> -->
-            </v-col>
+              </span>
+            </v-btn>
           </v-row>
+          <span v-if="currentUser.user_type == 'business'">
+            <v-divider dark class="mx-16 mt-2 mb-2"></v-divider>
+          </span>
           <v-row justify="center" v-if="currentUser.user_type == 'admin'">
-            <v-col cols="10" sm="10" lg="5">
-              <v-btn
-                @click="$router.push(`/${$i18n.locale}/siteColors`)"
-                rounded
-                :color="siteColor.button_color"
+            <v-btn
+              @click="$router.push(`/${$i18n.locale}/siteColors`)"
+              rounded
+              :color="siteColor.button_color"
+              class="smallerText"
+            >
+              <span
                 class="smallerText"
+                v-html="$t('toolbar.siteColors')"
+                :style="`color: ${siteColor.button_text_color}`"
               >
-                <span
-                  class="smallerText"
-                  v-html="$t('toolbar.siteColors')"
-                  :style="`color: ${siteColor.button_text_color}`"
-                >
-                </span>
-              </v-btn>
-              <!-- <v-divider class="mr-4"></v-divider> -->
-            </v-col>
+              </span>
+            </v-btn>
           </v-row>
-
+          <span v-if="currentUser.user_type == 'admin'">
+            <v-divider dark class="mx-16 mt-2 mb-2"></v-divider>
+          </span>
           <v-row justify="center" v-if="currentUser.user_type == 'business'">
-            <v-col cols="10" sm="10" lg="5">
-              <v-btn
-                :color="siteColor.button_color"
+            <v-btn
+              :color="siteColor.button_color"
+              class="smallerText"
+              rounded
+              @click="$router.push(`/${$i18n.locale}/orderedProducts`)"
+            >
+              <span
+                :style="`color: ${siteColor.button_text_color}`"
                 class="smallerText"
-                rounded
-                @click="$router.push(`/${$i18n.locale}/orderedProducts`)"
+                v-html="$t('toolbar.orderManage')"
               >
-                <span
-                  :style="`color: ${siteColor.button_text_color}`"
-                  class="smallerText"
-                  v-html="$t('toolbar.orderManage')"
-                >
-                </span>
-              </v-btn>
-              <!-- <v-divider class="mr-4"></v-divider> -->
-            </v-col>
+              </span>
+            </v-btn>
+            <!-- <v-divider class="mr-4"></v-divider> -->
           </v-row>
+          <span v-if="currentUser.user_type == 'business'">
+            <v-divider dark class="mx-16 mt-2 mb-2"></v-divider>
+          </span>
+          <v-row justify="center" v-if="currentUser.user_type == 'admin'">
+            <v-btn
+              :color="siteColor.button_color"
+              rounded
+              @click="$router.push(`/${$i18n.locale}/categoryAndItemRequests`)"
+              ><span
+                class="smallerText"
+                v-html="$t('toolbar.categoryRequests')"
+                :style="`color: ${siteColor.button_text_color}`"
+              >
+              </span
+            ></v-btn>
+          </v-row>
+          <span v-if="currentUser.user_type == 'admin'">
+            <v-divider dark class="mx-16 mt-2 mb-2"></v-divider>
+          </span>
 
           <v-row justify="center" v-if="currentUser.user_type == 'admin'">
-            <v-col cols="10" sm="10" lg="5">
-              <v-btn
-                :color="siteColor.button_color"
-                rounded
-                @click="
-                  $router.push(`/${$i18n.locale}/categoryAndItemRequests`)
-                "
-                ><span
-                  class="smallerText"
-                  v-html="$t('toolbar.categoryRequests')"
-                  :style="`color: ${siteColor.button_text_color}`"
-                >
-                </span
-              ></v-btn>
-              <!-- <v-divider class="mr-4"></v-divider> -->
-            </v-col>
-          </v-row>
-          <v-row justify="center" v-if="currentUser.user_type == 'admin'">
-            <v-col cols="10" sm="10" lg="5">
-              <v-btn
-                :color="siteColor.button_color"
+            <v-btn
+              :color="siteColor.button_color"
+              class="smallerText"
+              rounded
+              @click="$router.push(`/${$i18n.locale}/pendingSuppliers`)"
+            >
+              <span
+                :style="`color: ${siteColor.button_text_color}`"
                 class="smallerText"
-                rounded
-                @click="$router.push(`/${$i18n.locale}/pendingSuppliers`)"
+                v-html="$t('toolbar.pendingSuppliers')"
               >
-                <span
-                  :style="`color: ${siteColor.button_text_color}`"
-                  class="smallerText"
-                  v-html="$t('toolbar.pendingSuppliers')"
-                >
-                </span>
-              </v-btn>
-              <!-- <v-divider class="mr-4"></v-divider> -->
-            </v-col>
+              </span>
+            </v-btn>
           </v-row>
+          <span v-if="currentUser.user_type == 'admin'">
+            <v-divider dark class="mx-16 mt-2 mb-2"></v-divider>
+          </span>
+
           <v-row>
             <v-col cols="12">
               <v-card-text>
@@ -391,31 +390,32 @@
           </v-row>
         </v-card>
       </v-menu>
-      <v-dialog
-        max-width="70%"
-        style="overflow: hidden"
-        v-model="profileDialog"
+      <v-btn
         v-else-if="
           (currentUser && $vuetify.breakpoint.sm) ||
           (currentUser && $vuetify.breakpoint.xs)
         "
+        icon
+        small
+        @click="profileDialog = true"
       >
-        <template v-slot:activator="{ on }">
-          <v-btn icon small @click="profileDialog = true" v-on="on">
-            <i
-              :style="`color:${siteColor.toolbar_text_color}`"
-              class="fa fa-user"
-            ></i>
-          </v-btn>
-        </template>
-
-        <v-card>
+        <i
+          :style="`color:${siteColor.toolbar_text_color}`"
+          class="fa fa-user"
+        ></i>
+      </v-btn>
+      <v-dialog
+        max-width="70%"
+        style="overflow: hidden"
+        v-model="profileDialog"
+      >
+        <v-card style="overflow: hidden">
           <v-img
             v-if="currentUser.profile_photo"
             style="
               width: 60%;
               height: 80%;
-              margin-left: auto;
+              margin-left: auto;g
               margin-right: auto;
             "
             id="picture"
@@ -480,121 +480,118 @@
 
           <v-card-title>
             <v-row justify="center">
-              <span style="font-size: 20px">{{
+              <span style="font-size: 15px">{{
                 currentUser.full_arabic_name
               }}</span>
             </v-row>
           </v-card-title>
 
           <v-row v-if="currentUser.user_type == 'business'" justify="center">
-            <v-col cols="7" sm="10" lg="5">
-              <v-btn
-                :color="siteColor.button_color"
+            <v-btn
+              :color="siteColor.button_color"
+              class="smallerText"
+              rounded
+              @click="supplierPage"
+            >
+              <span
+                :style="`color:${siteColor.button_text_color}; `"
                 class="smallerText"
-                rounded
-                @click="supplierPage"
               >
-                <span
-                  :style="`color:${siteColor.button_text_color}; `"
-                  class="smallerText"
-                >
-                  {{ $t("toolbar.myPage") }}</span
-                >
-              </v-btn>
-              <!-- <v-divider class="mr-4"></v-divider> -->
-            </v-col>
+                {{ $t("toolbar.myPage") }}</span
+              >
+            </v-btn>
           </v-row>
+          <span v-if="currentUser.user_type == 'business'">
+            <v-divider dark class="mx-16 mt-2 mb-2"></v-divider>
+          </span>
           <v-row justify="center" v-if="currentUser.user_type == 'business'">
-            <v-col cols="7" sm="11" lg="5">
-              <v-btn
+            <v-btn
+              class="smallerText"
+              :color="siteColor.button_color"
+              rounded
+              @click="$router.push(`/${$i18n.locale}/myProducts`)"
+            >
+              <span
                 class="smallerText"
-                :color="siteColor.button_color"
-                rounded
-                @click="$router.push(`/${$i18n.locale}/myProducts`)"
+                :style="`color: ${siteColor.button_text_color}`"
+                v-html="$t('toolbar.myProducts')"
               >
-                <span
-                  :style="`color: ${siteColor.button_text_color};font-size:15px`"
-                  v-html="$t('toolbar.myProducts')"
-                >
-                </span>
-              </v-btn>
-              <!-- <v-divider class="mr-4"></v-divider> -->
-            </v-col>
+              </span>
+            </v-btn>
           </v-row>
+          <span v-if="currentUser.user_type == 'business'">
+            <v-divider dark class="mx-16 mt-2 mb-2"></v-divider>
+          </span>
           <v-row justify="center" v-if="currentUser.user_type == 'admin'">
-            <v-col cols="7" sm="10" lg="5">
-              <v-btn
-                @click="$router.push(`/${$i18n.locale}/siteColors`)"
+            <v-btn
+              @click="$router.push(`/${$i18n.locale}/siteColors`)"
+              class="smallerText"
+              rounded
+              :color="siteColor.button_color"
+            >
+              <span
                 class="smallerText"
-                rounded
-                :color="siteColor.button_color"
+                v-html="$t('toolbar.siteColors')"
+                :style="`color: ${siteColor.button_text_color}`"
               >
-                <span
-                  class="smallerText"
-                  v-html="$t('toolbar.siteColors')"
-                  :style="`color: ${siteColor.button_text_color}`"
-                >
-                </span>
-              </v-btn>
-              <!-- <v-divider class="mr-4"></v-divider> -->
-            </v-col>
+              </span>
+            </v-btn>
           </v-row>
-
+          <span v-if="currentUser.user_type == 'admin'">
+            <v-divider dark class="mx-16 mt-2 mb-2"></v-divider>
+          </span>
           <v-row justify="center" v-if="currentUser.user_type == 'business'">
-            <v-col cols="7" sm="10" lg="5">
-              <v-btn
-                :color="siteColor.button_color"
+            <v-btn
+              :color="siteColor.button_color"
+              class="smallerText"
+              rounded
+              @click="$router.push(`/${$i18n.locale}/orderedProducts`)"
+            >
+              <span
+                :style="`color: ${siteColor.button_text_color}`"
                 class="smallerText"
-                rounded
-                @click="$router.push(`/${$i18n.locale}/orderedProducts`)"
+                v-html="$t('toolbar.orderManage')"
               >
-                <span
-                  :style="`color: ${siteColor.button_text_color}`"
-                  class="smallerText"
-                  v-html="$t('toolbar.orderManage')"
-                >
-                </span>
-              </v-btn>
-              <!-- <v-divider class="mr-4"></v-divider> -->
-            </v-col>
+              </span>
+            </v-btn>
           </v-row>
-
+          <span v-if="currentUser.user_type == 'business'">
+            <v-divider dark class="mx-16 mt-2 mb-2"></v-divider>
+          </span>
           <v-row justify="center" v-if="currentUser.user_type == 'admin'">
-            <v-col cols="7" sm="10" lg="5">
-              <v-btn
-                :color="siteColor.button_color"
-                rounded
-                @click="
-                  $router.push(`/${$i18n.locale}/categoryAndItemRequests`)
-                "
-                ><span
-                  class="smallerText"
-                  v-html="$t('toolbar.categoryRequests')"
-                  :style="`color: ${siteColor.button_text_color}`"
-                >
-                </span
-              ></v-btn>
-              <!-- <v-divider class="mr-4"></v-divider> -->
-            </v-col>
-          </v-row>
-          <v-row justify="center" v-if="currentUser.user_type == 'admin'">
-            <v-col cols="7" sm="10" lg="5">
-              <v-btn
-                :color="siteColor.button_color"
+            <v-btn
+              :color="siteColor.button_color"
+              rounded
+              @click="$router.push(`/${$i18n.locale}/categoryAndItemRequests`)"
+              ><span
                 class="smallerText"
-                rounded
-                @click="$router.push(`/${$i18n.locale}/pendingSuppliers`)"
+                v-html="$t('toolbar.categoryRequests')"
+                :style="`color: ${siteColor.button_text_color}`"
               >
-                <span
-                  :style="`color: ${siteColor.button_text_color}`"
-                  class="smallerText"
-                  v-html="$t('toolbar.pendingSuppliers')"
-                >
-                </span>
-              </v-btn>
-              <!-- <v-divider class="mr-4"></v-divider> -->
-            </v-col>
+              </span
+            ></v-btn>
           </v-row>
+          <span v-if="currentUser.user_type == 'admin'">
+            <v-divider dark class="mx-16 mt-2 mb-2"></v-divider>
+          </span>
+          <v-row justify="center" v-if="currentUser.user_type == 'admin'">
+            <v-btn
+              :color="siteColor.button_color"
+              class="smallerText"
+              rounded
+              @click="$router.push(`/${$i18n.locale}/pendingSuppliers`)"
+            >
+              <span
+                :style="`color: ${siteColor.button_text_color}`"
+                class="smallerText"
+                v-html="$t('toolbar.pendingSuppliers')"
+              >
+              </span>
+            </v-btn>
+          </v-row>
+          <span v-if="currentUser.user_type == 'admin'">
+            <v-divider dark class="mx-16 mt-2 mb-2"></v-divider>
+          </span>
           <v-row>
             <v-col cols="12">
               <v-card-text>
@@ -607,7 +604,10 @@
                     aria-hidden="true"
                     style="color: black"
                   ></i>
-                  <span class="ml-2" :color="siteColor.toolbar_text_color">
+                  <span
+                    class="ml-2 smallerText"
+                    :color="siteColor.toolbar_text_color"
+                  >
                     {{ $t("toolbar.changeYourPassword") }}</span
                   >
                 </a>
@@ -622,9 +622,11 @@
                     aria-hidden="true"
                     style="color: black"
                   ></i>
-                  <span class="ml-2" :color="siteColor.toolbar_text_color">{{
-                    $t("toolbar.updateOrCompleteInfo")
-                  }}</span>
+                  <span
+                    class="ml-2 smallerText"
+                    :color="siteColor.toolbar_text_color"
+                    >{{ $t("toolbar.updateOrCompleteInfo") }}</span
+                  >
                 </a>
                 <br />
                 <br />
@@ -634,7 +636,10 @@
                     aria-hidden="true"
                     style="color: black"
                   ></i>
-                  <span class="ml-2" :color="siteColor.toolbar_text_color">
+                  <span
+                    class="ml-2 smallerText"
+                    :color="siteColor.toolbar_text_color"
+                  >
                     {{ $t("toolbar.logout") }}</span
                   >
                 </a>
@@ -1456,7 +1461,7 @@ export default {
   border-radius: 50%;
 }
 .size {
-  font-size: 20px;
+  font-size: 15px;
   font-weight: bold;
 }
 .x {

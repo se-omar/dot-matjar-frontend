@@ -10,7 +10,8 @@ export default {
         currentProduct: JSON.parse(localStorage.getItem('currentProduct')),
         dialog: false,
         productRequestDialog: false,
-        productColors: []
+        productColors: [],
+        snackbarMessage:''
     },
 
     mutations: {
@@ -52,6 +53,10 @@ export default {
 
         getProductColors(state, colors) {
             state.productColors = colors
+        },
+        updateProductDiscount(state,message){
+            console.log(message)
+            state.snackbarMessage = message
         }
     },
 
@@ -124,6 +129,20 @@ export default {
                     console.log(response.data.colors)
                     context.commit('getProductColors', response.data.colors)
                 })
+        },
+        async updateProductDiscount(context , {discountAmount,product_id} ){
+console.log(discountAmount)
+axios.put(context.rootState.nodeHost+"/api/updateProductDiscount" , {discountAmount , product_id})
+.then(message=>{
+    console.log(message.data.message)
+    context.commit('updateProductDiscount',message.data.message)
+})
+        },
+        async removeProductDiscount(context , product_id){
+            axios.put(context.rootState.nodeHost +"/api/removeProductDiscount",product_id)
+            .then(message=>{
+                context.commit('updateProductDiscount',message.data.message)
+            })
         }
 
     }
