@@ -1241,8 +1241,28 @@ export default {
 
   computed: {
     siteColor() {
-      if (this.$store.state.SupplierPage.supplierPageInfo) {
-        return this.$store.state.SupplierPage.supplierPageInfo;
+      var colorInfo = this.$store.state.Home.siteColor;
+      if (this.$store.state.Home.siteColor) {
+        return {
+          button_text_color: colorInfo.button_text_color
+            ? colorInfo.button_text_color
+            : "black",
+          button_color: colorInfo.button_color
+            ? colorInfo.button_color
+            : "white",
+          toolbar_color: colorInfo.toolbar_color
+            ? colorInfo.toolbar_color
+            : "white",
+          toolbar_text_color: colorInfo.toolbar_text_color
+            ? colorInfo.toolbar_text_color
+            : "black",
+          footer_color: colorInfo.footer_color
+            ? colorInfo.footer_color
+            : "white",
+          footer_text_color: colorInfo.footer_text_color
+            ? colorInfo.footer_text_color
+            : "black",
+        };
       } else {
         return {
           button_text_color: "black",
