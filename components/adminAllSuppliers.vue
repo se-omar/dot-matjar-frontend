@@ -6,7 +6,7 @@
       </v-row>
 
       <v-row justify="center">
-        <v-col lg="3">
+        <v-col lg="3" cols="12" sm="12" md="3">
           <v-text-field
             @keyup="emptySupplierName"
             dense
@@ -17,7 +17,7 @@
           ></v-text-field>
         </v-col>
 
-        <v-col lg="3">
+        <v-col lg="3" cols="12" sm="12" md="3">
           <v-select
             :items="egyptGovernorates"
             :placeholder="$t('adminPage.governorate')"
@@ -29,7 +29,7 @@
           ></v-select>
         </v-col>
 
-        <v-col lg="2">
+        <v-col lg="3" cols="12" sm="12" md="3">
           <v-select
             :items="regions"
             :placeholder="$t('adminPage.region')"
@@ -40,7 +40,7 @@
           ></v-select>
         </v-col>
 
-        <v-col lg="1">
+        <v-col lg="4" cols="7" md="4" sm="4">
           <v-btn
             small
             class="white--text mt-1"
@@ -53,7 +53,7 @@
           >
         </v-col>
 
-        <v-col lg="1">
+        <v-col lg="3" cols="7" md="3" sm="3">
           <v-btn
             small
             class="white--text mt-1"
@@ -71,9 +71,10 @@
           class="ms-3"
           v-for="supplier in suppliers"
           :key="supplier.user_id"
-          lg="2"
-          md="2"
-          cols="5"
+          lg="3"
+          md="3"
+          cols="8"
+          sm="4"
         >
           <supplier :supplier="supplier"></supplier>
         </v-col>

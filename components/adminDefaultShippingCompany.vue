@@ -93,6 +93,7 @@
                         >
                           <span
                             :style="`color:${siteColor.button_text_color}`"
+                            class="smallerText"
                             >{{ $t("dashboardSellingProduct.details") }}</span
                           >
                         </v-btn>
@@ -117,16 +118,16 @@
                               <template v-slot:default>
                                 <thead>
                                   <tr>
-                                    <th style="font-size: 20px">
+                                    <th style="font-size: 15px">
                                       {{ $t("orderedProducts.country") }}
                                     </th>
-                                    <th style="font-size: 20px">
+                                    <th style="font-size: 15px">
                                       {{ $t("adminPage.governorate") }}
                                     </th>
-                                    <th style="font-size: 20px">
+                                    <th style="font-size: 15px">
                                       {{ $t("adminPage.region") }}
                                     </th>
-                                    <th style="font-size: 20px">
+                                    <th style="font-size: 15px">
                                       {{ $t("adminPage.shippingRate") }}
                                     </th>
                                   </tr>
@@ -185,10 +186,10 @@
                               <template v-slot:default>
                                 <thead>
                                   <tr>
-                                    <th style="font-size: 20px">
+                                    <th style="font-size: 15px">
                                       {{ $t("adminPage.collectionAmount") }}
                                     </th>
-                                    <th style="font-size: 20px">
+                                    <th style="font-size: 15px">
                                       {{ $t("adminPage.collectionRate") }}
                                     </th>
                                   </tr>
@@ -257,12 +258,12 @@
                                 :color="siteColor.toolbar_text_color"
                               >
                                 <v-row justify="center">
-                                  <h2
+                                  <h3
                                     :style="`color:${siteColor.toolbar_color}`"
                                   >
                                     {{ $t("adminPage.addShippingRate") }}
                                     {{ defaultCompanyClicked.company_name }}
-                                  </h2>
+                                  </h3>
                                 </v-row>
                               </v-toolbar>
                               <v-form v-model="shippingValidation">
@@ -333,16 +334,16 @@
                                   <v-simple-table dark>
                                     <thead>
                                       <tr>
-                                        <th style="font-size: 20px">
+                                        <th style="font-size: 15px">
                                           {{ $t("orderedProducts.country") }}
                                         </th>
-                                        <th style="font-size: 20px">
+                                        <th style="font-size: 15px">
                                           {{ $t("addUser.governorate") }}
                                         </th>
-                                        <th style="font-size: 20px">
+                                        <th style="font-size: 15px">
                                           {{ $t("completedata.region") }}
                                         </th>
-                                        <th style="font-size: 20px">
+                                        <th style="font-size: 15px">
                                           {{ $t("adminPage.shippingRate") }}
                                         </th>
                                       </tr>
@@ -394,12 +395,12 @@
                                   :color="siteColor.toolbar_text_color"
                                 >
                                   <v-row justify="center">
-                                    <h2
+                                    <h3
                                       :style="`color:${siteColor.toolbar_color}`"
                                     >
                                       {{ $t("adminPage.addCollectionRate") }}
                                       {{ defaultCompanyClicked.company_name }}
-                                    </h2>
+                                    </h3>
                                   </v-row>
                                 </v-toolbar>
                               </v-row>
@@ -447,10 +448,10 @@
                                   <v-simple-table dark>
                                     <thead>
                                       <tr>
-                                        <th style="font-size: 20px">
+                                        <th style="font-size: 15px">
                                           {{ $t("adminPage.collectionAmount") }}
                                         </th>
-                                        <th style="font-size: 20px">
+                                        <th style="font-size: 15px">
                                           {{ $t("adminPage.collectionRate") }}
                                         </th>
                                       </tr>
@@ -501,6 +502,7 @@
                             small
                             :color="siteColor.button_color"
                             @click="edit = !edit"
+                            class="mt-4"
                             ><span
                               :style="`color:${siteColor.button_text_color}`"
                               >{{ $t("adminPage.edit") }}</span
@@ -791,7 +793,7 @@
                   <h2>{{ defaultCompanyClicked.company_name }}</h2>
                 </v-row>
                 <v-row justify="center">
-                  <h3>{{ $t("adminPage.setCompany") }}</h3>
+                  <h4>{{ $t("adminPage.setCompany") }}</h4>
                   <v-btn
                     @click="defaultCompanyPermission = true"
                     text
@@ -987,7 +989,8 @@ export default {
       this.companyAddress2 = this.defaultCompanyClicked.company_address2;
       this.companyAddress3 = this.defaultCompanyClicked.company_address3;
     },
-    updateShippingCompany() {
+    async updateShippingCompany() {
+      this.isLoading = true;
       console.log(this.defaultCompanyClicked.shipping_companies_id);
       var wh = {};
 
@@ -998,6 +1001,14 @@ export default {
       wh.companyAddress3 = this.companyAddress3;
       wh.shipping_companies_id = this.defaultCompanyClicked.shipping_companies_id;
       this.$store.dispatch("updateShippingCompany", wh);
+      setTimeout(async () => {
+        await this.$store.dispatch("getDefaultCompany");
+        await this.$store.dispatch("getAllCompanies");
+        this.defaultCompanyClicked = this.defaultCompany;
+
+        this.dialog = false;
+        this.isLoading = false;
+      }, 3000);
     },
     editCollectionRate(item) {
       console.log(item);

@@ -9,7 +9,7 @@
         ></loading>
       </div>
       <v-row justify="center">
-        <v-radio-group row mandatory v-model="radioGroup">
+        <v-radio-group mandatory v-model="radioGroup">
           <v-radio value="1">
             <template v-slot:label>
               <span>{{ $t("adminPage.addCompany") }}</span>
@@ -152,16 +152,16 @@
             <v-simple-table dark>
               <thead>
                 <tr>
-                  <th style="font-size: 20px">
+                  <th style="font-size: 15px">
                     {{ $t("orderedProducts.country") }}
                   </th>
-                  <th style="font-size: 20px">
+                  <th style="font-size: 15px">
                     {{ $t("addUser.governorate") }}
                   </th>
-                  <th style="font-size: 20px">
+                  <th style="font-size: 15px">
                     {{ $t("completedata.region") }}
                   </th>
-                  <th style="font-size: 20px">
+                  <th style="font-size: 15px">
                     {{ $t("adminPage.shippingRate") }}
                   </th>
                 </tr>
@@ -227,10 +227,10 @@
             <v-simple-table dark>
               <thead>
                 <tr>
-                  <th style="font-size: 20px">
+                  <th style="font-size: 15px">
                     {{ $t("adminPage.collectionAmount") }}
                   </th>
-                  <th style="font-size: 20px">
+                  <th style="font-size: 15px">
                     {{ $t("adminPage.collectionRate") }}
                   </th>
                 </tr>
@@ -375,8 +375,6 @@ export default {
   },
   methods: {
     activateRemoveDialog(name) {
-      console.log(name);
-      console.log(this.allCompanies);
       for (let i = 0; i < this.allCompanies.length; i++) {
         if (this.allCompanies[i].company_name == name) {
           this.companyData = this.allCompanies[i];
@@ -386,11 +384,18 @@ export default {
         this.snackbar = true;
       } else this.removeDialog = true;
     },
-    removeCompany() {
+    async removeCompany() {
+      this.isLoading = true;
       this.$store.dispatch(
         "removeCompany",
         this.companyData.shipping_companies_id
       );
+      await this.$store.dispatch("getDefaultCompany");
+      await this.$store.dispatch("getAllCompanies");
+      setTimeout(() => {
+        this.isLoading = false;
+        this.removeDialog = false;
+      }, 3000);
     },
     addNewCompany() {
       this.isLoading = true;

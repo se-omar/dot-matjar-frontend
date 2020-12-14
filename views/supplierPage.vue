@@ -104,7 +104,7 @@
       </v-dialog>
     </v-row>
 
-    <v-row>
+    <v-row justify="start">
       <v-col
         lg="2"
         sm="3"
@@ -140,6 +140,13 @@
               </template>
             </v-col>
           </v-row>
+          <v-row class="ml-8">
+            <v-btn text @click="getAllProducts"
+              ><span class="smallerText">{{
+                $t("homePage.allProducts")
+              }}</span></v-btn
+            >
+          </v-row>
         </v-card>
       </v-col>
       <!-- category -->
@@ -147,7 +154,7 @@
       <v-col
         :lg="supplierPageInfo && supplierPageInfo.show_right_banner ? 8 : 10"
         sm="8"
-        :md="supplierPageInfo && supplierPageInfo.show_right_banner ? 8 : 12"
+        :md="supplierPageInfo && supplierPageInfo.show_right_banner ? 8 : 10"
         cols="12"
       >
         <v-row justify="center" class="mt-10">
@@ -199,16 +206,11 @@
           :justify="
             supplierPageInfo && supplierPageInfo.show_right_banner
               ? 'space-between'
-              : 'start'
+              : 'center'
           "
         >
           <v-col
-            :class="
-              supplierPageInfo && supplierPageInfo.show_right_banner
-                ? ''
-                : productsClass
-            "
-            :lg="supplierPageInfo && supplierPageInfo.show_right_banner ? 3 : 2"
+            :lg="supplierPageInfo && supplierPageInfo.show_right_banner ? 4 : 4"
             :md="supplierPageInfo && supplierPageInfo.show_right_banner ? 4 : 3"
             v-for="(supplierProduct, index) in supplierProducts"
             :key="index"
@@ -221,7 +223,7 @@
                 supplierPageInfo.show_right_banner &&
                 supplierPageInfo.right_banner_image
                   ? '104%'
-                  : '114%'
+                  : '100%'
               "
               :addToCartButton="false"
               :filteredProduct="supplierProduct"
