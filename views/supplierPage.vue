@@ -11,7 +11,10 @@
       v-if="this.$route.params.supplier_id == currentUser.user_id"
     ></sideButton> -->
 
-    <v-row v-if="supplierPageInfo && supplierPageInfo.show_carousel" justify="center">
+    <v-row
+      v-if="supplierPageInfo && supplierPageInfo.show_carousel"
+      justify="center"
+    >
       <v-col :lg="supplierPageInfo ? supplierPageInfo.carousel_width : 10">
         <carousel
           :autoplay="true"
@@ -22,25 +25,33 @@
         >
           <slide v-if="supplierPageInfo && supplierPageInfo.carousel_image_1">
             <v-img
-              :height="supplierPageInfo ? supplierPageInfo.carousel_height : 400"
+              :height="
+                supplierPageInfo ? supplierPageInfo.carousel_height : 400
+              "
               :src="nodeHost + supplierPageInfo.carousel_image_1"
             ></v-img>
           </slide>
           <slide v-if="supplierPageInfo && supplierPageInfo.carousel_image_2">
             <v-img
-              :height="supplierPageInfo ? supplierPageInfo.carousel_height : 400"
+              :height="
+                supplierPageInfo ? supplierPageInfo.carousel_height : 400
+              "
               :src="nodeHost + supplierPageInfo.carousel_image_2"
             ></v-img>
           </slide>
           <slide v-if="supplierPageInfo && supplierPageInfo.carousel_image_3">
             <v-img
-              :height="supplierPageInfo ? supplierPageInfo.carousel_height : 400"
+              :height="
+                supplierPageInfo ? supplierPageInfo.carousel_height : 400
+              "
               :src="nodeHost + supplierPageInfo.carousel_image_3"
             ></v-img>
           </slide>
           <slide v-if="supplierPageInfo && supplierPageInfo.carousel_image_4">
             <v-img
-              :height="supplierPageInfo ? supplierPageInfo.carousel_height : 400"
+              :height="
+                supplierPageInfo ? supplierPageInfo.carousel_height : 400
+              "
               :src="nodeHost + supplierPageInfo.carousel_image_4"
             ></v-img>
           </slide>
@@ -54,8 +65,11 @@
         :color="siteColor.button_color"
         @click="filterDialog = true"
         :style="`color:${siteColor.button_text_color}`"
-        ><i class="fa fa-filter" :style="`color:${siteColor.button_text_color}`"></i
-        >{{ $t("supplierPage.filter") }}</v-btn
+        ><i
+          class="fa fa-filter fa-sm"
+          :style="`color:${siteColor.button_text_color}`"
+        ></i
+        ><span class="smallerText">{{ $t("supplierPage.filter") }}</span></v-btn
       >
       <v-dialog v-model="filterDialog">
         <v-card height="95%" style="overflow: hidden" max-width>
@@ -78,9 +92,11 @@
               >
               </v-treeview>
               <template slot-scope="{ item }">
-                <v-btn style="cursor: pointer" @click="filterByCategory(item)">{{
-                  item.name
-                }}</v-btn>
+                <v-btn
+                  style="cursor: pointer"
+                  @click="filterByCategory(item)"
+                  >{{ item.name }}</v-btn
+                >
               </template>
             </v-col>
           </v-row>
@@ -96,7 +112,7 @@
         cols="4"
         v-if="$vuetify.breakpoint.lg || $vuetify.breakpoint.md"
       >
-        <v-card height="95%" style="overflow: hidden" max-width>
+        <v-card height="95%" style="overflow: hidden">
           <v-row justify="center"
             ><v-card-title>{{ $t("addProduct.category") }}</v-card-title>
           </v-row>
@@ -116,9 +132,11 @@
               >
               </v-treeview>
               <template slot-scope="{ item }">
-                <v-btn style="cursor: pointer" @click="filterByCategory(item)">{{
-                  item.name
-                }}</v-btn>
+                <v-btn
+                  style="cursor: pointer"
+                  @click="filterByCategory(item)"
+                  >{{ item.name }}</v-btn
+                >
               </template>
             </v-col>
           </v-row>
@@ -133,39 +151,48 @@
         cols="12"
       >
         <v-row justify="center" class="mt-10">
-          <v-col lg="2" md="3" sm="5" cols="5">
-            <v-btn
-              v-if="$route.params.supplier_id == currentUser.user_id"
-              @click="updatePage"
-              :color="siteColor.button_color"
-              rounded
+          <v-btn
+            v-if="$route.params.supplier_id == currentUser.user_id"
+            @click="updatePage"
+            :color="siteColor.button_color"
+            rounded
+          >
+            <span
+              class="smallerText"
+              :style="`color:${siteColor.button_text_color}`"
             >
-              <span class="smallerText" :style="`color:${siteColor.button_text_color}`">
-                {{ $t("supplierPage.updatePage") }}</span
-              ></v-btn
-            >
-          </v-col>
-          <v-col lg="2" md="3" sm="5" cols="5">
-            <v-btn
-              :color="siteColor.button_color"
-              @click="
-                $router.push(`/${$i18n.locale}/supplierDetails/` + supplier.user_id)
-              "
-              rounded
-            >
-              <span class="smallerText" :style="`color:${siteColor.button_text_color}`">
-                {{ $t("supplierPage.supplierDetails") }}</span
-              >
-            </v-btn>
-          </v-col>
+              {{ $t("supplierPage.updatePage") }}</span
+            ></v-btn
+          >
 
+          <v-btn
+            :color="siteColor.button_color"
+            @click="
+              $router.push(
+                `/${$i18n.locale}/supplierDetails/` + supplier.user_id
+              )
+            "
+            rounded
+          >
+            <span
+              class="smallerText"
+              :style="`color:${siteColor.button_text_color}`"
+            >
+              {{ $t("supplierPage.supplierDetails") }}</span
+            >
+          </v-btn>
+          <!-- 
           <v-col lg="2" md="3" sm="5" cols="5">
-            <v-btn rounded :color="siteColor.button_color" @click="getAllProducts">
+            <v-btn
+              rounded
+              :color="siteColor.button_color"
+              @click="getAllProducts"
+            >
               <span :style="`color:${siteColor.button_text_color}`">{{
                 $t("homePage.allProducts")
               }}</span></v-btn
             >
-          </v-col>
+          </v-col> -->
         </v-row>
 
         <v-row
@@ -177,7 +204,9 @@
         >
           <v-col
             :class="
-              supplierPageInfo && supplierPageInfo.show_right_banner ? '' : productsClass
+              supplierPageInfo && supplierPageInfo.show_right_banner
+                ? ''
+                : productsClass
             "
             :lg="supplierPageInfo && supplierPageInfo.show_right_banner ? 3 : 2"
             :md="supplierPageInfo && supplierPageInfo.show_right_banner ? 4 : 3"
@@ -203,8 +232,8 @@
       <v-col
         v-if="
           supplierPageInfo &&
-            supplierPageInfo.show_right_banner &&
-            supplierPageInfo.right_banner_image
+          supplierPageInfo.show_right_banner &&
+          supplierPageInfo.right_banner_image
         "
         lg="2"
       >
@@ -235,7 +264,11 @@ export default {
     review: "",
     groupedRatings: [],
     tab: 0,
-    tabs: [{ name: "Products" }, { name: "Reviews" }, { name: "Rate Supplier" }],
+    tabs: [
+      { name: "Products" },
+      { name: "Reviews" },
+      { name: "Rate Supplier" },
+    ],
     supplierProductsSearch: "",
     categoryItems: [],
     productsClass: "mr-2 ml-2",
@@ -352,7 +385,8 @@ export default {
   methods: {
     updatePage() {
       this.$router.push(
-        `/${this.$i18n.locale}/updateSupplierPage/` + this.$route.params.supplier_id
+        `/${this.$i18n.locale}/updateSupplierPage/` +
+          this.$route.params.supplier_id
       );
     },
 
@@ -372,7 +406,10 @@ export default {
     },
 
     groupBy(xs, f) {
-      return xs.reduce((r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r), {});
+      return xs.reduce(
+        (r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r),
+        {}
+      );
     },
     filterSupplierProducts() {
       this.$store.dispatch("filterSupplierProducts", {
@@ -432,7 +469,10 @@ export default {
       this.$store.commit("returnAllProducts");
     },
     async getAllProducts() {
-      await this.$store.dispatch("getSupplierProducts", this.$route.params.supplier_id);
+      await this.$store.dispatch(
+        "getSupplierProducts",
+        this.$route.params.supplier_id
+      );
     },
 
     filterByCategory(catAr) {
@@ -458,10 +498,16 @@ export default {
     );
     await this.$store.dispatch("getSupplier", this.$route.params.supplier_id);
 
-    await this.$store.dispatch("getSupplierPageData", this.$route.params.supplier_id);
+    await this.$store.dispatch(
+      "getSupplierPageData",
+      this.$route.params.supplier_id
+    );
     //this.$store.commit("emptySupplierProducts");
 
-    await this.$store.dispatch("getSupplierProducts", this.$route.params.supplier_id);
+    await this.$store.dispatch(
+      "getSupplierProducts",
+      this.$route.params.supplier_id
+    );
 
     // await this.$store.dispatch(
     //   "getSupplierCategoriesAndItems",
@@ -472,12 +518,21 @@ export default {
       supplier_id: this.supplier.user_id,
       user_id: this.currentUser.user_id,
     });
-    console.log("supplier categories and items", this.supplierCategoriesAndItems);
+    console.log(
+      "supplier categories and items",
+      this.supplierCategoriesAndItems
+    );
     await this.setValues();
 
-    await this.$store.dispatch("getSupplierRatingsArray", this.supplier.user_id);
+    await this.$store.dispatch(
+      "getSupplierRatingsArray",
+      this.supplier.user_id
+    );
 
-    this.groupedRatings = this.groupBy(this.currentSupplierRatings, (c) => c.rating);
+    this.groupedRatings = this.groupBy(
+      this.currentSupplierRatings,
+      (c) => c.rating
+    );
     console.log("colors iss", this.siteColor);
     for (var j = 1; j < this.barRatingArray.length + 1; j++) {
       if (this.groupedRatings[j]) {

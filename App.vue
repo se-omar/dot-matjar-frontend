@@ -52,7 +52,7 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Markazi+Text:wght@700&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@500&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Vesper+Libre:wght@500&display=swap");
 
 .padding-0 {
@@ -61,7 +61,8 @@ export default {
 }
 * {
   /* font-family: "Markazi Text", serif; */
-  font-family: "Vesper Libre", serif;
+  /* font-family: "Vesper Libre", serif; */
+  font-family: "Tajawal", sans-serif;
 }
 .arabic {
   font-size: 50px;

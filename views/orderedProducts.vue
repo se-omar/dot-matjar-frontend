@@ -246,6 +246,7 @@
               small
               rounded
               :color="siteColor.button_color"
+              :disabled="!orderID"
             >
               <span :style="`color:${siteColor.button_text_color}`">
                 {{ $t("userOrders.showBillInfo") }}</span
@@ -310,9 +311,10 @@ export default {
       });
     },
     async PushTOBillPage() {
-      console.log(this.orderID);
-      await this.$store.dispatch("getOrder", { order_id: this.orderID });
-      this.$router.push(`/${this.$i18n.locale}/orderConfirmation`);
+      if (this.orderID) {
+        await this.$store.dispatch("getOrder", { order_id: this.orderID });
+        this.$router.push(`/${this.$i18n.locale}/orderConfirmation`);
+      }
     },
   },
   async created() {
