@@ -551,6 +551,10 @@
         "cancel": "الغاء"
     },
     "myProducts": {
-        "products": "منتجات"
+        "products": "منتجات",
+        "minUnitsPerOrder":"اقل وحدات للطلب",
+        "boughtNumber":"رقم الشراء",
+        "remainingInStock":"المتبقي في المخزون"
+        
     }
 }

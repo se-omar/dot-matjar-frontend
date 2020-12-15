@@ -36,7 +36,8 @@ export default {
             var userId = true
             var users = []
             var address = []
-
+state.showOrderProducts=[]
+state.pressedOrder=[]
             var orders = revOrders.reverse();
             for (var i = 0; i < orders.length; i++) {
 

@@ -210,7 +210,7 @@
           "
         >
           <v-col
-            :lg="supplierPageInfo && supplierPageInfo.show_right_banner ? 4 : 4"
+            :lg="supplierPageInfo && supplierPageInfo.show_right_banner ? 4 : 3"
             :md="supplierPageInfo && supplierPageInfo.show_right_banner ? 4 : 3"
             v-for="(supplierProduct, index) in supplierProducts"
             :key="index"

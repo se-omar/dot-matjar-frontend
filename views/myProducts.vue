@@ -1,7 +1,7 @@
 <template>
   <v-app class="grey lighten-4">
     <v-row justify="center">
-      <v-col lg="9">
+      <v-col lg="12">
         <v-container
           v-if="
             (currentUser && currentUser.user_type == 'business') ||
@@ -34,7 +34,7 @@
             <v-col></v-col>
           </v-row>
           <v-row v-if="myProducts.length != 0">
-            <v-col
+            <!-- <v-col
               lg="3"
               md="4"
               sm="6"
@@ -47,7 +47,27 @@
                 :addToCartButton="false"
                 :filteredProduct="myProduct"
               ></product>
-            </v-col>
+            </v-col> -->
+            <v-data-table :items="myProducts" :headers="productTableHeaders">
+              <template #[`item.main_picture`]="{ item }">
+                <v-img
+                  :src="nodeHost + item.main_picture"
+                  width="80"
+                  height="80"
+                  style="
+                    border-radius: 50%;
+                    margin-left: auto;
+                    margin-right: auto;
+                  "
+                ></v-img>
+                <!-- <p>{{ item.main_picture }}</p> -->
+              </template>
+              <template #[`item.details`]="{ item }">
+                <v-btn @click="productInfo(item)" icon>
+                  <i class="fa fa-info-circle"></i
+                ></v-btn>
+              </template>
+            </v-data-table>
           </v-row>
 
           <v-row class="mt-16" justify="center" v-else>
@@ -79,6 +99,7 @@
 
 export default {
   async created() {
+    console.log("nodehost", this.nodeHost);
     await this.$store.dispatch("getSiteColor");
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
@@ -106,11 +127,49 @@ export default {
         };
       }
     },
-  },
+    productTableHeaders() {
+      return [
+        { text: this.$t("userOrders.productName"), value: "product_name" },
+        { text: this.$t("userOrders.productCode"), value: "product_code" },
+        {
+          text: this.$t("dashboardSellingProduct.unitPrice"),
+          value: "unit_price",
+        },
+        {
+          text: this.$t("myProducts.minUnitsPerOrder"),
+          value: "min_units_per_order",
+        },
+        { text: this.$t("productDetails.weight"), value: "unit_weight" },
+        { text: this.$t("footer.currency"), value: "currency" },
+        { text: this.$t("myProducts.boughtNumber"), value: "buy_counter" },
 
-  components: {
-    product: () => import("../components/product"),
+        {
+          text: this.$t("myProducts.remainingInStock"),
+          value: "stock_remaining",
+        },
+        {
+          text: this.$t("productDetails.discountInfo"),
+          value: "discount_amount",
+        },
+
+        { text: this.$t("addProduct.mainPicture"), value: "main_picture" },
+        { text: this.$t("product.details"), value: "details" },
+      ];
+    },
+    nodeHost() {
+      return this.$store.state.nodeHost;
+    },
   },
+  methods: {
+    productInfo(item) {
+      this.$store.dispatch("setCurrentProduct", item);
+      this.$router.push(`/${this.$i18n.locale}/productDetails`);
+      console.log("filtered product in componetents", item);
+    },
+  },
+  // components: {
+  //   product: () => import("../components/product"),
+  // },
 };
 </script>
 <style scoped>

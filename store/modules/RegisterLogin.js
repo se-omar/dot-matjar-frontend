@@ -100,6 +100,12 @@ export default {
                     alert(res.data)
 
                 })
+        },
+        async updatePassword(context , {email , password,newPassword}){
+        console.log(password , email , newPassword)
+        axios.put(context.rootState.nodeHost +'/api/updatePassword' ,  {email , password,newPassword}).then(message=>{
+            alert(message.data.message)
+        })
         }
       
 

@@ -47,7 +47,7 @@
     "allProducts": "All"
   },
   "addProduct": {
-    "productName": "product name",
+    "productName": "Product Name",
     "category": "Category",
     "item": "item",
     "code": "code",
@@ -512,9 +512,9 @@
     "orderDate": "order date",
     "shippingDate": "shipping date",
     "orderPrice": "order price",
-    "productName": "product name",
+    "productName": "Product Name",
     "price": "price",
-    "productCode": "product code",
+    "productCode": "Product Code",
     "status": "status",
     "quantity": "quantity",
     "color": "color",
@@ -545,6 +545,9 @@
     "cancel": "cancel"
   },
   "myProducts": {
-    "products": "'s products"
+    "products": "'s products",
+    "minUnitsPerOrder":"Min units/order",
+    "boughtNumber":"Bought Number",
+    "remainingInStock":"Remaining In Stock"
   }
 }

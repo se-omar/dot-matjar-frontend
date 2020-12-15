@@ -128,10 +128,8 @@ export default {
     },
 
     async loadMore() {
-      this.isLoading = true;
       var self = this;
       await self.$store.dispatch("getSuppliers", this.supplierFilterFlag);
-      this.isLoading = false;
     },
 
     All() {

@@ -1,5 +1,12 @@
 <template>
   <v-app class="grey lighten-4">
+    <div class="vld-parent">
+      <loading
+        :active.sync="isloading"
+        :can-cancel="false"
+        :is-full-page="fullPage"
+      ></loading>
+    </div>
     <v-row justify="center">
       <!-- <product :filteredProduct="filteredProduct"></product> -->
 
@@ -73,6 +80,7 @@
                       v-if="item.status == 'Rejected'"
                       class="fa fa-trash fa-sm"
                     ></i>
+                    <i v-if="item.status == 'Shipped'" class="fa fa-truck"> </i>
                     <v-btn icon @click="productStatus">
                       <i class="fa fa-edit fa-sm ml-4"></i>
                     </v-btn>
@@ -115,15 +123,8 @@
                                 ></v-btn
                               >
                               <v-snackbar v-model="snackbar" :timeout="timeout">
-                                <template v-slot:action="{ attrs }">
+                                <template>
                                   {{ $t("orderedProducts.statusUpdated") }}
-                                  <v-btn
-                                    class="red white--text"
-                                    text
-                                    v-bind="attrs"
-                                    @click="snackbar = false"
-                                    >{{ $t("orderedProducts.close") }}</v-btn
-                                  >
                                 </template>
                               </v-snackbar>
                               <v-btn
@@ -265,7 +266,7 @@ export default {
   components: { VSwatches: () => import("vue-swatches") },
   data: () => ({
     dialog: false,
-    orderId: "",
+    orderID: "",
     state: "",
     country: "",
     address1: "",
@@ -273,12 +274,13 @@ export default {
     city: "",
     statusDialog: false,
     clickedProductInfo: "",
-    statusItems: ["Pending", "Delivered", "Rejected"],
+    statusItems: ["Pending", "Shipped", "Delivered", "Rejected"],
     productStatusUpdate: "",
     userMadeOrder: "",
     snackbar: false,
     timeout: 2000,
-    // updating this page
+    isloading: false,
+    fullPage: "",
   }),
   methods: {
     async showProducts(event) {
@@ -301,14 +303,26 @@ export default {
     productStatus() {
       this.statusDialog = true;
     },
-    updateStatus() {
+    async updateStatus() {
+      this.isloading = true;
       this.snackbar = true;
-      this.$store.dispatch("updateProductStatus", {
+      await this.$store.dispatch("updateProductStatus", {
         status: this.productStatusUpdate,
         orderId: this.clickedProductInfo.order_id,
         productId: this.clickedProductInfo.product_id,
         productColor: this.clickedProductInfo.product_color,
       });
+      await this.$store.commit(
+        "showOrderProducts",
+        this.pressedOrder.order_number
+      );
+
+      setTimeout(async () => {
+        await this.$store.dispatch("ordersMade", this.currentUser.user_id);
+
+        this.statusDialog = false;
+        this.isloading = false;
+      }, 3000);
     },
     async PushTOBillPage() {
       if (this.orderID) {

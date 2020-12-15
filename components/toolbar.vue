@@ -137,6 +137,7 @@
         max-height="90%"
         offset-y
         class="menu"
+        transition="fab-transition"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn
