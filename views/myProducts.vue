@@ -30,8 +30,20 @@
               ></span>
             </v-btn>
           </v-row>
-          <v-row>
-            <v-col></v-col>
+          <v-row justify="start">
+            <v-col lg="4" sm="8" cols="8" md="4">
+              <v-text-field
+                class="white arabic mx-5"
+                style="max-width: 250px; max-height: 41px"
+                outlined
+                @keyup="filterProductsTable"
+                v-model="searchSupplierProductsTable"
+                dense
+                rounded
+                :placeholder="$t('toolbar.search')"
+                append-icon="fa fa-search"
+              ></v-text-field>
+            </v-col>
           </v-row>
           <v-row v-if="myProducts.length != 0">
             <!-- <v-col
@@ -166,10 +178,20 @@ export default {
       this.$router.push(`/${this.$i18n.locale}/productDetails`);
       console.log("filtered product in componetents", item);
     },
+    filterProductsTable() {
+      this.$store.dispatch("filterSupplierProductsTable", {
+        productsSearch: this.searchSupplierProductsTable,
+        searchType: "name",
+        supplier_id: this.currentUser.user_id,
+      });
+    },
   },
   // components: {
   //   product: () => import("../components/product"),
   // },
+  data: () => ({
+    searchSupplierProductsTable: "",
+  }),
 };
 </script>
 <style scoped>

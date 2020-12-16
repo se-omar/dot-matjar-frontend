@@ -435,8 +435,7 @@ export default {
           searchType,
         })
         .then((products) => {
-          console.log(products.data.message);
-          console.log("Products is:", products.data.data);
+       
           context.commit("filterSupplierProducts", {
             products: products.data.data,
             categoryArray,

@@ -1,25 +1,28 @@
 <template>
   <v-app>
-    <!-- <v-row>
-      <v-col>
-        <v-card height="120">
-          <v-card-title>
-            <span>ad here</span>
-          </v-card-title>
-        </v-card>
-      </v-col>
-    </v-row> -->
+    <v-row justify="center">
+      <v-container class="white" style="width: 60%">
+        <v-card-title>ORDER DETAILS</v-card-title>
+        <v-divider class="black"></v-divider>
 
-    <v-row justify="start">
-      <!-- <v-col cols="1" lg="1" sm="1">
-        <v-card height="95%">
-          <v-card-title>
-            <span>ad here</span>
-          </v-card-title>
-        </v-card>
-      </v-col> -->
+        <v-row v-for="(order, index) in orders" :key="index" justify="start">
+          <v-col lg="12" sm="12" md="12" cols="12">
+            <v-card
+              v-for="(product, index1) in order.products_orders"
+              :key="index1"
+              class="mx-10"
+            >
+              <v-img
+                :src="nodeHost + product.main_picture"
+                width="50"
+                height="50"
+              ></v-img>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
 
-      <v-col sm="5" lg="6" cols="5 mt-4">
+      <!-- <v-col sm="5" lg="6" cols="5 mt-4">
         <v-card>
           <v-data-table
             @click:row="tableClicked"
@@ -80,7 +83,7 @@
             </template>
           </v-data-table>
         </v-card>
-      </v-col>
+      </v-col> -->
 
       <!-- <v-col cols="2" lg="2" sm="2">
         <v-card height="95%">
@@ -103,7 +106,7 @@
 export default {
   name: "userOrders",
   components: {
-    VSwatches: () => import("vue-swatches"),
+    // VSwatches: () => import("vue-swatches"),
   },
   async created() {
     await this.$store.dispatch("getSiteColor");
@@ -111,6 +114,7 @@ export default {
       await this.$store.dispatch("refreshCurrentUser");
     }
     await this.$store.dispatch("getOrders");
+    console.log(this.orders);
   },
   computed: {
     row() {

@@ -76,7 +76,8 @@
         "condition": "الحالة",
         "addCategorySnackBar": " سيتم إرسال طلبك الي المسؤول ، وسيتم إخبارك",
         "chooseCategory": "اختر فئتك",
-        "chooseParent": "اختر الاب"
+        "chooseParent": "اختر الاب",
+        "inStock":"في المخزون"
     },
     "adminPage": {
         "addNewCategory": "اضافة فئة جديدة",
@@ -466,7 +467,7 @@
         "category": "الفئة",
         "color": "اللون",
         "weight": "الوزن",
-        "stockStatus": "المخزون",
+        "stockRemaining": "المخزون",
         "brand": "الماركة",
         "condition": "الحالة",
         "aboutProduct": "عن المنتج",

@@ -38,6 +38,8 @@
                     v-model="brand"
                     :label="$t('addProduct.brand')"
                     filled
+                    required
+                    :rules="[rules.required]"
                     rounded
                   ></v-text-field>
                 </v-col>
@@ -59,6 +61,8 @@
                     solo-inverted
                     :items="currencies"
                     v-model="productCurrency"
+                    required
+                    :rules="[rules.required]"
                     filled
                     rounded
                   >
@@ -69,6 +73,17 @@
                   <v-text-field
                     v-model="minUnits"
                     :label="$t('addProduct.minOrders')"
+                    filled
+                    :rules="[rules.required && rules.numbersOnly]"
+                    rounded
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="4">
+                  <v-text-field
+                    v-model="stock"
+                    :label="$t('addProduct.inStock')"
+                    required
+                    :rules="[rules.required && rules.numbersOnly]"
                     filled
                     rounded
                   ></v-text-field>
@@ -138,6 +153,7 @@
                   @update:active="setCategory"
                   color="warning"
                   :items="categoriesTreeArray"
+                  style="cursor: pointer"
                 >
                 </v-treeview>
                 <template slot-scope="{ item }">
@@ -512,7 +528,7 @@ export default {
       description: "",
       productCurrency: "egp",
       currencies: ["egp", "usd"],
-
+      stock: "",
       rules: {
         required: (v) => !!v || "Required.",
         numbersOnly: (v) => /\d+/.test(v) || "Enter numbers",
@@ -583,6 +599,7 @@ export default {
       form.set("discount_amount", self.discountAmount);
       form.set("currency", self.productCurrency);
       form.set("siteLanguage", self.siteLanguage);
+      form.set("inStock", self.stock);
       files.forEach((element) => {
         form.append("file", element);
       });

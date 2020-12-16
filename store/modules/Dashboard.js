@@ -41,6 +41,9 @@ export default {
     getMonthlySales(state, orders) {
       state.notSortedDashboardOrders = orders;
     },
+    filterSupplierProductsTable(state , products){
+      state.myProducts = products
+    }
   },
 
   actions: {
@@ -83,5 +86,21 @@ export default {
           context.commit("getMonthlySales", response.data);
         });
     },
+    async filterSupplierProductsTable(context , {productsSearch , searchType , supplier_id}){
+      axios
+        .put(context.rootState.nodeHost + "/api/filterSupplierProducts", {
+          categoryArray:null,
+          supplier_id,
+          productsSearch,
+          searchType,
+        })
+        .then((products) => {
+      
+          context.commit("filterSupplierProductsTable", 
+           products.data.data
+            
+          );
+        });
+    }
   },
 };

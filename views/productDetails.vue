@@ -101,12 +101,12 @@
 
           <v-col lg="6" md="6" sm="6" cols="6">
             <span class="font-weight-medium" style="font-size: 20px">
-              {{ $t("productDetails.stockStatus") }}:
-              <span v-if="currentProduct" class="text--secondary">{{
-                currentProduct.availability === "1"
-                  ? "In Stock"
-                  : "Out of Stock"
-              }}</span>
+              {{ $t("productDetails.stockRemaining") }}:
+              <span
+                v-if="currentProduct && currentProduct.stock_remaining"
+                class="text--secondary"
+                >{{ currentProduct.stock_remaining }}</span
+              >
             </span>
           </v-col>
 
@@ -579,6 +579,7 @@ export default {
       user_id: this.currentUser.user_id,
       product_id: this.currentProduct.product_id,
     });
+    console.log("curretn product is stock", this.currentProduct.user);
   },
 
   data() {
