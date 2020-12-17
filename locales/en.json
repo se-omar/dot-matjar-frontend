@@ -51,7 +51,7 @@
     "category": "Category",
     "item": "item",
     "code": "code",
-    "quantity": "quantity",
+    "quantity": "Quantity",
     "hsCode": "HS code",
     "price": "price",
     "minOrders": "minimum number of orders",
@@ -448,14 +448,16 @@
     "address2": "address line 2",
     "username": "user name",
     "userMobile": "user mobile number",
-    "orderNumber": "order number",
-    "orderDate": "order date",
+    "orderNumber": "Order Number",
+    "orderDate": "Order Date",
     "productName": "product name",
     "productId": "product ID",
     "productCode": "product code",
     "quantity": "quantity",
     "status": "status",
-    "color": "color"
+    "color": "color",
+    "order":"Order",
+    "orderDetails":"Order Details"
   },
   "productDetails": {
     "supplier": "supplier",
@@ -520,8 +522,9 @@
     "quantity": "quantity",
     "color": "color",
     "showBillInfo":"Show bill Info",
-    "generatePDF":"generate PDF"
-
+    "generatePDF":"generate PDF",
+"itemsInYourOrder":"Items in your Order",
+"dialogDescription":"will be removed from your order"
   },
   "allUsers": {
     "searchUserByName": "Search User By Name",

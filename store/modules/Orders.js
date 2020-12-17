@@ -77,7 +77,7 @@ state.pressedOrder=[]
 
         getOrders(state, order) {
 
-            state.orders = order
+            state.orders = order.reverse();
 
         },
 
@@ -222,12 +222,19 @@ state.pressedOrder=[]
                 })
         },
 
-        async getShippingRateForCountry(context, country) {
-            console.log(country)
-            await axios.post(context.rootState.nodeHost + "/api/getShippingRateForCountry",
-                { country }).then((response => {
-                    context.commit('getShippingRateForCountry', response.data.shippingRate)
-                }))
+        // async getShippingRateForCountry(context, country) {
+        //     console.log(country)
+        //     await axios.post(context.rootState.nodeHost + "/api/getShippingRateForCountry",
+        //         { country }).then((response => {
+        //             context.commit('getShippingRateForCountry', response.data.shippingRate)
+        //         }))
+        // },
+        async removingProductfromOrder(context , products_orders_id){
+            console.log(products_orders_id)
+            axios.put(context.rootState.nodeHost+'/api/removingProductfromOrder' , {products_orders_id})
+            .then(message=>{
+                alert(message.data.message)
+            })
         }
     }
 }

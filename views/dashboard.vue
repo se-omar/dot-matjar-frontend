@@ -11,11 +11,11 @@
       {{ $t("dashboard.dashboard") }}
     </div>
 
-    <v-row justify="center">
+    <!-- <v-row justify="center">
       <p>{{ $t("dashboard.allProducts") }}</p>
-    </v-row>
+    </v-row> -->
 
-    <v-row class="ml-15 mr-15" justify="center" v-if="myProducts.length != 0">
+    <!-- <v-row class="ml-15 mr-15" justify="center" v-if="myProducts.length != 0">
       <v-col
         lg="2"
         md="2"
@@ -33,7 +33,7 @@
     </v-row>
 
     <v-divider class="mt- mb-10"></v-divider>
-
+ -->
     <v-row class="mb-n7" style="width: 92%; margin: auto">
       <v-col lg="3">
         <v-select
@@ -152,7 +152,9 @@
               <span
                 >{{ $t("dashboard.monthlyRevenue") }}:
                 {{
-                  revenueChartSeries[0].data[revenueChartSeries[0].data.length - 1]
+                  revenueChartSeries[0].data[
+                    revenueChartSeries[0].data.length - 1
+                  ]
                 }}</span
               >
             </v-label>
@@ -206,7 +208,9 @@
             >
               <span class="grey--text text--darken-1"
                 >{{ $t("dashboard.amountLeft") }}:
-                {{ currentUser.total_revenue - currentUser.revenue_recieved || 0 }}
+                {{
+                  currentUser.total_revenue - currentUser.revenue_recieved || 0
+                }}
                 EGP</span
               >
             </v-card>
@@ -257,8 +261,14 @@ export default {
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
     }
-    await this.$store.dispatch("getTopSellingProduct", this.currentUser.user_id);
-    await this.$store.dispatch("getLeastSellingProduct", this.currentUser.user_id);
+    await this.$store.dispatch(
+      "getTopSellingProduct",
+      this.currentUser.user_id
+    );
+    await this.$store.dispatch(
+      "getLeastSellingProduct",
+      this.currentUser.user_id
+    );
     await this.$store.dispatch("getMyProducts", this.currentUser.user_id);
     await this.$store.dispatch("getMonthlySales", this.currentUser.user_id);
 
@@ -358,7 +368,7 @@ export default {
       this.notSortedDashboardOrders.forEach((element) => {
         year.push(element.order_year);
       });
-      return year.sort(function(a, b) {
+      return year.sort(function (a, b) {
         return b - a;
       });
     },
@@ -381,7 +391,7 @@ export default {
     },
   },
 
-  data: function() {
+  data: function () {
     return {
       topSellingProduct: {},
       leastSellingProduct: {},
@@ -398,7 +408,10 @@ export default {
 
   methods: {
     groupBy(xs, f) {
-      return xs.reduce((r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r), {});
+      return xs.reduce(
+        (r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r),
+        {}
+      );
     },
 
     calculateCategoryPercentage() {
@@ -415,7 +428,8 @@ export default {
           categorySales += this.categoryArray[i][j].buy_counter;
           totalCategorySales += this.categoryArray[i][j].buy_counter;
 
-          categoryName = this.categoryArray[i][j].product_category.category_name;
+          categoryName = this.categoryArray[i][j].product_category
+            .category_name;
           if (!this.categoryNames.includes(categoryName)) {
             this.categoryNames.push(
               this.categoryArray[i][j].product_category.category_name
@@ -485,8 +499,9 @@ export default {
   },
 
   components: {
-    dashboardSellingProduct: () => import("../components/dashboardSellingProduct"),
-    product: () => import("../components/product"),
+    dashboardSellingProduct: () =>
+      import("../components/dashboardSellingProduct"),
+    // product: () => import("../components/product"),
     apexchart: () => import("vue-apexcharts"),
   },
 };

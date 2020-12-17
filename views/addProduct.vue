@@ -437,7 +437,7 @@
 
               <v-col cols="12" lg="4" sm="12" md="4">
                 <v-btn
-                  @click="$router.push(`/${$i18n.locale}myProducts`)"
+                  @click="$router.push(`/${$i18n.locale}/myProducts`)"
                   rounded
                   class="red white--text"
                 >

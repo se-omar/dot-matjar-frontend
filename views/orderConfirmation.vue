@@ -347,10 +347,10 @@ export default {
   async created() {
     // await this.$store.dispatch("getOrder", { order_id: null });
     await this.$store.dispatch("getDefaultCompany");
-    await this.$store.dispatch(
-      "getShippingRateForCountry",
-      this.billOrderData.country
-    );
+    // await this.$store.dispatch(
+    //   "getShippingRateForCountry",
+    //   this.billOrderData.country
+    // );
     console.log("order company shipping rate", this.orderCountryShippingRate);
     setTimeout(() => {
       console.log(

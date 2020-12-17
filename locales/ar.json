@@ -459,7 +459,9 @@
         "productId": "رقم المنتج",
         "productCode": "كود المنتج",
         "productQuantity": "الكمية المتاحة",
-        "status": "الحالة"
+        "status": "الحالة",
+        "order":"الطلب",
+    "orderDetails":"تفاصيل الطلب"
     },
     "productDetails": {
         "supplier": "البائع",
@@ -525,7 +527,9 @@
         "status": "الحالة",
         "quantity": "الكمية",
         "showBillInfo":"اظهار الفاتوره",
-        "generatePDF":"توليد pdf"
+        "generatePDF":"توليد pdf",
+        "itemsInYourOrder":"العناصر في طلبك",
+        "dialogDescription":"ستتم إزالة  من طلبك "
 
 
     },
