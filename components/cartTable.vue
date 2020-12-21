@@ -65,6 +65,7 @@
               <template #[`item.product_color`]="{ item }">
                 <v-swatches disabled v-model="item.product_color"></v-swatches>
               </template>
+
               <!-- =============== -->
 
               <!-- =================== -->
@@ -202,7 +203,11 @@ export default {
     totalPrice() {
       var t = 0;
       for (var i = 0; i < this.items.length; i++) {
-        t += this.items[i].product.unit_price * this.items[i].quantity;
+        t += this.items[i].product.discount_amount
+          ? (this.items[i].product.unit_price -
+              this.items[i].product.discount_amount) *
+            this.items[i].quantity
+          : this.items[i].product.unit_price * this.items[i].quantity;
       }
       return t;
     },

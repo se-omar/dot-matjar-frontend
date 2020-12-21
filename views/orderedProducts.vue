@@ -81,7 +81,7 @@
                       class="fa fa-trash fa-sm"
                     ></i>
                     <i v-if="item.status == 'Shipped'" class="fa fa-truck"> </i>
-                    <v-btn icon @click="productStatus">
+                    <v-btn icon @click="productStatus(item)">
                       <i class="fa fa-edit fa-sm ml-4"></i>
                     </v-btn>
                   </h4>
@@ -110,7 +110,8 @@
                                 v-model="productStatusUpdate"
                                 outlined
                                 :items="statusItems"
-                              ></v-select>
+                              >
+                              </v-select>
 
                               <v-btn
                                 @click="updateStatus"
@@ -274,13 +275,13 @@ export default {
     city: "",
     statusDialog: false,
     clickedProductInfo: "",
-    statusItems: ["Pending", "Shipped", "Delivered", "Rejected"],
     productStatusUpdate: "",
     userMadeOrder: "",
     snackbar: false,
     timeout: 2000,
     isloading: false,
     fullPage: "",
+    productClickedd: {},
   }),
   methods: {
     async showProducts(event) {
@@ -300,12 +301,15 @@ export default {
       this.clickedProductInfo = event;
       this.productStatusUpdate = event.status;
     },
-    productStatus() {
+    productStatus(item) {
+      console.log(item);
+      this.productClickedd = item;
       this.statusDialog = true;
     },
     async updateStatus() {
       this.isloading = true;
       this.snackbar = true;
+      console.log("product status ", this.productStatusUpdate);
       await this.$store.dispatch("updateProductStatus", {
         status: this.productStatusUpdate,
         orderId: this.clickedProductInfo.order_id,
@@ -403,6 +407,15 @@ export default {
           value: "color",
         },
       ];
+    },
+    statusItems() {
+      var a = [
+        { text: "Pending", value: "Pending" },
+        { text: "Shipped", value: "Shipped" },
+        { text: "Delivered", value: "Delivered" },
+        { text: "Rejected", value: "Rejected" },
+      ];
+      return a;
     },
   },
 };

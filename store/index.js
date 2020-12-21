@@ -18,7 +18,7 @@ Vue.use(Vuex, axios, router);
 
 export default new Vuex.Store({
   state: {
-    nodeHost: process.env.VUE_APP_NODE_HOST,
+    nodeHost: 'http://localhost:3000',
     // viewRequestDetails: false,
     // cart: [],
     // table: JSON.parse(localStorage.getItem('cartItems')) ? JSON.parse(localStorage.getItem('cartItems')) : [],
