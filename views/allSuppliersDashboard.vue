@@ -186,14 +186,47 @@
               :class="`elevation-${hover ? 5 : 3}`"
               class="grey lighten-5 mb-11"
             >
-              <span class="grey--text text--darken-1" style="font-size: 20px"
-                >{{ $t("suppliersDashboard.totalRevenue") }}:
-                {{ supplier.total_revenue }} EGP</span
-              >
+              <v-row justify="center">
+                <span class="grey--text text--darken-1" style="font-size: 20px"
+                  >{{ $t("suppliersDashboard.totalRevenue") }}:
+                  {{ supplier.total_revenue }} EGP</span
+                >
+                <v-btn
+                  v-if="currentUser.user_type == 'admin'"
+                  icon
+                  @click="totalRevenueDialog = true"
+                  ><i class="fa fa-edit"></i
+                ></v-btn>
+              </v-row>
             </v-card>
           </v-hover>
         </div>
-
+        <v-dialog width="300" v-model="totalRevenueDialog">
+          <v-card style="overflow: hidden">
+            <v-row justify="center">
+              <v-col cols="6">
+                <v-form v-model="totalRevenueValidation">
+                  <v-text-field
+                    height="30"
+                    outlined
+                    shaped
+                    v-model="supplierTotalRevenue"
+                    :label="$t('suppliersDashboard.totalRevenue')"
+                    :rules="[rules.required, rules.numbersOnly]"
+                  ></v-text-field>
+                </v-form>
+              </v-col>
+            </v-row>
+            <v-row justify="center">
+              <v-btn
+                :disabled="!totalRevenueValidation"
+                @click="updateSupplierTotalRevenue"
+                icon
+                ><i class="fa fa-sync-alt"> </i
+              ></v-btn>
+            </v-row>
+          </v-card>
+        </v-dialog>
         <div style="text-align: center">
           <v-hover>
             <v-card
@@ -203,14 +236,47 @@
               :class="`elevation-${hover ? 5 : 3}`"
               class="grey lighten-5 mb-11"
             >
-              <span class="grey--text text--darken-1" style="font-size: 20px"
-                >{{ $t("suppliersDashboard.amountRecieved") }}:
-                {{ supplier.revenue_recieved || 0 }} EGP</span
-              >
+              <v-row justify="center">
+                <span class="grey--text text--darken-1" style="font-size: 20px"
+                  >{{ $t("suppliersDashboard.amountRecieved") }}:
+                  {{ supplier.revenue_recieved || 0 }} EGP</span
+                >
+                <v-btn
+                  v-if="currentUser.user_type == 'admin'"
+                  @click="amountRecievedDialog = true"
+                  icon
+                  ><i class="fa fa-edit"></i
+                ></v-btn>
+              </v-row>
             </v-card>
           </v-hover>
         </div>
-
+        <v-dialog width="300" v-model="amountRecievedDialog">
+          <v-card style="overflow: hidden">
+            <v-row justify="center">
+              <v-col cols="6">
+                <v-form v-model="amountRecievedValidation">
+                  <v-text-field
+                    height="30"
+                    outlined
+                    :rules="[rules.required, rules.numbersOnly]"
+                    shaped
+                    v-model="supplierAmountRecieved"
+                    :label="$t('suppliersDashboard.amountRecieved')"
+                  ></v-text-field>
+                </v-form>
+              </v-col>
+            </v-row>
+            <v-row justify="center">
+              <v-btn
+                :disabled="!amountRecievedValidation"
+                @click="updateSupplierAmountRecieved"
+                icon
+                ><i class="fa fa-sync-alt"> </i
+              ></v-btn>
+            </v-row>
+          </v-card>
+        </v-dialog>
         <div style="text-align: center">
           <v-hover>
             <v-card
@@ -220,14 +286,43 @@
               :class="`elevation-${hover ? 5 : 3}`"
               class="grey lighten-5 mb-11"
             >
-              <span class="grey--text text--darken-1" style="font-size: 20px"
-                >{{ $t("suppliersDashboard.amountLeft") }}:
-                {{ supplier.total_revenue - supplier.revenue_recieved || 0 }}
-                EGP</span
-              >
+              <v-row justify="center">
+                <span class="grey--text text--darken-1" style="font-size: 20px"
+                  >{{ $t("suppliersDashboard.amountLeft") }}:
+                  {{ supplier.total_revenue - supplier.revenue_recieved || 0 }}
+                  EGP</span
+                >
+                <!-- <v-btn
+                  v-if="currentUser.user_type == 'admin'"
+                  icon
+                  @click="amountLeftDialog = true"
+                >
+                  <i class="fa fa-edit"></i
+                ></v-btn> -->
+              </v-row>
             </v-card>
           </v-hover>
         </div>
+        <!-- <v-dialog width="300" v-model="amountLeftDialog">
+          <v-card style="overflow: hidden">
+            <v-row justify="center">
+              <v-col cols="6">
+                <v-text-field
+                  height="30"
+                  outlined
+                  shaped
+                  v-model="supplierAmountLeft"
+                  :label="$t('suppliersDashboard.amountLeft')"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row justify="center">
+              <v-btn @click="updateSupplierAmountLeft" icon
+                ><i class="fa fa-sync-alt"> </i
+              ></v-btn>
+            </v-row>
+          </v-card>
+        </v-dialog> -->
       </v-col>
     </v-row>
 
@@ -431,8 +526,35 @@ export default {
         };
       }
     },
+    // supplierTotalRevenue() {
+    //   if (this.supplier) {
+    //     return this.supplier.total_revenue;
+    //   } else {
+    //     return 0;
+    //   }
+    // },
+    // supplierAmountRecieved() {
+    //   if (this.supplier) {
+    //     return this.supplier.revenue_recieved;
+    //   } else {
+    //     return 0;
+    //   }
+    // },
   },
+  created() {
+    if (!localStorage.getItem("reloaded")) {
+      localStorage.setItem("reloaded", "1");
+      location.reload();
+    }
 
+    if (this.supplier) {
+      this.supplierTotalRevenue = this.supplier.total_revenue;
+      this.supplierAmountRecieved = this.supplier.revenue_recieved;
+    }
+    setTimeout(() => {
+      localStorage.removeItem("reloaded");
+    }, 50);
+  },
   data: function () {
     return {
       topSellingProduct: {},
@@ -445,6 +567,21 @@ export default {
       selectedYear: new Date().getFullYear(),
       myYearlyProducts: [],
       isLoading: false,
+      editAmountRecieved: false,
+      editTotalRevenue: false,
+      editAmountLeft: false,
+      totalRevenueDialog: false,
+      amountRecievedDialog: false,
+      amountLeftDialog: false,
+      supplierAmountRecieved: "",
+      supplierTotalRevenue: "",
+      supplierAmountLeft: "",
+      rules: {
+        numbersOnly: (v) => /\d+/.test(v) || "Enter numbers",
+        required: (v) => !!v || "Required",
+      },
+      amountRecievedValidation: false,
+      totalRevenueValidation: false,
     };
   },
 
@@ -536,6 +673,39 @@ export default {
 
       this.calculateMonthlySales();
       this.calculateCategoryPercentage();
+    },
+    async updateSupplierTotalRevenue() {
+      console.log("test");
+      await this.$store.dispatch("updateSupplierTotalRevenue", {
+        user_id: this.supplier.user_id,
+        totalRevenue: this.supplierTotalRevenue,
+      });
+      await this.$store.dispatch("getSupplierNewData", {
+        user_id: this.supplier.user_id,
+      });
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
+    },
+    // updateSupplierAmountLeft() {
+    //   console.log("test");
+    //   this.$store.dispatch("updateSupplierAmmountLeft", {
+    //     user_id: this.supplier.user_id,
+    //     amountLeft: this.supplierAmountLeft,
+    //   });
+    // },
+    async updateSupplierAmountRecieved() {
+      console.log("test");
+      await this.$store.dispatch("updateSupplierAmountRecieved", {
+        user_id: this.supplier.user_id,
+        amountRecieved: this.supplierAmountRecieved,
+      });
+      await this.$store.dispatch("getSupplierNewData", {
+        user_id: this.supplier.user_id,
+      });
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
     },
   },
 

@@ -42,6 +42,7 @@ export default {
             var obj = siteColors;
             localStorage.setItem("siteColor", JSON.stringify(obj));
             state.siteColor = JSON.parse(localStorage.getItem("siteColor"));
+            console.log('siteColorssss', state.siteColor)
         },
 
         refreshCurrentUser(state, user) {

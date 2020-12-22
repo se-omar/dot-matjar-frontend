@@ -234,6 +234,11 @@ export default {
     },
   },
   async created() {
+    if (!localStorage.getItem("reloaded")) {
+      localStorage.setItem("reloaded", "1");
+      location.reload();
+    }
+
     await this.$store.dispatch("getSiteColor");
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
@@ -256,6 +261,9 @@ export default {
     this.linkedin = this.currentUser.linkedin;
     this.website = this.currentUser.website;
     this.address = this.currentUser.address;
+    setTimeout(() => {
+      localStorage.removeItem("reloaded");
+    }, 50);
   },
   data: () => ({
     rules: {

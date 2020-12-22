@@ -127,12 +127,20 @@ export default {
   },
 
   async created() {
+    if (!localStorage.getItem("reloaded")) {
+      localStorage.setItem("reloaded", "1");
+      location.reload();
+    }
+
     await this.$store.dispatch("getSiteColor");
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
     }
     this.$store.dispatch("getRecievedRequests");
     this.$store.dispatch("getSentRequests");
+    setTimeout(() => {
+      localStorage.removeItem("reloaded");
+    }, 50);
   },
   methods: {
     openDetails() {

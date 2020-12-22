@@ -286,6 +286,10 @@ export default {
   },
 
   async created() {
+    if (!localStorage.getItem("reloaded")) {
+      localStorage.setItem("reloaded", "1");
+      location.reload();
+    }
     this.isLoading = true;
     await this.$store.dispatch("getSiteColor");
 
@@ -305,6 +309,7 @@ export default {
       this.supplierApprovalMessage = true;
     }
     this.isLoading = false;
+    localStorage.removeItem("reloaded");
   },
 
   computed: {

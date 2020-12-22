@@ -211,8 +211,16 @@ export default {
     supplier: [],
   }),
   async created() {
+    if (!localStorage.getItem("reloaded")) {
+      localStorage.setItem("reloaded", "1");
+      location.reload();
+    }
+
     await this.$store.dispatch("getSiteColor");
     this.$store.dispatch("getPendingSuppliers");
+    setTimeout(() => {
+      localStorage.removeItem("reloaded");
+    }, 50);
   },
   computed: {
     pendingSuppliers() {

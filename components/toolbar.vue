@@ -51,6 +51,7 @@
           "
         >
           <v-img
+            :key="imageKey"
             src="../assets/images/dotmatjar_logo.png"
             max-height="110"
             max-width="120"
@@ -60,6 +61,7 @@
 
         <a v-else class="ml-4" @click="goSupplierPage">
           <v-img
+            :key="imageKey"
             class="mx-2"
             :src="
               supplierPageInfo && supplierPageInfo.logo
@@ -1154,7 +1156,15 @@
 <script>
 export default {
   components: {},
+  props: {
+    imageKey: {
+      type: Number,
+      default: 0,
+    },
+  },
   async created() {
+    console.log("toolbar reloaded");
+
     localStorage.setItem("currentCurrency", "egp");
 
     if (localStorage.getItem("loginToken")) {
@@ -1168,14 +1178,6 @@ export default {
     console.log("supplier page info", this.supplierPageInfo, this.nodeHost);
   },
 
-  props: {
-    //     toolBarColor: {
-    //       type: String,
-    //       default (){
-    // return this.siteColor
-    //       }
-    //     },
-  },
   computed: {
     currentUser() {
       return this.$store.state.Home.currentUser;

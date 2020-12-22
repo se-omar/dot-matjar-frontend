@@ -1,7 +1,7 @@
 
 <template>
   <v-app id="app">
-    <ToolBar></ToolBar>
+    <ToolBar :imageKey="imageKey"></ToolBar>
     <cartTable></cartTable>
     <router-view class="grey lighten-3" />
     <!-- <link
@@ -24,6 +24,7 @@
 
 export default {
   name: "App",
+
   async created() {
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
@@ -45,6 +46,10 @@ export default {
   computed: {
     currentUser() {
       return this.$store.state.currentUser;
+    },
+    imageKey() {
+      var x = 0;
+      return x++;
     },
   },
 };

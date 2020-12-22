@@ -348,11 +348,19 @@ export default {
     // VSwatches: () => import("vue-swatches"),
   },
   async created() {
+    if (!localStorage.getItem("reloaded")) {
+      localStorage.setItem("reloaded", "1");
+      location.reload();
+    }
+
     await this.$store.dispatch("getSiteColor");
     if (localStorage.getItem("loginToken")) {
       await this.$store.dispatch("refreshCurrentUser");
     }
     await this.$store.dispatch("getOrders");
+    setTimeout(() => {
+      localStorage.removeItem("reloaded");
+    }, 50);
   },
   computed: {
     row() {

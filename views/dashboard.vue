@@ -255,6 +255,11 @@
 // import dashboardSellingProduct from "../components/dashboardSellingProduct";
 export default {
   async created() {
+    if (!localStorage.getItem("reloaded")) {
+      localStorage.setItem("reloaded", "1");
+      location.reload();
+    }
+
     await this.$store.dispatch("getSiteColor");
     //this.isLoading = true;
 
@@ -282,6 +287,9 @@ export default {
     await this.calculateCategoryPercentage();
     //
     //
+    setTimeout(() => {
+      localStorage.removeItem("reloaded");
+    }, 50);
     this.isLoading = false;
   },
 
